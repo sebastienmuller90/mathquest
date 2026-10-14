@@ -1,0 +1,248 @@
+/* MathQuest — Anglais collège : enrichissement V8.13 des chapitres de grammaire historiques (variété ≥ 12 questions distinctes).
+   Programme de langues vivantes du cycle 4 (BO n°31 du 30/07/2020) et du cycle 3 pour la 6e ; repères grammaticaux A1-A2.
+   Les questions s'ajoutent au générateur d'origine (mélange), avec une explication en français. */
+(function(){
+'use strict';
+const MQ=window.MQCollege;if(!MQ)return;const E=(id,items)=>MQ.enrich(id,{items,w:.55});
+const C='Complète : ';
+E('en6k',[
+ [C+'I have ___ orange in my bag.','an',['a','the','—'],'Devant un son voyelle (orange), on emploie « an ».'],
+ [C+'She is ___ teacher.','a',['an','the','—'],'Métier au singulier, son consonne (teacher) : « a ».'],
+ [C+'It takes ___ hour to get there.','an',['a','the','—'],'Le h de « hour » ne se prononce pas : son voyelle → « an ».'],
+ [C+'He goes to ___ university in London.','a',['an','the','—'],'« university » commence par le son [j] (consonne) : « a ».'],
+ [C+'Look at ___ moon tonight!','the',['a','an','—'],'Il n’y a qu’une Lune : on emploie « the ».'],
+ [C+'I like ___ music.','—',['the','a','an'],'Sens général (la musique en général) : pas d’article en anglais.'],
+ [C+'There is ___ elephant at the zoo.','an',['a','the','—'],'« elephant » commence par un son voyelle : « an ».'],
+ [C+'Can you close ___ door, please?','the',['a','an','—'],'On parle d’une porte précise (celle de la pièce) : « the ».'],
+ [C+'My brother wants ___ new bike.','a',['an','the','—'],'Un vélo quelconque, son consonne (new) : « a ».'],
+ [C+'She plays ___ piano very well.','the',['a','an','—'],'Avec les instruments de musique, on emploie « the » : play the piano.',2],
+ [C+'He is ___ honest boy.','an',['a','the','—'],'Le h de « honest » est muet : son voyelle → « an ».',3],
+ [C+'We have lunch at ___ noon.','—',['the','a','an'],'Expression figée : « at noon », sans article.',3]]);
+E('en6l',[
+ [C+'Tom and Lisa are washing ___ car.','their',['his','her','our'],'Possesseurs : Tom et Lisa (they) → « their ».'],
+ [C+'Lisa is brushing ___ hair.','her',['his','its','their'],'Possesseur féminin (Lisa) → « her ».'],
+ [C+'The dog is eating ___ bone.','its',['it’s','his','their'],'Possesseur animal ou objet → « its » (sans apostrophe).'],
+ [C+'We love ___ new house.','our',['us','their','your'],'Possesseur : we → « our ».'],
+ [C+'Paul, is this ___ bag?','your',['you','yours','his'],'On s’adresse à Paul : « your bag ».'],
+ [C+'Mr Smith is talking to ___ students.','his',['her','its','their'],'Possesseur masculin (Mr Smith) → « his ».'],
+ [C+'I can’t find ___ pencil case.','my',['me','mine','I'],'Possesseur : I → « my ».'],
+ [C+'The children are playing with ___ toys.','their',['there','they’re','his'],'« their » (leur) ; « there » = là ; « they’re » = they are.'],
+ [C+'Emma lives with ___ grandparents.','her',['his','its','she'],'Possesseur féminin (Emma) → « her », même si les grands-parents sont plusieurs.',2],
+ [C+'Jack and I are in the same class. ___ teacher is Mrs Brown.','Our',['My','Their','Your'],'Jack and I = we → « our ».',2],
+ [C+'The cat is sleeping in ___ basket.','its',['it’s','his','her'],'« its » est le possessif ; « it’s » = it is.',3]]);
+E('en6m',[
+ [C+'___ book here is mine.','This',['That','These','Those'],'Singulier, proche (here) → « this ».'],
+ [C+'___ shoes here are new.','These',['This','That','Those'],'Pluriel, proche (here) → « these ».'],
+ [C+'Look at ___ star up there!','that',['this','these','those'],'Singulier, loin (up there) → « that ».'],
+ [C+'___ children over there are my cousins.','Those',['These','This','That'],'Pluriel, loin (over there) → « those ».'],
+ [C+'Is ___ your phone in my hand?','this',['these','those','that'],'Singulier et tout près (in my hand) → « this ».'],
+ [C+'I don’t like ___ apples here: they are green.','these',['this','that','those'],'Pluriel, proche → « these ».'],
+ [C+'Who is ___ man at the end of the street?','that',['this','these','those'],'Singulier, éloigné → « that ».'],
+ [C+'___ mountains in the distance are the Alps.','Those',['These','This','That'],'Pluriel, éloigné (in the distance) → « those ».'],
+ [C+'Can you pass me ___ glass next to you?','that',['this','these','those'],'L’objet est près de l’autre personne, pas de moi → « that ».',2],
+ [C+'___ is my friend Sam. (je te le présente, il est à côté de moi)','This',['That','These','Those'],'Pour présenter quelqu’un : « This is… ».',2],
+ [C+'In ___ days, people didn’t have phones. (autrefois)','those',['these','this','that'],'« in those days » = à cette époque-là (passé lointain).',3]]);
+E('en6n',[
+ [C+'___ two cats on the sofa.','There are',['There is','It is','They are'],'Pluriel (two cats) → « There are ».'],
+ [C+'___ a book on the table.','There is',['There are','It are','They is'],'Singulier → « There is ».'],
+ [C+'___ any milk in the fridge?','Is there',['Are there','There is','Is it'],'Question, indénombrable (milk) → « Is there…? ».'],
+ [C+'___ any students in the classroom?','Are there',['Is there','There are','Are they'],'Question au pluriel → « Are there…? ».'],
+ [C+'There ___ a lot of people at the concert.','are',['is','am','be'],'« people » est pluriel → « There are ».'],
+ [C+'There ___ some water in the bottle.','is',['are','am','be'],'« water » est indénombrable → « There is ».'],
+ [C+'There ___ any shops in my village. (négatif)','aren’t',['isn’t','not','don’t'],'Négatif pluriel → « There aren’t any… ».'],
+ [C+'There ___ a cinema near my house. (négatif)','isn’t',['aren’t','don’t','not is'],'Négatif singulier → « There isn’t… ».'],
+ [C+'How many pupils ___ in your class?','are there',['there are','is there','there is'],'Question avec « How many » : « How many … are there? ».',2],
+ [C+'There ___ a park here ten years ago. (passé)','was',['were','is','are'],'Passé singulier → « There was ».',3],
+ [C+'There ___ many trees in this street before. (passé)','were',['was','are','is'],'Passé pluriel → « There were ».',3]]);
+E('en6p',[
+ [C+'My birthday is ___ May.','in',['on','at','—'],'Mois → « in » : in May.'],
+ [C+'The film starts ___ 8 o’clock.','at',['in','on','—'],'Heure précise → « at ».'],
+ [C+'We don’t go to school ___ Sunday.','on',['in','at','—'],'Jour de la semaine → « on ».'],
+ [C+'I was born ___ 2014.','in',['on','at','—'],'Année → « in ».'],
+ [C+'We go skiing ___ winter.','in',['on','at','—'],'Saison → « in ».'],
+ [C+'My party is ___ 12th June.','on',['in','at','—'],'Date précise → « on ».'],
+ [C+'I read a book ___ night.','at',['in','on','—'],'Expression : « at night ».'],
+ [C+'I do my homework ___ the afternoon.','in',['on','at','—'],'Moment de la journée → « in the morning / afternoon / evening ».'],
+ [C+'We open our presents ___ Christmas Day.','on',['in','at','—'],'Jour précis (Christmas Day) → « on ».',2],
+ [C+'Shops are busy ___ the weekend. (anglais britannique)','at',['in','on','—'],'En anglais britannique : « at the weekend ».',3],
+ [C+'I will see you ___ Monday morning.','on',['in','at','—'],'Jour + moment de ce jour → « on Monday morning ».',3]]);
+E('en6q',[
+ [C+'He ___ (watch) TV every evening.','watches',['watchs','watch','is watch'],'3e personne du singulier : -es après ch → watches.'],
+ [C+'They ___ (live) in Manchester.','live',['lives','living','are live'],'They : pas de -s au présent simple.'],
+ [C+'My mother ___ (go) to work by bus.','goes',['gos','go','going'],'go → goes à la 3e personne du singulier.'],
+ [C+'The baby ___ (cry) a lot.','cries',['crys','cry','cryes'],'Consonne + y → -ies : cries.'],
+ [C+'I ___ (not like) spiders.','don’t like',['doesn’t like','not like','am not like'],'Négation avec I : don’t + verbe.'],
+ [C+'She ___ (not play) the guitar.','doesn’t play',['don’t play','doesn’t plays','not plays'],'Négation 3e personne : doesn’t + verbe sans -s.'],
+ [C+'___ you speak Spanish?','Do',['Does','Are','Is'],'Question avec you : « Do you…? ».'],
+ [C+'___ your brother like football?','Does',['Do','Is','Has'],'Question 3e personne : « Does … like…? » (sans -s au verbe).'],
+ [C+'My dad ___ (have) a red car.','has',['haves','have','is have'],'have → has à la 3e personne du singulier.',2],
+ [C+'Water ___ (boil) at 100 °C.','boils',['boil','is boiling','boiled'],'Vérité générale → présent simple, 3e personne : boils.',2],
+ [C+'Lucy ___ (fix) bikes in her free time.','fixes',['fixs','fix','fixing'],'Après x, on ajoute -es : fixes.',3]]);
+E('en6r',[
+ [C+'I ___ chocolate! (adorer)','love',['hate','loves','don’t like'],'Adorer → love ; avec I, pas de -s.'],
+ [C+'He ___ getting up early. (détester)','hates',['hate','loves','likes'],'Détester → hate ; 3e personne : hates.'],
+ [C+'We ___ playing chess. (aimer bien)','like',['likes','hate','liking'],'Aimer bien → like ; avec we, pas de -s.'],
+ [C+'My sister ___ horror films. (ne pas aimer)','doesn’t like',['don’t like','not likes','doesn’t likes'],'Négatif 3e personne : doesn’t like.'],
+ [C+'They love ___ (swim) in the sea.','swimming',['swim','swims','to swimming'],'Après love / like / hate, on emploie souvent le verbe en -ing : swimming.'],
+ [C+'I hate ___ (do) the washing-up.','doing',['do','does','to doing'],'Après hate : verbe en -ing.'],
+ [C+'Do you like ___ (dance)?','dancing',['dance','dances','to dancing'],'Après like : verbe en -ing (dance → dancing, le e tombe).'],
+ [C+'___ she like cats?','Does',['Do','Is','Has'],'Question 3e personne : Does she like…?'],
+ [C+'Tom ___ pizza. (adorer)','loves',['love','is love','loving'],'3e personne du singulier : loves.',2],
+ ['Quel verbe exprime le sentiment le plus fort ?','love',['like','don’t mind','hate'],'Love (adorer) est plus fort que like (aimer bien) ; hate exprime le contraire.',2],
+ [C+'I don’t mind ___ (wait). (ça m’est égal)','waiting',['wait','to waiting','waits'],'Après « don’t mind » : verbe en -ing.',3]]);
+E('en6t',[
+ [C+'It’s half ___ seven. (7 h 30)','past',['to','at','and'],'« half past seven » = 7 h 30.'],
+ [C+'It’s quarter ___ nine. (8 h 45)','to',['past','at','for'],'« quarter to nine » = il est 9 h moins le quart.'],
+ [C+'It’s ten ___ six. (6 h 10)','past',['to','at','after to'],'Minutes après l’heure : « past ».'],
+ [C+'It’s twenty ___ four. (3 h 40)','to',['past','at','for'],'Minutes avant l’heure suivante : « to » (4 h moins 20).'],
+ [C+'It’s five ___. (5 h 00)','o’clock',['hour','hours','past'],'Heure pile : « five o’clock ».'],
+ ['Comment dit-on 2 h 15 ?','It’s quarter past two.',['It’s quarter to two.','It’s two quarter.','It’s half past two.'],'15 minutes après 2 h : quarter past two.'],
+ ['Comment dit-on 11 h 50 ?','It’s ten to twelve.',['It’s ten past eleven.','It’s fifty to eleven.','It’s ten to eleven.'],'11 h 50 = midi moins dix : ten to twelve.'],
+ [C+'What time ___ it?','is',['are','does','do'],'Question : « What time is it? ».'],
+ ['Comment dit-on 9 h 25 ?','It’s twenty-five past nine.',['It’s twenty-five to nine.','It’s nine and twenty-five.','It’s twenty-five to ten.'],'25 minutes après 9 h : twenty-five past nine.',2],
+ [C+'The train leaves ___ 6.15.','at',['in','on','to'],'Heure précise : « at ».',2],
+ ['Comment dit-on 12 h 00 (le midi) ?','It’s midday.',['It’s midnight.','It’s twelve past.','It’s half twelve.'],'midday (ou noon) = midi ; midnight = minuit.',3]]);
+E('en6ad',[
+ [C+'___ is your name?','What',['Who','Where','How'],'Pour demander le nom : What is your name?'],
+ [C+'___ do you live?','Where',['What','When','Who'],'Lieu → Where.'],
+ [C+'___ is your birthday?','When',['Where','Who','How old'],'Date → When.'],
+ [C+'___ is that boy? — He’s my cousin.','Who',['What','Where','Which'],'Personne → Who.'],
+ [C+'___ do you go to school? — By bus.','How',['What','Where','Why'],'Moyen, manière → How.'],
+ [C+'___ are you sad? — Because I lost my dog.','Why',['What','How','When'],'Cause (because) → Why.'],
+ [C+'___ brothers and sisters have you got?','How many',['How much','How old','What'],'Nombre (dénombrable) → How many.'],
+ [C+'___ is this T-shirt? — It’s £10.','How much',['How many','What','How old'],'Prix → How much.'],
+ [C+'___ colour is your bike?','What',['Which','How','Who'],'Question sur la couleur : What colour…?',2],
+ [C+'___ you got a pet?','Have',['Has','Do','Are'],'Question avec have got : Have you got…?',2],
+ [C+'___ bag is this? — It’s Tom’s.','Whose',['Who','Who’s','Which'],'Possesseur → Whose.',3]]);
+E('en5d',[
+ [C+'Listen! The baby ___ (cry).','is crying',['cries','cry','crying'],'« Listen! » : action en cours → be + -ing.'],
+ [C+'We ___ (play) tennis every Saturday.','play',['are playing','plays','playing'],'Habitude (every Saturday) → présent simple.'],
+ [C+'Look! It ___ (snow).','is snowing',['snows','snow','snowing'],'Action en cours au moment où l’on parle → be + -ing.'],
+ [C+'My father never ___ (drink) coffee.','drinks',['is drinking','drink','drinking'],'Habitude (never) → présent simple, 3e personne : drinks.'],
+ [C+'At the moment, she ___ (read) a comic.','is reading',['reads','read','reading'],'« At the moment » → be + -ing.'],
+ [C+'They usually ___ (have) lunch at school.','have',['are having','has','having'],'« usually » → présent simple.'],
+ [C+'What ___ you ___ now? (do)','are / doing',['do / do','does / doing','are / do'],'« now » → présent en be + -ing : What are you doing now?'],
+ [C+'He often ___ (forget) his keys.','forgets',['is forgetting','forget','forgetting'],'« often » → présent simple : forgets.'],
+ [C+'I ___ (not watch) TV right now, I’m reading.','am not watching',['don’t watch','doesn’t watch','not watching'],'« right now » → be + not + -ing.',2],
+ [C+'Water ___ (freeze) at 0 °C.','freezes',['is freezing','freeze','froze'],'Vérité générale → présent simple.',2],
+ [C+'Be quiet! Grandma ___ (sleep).','is sleeping',['sleeps','sleep','slept'],'Action en cours (Be quiet!) → be + -ing.',3]]);
+E('en5i',[
+ [C+'This pen is ___. (à toi)','yours',['your','you','yours’'],'Pronom possessif : yours (sans nom après).'],
+ [C+'That house is ___. (à eux)','theirs',['their','them','their’s'],'Pronom possessif pluriel : theirs.'],
+ [C+'The red bike is ___. (à elle)','hers',['her','her’s','she'],'Pronom possessif féminin : hers (sans apostrophe).'],
+ [C+'These books are ___. (à nous)','ours',['our','us','our’s'],'Pronom possessif : ours.'],
+ [C+'Is this cap ___? (à lui)','his',['him','he','his’s'],'Pronom possessif masculin : his.'],
+ [C+'___ is this coat? — It’s Anna’s.','Whose',['Who’s','Who','Which'],'Question sur le possesseur : Whose…?'],
+ [C+'This is ___ phone, not yours. (mon)','my',['mine','me','I'],'Devant un nom : adjectif possessif « my ».'],
+ [C+'That’s not my bag, it’s ___. (le sien, à Paul)','his',['her','hers','its'],'À Paul → his.'],
+ [C+'Your room is bigger than ___. (la mienne)','mine',['my','me','mines'],'Pronom possessif : mine (jamais « mines »).',2],
+ ['Quelle phrase est correcte ?','Whose shoes are these?',['Who’s shoes are these?','Whose are shoes these?','Who shoes are these?'],'Whose + nom pour demander le possesseur ; « who’s » = who is.',2],
+ [C+'A friend of ___ is coming tonight. (un de mes amis)','mine',['my','me','I'],'« a friend of mine » = un de mes amis.',3]]);
+E('en4g',[
+ [C+'You ___ wear a helmet on a bike. It’s the law. (obligation)','must',['mustn’t','don’t have to','can’t'],'Obligation (loi, règle) → must.'],
+ [C+'You ___ run in the corridors. (interdiction)','mustn’t',['don’t have to','must','have to'],'Interdiction → mustn’t.'],
+ [C+'Tomorrow is Sunday: I ___ get up early. (pas obligé)','don’t have to',['mustn’t','must','has to'],'Absence d’obligation → don’t have to.'],
+ [C+'She ___ wear a uniform at her school. (obligation extérieure)','has to',['have to','must to','mustn’t'],'Obligation imposée de l’extérieur, 3e personne → has to.'],
+ [C+'We ___ forget our passports! (interdiction)','mustn’t',['don’t have to','doesn’t have to','have to'],'Il ne faut surtout pas oublier → mustn’t.'],
+ [C+'Students ___ use a calculator for this test: it’s allowed but not necessary.','don’t have to',['mustn’t','must','has to'],'Ce n’est pas obligatoire → don’t have to.'],
+ [C+'Yesterday, I ___ stay at home because I was ill.','had to',['must','mustn’t','have to'],'Au passé, must devient « had to ».'],
+ [C+'___ you have to wear a tie?','Do',['Does','Must','Are'],'Question avec have to : Do you have to…?'],
+ ['Que signifie « You mustn’t smoke here » ?','Il est interdit de fumer ici.',['Tu n’es pas obligé de fumer ici.','Tu dois fumer ici.','Tu peux fumer ici.'],'mustn’t exprime une interdiction.',2],
+ ['Que signifie « You don’t have to come » ?','Tu n’es pas obligé de venir.',['Tu ne dois pas venir.','Tu dois venir.','Tu ne peux pas venir.'],'don’t have to = absence d’obligation (≠ mustn’t).',2],
+ [C+'He ___ finish his homework before he can go out. (obligation, 3e personne)','has to',['have to','must to','musts'],'3e personne : has to (must ne prend jamais de -s).',3]]);
+E('en4i',[
+ [C+'I know Sarah. I see ___ every day.','her',['she','his','hers'],'Pronom complément féminin : her.'],
+ [C+'Where are my keys? I can’t find ___.','them',['they','their','it'],'Pronom complément pluriel : them.'],
+ [C+'Can you help ___? We are lost.','us',['we','our','ours'],'Pronom complément de « we » : us.'],
+ [C+'This is my dog. I love ___.','it',['its','him','it’s'],'Animal ou objet : it.'],
+ [C+'Listen to ___! I’m talking to you.','me',['I','my','mine'],'Pronom complément de « I » : me.'],
+ [C+'Mr Brown is nice. We like ___ a lot.','him',['he','his','her'],'Pronom complément masculin : him.'],
+ [C+'I called you yesterday but you didn’t answer ___.','me',['I','my','mine'],'Après le verbe (answer me) : pronom complément.'],
+ [C+'Tom and Lea are coming. Wait for ___!','them',['they','their','theirs'],'Tom and Lea = they → complément : them.'],
+ [C+'Between you and ___, this film is boring.','me',['I','my','mine'],'Après une préposition (between) : pronom complément « me ».',2],
+ [C+'Give ___ the ball, please! (à moi)','me',['I','my','mine'],'Give me… : pronom complément.',2],
+ [C+'She bought ___ a present. (à lui)','him',['he','his','himself'],'Complément d’attribution : him.',3]]);
+E('en3b',[
+ [C+'I have known her ___ ten years.','for',['since','ago','during'],'Durée (ten years) → for.'],
+ [C+'They ___ (visit) Rome in 2019.','visited',['have visited','visit','have visit'],'Date précise terminée (in 2019) → prétérit.'],
+ [C+'I ___ (never / see) the sea.','have never seen',['never saw','never see','had never see'],'Expérience de vie sans date → present perfect.'],
+ [C+'She arrived two hours ___.','ago',['for','since','yet'],'« ago » = il y a (avec le prétérit).'],
+ [C+'___ you ever ___ (eat) sushi?','Have / eaten',['Did / eat','Have / ate','Do / eat'],'« ever » (déjà, dans ta vie) → present perfect : Have you ever eaten…?'],
+ [C+'We ___ (live) here since 2020.','have lived',['lived','live','are living'],'Action commencée dans le passé qui dure encore (since) → present perfect.'],
+ [C+'Last summer, we ___ (go) to Scotland.','went',['have gone','go','have went'],'« Last summer » (passé terminé) → prétérit.'],
+ [C+'I ___ (just / finish) my homework.','have just finished',['just finished','finish just','am just finished'],'« just » (venir de) → present perfect.'],
+ [C+'He hasn’t called me ___.','yet',['already','ago','since'],'« not … yet » = pas encore.',2],
+ [C+'When ___ you ___ (start) learning English?','did / start',['have / started','do / start','have / start'],'Question avec « When » → prétérit.',2],
+ [C+'She has been ill ___ Monday.','since',['for','ago','during'],'Point de départ (Monday) → since.',3]]);
+E('en3d',[
+ [C+'If it rains, we ___ (stay) at home.','will stay',['stay','would stay','stayed'],'If + présent, will + verbe.'],
+ [C+'If you ___ (study), you will pass.','study',['will study','studied','would study'],'Après if (condition réelle) : présent, jamais will.'],
+ [C+'If I ___ (be) late, my mum will be angry.','am',['will be','was','be'],'If + présent : I am.'],
+ [C+'If she doesn’t hurry, she ___ (miss) the bus.','will miss',['misses','would miss','miss'],'Conséquence au futur : will miss.'],
+ [C+'We will go to the beach if it ___ (be) sunny.','is',['will be','was','be'],'La proposition en if reste au présent.'],
+ [C+'If you heat ice, it ___ (melt).','melts',['will melt','melted','would melt'],'Vérité générale : if + présent, présent.'],
+ [C+'If they ___ (not come), we will start without them.','don’t come',['won’t come','didn’t come','not come'],'If + présent négatif : don’t come.'],
+ [C+'I’ll call you if I ___ (have) time.','have',['will have','had','would have'],'If + présent.'],
+ ['Quelle phrase est correcte ?','If I see him, I will tell him.',['If I will see him, I tell him.','If I saw him, I will tell him.','If I see him, I would told him.'],'Structure : If + présent, will + base verbale.',2],
+ [C+'Unless you hurry, you ___ (be) late. (à moins que)','will be',['are','would be','were'],'unless = if … not : la conséquence est au futur.',3],
+ [C+'If he ___ (win) the match, he will be champion.','wins',['will win','won','win'],'If + présent, 3e personne : wins.',3]]);
+E('en3e',[
+ [C+'If I ___ (be) rich, I would travel around the world.','were',['am','will be','would be'],'Condition irréelle : If + prétérit (were pour toutes les personnes en anglais soigné).'],
+ [C+'If she had a dog, she ___ (walk) it every day.','would walk',['will walk','walks','walked'],'If + prétérit, would + verbe.'],
+ [C+'If we ___ (live) in London, we would visit museums.','lived',['live','would live','will live'],'Condition irréelle : prétérit.'],
+ [C+'What ___ you do if you won the lottery?','would',['will','do','did'],'Question au conditionnel : What would you do…?'],
+ [C+'If I ___ (know) the answer, I would tell you.','knew',['know','would know','knowed'],'Prétérit irrégulier : know → knew.'],
+ [C+'If he ___ (not be) so tired, he would come.','weren’t',['isn’t','wouldn’t be','not was'],'If + prétérit négatif : weren’t.'],
+ [C+'I ___ (buy) a new phone if I had enough money.','would buy',['will buy','buy','bought'],'Conséquence : would + verbe.'],
+ [C+'If I were you, I ___ (see) a doctor.','would see',['will see','saw','see'],'Conseil : If I were you, I would…'],
+ ['Que signifie « If I had wings, I would fly » ?','Si j’avais des ailes, je volerais.',['Si j’ai des ailes, je volerai.','J’avais des ailes et je volais.','Si j’avais eu des ailes, j’aurais volé.'],'If + prétérit, would : situation imaginaire au présent.',2],
+ [C+'If they ___ (have) a car, they wouldn’t take the bus.','had',['have','would have','has'],'If + prétérit : had.',3],
+ ['Quelle phrase exprime une situation imaginaire ?','If I lived in Japan, I would eat sushi every day.',['If I live in Japan, I will eat sushi.','When I lived in Japan, I ate sushi.','I live in Japan and I eat sushi.'],'Imaginaire : If + prétérit, would.',3]]);
+E('en3f',[
+ [C+'English ___ (speak) all over the world.','is spoken',['speaks','is speaking','spoken'],'Passif présent : be + participe passé (spoken).'],
+ [C+'This bridge ___ (build) in 1890.','was built',['built','is built','was build'],'Passif prétérit : was + participe passé.'],
+ [C+'The windows ___ (clean) every week.','are cleaned',['clean','is cleaned','are clean'],'Passif présent pluriel : are cleaned.'],
+ [C+'“Harry Potter” ___ (write) by J. K. Rowling.','was written',['wrote','is writing','was wrote'],'Passif prétérit : was written (write, wrote, written).'],
+ [C+'The thief ___ (arrest) yesterday.','was arrested',['arrested','is arrested','were arrested'],'Passé + singulier : was arrested.'],
+ [C+'Cars ___ (make) in this factory.','are made',['make','is made','are make'],'Passif présent pluriel : are made.'],
+ [C+'The cake ___ (eat) by the children.','was eaten',['was ate','ate','is eat'],'Participe passé du verbe « eat » : eaten.'],
+ [C+'The letter was sent ___ my grandmother.','by',['from','of','with'],'Complément d’agent : by.'],
+ ['Mets au passif : « Shakespeare wrote Hamlet. »','Hamlet was written by Shakespeare.',['Hamlet wrote by Shakespeare.','Hamlet is written by Shakespeare.','Shakespeare was written by Hamlet.'],'Le COD devient sujet ; be au prétérit + participe passé ; by + agent.',2],
+ [C+'Rice ___ (grow) in China.','is grown',['grows','is growing','is grow'],'Passif présent : is grown.',2],
+ [C+'The new school ___ (open) next year.','will be opened',['will open be','is opening','opened'],'Passif futur : will be + participe passé.',3]]);
+E('en3g',[
+ [C+'The girl ___ lives next door is my friend.','who',['which','whose','where'],'Antécédent humain sujet → who.'],
+ [C+'This is the house ___ I was born.','where',['which','who','whose'],'Lieu → where.'],
+ [C+'I have a friend ___ father is a pilot.','whose',['who','which','who’s'],'Possession (dont le père) → whose.'],
+ [C+'The film ___ we saw was boring.','which',['who','whose','where'],'Antécédent non humain → which (ou that).'],
+ [C+'Do you know the man ___ is talking to Tom?','who',['which','whose','what'],'Personne → who.'],
+ [C+'The dog ___ bit me was enormous.','which',['who','whose','where'],'Animal (non humain) → which / that.'],
+ [C+'That’s the restaurant ___ we had dinner.','where',['which','who','what'],'Lieu où l’on a dîné → where.'],
+ [C+'The boy ___ bag was stolen called the police.','whose',['who','which','who’s'],'Le garçon dont le sac… → whose.'],
+ ['Quel pronom peut remplacer « which » ou « who » dans « The book which I read » ?','that',['what','whose','where'],'« that » remplace who/which dans les relatives déterminatives.',2],
+ [C+'This is the teacher ___ I told you about.','who',['which','whose','where'],'Personne, complément : who (ou that, ou pronom omis).',2],
+ [C+'1789 is the year ___ the French Revolution began.','when',['where','which','who'],'Moment → when.',3]]);
+E('en3h',[
+ [C+'You ___ see a doctor. (conseil)','should',['must','can','would'],'Conseil → should.'],
+ [C+'It ___ rain later. Take an umbrella. (possibilité)','might',['must','should','can’t'],'Possibilité incertaine → might (ou may).'],
+ [C+'___ I open the window? (demande de permission)','May',['Must','Should','Would'],'Permission polie → May I…? (ou Can I…?).'],
+ [C+'You ___ eat so many sweets. (conseil négatif)','shouldn’t',['mustn’t','can’t','might'],'Conseil négatif → shouldn’t.'],
+ [C+'___ you pass me the salt, please? (demande polie)','Could',['Must','Should','May'],'Demande polie → Could you…?'],
+ [C+'She ___ swim when she was five. (capacité passée)','could',['can','might','should'],'Capacité dans le passé → could.'],
+ [C+'He isn’t answering. He ___ be asleep. (supposition)','might',['should','mustn’t','can'],'Supposition possible → might / may.'],
+ [C+'If you’re tired, you ___ go to bed early. (conseil)','should',['must to','can’t','might not'],'Conseil → should + base verbale.'],
+ ['Que signifie « You should rest » ?','Tu devrais te reposer.',['Tu dois absolument te reposer.','Tu peux te reposer.','Tu t’es reposé.'],'should = conseil (conditionnel de « devoir »).',2],
+ ['Quelle phrase exprime une possibilité ?','We may go to the beach tomorrow.',['We must go to the beach tomorrow.','We should go to the beach tomorrow.','We went to the beach.'],'may / might = peut-être.',2],
+ [C+'You ___ have told me sooner! (reproche au passé)','should',['must','can','may'],'should have + participe passé = tu aurais dû.',3]]);
+E('en3i',[
+ [C+'When I was a child, I ___ (play) with dolls.','used to play',['use to play','used to playing','was use to play'],'Habitude passée révolue → used to + verbe.'],
+ [C+'My grandfather ___ (smoke), but he stopped.','used to smoke',['use to smoke','used smoke','was used to smoke'],'Ce qui se faisait avant et ne se fait plus → used to.'],
+ [C+'___ you use to go to the beach as a child?','Did',['Do','Were','Have'],'Question : Did you use to…? (use sans -d).'],
+ [C+'We ___ have a computer when I was little. (négatif)','didn’t use to',['didn’t used to','don’t use to','used not'],'Négatif : didn’t use to (sans -d après didn’t).'],
+ [C+'People ___ travel by horse before cars existed.','used to',['use to','were used','using to'],'Habitude ancienne : used to travel.'],
+ [C+'There ___ be a cinema here, but now it’s a shop.','used to',['use to','was used','did used'],'Situation passée qui n’existe plus : There used to be…'],
+ ['Que signifie « I used to live in Paris » ?','J’habitais à Paris avant (plus maintenant).',['J’habite à Paris.','Je suis habitué à vivre à Paris.','J’habiterai à Paris.'],'used to = habitude ou situation passée révolue.'],
+ [C+'She ___ have long hair, but now it’s short.','used to',['uses to','is used to','use'],'used to + base verbale : changement par rapport au passé.'],
+ ['Quelle phrase est correcte ?','Did he use to play rugby?',['Did he used to play rugby?','Does he used to play rugby?','He did use to played rugby?'],'Après did : use (sans -d).',2],
+ [C+'In the Middle Ages, people ___ believe the Earth was flat. (certains)','used to',['use to','were using','are used to'],'Croyance passée qui a changé : used to.',3]]);
+})();

@@ -1,0 +1,15 @@
+# Dépôt public : seul ce qui est nécessaire au fonctionnement de l'appli est publié.
+# Liste blanche (tout est ignoré sauf ce qui est explicitement autorisé ci-dessous).
+*
+!/.gitignore
+!/data/
+!/data/**
+!/js/
+!/js/**
+!/fonts/
+!/fonts/**
+!/index.html
+!/parent.html
+!/sw.js
+!/manifest.webmanifest
+!/icon.png
