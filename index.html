@@ -2640,7 +2640,7 @@ const bar=t=>`<div class="bar"><button class="btn ghost sm" data-a="home" aria-l
 
 /* ===== Écrans ===== */
 let ONBG='';
-function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><div class="logo">🧮</div><h1>${isNew?'Nouveau profil':'MathQuest'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
+function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><img src="${FINOT_IMG.bienvenue}" alt="" aria-hidden="true" class="finot-live" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 35%;"><h1>${isNew?'Nouveau profil':'MathQuest'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
  <label class="lab">Ton prénom ou pseudo<input id="nm" class="big" maxlength="16" autocomplete="off"></label>
  <p class="lab" id="stl">Ton école</p><div class="stagepick" role="group" aria-labelledby="stl">${Object.entries(STAGE_INFO).filter(([k])=>k==='college'||PRIMARY_GRADES.length).map(([k,v])=>`<button class="stb ${st===k?'sel':''}" data-a="pickstage:${k}" aria-pressed="${st===k}"><span>${v.emoji}</span>${v.label}</button>`).join('')}</div>
  <div id="gradebox">${onbGrades(st)}</div>
@@ -2653,7 +2653,7 @@ function onbGrades(st){if(!st)return '<p class="muted small">Choisis d’abord t
    jours de suite, ne redescend jamais) : pas de nouveau champ de sauvegarde, rien à migrer. Le message
    contextuel se déduit de S.streak.n/.last (déjà existants). Compagnon distinct de S.avatar (choisi par
    l'enfant) : jamais affiché à sa place. */
-const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg',indice:'data/images/finot/07-expression-indice.jpg',bravo:'data/images/finot/08-expression-bravo.jpg',carnet:'data/images/finot/09-expression-carnet.jpg',revision:'data/images/finot/10-expression-revision.jpg',cadeau:'data/images/finot/11-expression-cadeau.jpg'};
+const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg',indice:'data/images/finot/07-expression-indice.jpg',bravo:'data/images/finot/08-expression-bravo.jpg',carnet:'data/images/finot/09-expression-carnet.jpg',revision:'data/images/finot/10-expression-revision.jpg',cadeau:'data/images/finot/11-expression-cadeau.jpg',bienvenue:'data/images/finot/12-expression-bienvenue.jpg'};
 /* V8.14 — catégories de matières au collège (18 matières à plat étaient illisibles). Le primaire (10 matières)
    garde l'affichage à plat existant, inchangé. */
 const FINOT_CATS={
