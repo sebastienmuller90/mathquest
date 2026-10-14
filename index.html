@@ -2649,7 +2649,7 @@ function onbGrades(st){if(!st)return '<p class="muted small">Choisis d’abord t
    jours de suite, ne redescend jamais) : pas de nouveau champ de sauvegarde, rien à migrer. Le message
    contextuel se déduit de S.streak.n/.last (déjà existants). Compagnon distinct de S.avatar (choisi par
    l'enfant) : jamais affiché à sa place. */
-const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg',indice:'data/images/finot/07-expression-indice.jpg'};
+const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg',indice:'data/images/finot/07-expression-indice.jpg',bravo:'data/images/finot/08-expression-bravo.jpg'};
 /* V8.14 — catégories de matières au collège (18 matières à plat étaient illisibles). Le primaire (10 matières)
    garde l'affichage à plat existant, inchangé. */
 const FINOT_CATS={
@@ -2842,6 +2842,7 @@ function endMission(){const m=M;M=null;padClose();const st=m.ok>=8?3:m.ok>=6?2:m
  if(up)sfx('lvl');if(st>=2)confetti(45);
  const msg=['On recommence ? Tu vas y arriver 💪','Pas mal, continue !','Très bien !','Sans faute !'][st];
  app.innerHTML=`<div class="end card pop">${up?`<div class="lvlup">🎉 Niveau ${L} ! <small>${title(L)}</small></div>`:''}
+  ${st>=2?`<img src="${FINOT_IMG.bravo}" alt="" aria-hidden="true" class="finot-live" style="width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:50% 35%;display:block;margin:0 auto 4px;">`:''}
   <div class="bigstars">${[1,2,3].map(i=>`<span class="${i<=st?'on':''}" style="animation-delay:${i*.18}s">★</span>`).join('')}</div>
   <h1>${m.ok}/${m.n}</h1><p class="lead">${msg}</p><div class="adaptive-card"><b>🧠 Maîtrise du chapitre : ${ar.mastery}%</b><p class="muted small">${MQAdaptive.masteryLabel(ar.mastery).e} ${MQAdaptive.masteryLabel(ar.mastery).t} · prochaine révision ${MQAdaptive.dueInText(S,cid)} · ${m.wrong||0} erreur${(m.wrong||0)>1?'s':''} analysée${(m.wrong||0)>1?'s':''}</p></div><div class="gains"><span>+${m.xp+bx} XP</span><span>+${m.coins+bc} 🪙</span>${m.mg?`<span>+${m.mg} 🎖️</span>`:''}</div>
   ${m.newB.length?`<div class="nb">🏆 ${m.newB.map(b=>b[1]+' '+b[2]).join(', ')}</div>`:''}${pauseCard()}
