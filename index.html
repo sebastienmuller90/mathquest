@@ -126,6 +126,14 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 @keyframes viewPop{0%{transform:scale(.96) translateY(10px);opacity:0}60%{transform:scale(1.01) translateY(-2px);opacity:1}100%{transform:scale(1) translateY(0)}}
 #app.view-pop{animation:viewPop .32s cubic-bezier(.2,.9,.3,1.3) both}
 @keyframes celebPop{0%{transform:scale(.4) rotate(-15deg);opacity:0}55%{transform:scale(1.15) rotate(4deg);opacity:1}80%{transform:scale(.95) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
+#celeb{position:fixed;inset:0;z-index:97;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.35);cursor:pointer}
+#celeb.show{display:flex}
+.celeb-card{background:var(--surface);border-radius:24px;padding:28px 32px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35);max-width:84vw}
+.celeb-icon{font-size:56px;line-height:1}
+.celeb-title{display:block;font-family:'Fredoka',sans-serif;font-size:22px;margin-top:6px;color:var(--accent)}
+.celeb-sub{margin-top:4px;color:var(--muted);font-weight:600}
+.celeb-pop{animation:celebPop .6s cubic-bezier(.2,.9,.3,1.3) both}
+@media (prefers-reduced-motion: reduce){.celeb-pop{animation:none!important}}
 @media (prefers-reduced-motion: reduce){.finot-live,#app.view-pop,.finot-boing{animation:none!important}}
 /* V8.16 — Assistant Finot : aide scolaire + appli, scripté (pas d'IA générative, pas d'Internet requis). */
 .finot-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:70;padding:0;cursor:pointer;background:var(--accent);display:none}
@@ -2611,7 +2619,17 @@ function confetti(n=24){if(matchMedia('(prefers-reduced-motion: reduce)').matche
  for(let i=0;i<n;i++){const e=document.createElement('i');e.className='cf';e.style.left=(25+Math.random()*50)+'vw';e.style.background=cols[i%cols.length];e.style.setProperty('--dx',(Math.random()*50-25)+'vw');e.style.setProperty('--r',(Math.random()*900)+'deg');e.style.animationDelay=(Math.random()*.15)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),1800);}}
 function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t);}t.innerHTML=m;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);}
 function shake(){const c=$('.qcard');if(c){c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
-function checkBadges(m){BADGES.forEach(b=>{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=Date.now();if(m)m.newB.push(b);toast(`🏆 Nouveau badge : <b>${b[1]} ${b[2]}</b>`);}});save();}
+/* V8.17 — vraie célébration (overlay + confettis) au lieu d'un simple toast, pour les deux temps forts
+   « très exubérants » demandés : déblocage d'un badge, et montée de palier du lien avec Finot. */
+function finotCelebDOM(){if(document.getElementById('celeb'))return;const d=document.createElement('div');d.id='celeb';d.dataset.a='celebclose';
+ d.innerHTML='<div class="celeb-card celeb-pop"><div class="celeb-icon"></div><b class="celeb-title"></b><div class="celeb-sub"></div></div>';document.body.appendChild(d);}
+let CELEB_T=null;
+function finotCeleb(icon,title,sub){finotCelebDOM();const d=document.getElementById('celeb'),card=d.querySelector('.celeb-card');
+ d.querySelector('.celeb-icon').textContent=icon;d.querySelector('.celeb-title').textContent=title;d.querySelector('.celeb-sub').textContent=sub||'';
+ card.classList.remove('celeb-pop');void card.offsetWidth;card.classList.add('celeb-pop');
+ d.classList.add('show');confetti(32);sfx('lvl');clearTimeout(CELEB_T);CELEB_T=setTimeout(()=>d.classList.remove('show'),2400);}
+function checkBadges(m){const unlocked=[];BADGES.forEach(b=>{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=Date.now();if(m)m.newB.push(b);unlocked.push(b);}});save();
+ unlocked.forEach((b,i)=>setTimeout(()=>finotCeleb('🏆','Nouveau badge !',`${b[1]} ${b[2]}`),i*2600));}
 const starStr=n=>`<span class="st">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
 const bar=t=>`<div class="bar"><button class="btn ghost sm" data-a="home" aria-label="Accueil">←</button><h1>${t}</h1><span class="pill">🪙 ${S.coins}</span></div>`;
 
@@ -2788,7 +2806,7 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
 function result(ok){M.locked=true;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
  if(ok&&M.dict&&!M.dict.perfect)MQAdaptive.recordMistake(S,M.cid,dictMistake(M.q,M.dict));MQAdaptive.recordAnswer(S,M.cid,ok,{source:'practice'});M.lastOk=ok;
  const qb=$('.qbtns');if(qb)qb.remove();
- if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;touchStreak();addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
+ if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);if(niv.nom!==nivAvant)setTimeout(()=>finotCeleb('🦊','Nouveau lien avec Finot !',niv.nom),700);}addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
   const g=M.flash?5:Math.round(10*M.d*mult()*(M.hint?.5:1)),c=M.flash?1:1+(M.streak%3===0?1:0);M.xp+=g;S.xp+=g;M.coins+=c;S.coins+=c;
   {const od=M.d;M.d=M.flash?Math.min(2,MQAdaptive.nextDifficulty(M.d,true,M.streak)):MQAdaptive.nextDifficulty(M.d,true,M.streak);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
   $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}</div>`;
@@ -3289,7 +3307,8 @@ const ACT={
  finotopen:()=>finotOpen(),finotclose:()=>finotClose(),
  finotsend:()=>{const el=document.getElementById('finotin');if(!el)return;const v=el.value;el.value='';finotAsk(v);},
  finotsug:i=>finotAsk(FINOT_SUGGEST[+i]||''),
- finotcoach:()=>{const cid=finotCurrentChapterId();if(!cid)return;finotChatEnsure();finotPush('you',esc('📖 Aide sur l’exercice en cours'));const h=finotLessonHelp(cid);finotPush('finot',h?`<b>${esc(h.name)}</b><br>${h.html}`:FINOT_FALLBACK);}
+ finotcoach:()=>{const cid=finotCurrentChapterId();if(!cid)return;finotChatEnsure();finotPush('you',esc('📖 Aide sur l’exercice en cours'));const h=finotLessonHelp(cid);finotPush('finot',h?`<b>${esc(h.name)}</b><br>${h.html}`:FINOT_FALLBACK);},
+ celebclose:()=>{const d=document.getElementById('celeb');if(d){d.classList.remove('show');clearTimeout(CELEB_T);}}
 };
 document.addEventListener('click',e=>{const sp=e.target.closest('.lcard [lang],.qcard .qtext [lang],.fiche [lang]');if(sp&&!e.target.closest('button,[data-a]')&&TTS.ok){ttsSpeak([{segs:[{l:sp.getAttribute('lang').slice(0,2),t:spokenFor(sp.textContent)}]}]);return;}const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const s=el.dataset.a,i=s.indexOf(':'),a=i<0?s:s.slice(0,i),arg=i<0?undefined:s.slice(i+1);if(!/^(tts|pad|chip|otok|oundo|qlisten)/.test(a))ttsStop();if(ACT[a])ACT[a](arg,el);});
 /* V8.15 — Finot réagit quand on le touche. */
