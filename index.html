@@ -2624,12 +2624,13 @@ function shake(){const c=$('.qcard');if(c){c.classList.remove('shake');void c.of
 function finotCelebDOM(){if(document.getElementById('celeb'))return;const d=document.createElement('div');d.id='celeb';d.dataset.a='celebclose';
  d.innerHTML='<div class="celeb-card celeb-pop"><div class="celeb-icon"></div><b class="celeb-title"></b><div class="celeb-sub"></div></div>';document.body.appendChild(d);}
 let CELEB_T=null;
-function finotCeleb(icon,title,sub){finotCelebDOM();const d=document.getElementById('celeb'),card=d.querySelector('.celeb-card');
- d.querySelector('.celeb-icon').textContent=icon;d.querySelector('.celeb-title').textContent=title;d.querySelector('.celeb-sub').textContent=sub||'';
+function finotCeleb(icon,title,sub){finotCelebDOM();const d=document.getElementById('celeb'),card=d.querySelector('.celeb-card'),ic=d.querySelector('.celeb-icon');
+ ic.innerHTML=icon.includes('/')?`<img src="${icon}" alt="" aria-hidden="true" class="finot-live" style="width:72px;height:72px;object-fit:contain;">`:esc(icon);
+ d.querySelector('.celeb-title').textContent=title;d.querySelector('.celeb-sub').textContent=sub||'';
  card.classList.remove('celeb-pop');void card.offsetWidth;card.classList.add('celeb-pop');
  d.classList.add('show');confetti(32);sfx('lvl');clearTimeout(CELEB_T);CELEB_T=setTimeout(()=>d.classList.remove('show'),2400);}
 function checkBadges(m){const unlocked=[];BADGES.forEach(b=>{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=Date.now();if(m)m.newB.push(b);unlocked.push(b);}});save();
- unlocked.forEach((b,i)=>setTimeout(()=>finotCeleb('🏆','Nouveau badge !',`${b[1]} ${b[2]}`),i*2600));}
+ unlocked.forEach((b,i)=>setTimeout(()=>finotCeleb('data/images/finot/ui-celeb-badge.png','Nouveau badge !',`${b[1]} ${b[2]}`),i*2600));}
 const starStr=n=>`<span class="st">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
 const bar=t=>`<div class="bar"><button class="btn ghost sm" data-a="home" aria-label="Accueil">←</button><h1>${t}</h1><span class="pill">🪙 ${S.coins}</span></div>`;
 
@@ -2648,7 +2649,7 @@ function onbGrades(st){if(!st)return '<p class="muted small">Choisis d’abord t
    jours de suite, ne redescend jamais) : pas de nouveau champ de sauvegarde, rien à migrer. Le message
    contextuel se déduit de S.streak.n/.last (déjà existants). Compagnon distinct de S.avatar (choisi par
    l'enfant) : jamais affiché à sa place. */
-const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg'};
+const FINOT_IMG={neutre:'data/images/finot/01-expression-neutre.jpg',victoire:'data/images/finot/02-expression-victoire.jpg',encouragement:'data/images/finot/03-expression-encouragement.jpg',surprise:'data/images/finot/04-expression-surprise.jpg',fatigue:'data/images/finot/06-expression-fatigue.jpg',indice:'data/images/finot/07-expression-indice.jpg'};
 /* V8.14 — catégories de matières au collège (18 matières à plat étaient illisibles). Le primaire (10 matières)
    garde l'affichage à plat existant, inchangé. */
 const FINOT_CATS={
@@ -2791,7 +2792,7 @@ function renderQ(){const q=M.q,c=byId(M.cid);
  padReset(q.q);if(M.flash)padClose();if(q.audio&&TTS.ok)setTimeout(()=>{if(M&&M.q===q&&!M.locked)ttsSay(q.audio);},350);const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;}
 function markOrd(ok){const l=$('#ordline');if(l)l.classList.add(ok?'good':'bad');document.querySelectorAll('.otok,[data-a="oundo"]').forEach(b=>b.disabled=true);}
 function insertChip(ch){const el=lastIn||$('#in0');if(!el||el.disabled)return;const v=ch==='−'?'-':ch;const s=el.selectionStart??el.value.length,e=el.selectionEnd??el.value.length;el.setRangeText(v,s,e,'end');el.focus();}
-function showHint(){if(!M||M.locked)return;M.hint=true;$('#fb').innerHTML=`<div class="fb tip">💡 ${M.q.hint||'Relis bien la question.'}<small>Indice utilisé : XP divisés par 2 pour cette question.</small></div>`;}
+function showHint(){if(!M||M.locked)return;M.hint=true;$('#fb').innerHTML=`<div class="fb tip"><img src="${FINOT_IMG.indice}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;">💡 ${M.q.hint||'Relis bien la question.'}<small>Indice utilisé : XP divisés par 2 pour cette question.</small></div>`;}
 function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
  if(q.type==='choice')v=pick;
  else if(q.type==='order'){if(q._sel.length<q.tokens.length)return shake();v=q._sel.map(i=>q.tokens[i]).join(' ');}
@@ -2806,7 +2807,7 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
 function result(ok){M.locked=true;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
  if(ok&&M.dict&&!M.dict.perfect)MQAdaptive.recordMistake(S,M.cid,dictMistake(M.q,M.dict));MQAdaptive.recordAnswer(S,M.cid,ok,{source:'practice'});M.lastOk=ok;
  const qb=$('.qbtns');if(qb)qb.remove();
- if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);if(niv.nom!==nivAvant)setTimeout(()=>finotCeleb('🦊','Nouveau lien avec Finot !',niv.nom),700);}addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
+ if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);if(niv.nom!==nivAvant)setTimeout(()=>finotCeleb('data/images/finot/ui-celeb-lien.png','Nouveau lien avec Finot !',niv.nom),700);}addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
   const g=M.flash?5:Math.round(10*M.d*mult()*(M.hint?.5:1)),c=M.flash?1:1+(M.streak%3===0?1:0);M.xp+=g;S.xp+=g;M.coins+=c;S.coins+=c;
   {const od=M.d;M.d=M.flash?Math.min(2,MQAdaptive.nextDifficulty(M.d,true,M.streak)):MQAdaptive.nextDifficulty(M.d,true,M.streak);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
   $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}</div>`;
