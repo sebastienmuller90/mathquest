@@ -190,6 +190,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .tools{grid-template-columns:repeat(5,1fr)}
 @media (max-width:560px){.tools{grid-template-columns:repeat(3,1fr)}}
 /* cours */
+.lesson-banner{width:100%;height:150px;border-radius:20px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 0 var(--edge)}.lesson-banner img{width:100%;height:100%;object-fit:cover;display:block}
 .ldots{display:flex;gap:6px;justify-content:center;margin:0 0 12px}.ldots i{width:28px;height:8px;border-radius:99px;background:var(--surface2)}.ldots i.done{background:color-mix(in srgb,var(--accent) 45%,var(--surface2))}.ldots i.on{background:var(--accent);width:44px}
 .lcard h2{font-size:26px;margin:.15em 0 .6em}.ltag{font-size:14px;color:var(--muted);font-weight:700}
 .lcard{font-size:18px;line-height:1.6}.lcard b{color:var(--accent-text)}
@@ -3002,7 +3003,8 @@ function renderLesson(fromReveal){CUR='lesson';ttsStop();{const now=Date.now();S
  else body=s.h;
  const exMore=s.k==='ex'&&L.exn<s.ex.s.length;
  const pronOpt=isPrimaryCh(L.id),pronBlocked=s.k==='pron'&&!L.pronPassed&&!!SpeechRec&&!pronOpt;
- app.innerHTML=`${bar(ch.icon+' '+ch.name)}<div class="ldots" aria-label="Étape ${L.i+1} sur ${n}">${L.steps.map((_,i)=>`<i class="${i<L.i?'done':i===L.i?'on':''}"></i>`).join('')}</div>
+ const wimg=FINOT_WORLD_IMG[WMAP[L.id].id];
+ app.innerHTML=`${bar(ch.icon+' '+ch.name)}${wimg&&L.i===0?`<div class="lesson-banner"><img src="${wimg}" alt="" aria-hidden="true"></div>`:''}<div class="ldots" aria-label="Étape ${L.i+1} sur ${n}">${L.steps.map((_,i)=>`<i class="${i<L.i?'done':i===L.i?'on':''}"></i>`).join('')}</div>
  <div class="card lcard ${s.k==='quiz'?'qcard':''}"><div class="lhead"><div class="ltag">${sOf(WMAP[L.id].id).name} ${WMAP[L.id].lvl}, étape ${L.i+1} sur ${n}</div>${ttsBar()}</div><h2>${s.t}</h2><div class="lbody">${body}</div></div>
  ${s.k!=='quiz'?`<div class="lnav"><button class="btn" data-a="lprev" ${L.i===0?'disabled':''} aria-label="Étape précédente">←</button><button class="btn primary grow" data-a="lnext" ${pronBlocked?'disabled':''}>${s.k==='pron'&&!L.pronPassed?(pronOpt?'Passer cette étape →':'Valide la prononciation 🎤'):exMore?`👀 Étape suivante (${L.exn}/${s.ex.s.length})`:L.i===n-2?'Passer au quiz 🎮':'Suivant'}</button></div>`:''}`;
  const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;if(s.k==='practice'||s.k==='quiz'){const q=s.k==='quiz'?L.q:L.pq;if(q&&q.type==='choice')setTimeout(()=>{const b=document.querySelector('.lcard .choice');if(b&&!PAD.open)b.focus();},30);}
