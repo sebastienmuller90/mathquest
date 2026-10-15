@@ -2694,7 +2694,10 @@ function finotCatOf(subjId){for(const [k,c] of Object.entries(FINOT_CATS))if(c.i
 let OPENCAT=null;
 /* Scènes illustrées des mondes maths (seuls mondes avec une image pour l'instant ; les autres gardent leur
    dégradé de couleur existant — pas d'image manquante à combler). */
-const FINOT_WORLD_IMG={'6':'data/images/finot/35-scene-ile-nombres.jpg','5':'data/images/finot/36-scene-foret-relatifs.jpg','4':'data/images/finot/37-scene-volcan-puissances.jpg','3':'data/images/finot/38-scene-galaxie-fonctions.jpg'};
+const FINOT_WORLD_IMG={'6':'data/images/finot/35-scene-ile-nombres.jpg','5':'data/images/finot/36-scene-foret-relatifs.jpg','4':'data/images/finot/37-scene-volcan-puissances.jpg','3':'data/images/finot/38-scene-galaxie-fonctions.jpg',
+ svt6:'data/images/finot/scene-svt-6e.jpg',svt5:'data/images/finot/scene-svt-5e.jpg',svt4:'data/images/finot/scene-svt-4e.jpg',svt3:'data/images/finot/scene-svt-3e.jpg',
+ en6:'data/images/finot/scene-en-6e.jpg',en5:'data/images/finot/scene-en-5e.jpg',en4:'data/images/finot/scene-en-4e.jpg',en3:'data/images/finot/scene-en-3e.jpg',
+ it5:'data/images/finot/scene-it-5e.jpg',it4:'data/images/finot/scene-it-4e.jpg'};
 const FINOT_NIVEAUX=[{seuil:0,nom:'Nouvel ami'},{seuil:3,nom:'Complice'},{seuil:7,nom:'Meilleur ami'},{seuil:14,nom:'Explorateur fidèle'},{seuil:30,nom:'Lié pour la vie'}];
 function finotNiveau(S){const best=S.streak?.best||0;let cur=FINOT_NIVEAUX[0];for(const niv of FINOT_NIVEAUX)if(best>=niv.seuil)cur=niv;return cur;}
 function finotJoursAbsence(S){const last=S.streak?.last;if(!last)return 0;const d=new Date(last);if(isNaN(d))return 0;return Math.max(0,Math.round((Date.now()-d.getTime())/864e5));}
