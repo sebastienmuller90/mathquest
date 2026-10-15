@@ -2846,7 +2846,10 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
 function result(ok){M.locked=true;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
  if(ok&&M.dict&&!M.dict.perfect)MQAdaptive.recordMistake(S,M.cid,dictMistake(M.q,M.dict));MQAdaptive.recordAnswer(S,M.cid,ok,{source:'practice'});M.lastOk=ok;
  const qb=$('.qbtns');if(qb)qb.remove();
- if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);if(niv.nom!==nivAvant)setTimeout(()=>finotCeleb('data/images/finot/ui-celeb-lien.png','Nouveau lien avec Finot !',niv.nom),700);}addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
+ if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);
+  if(niv.nom!==nivAvant){const ami=FINOT_AMIS.find(a=>a.seuil===S.streak.best);
+   setTimeout(()=>ami?finotCeleb(ami.img,'Nouvel ami !',`${ami.nom} rejoint votre bande 🎉`):finotCeleb('data/images/finot/ui-celeb-lien.png','Nouveau lien avec Finot !',niv.nom),700);}}
+  addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
   const g=M.flash?5:Math.round(10*M.d*mult()*(M.hint?.5:1)),c=M.flash?1:1+(M.streak%3===0?1:0);M.xp+=g;S.xp+=g;M.coins+=c;S.coins+=c;
   {const od=M.d;M.d=M.flash?Math.min(2,MQAdaptive.nextDifficulty(M.d,true,M.streak)):MQAdaptive.nextDifficulty(M.d,true,M.streak);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
   $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}</div>`;
@@ -3124,6 +3127,9 @@ function shop(){app.innerHTML=`${bar('🛍️ Boutique')}<p class="muted center"
  <h2 class="sec">Couleurs</h2><div class="grid">${THEMES.map(([id,n,c,p])=>{const own=S.own.includes(id),cur=S.theme===id;return `<button class="item ${cur?'cur':''} ${!own&&S.coins<p?'lock':''}" data-a="buyT:${id}"><span class="sw" style="background:${c}"></span><b>${n}</b><small>${cur?'Équipé':own?'Choisir':p+' 🪙'}</small></button>`;}).join('')}</div>`;}
 function buy(key,price,apply){if(!S.own.includes(key)){if(S.coins<price){sfx('bad');return toast(`Il te manque ${price-S.coins} 🪙. Gagne-les en mission !`);}S.coins-=price;S.own.push(key);S.bought++;sfx('coin');confetti(20);}apply();save();checkBadges();shop();}
 const FINOT_OBJETS=[{seuil:0,emoji:'🧣',img:'data/images/finot/ui-objet-foulard.png',nom:'Foulard bleu'},{seuil:3,emoji:'🛏️',img:'data/images/finot/ui-objet-hamac.png',nom:'Hamac douillet'},{seuil:7,emoji:'🎩',img:'data/images/finot/ui-objet-chapeau.png',nom:'Chapeau d’explorateur'},{seuil:14,emoji:'🧥',img:'data/images/finot/ui-objet-cape.png',nom:'Cape d’aventurier'},{seuil:30,emoji:'👑',img:'data/images/finot/ui-objet-couronne.png',nom:'Couronne dorée'}];
+// V8.20 — amis de Finot, débloqués aux mêmes paliers d'assiduité que les objets du repaire (aucun nouveau
+// champ de sauvegarde : dérivé de streak.best, comme FINOT_NIVEAUX/FINOT_OBJETS).
+const FINOT_AMIS=[{seuil:14,emoji:'🦉',img:'data/images/finot/ami-momo.jpg',nom:'Momo le hibou'},{seuil:30,emoji:'🐰',img:'data/images/finot/ami-leo.jpg',nom:'Léo le lapin'}];
 function finotScreen(){const best=S.streak?.best||0,niv=finotNiveau(S),next=FINOT_NIVEAUX.find(n=>n.seuil>best),pct=next?Math.round((best-niv.seuil)/(next.seuil-niv.seuil)*100):100;
  const ago=t=>{const sAgo=Math.round((Date.now()-t)/1000);return sAgo<3600?'à l’instant':sAgo<86400?`il y a ${Math.round(sAgo/3600)} h`:sAgo<172800?'hier':`il y a ${Math.round(sAgo/86400)} j`;};
  const souvenirs=S.badges.filter(id=>S.badgeDates[id]).sort((a,b)=>S.badgeDates[b]-S.badgeDates[a]).slice(0,6).map(id=>BADGES.find(b=>b[0]===id)).filter(Boolean);
@@ -3136,6 +3142,9 @@ function finotScreen(){const best=S.streak?.best||0,niv=finotNiveau(S),next=FINO
   </div>
   <h2 class="sec">Ce que vous avez débloqué ensemble</h2>
   <div class="grid">${FINOT_OBJETS.map(o=>{const on=best>=o.seuil;const icon=on?(o.img?`<img src="${o.img}" alt="" aria-hidden="true" style="width:34px;height:34px;object-fit:contain;">`:`<span class="ie">${o.emoji}</span>`):'<span class="ie">🔒</span>';return `<div class="item badge ${on?'':'off'}">${icon}<b>${esc(o.nom)}</b><small>${on?'Débloqué':`${o.seuil} jours de suite`}</small></div>`;}).join('')}</div>
+  <h2 class="sec">Mes amis</h2>
+  <div class="grid">${FINOT_AMIS.map(a=>{const on=best>=a.seuil;const icon=on?`<img src="${a.img}" alt="" aria-hidden="true" class="finot-live" style="width:56px;height:56px;border-radius:50%;object-fit:cover;">`:'<span class="ie">🔒</span>';return `<div class="item badge ${on?'':'off'}">${icon}<b>${esc(a.nom)}</b><small>${on?'Rejoint votre bande !':`${a.seuil} jours de suite`}</small></div>`;}).join('')}</div>
+  ${FINOT_AMIS.every(a=>best>=a.seuil)?`<div class="card" style="text-align:center;padding:0;overflow:hidden;"><img src="data/images/finot/scene-trio.jpg" alt="Finot, Momo et Léo, inséparables" style="width:100%;display:block;"></div>`:''}
   <h2 class="sec">Vos souvenirs ensemble</h2>
   ${souvenirs.length?`<div class="grid">${souvenirs.map(b=>`<div class="item badge"><span class="ie">${b[1]}</span><b>${esc(b[2])}</b><small>${ago(S.badgeDates[b[0]])}</small></div>`).join('')}</div>`:'<p class="muted small">Continue à jouer pour créer vos premiers souvenirs !</p>'}`;}
 function badgesScreen(){app.innerHTML=`${bar('🏆 Badges')}<div class="grid">${BADGES.map(b=>{const on=S.badges.includes(b[0]);return `<div class="item badge ${on?'':'off'}"><span class="ie">${on?b[1]:'🔒'}</span><b>${b[2]}</b><small>${b[3]}</small></div>`;}).join('')}</div>`;}
