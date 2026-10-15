@@ -2697,7 +2697,10 @@ let OPENCAT=null;
 const FINOT_WORLD_IMG={'6':'data/images/finot/35-scene-ile-nombres.jpg','5':'data/images/finot/36-scene-foret-relatifs.jpg','4':'data/images/finot/37-scene-volcan-puissances.jpg','3':'data/images/finot/38-scene-galaxie-fonctions.jpg',
  svt6:'data/images/finot/scene-svt-6e.jpg',svt5:'data/images/finot/scene-svt-5e.jpg',svt4:'data/images/finot/scene-svt-4e.jpg',svt3:'data/images/finot/scene-svt-3e.jpg',
  en6:'data/images/finot/scene-en-6e.jpg',en5:'data/images/finot/scene-en-5e.jpg',en4:'data/images/finot/scene-en-4e.jpg',en3:'data/images/finot/scene-en-3e.jpg',
- it5:'data/images/finot/scene-it-5e.jpg',it4:'data/images/finot/scene-it-4e.jpg'};
+ it5:'data/images/finot/scene-it-5e.jpg',it4:'data/images/finot/scene-it-4e.jpg',it3:'data/images/finot/scene-it-3e.jpg',
+ fr6:'data/images/finot/scene-fr-6e.jpg',fr5:'data/images/finot/scene-fr-5e.jpg',fr4:'data/images/finot/scene-fr-4e.jpg',fr3:'data/images/finot/scene-fr-3e.jpg',
+ hg6:'data/images/finot/scene-hg-6e.jpg',hg5:'data/images/finot/scene-hg-5e.jpg',hg4:'data/images/finot/scene-hg-4e.jpg',hg3:'data/images/finot/scene-hg-3e.jpg',
+ emc6:'data/images/finot/scene-emc-6e.jpg',emc5:'data/images/finot/scene-emc-5e.jpg',emc4:'data/images/finot/scene-emc-4e.jpg',emc3:'data/images/finot/scene-emc-3e.jpg'};
 const FINOT_NIVEAUX=[{seuil:0,nom:'Nouvel ami'},{seuil:3,nom:'Complice'},{seuil:7,nom:'Meilleur ami'},{seuil:14,nom:'Explorateur fidèle'},{seuil:30,nom:'Lié pour la vie'}];
 function finotNiveau(S){const best=S.streak?.best||0;let cur=FINOT_NIVEAUX[0];for(const niv of FINOT_NIVEAUX)if(best>=niv.seuil)cur=niv;return cur;}
 function finotJoursAbsence(S){const last=S.streak?.last;if(!last)return 0;const d=new Date(last);if(isNaN(d))return 0;return Math.max(0,Math.round((Date.now()-d.getTime())/864e5));}
