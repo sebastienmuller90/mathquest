@@ -7,7 +7,7 @@
 const VERSION='8.21.0-date-naissance-2026-10-16';
 const CACHE='mathquest-'+VERSION;
 const CORE=[
-  './','./index.html','./parent.html','./manifest.webmanifest','./icon.png',
+  './','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css',
   './fonts/fonts.css','./fonts/fredoka-latin.woff2','./fonts/fredoka-latin-ext.woff2','./fonts/nunito-latin.woff2','./fonts/nunito-latin-ext.woff2','./js/vendor/qrcode.min.js',
   './data/program-2026-2027.js','./data/math-2026-2027.js','./data/french-2026-2027.js','./data/languages-2026-2027.js',
   './data/hg-emc-2026-2027.js','./data/remaining-2026-2027.js','./data/lexicon.js',
