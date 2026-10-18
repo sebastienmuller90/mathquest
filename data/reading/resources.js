@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.5-lot6-2026-10-18',
+ version:'1.6-lot7-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -1904,6 +1904,404 @@ window.MQ_READING={
     {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où le chat explique ce dont il a besoin.',evidenceParagraph:1,explanation:'« Donnez-moi seulement un sac et une paire de bottes... »'},
     {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets les ruses du chat dans l’ordre.',tokens:['Il offre du gibier au roi','Il invente le vol des habits','Il piège l’ogre','Il accueille le roi au château'],ans:'Il offre du gibier au roi Il invente le vol des habits Il piège l’ogre Il accueille le roi au château',explanation:'C’est l’ordre du conte.'},
     {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:6,prompt:'Quelle qualité ce conte met-il en avant ?',choices:['L’intelligence et l’habileté valent mieux qu’un riche héritage','Il faut toujours dire la vérité','Les ogres sont gentils'],ans:0,explanation:'Le plus pauvre des trois frères, grâce à l’adresse de son chat, finit par épouser la princesse.'}
+   ]
+  },
+
+  // ===== Lot 7 (18/10/2026) : 2e support pour plusieurs chapitres du collège, rotation au primaire.
+  // Textes originaux de Rimbaud (mort en 1891) et Verlaine ; adaptations libres de la mythologie
+  // grecque (Plutarque, Ovide), du Roman de Renart, de Molière, Verne, Zola et Grimm (domaine public).
+
+  fr_6e_minotaure_01:{
+   id:'fr_6e_minotaure_01',level:'6e',subject:'francais',type:'literary_text',documentType:'récit mythologique',
+   title:'Thésée et le Minotaure',author:null,work:'Mythologie grecque',
+   sourceType:'public_domain',sourceReference:'Adaptation libre pour la 6e du mythe grec, notamment d’après Plutarque (Vie de Thésée), dans le domaine public.',
+   chapterLinks:['fr6h'],
+   competencies:['READ_CHARACTER','READ_PLACE','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_SEQUENCE','READ_JUSTIFY','READ_GENRE','READ_EMOTION_INTENTION'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'En Crète régnait le roi Minos. Dans un immense labyrinthe construit par l’architecte Dédale, il gardait enfermé un monstre terrible : le Minotaure, mi-homme, mi-taureau.',
+    'Vaincue par Minos, la ville d’Athènes devait lui envoyer régulièrement sept jeunes gens et sept jeunes filles, qui étaient livrés au Minotaure.',
+    'Thésée, le fils du roi d’Athènes Égée, décida de partir avec eux pour tuer le monstre. Son père lui fit une promesse : « Si tu reviens vivant, remplace la voile noire de ton navire par une voile blanche. »',
+    'En Crète, Ariane, la fille de Minos, tomba amoureuse de Thésée. Elle lui donna une pelote de fil : en le déroulant derrière lui, il pourrait retrouver la sortie du labyrinthe.',
+    'Thésée s’enfonça dans les couloirs, affronta le Minotaure et le tua. Puis, en suivant le fil, il ressortit sain et sauf avec ses compagnons.',
+    'Mais sur le chemin du retour, Thésée oublia de changer la voile. Du haut d’une falaise, Égée vit approcher le navire à la voile noire. Croyant son fils mort, il se jeta dans la mer, qui porte depuis son nom : la mer Égée.'
+   ],
+   glossary:[{word:'labyrinthe',definition:'Un ensemble de couloirs si compliqué qu’on s’y perd.'},{word:'pelote',definition:'Une boule de fil enroulé.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:3,prompt:'Qu’est-ce que le Minotaure ?',choices:['Un monstre mi-homme, mi-taureau','Un roi de Crète','Un architecte'],ans:0,evidenceParagraph:0,explanation:'« ...le Minotaure, mi-homme, mi-taureau. »'},
+    {id:'q2',type:'choice',competencies:['READ_PLACE'],difficulty:3,prompt:'Où le Minotaure est-il enfermé ?',choices:['Dans un labyrinthe, en Crète','Dans une prison d’Athènes','Au fond de la mer'],ans:0,evidenceParagraph:0,explanation:'« Dans un immense labyrinthe construit par l’architecte Dédale... »'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_CHARACTER'],difficulty:4,prompt:'Que montre la décision de Thésée de partir avec les jeunes Athéniens ?',choices:['Son courage : il veut libérer sa ville','Son envie de voyager','Sa peur du Minotaure'],ans:0,evidenceParagraph:2,explanation:'Fils du roi, il pourrait rester à l’abri, mais il part « pour tuer le monstre ».'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'À quoi sert le fil d’Ariane ?',choices:['À retrouver la sortie du labyrinthe','À attacher le Minotaure','À recoudre la voile'],ans:0,evidenceParagraph:3,explanation:'« ...en le déroulant derrière lui, il pourrait retrouver la sortie du labyrinthe. »'},
+    {id:'q5',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi Égée se jette-t-il dans la mer ?',choices:['La voile noire lui fait croire que son fils est mort','Il veut rejoindre Thésée à la nage','Il est poursuivi par Minos'],ans:0,evidenceParagraph:5,explanation:'Thésée a oublié de hisser la voile blanche promise : son père croit qu’il a été tué.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui explique la promesse de la voile.',evidenceParagraph:2,explanation:'« Si tu reviens vivant, remplace la voile noire [...] par une voile blanche. »'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Que cherche aussi à expliquer la fin de ce mythe ?',choices:['L’origine du nom de la mer Égée','La fabrication des voiles','La naissance de la Crète'],ans:0,evidenceParagraph:5,explanation:'Comme beaucoup de mythes, il explique une origine : ici, le nom d’une mer.'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets le mythe dans l’ordre.',tokens:['Thésée part pour la Crète','Ariane lui donne un fil','Thésée tue le Minotaure','Égée voit la voile noire'],ans:'Thésée part pour la Crète Ariane lui donne un fil Thésée tue le Minotaure Égée voit la voile noire',explanation:'C’est l’ordre du récit.'}
+   ]
+  },
+
+  fr_6e_tour_du_monde_01:{
+   id:'fr_6e_tour_du_monde_01',level:'6e',subject:'francais',type:'literary_text',documentType:'roman d’aventure (extrait adapté)',
+   title:'Le pari de Phileas Fogg',author:'Jules Verne',work:'Le Tour du monde en quatre-vingts jours (1872)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 6e, d’après Jules Verne (mort en 1905), dans le domaine public.',
+   chapterLinks:['fr6g'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_PLACE','READ_TIME','READ_INFERENCE','READ_CAUSE_CONSEQUENCE','READ_JUSTIFY','READ_VOCAB_CONTEXT'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'En 1872, à Londres, vivait un gentleman nommé Phileas Fogg. C’était un homme d’une précision extraordinaire : chaque jour, il faisait exactement les mêmes gestes, aux mêmes heures, à la seconde près.',
+    'Un soir, au Reform Club, ses amis lisaient un journal qui affirmait qu’on pouvait désormais faire le tour du monde en quatre-vingts jours, grâce aux trains et aux bateaux à vapeur.',
+    '« En théorie, peut-être, dit l’un d’eux. Mais en pratique, avec les retards et les tempêtes, c’est impossible ! » Fogg répondit calmement : « Je parie vingt mille livres que je le ferai. »',
+    'Le pari fut accepté. Le soir même, Fogg partait avec son nouveau domestique, un Français nommé Passepartout, qui venait justement d’entrer à son service en espérant une vie tranquille.',
+    'Il devait être de retour au Reform Club le samedi 21 décembre, à 8 heures 45 du soir. Sinon, il perdait tout.'
+   ],
+   glossary:[{word:'gentleman',definition:'Un homme distingué et bien élevé, en Angleterre.'},{word:'livres',definition:'Ici : la monnaie anglaise (livres sterling).'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Quel est le trait de caractère principal de Phileas Fogg ?',choices:['Il est d’une précision extraordinaire','Il est très bavard','Il est toujours en retard'],ans:0,evidenceParagraph:0,explanation:'« ...chaque jour, il faisait exactement les mêmes gestes, aux mêmes heures, à la seconde près. »'},
+    {id:'q2',type:'choice',competencies:['READ_PLACE','READ_TIME'],difficulty:3,prompt:'Où et quand commence l’histoire ?',choices:['À Londres, en 1872','À Paris, en 1900','À New York, aujourd’hui'],ans:0,evidenceParagraph:0,explanation:'« En 1872, à Londres... »'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Quel est l’objet du pari ?',choices:['Faire le tour du monde en quatre-vingts jours','Traverser la Manche à la nage','Construire un bateau à vapeur'],ans:0,evidenceParagraph:2,explanation:'Fogg parie qu’il fera ce tour du monde en quatre-vingts jours.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi le journal pense-t-il ce voyage possible ?',choices:['Grâce aux trains et aux bateaux à vapeur','Grâce aux avions','Grâce aux chevaux les plus rapides'],ans:0,evidenceParagraph:1,explanation:'« ...grâce aux trains et aux bateaux à vapeur. » En 1872, il n’y avait pas encore d’avions.'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Pourquoi est-il amusant que Passepartout ait espéré « une vie tranquille » ?',choices:['Il se retrouve aussitôt embarqué dans un voyage plein d’aventures','Parce que Fogg est très calme','Parce qu’il aime les voyages'],ans:0,evidenceParagraph:3,explanation:'Le soir même de son arrivée, il part faire le tour du monde : c’est tout le contraire de ce qu’il espérait.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe qui précise ce qui arrivera si Fogg échoue.',evidenceParagraph:4,explanation:'« Sinon, il perdait tout. »'},
+    {id:'q7',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'« En théorie, peut-être [...] mais en pratique, c’est impossible ». Que veut dire l’ami de Fogg ?',choices:['Sur le papier, c’est possible, mais dans la réalité, il y aura trop d’imprévus','C’est possible dans tous les cas','Il faut d’abord étudier la théorie'],ans:0,evidenceParagraph:2,explanation:'« ...avec les retards et les tempêtes » : la réalité est moins simple que le calcul.'},
+    {id:'q8',type:'choice',competencies:['READ_INFERENCE','READ_CHARACTER'],difficulty:5,prompt:'Pourquoi le caractère de Fogg le rend-il capable de tenter ce pari ?',choices:['Il calcule tout avec exactitude et garde son calme','Il aime prendre des risques sans réfléchir','Il connaît déjà tous les pays'],ans:0,evidenceParagraph:2,explanation:'Il répond « calmement » : cet homme précis compte sur un horaire parfaitement organisé.'}
+   ]
+  },
+
+  fr_6e_deucalion_01:{
+   id:'fr_6e_deucalion_01',level:'6e',subject:'francais',type:'literary_text',documentType:'récit mythologique',
+   title:'Deucalion et Pyrrha',author:'Ovide',work:'Les Métamorphoses, livre I',
+   sourceType:'public_domain',sourceReference:'Adaptation libre pour la 6e, d’après Ovide (mort vers 17-18 apr. J.-C.), dans le domaine public — aucune traduction existante reprise. Ovide utilise les noms romains (Jupiter, Thémis) ; on a gardé ici le nom grec de Zeus.',
+   chapterLinks:['fr6d'],
+   competencies:['READ_CAUSE_CONSEQUENCE','READ_CHARACTER','READ_INFERENCE','READ_VOCAB_CONTEXT','READ_GENRE','READ_JUSTIFY','READ_SEQUENCE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Autrefois, les hommes étaient devenus si cruels et si malhonnêtes que Zeus décida de les faire disparaître. Il fit tomber une pluie terrible, qui dura des jours et des nuits. Les eaux recouvrirent toute la Terre.',
+    'Seuls survécurent Deucalion et sa femme Pyrrha, deux êtres justes et respectueux des dieux. Leur petite barque s’échoua au sommet du mont Parnasse.',
+    'Quand les eaux se retirèrent, ils se retrouvèrent seuls dans un monde vide et silencieux. En larmes, ils allèrent demander conseil à la déesse Thémis.',
+    'La déesse leur répondit : « Voilez-vous la tête et jetez derrière vous les os de votre grande mère. » Pyrrha fut horrifiée : jamais elle ne ferait une chose pareille !',
+    'Deucalion réfléchit longuement, puis comprit : « Notre grande mère, c’est la Terre ; ses os, ce sont les pierres ! »',
+    'Ils lancèrent des pierres derrière eux. Peu à peu, elles s’amollirent et prirent forme humaine : celles de Deucalion devinrent des hommes, celles de Pyrrha des femmes. Ainsi la Terre fut de nouveau peuplée.'
+   ],
+   glossary:[{word:'s’échoua',definition:'Se posa et resta bloquée (pour un bateau).'},{word:'Voilez-vous',definition:'Couvrez-vous d’un voile.'},{word:'s’amollirent',definition:'Devinrent molles.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Zeus provoque-t-il le déluge ?',choices:['Parce que les hommes sont devenus cruels et malhonnêtes','Parce que la Terre manque d’eau','Pour punir Deucalion'],ans:0,evidenceParagraph:0,explanation:'« ...les hommes étaient devenus si cruels et si malhonnêtes que Zeus décida de les faire disparaître. »'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi Deucalion et Pyrrha sont-ils épargnés ?',choices:['Ce sont des êtres justes et respectueux des dieux','Ils savent très bien nager','Ils se sont cachés dans une grotte'],ans:0,evidenceParagraph:1,explanation:'Contrairement aux autres hommes, ils sont « justes et respectueux des dieux ».'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_INFERENCE'],difficulty:6,prompt:'Pourquoi Pyrrha est-elle horrifiée par la réponse de la déesse ?',choices:['Elle comprend qu’il faudrait jeter les os de sa vraie mère','Elle a peur de l’eau','Elle ne veut pas se voiler'],ans:0,evidenceParagraph:3,explanation:'Elle prend les mots au sens propre : jeter les os d’une mère morte serait sacrilège.'},
+    {id:'q4',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:6,prompt:'Comment Deucalion comprend-il l’oracle ?',choices:['La « grande mère » est la Terre, et ses « os » sont les pierres','Il faut aller chercher leur grand-mère','Il faut construire une nouvelle barque'],ans:0,evidenceParagraph:4,explanation:'Il comprend le sens figuré de la phrase : c’est une énigme.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe où les pierres se transforment.',evidenceParagraph:5,explanation:'« ...elles s’amollirent et prirent forme humaine. »'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Ce mythe raconte...',choices:['Comment l’humanité aurait été recréée après un déluge','La construction d’un temple','La vie quotidienne en Grèce'],ans:0,explanation:'C’est un récit des origines : il explique d’où viendraient les hommes après la destruction du monde.'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets le mythe dans l’ordre.',tokens:['Le déluge recouvre la Terre','La barque s’échoue sur le Parnasse','Thémis donne sa réponse','Les pierres deviennent des humains'],ans:'Le déluge recouvre la Terre La barque s’échoue sur le Parnasse Thémis donne sa réponse Les pierres deviennent des humains',explanation:'C’est l’ordre du récit.'},
+    {id:'q8',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Pourquoi peut-on dire que ce récit fait partie des « Métamorphoses » ?',choices:['Des pierres se transforment en êtres humains','Les personnages voyagent beaucoup','Il y a beaucoup de dialogues'],ans:0,evidenceParagraph:5,explanation:'Une métamorphose est une transformation : ici, des pierres deviennent des hommes et des femmes.'}
+   ]
+  },
+
+  fr_6e_medecin_malgre_lui_01:{
+   id:'fr_6e_medecin_malgre_lui_01',level:'6e',subject:'francais',type:'literary_text',documentType:'comédie (extrait adapté)',
+   title:'Le Médecin malgré lui',author:'Molière',work:'Le Médecin malgré lui (1666)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 6e de l’acte I (scènes 4 et 5), d’après Molière (mort en 1673), dans le domaine public.',
+   chapterLinks:['fr6f'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_EMOTION_INTENTION','READ_GENRE','READ_JUSTIFY','READ_EXPLICIT'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    '(Martine vient d’être battue par son mari, Sganarelle, un bûcheron. Elle cherche à se venger. Arrivent Valère et Lucas, deux serviteurs.)',
+    'VALÈRE. — Notre maître a une fille qui a perdu la parole. Nous cherchons un médecin assez habile pour la guérir.',
+    'MARTINE, à part. — Voici l’occasion de me venger ! (Haut.) Messieurs, vous avez de la chance : il y a ici un homme merveilleux, qui guérit tous les malades. Mais il a une étrange folie.',
+    'LUCAS. — Laquelle ?',
+    'MARTINE. — Il cache son talent. Il ne veut jamais avouer qu’il est médecin… sauf si on lui donne des coups de bâton. Vous le trouverez là-bas, en train de couper du bois.',
+    '(Valère et Lucas vont trouver Sganarelle.) VALÈRE. — Monsieur, n’êtes-vous pas médecin ? — SGANARELLE. — Moi ? Je suis fagotier ! (Ils prennent des bâtons et le frappent.)',
+    'SGANARELLE. — Aïe ! Aïe ! Arrêtez ! Je suis médecin, je suis tout ce que vous voudrez !'
+   ],
+   glossary:[{word:'habile',definition:'Adroit, compétent.'},{word:'fagotier',definition:'Celui qui fait des fagots, des paquets de petit bois.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Martine veut-elle se venger de Sganarelle ?',choices:['Il vient de la battre','Il a perdu son argent','Il refuse de travailler'],ans:0,evidenceParagraph:0,explanation:'La didascalie l’indique : « Martine vient d’être battue par son mari. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Que cherchent Valère et Lucas ?',choices:['Un médecin pour la fille de leur maître','Un bûcheron','Un voleur'],ans:0,evidenceParagraph:1,explanation:'« Nous cherchons un médecin assez habile pour la guérir. »'},
+    {id:'q3',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Que signifie l’indication « à part » avant la réplique de Martine ?',choices:['Elle parle pour elle-même : les autres personnages ne l’entendent pas, seul le public l’entend','Elle sort de scène','Elle crie très fort'],ans:0,evidenceParagraph:2,explanation:'Un aparté met le public dans la confidence : nous savons que c’est une vengeance.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi Martine invente-t-elle que Sganarelle n’avoue qu’après des coups de bâton ?',choices:['Pour qu’il soit battu à son tour : c’est sa vengeance','Parce que c’est vrai','Pour protéger son mari'],ans:0,evidenceParagraph:4,explanation:'Battu par son mari, elle le fait battre par d’autres : la ruse retourne la situation.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où Martine décide de profiter de la situation.',evidenceParagraph:2,explanation:'« Voici l’occasion de me venger ! »'},
+    {id:'q6',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi Sganarelle finit-il par dire « Je suis médecin » ?',choices:['Pour que les coups s’arrêtent','Parce qu’il a fait des études de médecine','Parce qu’il veut aider la jeune fille'],ans:0,evidenceParagraph:6,explanation:'« Arrêtez ! Je suis médecin, je suis tout ce que vous voudrez ! » : il dirait n’importe quoi pour ne plus être battu.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Pourquoi le titre est-il « Le Médecin malgré lui » ?',choices:['Sganarelle devient médecin sans l’avoir voulu','Le médecin ne veut pas soigner','Le médecin est malade'],ans:0,explanation:'On l’oblige, à coups de bâton, à se dire médecin : il l’est « malgré lui ».'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE'],difficulty:4,prompt:'Les coups de bâton font partie d’un type de comique. Lequel ?',choices:['Le comique de gestes','Le comique de répétition','Le comique de caractère'],ans:0,evidenceParagraph:5,explanation:'Les coups, les chutes, les grimaces : c’est le comique de gestes, très présent chez Molière.'}
+   ]
+  },
+
+  fr_5e_renart_anguilles_01:{
+   id:'fr_5e_renart_anguilles_01',level:'5e',subject:'francais',type:'literary_text',documentType:'récit médiéval (adaptation)',
+   title:'Renart et les anguilles',author:null,work:'Le Roman de Renart (XIIe-XIIIe siècles)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre en français moderne pour la 5e, d’après Le Roman de Renart (textes anonymes du Moyen Âge), dans le domaine public.',
+   chapterLinks:['fr5g'],
+   competencies:['READ_CHARACTER','READ_TIME','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_GENRE','READ_SEQUENCE'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'C’était l’hiver. Les provisions de Renart le goupil étaient épuisées, et sa famille mourait de faim. Il partit chercher à manger.',
+    'Au bord d’un chemin, il aperçut une charrette de marchands chargée de poissons : des harengs et des anguilles. Il eut aussitôt une idée.',
+    'Il se coucha au milieu du chemin, les yeux fermés, la langue pendante, et fit le mort. Les marchands arrivèrent : « Un renard ! Sa fourrure nous rapportera de l’argent ! » Ils le jetèrent sur leur charrette.',
+    'Pendant que les marchands avançaient sans se méfier, Renart dévora les harengs. Puis il passa autour de son cou plusieurs colliers d’anguilles et sauta de la charrette.',
+    '« Merci pour les anguilles, mes amis ! leur cria-t-il en s’enfuyant. Gardez le reste ! » Les marchands, furieux, ne purent le rattraper. Renart rentra chez lui, où l’on fit un grand festin.'
+   ],
+   glossary:[{word:'goupil',definition:'Ancien nom du renard. Le nom propre « Renart » est devenu le nom commun « renard ».'},{word:'anguilles',definition:'Poissons très longs, en forme de serpent.'},{word:'épuisées',definition:'Ici : complètement finies.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_TIME','READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Renart part-il chercher à manger ?',choices:['C’est l’hiver et sa famille meurt de faim','Il veut faire une farce aux marchands','Il s’ennuie'],ans:0,evidenceParagraph:0,explanation:'« C’était l’hiver. Les provisions [...] étaient épuisées, et sa famille mourait de faim. »'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Quelle ruse Renart utilise-t-il ?',choices:['Il fait le mort au milieu du chemin','Il se déguise en marchand','Il creuse un piège'],ans:0,evidenceParagraph:2,explanation:'« Il se coucha au milieu du chemin, les yeux fermés, la langue pendante, et fit le mort. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi les marchands mettent-ils Renart sur leur charrette ?',choices:['Ils veulent vendre sa fourrure','Ils veulent le soigner','Ils veulent l’enterrer'],ans:0,evidenceParagraph:2,explanation:'« Sa fourrure nous rapportera de l’argent ! » : leur avidité les rend imprudents.'},
+    {id:'q4',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel ton Renart prend-il en criant « Merci pour les anguilles » ?',choices:['Moqueur','Désolé','Effrayé'],ans:0,evidenceParagraph:4,explanation:'Il remercie ceux qu’il vient de voler : il se moque d’eux.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe où Renart profite de l’inattention des marchands.',evidenceParagraph:3,explanation:'« Pendant que les marchands avançaient sans se méfier, Renart dévora les harengs. »'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Pourquoi peut-on rapprocher ce récit d’une fable ?',choices:['Un animal rusé, qui ressemble à un homme, trompe des naïfs','Il est écrit en vers avec une morale finale','Il raconte des faits historiques'],ans:0,explanation:'Comme dans les fables, l’animal a des comportements humains et le plus malin l’emporte.'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE','READ_CHARACTER'],difficulty:6,prompt:'Que reproche implicitement le récit aux marchands ?',choices:['Leur avidité les a rendus imprudents','Leur méchanceté envers les animaux','Leur paresse'],ans:0,evidenceParagraph:2,explanation:'Ils ne pensent qu’à l’argent de la fourrure et ne surveillent pas leur « marchandise » : ils sont punis par où ils ont péché.'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets l’histoire dans l’ordre.',tokens:['Renart voit la charrette','Il fait le mort','Il mange les harengs','Il s’enfuit avec les anguilles'],ans:'Renart voit la charrette Il fait le mort Il mange les harengs Il s’enfuit avec les anguilles',explanation:'C’est l’ordre du récit.'}
+   ]
+  },
+
+  fr_5e_sensation_01:{
+   id:'fr_5e_sensation_01',level:'5e',subject:'francais',type:'literary_text',documentType:'poème',
+   title:'Sensation',author:'Arthur Rimbaud',work:'Poésies (1870)',
+   sourceType:'public_domain',sourceReference:'Texte original d’Arthur Rimbaud (mort en 1891), dans le domaine public.',
+   chapterLinks:['fr5e'],verse:true,stanzas:[4],
+   competencies:['READ_TIME','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_GENRE','READ_INFERENCE','READ_JUSTIFY','READ_NARRATOR_POV'],
+   difficulty:6,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Par les soirs bleus d’été, j’irai dans les sentiers,',
+    'Picoté par les blés, fouler l’herbe menue :',
+    'Rêveur, j’en sentirai la fraîcheur à mes pieds.',
+    'Je laisserai le vent baigner ma tête nue.',
+    'Je ne parlerai pas, je ne penserai rien :',
+    'Mais l’amour infini me montera dans l’âme,',
+    'Et j’irai loin, bien loin, comme un bohémien,',
+    'Par la Nature, — heureux comme avec une femme.'
+   ],
+   glossary:[{word:'fouler',definition:'Marcher sur.'},{word:'menue',definition:'Fine, délicate.'},{word:'bohémien',definition:'Ici : un voyageur sans attaches, qui va librement de lieu en lieu.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_TIME'],difficulty:4,prompt:'À quel moment le poète imagine-t-il sa promenade ?',choices:['Les soirs d’été','Les matins d’hiver','Une nuit d’orage'],ans:0,evidenceParagraph:0,explanation:'« Par les soirs bleus d’été... »'},
+    {id:'q2',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'À quel temps sont la plupart des verbes (« j’irai », « je sentirai ») ?',choices:['Au futur : le poète imagine un voyage à venir','Au passé simple : il raconte un souvenir','Au présent : il décrit ce qu’il fait'],ans:0,evidenceParagraph:2,explanation:'Le futur montre un projet, un rêve de voyage.'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_GENRE'],difficulty:6,prompt:'Quels sens sont surtout sollicités dans le premier quatrain ?',choices:['Le toucher et la vue','L’ouïe et le goût','Aucun sens'],ans:0,evidenceParagraph:1,explanation:'« Picoté par les blés », « la fraîcheur à mes pieds », « le vent baigner ma tête », « soirs bleus » : le poème s’appelle d’ailleurs « Sensation ».'},
+    {id:'q4',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel sentiment domine le poème ?',choices:['Le bonheur et la liberté','La peur de se perdre','La tristesse de partir'],ans:0,evidenceParagraph:7,explanation:'« ...heureux comme avec une femme » ; « j’irai loin, bien loin » : liberté et bonheur.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le vers où le poète dit qu’il ne veut ni parler ni réfléchir.',evidenceParagraph:4,explanation:'« Je ne parlerai pas, je ne penserai rien » : il veut seulement ressentir.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Que signifie « comme un bohémien » ?',choices:['Le poète veut voyager librement, sans but précis','Il veut devenir musicien','Il veut rester chez lui'],ans:0,evidenceParagraph:6,explanation:'Le bohémien va de lieu en lieu, librement : c’est l’image du voyage sans contrainte.'},
+    {id:'q7',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:4,prompt:'Qui s’exprime dans le poème ?',choices:['Le poète lui-même, avec « je »','Un narrateur qui raconte la vie d’un autre','La Nature'],ans:0,evidenceParagraph:0,explanation:'« j’irai », « je laisserai » : le poète exprime ses propres sensations. Rimbaud avait quinze ans quand il l’a écrit.'}
+   ]
+  },
+
+  fr_4e_il_pleure_01:{
+   id:'fr_4e_il_pleure_01',level:'4e',subject:'francais',type:'literary_text',documentType:'poème',
+   title:'Il pleure dans mon cœur…',author:'Paul Verlaine',work:'Romances sans paroles (1874)',
+   sourceType:'public_domain',sourceReference:'Texte original de Paul Verlaine (mort en 1896), dans le domaine public.',
+   chapterLinks:['fr4w'],verse:true,stanzas:[4,8,12],
+   competencies:['READ_GENRE','READ_STRUCTURE','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_INFERENCE','READ_JUSTIFY'],
+   difficulty:6,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Il pleure dans mon cœur',
+    'Comme il pleut sur la ville ;',
+    'Quelle est cette langueur',
+    'Qui pénètre mon cœur ?',
+    'Ô bruit doux de la pluie',
+    'Par terre et sur les toits !',
+    'Pour un cœur qui s’ennuie,',
+    'Ô le chant de la pluie !',
+    'Il pleure sans raison',
+    'Dans ce cœur qui s’écœure.',
+    'Quoi ! nulle trahison ?…',
+    'Ce deuil est sans raison.',
+    'C’est bien la pire peine',
+    'De ne savoir pourquoi',
+    'Sans amour et sans haine',
+    'Mon cœur a tant de peine !'
+   ],
+   glossary:[{word:'langueur',definition:'Une tristesse fatiguée, sans force.'},{word:'s’écœure',definition:'Se dégoûte, se décourage.'},{word:'deuil',definition:'Ici : une grande tristesse.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_INFERENCE'],difficulty:6,prompt:'« Il pleure dans mon cœur / Comme il pleut sur la ville » : que fait le poète ?',choices:['Il compare sa tristesse à la pluie','Il raconte qu’il est sorti sous la pluie','Il explique d’où vient la pluie'],ans:0,evidenceParagraph:1,explanation:'Grâce à « comme », la tristesse intérieure est comparée à la pluie qui tombe sur la ville.'},
+    {id:'q2',type:'choice',competencies:['READ_GENRE','READ_STRUCTURE'],difficulty:6,prompt:'Combien de syllabes compte chaque vers ?',choices:['Six','Huit','Douze'],ans:0,explanation:'« Il/ pleu/re/ dans/ mon/ cœur » : 6 syllabes (le e de « pleure » se prononce devant une consonne). Ce sont des hexasyllabes, des vers courts et musicaux.'},
+    {id:'q3',type:'choice',competencies:['READ_STRUCTURE'],difficulty:6,prompt:'Quel mot revient le plus souvent dans le poème ?',choices:['« cœur »','« ville »','« toits »'],ans:0,evidenceParagraph:0,explanation:'« cœur » revient dans chaque strophe : le poème parle d’un état intérieur.'},
+    {id:'q4',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:6,prompt:'Qu’est-ce qui rend la peine du poète si difficile à supporter ?',choices:['Il ne sait pas pourquoi il est triste','Il a été trahi','Il a perdu quelqu’un'],ans:0,evidenceParagraph:13,explanation:'« C’est bien la pire peine / De ne savoir pourquoi » ; il précise : « nulle trahison ».'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le vers où le poète affirme que sa tristesse n’a pas de cause.',evidenceParagraph:11,explanation:'« Ce deuil est sans raison. »'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE'],difficulty:7,prompt:'Dans la 1re strophe, les vers 1, 3 et 4 riment (cœur, langueur, cœur). Quel effet crée ce retour du même son ?',choices:['Une musique insistante, comme le bruit régulier de la pluie','Un effet comique','Aucun effet'],ans:0,evidenceParagraph:3,explanation:'Les sons qui reviennent imitent la pluie monotone et la tristesse qui s’installe.'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Dans la 2e strophe, comment le poète perçoit-il le bruit de la pluie ?',choices:['Comme un chant doux qui accompagne son ennui','Comme un bruit insupportable','Il ne l’entend pas'],ans:0,evidenceParagraph:4,explanation:'« Ô bruit doux de la pluie », « Ô le chant de la pluie ! » : la pluie berce sa mélancolie.'}
+   ]
+  },
+
+  fr_4e_bonheur_dames_01:{
+   id:'fr_4e_bonheur_dames_01',level:'4e',subject:'francais',type:'literary_text',documentType:'roman réaliste (extrait adapté)',
+   title:'Denise arrive à Paris',author:'Émile Zola',work:'Au Bonheur des Dames (1883)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 4e du chapitre 1, d’après Émile Zola (mort en 1902), dans le domaine public.',
+   chapterLinks:['fr4e'],
+   competencies:['READ_CHARACTER','READ_PLACE','READ_EMOTION_INTENTION','READ_INFERENCE','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_GENRE','READ_AUTHOR_INTENT'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Denise était venue à pied de la gare Saint-Lazare, avec ses deux frères, Jean et le petit Pépé. Arrivés de Valognes, en Normandie, après une nuit de train, ils cherchaient la boutique de leur oncle Baudu.',
+    'Au coin d’une rue, elle s’arrêta net. En face d’elle se dressait un immense magasin de nouveautés : « Au Bonheur des Dames ». Jamais elle n’avait vu un bâtiment pareil.',
+    'Derrière les grandes vitrines, les étoffes ruisselaient en cascades : soies, velours, dentelles, aux couleurs éclatantes. Des mannequins portaient des manteaux luxueux. Une foule de clientes entrait et sortait sans cesse.',
+    '« Oh ! Jean, regarde ! » murmura Denise, éblouie. Les trois enfants restaient là, serrés les uns contre les autres, perdus dans le bruit de la grande ville.',
+    'En face, la petite boutique de l’oncle, « Le Vieil Elbeuf », paraissait sombre et triste, comme écrasée par son puissant voisin.'
+   ],
+   glossary:[{word:'magasin de nouveautés',definition:'Au XIXe siècle, un grand magasin qui vend des tissus et des vêtements à la mode.'},{word:'étoffes',definition:'Des tissus.'},{word:'éblouie',definition:'Émerveillée, comme aveuglée par trop de beauté.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER','READ_PLACE'],difficulty:4,prompt:'D’où viennent Denise et ses frères ?',choices:['De Valognes, en Normandie','De Paris','De Marseille'],ans:0,evidenceParagraph:0,explanation:'« Arrivés de Valognes, en Normandie... »'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Que ressent Denise devant le grand magasin ?',choices:['De l’éblouissement','De l’ennui','De la colère'],ans:0,evidenceParagraph:3,explanation:'« ...murmura Denise, éblouie. »'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:6,prompt:'« Les étoffes ruisselaient en cascades » : quelle image le romancier utilise-t-il ?',choices:['Les tissus sont comparés à de l’eau qui coule en abondance','Il pleut sur la vitrine','Les tissus sont mouillés'],ans:0,evidenceParagraph:2,explanation:'Le vocabulaire de l’eau (ruisseler, cascades) donne une impression d’abondance et de mouvement.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Que suggère la phrase « Les trois enfants restaient là, serrés les uns contre les autres » ?',choices:['Ils se sentent petits et un peu perdus dans la grande ville','Ils ont froid','Ils se disputent'],ans:0,evidenceParagraph:3,explanation:'Ils sont « perdus dans le bruit de la grande ville » : ils se serrent pour se rassurer.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe qui oppose la boutique de l’oncle au grand magasin.',evidenceParagraph:4,explanation:'« ...paraissait sombre et triste, comme écrasée par son puissant voisin. »'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Que laisse prévoir l’image de la petite boutique « écrasée » par le grand magasin ?',choices:['Les petits commerces vont souffrir de la concurrence des grands magasins','La boutique va s’agrandir','L’oncle va acheter le grand magasin'],ans:0,evidenceParagraph:4,explanation:'Le roman raconte en effet comment les grands magasins ruinent peu à peu les petites boutiques du quartier.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:6,prompt:'Pourquoi ce roman est-il dit « réaliste » ?',choices:['Il décrit avec précision la société et les lieux d’une époque réelle','Il contient de la magie','Il se passe dans le futur'],ans:0,explanation:'Zola s’est longuement documenté sur les vrais grands magasins de Paris pour écrire ce roman.'},
+    {id:'q8',type:'choice',competencies:['READ_PLACE'],difficulty:4,prompt:'Comment s’appelle la boutique de l’oncle ?',choices:['Le Vieil Elbeuf','Au Bonheur des Dames','La Gare Saint-Lazare'],ans:0,evidenceParagraph:4,explanation:'« ...la petite boutique de l’oncle, « Le Vieil Elbeuf »... »'}
+   ]
+  },
+
+  fr_3e_dormeur_val_01:{
+   id:'fr_3e_dormeur_val_01',level:'3e',subject:'francais',type:'literary_text',documentType:'poème (sonnet)',
+   title:'Le Dormeur du val',author:'Arthur Rimbaud',work:'Poésies (1870)',
+   sourceType:'public_domain',sourceReference:'Texte original d’Arthur Rimbaud (mort en 1891), dans le domaine public.',
+   chapterLinks:['fr3c','fr3w'],verse:true,stanzas:[4,8,11],
+   competencies:['READ_PLACE','READ_CHARACTER','READ_INFERENCE','READ_STRUCTURE','READ_GENRE','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_VOCAB_CONTEXT'],
+   difficulty:8,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'C’est un trou de verdure où chante une rivière,',
+    'Accrochant follement aux herbes des haillons',
+    'D’argent ; où le soleil, de la montagne fière,',
+    'Luit : c’est un petit val qui mousse de rayons.',
+    'Un soldat jeune, bouche ouverte, tête nue,',
+    'Et la nuque baignant dans le frais cresson bleu,',
+    'Dort ; il est étendu dans l’herbe, sous la nue,',
+    'Pâle dans son lit vert où la lumière pleut.',
+    'Les pieds dans les glaïeuls, il dort. Souriant comme',
+    'Sourirait un enfant malade, il fait un somme :',
+    'Nature, berce-le chaudement : il a froid.',
+    'Les parfums ne font pas frissonner sa narine ;',
+    'Il dort dans le soleil, la main sur sa poitrine,',
+    'Tranquille. Il a deux trous rouges au côté droit.'
+   ],
+   glossary:[{word:'val',definition:'Une petite vallée.'},{word:'haillons',definition:'Des vêtements en lambeaux ; ici, les reflets de l’eau accrochés aux herbes.'},{word:'nue',definition:'Ici : les nuages, le ciel.'},{word:'glaïeuls',definition:'Des fleurs à longues tiges.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:5,prompt:'Comment le paysage est-il présenté dans le premier quatrain ?',choices:['Lumineux, vivant et paisible','Sombre et menaçant','Glacé et désert'],ans:0,evidenceParagraph:3,explanation:'Une rivière qui « chante », le soleil qui « luit », un val qui « mousse de rayons ».'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:5,prompt:'Qui se trouve dans ce val ?',choices:['Un jeune soldat étendu dans l’herbe','Un enfant qui joue','Un paysan au travail'],ans:0,evidenceParagraph:4,explanation:'« Un soldat jeune, bouche ouverte, tête nue... »'},
+    {id:'q3',type:'choice',competencies:['READ_STRUCTURE'],difficulty:7,prompt:'Quel verbe est répété pour décrire le soldat ?',choices:['« dort »','« chante »','« pleut »'],ans:0,evidenceParagraph:8,explanation:'« Dort », « il dort », « Il dort dans le soleil » : l’insistance finit par paraître étrange.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Quels indices, avant le dernier vers, peuvent faire douter que le soldat dorme vraiment ?',choices:['Il est « pâle », sourit « comme un enfant malade », « il a froid » et ne sent pas les parfums','Il ronfle bruyamment','Il parle en dormant'],ans:0,evidenceParagraph:11,explanation:'Ces détails sont inquiétants : un dormeur au soleil n’a pas froid et sentirait les parfums.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:7,prompt:'Clique sur le vers qui révèle la vérité.',evidenceParagraph:13,explanation:'« Il a deux trous rouges au côté droit » : deux blessures par balle. Le soldat est mort.'},
+    {id:'q6',type:'choice',competencies:['READ_STRUCTURE','READ_GENRE'],difficulty:8,prompt:'Quel est l’effet de la révélation placée à la toute fin du sonnet ?',choices:['Une chute brutale qui bouleverse le lecteur','Une fin joyeuse','Une transition vers un autre poème'],ans:0,evidenceParagraph:13,explanation:'Après toute cette douceur, la mort apparaît d’un coup : le choc rend la dénonciation plus forte.'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:8,prompt:'Que dénonce Rimbaud dans ce poème écrit en 1870 ?',choices:['L’absurdité de la guerre, qui tue des jeunes gens au milieu d’une nature pleine de vie','La pollution des rivières','La paresse des soldats'],ans:0,explanation:'Écrit pendant la guerre franco-prussienne, le poème oppose la vie de la nature à la mort d’un jeune soldat.'},
+    {id:'q8',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_GENRE'],difficulty:7,prompt:'« Nature, berce-le chaudement » : quelle figure de style est employée ?',choices:['Une personnification : le poète s’adresse à la Nature comme à une mère','Une comparaison avec « comme »','Une énumération'],ans:0,evidenceParagraph:10,explanation:'La Nature est traitée comme une personne qui pourrait bercer un enfant.'}
+   ]
+  },
+
+  fr_cp_lettre_mamie_01:{
+   id:'fr_cp_lettre_mamie_01',level:'CP',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Une lettre pour Mamie',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cp-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_INFERENCE','READ_SEQUENCE'],
+   difficulty:1,estimatedReadingMinutes:1,audioMode:'audioRecommended',sessionSize:5,
+   paragraphs:[
+    'Nina écrit une lettre à Mamie.',
+    'Elle dessine un soleil et une fleur.',
+    'Papa met la lettre dans une enveloppe.',
+    'Nina la poste.',
+    'Trois jours plus tard, Mamie téléphone : « Merci pour ta jolie lettre ! »'
+   ],
+   glossary:[{word:'enveloppe',definition:'Une pochette en papier dans laquelle on met une lettre.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:1,prompt:'À qui Nina écrit-elle ?',choices:['À Mamie','À son papa','À la maîtresse'],ans:0,evidenceParagraph:0,explanation:'« Nina écrit une lettre à Mamie. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Que dessine Nina ?',choices:['Un soleil et une fleur','Une maison','Un chat'],ans:0,evidenceParagraph:1,explanation:'« Elle dessine un soleil et une fleur. »'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Où Papa met-il la lettre ?',choices:['Dans une enveloppe','Dans un sac','Sur la table'],ans:0,evidenceParagraph:2,explanation:'« Papa met la lettre dans une enveloppe. »'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:2,prompt:'Pourquoi Mamie téléphone-t-elle ?',choices:['Elle a reçu la lettre et dit merci','Elle est malade','Elle a perdu ses clés'],ans:0,evidenceParagraph:4,explanation:'« Merci pour ta jolie lettre ! » : la lettre est bien arrivée.'},
+    {id:'q5',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Nina écrit','Nina poste la lettre','Mamie téléphone'],ans:'Nina écrit Nina poste la lettre Mamie téléphone',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_ce1_doudou_01:{
+   id:'fr_ce1_doudou_01',level:'CE1',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le doudou perdu',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce1-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_EMOTION_INTENTION','READ_PLACE','READ_INFERENCE','READ_REFERENCE','READ_SEQUENCE','READ_JUSTIFY'],
+   difficulty:2,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Le soir, au moment de se coucher, Tim ne trouve plus son doudou, un petit lapin gris.',
+    'Il fouille sa chambre, le salon et la salle de bain. Rien ! Tim a les larmes aux yeux.',
+    'Sa grande sœur Léa réfléchit : « Où es-tu allé aujourd’hui ? » Tim se souvient : « Au parc, avec Papi ! »',
+    'Papi prend sa lampe de poche, et ils retournent au parc tous les trois.',
+    'Sous le toboggan, quelque chose de gris dépasse. C’est le lapin ! Tim le serre très fort contre lui.'
+   ],
+   glossary:[{word:'fouille',definition:'Cherche partout avec soin.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Quel est le doudou de Tim ?',choices:['Un petit lapin gris','Un ours brun','Un chien blanc'],ans:0,evidenceParagraph:0,explanation:'« ...son doudou, un petit lapin gris. »'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:2,prompt:'Comment se sent Tim quand il ne trouve rien ?',choices:['Triste','Joyeux','Fâché contre Léa'],ans:0,evidenceParagraph:1,explanation:'« Tim a les larmes aux yeux. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:3,prompt:'Pourquoi Léa demande-t-elle où Tim est allé ?',choices:['Pour deviner où il a pu oublier son doudou','Pour le gronder','Pour aller jouer au parc'],ans:0,evidenceParagraph:2,explanation:'Si le doudou n’est pas à la maison, il est peut-être resté là où Tim est allé.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:3,prompt:'Pourquoi Papi prend-il une lampe de poche ?',choices:['Parce qu’il fait nuit','Pour jouer','Parce que le parc est fermé'],ans:0,evidenceParagraph:3,explanation:'C’est le soir, au moment de se coucher : dehors, il fait sombre.'},
+    {id:'q5',type:'choice',competencies:['READ_PLACE'],difficulty:2,prompt:'Où retrouvent-ils le doudou ?',choices:['Sous le toboggan','Dans la salle de bain','Dans le lit'],ans:0,evidenceParagraph:4,explanation:'« Sous le toboggan, quelque chose de gris dépasse. »'},
+    {id:'q6',type:'choice',competencies:['READ_REFERENCE'],difficulty:3,prompt:'Dans « Tim le serre très fort », que remplace « le » ?',choices:['Le lapin','Le toboggan','Papi'],ans:0,evidenceParagraph:4,explanation:'« le » reprend « le lapin », juste avant.'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE','READ_JUSTIFY'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Tim cherche dans la maison','Léa lui pose une question','Ils retournent au parc','Tim retrouve son lapin'],ans:'Tim cherche dans la maison Léa lui pose une question Ils retournent au parc Tim retrouve son lapin',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_ce2_dinosaures_doc_01:{
+   id:'fr_ce2_dinosaures_doc_01',level:'CE2',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Sur la piste des dinosaures',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce2-fr-comprendre'],
+   competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_TIME','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_JUSTIFY'],
+   difficulty:3,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Les dinosaures ont vécu sur la Terre pendant très longtemps, bien avant l’apparition des humains.',
+    'Certains étaient gigantesques et mangeaient des plantes : ce sont des herbivores. D’autres, comme le tyrannosaure, chassaient les autres animaux : ce sont des carnivores.',
+    'Il y a environ 66 millions d’années, la plupart des dinosaures ont disparu. Selon les scientifiques, la cause principale serait la chute d’une énorme météorite, qui a bouleversé le climat.',
+    'Comment le sait-on ? Grâce aux fossiles : des os, des dents ou des empreintes transformés en pierre au fil du temps. Les scientifiques qui les étudient s’appellent des paléontologues.',
+    'Et les oiseaux ? Les scientifiques ont découvert qu’ils descendent de petits dinosaures. Le moineau de ton jardin est donc un lointain cousin du tyrannosaure !'
+   ],
+   glossary:[{word:'herbivores',definition:'Animaux qui mangent des plantes.'},{word:'carnivores',definition:'Animaux qui mangent de la viande.'},{word:'météorite',definition:'Un morceau de roche venu de l’espace qui tombe sur une planète.'},{word:'fossiles',definition:'Restes d’êtres vivants très anciens, conservés dans la pierre.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:2,prompt:'De quoi parle ce texte ?',choices:['Des dinosaures et de ce que l’on sait d’eux','Des oiseaux du jardin','Des volcans'],ans:0,explanation:'Tous les paragraphes parlent des dinosaures.'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Un dinosaure qui mange des plantes est...',choices:['Herbivore','Carnivore','Paléontologue'],ans:0,evidenceParagraph:1,explanation:'« ...mangeaient des plantes : ce sont des herbivores. »'},
+    {id:'q3',type:'choice',competencies:['READ_TIME'],difficulty:3,prompt:'Quand la plupart des dinosaures ont-ils disparu ?',choices:['Il y a environ 66 millions d’années','Il y a 100 ans','L’année dernière'],ans:0,evidenceParagraph:2,explanation:'« Il y a environ 66 millions d’années... »'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Quelle serait la cause principale de leur disparition ?',choices:['La chute d’une énorme météorite','Les humains qui les chassaient','Le manque de plantes au printemps'],ans:0,evidenceParagraph:2,explanation:'« ...la chute d’une énorme météorite, qui a bouleversé le climat. » Les humains n’existaient pas encore.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:3,prompt:'Clique sur le paragraphe qui explique comment on connaît les dinosaures.',evidenceParagraph:3,explanation:'« Grâce aux fossiles... »'},
+    {id:'q6',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Comment s’appellent les scientifiques qui étudient les fossiles ?',choices:['Des paléontologues','Des astronautes','Des vétérinaires'],ans:0,evidenceParagraph:3,explanation:'« Les scientifiques qui les étudient s’appellent des paléontologues. »'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Pourquoi le texte dit-il que le moineau est un « cousin » du tyrannosaure ?',choices:['Parce que les oiseaux descendent de petits dinosaures','Parce que le moineau est très grand','Parce qu’ils vivent au même endroit'],ans:0,evidenceParagraph:4,explanation:'Les oiseaux descendent de dinosaures : ils font partie de la même grande famille.'}
+   ]
+  },
+
+  fr_cm1_musiciens_breme_01:{
+   id:'fr_cm1_musiciens_breme_01',level:'CM1',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Les Musiciens de Brême',author:'Jacob et Wilhelm Grimm',work:'Contes de l’enfance et du foyer',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CM1, d’après le conte des frères Grimm (morts en 1859 et 1863), dans le domaine public.',
+   chapterLinks:['cm1-fr-litterature'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_PLACE','READ_INFERENCE','READ_EMOTION_INTENTION','READ_SEQUENCE','READ_JUSTIFY','READ_AUTHOR_INTENT'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Un âne avait porté des sacs toute sa vie. Devenu vieux et faible, son maître voulut se débarrasser de lui. L’âne s’enfuit et prit la route de Brême : là-bas, pensait-il, il pourrait devenir musicien.',
+    'En chemin, il rencontra un vieux chien trop lent pour la chasse, un chat qui n’attrapait plus les souris et un coq qu’on voulait mettre à la casserole. Tous avaient été chassés. « Venez avec moi à Brême ! » leur dit l’âne.',
+    'Le soir, dans la forêt, ils aperçurent une maison éclairée. Par la fenêtre, l’âne vit des brigands attablés devant un repas magnifique.',
+    'Les animaux eurent une idée : le chien grimpa sur le dos de l’âne, le chat sur le chien, et le coq sur la tête du chat. Puis ils se mirent tous à « chanter » en même temps : l’âne braya, le chien aboya, le chat miaula, le coq cria.',
+    'Terrifiés par ce vacarme, les brigands crurent qu’un monstre les attaquait et s’enfuirent dans la forêt. Les quatre compagnons se régalèrent, puis s’installèrent dans la maison, où ils vécurent heureux. Ils n’arrivèrent jamais à Brême.'
+   ],
+   glossary:[{word:'brigands',definition:'Des voleurs qui attaquent les gens.'},{word:'braya',definition:'Poussa le cri de l’âne.'},{word:'vacarme',definition:'Un bruit très fort.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Pourquoi l’âne s’enfuit-il ?',choices:['Son maître veut se débarrasser de lui car il est vieux','Il veut voir la mer','Il a peur des brigands'],ans:0,evidenceParagraph:0,explanation:'« Devenu vieux et faible, son maître voulut se débarrasser de lui. »'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:4,prompt:'Qu’ont en commun les quatre animaux ?',choices:['Ils sont vieux ou menacés, et ont été chassés par leurs maîtres','Ils sont tous musiciens','Ils vivent tous à Brême'],ans:0,evidenceParagraph:1,explanation:'« Tous avaient été chassés. »'},
+    {id:'q3',type:'choice',competencies:['READ_PLACE'],difficulty:3,prompt:'Où les animaux trouvent-ils les brigands ?',choices:['Dans une maison éclairée au milieu de la forêt','À Brême','Dans une grange'],ans:0,evidenceParagraph:2,explanation:'« Le soir, dans la forêt, ils aperçurent une maison éclairée. »'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi les brigands s’enfuient-ils ?',choices:['Ils croient qu’un monstre les attaque','La police arrive','Leur repas est brûlé'],ans:0,evidenceParagraph:4,explanation:'« ...les brigands crurent qu’un monstre les attaquait. »'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui décrit la ruse des animaux.',evidenceParagraph:3,explanation:'Ils montent les uns sur les autres et crient tous ensemble.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi le mot « chanter » est-il entre guillemets ?',choices:['Parce que leurs cris ne sont pas vraiment de la musique','Parce que c’est une citation d’un livre','Parce que les animaux chantent très bien'],ans:0,evidenceParagraph:3,explanation:'Braire, aboyer, miauler et crier en même temps : c’est un vacarme, pas un vrai chant. Les guillemets marquent l’ironie.'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT','READ_EMOTION_INTENTION'],difficulty:5,prompt:'Que montre ce conte ?',choices:['Ensemble, même les plus faibles peuvent réussir','Il faut toujours obéir à son maître','Les brigands sont courageux'],ans:0,explanation:'Seuls, ces animaux étaient rejetés ; ensemble, ils triomphent des brigands.'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets le conte dans l’ordre.',tokens:['L’âne part pour Brême','Il rencontre le chien, le chat et le coq','Ils voient les brigands','Ils font fuir les brigands'],ans:'L’âne part pour Brême Il rencontre le chien, le chat et le coq Ils voient les brigands Ils font fuir les brigands',explanation:'C’est l’ordre du conte.'}
+   ]
+  },
+
+  fr_cm2_systeme_solaire_doc_01:{
+   id:'fr_cm2_systeme_solaire_doc_01',level:'CM2',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Notre système solaire',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm2-fr-comprendre'],
+   competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_STRUCTURE','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Au centre du système solaire se trouve le Soleil. C’est une étoile : une gigantesque boule de gaz très chauds qui produit de la lumière et de la chaleur.',
+    'Huit planètes tournent autour du Soleil. Dans l’ordre, en partant du Soleil : Mercure, Vénus, la Terre, Mars, Jupiter, Saturne, Uranus et Neptune.',
+    'Les quatre premières sont des planètes rocheuses. Les quatre suivantes sont des géantes gazeuses ; Jupiter est la plus grosse de toutes.',
+    'La Terre fait le tour du Soleil en un peu plus de 365 jours : c’est une année. En même temps, elle tourne sur elle-même en 24 heures, ce qui provoque l’alternance du jour et de la nuit.',
+    'Pluton a longtemps été considérée comme la neuvième planète. Mais en 2006, les astronomes l’ont classée parmi les planètes naines, car elle est beaucoup plus petite.'
+   ],
+   glossary:[{word:'étoile',definition:'Un astre qui produit sa propre lumière.'},{word:'rocheuses',definition:'Faites de roches, avec un sol solide.'},{word:'astronomes',definition:'Les scientifiques qui étudient les astres.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Qu’est-ce que le Soleil ?',choices:['Une étoile','Une planète','Un satellite'],ans:0,evidenceParagraph:0,explanation:'« C’est une étoile... »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Combien de planètes tournent autour du Soleil ?',choices:['Huit','Neuf','Douze'],ans:0,evidenceParagraph:1,explanation:'« Huit planètes tournent autour du Soleil. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Quelle est la place de la Terre en partant du Soleil ?',choices:['Troisième','Première','Huitième'],ans:0,evidenceParagraph:1,explanation:'Mercure, Vénus, puis la Terre : elle est troisième.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Qu’est-ce qui provoque l’alternance du jour et de la nuit ?',choices:['La rotation de la Terre sur elle-même en 24 heures','Le tour de la Terre autour du Soleil','Les nuages'],ans:0,evidenceParagraph:3,explanation:'« ...elle tourne sur elle-même en 24 heures, ce qui provoque l’alternance du jour et de la nuit. »'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'D’après le texte, une « année » correspond...',choices:['Au temps que met la Terre pour faire le tour du Soleil','Au temps que met la Terre pour tourner sur elle-même','À la durée d’une saison'],ans:0,evidenceParagraph:3,explanation:'« La Terre fait le tour du Soleil en un peu plus de 365 jours : c’est une année. »'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui explique pourquoi Pluton n’est plus une planète.',evidenceParagraph:4,explanation:'« ...en 2006, les astronomes l’ont classée parmi les planètes naines... »'},
+    {id:'q7',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Quelle est la plus grosse planète ?',choices:['Jupiter','La Terre','Mars'],ans:0,evidenceParagraph:2,explanation:'« ...Jupiter est la plus grosse de toutes. »'},
+    {id:'q8',type:'choice',competencies:['READ_MAIN_IDEA','READ_STRUCTURE'],difficulty:4,prompt:'Quel serait le meilleur résumé de ce texte ?',choices:['Le Soleil, une étoile, est entouré de huit planètes, dont la Terre','La Terre est la plus grosse planète','Pluton est la planète la plus chaude'],ans:0,explanation:'Ce résumé reprend l’idée principale sans s’arrêter sur un seul détail.'}
    ]
   }
 
