@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.3-lot4-2026-10-18',
+ version:'1.4-lot5-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -1296,6 +1296,294 @@ window.MQ_READING={
     {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_ARGUMENT'],difficulty:7,prompt:'Dans le deuxième paragraphe, quel est le rôle du mot « Or » ?',choices:['Il ajoute une idée qui fait avancer le raisonnement : mal dormir nuit à la concentration','Il annonce un exemple','Il introduit la conclusion du texte'],ans:0,evidenceParagraph:1,explanation:'« Or » introduit une nouvelle donnée qui, reliée à la première, mène à une conséquence.'},
     {id:'q7',type:'order',competencies:['READ_STRUCTURE','READ_SEQUENCE'],difficulty:6,prompt:'Remets les étapes du texte dans l’ordre.',tokens:['La thèse','L’argument du sommeil','L’argument du temps libéré','La concession et la réfutation','La conclusion'],ans:'La thèse L’argument du sommeil L’argument du temps libéré La concession et la réfutation La conclusion',explanation:'Les connecteurs le montrent : « D’abord », « Ensuite », « Certes... Mais », « En conclusion ».'},
     {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:5,prompt:'Quel est le but de ce texte ?',choices:['Convaincre le lecteur d’adopter une habitude','Raconter une histoire inventée','Décrire le fonctionnement d’un téléphone'],ans:0,explanation:'C’est un texte argumentatif : il défend une thèse avec des arguments pour convaincre.'}
+   ]
+  },
+
+  // ===== Lot 5 (18/10/2026) : renfort du primaire (2 supports de plus par classe, récits et
+  // documentaires). Texte original de La Fontaine ; adaptations libres de Grimm, Perrault et Andersen
+  // (tous dans le domaine public).
+
+  fr_cp_chat_pluie_01:{
+   id:'fr_cp_chat_pluie_01',level:'CP',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le chat sous la pluie',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cp-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_PLACE','READ_INFERENCE','READ_SEQUENCE'],
+   difficulty:1,estimatedReadingMinutes:1,audioMode:'audioRecommended',sessionSize:5,
+   paragraphs:[
+    'Il pleut très fort.',
+    'Le petit chat est dehors.',
+    'Il miaule devant la porte.',
+    'Lou ouvre la porte.',
+    'Le chat se sèche près du feu.'
+   ],
+   glossary:[{word:'miaule',definition:'Fait le cri du chat : « miaou ».'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Quel temps fait-il ?',choices:['Il pleut','Il fait beau','Il neige'],ans:0,evidenceParagraph:0,explanation:'« Il pleut très fort. »'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:1,prompt:'Qui est dehors ?',choices:['Le petit chat','Lou','Le chien'],ans:0,evidenceParagraph:1,explanation:'« Le petit chat est dehors. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:2,prompt:'Pourquoi le chat miaule-t-il devant la porte ?',choices:['Il veut rentrer à l’abri','Il veut jouer dans la pluie','Il a vu une souris'],ans:0,evidenceParagraph:2,explanation:'Il pleut fort et il est dehors : il veut rentrer.'},
+    {id:'q4',type:'choice',competencies:['READ_CHARACTER'],difficulty:1,prompt:'Qui ouvre la porte ?',choices:['Lou','Le chat','Personne'],ans:0,evidenceParagraph:3,explanation:'« Lou ouvre la porte. »'},
+    {id:'q5',type:'choice',competencies:['READ_PLACE'],difficulty:2,prompt:'Où le chat se sèche-t-il ?',choices:['Près du feu','Sous la table','Dans le jardin'],ans:0,evidenceParagraph:4,explanation:'« Le chat se sèche près du feu. »'},
+    {id:'q6',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Le chat miaule','Lou ouvre la porte','Le chat se sèche'],ans:'Le chat miaule Lou ouvre la porte Le chat se sèche',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_cp_poule_doc_01:{
+   id:'fr_cp_poule_doc_01',level:'CP',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'La poule et ses poussins',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cp-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_TIME','READ_SEQUENCE','READ_GENRE'],
+   difficulty:1,estimatedReadingMinutes:1,audioMode:'audioRecommended',sessionSize:5,
+   paragraphs:[
+    'La poule est un oiseau.',
+    'Elle pond des œufs.',
+    'Elle s’assoit sur ses œufs pour les garder au chaud : elle les couve.',
+    'Au bout de trois semaines, les poussins sortent de l’œuf.',
+    'Le papa des poussins, c’est le coq.'
+   ],
+   glossary:[{word:'pond',definition:'Fait sortir un œuf de son corps.'},{word:'poussins',definition:'Les bébés de la poule.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'La poule est...',choices:['Un oiseau','Un poisson','Un chat'],ans:0,evidenceParagraph:0,explanation:'« La poule est un oiseau. »'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:2,prompt:'Que veut dire « couver » ?',choices:['S’asseoir sur ses œufs pour les garder au chaud','Manger des graines','Courir très vite'],ans:0,evidenceParagraph:2,explanation:'Le texte l’explique : « Elle s’assoit sur ses œufs pour les garder au chaud : elle les couve. »'},
+    {id:'q3',type:'choice',competencies:['READ_TIME'],difficulty:2,prompt:'Au bout de combien de temps les poussins sortent-ils de l’œuf ?',choices:['Trois semaines','Trois jours','Trois mois'],ans:0,evidenceParagraph:3,explanation:'« Au bout de trois semaines, les poussins sortent de l’œuf. »'},
+    {id:'q4',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Qui est le papa des poussins ?',choices:['Le coq','Le canard','Le lapin'],ans:0,evidenceParagraph:4,explanation:'« Le papa des poussins, c’est le coq. »'},
+    {id:'q5',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets dans l’ordre.',tokens:['La poule pond','Elle couve ses œufs','Les poussins sortent'],ans:'La poule pond Elle couve ses œufs Les poussins sortent',explanation:'D’abord l’œuf, puis la couvaison, enfin la naissance.'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE'],difficulty:2,prompt:'Ce texte...',choices:['Nous apprend des choses vraies sur la poule','Raconte une histoire inventée','Est une chanson'],ans:0,explanation:'C’est un texte documentaire : il donne des informations vraies.'}
+   ]
+  },
+
+  fr_ce1_sept_chevreaux_01:{
+   id:'fr_ce1_sept_chevreaux_01',level:'CE1',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Le loup et les sept chevreaux',author:'Jacob et Wilhelm Grimm',work:'Contes de l’enfance et du foyer (1812)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CE1, d’après le conte des frères Grimm (morts en 1859 et 1863), dans le domaine public.',
+   chapterLinks:['ce1-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_SEQUENCE','READ_JUSTIFY','READ_PLACE'],
+   difficulty:2,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Une maman chèvre devait partir dans la forêt. Elle dit à ses sept chevreaux : « N’ouvrez à personne ! Le loup a une grosse voix et des pattes noires. »',
+    'Bientôt, on frappa : « Ouvrez, mes enfants, c’est maman ! » Mais la voix était grosse. « Tu n’es pas notre maman, tu es le loup ! »',
+    'Le loup mangea de la craie pour adoucir sa voix. Il revint, mais il posa sa patte noire sur la fenêtre. « Tu n’es pas notre maman ! »',
+    'Alors le loup se fit mettre de la farine sur la patte. Il revint encore, avec une voix douce et une patte blanche. Cette fois, les chevreaux ouvrirent… et le loup entra !',
+    'Heureusement, le plus petit s’était caché dans la grande horloge. Quand la maman rentra, il lui raconta tout, et ensemble ils partirent délivrer ses frères.'
+   ],
+   glossary:[{word:'chevreaux',definition:'Les petits de la chèvre.'},{word:'adoucir',definition:'Rendre plus doux.'},{word:'farine',definition:'Poudre blanche faite avec du blé, qui sert à faire le pain.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Combien de chevreaux la maman a-t-elle ?',choices:['Sept','Trois','Dix'],ans:0,evidenceParagraph:0,explanation:'« Elle dit à ses sept chevreaux... »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'À quoi peut-on reconnaître le loup, selon la maman ?',choices:['À sa grosse voix et à ses pattes noires','À ses grandes oreilles','À sa queue rouge'],ans:0,evidenceParagraph:0,explanation:'« Le loup a une grosse voix et des pattes noires. »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:2,prompt:'Pourquoi le loup mange-t-il de la craie ?',choices:['Pour avoir une voix plus douce','Parce qu’il a faim','Pour blanchir ses dents'],ans:0,evidenceParagraph:2,explanation:'« Le loup mangea de la craie pour adoucir sa voix. »'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:3,prompt:'Pourquoi le loup met-il de la farine sur sa patte ?',choices:['Pour que sa patte soit blanche comme celle de la maman','Pour faire un gâteau','Pour se réchauffer'],ans:0,evidenceParagraph:3,explanation:'Les chevreaux l’avaient reconnu à sa patte noire : avec la farine, elle devient blanche.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:3,prompt:'Quel paragraphe montre que les chevreaux se sont fait piéger ?',evidenceParagraph:3,explanation:'« Cette fois, les chevreaux ouvrirent… et le loup entra ! »'},
+    {id:'q6',type:'choice',competencies:['READ_PLACE','READ_CHARACTER'],difficulty:2,prompt:'Où le plus petit chevreau s’est-il caché ?',choices:['Dans la grande horloge','Sous le lit','Dans la forêt'],ans:0,evidenceParagraph:4,explanation:'« ...le plus petit s’était caché dans la grande horloge. »'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:3,prompt:'Remets l’histoire dans l’ordre.',tokens:['La maman part','Le loup mange de la craie','Le loup met de la farine','Les chevreaux ouvrent la porte'],ans:'La maman part Le loup mange de la craie Le loup met de la farine Les chevreaux ouvrent la porte',explanation:'C’est l’ordre du conte : le loup essaie trois fois avant de réussir.'}
+   ]
+  },
+
+  fr_ce1_dents_doc_01:{
+   id:'fr_ce1_dents_doc_01',level:'CE1',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Prendre soin de ses dents',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce1-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_TIME','READ_CAUSE_CONSEQUENCE','READ_VOCAB_CONTEXT','READ_MAIN_IDEA','READ_AUTHOR_INTENT','READ_REFERENCE'],
+   difficulty:2,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Dans ta bouche, il y a des dents de lait. Vers six ans, elles commencent à tomber, et des dents définitives poussent à leur place.',
+    'Les dents définitives doivent durer toute la vie : il faut en prendre soin.',
+    'Quand tu manges du sucre, de minuscules êtres vivants appelés bactéries se régalent sur tes dents. Elles fabriquent un acide qui peut faire des trous : ce sont les caries.',
+    'Pour les éviter, brosse-toi les dents deux fois par jour, pendant deux minutes, surtout le soir avant de dormir.',
+    'Et va voir le dentiste une fois par an, même si tu n’as pas mal !'
+   ],
+   glossary:[{word:'définitives',definition:'Qui restent pour toujours.'},{word:'bactéries',definition:'Êtres vivants si petits qu’on ne peut pas les voir sans microscope.'},{word:'caries',definition:'Trous dans les dents, qui peuvent faire mal.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:2,prompt:'De quoi parle ce texte ?',choices:['De la façon de prendre soin de ses dents','Des animaux de la mer','D’une histoire de dentiste'],ans:0,explanation:'Le titre et tous les paragraphes parlent des dents et de leur soin.'},
+    {id:'q2',type:'choice',competencies:['READ_TIME'],difficulty:2,prompt:'Vers quel âge les dents de lait commencent-elles à tomber ?',choices:['Vers six ans','Vers deux ans','Vers douze ans'],ans:0,evidenceParagraph:0,explanation:'« Vers six ans, elles commencent à tomber... »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Qu’est-ce qui provoque les caries ?',choices:['Les bactéries qui se nourrissent du sucre','Le brossage des dents','Le dentiste'],ans:0,evidenceParagraph:2,explanation:'Les bactéries se régalent du sucre et fabriquent un acide qui fait des trous.'},
+    {id:'q4',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Combien de fois par jour faut-il se brosser les dents ?',choices:['Deux fois','Une fois par semaine','Dix fois'],ans:0,evidenceParagraph:3,explanation:'« ...brosse-toi les dents deux fois par jour, pendant deux minutes... »'},
+    {id:'q5',type:'choice',competencies:['READ_REFERENCE'],difficulty:3,prompt:'Dans « Elles fabriquent un acide », qui est « Elles » ?',choices:['Les bactéries','Les dents','Les caries'],ans:0,evidenceParagraph:2,explanation:'« Elles » reprend « bactéries », le nom juste avant.'},
+    {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:2,prompt:'Les dents « définitives » sont des dents...',choices:['Qui doivent durer toute la vie','Qui tombent très vite','Qui sont en sucre'],ans:0,evidenceParagraph:1,explanation:'« Les dents définitives doivent durer toute la vie. »'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:3,prompt:'Pourquoi conseille-t-on d’aller chez le dentiste « même si tu n’as pas mal » ?',choices:['Pour repérer un problème avant qu’il fasse mal','Parce que c’est amusant','Pour manger des bonbons'],ans:0,evidenceParagraph:4,explanation:'Le dentiste peut trouver une carie tout au début, avant qu’elle ne devienne douloureuse.'}
+   ]
+  },
+
+  fr_ce2_rat_ville_champs_01:{
+   id:'fr_ce2_rat_ville_champs_01',level:'CE2',subject:'francais',type:'literary_text',documentType:'fable',
+   title:'Le Rat de ville et le Rat des champs',author:'Jean de La Fontaine',work:'Fables, livre I (1668)',
+   sourceType:'public_domain',sourceReference:'Texte original de Jean de La Fontaine (mort en 1695), dans le domaine public.',
+   chapterLinks:['ce2-fr-comprendre'],verse:true,stanzas:[4,8,12,16,20,24],
+   competencies:['READ_CHARACTER','READ_PLACE','READ_CAUSE_CONSEQUENCE','READ_VOCAB_CONTEXT','READ_REFERENCE','READ_MAIN_IDEA','READ_JUSTIFY','READ_GENRE'],
+   difficulty:3,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Autrefois le Rat de ville',
+    'Invita le Rat des champs,',
+    'D’une façon fort civile,',
+    'À des reliefs d’Ortolans.',
+    'Sur un Tapis de Turquie',
+    'Le couvert se trouva mis.',
+    'Je laisse à penser la vie',
+    'Que firent ces deux amis.',
+    'Le régal fut fort honnête,',
+    'Rien ne manquait au festin ;',
+    'Mais quelqu’un troubla la fête',
+    'Pendant qu’ils étaient en train.',
+    'À la porte de la salle',
+    'Ils entendirent du bruit :',
+    'Le Rat de ville détale ;',
+    'Son camarade le suit.',
+    'Le bruit cesse, on se retire :',
+    'Rats en campagne aussitôt ;',
+    'Et le citadin de dire :',
+    'Achevons tout notre rôt.',
+    'C’est assez, dit le rustique ;',
+    'Demain vous viendrez chez moi :',
+    'Ce n’est pas que je me pique',
+    'De tous vos festins de Roi ;',
+    'Mais rien ne vient m’interrompre :',
+    'Je mange tout à loisir.',
+    'Adieu donc ; fi du plaisir',
+    'Que la crainte peut corrompre.'
+   ],
+   glossary:[{word:'civile',definition:'Polie.'},{word:'reliefs',definition:'Les restes d’un repas.'},{word:'Ortolans',definition:'Petits oiseaux qu’on servait autrefois comme plat de luxe.'},{word:'festin',definition:'Un repas de fête, très riche.'},{word:'détale',definition:'S’enfuit en courant.'},{word:'citadin',definition:'Celui qui habite en ville.'},{word:'rôt',definition:'Le rôti, la viande du repas.'},{word:'rustique',definition:'Celui qui vit à la campagne.'},{word:'crainte',definition:'La peur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:2,prompt:'Qui invite qui ?',choices:['Le Rat de ville invite le Rat des champs','Le Rat des champs invite le Rat de ville','Le chat invite les rats'],ans:0,evidenceParagraph:1,explanation:'« Autrefois le Rat de ville / Invita le Rat des champs ».'},
+    {id:'q2',type:'choice',competencies:['READ_PLACE'],difficulty:3,prompt:'Sur quoi le repas est-il servi ?',choices:['Sur un tapis de Turquie','Dans un champ','Sur une table de jardin'],ans:0,evidenceParagraph:4,explanation:'« Sur un Tapis de Turquie / Le couvert se trouva mis. »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Qu’est-ce qui interrompt le repas ?',choices:['Un bruit à la porte de la salle','Un orage','Le Rat des champs qui a trop mangé'],ans:0,evidenceParagraph:13,explanation:'« À la porte de la salle / Ils entendirent du bruit ».'},
+    {id:'q4',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'« Le Rat de ville détale » veut dire qu’il...',choices:['S’enfuit en courant','Se met à danser','Se cache sous le tapis sans bouger'],ans:0,evidenceParagraph:14,explanation:'Il a entendu du bruit : il s’enfuit, et « son camarade le suit ».'},
+    {id:'q5',type:'choice',competencies:['READ_REFERENCE'],difficulty:4,prompt:'Qui est « le rustique » ?',choices:['Le Rat des champs','Le Rat de ville','Le maître de la maison'],ans:0,evidenceParagraph:20,explanation:'Le rustique, c’est celui qui vit à la campagne : le Rat des champs. (Le « citadin », c’est le Rat de ville.)'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le vers où le Rat des champs dit ce qu’il aime chez lui.',evidenceParagraph:25,explanation:'« Je mange tout à loisir » : chez lui, personne ne le dérange.'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:4,prompt:'Quelle est la morale de cette fable ?',choices:['Mieux vaut un repas simple dans le calme qu’un festin dans la peur','Il faut toujours manger le plus possible','Les rats des villes sont plus courageux'],ans:0,evidenceParagraph:27,explanation:'« ...fi du plaisir / Que la crainte peut corrompre » : un plaisir gâché par la peur ne vaut rien.'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE'],difficulty:3,prompt:'Ce texte est...',choices:['Une fable en vers','Un texte documentaire sur les rats','Une recette de cuisine'],ans:0,explanation:'Des animaux qui parlent, des vers, une leçon à la fin : c’est une fable.'}
+   ]
+  },
+
+  fr_ce2_hirondelles_doc_01:{
+   id:'fr_ce2_hirondelles_doc_01',level:'CE2',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Le grand voyage des hirondelles',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce2-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_TIME','READ_CAUSE_CONSEQUENCE','READ_VOCAB_CONTEXT','READ_PLACE','READ_SEQUENCE','READ_MAIN_IDEA'],
+   difficulty:3,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Au printemps, on voit revenir les hirondelles. Elles construisent leur nid avec de la boue, souvent sous un toit ou dans une grange.',
+    'Les hirondelles se nourrissent d’insectes, qu’elles attrapent en plein vol.',
+    'À la fin de l’été, quand il commence à faire froid, les insectes deviennent rares. Les hirondelles se rassemblent alors sur les fils électriques, puis s’envolent vers l’Afrique, où il fait chaud.',
+    'Ce voyage dure plusieurs semaines et fait des milliers de kilomètres. On dit que ce sont des oiseaux migrateurs.',
+    'Au printemps suivant, beaucoup reviennent au même endroit, parfois même dans le même nid !'
+   ],
+   glossary:[{word:'grange',definition:'Bâtiment de ferme où l’on range le foin et le matériel.'},{word:'rares',definition:'Peu nombreux, difficiles à trouver.'},{word:'migrateurs',definition:'Qui partent chaque année vers une autre région, puis reviennent.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:2,prompt:'De quoi parle surtout ce texte ?',choices:['Du voyage que font les hirondelles chaque année','De la vie dans une ferme','Des fils électriques'],ans:0,explanation:'Le titre et la plupart des paragraphes parlent de leur départ et de leur retour.'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Avec quoi les hirondelles construisent-elles leur nid ?',choices:['Avec de la boue','Avec des cailloux','Avec du papier'],ans:0,evidenceParagraph:0,explanation:'« Elles construisent leur nid avec de la boue... »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi les hirondelles partent-elles à la fin de l’été ?',choices:['Parce qu’il fait froid et qu’il n’y a plus assez d’insectes à manger','Parce que leur nid est cassé','Parce qu’elles s’ennuient'],ans:0,evidenceParagraph:2,explanation:'Elles mangent des insectes ; quand il fait froid, « les insectes deviennent rares ».'},
+    {id:'q4',type:'choice',competencies:['READ_PLACE'],difficulty:2,prompt:'Où vont-elles passer l’hiver ?',choices:['En Afrique','Au pôle Nord','Dans la grange'],ans:0,evidenceParagraph:2,explanation:'« ...puis s’envolent vers l’Afrique, où il fait chaud. »'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Un oiseau « migrateur », c’est un oiseau qui...',choices:['Part chaque année vers une autre région, puis revient','Ne vole jamais','Vit toujours au même endroit'],ans:0,evidenceParagraph:3,explanation:'Le texte vient de décrire ce long voyage aller et retour.'},
+    {id:'q6',type:'choice',competencies:['READ_TIME'],difficulty:3,prompt:'Quand les hirondelles reviennent-elles ?',choices:['Au printemps','En hiver','À la fin de l’été'],ans:0,evidenceParagraph:4,explanation:'« Au printemps suivant, beaucoup reviennent au même endroit... »'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:3,prompt:'Remets l’année des hirondelles dans l’ordre.',tokens:['Elles arrivent au printemps','Elles chassent les insectes tout l’été','Elles se rassemblent sur les fils','Elles s’envolent vers l’Afrique'],ans:'Elles arrivent au printemps Elles chassent les insectes tout l’été Elles se rassemblent sur les fils Elles s’envolent vers l’Afrique',explanation:'C’est l’ordre des saisons décrit dans le texte.'}
+   ]
+  },
+
+  fr_cm1_petit_poucet_01:{
+   id:'fr_cm1_petit_poucet_01',level:'CM1',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Le Petit Poucet',author:'Charles Perrault',work:'Histoires ou contes du temps passé (1697)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CM1 du début du conte, d’après Charles Perrault (mort en 1703), dans le domaine public.',
+   chapterLinks:['cm1-fr-litterature'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_SEQUENCE','READ_EMOTION_INTENTION'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Il était une fois un bûcheron et sa femme qui avaient sept garçons. Le plus jeune était si petit qu’à sa naissance, il n’était pas plus grand que le pouce : on l’appela le Petit Poucet.',
+    'Une année, il y eut une terrible famine. Un soir, les parents, désespérés, décidèrent de perdre leurs enfants dans la forêt, car ils ne pouvaient plus les nourrir.',
+    'Caché sous le tabouret de son père, le Petit Poucet entendit tout. Le lendemain matin, il alla au bord d’un ruisseau et remplit ses poches de petits cailloux blancs.',
+    'Dans la forêt, il les jeta un à un le long du chemin. Quand les parents s’éclipsèrent, ses frères se mirent à pleurer, mais Poucet les ramena tous à la maison en suivant les cailloux.',
+    'Quelque temps plus tard, les parents recommencèrent. Cette fois, la porte était fermée à double tour : Poucet ne put sortir chercher des cailloux. Il émietta donc son morceau de pain le long du chemin.',
+    'Hélas ! les oiseaux mangèrent toutes les miettes. Les sept frères étaient perdus. Grimpé en haut d’un arbre, Poucet aperçut alors une petite lumière, très loin, au-delà de la forêt.'
+   ],
+   glossary:[{word:'bûcheron',definition:'Celui dont le métier est de couper des arbres.'},{word:'famine',definition:'Période où l’on manque gravement de nourriture.'},{word:'s’éclipsèrent',definition:'Partirent discrètement, sans être vus.'},{word:'émietta',definition:'Réduisit en miettes, en tout petits morceaux.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:3,prompt:'Pourquoi le héros s’appelle-t-il le Petit Poucet ?',choices:['À sa naissance, il n’était pas plus grand qu’un pouce','Il suçait son pouce','Il avait un gros pouce'],ans:0,evidenceParagraph:0,explanation:'« ...il n’était pas plus grand que le pouce : on l’appela le Petit Poucet. »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi les parents veulent-ils perdre leurs enfants ?',choices:['À cause de la famine : ils ne peuvent plus les nourrir','Parce que les enfants sont méchants','Pour qu’ils apprennent à chasser'],ans:0,evidenceParagraph:1,explanation:'« ...car ils ne pouvaient plus les nourrir. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Pourquoi Poucet remplit-il ses poches de cailloux blancs ?',choices:['Pour marquer le chemin et pouvoir revenir','Pour jouer avec ses frères','Pour les vendre'],ans:0,evidenceParagraph:2,explanation:'Il a entendu le projet de ses parents : il prépare un moyen de retrouver le chemin.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Poucet utilise-t-il du pain la deuxième fois ?',choices:['La porte était fermée : il n’a pas pu aller chercher de cailloux','Le pain se voit mieux','Il n’aime pas le pain'],ans:0,evidenceParagraph:4,explanation:'« ...la porte était fermée à double tour : Poucet ne put sortir chercher des cailloux. »'},
+    {id:'q5',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi la ruse du pain échoue-t-elle, alors que celle des cailloux avait réussi ?',choices:['Les oiseaux mangent le pain, mais pas les cailloux','Le pain est trop lourd','Les frères ont ramassé le pain'],ans:0,evidenceParagraph:5,explanation:'« Hélas ! les oiseaux mangèrent toutes les miettes. »'},
+    {id:'q6',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_CHARACTER'],difficulty:4,prompt:'Quelle qualité montre Poucet dans ce conte ?',choices:['Il est malin et ne perd pas courage','Il est paresseux','Il est méchant avec ses frères'],ans:0,evidenceParagraph:3,explanation:'Il trouve des solutions et ramène ses frères, alors qu’eux pleurent.'},
+    {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui montre que Poucet sauve ses frères une première fois.',evidenceParagraph:3,explanation:'« ...Poucet les ramena tous à la maison en suivant les cailloux. »'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets le conte dans l’ordre.',tokens:['Poucet entend ses parents','Il sème des cailloux blancs','Il sème des miettes de pain','Il aperçoit une lumière au loin'],ans:'Poucet entend ses parents Il sème des cailloux blancs Il sème des miettes de pain Il aperçoit une lumière au loin',explanation:'C’est l’ordre du récit.'},
+    {id:'q9',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'« Quand les parents s’éclipsèrent » veut dire quand les parents...',choices:['Partirent discrètement','Se mirent à crier','S’endormirent'],ans:0,evidenceParagraph:3,explanation:'Juste après, les frères pleurent : ils se retrouvent seuls, leurs parents sont partis sans qu’ils les voient.'}
+   ]
+  },
+
+  fr_cm1_bouteille_01:{
+   id:'fr_cm1_bouteille_01',level:'CM1',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le message dans la bouteille',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm1-fr-comprendre'],
+   competencies:['READ_PLACE','READ_EXPLICIT','READ_CHARACTER','READ_REFERENCE','READ_CAUSE_CONSEQUENCE','READ_TIME','READ_INFERENCE','READ_EMOTION_INTENTION'],
+   difficulty:4,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Pendant les vacances, Lina se promenait sur la plage avec son grand-père quand elle aperçut une bouteille coincée entre deux rochers.',
+    'À l’intérieur, il y avait un papier roulé. Lina le déroula avec précaution : l’encre avait un peu coulé, mais on pouvait encore lire.',
+    '« Je m’appelle Tom, j’ai dix ans. J’ai lancé cette bouteille depuis le bateau qui m’emmène en Irlande. Si tu la trouves, écris-moi ! » Suivait une adresse.',
+    'Le grand-père examina le papier : « Regarde la date : il a été écrit il y a deux ans. Cette bouteille a fait un long voyage ! »',
+    'Le soir même, Lina sortit son plus beau papier à lettres. Elle hésita longtemps sur la première phrase, puis écrivit : « Cher Tom, ta bouteille est arrivée… »'
+   ],
+   glossary:[{word:'coincée',definition:'Bloquée, qui ne peut plus bouger.'},{word:'précaution',definition:'Grande attention, pour ne rien abîmer.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:2,prompt:'Où Lina trouve-t-elle la bouteille ?',choices:['Sur la plage, entre deux rochers','Dans le jardin','Sur un bateau'],ans:0,evidenceParagraph:0,explanation:'« ...une bouteille coincée entre deux rochers » sur la plage.'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:3,prompt:'Qui a écrit le message ?',choices:['Tom, un garçon de dix ans','Le grand-père de Lina','Un capitaine de bateau'],ans:0,evidenceParagraph:2,explanation:'« Je m’appelle Tom, j’ai dix ans. »'},
+    {id:'q3',type:'choice',competencies:['READ_REFERENCE'],difficulty:4,prompt:'Dans « Lina le déroula », que représente « le » ?',choices:['Le papier roulé','La bouteille','Le grand-père'],ans:0,evidenceParagraph:1,explanation:'« le » reprend « un papier roulé », juste avant.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:4,prompt:'Pourquoi l’encre avait-elle un peu coulé ?',choices:['À cause de l’humidité de la mer pendant le voyage','Parce que Tom écrivait mal','Parce que Lina l’a mouillée exprès'],ans:0,evidenceParagraph:1,explanation:'La bouteille a passé longtemps en mer : un peu d’humidité a pu entrer.'},
+    {id:'q5',type:'choice',competencies:['READ_TIME'],difficulty:3,prompt:'Quand le message a-t-il été écrit ?',choices:['Il y a deux ans','Hier','Il y a cent ans'],ans:0,evidenceParagraph:3,explanation:'« ...il a été écrit il y a deux ans. »'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi le grand-père dit-il que la bouteille « a fait un long voyage » ?',choices:['Elle a dérivé en mer pendant deux ans avant d’arriver','Elle est venue en avion','Il l’a transportée dans sa voiture'],ans:0,evidenceParagraph:3,explanation:'Écrite il y a deux ans, lancée d’un bateau : elle a flotté très longtemps.'},
+    {id:'q7',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Pourquoi Lina hésite-t-elle longtemps sur la première phrase ?',choices:['Elle tient à écrire une belle lettre à Tom','Elle ne sait pas écrire','Elle ne veut pas répondre'],ans:0,evidenceParagraph:4,explanation:'Elle prend « son plus beau papier » : cette lettre compte beaucoup pour elle.'},
+    {id:'q8',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Que demandait Tom dans son message ?',choices:['Que la personne qui trouve la bouteille lui écrive','Qu’on lui renvoie la bouteille','Qu’on vienne le chercher'],ans:0,evidenceParagraph:2,explanation:'« Si tu la trouves, écris-moi ! »'}
+   ]
+  },
+
+  fr_cm2_habits_empereur_01:{
+   id:'fr_cm2_habits_empereur_01',level:'CM2',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Les Habits neufs de l’empereur',author:'Hans Christian Andersen',work:'Contes (1837)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CM2, d’après Hans Christian Andersen (mort en 1875), dans le domaine public.',
+   chapterLinks:['cm2-fr-litterature','cm2-fr-temps-recit'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_INFERENCE','READ_EMOTION_INTENTION','READ_AUTHOR_INTENT','READ_STRUCTURE','READ_JUSTIFY','READ_GENRE'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Il était une fois un empereur qui aimait tant les beaux habits qu’il dépensait tout son argent pour sa toilette.',
+    'Un jour, deux escrocs arrivèrent en ville. Ils prétendirent savoir tisser une étoffe merveilleuse, qui avait une propriété étonnante : elle était invisible pour toute personne sotte ou incapable de faire son travail.',
+    'L’empereur, ravi, leur donna beaucoup d’or et de soie. Les deux escrocs installèrent des métiers à tisser et firent semblant de travailler, mais il n’y avait rien du tout sur les métiers.',
+    'L’empereur envoya son vieux ministre voir l’ouvrage. Le ministre ne vit rien. « Suis-je donc sot ? pensa-t-il. Personne ne doit le savoir ! » Et il fit de grands compliments sur l’étoffe.',
+    'Le jour de la grande procession, l’empereur se déshabilla, et les escrocs firent semblant de lui passer ses nouveaux habits. Dans la rue, tout le monde s’écriait : « Quels habits magnifiques ! »',
+    'Soudain, un petit enfant dit : « Mais il n’a rien sur lui ! » Le mot passa de bouche en bouche, et bientôt toute la foule criait la même chose.',
+    'L’empereur frissonna, car il sentait qu’ils avaient raison. Mais il pensa : « Je dois tenir jusqu’au bout. » Et il continua sa marche, plus fièrement que jamais.'
+   ],
+   glossary:[{word:'escrocs',definition:'Des personnes qui trompent les autres pour leur prendre leur argent.'},{word:'étoffe',definition:'Un tissu.'},{word:'sotte',definition:'Bête, qui manque d’intelligence.'},{word:'procession',definition:'Un long défilé solennel dans les rues.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:3,prompt:'Quel est le grand défaut de l’empereur ?',choices:['Il ne pense qu’à ses beaux habits','Il est trop généreux','Il a peur des enfants'],ans:0,evidenceParagraph:0,explanation:'« ...il dépensait tout son argent pour sa toilette. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Selon les escrocs, qui ne peut pas voir l’étoffe ?',choices:['Les personnes sottes ou incapables de faire leur travail','Les enfants','Les personnes qui ont mal aux yeux'],ans:0,evidenceParagraph:1,explanation:'« ...elle était invisible pour toute personne sotte ou incapable de faire son travail. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi le ministre fait-il des compliments sur une étoffe qu’il ne voit pas ?',choices:['Il a peur qu’on le croie sot','Il voit vraiment l’étoffe','Il veut acheter l’étoffe'],ans:0,evidenceParagraph:3,explanation:'« Suis-je donc sot ? [...] Personne ne doit le savoir ! » Il préfère mentir.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi la foule s’écrie-t-elle « Quels habits magnifiques ! » ?',choices:['Personne n’ose avouer qu’il ne voit rien','Les habits sont vraiment magnifiques','Les escrocs les ont payés'],ans:0,evidenceParagraph:4,explanation:'Comme le ministre, chacun craint de passer pour sot s’il dit la vérité.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où quelqu’un ose enfin dire la vérité.',evidenceParagraph:5,explanation:'« Mais il n’a rien sur lui ! », dit un petit enfant.'},
+    {id:'q6',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Pourquoi l’empereur continue-t-il à marcher « plus fièrement que jamais » ?',choices:['Par orgueil : il ne veut pas reconnaître qu’il s’est fait tromper','Parce qu’il n’a rien entendu','Parce qu’il a chaud'],ans:0,evidenceParagraph:6,explanation:'Il « sentait qu’ils avaient raison », mais préfère faire semblant jusqu’au bout.'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:6,prompt:'Que veut nous faire comprendre ce conte ?',choices:['On ment parfois par peur du regard des autres, et il faut du courage pour dire la vérité','Il faut toujours acheter de beaux habits','Les enfants ne doivent pas parler aux empereurs'],ans:0,explanation:'Tout le monde ment pour ne pas paraître sot ; seul l’enfant, sincère, dit ce qu’il voit.'},
+    {id:'q8',type:'choice',competencies:['READ_STRUCTURE','READ_GENRE'],difficulty:5,prompt:'Dans le premier paragraphe, l’imparfait (« aimait », « dépensait ») sert à...',choices:['Décrire la situation de départ, les habitudes de l’empereur','Raconter une action soudaine','Parler du futur'],ans:0,evidenceParagraph:0,explanation:'L’imparfait décrit le décor et les habitudes ; le passé simple (« arrivèrent », « dit ») raconte les actions qui font avancer l’histoire.'}
+   ]
+  },
+
+  fr_cm2_cycle_eau_doc_01:{
+   id:'fr_cm2_cycle_eau_doc_01',level:'CM2',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Le grand voyage de l’eau',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm2-fr-comprendre'],
+   competencies:['READ_MAIN_IDEA','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_SEQUENCE','READ_STRUCTURE','READ_EXPLICIT','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'L’eau de la Terre voyage sans cesse : elle passe de la mer au ciel, puis du ciel à la terre, avant de revenir à la mer. On appelle ce voyage le cycle de l’eau.',
+    'Chauffée par le soleil, l’eau des océans, des lacs et des rivières s’évapore : elle se transforme en vapeur d’eau, un gaz invisible qui monte dans l’air.',
+    'En altitude, l’air est plus froid. La vapeur se refroidit et se transforme en minuscules gouttelettes : c’est la condensation. Ces gouttelettes forment les nuages.',
+    'Quand les gouttelettes grossissent et deviennent trop lourdes, elles tombent : ce sont les précipitations (pluie, neige ou grêle).',
+    'Une partie de cette eau ruisselle jusqu’aux rivières, qui la ramènent à la mer ; une autre s’infiltre dans le sol et forme des nappes souterraines. Puis le voyage recommence.'
+   ],
+   glossary:[{word:'s’évapore',definition:'Se transforme en gaz sous l’effet de la chaleur.'},{word:'altitude',definition:'La hauteur au-dessus du niveau de la mer.'},{word:'ruisselle',definition:'Coule à la surface du sol.'},{word:'s’infiltre',definition:'Pénètre petit à petit à l’intérieur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:3,prompt:'Quel est le sujet du texte ?',choices:['Le cycle de l’eau','La pêche en mer','La fabrication des nuages artificiels'],ans:0,evidenceParagraph:0,explanation:'« On appelle ce voyage le cycle de l’eau. »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Qu’est-ce qui fait s’évaporer l’eau ?',choices:['La chaleur du soleil','Le vent froid','La pluie'],ans:0,evidenceParagraph:1,explanation:'« Chauffée par le soleil, l’eau [...] s’évapore. »'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'Qu’est-ce que la condensation ?',choices:['La vapeur qui se refroidit et devient de minuscules gouttelettes','L’eau qui coule dans les rivières','La neige qui fond'],ans:0,evidenceParagraph:2,explanation:'« La vapeur se refroidit et se transforme en minuscules gouttelettes : c’est la condensation. »'},
+    {id:'q4',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'De quoi sont faits les nuages ?',choices:['De minuscules gouttelettes d’eau','De fumée','De coton'],ans:0,evidenceParagraph:2,explanation:'« Ces gouttelettes forment les nuages. »'},
+    {id:'q5',type:'order',competencies:['READ_SEQUENCE','READ_STRUCTURE'],difficulty:4,prompt:'Remets les étapes du cycle dans l’ordre.',tokens:['L’eau s’évapore','La vapeur se condense en nuages','Les précipitations tombent','L’eau rejoint les rivières et la mer'],ans:'L’eau s’évapore La vapeur se condense en nuages Les précipitations tombent L’eau rejoint les rivières et la mer',explanation:'Chaque paragraphe décrit une étape, dans cet ordre.'},
+    {id:'q6',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi les gouttelettes finissent-elles par tomber ?',choices:['Elles grossissent et deviennent trop lourdes','Le soleil les pousse','Les oiseaux les font tomber'],ans:0,evidenceParagraph:3,explanation:'« Quand les gouttelettes grossissent et deviennent trop lourdes, elles tombent. »'},
+    {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui explique d’où vient l’eau des nappes souterraines.',evidenceParagraph:4,explanation:'« ...une autre s’infiltre dans le sol et forme des nappes souterraines. »'},
+    {id:'q8',type:'choice',competencies:['READ_INFERENCE','READ_STRUCTURE'],difficulty:5,prompt:'Pourquoi parle-t-on de « cycle » ?',choices:['Parce que le voyage de l’eau recommence sans fin','Parce qu’il faut un vélo','Parce qu’il ne se produit qu’une fois'],ans:0,evidenceParagraph:4,explanation:'« Puis le voyage recommence » : un cycle revient toujours à son point de départ.'}
    ]
   }
 
