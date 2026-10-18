@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.1-lot2-2026-10-18',
+ version:'1.2-lot3-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -671,6 +671,285 @@ window.MQ_READING={
     {id:'q6',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:5,prompt:'À qui s’adresse le poète avec « tu » ?',choices:['À la personne disparue','Au lecteur','À un ami qui marche avec lui'],ans:0,evidenceParagraph:10,explanation:'Le « tu » de « je sais que tu m’attends » est le même que celui de « ta tombe ». Hugo l’a écrit pour sa fille Léopoldine, morte noyée en 1843.'},
     {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Combien de syllabes compte chaque vers de ce poème ?',choices:['12 (ce sont des alexandrins)','8 (octosyllabes)','10 (décasyllabes)'],ans:0,explanation:'Par exemple : « Je / ne / puis / de/meu/rer / loin / de / toi / plus / long/temps » = 12 syllabes.'},
     {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:8,prompt:'Que montre le bouquet de « houx vert » et de « bruyère en fleur » à la fin ?',choices:['Un hommage fidèle et vivant, qui contraste avec la mort','Que le poète est jardinier','Que c’est le printemps'],ans:0,evidenceParagraph:11,explanation:'Le houx reste vert toute l’année (fidélité, permanence) et la bruyère est en fleur : la vie et le souvenir s’opposent à la tombe.'}
+   ]
+  },
+
+  // ===== Lot 3 (18/10/2026) : 3e support pour le primaire (rotation dans « Comprendre ») et nouveaux
+  // chapitres du collège. Adaptations libres (Hésiode, Defoe, Hugo — tous dans le domaine public) et
+  // texte original de Verlaine (mort en 1896).
+
+  fr_cp_gouter_01:{
+   id:'fr_cp_gouter_01',level:'CP',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le goûter de Sami',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cp-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_EMOTION_INTENTION','READ_INFERENCE'],
+   difficulty:1,estimatedReadingMinutes:1,audioMode:'audioRecommended',sessionSize:5,
+   paragraphs:[
+    'Sami a une pomme et un gâteau.',
+    'Son amie Zoé n’a pas de goûter.',
+    'Sami coupe son gâteau en deux.',
+    'Il donne une part à Zoé.',
+    'Zoé dit : « Merci, Sami ! »'
+   ],
+   glossary:[{word:'goûter',definition:'Le petit repas de l’après-midi.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Qu’a Sami pour son goûter ?',choices:['Une pomme et un gâteau','Une banane','Du pain'],ans:0,evidenceParagraph:0,explanation:'« Sami a une pomme et un gâteau. »'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:1,prompt:'Qui n’a pas de goûter ?',choices:['Zoé','Sami','La maîtresse'],ans:0,evidenceParagraph:1,explanation:'« Son amie Zoé n’a pas de goûter. »'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Que fait Sami avec son gâteau ?',choices:['Il le coupe en deux','Il le mange tout seul','Il le jette'],ans:0,evidenceParagraph:2,explanation:'« Sami coupe son gâteau en deux. »'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE','READ_EMOTION_INTENTION'],difficulty:2,prompt:'Pourquoi Sami coupe-t-il son gâteau ?',choices:['Pour partager avec Zoé','Parce qu’il est trop gros pour lui','Pour le garder pour demain'],ans:0,evidenceParagraph:3,explanation:'Juste après, « il donne une part à Zoé » : il partage.'},
+    {id:'q5',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:2,prompt:'Comment se sent Zoé à la fin ?',choices:['Contente','Fâchée','Triste'],ans:0,evidenceParagraph:4,explanation:'Elle dit « Merci, Sami ! » : elle est contente.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:2,prompt:'Quelle phrase montre que Sami partage ?',evidenceParagraph:3,explanation:'« Il donne une part à Zoé. »'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Sami coupe son gâteau','Il donne une part à Zoé','Zoé dit merci'],ans:'Sami coupe son gâteau Il donne une part à Zoé Zoé dit merci',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_ce1_tortue_classe_01:{
+   id:'fr_ce1_tortue_classe_01',level:'CE1',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Où est passée Caramel ?',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce1-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_PLACE','READ_INFERENCE','READ_SEQUENCE','READ_REFERENCE','READ_EMOTION_INTENTION'],
+   difficulty:2,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Dans la classe de Mme Leroy, il y a une tortue qui s’appelle Caramel.',
+    'Lundi matin, son bac est vide ! Les élèves sont inquiets.',
+    'Ils cherchent partout : sous les tables, derrière les livres, près de la porte.',
+    'Soudain, Léo entend un petit bruit dans le coin lecture.',
+    'Caramel est là, cachée sous un coussin, en train de grignoter une feuille de salade tombée du sac de Léa.',
+    'Tout le monde rit. Mme Leroy ajoute un couvercle au bac.'
+   ],
+   glossary:[{word:'inquiets',definition:'Qui ont peur qu’il soit arrivé quelque chose de grave.'},{word:'grignoter',definition:'Manger tout doucement, par petits morceaux.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Quel animal vit dans la classe ?',choices:['Une tortue','Un hamster','Un poisson'],ans:0,evidenceParagraph:0,explanation:'« ...il y a une tortue qui s’appelle Caramel. »'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:2,prompt:'Comment se sentent les élèves quand le bac est vide ?',choices:['Inquiets','Contents','Fâchés'],ans:0,evidenceParagraph:1,explanation:'« Les élèves sont inquiets. »'},
+    {id:'q3',type:'choice',competencies:['READ_PLACE'],difficulty:2,prompt:'Où retrouve-t-on Caramel ?',choices:['Sous un coussin, dans le coin lecture','Dans le sac de Léa','Derrière la porte'],ans:0,evidenceParagraph:4,explanation:'« Caramel est là, cachée sous un coussin » dans le coin lecture.'},
+    {id:'q4',type:'text',strict:false,acc:['Léo','Leo','léo'],competencies:['READ_CHARACTER'],difficulty:2,prompt:'Quel élève entend un petit bruit ?',evidenceParagraph:3,explanation:'« Soudain, Léo entend un petit bruit... »'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:3,prompt:'Pourquoi Caramel est-elle allée dans le coin lecture ?',choices:['Pour manger la salade tombée du sac de Léa','Pour lire un livre','Parce qu’elle avait froid'],ans:0,evidenceParagraph:4,explanation:'Elle « grignote une feuille de salade tombée du sac de Léa » : c’est ce qui l’a attirée.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE','READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Pourquoi la maîtresse ajoute-t-elle un couvercle au bac ?',choices:['Pour que Caramel ne s’échappe plus','Pour que Caramel ait chaud','Pour cacher Caramel'],ans:0,evidenceParagraph:5,explanation:'Caramel est sortie de son bac : le couvercle l’en empêchera.'},
+    {id:'q7',type:'choice',competencies:['READ_REFERENCE'],difficulty:2,prompt:'Dans « Ils cherchent partout », qui est « Ils » ?',choices:['Les élèves','Les tortues','Les livres'],ans:0,evidenceParagraph:2,explanation:'« Ils » reprend « les élèves » de la phrase d’avant.'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Le bac est vide','Les élèves cherchent partout','Léo entend un bruit','On retrouve Caramel'],ans:'Le bac est vide Les élèves cherchent partout Léo entend un bruit On retrouve Caramel',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_ce2_neige_01:{
+   id:'fr_ce2_neige_01',level:'CE2',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'La première neige',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce2-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_TIME','READ_EMOTION_INTENTION','READ_INFERENCE','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_JUSTIFY'],
+   difficulty:3,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Ce matin de décembre, Nora ouvrit les volets et resta bouche bée : le jardin avait disparu sous un épais manteau blanc.',
+    'Elle enfila ses bottes en vitesse, oublia ses gants et courut dehors.',
+    'La neige craquait sous ses pas. Nora forma une boule et la lança contre le vieux chêne.',
+    'Au bout de quelques minutes, elle ne sentait plus ses doigts. Elle souffla dessus, mais rien n’y fit.',
+    'Sa grand-mère l’appela depuis la cuisine : un chocolat chaud et une paire de gants l’attendaient sur la table.'
+   ],
+   glossary:[{word:'bouche bée',definition:'La bouche ouverte, très étonnée.'},{word:'volets',definition:'Panneaux de bois ou de métal qui ferment une fenêtre de l’extérieur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_TIME'],difficulty:2,prompt:'À quel moment se passe l’histoire ?',choices:['Un matin de décembre','Un soir d’été','Un après-midi de printemps'],ans:0,evidenceParagraph:0,explanation:'« Ce matin de décembre... »'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'« Un épais manteau blanc » désigne...',choices:['La neige qui recouvre le jardin','Un vêtement de Nora','Un drap posé sur l’herbe'],ans:0,evidenceParagraph:0,explanation:'C’est une image : la neige recouvre le jardin comme un manteau.'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:2,prompt:'Que ressent Nora en ouvrant les volets ?',choices:['Une grande surprise','De la peur','De l’ennui'],ans:0,evidenceParagraph:0,explanation:'Elle « resta bouche bée » : elle est très surprise.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:4,prompt:'Pourquoi Nora ne sent-elle plus ses doigts ?',choices:['Parce qu’elle a oublié ses gants et touche la neige','Parce qu’elle s’est cognée contre le chêne','Parce que ses bottes sont trop petites'],ans:0,evidenceParagraph:1,explanation:'Elle « oublia ses gants » puis joua avec la neige : ses doigts ont gelé.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:3,prompt:'Quelle phrase montre que Nora était très pressée de sortir ?',evidenceParagraph:1,explanation:'« Elle enfila ses bottes en vitesse, oublia ses gants et courut dehors. »'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Qu’a compris la grand-mère ?',choices:['Que Nora avait froid aux mains','Que Nora avait faim de gâteaux','Que Nora voulait rentrer dormir'],ans:0,evidenceParagraph:4,explanation:'Elle prépare un chocolat chaud et des gants : elle a deviné que Nora avait froid.'},
+    {id:'q7',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Contre quoi Nora lance-t-elle sa boule de neige ?',choices:['Le vieux chêne','La fenêtre','Sa grand-mère'],ans:0,evidenceParagraph:2,explanation:'« ...la lança contre le vieux chêne. »'}
+   ]
+  },
+
+  fr_cm2_volcans_doc_01:{
+   id:'fr_cm2_volcans_doc_01',level:'CM2',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Comment fonctionne un volcan ?',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm2-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_MAIN_IDEA','READ_STRUCTURE','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Sous nos pieds, à plusieurs dizaines de kilomètres de profondeur, la chaleur est si forte que certaines roches fondent. Elles forment le magma.',
+    'Plus léger que les roches qui l’entourent, le magma remonte lentement et s’accumule dans une poche appelée chambre magmatique.',
+    'Quand la pression devient trop forte, le magma monte par une cheminée jusqu’à la surface : c’est l’éruption. Une fois sorti, le magma prend le nom de lave.',
+    'Certains volcans laissent couler des rivières de lave : on parle d’éruptions effusives. D’autres explosent et projettent des cendres très haut dans le ciel : ce sont les éruptions explosives.',
+    'En France, le piton de la Fournaise, sur l’île de La Réunion, est l’un des volcans les plus actifs du monde. Les scientifiques le surveillent jour et nuit pour prévenir la population.'
+   ],
+   glossary:[{word:'magma',definition:'Roche fondue, très chaude, qui se trouve sous la surface de la Terre.'},{word:'pression',definition:'Force qui pousse sur quelque chose.'},{word:'cheminée',definition:'Ici : le conduit par lequel le magma monte dans le volcan.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:3,prompt:'Quel est le sujet du texte ?',choices:['Le fonctionnement des volcans','La vie à La Réunion','Le métier de scientifique'],ans:0,explanation:'Le titre l’annonce et chaque paragraphe explique une étape ou un type d’éruption.'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Quelle est la différence entre le magma et la lave ?',choices:['C’est la même roche fondue : magma sous terre, lave une fois sortie','La lave est froide, le magma est chaud','Le magma est un gaz'],ans:0,evidenceParagraph:2,explanation:'« Une fois sorti, le magma prend le nom de lave. »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi le magma remonte-t-il ?',choices:['Parce qu’il est plus léger que les roches autour','Parce que le vent l’aspire','Parce que la mer le pousse'],ans:0,evidenceParagraph:1,explanation:'« Plus léger que les roches qui l’entourent, le magma remonte... »'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Qu’est-ce qui déclenche l’éruption ?',choices:['Une pression trop forte dans la chambre magmatique','Un tremblement de la mer','L’arrivée de l’hiver'],ans:0,evidenceParagraph:2,explanation:'« Quand la pression devient trop forte, le magma monte [...] : c’est l’éruption. »'},
+    {id:'q5',type:'order',competencies:['READ_SEQUENCE','READ_STRUCTURE'],difficulty:4,prompt:'Remets les étapes dans l’ordre.',tokens:['Les roches fondent','Le magma remonte','Il s’accumule dans la chambre magmatique','La pression monte','L’éruption a lieu'],ans:'Les roches fondent Le magma remonte Il s’accumule dans la chambre magmatique La pression monte L’éruption a lieu',explanation:'C’est l’ordre décrit par les trois premiers paragraphes.'},
+    {id:'q6',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Une éruption qui projette des cendres très haut est dite...',choices:['Explosive','Effusive','Endormie'],ans:0,evidenceParagraph:3,explanation:'« D’autres explosent et projettent des cendres [...] : ce sont les éruptions explosives. »'},
+    {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Quel paragraphe explique pourquoi on surveille certains volcans ?',evidenceParagraph:4,explanation:'Les scientifiques surveillent le piton de la Fournaise « pour prévenir la population ».'},
+    {id:'q8',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'À quoi sert de surveiller un volcan « jour et nuit » ?',choices:['À donner l’alerte à temps pour protéger les habitants','À empêcher l’éruption','À récupérer de la lave'],ans:0,evidenceParagraph:4,explanation:'On ne peut pas empêcher une éruption, mais on peut prévenir la population à temps.'}
+   ]
+  },
+
+  fr_6e_pandore_01:{
+   id:'fr_6e_pandore_01',level:'6e',subject:'francais',type:'literary_text',documentType:'récit mythologique',
+   title:'La boîte de Pandore',author:'Hésiode',work:'Les Travaux et les Jours',
+   sourceType:'public_domain',sourceReference:'Adaptation libre en français moderne pour la 6e, d’après le mythe raconté par Hésiode (VIIIe-VIIe siècle av. J.-C.), dans le domaine public. La curiosité de Pandore et l’interdiction d’ouvrir la jarre suivent la version la plus répandue du mythe, plus tardive que le texte d’Hésiode.',
+   chapterLinks:['fr6d'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_AUTHOR_INTENT','READ_JUSTIFY','READ_GENRE','READ_SEQUENCE'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Prométhée avait volé le feu aux dieux pour l’offrir aux hommes. Furieux, Zeus, le roi des dieux, décida de se venger.',
+    'Il demanda aux dieux de fabriquer la première femme : Pandore. Chacun lui offrit un don : la beauté, l’habileté, la parole, mais aussi la ruse. Et elle était d’une immense curiosité.',
+    'Zeus lui confia une jarre fermée, en lui interdisant de l’ouvrir. Puis il l’envoya sur la Terre, où elle épousa Épiméthée, le frère de Prométhée.',
+    'Les jours passaient, et Pandore ne pensait plus qu’à la jarre. Un soir, elle souleva le couvercle.',
+    'Aussitôt, tous les malheurs s’en échappèrent : la maladie, la vieillesse, la misère, la guerre. Ils se répandirent dans le monde entier.',
+    'Pandore referma vite la jarre. Au fond, il ne restait qu’une seule chose : l’Espérance.'
+   ],
+   glossary:[{word:'jarre',definition:'Grand vase en terre cuite. (On parle souvent de « boîte de Pandore », mais le texte grec parle d’une jarre.)'},{word:'habileté',definition:'Le talent pour faire des choses avec adresse.'},{word:'Espérance',definition:'L’espoir que les choses iront mieux.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Zeus veut-il se venger ?',choices:['Parce que Prométhée a volé le feu des dieux pour les hommes','Parce que Pandore a désobéi','Parce que les hommes l’ont attaqué'],ans:0,evidenceParagraph:0,explanation:'Tout commence par le vol du feu par Prométhée.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Zeus confie une jarre interdite à une femme très curieuse. Qu’espère-t-il sans doute ?',choices:['Qu’elle finisse par l’ouvrir, ce qui servira sa vengeance','Pour qu’elle apprenne beaucoup à l’école','Pour la protéger des malheurs'],ans:0,evidenceParagraph:2,explanation:'Interdire d’ouvrir la jarre à quelqu’un de très curieux, c’est tendre un piège : la vengeance de Zeus passe par cette curiosité.'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Que contenait la jarre ?',choices:['Tous les malheurs du monde, et l’Espérance','Le feu volé par Prométhée','De l’or et des bijoux'],ans:0,evidenceParagraph:4,explanation:'Les malheurs s’échappent ; il ne reste au fond que l’Espérance.'},
+    {id:'q4',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Quel paragraphe montre que Pandore n’arrive pas à résister à la tentation ?',evidenceParagraph:3,explanation:'« ...Pandore ne pensait plus qu’à la jarre. Un soir, elle souleva le couvercle. »'},
+    {id:'q5',type:'choice',competencies:['READ_GENRE','READ_AUTHOR_INTENT'],difficulty:5,prompt:'Ce récit est un mythe. Que cherche-t-il à expliquer ?',choices:['L’origine des malheurs dans le monde','Comment fabriquer une jarre','Pourquoi Zeus est le roi des dieux'],ans:0,explanation:'Les récits des origines expliquent d’où vient quelque chose : ici, les malheurs des hommes.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Pourquoi est-il important que l’Espérance reste dans la jarre ?',choices:['Malgré les malheurs, les hommes gardent l’espoir','Parce qu’elle est le pire des malheurs','Parce que Zeus l’a oubliée'],ans:0,evidenceParagraph:5,explanation:'Le mythe se termine sur une note d’espoir : même face aux malheurs, l’Espérance reste aux hommes. (C’est l’interprétation la plus courante.)'},
+    {id:'q7',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Qui Pandore épouse-t-elle ?',choices:['Épiméthée, le frère de Prométhée','Prométhée','Hermès'],ans:0,evidenceParagraph:2,explanation:'« ...elle épousa Épiméthée, le frère de Prométhée. »'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets le mythe dans l’ordre.',tokens:['Prométhée vole le feu','Les dieux créent Pandore','Pandore ouvre la jarre','Les malheurs se répandent'],ans:'Prométhée vole le feu Les dieux créent Pandore Pandore ouvre la jarre Les malheurs se répandent',explanation:'C’est l’ordre du récit.'}
+   ]
+  },
+
+  fr_6e_robinson_01:{
+   id:'fr_6e_robinson_01',level:'6e',subject:'francais',type:'literary_text',documentType:'roman d’aventure (extrait adapté)',
+   title:'Robinson et l’empreinte de pas',author:'Daniel Defoe',work:'Robinson Crusoé (1719)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre en français moderne pour la 6e, d’après Daniel Defoe (mort en 1731), dans le domaine public — aucune traduction existante reprise.',
+   chapterLinks:['fr6g'],
+   competencies:['READ_NARRATOR_POV','READ_EMOTION_INTENTION','READ_INFERENCE','READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_CAUSE_CONSEQUENCE'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Cela faisait des années que je vivais seul sur mon île, depuis le naufrage de mon navire. J’avais construit une cabane, apprivoisé des chèvres et appris à cultiver le blé.',
+    'Un midi, alors que je longeais le rivage pour rejoindre ma barque, je m’arrêtai net : dans le sable, il y avait l’empreinte d’un pied nu.',
+    'Je restai immobile, comme frappé par la foudre. J’écoutai, je regardai autour de moi : rien. Je montai sur une petite hauteur pour voir plus loin : personne.',
+    'Je revins vers l’empreinte. Elle était bien là, avec ses orteils, son talon, chaque détail. Je ne pouvais pas l’avoir rêvée.',
+    'Je rentrai chez moi en courant, me retournant tous les deux ou trois pas, prenant chaque buisson pour un homme. Cette nuit-là, je ne fermai pas l’œil.'
+   ],
+   glossary:[{word:'naufrage',definition:'Quand un bateau coule ou se brise en mer.'},{word:'apprivoisé',definition:'Rendu moins sauvage, habitué à vivre près de l’homme.'},{word:'rivage',definition:'Le bord de la mer.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:3,prompt:'Qui raconte cette histoire ?',choices:['Robinson lui-même, qui dit « je »','Un narrateur extérieur','Un autre naufragé'],ans:0,evidenceParagraph:0,explanation:'« ...je vivais seul sur mon île » : le héros raconte sa propre histoire.'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Pourquoi Robinson vit-il sur cette île ?',choices:['Son navire a fait naufrage','Il l’a achetée','Il est venu en vacances'],ans:0,evidenceParagraph:0,explanation:'« ...depuis le naufrage de mon navire. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi l’empreinte bouleverse-t-elle autant Robinson ?',choices:['Elle prouve qu’il n’est peut-être plus seul sur l’île','Elle montre que la mer monte','Elle est la sienne'],ans:0,evidenceParagraph:1,explanation:'Après des années de solitude, un pied nu qui n’est pas le sien signifie qu’un autre humain est passé là.'},
+    {id:'q4',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'« Comme frappé par la foudre » signifie que Robinson est...',choices:['Saisi d’un choc immense, incapable de bouger','Blessé par un orage','Brûlé par le soleil'],ans:0,evidenceParagraph:2,explanation:'C’est une comparaison : le choc est si fort qu’il le paralyse, comme un éclair.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY','READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel paragraphe montre le mieux la peur de Robinson ?',evidenceParagraph:4,explanation:'Il court, se retourne sans cesse, prend « chaque buisson pour un homme » et ne dort pas.'},
+    {id:'q6',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Robinson revient-il vers l’empreinte ?',choices:['Pour vérifier qu’il ne l’a pas rêvée','Pour l’effacer','Pour la mesurer avec son pied'],ans:0,evidenceParagraph:3,explanation:'« Je ne pouvais pas l’avoir rêvée » : il vérifie.'},
+    {id:'q7',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_INFERENCE'],difficulty:6,prompt:'« Prenant chaque buisson pour un homme » : que montre ce détail ?',choices:['Sa peur lui fait voir des dangers partout','Il a une mauvaise vue','Il cherche quelqu’un pour l’aider'],ans:0,evidenceParagraph:4,explanation:'La peur déforme ce qu’il voit : de simples buissons deviennent des menaces.'},
+    {id:'q8',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Qu’a appris à faire Robinson sur son île ?',choices:['Cultiver le blé et apprivoiser des chèvres','Construire un navire','Parler aux oiseaux'],ans:0,evidenceParagraph:0,explanation:'« ...apprivoisé des chèvres et appris à cultiver le blé. »'}
+   ]
+  },
+
+  fr_5e_match_01:{
+   id:'fr_5e_match_01',level:'5e',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le dernier penalty',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr5a'],
+   competencies:['READ_INFERENCE','READ_EMOTION_INTENTION','READ_CHARACTER','READ_NARRATOR_POV','READ_JUSTIFY','READ_MAIN_IDEA','READ_VOCAB_CONTEXT'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Il restait un tir au but. Si Malik le marquait, son équipe gagnait le tournoi. Il posa le ballon, recula de trois pas et essuya ses mains sur son short.',
+    'Dans les tribunes, il chercha le visage de son père. La place était vide. Comme d’habitude.',
+    'Le gardien sautillait d’un poteau à l’autre. Malik prit son élan, frappa… et le ballon fila au-dessus de la barre.',
+    'Le silence tomba sur le terrain. Malik resta les bras ballants. Puis il sentit une main sur son épaule : c’était Théo, le remplaçant qui n’avait pas joué une seule minute du tournoi.',
+    '« Tu as eu le courage de tirer, dit Théo. Moi, je n’aurais pas osé. » Malik ne répondit rien, mais il releva la tête.'
+   ],
+   glossary:[{word:'tribunes',definition:'Les gradins où s’assoient les spectateurs.'},{word:'ballants',definition:'Qui pendent sans bouger, sans force.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_INFERENCE'],difficulty:4,prompt:'« Il [...] essuya ses mains sur son short. » Que révèle ce geste ?',choices:['Malik est nerveux','Malik a mal aux mains','Malik veut se salir'],ans:0,evidenceParagraph:0,explanation:'Des mains moites sont un signe de stress : le narrateur montre l’émotion par un geste au lieu de la nommer.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'« La place était vide. Comme d’habitude. » Que comprend-on ?',choices:['Le père de Malik ne vient jamais le voir jouer, et cela le blesse','Le stade est fermé','Le père de Malik joue aussi dans le match'],ans:0,evidenceParagraph:1,explanation:'« Comme d’habitude » indique que l’absence se répète. Le texte ne dit pas « il est triste », mais le fait qu’il cherche ce visage le montre.'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Que se passe-t-il quand Malik tire ?',choices:['Le ballon passe au-dessus de la barre','Il marque le but','Le gardien arrête le ballon'],ans:0,evidenceParagraph:2,explanation:'« ...le ballon fila au-dessus de la barre. »'},
+    {id:'q4',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi est-il important que ce soit Théo qui console Malik ?',choices:['Théo n’a pas joué, il aurait pu être jaloux ou indifférent, mais il est généreux','Théo est le capitaine de l’équipe','Théo est le père de Malik'],ans:0,evidenceParagraph:3,explanation:'Le remplaçant « qui n’avait pas joué une seule minute » est le seul à venir : son geste n’en est que plus fort.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY','READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel paragraphe montre que Malik commence à aller mieux ?',evidenceParagraph:4,explanation:'« ...il releva la tête » : un geste qui montre qu’il reprend courage.'},
+    {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'« Le silence tomba sur le terrain. » Cette phrase signifie que...',choices:['Tout le monde se tut d’un coup','Il se mit à pleuvoir','Le terrain s’effondra'],ans:0,evidenceParagraph:3,explanation:'C’est une image : le silence arrive soudainement, comme quelque chose qui tombe.'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:6,prompt:'Quel est le vrai sujet de ce récit ?',choices:['Le soutien qu’on peut trouver après un échec','Les règles des tirs au but','Comment gagner un tournoi'],ans:0,explanation:'Le match n’est que le cadre : le texte parle d’échec, d’absence et d’amitié.'},
+    {id:'q8',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:4,prompt:'Qui raconte cette histoire ?',choices:['Un narrateur extérieur, qui dit « il »','Malik, qui dit « je »','Théo, qui dit « je »'],ans:0,explanation:'Le récit est à la 3ᵉ personne (« Il posa le ballon ») mais suit de près ce que voit et ressent Malik.'}
+   ]
+  },
+
+  fr_4e_verlaine_ciel_01:{
+   id:'fr_4e_verlaine_ciel_01',level:'4e',subject:'francais',type:'literary_text',documentType:'poème',
+   title:'Le ciel est, par-dessus le toit…',author:'Paul Verlaine',work:'Sagesse (1880)',
+   sourceType:'public_domain',sourceReference:'Texte original de Paul Verlaine (mort en 1896), dans le domaine public.',
+   chapterLinks:['fr4e'],verse:true,stanzas:[4,8,12],
+   competencies:['READ_INFERENCE','READ_EMOTION_INTENTION','READ_STRUCTURE','READ_PLACE','READ_NARRATOR_POV','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_GENRE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Le ciel est, par-dessus le toit,',
+    'Si bleu, si calme !',
+    'Un arbre, par-dessus le toit,',
+    'Berce sa palme.',
+    'La cloche, dans le ciel qu’on voit,',
+    'Doucement tinte.',
+    'Un oiseau sur l’arbre qu’on voit',
+    'Chante sa plainte.',
+    'Mon Dieu, mon Dieu, la vie est là,',
+    'Simple et tranquille.',
+    'Cette paisible rumeur-là',
+    'Vient de la ville.',
+    '— Qu’as-tu fait, ô toi que voilà',
+    'Pleurant sans cesse,',
+    'Dis, qu’as-tu fait, toi que voilà,',
+    'De ta jeunesse ?'
+   ],
+   glossary:[{word:'palme',definition:'Ici : la cime feuillue de l’arbre, qui bouge comme une main.'},{word:'tinte',definition:'Sonne doucement.'},{word:'rumeur',definition:'Ici : un bruit confus et lointain.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE','READ_INFERENCE'],difficulty:6,prompt:'D’où le poète semble-t-il regarder le monde ?',choices:['D’un lieu fermé, d’où il ne voit que le ciel et le haut d’un arbre','Du sommet d’une montagne','Du milieu d’une foule'],ans:0,evidenceParagraph:0,explanation:'Il ne voit que ce qui est « par-dessus le toit » et entend la ville de loin. Verlaine a écrit ce poème en prison, en 1873.'},
+    {id:'q2',type:'choice',competencies:['READ_STRUCTURE'],difficulty:5,prompt:'Quelle reprise rythme les deux premières strophes ?',choices:['« par-dessus le toit » puis « qu’on voit »','« Mon Dieu, mon Dieu »','« toi que voilà »'],ans:0,evidenceParagraph:2,explanation:'Ces répétitions créent une musique douce, presque une berceuse.'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Comment le monde extérieur est-il décrit dans les trois premières strophes ?',choices:['Calme, simple et paisible','Bruyant et dangereux','Triste et sombre'],ans:0,evidenceParagraph:9,explanation:'« Si bleu, si calme », « simple et tranquille », « paisible rumeur ».'},
+    {id:'q4',type:'evidence',competencies:['READ_JUSTIFY','READ_EMOTION_INTENTION'],difficulty:6,prompt:'Clique sur le vers où l’on comprend que le poète souffre.',evidenceParagraph:13,explanation:'« Pleurant sans cesse » : le contraste avec la paix du dehors est brutal.'},
+    {id:'q5',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:7,prompt:'Dans la dernière strophe, à qui le poète s’adresse-t-il avec « toi » ?',choices:['À lui-même','À un oiseau','À la ville'],ans:0,evidenceParagraph:12,explanation:'Il se parle à lui-même, avec reproche : c’est un examen de conscience.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Quel sentiment exprime la question finale « qu’as-tu fait [...] de ta jeunesse ? »',choices:['Le regret d’avoir gâché sa vie','La joie d’être jeune','La colère contre la ville'],ans:0,evidenceParagraph:15,explanation:'Il se reproche d’avoir perdu ses belles années, face à une vie simple qu’il ne peut plus toucher.'},
+    {id:'q7',type:'choice',competencies:['READ_STRUCTURE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Quel effet produit l’opposition entre les trois premières strophes et la dernière ?',choices:['La paix du dehors rend plus forte la douleur de celui qui en est privé','Elle montre que la ville est dangereuse','Elle n’a aucun effet particulier'],ans:0,explanation:'Plus le monde extérieur est doux, plus l’enfermement et les regrets du poète paraissent cruels.'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Comment sont organisés les vers de chaque strophe ?',choices:['Un vers long puis un vers court, en alternance','Tous les vers ont 12 syllabes','Il n’y a pas de rimes'],ans:0,explanation:'Vers de 8 syllabes et de 4 syllabes alternent, avec des rimes croisées (toit/calme/toit/palme).'}
+   ]
+  },
+
+  fr_3e_cosette_01:{
+   id:'fr_3e_cosette_01',level:'3e',subject:'francais',type:'literary_text',documentType:'roman (extrait adapté)',
+   title:'Cosette dans la forêt',author:'Victor Hugo',work:'Les Misérables (1862)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre en français moderne pour la 3e, d’après Victor Hugo (mort en 1885), dans le domaine public.',
+   chapterLinks:['fr3k'],
+   competencies:['READ_INFERENCE','READ_EMOTION_INTENTION','READ_CHARACTER','READ_NARRATOR_POV','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_ARGUMENT'],
+   difficulty:7,estimatedReadingMinutes:4,audioMode:'audioOptional',sessionSize:9,
+   paragraphs:[
+    'Il faisait nuit noire. Les Thénardier, qui hébergeaient Cosette en échange d’une pension, l’avaient envoyée chercher de l’eau à la source, au fond du bois. Elle avait huit ans.',
+    'Le seau était énorme pour ses petites mains. À mesure qu’elle s’enfonçait sous les arbres, les dernières lumières du village disparaissaient derrière elle.',
+    'Elle aurait voulu rebrousser chemin, mais elle avait encore plus peur de la Thénardier que de la forêt. Alors elle continua, en comptant tout haut pour ne plus entendre le silence.',
+    'À la source, elle remplit le seau. Il pesait si lourd qu’elle devait s’arrêter tous les dix pas, et l’eau glacée éclaboussait ses jambes nues.',
+    'Soudain, le seau ne pesa plus rien. Une grande main venait de saisir l’anse. Cosette leva les yeux : un homme marchait à côté d’elle, sans rien dire. Étrangement, elle n’eut pas peur.'
+   ],
+   glossary:[{word:'pension',definition:'Ici : l’argent payé régulièrement pour qu’un enfant soit logé et nourri.'},{word:'rebrousser chemin',definition:'Faire demi-tour.'},{word:'anse',definition:'La poignée d’un seau.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:6,prompt:'Quelle précision du 1er paragraphe rend la situation particulièrement révoltante ?',choices:['« Elle avait huit ans. »','« Il faisait nuit noire. »','« au fond du bois »'],ans:0,evidenceParagraph:0,explanation:'La phrase courte, placée à la fin, frappe le lecteur : on envoie une enfant de huit ans seule dans la forêt la nuit.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE','READ_CHARACTER'],difficulty:7,prompt:'Que révèle la phrase « elle avait encore plus peur de la Thénardier que de la forêt » ?',choices:['Cosette est maltraitée par les Thénardier','Cosette aime la forêt','La Thénardier est dans la forêt'],ans:0,evidenceParagraph:2,explanation:'Si une maison fait plus peur qu’une forêt la nuit, c’est que l’enfant y est maltraitée.'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Pourquoi Cosette compte-t-elle tout haut ?',choices:['Pour se rassurer et couvrir le silence qui l’effraie','Pour savoir combien de pas il reste','Pour appeler à l’aide'],ans:0,evidenceParagraph:2,explanation:'« ...pour ne plus entendre le silence » : sa propre voix la rassure.'},
+    {id:'q4',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Quel paragraphe montre que la tâche est trop dure physiquement pour Cosette ?',evidenceParagraph:3,explanation:'Elle doit « s’arrêter tous les dix pas » et l’eau glacée éclabousse ses jambes nues.'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'« Le seau ne pesa plus rien » : que s’est-il passé ?',choices:['Quelqu’un a pris le seau pour le porter','Le seau s’est vidé','Cosette est devenue plus forte'],ans:0,evidenceParagraph:4,explanation:'La phrase suivante l’explique : « Une grande main venait de saisir l’anse. »'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Pourquoi le texte précise-t-il qu’« étrangement, elle n’eut pas peur » ?',choices:['Pour faire sentir que cet inconnu est bienveillant et va changer son destin','Parce que Cosette n’a jamais peur','Parce qu’elle connaît déjà l’homme'],ans:0,evidenceParagraph:4,explanation:'Après tant de peur, ce calme soudain annonce un sauveur. (Dans le roman, il s’agit de Jean Valjean.)'},
+    {id:'q7',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:6,prompt:'Quel point de vue le narrateur adopte-t-il surtout ?',choices:['Il nous fait vivre la scène à travers les sensations et les peurs de Cosette','Il raconte comme un témoin qui ne sait rien de ce qu’elle ressent','C’est Cosette qui dit « je »'],ans:0,explanation:'Récit à la 3ᵉ personne, mais nous savons ce que Cosette ressent, entend et craint : point de vue interne.'},
+    {id:'q8',type:'choice',competencies:['READ_ARGUMENT','READ_AUTHOR_INTENT'],difficulty:8,prompt:'Quelle dénonciation Victor Hugo fait-il à travers ce passage ?',choices:['La misère et l’exploitation des enfants','La dangerosité des forêts','La difficulté de trouver de l’eau'],ans:0,explanation:'Les Misérables dénoncent la misère sociale ; Cosette, enfant exploitée, en est l’un des symboles.'},
+    {id:'q9',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets les étapes du passage dans l’ordre.',tokens:['Cosette est envoyée à la source','Elle s’enfonce dans le bois','Elle remplit le seau','Un homme prend le seau'],ans:'Cosette est envoyée à la source Elle s’enfonce dans le bois Elle remplit le seau Un homme prend le seau',explanation:'C’est l’ordre du récit.'}
+   ]
+  },
+
+  fr_3e_fausse_info_01:{
+   id:'fr_3e_fausse_info_01',level:'3e',subject:'francais',type:'document',documentType:'publication de réseau social et vérification',
+   title:'Une information trop belle pour être vraie',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr3h'],
+   competencies:['READ_DOCUMENT_SOURCE','READ_ARGUMENT','READ_INFERENCE','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_COMPARE_DOCUMENTS','READ_MAIN_IDEA'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioOptional',sessionSize:8,
+   paragraphs:[
+    'DOCUMENT 1 — Publication partagée 48 000 fois : « INCROYABLE !!! À partir de lundi, les vacances d’été dureront 4 mois dans tous les collèges. Le ministère l’a confirmé. Partagez avant que ce soit supprimé !!! » (compte « InfosVraies2026 », créé il y a trois semaines, photo de profil absente).',
+    'DOCUMENT 2 — Article d’un quotidien régional : « Contacté, le ministère de l’Éducation nationale dément formellement : aucune modification du calendrier scolaire n’est prévue. Le texte qui circule ne cite aucun document officiel. »',
+    'DOCUMENT 3 — Page « Calendrier scolaire » du site officiel du ministère, mise à jour le mois dernier : les dates des vacances d’été sont inchangées.',
+    'DOCUMENT 4 — Conseil d’un professeur documentaliste : « Avant de partager, posez trois questions : Qui parle ? Quelle est sa source ? D’autres médias fiables disent-ils la même chose ? »'
+   ],
+   glossary:[{word:'dément',definition:'Affirme que c’est faux.'},{word:'quotidien',definition:'Un journal qui paraît chaque jour.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_DOCUMENT_SOURCE'],difficulty:5,prompt:'Pourquoi le compte du document 1 est-il peu fiable ?',choices:['Il est très récent, anonyme et ne cite aucune source','Il a été partagé 48 000 fois','Il parle des vacances'],ans:0,evidenceParagraph:0,explanation:'Un compte créé il y a trois semaines, sans identité ni source, n’offre aucune garantie. Le nombre de partages ne prouve pas que c’est vrai.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:6,prompt:'À quoi servent les majuscules, les « !!! » et « Partagez avant que ce soit supprimé » ?',choices:['À provoquer une émotion forte et pousser à partager sans réfléchir','À informer calmement','À citer le ministère'],ans:0,evidenceParagraph:0,explanation:'Urgence et émotion sont des procédés typiques des fausses informations : ils empêchent de vérifier.'},
+    {id:'q3',type:'choice',competencies:['READ_COMPARE_DOCUMENTS'],difficulty:6,prompt:'Que montrent ensemble les documents 2 et 3 ?',choices:['L’information du document 1 est fausse','L’information du document 1 est vraie','Ils ne parlent pas du même sujet'],ans:0,explanation:'Un journal qui a contacté le ministère et le site officiel lui-même disent la même chose : rien ne change.'},
+    {id:'q4',type:'evidence',competencies:['READ_JUSTIFY','READ_DOCUMENT_SOURCE'],difficulty:5,prompt:'Quel document est la source la plus directe pour vérifier le calendrier scolaire ?',evidenceParagraph:2,explanation:'Le site officiel du ministère est la source première : c’est lui qui fixe le calendrier.'},
+    {id:'q5',type:'choice',competencies:['READ_ARGUMENT'],difficulty:7,prompt:'« Partagé 48 000 fois » : pourquoi cet argument ne prouve-t-il rien ?',choices:['Beaucoup de gens peuvent partager une information sans l’avoir vérifiée','Parce que 48 000 est un petit nombre','Parce que le compte a supprimé la publication'],ans:0,evidenceParagraph:0,explanation:'La popularité n’est pas une preuve : une rumeur peut se répandre très vite précisément parce qu’elle est surprenante.'},
+    {id:'q6',type:'choice',competencies:['READ_DOCUMENT_SOURCE','READ_INFERENCE'],difficulty:6,prompt:'Le document 1 dit « Le ministère l’a confirmé ». Qu’est-ce qui rend cette affirmation douteuse ?',choices:['Aucun document officiel n’est cité, et le ministère dément','Le ministère ne parle jamais aux journaux','Le mot « ministère » est mal écrit'],ans:0,evidenceParagraph:1,explanation:'Citer une autorité sans source vérifiable est un procédé fréquent ; le document 2 montre le démenti.'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:5,prompt:'Quelle est la leçon principale de cet ensemble de documents ?',choices:['Vérifier qui parle et croiser les sources avant de partager','Ne jamais utiliser les réseaux sociaux','Toujours croire les journaux'],ans:0,evidenceParagraph:3,explanation:'Le document 4 résume la méthode ; les autres documents l’appliquent. « Toujours croire » ou « ne jamais utiliser » sont des positions extrêmes.'},
+    {id:'q8',type:'order',competencies:['READ_STRUCTURE'],difficulty:4,prompt:'Remets dans l’ordre les trois questions conseillées par le professeur documentaliste.',tokens:['Qui parle ?','Quelle est sa source ?','D’autres médias fiables disent-ils la même chose ?'],ans:'Qui parle ? Quelle est sa source ? D’autres médias fiables disent-ils la même chose ?',explanation:'C’est l’ordre du document 4 : de l’auteur, à sa source, puis au croisement des sources.'}
    ]
   }
 
