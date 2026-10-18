@@ -43,6 +43,21 @@ function parentAdvice(){const g=S.grade,st=stageOf(g),out=[];const due=Object.ke
  return out;}
 /* Tableau de suivi parent (V8.13) : filtres classe / matière / période, vocabulaire compréhensible par un parent. */
 let PF={pid:null,grade:null,subj:'',period:'all'};
+// Lecture et compréhension (moteur js/reading-engine.js) : maîtrise par compétence et textes lus.
+// Masqué si un filtre de matière autre que le français est actif.
+function readingParentBody(){
+ if(!window.MQReading||(PF.subj&&!/francais$/.test(PF.subj)))return '';
+ const comps=MQReading.masterySummary(S).sort((a,b)=>a.value-b.value);
+ const prog=S.readingProgress||{};
+ const texts=Object.entries(prog).map(([id,p])=>({r:MQReading.get(id),p})).filter(x=>x.r).sort((a,b)=>(b.p.lastSeen||0)-(a.p.lastSeen||0));
+ const cls=v=>v<50?'lo':v<85?'mid':'okc';
+ const bar=v=>`<span class="mbar" aria-hidden="true"><i style="width:${v}%"></i></span>`;
+ if(!comps.length)return `<h2 class="sec">📖 Lecture et compréhension</h2><p class="muted">Pas encore de texte lu. Les textes apparaissent dans certains cours de français (rubrique « Je lis »).</p>`;
+ return `<h2 class="sec">📖 Lecture et compréhension <small class="muted">(${texts.length} texte${texts.length>1?'s':''} lu${texts.length>1?'s':''})</small></h2>
+ <div class="card">${comps.map(c=>`<div class="drow rdrow"><span>${esc(c.label)} <small class="muted">(${c.n} question${c.n>1?'s':''})</small></span>${bar(c.value)}<b class="${cls(c.value)}">${c.value} %</b></div>`).join('')}
+ <p class="muted small">Chaque compétence est estimée sur 100 à partir des questions de lecture. Une réponse trouvée avec des indices compte moins qu’une réponse trouvée seul.</p></div>
+ ${texts.length?`<div class="card">${texts.slice(0,8).map(x=>`<div class="drow"><span>${esc(x.r.title)} <small class="muted">${esc(x.r.level)}</small></span><b class="${cls(x.p.bestScore||0)}">${x.p.bestScore||0} % <small class="muted">(${x.p.attempts||1} fois)</small></b></div>`).join('')}</div>`:''}`;
+}
 function statsBody(){if(PF.pid!==ACTIVE)PF={pid:ACTIVE,grade:S.grade,subj:'',period:'all'};
  const now=Date.now(),day=864e5,since=PF.period==='7'?now-7*day:PF.period==='30'?now-30*day:0,inP=t=>(t||0)>=since;
  const worked=c=>S.chap[c.id]?.tot||S.lessonScores[c.id]!=null||S.lessons[c.id];
@@ -84,6 +99,7 @@ function statsBody(){if(PF.pid!==ACTIVE)PF={pid:ACTIVE,grade:S.grade,subj:'',per
  <h2 class="sec">💬 Recommandations du prof particulier</h2><div class="card"><ul class="lst">${parentAdvice().map(x=>`<li>${x}</li>`).join('')}</ul></div>
  <h2 class="sec">🔴 Notions fragiles</h2>${fragile.length?`<div class="card">${fragile.map(x=>`<button class="row" data-a="chap:${x.c.id}"><span>${chLabel(x.c)}</span><b class="lo">${x.m} %</b></button>`).join('')}</div>`:'<p class="muted">Aucune notion fragile repérée pour l’instant.</p>'}
  <h2 class="sec">🏆 Notions maîtrisées <small class="muted">(${mastered.length})</small></h2>${mastered.length?`<div class="card">${mastered.slice(0,10).map(x=>`<div class="drow"><span>${chLabel(x.c)}</span><b class="okc">${x.m} %</b></div>`).join('')}${mastered.length>10?`<p class="muted small">… et ${mastered.length-10} autres.</p>`:''}</div>`:'<p class="muted">Pas encore de notion maîtrisée : il faut plusieurs séances réussies.</p>'}
+ ${readingParentBody()}
  <h2 class="sec">📝 Quiz de cours et scores</h2>${quiz.length?`<div class="card">${quiz.map(x=>`<div class="drow"><span>${chLabel(x.c)}</span><b class="${x.ok?'okc':'mid'}">${x.v} % ${x.ok?'✅ validé':'🟠 à refaire'}</b></div>`).join('')}</div>`:'<p class="muted">Aucun quiz de cours terminé sur cette sélection.</p>'}
  <h2 class="sec">⚠️ Erreurs fréquentes <small class="muted">(${pLabel})</small></h2>${freq.length?`<div class="card">${freq.map(x=>`<div class="drow"><span>${chLabel(x.c)}</span><b class="mid">${x.n} erreur${x.n>1?'s':''}</b></div>`).join('')}</div>`:'<p class="muted">Aucune erreur sur cette période.</p>'}
  <h2 class="sec">📒 Carnet d’erreurs <small class="muted">(${mist.length} à revoir)</small></h2>${mist.length?`<div class="card">${mist.slice(0,8).map(r=>`<div class="error-row"><b>${chLabel(r.c)}</b><div>${esc(r.x.q)}</div><div class="muted small">Réponse attendue : <b>${esc(r.x.answer)}</b> · ${new Date(r.x.at).toLocaleDateString('fr-FR')}</div></div>`).join('')}<p class="muted small">Une erreur disparaît du carnet après 3 bonnes réponses d’affilée sur la même notion.</p></div>`:'<p class="muted">Aucune erreur en attente.</p>'}

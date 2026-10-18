@@ -103,6 +103,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .lo{color:var(--bad)}.mid{color:var(--gold)}
 .det{padding:12px 16px;margin-bottom:10px}.det summary{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:700;list-style:none}.det summary::-webkit-details-marker{display:none}.det .mbar{flex:1;margin:0}
 .drow{display:grid;grid-template-columns:1fr auto 64px;gap:10px;padding:6px 0;border-top:1px solid var(--border);font-size:15px}.drow span:last-child{text-align:right}
+.rdrow{align-items:center}.rdrow .mbar{width:64px;margin:0}.rdrow b{text-align:right}
 /* accueil initial */
 .onb{text-align:center;margin-top:6vh}.logo{font-size:72px}.onb h1{font-size:42px}.lab{display:block;text-align:left;font-weight:700;margin:16px 0 6px}.lab input{margin-top:6px}
 .avs{display:flex;justify-content:center;gap:12px}.avb{font-size:42px;width:76px;height:76px;border-radius:50%;border:3px solid var(--border);background:var(--surface2);cursor:pointer}.avb.sel{border-color:var(--accent);transform:scale(1.08)}
