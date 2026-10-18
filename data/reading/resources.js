@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.4-lot5-2026-10-18',
+ version:'1.5-lot6-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -1195,7 +1195,7 @@ window.MQ_READING={
    id:'fr_3e_peigne_casse_01',level:'3e',subject:'francais',type:'literary_text',documentType:'autobiographie (extrait adapté)',
    title:'Le peigne cassé',author:'Jean-Jacques Rousseau',work:'Les Confessions, livre I',
    sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 3e, d’après Jean-Jacques Rousseau (mort en 1778), dans le domaine public.',
-   chapterLinks:['fr3a'],
+   chapterLinks:['fr3a','fr3i'],
    competencies:['READ_NARRATOR_POV','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_TIME','READ_EMOTION_INTENTION','READ_INFERENCE','READ_JUSTIFY','READ_GENRE','READ_STRUCTURE','READ_AUTHOR_INTENT'],
    difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
    paragraphs:[
@@ -1276,7 +1276,7 @@ window.MQ_READING={
   fr_3e_ecrans_soir_01:{
    id:'fr_3e_ecrans_soir_01',level:'3e',subject:'francais',type:'document',documentType:'texte argumentatif',
    title:'Faut-il éteindre les écrans le soir ?',author:null,work:null,sourceType:'original_mathquest',
-   chapterLinks:['fr3g'],
+   chapterLinks:['fr3g','fr3j'],
    competencies:['READ_ARGUMENT','READ_STRUCTURE','READ_AUTHOR_INTENT','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_MAIN_IDEA','READ_SEQUENCE'],
    difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
    paragraphs:[
@@ -1584,6 +1584,326 @@ window.MQ_READING={
     {id:'q6',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi les gouttelettes finissent-elles par tomber ?',choices:['Elles grossissent et deviennent trop lourdes','Le soleil les pousse','Les oiseaux les font tomber'],ans:0,evidenceParagraph:3,explanation:'« Quand les gouttelettes grossissent et deviennent trop lourdes, elles tombent. »'},
     {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui explique d’où vient l’eau des nappes souterraines.',evidenceParagraph:4,explanation:'« ...une autre s’infiltre dans le sol et forme des nappes souterraines. »'},
     {id:'q8',type:'choice',competencies:['READ_INFERENCE','READ_STRUCTURE'],difficulty:5,prompt:'Pourquoi parle-t-on de « cycle » ?',choices:['Parce que le voyage de l’eau recommence sans fin','Parce qu’il faut un vélo','Parce qu’il ne se produit qu’une fois'],ans:0,evidenceParagraph:4,explanation:'« Puis le voyage recommence » : un cycle revient toujours à son point de départ.'}
+   ]
+  },
+
+  // ===== Lot 6 (18/10/2026) : derniers chapitres de lecture du collège (lecture expressive,
+  // versification, dénonciation, texte complexe, fantastique, argumentation) et renfort du primaire.
+  // Textes originaux de La Fontaine, Baudelaire (mort en 1867) et Hugo ; adaptations libres de
+  // Maupassant et Perrault (domaine public) ; documents et récits originaux MathQuest.
+
+  fr_6e_grenouille_boeuf_01:{
+   id:'fr_6e_grenouille_boeuf_01',level:'6e',subject:'francais',type:'literary_text',documentType:'fable',
+   title:'La Grenouille qui se veut faire aussi grosse que le Bœuf',author:'Jean de La Fontaine',work:'Fables, livre I (1668)',
+   sourceType:'public_domain',sourceReference:'Texte original de Jean de La Fontaine (mort en 1695), dans le domaine public.',
+   chapterLinks:['fr6a'],verse:true,stanzas:[10],
+   competencies:['READ_CHARACTER','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_STRUCTURE','READ_JUSTIFY','READ_MAIN_IDEA','READ_GENRE'],
+   difficulty:5,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Une Grenouille vit un Bœuf',
+    'Qui lui sembla de belle taille.',
+    'Elle, qui n’était pas grosse en tout comme un œuf,',
+    'Envieuse, s’étend, et s’enfle, et se travaille,',
+    'Pour égaler l’animal en grosseur,',
+    'Disant : Regardez bien, ma sœur ;',
+    'Est-ce assez ? dites-moi ; n’y suis-je point encore ?',
+    'Nenni. M’y voici donc ? Point du tout. M’y voilà ?',
+    'Vous n’en approchez point. La chétive pécore',
+    'S’enfla si bien qu’elle creva.',
+    'Le monde est plein de gens qui ne sont pas plus sages :',
+    'Tout bourgeois veut bâtir comme les grands seigneurs,',
+    'Tout petit prince a des ambassadeurs,',
+    'Tout marquis veut avoir des pages.'
+   ],
+   glossary:[{word:'Envieuse',definition:'Qui voudrait avoir ce qu’ont les autres.'},{word:'s’enfle',definition:'Se gonfle, devient plus grosse.'},{word:'Nenni',definition:'« Non », en ancien français.'},{word:'chétive',definition:'Petite et faible.'},{word:'pécore',definition:'Une sotte, une prétentieuse.'},{word:'pages',definition:'Jeunes garçons nobles au service d’un seigneur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Quel sentiment pousse la Grenouille à se gonfler ?',choices:['L’envie : elle veut être aussi grosse que le Bœuf','La peur du Bœuf','La colère contre sa sœur'],ans:0,evidenceParagraph:3,explanation:'« Envieuse, s’étend, et s’enfle [...] / Pour égaler l’animal en grosseur ».'},
+    {id:'q2',type:'choice',competencies:['READ_STRUCTURE'],difficulty:5,prompt:'Aux vers 6 à 9, comment le dialogue entre les deux grenouilles est-il construit ?',choices:['Des questions de la Grenouille et des réponses très courtes de sa sœur','Un long discours du Bœuf','Une seule réplique de la Grenouille'],ans:0,evidenceParagraph:7,explanation:'« M’y voici donc ? Point du tout. M’y voilà ? » : questions et réponses s’enchaînent très vite. À l’oral, il faut changer de voix à chaque réplique.'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:4,prompt:'Que répond la sœur avec « Nenni » ?',choices:['Non','Oui','Peut-être'],ans:0,evidenceParagraph:7,explanation:'« Nenni » veut dire « non » : la Grenouille n’est pas encore aussi grosse que le Bœuf.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Comment se termine l’histoire de la Grenouille ?',choices:['Elle s’enfle tant qu’elle éclate','Elle devient aussi grosse que le Bœuf','Elle renonce et rentre chez elle'],ans:0,evidenceParagraph:9,explanation:'« S’enfla si bien qu’elle creva. »'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le vers qui annonce la morale.',evidenceParagraph:10,explanation:'« Le monde est plein de gens qui ne sont pas plus sages » : La Fontaine passe des animaux aux hommes.'},
+    {id:'q6',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:6,prompt:'Que dénonce la morale ?',choices:['Les gens qui veulent paraître plus importants qu’ils ne sont','Les gens qui mangent trop','Les animaux qui parlent'],ans:0,evidenceParagraph:11,explanation:'Le bourgeois qui imite les seigneurs, le petit prince qui veut des ambassadeurs : tous veulent jouer les grands, comme la Grenouille.'},
+    {id:'q7',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Pourquoi La Fontaine précise-t-il que la Grenouille n’était « pas grosse en tout comme un œuf » ?',choices:['Pour montrer combien son projet est impossible','Pour dire qu’elle a faim','Pour décrire sa couleur'],ans:0,evidenceParagraph:2,explanation:'Grosse comme un œuf face à un bœuf : la différence est immense, son ambition est ridicule.'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE'],difficulty:4,prompt:'Quelles sont les deux parties de cette fable ?',choices:['Un récit, puis une morale','Une question, puis une réponse','Une description, puis une recette'],ans:0,explanation:'Les dix premiers vers racontent ; les quatre derniers donnent la leçon.'}
+   ]
+  },
+
+  fr_4e_albatros_01:{
+   id:'fr_4e_albatros_01',level:'4e',subject:'francais',type:'literary_text',documentType:'poème',
+   title:'L’Albatros',author:'Charles Baudelaire',work:'Les Fleurs du mal (1861)',
+   sourceType:'public_domain',sourceReference:'Texte original de Charles Baudelaire (mort en 1867), dans le domaine public.',
+   chapterLinks:['fr4w','fr4v'],verse:true,stanzas:[4,8,12],
+   competencies:['READ_GENRE','READ_VOCAB_CONTEXT','READ_EMOTION_INTENTION','READ_INFERENCE','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_STRUCTURE'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Souvent, pour s’amuser, les hommes d’équipage',
+    'Prennent des albatros, vastes oiseaux des mers,',
+    'Qui suivent, indolents compagnons de voyage,',
+    'Le navire glissant sur les gouffres amers.',
+    'À peine les ont-ils déposés sur les planches,',
+    'Que ces rois de l’azur, maladroits et honteux,',
+    'Laissent piteusement leurs grandes ailes blanches',
+    'Comme des avirons traîner à côté d’eux.',
+    'Ce voyageur ailé, comme il est gauche et veule !',
+    'Lui, naguère si beau, qu’il est comique et laid !',
+    'L’un agace son bec avec un brûle-gueule,',
+    'L’autre mime, en boitant, l’infirme qui volait !',
+    'Le Poète est semblable au prince des nuées',
+    'Qui hante la tempête et se rit de l’archer ;',
+    'Exilé sur le sol au milieu des huées,',
+    'Ses ailes de géant l’empêchent de marcher.'
+   ],
+   glossary:[{word:'indolents',definition:'Tranquilles, qui se laissent porter sans effort.'},{word:'gouffres amers',definition:'Les profondeurs de la mer salée.'},{word:'azur',definition:'Le bleu du ciel.'},{word:'avirons',definition:'Les rames d’un bateau.'},{word:'veule',definition:'Mou, sans force.'},{word:'naguère',definition:'Il y a peu de temps.'},{word:'brûle-gueule',definition:'Une pipe à tuyau très court.'},{word:'huées',definition:'Les cris de moquerie d’une foule.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_GENRE','READ_STRUCTURE'],difficulty:6,prompt:'Combien de syllabes compte chaque vers de ce poème ?',choices:['Douze : ce sont des alexandrins','Huit : ce sont des octosyllabes','Le nombre change à chaque vers'],ans:0,explanation:'« Sou/vent/, pour/ s’a/mu/ser/, les/ hom/mes/ d’é/qui/page » : 12 syllabes (le e final de « équipage » ne compte pas). Ce sont des alexandrins, en quatre quatrains.'},
+    {id:'q2',type:'choice',competencies:['READ_GENRE'],difficulty:6,prompt:'Dans la 1re strophe, « équipage / voyage » et « mers / amers » riment. Comment ces rimes sont-elles disposées ?',choices:['Croisées (ABAB)','Suivies (AABB)','Embrassées (ABBA)'],ans:0,evidenceParagraph:2,explanation:'Vers 1 et 3 (équipage/voyage), vers 2 et 4 (mers/amers) : les rimes alternent, elles sont croisées.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Quelle opposition le poème montre-t-il chez l’albatros ?',choices:['Majestueux dans le ciel, maladroit et ridicule sur le pont','Petit en mer, grand sur terre','Joyeux le jour, triste la nuit'],ans:0,evidenceParagraph:9,explanation:'« ces rois de l’azur » deviennent « maladroits et honteux » ; « naguère si beau, qu’il est comique et laid ! »'},
+    {id:'q4',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:6,prompt:'« Comme des avirons » : quelle figure de style est utilisée ?',choices:['Une comparaison','Une personnification','Une répétition'],ans:0,evidenceParagraph:7,explanation:'Les ailes sont comparées à des rames grâce à l’outil « comme » : c’est une comparaison.'},
+    {id:'q5',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:6,prompt:'Comment se comportent les marins avec l’albatros ?',choices:['Ils se moquent de lui et le maltraitent','Ils le soignent','Ils l’admirent en silence'],ans:0,evidenceParagraph:11,explanation:'L’un lui agace le bec avec sa pipe, l’autre l’imite en boitant : ils sont cruels.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:7,prompt:'Clique sur le vers où Baudelaire compare directement le poète à l’albatros.',evidenceParagraph:12,explanation:'« Le Poète est semblable au prince des nuées » : le dernier quatrain révèle le sens du poème.'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE','READ_AUTHOR_INTENT'],difficulty:8,prompt:'Que signifie le dernier vers : « Ses ailes de géant l’empêchent de marcher » ?',choices:['Le talent qui rend le poète grand dans son art le rend maladroit et incompris parmi les hommes','Le poète a de vraies ailes','Le poète ne sait pas marcher depuis l’enfance'],ans:0,evidenceParagraph:15,explanation:'Comme l’albatros sur le pont, le poète, « exilé » parmi la foule qui le hue, est gêné par ce qui fait sa grandeur.'},
+    {id:'q8',type:'choice',competencies:['READ_STRUCTURE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Pourquoi Baudelaire attend-il la dernière strophe pour parler du poète ?',choices:['Le récit de l’albatros prépare une comparaison qui donne tout son sens au poème','Il avait oublié d’en parler avant','Pour raconter une nouvelle histoire sans lien'],ans:0,explanation:'Les trois premières strophes forment une image ; la dernière en donne la clé : l’albatros, c’est le poète.'}
+   ]
+  },
+
+  fr_3e_melancholia_01:{
+   id:'fr_3e_melancholia_01',level:'3e',subject:'francais',type:'literary_text',documentType:'poème (extrait)',
+   title:'Melancholia (extrait)',author:'Victor Hugo',work:'Les Contemplations (1856)',
+   sourceType:'public_domain',sourceReference:'Extrait original de Victor Hugo (mort en 1885), dans le domaine public (dix premiers vers du passage sur le travail des enfants).',
+   chapterLinks:['fr3b','fr3w'],verse:true,
+   competencies:['READ_MAIN_IDEA','READ_VOCAB_CONTEXT','READ_INFERENCE','READ_AUTHOR_INTENT','READ_JUSTIFY','READ_STRUCTURE','READ_EMOTION_INTENTION','READ_GENRE'],
+   difficulty:8,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Où vont tous ces enfants dont pas un seul ne rit ?',
+    'Ces doux êtres pensifs que la fièvre maigrit ?',
+    'Ces filles de huit ans qu’on voit cheminer seules ?',
+    'Ils s’en vont travailler quinze heures sous des meules ;',
+    'Ils vont, de l’aube au soir, faire éternellement',
+    'Dans la même prison le même mouvement.',
+    'Accroupis sous les dents d’une machine sombre,',
+    'Monstre hideux qui mâche on ne sait quoi dans l’ombre,',
+    'Innocents dans un bagne, anges dans un enfer,',
+    'Ils travaillent. Tout est d’airain, tout est de fer.'
+   ],
+   glossary:[{word:'pensifs',definition:'Perdus dans leurs pensées, graves.'},{word:'cheminer',definition:'Marcher, faire route.'},{word:'meules',definition:'Ici : les lourdes roues des machines d’usine.'},{word:'bagne',definition:'Prison où les condamnés faisaient des travaux forcés.'},{word:'airain',definition:'Ancien nom du bronze : un métal dur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:6,prompt:'Quel est le sujet de cet extrait ?',choices:['Le travail des enfants dans les usines','Les jeux des enfants à l’école','La vie à la campagne'],ans:0,evidenceParagraph:3,explanation:'« Ils s’en vont travailler quinze heures sous des meules. » Au XIXe siècle, de très jeunes enfants travaillaient dans les usines.'},
+    {id:'q2',type:'choice',competencies:['READ_STRUCTURE','READ_GENRE'],difficulty:7,prompt:'Le poème commence par trois questions. Quel effet produisent-elles ?',choices:['Elles interpellent le lecteur et l’obligent à regarder ces enfants','Elles montrent que le poète ne connaît pas la réponse','Elles rendent le texte drôle'],ans:0,evidenceParagraph:0,explanation:'Ces questions oratoires attirent l’attention ; la réponse, terrible, arrive au vers 4.'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:7,prompt:'La machine est appelée « Monstre hideux qui mâche ». Quelle figure de style est-ce ?',choices:['Une métaphore qui fait de la machine un monstre dévorant','Une comparaison avec « comme »','Une simple description technique'],ans:0,evidenceParagraph:7,explanation:'Sans outil de comparaison, la machine devient un monstre qui « mâche » : c’est une métaphore (et une personnification).'},
+    {id:'q4',type:'choice',competencies:['READ_STRUCTURE'],difficulty:7,prompt:'Au vers 9, « Innocents dans un bagne, anges dans un enfer » oppose des mots de sens contraire. Quel est l’effet de cette opposition ?',choices:['Elle souligne l’injustice : des êtres purs sont traités comme des condamnés','Elle rend le vers plus joyeux','Elle décrit le paysage'],ans:0,evidenceParagraph:8,explanation:'Innocents/bagne, anges/enfer : ces antithèses montrent l’injustice faite aux enfants.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:7,prompt:'Clique sur le vers qui insiste sur la répétition épuisante du travail.',evidenceParagraph:5,explanation:'« Dans la même prison le même mouvement » : la répétition de « même » imite la monotonie du travail.'},
+    {id:'q6',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_INFERENCE'],difficulty:6,prompt:'Que révèle le premier vers, « dont pas un seul ne rit » ?',choices:['Ces enfants ont perdu la joie de l’enfance','Ces enfants sont punis pour avoir ri','Ces enfants n’aiment pas les blagues'],ans:0,evidenceParagraph:0,explanation:'Des enfants qui ne rient jamais : leur enfance leur a été volée.'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE'],difficulty:8,prompt:'Pourquoi le vers 10 commence-t-il par une phrase très courte : « Ils travaillent. » ?',choices:['Pour frapper le lecteur par un constat brutal','Parce que Hugo manquait de place','Pour annoncer une bonne nouvelle'],ans:0,evidenceParagraph:9,explanation:'Après les longues images, cette phrase sèche tombe comme un verdict.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:7,prompt:'Quel est le but de Victor Hugo ?',choices:['Dénoncer le travail des enfants et émouvoir le lecteur','Décrire le fonctionnement d’une usine','Raconter ses souvenirs d’enfance'],ans:0,explanation:'Par les images et les oppositions, Hugo dénonce une injustice de son époque.'}
+   ]
+  },
+
+  fr_3e_parure_01:{
+   id:'fr_3e_parure_01',level:'3e',subject:'francais',type:'literary_text',documentType:'nouvelle réaliste (adaptation)',
+   title:'La Parure',author:'Guy de Maupassant',work:'La Parure (1884)',
+   sourceType:'public_domain',sourceReference:'Résumé-adaptation libre pour la 3e, d’après Guy de Maupassant (mort en 1893), dans le domaine public. La réplique finale est conservée.',
+   chapterLinks:['fr3f'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_TIME','READ_INFERENCE','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_STRUCTURE','READ_AUTHOR_INTENT'],
+   difficulty:8,estimatedReadingMinutes:4,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Mathilde Loisel, mariée à un petit employé du ministère de l’Instruction publique, souffrait sans cesse de ne pas être riche. Elle rêvait de salons luxueux, de bijoux et de belles toilettes.',
+    'Un soir, son mari rentra, tout fier, avec une invitation pour un grand bal au ministère. Mais Mathilde fondit en larmes : elle n’avait rien à se mettre. Son mari lui donna alors les quatre cents francs qu’il gardait pour s’acheter un fusil.',
+    'La robe achetée, il manquait encore un bijou. Mathilde alla voir son amie Mme Forestier, qui lui prêta volontiers une superbe rivière de diamants.',
+    'Au bal, Mathilde fut la plus belle. Tous les hommes voulaient danser avec elle. Mais en rentrant chez elle, au petit matin, elle s’aperçut avec horreur que le collier n’était plus à son cou.',
+    'Les Loisel le cherchèrent partout, en vain. Ils achetèrent alors chez un bijoutier un collier semblable, pour trente-six mille francs, en empruntant de tous côtés, et le rendirent à Mme Forestier sans rien dire.',
+    'Pendant dix ans, ils vécurent dans la misère pour rembourser leurs dettes. Mathilde fit le ménage, porta les seaux d’eau, marchanda chez l’épicier. Elle devint une femme forte, dure et rude.',
+    'Un dimanche, elle croisa Mme Forestier, toujours jeune et belle, et lui raconta tout. Son amie, bouleversée, lui prit les mains : « Oh ! ma pauvre Mathilde ! Mais la mienne était fausse. Elle valait au plus cinq cents francs !… »'
+   ],
+   glossary:[{word:'toilettes',definition:'Ici : les robes, les tenues élégantes.'},{word:'rivière de diamants',definition:'Un collier formé d’une rangée de diamants.'},{word:'en vain',definition:'Sans résultat.'},{word:'marchanda',definition:'Discuta le prix pour payer moins cher.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:6,prompt:'De quoi Mathilde souffre-t-elle au début ?',choices:['De ne pas être riche et de ne pas vivre dans le luxe','D’une maladie grave','D’être seule'],ans:0,evidenceParagraph:0,explanation:'« ...souffrait sans cesse de ne pas être riche. Elle rêvait de salons luxueux... »'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE','READ_CHARACTER'],difficulty:6,prompt:'Que montre le sacrifice des quatre cents francs sur le mari ?',choices:['Il aime sa femme et renonce à son propre plaisir pour elle','Il n’aime pas la chasse','Il est très riche'],ans:0,evidenceParagraph:1,explanation:'Il lui donne l’argent qu’il gardait « pour s’acheter un fusil » : il se sacrifie pour elle.'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:6,prompt:'Pourquoi les Loisel vivent-ils dix ans dans la misère ?',choices:['Pour rembourser le collier racheté trente-six mille francs','Parce que le mari a perdu son travail','Parce qu’ils ont acheté une maison'],ans:0,evidenceParagraph:5,explanation:'Ils ont emprunté pour remplacer le collier perdu et doivent rembourser leurs dettes.'},
+    {id:'q4',type:'choice',competencies:['READ_TIME','READ_STRUCTURE'],difficulty:6,prompt:'Combien de temps sépare la perte du collier de la rencontre finale ?',choices:['Environ dix ans','Une semaine','Un an'],ans:0,evidenceParagraph:5,explanation:'« Pendant dix ans, ils vécurent dans la misère... » puis vient la rencontre « un dimanche ».'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:8,prompt:'Pourquoi les Loisel ont-ils rendu le collier « sans rien dire » ?',choices:['Par honte et par orgueil : ils n’ont pas osé avouer la perte','Parce qu’ils ne savaient pas parler','Parce que Mme Forestier était absente'],ans:0,evidenceParagraph:4,explanation:'Avouer la perte aurait été humiliant : ce silence est la cause de dix ans de malheur, puisqu’un aveu leur aurait appris que le collier était faux.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:7,prompt:'Clique sur le paragraphe qui montre comment la misère a transformé Mathilde.',evidenceParagraph:5,explanation:'« Elle devint une femme forte, dure et rude. »'},
+    {id:'q7',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_STRUCTURE'],difficulty:8,prompt:'Quel est l’effet de la révélation finale de Mme Forestier ?',choices:['Elle rend tragique et absurde le sacrifice de dix années','Elle rassure le lecteur','Elle annonce un mariage'],ans:0,evidenceParagraph:6,explanation:'Le collier ne valait « au plus cinq cents francs » : dix ans de misère pour rien. C’est une chute, typique de la nouvelle.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:8,prompt:'Que critique Maupassant à travers cette histoire ?',choices:['L’importance excessive accordée aux apparences et au paraître','Les bals au ministère','Le métier de bijoutier'],ans:0,explanation:'Le rêve de paraître riche, le faux collier qui trompe tout le monde, l’orgueil de ne rien avouer : tout repose sur les apparences.'}
+   ]
+  },
+
+  fr_4e_horla_01:{
+   id:'fr_4e_horla_01',level:'4e',subject:'francais',type:'literary_text',documentType:'nouvelle fantastique (adaptation)',
+   title:'Le Horla',author:'Guy de Maupassant',work:'Le Horla (1887)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et très abrégée pour la 4e, d’après Guy de Maupassant (mort en 1893), dans le domaine public. La forme du journal intime et les dates sont conservées.',
+   chapterLinks:['fr4h'],
+   competencies:['READ_GENRE','READ_NARRATOR_POV','READ_TIME','READ_EXPLICIT','READ_INFERENCE','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_SEQUENCE'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    '8 mai. — Quelle journée admirable ! J’ai passé toute la matinée étendu sur l’herbe, devant ma maison, au bord de la Seine. Vers onze heures, un superbe trois-mâts brésilien, tout blanc, est passé devant chez moi. Je l’ai salué, je ne sais pourquoi.',
+    '25 mai. — Je dors mal. J’ai l’impression, la nuit, que quelqu’un s’approche de moi, s’accroupit sur ma poitrine et m’étouffe. Je me réveille en sueur. Personne.',
+    '5 juillet. — Ai-je perdu la raison ? Hier soir, j’avais posé une carafe pleine d’eau sur ma table de nuit. Ce matin, elle est vide. Les portes étaient fermées à clé. Qui a bu cette eau ? Moi, sans le savoir ? Ou quelqu’un d’autre ?',
+    '6 août. — Cette fois, je ne suis pas fou. En plein jour, dans mon jardin, j’ai vu la tige d’une rose se plier, comme si une main invisible la cueillait. Puis la fleur s’est élevée en l’air, toute seule, et a disparu.',
+    'Je suis certain, maintenant, qu’il existe près de moi un être invisible, qui boit mon eau et rôde autour de moi. À moins que… à moins que ce ne soit moi qui devienne fou.'
+   ],
+   glossary:[{word:'trois-mâts',definition:'Un grand voilier à trois mâts.'},{word:'carafe',definition:'Une bouteille à large base qui sert à servir l’eau.'},{word:'rôde',definition:'Tourne autour, de façon inquiétante.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_GENRE','READ_NARRATOR_POV'],difficulty:5,prompt:'Sous quelle forme ce récit est-il écrit ?',choices:['Un journal intime daté, écrit à la première personne','Une pièce de théâtre','Une lettre adressée à un ami'],ans:0,evidenceParagraph:0,explanation:'Chaque passage commence par une date et le narrateur dit « je » : c’est un journal intime.'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Dans quel état d’esprit est le narrateur le 8 mai ?',choices:['Heureux et serein','Terrifié','Malade'],ans:0,evidenceParagraph:0,explanation:'« Quelle journée admirable ! » : tout commence dans le calme.'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Qu’est-ce qui a disparu dans la nuit du 4 au 5 juillet ?',choices:['L’eau de la carafe','Une rose','Le trois-mâts'],ans:0,evidenceParagraph:2,explanation:'« ...j’avais posé une carafe pleine d’eau [...] Ce matin, elle est vide. »'},
+    {id:'q4',type:'choice',competencies:['READ_GENRE','READ_INFERENCE'],difficulty:7,prompt:'Pourquoi ce récit est-il fantastique ?',choices:['On hésite entre une explication surnaturelle (un être invisible) et la folie du narrateur','Il se passe dans un monde imaginaire avec des fées','Il raconte des faits historiques'],ans:0,evidenceParagraph:4,explanation:'Le fantastique repose sur cette hésitation : « un être invisible » ou « moi qui devienne fou » ? Le récit ne tranche pas.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le passage où le narrateur voit un phénomène inexplicable en plein jour.',evidenceParagraph:3,explanation:'Le 6 août, la rose est cueillie « comme si une main invisible la cueillait ».'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Pourquoi le narrateur précise-t-il que « les portes étaient fermées à clé » ?',choices:['Pour montrer que personne n’a pu entrer, ce qui rend le mystère inexplicable','Pour dire qu’il a peur des voleurs','Pour expliquer qu’il a perdu ses clés'],ans:0,evidenceParagraph:2,explanation:'Si personne n’a pu entrer, qui a bu l’eau ? Ce détail élimine les explications ordinaires.'},
+    {id:'q7',type:'choice',competencies:['READ_TIME','READ_SEQUENCE'],difficulty:5,prompt:'Comment évolue l’état du narrateur au fil des dates ?',choices:['Du calme à une angoisse de plus en plus forte','De l’angoisse au calme','Il ne change pas'],ans:0,evidenceParagraph:4,explanation:'Journée admirable (mai), puis cauchemars, puis doute (« Ai-je perdu la raison ? »), puis certitude inquiétante.'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:5,prompt:'Remets les événements dans l’ordre.',tokens:['Le trois-mâts passe','Les cauchemars commencent','La carafe est vide','La rose est cueillie'],ans:'Le trois-mâts passe Les cauchemars commencent La carafe est vide La rose est cueillie',explanation:'C’est l’ordre des dates : 8 mai, 25 mai, 5 juillet, 6 août.'}
+   ]
+  },
+
+  fr_4e_animal_classe_01:{
+   id:'fr_4e_animal_classe_01',level:'4e',subject:'francais',type:'document',documentType:'texte argumentatif',
+   title:'Faut-il un animal en classe ?',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr4i','fr4j'],
+   competencies:['READ_ARGUMENT','READ_STRUCTURE','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_MAIN_IDEA'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Dans certaines classes, un poisson rouge, un hamster ou des phasmes vivent avec les élèves. À mon avis, c’est une excellente idée, à condition de bien s’y prendre.',
+    'Premièrement, un animal rend les élèves responsables. Chacun, à tour de rôle, doit le nourrir, nettoyer son espace et vérifier qu’il va bien. Par exemple, dans la classe de ma cousine, un tableau indique qui s’occupe des phasmes chaque semaine.',
+    'De plus, observer un animal permet d’apprendre. On découvre comment il se nourrit, grandit et se comporte, ce qui rend les leçons de sciences bien plus vivantes.',
+    'On pourrait objecter que les animaux restent seuls pendant les vacances. C’est vrai, mais il suffit d’organiser un tour de garde : chaque famille volontaire peut l’accueillir quelques jours.',
+    'Bien sûr, il faut choisir un animal adapté et vérifier qu’aucun élève n’est allergique. Avec ces précautions, un animal en classe apporte bien plus qu’il ne coûte.'
+   ],
+   glossary:[{word:'phasmes',definition:'Insectes qui ressemblent à des brindilles.'},{word:'objecter',definition:'Opposer un argument contraire.'},{word:'allergique',definition:'Dont le corps réagit mal (éternuements, boutons…) au contact de quelque chose.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_ARGUMENT','READ_MAIN_IDEA'],difficulty:5,prompt:'Quelle est la thèse de l’auteur ?',choices:['Avoir un animal en classe est une excellente idée, si l’on s’y prend bien','Les animaux doivent rester à la maison','Les phasmes sont les meilleurs animaux'],ans:0,evidenceParagraph:0,explanation:'« À mon avis, c’est une excellente idée, à condition de bien s’y prendre. »'},
+    {id:'q2',type:'choice',competencies:['READ_ARGUMENT'],difficulty:5,prompt:'Quel est le premier argument ?',choices:['Un animal rend les élèves responsables','Un animal coûte peu cher','Un animal fait rire'],ans:0,evidenceParagraph:1,explanation:'« Premièrement, un animal rend les élèves responsables. »'},
+    {id:'q3',type:'choice',competencies:['READ_ARGUMENT','READ_STRUCTURE'],difficulty:5,prompt:'À quoi sert l’exemple de la classe de la cousine ?',choices:['À illustrer concrètement le premier argument','À contredire la thèse','À conclure le texte'],ans:0,evidenceParagraph:1,explanation:'Introduit par « Par exemple », il montre comment la responsabilité est partagée en pratique.'},
+    {id:'q4',type:'evidence',competencies:['READ_JUSTIFY','READ_ARGUMENT'],difficulty:6,prompt:'Clique sur le paragraphe où l’auteur répond à une objection.',evidenceParagraph:3,explanation:'« On pourrait objecter que... C’est vrai, mais... » : l’auteur cite l’argument adverse puis y répond.'},
+    {id:'q5',type:'choice',competencies:['READ_ARGUMENT'],difficulty:6,prompt:'Quelle est l’objection citée par l’auteur ?',choices:['Les animaux restent seuls pendant les vacances','Les animaux sont trop bruyants','Les animaux coûtent trop cher'],ans:0,evidenceParagraph:3,explanation:'« On pourrait objecter que les animaux restent seuls pendant les vacances. »'},
+    {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_STRUCTURE'],difficulty:6,prompt:'Quel est le rôle des mots « Premièrement » et « De plus » ?',choices:['Ils organisent les arguments et les ajoutent l’un à l’autre','Ils introduisent une opposition','Ils annoncent une conclusion'],ans:0,evidenceParagraph:2,explanation:'Ce sont des connecteurs d’énumération et d’addition.'},
+    {id:'q7',type:'choice',competencies:['READ_ARGUMENT','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Dans le dernier paragraphe, pourquoi l’auteur parle-t-il des allergies ?',choices:['Pour montrer qu’il a pensé aux limites, ce qui rend sa thèse plus crédible','Pour changer d’avis','Pour faire peur au lecteur'],ans:0,evidenceParagraph:4,explanation:'En reconnaissant les précautions nécessaires, il paraît raisonnable et convainc mieux.'},
+    {id:'q8',type:'order',competencies:['READ_STRUCTURE'],difficulty:6,prompt:'Remets les étapes du texte dans l’ordre.',tokens:['La thèse','L’argument de la responsabilité','L’argument de l’apprentissage','L’objection et la réponse','Les précautions et la conclusion'],ans:'La thèse L’argument de la responsabilité L’argument de l’apprentissage L’objection et la réponse Les précautions et la conclusion',explanation:'C’est l’ordre des paragraphes.'}
+   ]
+  },
+
+  fr_cp_velo_01:{
+   id:'fr_cp_velo_01',level:'CP',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le vélo de Malo',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cp-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_EMOTION_INTENTION','READ_SEQUENCE'],
+   difficulty:1,estimatedReadingMinutes:1,audioMode:'audioRecommended',sessionSize:5,
+   paragraphs:[
+    'Malo a un vélo rouge.',
+    'Il tombe. Il a mal au genou.',
+    'Papa lui dit : « Essaie encore ! »',
+    'Malo remonte sur son vélo.',
+    'Il roule tout seul ! Il est fier.'
+   ],
+   glossary:[{word:'fier',definition:'Content de ce qu’on a réussi.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'De quelle couleur est le vélo ?',choices:['Rouge','Bleu','Vert'],ans:0,evidenceParagraph:0,explanation:'« Malo a un vélo rouge. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:1,prompt:'Où Malo a-t-il mal ?',choices:['Au genou','À la tête','Au bras'],ans:0,evidenceParagraph:1,explanation:'« Il a mal au genou. »'},
+    {id:'q3',type:'choice',competencies:['READ_CHARACTER'],difficulty:1,prompt:'Qui encourage Malo ?',choices:['Papa','Maman','Sa sœur'],ans:0,evidenceParagraph:2,explanation:'« Papa lui dit : « Essaie encore ! » »'},
+    {id:'q4',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:2,prompt:'Comment se sent Malo à la fin ?',choices:['Fier','Triste','Fâché'],ans:0,evidenceParagraph:4,explanation:'« Il roule tout seul ! Il est fier. »'},
+    {id:'q5',type:'order',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Remets l’histoire dans l’ordre.',tokens:['Malo tombe','Papa dit d’essayer encore','Malo roule tout seul'],ans:'Malo tombe Papa dit d’essayer encore Malo roule tout seul',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_ce1_grenouille_doc_01:{
+   id:'fr_ce1_grenouille_doc_01',level:'CE1',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Du têtard à la grenouille',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce1-fr-comprendre'],
+   competencies:['READ_EXPLICIT','READ_SEQUENCE','READ_VOCAB_CONTEXT','READ_PLACE','READ_MAIN_IDEA'],
+   difficulty:2,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Au printemps, la grenouille pond des centaines d’œufs dans l’eau d’une mare. Ils sont entourés d’une sorte de gelée.',
+    'De chaque œuf sort un têtard. Il vit dans l’eau, il a une grosse tête et une longue queue pour nager, mais pas de pattes.',
+    'Peu à peu, le têtard change. Les pattes arrière poussent d’abord, puis les pattes avant.',
+    'Ensuite, sa queue raccourcit jusqu’à disparaître. Il peut maintenant sortir de l’eau et respirer l’air : c’est une petite grenouille.',
+    'Ce grand changement s’appelle une métamorphose.'
+   ],
+   glossary:[{word:'mare',definition:'Une petite étendue d’eau qui ne coule pas.'},{word:'têtard',definition:'Le petit de la grenouille, qui vit dans l’eau.'},{word:'métamorphose',definition:'Un changement complet de forme.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:1,prompt:'Où la grenouille pond-elle ses œufs ?',choices:['Dans l’eau d’une mare','Dans un arbre','Sous la terre'],ans:0,evidenceParagraph:0,explanation:'« ...dans l’eau d’une mare. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:2,prompt:'Que sort-il de chaque œuf ?',choices:['Un têtard','Une grenouille','Un poisson'],ans:0,evidenceParagraph:1,explanation:'« De chaque œuf sort un têtard. »'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Qu’est-ce que le têtard a, et que la grenouille adulte n’a plus ?',choices:['Une longue queue','Des pattes','Une tête'],ans:0,evidenceParagraph:3,explanation:'Le têtard a une longue queue ; elle « raccourcit jusqu’à disparaître ».'},
+    {id:'q4',type:'choice',competencies:['READ_SEQUENCE'],difficulty:2,prompt:'Quelles pattes poussent en premier ?',choices:['Les pattes arrière','Les pattes avant','Toutes en même temps'],ans:0,evidenceParagraph:2,explanation:'« Les pattes arrière poussent d’abord, puis les pattes avant. »'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Une « métamorphose », c’est...',choices:['Un grand changement de forme','Un voyage','Une maladie'],ans:0,evidenceParagraph:4,explanation:'« Ce grand changement s’appelle une métamorphose. »'},
+    {id:'q6',type:'order',competencies:['READ_SEQUENCE'],difficulty:3,prompt:'Remets les étapes dans l’ordre.',tokens:['Les œufs','Le têtard','Les pattes poussent','La queue disparaît'],ans:'Les œufs Le têtard Les pattes poussent La queue disparaît',explanation:'C’est l’ordre de la métamorphose.'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:2,prompt:'Ce texte explique...',choices:['Comment un têtard devient une grenouille','Comment construire une mare','Pourquoi les grenouilles chantent'],ans:0,explanation:'C’est le titre et le sujet de tous les paragraphes.'}
+   ]
+  },
+
+  fr_ce2_cabane_01:{
+   id:'fr_ce2_cabane_01',level:'CE2',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'La cabane du fond du jardin',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['ce2-fr-comprendre'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_EMOTION_INTENTION','READ_INFERENCE','READ_REFERENCE','READ_CAUSE_CONSEQUENCE','READ_JUSTIFY'],
+   difficulty:3,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Samedi, Inès et son petit frère Hugo décidèrent de construire une cabane au fond du jardin.',
+    'Inès voulait une cabane haute, avec un toit pointu. Hugo, lui, voulait une cabane basse, avec une porte secrète. Ils se disputèrent si fort que la voisine passa la tête par-dessus la haie.',
+    'Vexé, Hugo partit bouder sur la balançoire. Inès commença seule, mais les planches tombaient sans cesse : il fallait quelqu’un pour les tenir.',
+    'Elle alla trouver son frère : « Tu tiens les planches, et je te fais ta porte secrète. D’accord ? » Hugo sauta de la balançoire.',
+    'Le soir, la cabane était debout : un peu de travers, avec un toit pointu et une minuscule porte secrète. Ils y mangèrent leur goûter, très fiers.'
+   ],
+   glossary:[{word:'Vexé',definition:'Blessé dans son amour-propre, froissé.'},{word:'bouder',definition:'Montrer qu’on est fâché en restant dans son coin.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER','READ_EXPLICIT'],difficulty:2,prompt:'Qui sont les deux personnages principaux ?',choices:['Inès et son petit frère Hugo','Inès et la voisine','Hugo et son père'],ans:0,evidenceParagraph:0,explanation:'« ...Inès et son petit frère Hugo décidèrent de construire une cabane... »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Pourquoi Inès et Hugo se disputent-ils ?',choices:['Ils ne veulent pas la même cabane','Hugo a cassé une planche','Inès a mangé le goûter'],ans:0,evidenceParagraph:1,explanation:'Inès veut une cabane haute au toit pointu, Hugo une cabane basse avec une porte secrète.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Pourquoi la voisine passe-t-elle la tête par-dessus la haie ?',choices:['Elle a entendu les cris de la dispute','Elle veut aider à construire','Elle cherche son chat'],ans:0,evidenceParagraph:1,explanation:'« Ils se disputèrent si fort que la voisine passa la tête... » : le bruit l’a attirée.'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:4,prompt:'Pourquoi Inès va-t-elle chercher son frère ?',choices:['Seule, elle n’arrive pas à faire tenir les planches','Elle veut arrêter la cabane','Leur mère l’appelle'],ans:0,evidenceParagraph:2,explanation:'« ...les planches tombaient sans cesse : il fallait quelqu’un pour les tenir. »'},
+    {id:'q5',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:3,prompt:'Que montre le fait qu’Hugo « sauta de la balançoire » ?',choices:['Il est content d’accepter la proposition','Il a peur de sa sœur','Il est tombé'],ans:0,evidenceParagraph:3,explanation:'Il bondit tout de suite : la proposition lui plaît.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui montre que chacun a obtenu ce qu’il voulait.',evidenceParagraph:4,explanation:'La cabane a « un toit pointu » (l’idée d’Inès) et « une minuscule porte secrète » (l’idée d’Hugo).'},
+    {id:'q7',type:'choice',competencies:['READ_REFERENCE'],difficulty:3,prompt:'Dans « Ils y mangèrent leur goûter », où est « y » ?',choices:['Dans la cabane','Sur la balançoire','Chez la voisine'],ans:0,evidenceParagraph:4,explanation:'« y » remplace un lieu déjà cité : la cabane.'}
+   ]
+  },
+
+  fr_cm1_chateau_fort_doc_01:{
+   id:'fr_cm1_chateau_fort_doc_01',level:'CM1',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Le château fort au Moyen Âge',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm1-fr-documentaire'],
+   competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_STRUCTURE','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Au Moyen Âge, les seigneurs font construire des châteaux forts pour protéger leurs terres et les gens qui y vivent. Les premiers sont en bois ; à partir du XIe siècle, on les bâtit de plus en plus souvent en pierre, plus solide et qui ne brûle pas.',
+    'Le château est souvent entouré de fossés remplis d’eau, les douves. Pour entrer, il faut franchir le pont-levis, que l’on relève en cas d’attaque.',
+    'De hautes murailles, les remparts, entourent la cour. En haut, les créneaux permettent aux soldats de tirer tout en se cachant. Dans les murs, de fines ouvertures, les meurtrières, servent à tirer des flèches.',
+    'Au centre se dresse le donjon, la tour la plus haute et la plus solide. C’est là que vit souvent le seigneur, et c’est le dernier refuge si l’ennemi entre dans le château.',
+    'En cas de danger, les paysans des environs viennent s’abriter derrière les remparts.'
+   ],
+   glossary:[{word:'seigneurs',definition:'Au Moyen Âge, nobles qui possédaient des terres et commandaient ceux qui y vivaient.'},{word:'douves',definition:'Fossés remplis d’eau autour d’un château.'},{word:'remparts',definition:'Hautes murailles qui protègent un château ou une ville.'},{word:'donjon',definition:'La tour principale d’un château fort.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:3,prompt:'À quoi sert un château fort ?',choices:['À protéger le seigneur, ses terres et ses habitants','À organiser des fêtes','À stocker du blé seulement'],ans:0,evidenceParagraph:0,explanation:'« ...pour protéger leurs terres et les gens qui y vivent. »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi construit-on de plus en plus de châteaux en pierre ?',choices:['La pierre est plus solide et ne brûle pas','La pierre est plus légère','Le bois coûte trop cher'],ans:0,evidenceParagraph:0,explanation:'« ...en pierre, plus solide et qui ne brûle pas. »'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Que sont les douves ?',choices:['Des fossés remplis d’eau autour du château','Des tours de garde','Des portes secrètes'],ans:0,evidenceParagraph:1,explanation:'« ...entouré de fossés remplis d’eau, les douves. »'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi relève-t-on le pont-levis en cas d’attaque ?',choices:['Pour que les ennemis ne puissent plus franchir les douves','Pour le réparer','Pour laisser passer les bateaux'],ans:0,evidenceParagraph:1,explanation:'Une fois relevé, il n’y a plus de passage au-dessus de l’eau.'},
+    {id:'q5',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'À quoi servent les meurtrières ?',choices:['À tirer des flèches','À faire entrer la lumière','À évacuer la fumée'],ans:0,evidenceParagraph:2,explanation:'« ...les meurtrières, servent à tirer des flèches. »'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui parle du dernier refuge en cas d’attaque.',evidenceParagraph:3,explanation:'Le donjon est « le dernier refuge si l’ennemi entre dans le château ».'},
+    {id:'q7',type:'choice',competencies:['READ_STRUCTURE'],difficulty:4,prompt:'Comment ce texte est-il organisé ?',choices:['De l’extérieur du château vers son centre','Du plus récent au plus ancien','Par ordre alphabétique'],ans:0,explanation:'Douves et pont-levis, puis remparts, puis donjon au centre : on entre peu à peu dans le château.'},
+    {id:'q8',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi les paysans viennent-ils au château en cas de danger ?',choices:['Les remparts les protègent mieux que leurs maisons','Pour faire la fête','Pour vendre leurs récoltes'],ans:0,evidenceParagraph:4,explanation:'Leurs villages ne sont pas fortifiés : derrière les remparts, ils sont à l’abri.'}
+   ]
+  },
+
+  fr_cm2_chat_botte_01:{
+   id:'fr_cm2_chat_botte_01',level:'CM2',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Le Maître chat ou le Chat botté',author:'Charles Perrault',work:'Histoires ou contes du temps passé (1697)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CM2, d’après Charles Perrault (mort en 1703), dans le domaine public.',
+   chapterLinks:['cm2-fr-litterature'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_EXPLICIT','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_SEQUENCE','READ_AUTHOR_INTENT'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Un meunier mourut en laissant pour tout héritage son moulin, son âne et son chat. L’aîné eut le moulin, le deuxième l’âne, et le plus jeune n’eut que le chat. Il se désolait : « Que vais-je faire d’un chat ? »',
+    'Mais le chat lui dit : « Ne vous inquiétez pas, mon maître. Donnez-moi seulement un sac et une paire de bottes, et vous verrez que vous n’êtes pas si mal partagé. »',
+    'Avec son sac, le chat attrapa des lapins et des perdrix qu’il alla offrir au roi, de la part de « Monsieur le marquis de Carabas » : c’était le nom qu’il avait inventé pour son maître.',
+    'Un jour, apprenant que le roi passerait au bord de la rivière avec sa fille, le chat dit à son maître d’aller s’y baigner. Quand le carrosse arriva, il cria : « Au secours ! Des voleurs ont pris les habits de Monsieur le marquis de Carabas ! » Le roi lui fit apporter de magnifiques vêtements.',
+    'Le chat courut alors jusqu’au château d’un ogre très riche. Il le flatta et le mit au défi de se changer en souris. L’ogre, vexé, se transforma… et le chat le mangea aussitôt.',
+    'Quand le roi arriva, le chat l’accueillit : « Bienvenue au château de Monsieur le marquis de Carabas ! » Émerveillé, le roi donna sa fille en mariage au fils du meunier.'
+   ],
+   glossary:[{word:'héritage',definition:'Ce qu’une personne laisse à sa famille après sa mort.'},{word:'perdrix',definition:'Oiseau sauvage que l’on chassait.'},{word:'marquis',definition:'Un titre de noblesse.'},{word:'carrosse',definition:'Une voiture luxueuse tirée par des chevaux.'},{word:'flatta',definition:'Fit des compliments exagérés pour plaire.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Qu’hérite le plus jeune fils ?',choices:['Le chat','Le moulin','L’âne'],ans:0,evidenceParagraph:0,explanation:'« ...le plus jeune n’eut que le chat. »'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:3,prompt:'Comment se sent le jeune homme au début ?',choices:['Désolé, découragé','Ravi','En colère contre le chat'],ans:0,evidenceParagraph:0,explanation:'« Il se désolait : « Que vais-je faire d’un chat ? » »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi le chat offre-t-il du gibier au roi au nom du « marquis de Carabas » ?',choices:['Pour que le roi croie que son maître est un riche seigneur','Parce que le roi a faim','Pour se débarrasser du gibier'],ans:0,evidenceParagraph:2,explanation:'Il invente un titre de noblesse et fait des cadeaux : le roi se fait une haute idée de ce « marquis ».'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi le chat crie-t-il que des voleurs ont pris les habits de son maître ?',choices:['Pour que le roi lui offre de beaux vêtements et le remarque','Parce que c’est vrai','Pour faire arrêter des voleurs'],ans:0,evidenceParagraph:3,explanation:'Résultat : « Le roi lui fit apporter de magnifiques vêtements. » Le fils du meunier ressemble enfin à un marquis.'},
+    {id:'q5',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Comment le chat réussit-il à vaincre l’ogre ?',choices:['Par la ruse : il le pousse à se changer en souris','Par la force, en le combattant','En appelant les soldats du roi'],ans:0,evidenceParagraph:4,explanation:'Il le flatte et le met au défi : l’ogre, vexé, se transforme en souris… une proie facile.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où le chat explique ce dont il a besoin.',evidenceParagraph:1,explanation:'« Donnez-moi seulement un sac et une paire de bottes... »'},
+    {id:'q7',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets les ruses du chat dans l’ordre.',tokens:['Il offre du gibier au roi','Il invente le vol des habits','Il piège l’ogre','Il accueille le roi au château'],ans:'Il offre du gibier au roi Il invente le vol des habits Il piège l’ogre Il accueille le roi au château',explanation:'C’est l’ordre du conte.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:6,prompt:'Quelle qualité ce conte met-il en avant ?',choices:['L’intelligence et l’habileté valent mieux qu’un riche héritage','Il faut toujours dire la vérité','Les ogres sont gentils'],ans:0,explanation:'Le plus pauvre des trois frères, grâce à l’adresse de son chat, finit par épouser la princesse.'}
    ]
   }
 
