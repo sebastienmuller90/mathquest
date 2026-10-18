@@ -216,7 +216,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .reading-meta .rm-author{font-style:italic}
 .reading-text{background:var(--surface2);border-radius:14px;padding:16px 18px;font-size:19px;line-height:1.7}
 .reading-text p{margin:0 0 .7em}.reading-text p:last-child{margin-bottom:0}
-.reading-title{margin:0 0 6px;font-size:21px}.reread .reading-title{font-size:18px}
+.reading-title{margin:0 0 6px;font-size:21px}.reading-listen{display:flex;margin:8px 0 10px;font-size:18px}.reread .reading-title{font-size:18px}
 .reread{margin:4px 0 14px}.reread>summary{cursor:pointer;font-weight:700;color:var(--accent);padding:6px 0}.reread .reading-text{font-size:17px;margin-top:6px}
 .reading-text.verse p{margin:0 0 .15em;padding-left:1.2em;text-indent:-1.2em}.reading-text.verse p.stz{margin-top:.9em}
 .reading-glossary-hint{margin-top:8px;font-size:13px;color:var(--muted)}

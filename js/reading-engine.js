@@ -188,7 +188,10 @@
   // surcharger visuellement un paragraphe qui répéterait le même mot plusieurs fois.
   // Pas de lookbehind (absent de Safari < 16.4) : le caractère qui précède est capturé puis remis.
   function glossRe(word){return new RegExp('(^|[^\\p{L}\\p{N}_])('+word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![\\p{L}\\p{N}_])','iu');}
-  function textHTML(resource){
+  // audioMode : 'audioRecommended' (jeunes lecteurs, fables) ajoute un grand bouton d'écoute au-dessus du
+  // texte, en plus du bouton « Écouter » de la barre ; 'audioAllowed'/'audioOptional' : barre seule.
+  function textHTML(resource,opts){
+    const listen=opts&&opts.listen&&resource.audioMode==='audioRecommended'&&typeof TTS!=='undefined'&&TTS.ok;
     const glossary=resource.glossary||[];
     const used=new Set();
     const wrap=p=>{
@@ -202,7 +205,7 @@
       return out;
     };
     const typeLabel={literary_text:'Texte littéraire',document:'Document',press_article:'Article de presse'}[resource.type]||'Texte';
-    return `<h3 class="reading-title">${esc(resource.title)}</h3><div class="reading-meta"><span class="rm-badge">${esc(resource.documentType||typeLabel)}</span><span class="rm-time">⏱ ${resource.estimatedReadingMinutes||3} min</span>${resource.author?`<span class="rm-author">${esc(resource.author)}${resource.work?' · '+esc(resource.work):''}</span>`:''}</div>
+    return `<h3 class="reading-title">${esc(resource.title)}</h3>${listen?`<button class="btn primary reading-listen" data-a="ttsplay">🔊 Écouter le texte</button>`:''}<div class="reading-meta"><span class="rm-badge">${esc(resource.documentType||typeLabel)}</span><span class="rm-time">⏱ ${resource.estimatedReadingMinutes||3} min</span>${resource.author?`<span class="rm-author">${esc(resource.author)}${resource.work?' · '+esc(resource.work):''}</span>`:''}</div>
 <div class="reading-text${resource.verse?' verse':''}">${resource.paragraphs.map((p,i)=>`<p data-para="${i}"${(resource.stanzas||[]).includes(i)?' class="stz"':''}>${wrap(p)}</p>`).join('')}</div>
 ${glossary.length?`<p class="reading-glossary-hint">💡 Les mots soulignés ont une petite définition — touche-les pour l’afficher.</p>`:''}`;
   }

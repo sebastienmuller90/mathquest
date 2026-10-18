@@ -81,7 +81,7 @@ function primaryLessonSteps(id){const c=COURS[id],ch=byId(id),cg=stageOf(S.grade
  if(c.traps.length)st.push({k:'piege',t:'🚨 Attention !',h:`<div class="piege">${c.traps.map(x=>`<p>${x}</p>`).join('')}</div>`});
  st.push({k:'ret',t:'🧠 Je retiens',h:`<div class="memory-map">${c.retenir.map((x,i)=>`<div><span>${['🟣','🟡','🟢'][i%3]}</span><b>${x}</b></div>`).join('')}</div>`});
  const rres=window.MQReading?MQReading.pickResource(id,S):null;
- if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});
+ if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres,{listen:true}),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});
  st.push({k:'practice',t:'🎯 Je m’entraîne'});
  st.push({k:'confidence',t:yg?'🙂 Comment te sens-tu ?':'✅ Es-tu prêt pour le quiz ?',h:`<p>${yg?'Choisis :':'Choisis ton ressenti, il sert à régler le niveau du quiz :'}</p><div class="confidence"><button class="pillbtn ${S.confidence?.[id]?.value===1?'on':''}" data-a="conf:1">😕 Pas encore</button><button class="pillbtn ${S.confidence?.[id]?.value===2?'on':''}" data-a="conf:2">🙂 Presque</button><button class="pillbtn ${S.confidence?.[id]?.value===3?'on':''}" data-a="conf:3">😎 ${yg?'Oui !':'Je peux l’expliquer'}</button></div>`});
  if(pronLang(id))st.push({k:'pron',t:'Prononciation 🎤 (facultatif)'});
@@ -95,7 +95,7 @@ function lessonSteps(id){if(COURS[id]&&(COURS[id].primary||COURS[id].structured)
  ];
  c.parts.forEach((p,i)=>{st.push({k:'part',t:`${i+1}. ${p.t}`,h:p.h});if(i===0)st.push({k:'why',t:'💡 Le prof t’explique autrement',h:x.why});});
  st.push({k:'method',t:'🛠️ La méthode du champion',h:x.method},{k:'ex',t:'👣 Exemple guidé pas à pas',ex:c.ex},{k:'check',t:'🎯 Mini-défi avant de continuer',h:x.check},{k:'piege',t:'🚨 Le piège classique',h:`<div class="piege">${c.piege}</div>`},{k:'ret',t:'🧠 Carte mémoire',h:x.memory});
- {const rres=window.MQReading?MQReading.pickResource(id,S):null;if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});}
+ {const rres=window.MQReading?MQReading.pickResource(id,S):null;if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres,{listen:true}),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});}
  st.push({k:'practice',t:'🎯 Je m’entraîne (correction expliquée)'},{k:'confidence',t:'✅ Est-ce que tu te sens prêt ?',h:`<p>Choisis ton ressenti. Il sert à adapter le niveau du quiz :</p><div class="confidence"><button class="pillbtn ${S.confidence?.[id]?.value===1?'on':''}" data-a="conf:1">😕 Pas encore</button><button class="pillbtn ${S.confidence?.[id]?.value===2?'on':''}" data-a="conf:2">🙂 Presque</button><button class="pillbtn ${S.confidence?.[id]?.value===3?'on':''}" data-a="conf:3">😎 Je peux l’expliquer</button></div><p class="muted">MathQuest compare ensuite ce ressenti avec tes réponses. Si tu te sous-estimes ou te surestimes, ce n’est pas grave : le niveau se recale automatiquement.</p>`});
  if(pronLang(id))st.push({k:'pron',t:'Prononciation 🎤'});
  st.push({k:'quiz',t:'À toi de jouer ! 🎮'});return st;}
