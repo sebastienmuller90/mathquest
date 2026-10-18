@@ -4,7 +4,7 @@
    impossible de mélanger un index.html récent avec des données anciennes.
    ⚠️ À chaque publication, incrémenter VERSION : le navigateur installe alors la nouvelle version complète,
    puis supprime l'ancienne. La page en cours continue avec sa version ; la suivante utilise la nouvelle. */
-const VERSION='8.34.0-lecture-lot3-2026-10-18';
+const VERSION='8.35.0-lecture-lot4-2026-10-18';
 const CACHE='mathquest-'+VERSION;
 const CORE=[
   './','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css',

@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.2-lot3-2026-10-18',
+ version:'1.3-lot4-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -799,7 +799,7 @@ window.MQ_READING={
    glossary:[{word:'jarre',definition:'Grand vase en terre cuite. (On parle souvent de « boîte de Pandore », mais le texte grec parle d’une jarre.)'},{word:'habileté',definition:'Le talent pour faire des choses avec adresse.'},{word:'Espérance',definition:'L’espoir que les choses iront mieux.'}],
    questions:[
     {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi Zeus veut-il se venger ?',choices:['Parce que Prométhée a volé le feu des dieux pour les hommes','Parce que Pandore a désobéi','Parce que les hommes l’ont attaqué'],ans:0,evidenceParagraph:0,explanation:'Tout commence par le vol du feu par Prométhée.'},
-    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Zeus confie une jarre interdite à une femme très curieuse. Qu’espère-t-il sans doute ?',choices:['Qu’elle finisse par l’ouvrir, ce qui servira sa vengeance','Pour qu’elle apprenne beaucoup à l’école','Pour la protéger des malheurs'],ans:0,evidenceParagraph:2,explanation:'Interdire d’ouvrir la jarre à quelqu’un de très curieux, c’est tendre un piège : la vengeance de Zeus passe par cette curiosité.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Zeus confie une jarre interdite à une femme très curieuse. Qu’espère-t-il sans doute ?',choices:['Qu’elle finisse par l’ouvrir, ce qui servira sa vengeance','Qu’elle apprenne beaucoup de choses','Qu’elle soit protégée des malheurs'],ans:0,evidenceParagraph:2,explanation:'Interdire d’ouvrir la jarre à quelqu’un de très curieux, c’est tendre un piège : la vengeance de Zeus passe par cette curiosité.'},
     {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Que contenait la jarre ?',choices:['Tous les malheurs du monde, et l’Espérance','Le feu volé par Prométhée','De l’or et des bijoux'],ans:0,evidenceParagraph:4,explanation:'Les malheurs s’échappent ; il ne reste au fond que l’Espérance.'},
     {id:'q4',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Quel paragraphe montre que Pandore n’arrive pas à résister à la tentation ?',evidenceParagraph:3,explanation:'« ...Pandore ne pensait plus qu’à la jarre. Un soir, elle souleva le couvercle. »'},
     {id:'q5',type:'choice',competencies:['READ_GENRE','READ_AUTHOR_INTENT'],difficulty:5,prompt:'Ce récit est un mythe. Que cherche-t-il à expliquer ?',choices:['L’origine des malheurs dans le monde','Comment fabriquer une jarre','Pourquoi Zeus est le roi des dieux'],ans:0,explanation:'Les récits des origines expliquent d’où vient quelque chose : ici, les malheurs des hommes.'},
@@ -950,6 +950,352 @@ window.MQ_READING={
     {id:'q6',type:'choice',competencies:['READ_DOCUMENT_SOURCE','READ_INFERENCE'],difficulty:6,prompt:'Le document 1 dit « Le ministère l’a confirmé ». Qu’est-ce qui rend cette affirmation douteuse ?',choices:['Aucun document officiel n’est cité, et le ministère dément','Le ministère ne parle jamais aux journaux','Le mot « ministère » est mal écrit'],ans:0,evidenceParagraph:1,explanation:'Citer une autorité sans source vérifiable est un procédé fréquent ; le document 2 montre le démenti.'},
     {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:5,prompt:'Quelle est la leçon principale de cet ensemble de documents ?',choices:['Vérifier qui parle et croiser les sources avant de partager','Ne jamais utiliser les réseaux sociaux','Toujours croire les journaux'],ans:0,evidenceParagraph:3,explanation:'Le document 4 résume la méthode ; les autres documents l’appliquent. « Toujours croire » ou « ne jamais utiliser » sont des positions extrêmes.'},
     {id:'q8',type:'order',competencies:['READ_STRUCTURE'],difficulty:4,prompt:'Remets dans l’ordre les trois questions conseillées par le professeur documentaliste.',tokens:['Qui parle ?','Quelle est sa source ?','D’autres médias fiables disent-ils la même chose ?'],ans:'Qui parle ? Quelle est sa source ? D’autres médias fiables disent-ils la même chose ?',explanation:'C’est l’ordre du document 4 : de l’auteur, à sa source, puis au croisement des sources.'}
+   ]
+  },
+
+  // ===== Lot 4 (18/10/2026) : chapitres du collège encore sans texte (poésie, théâtre, argumentation,
+  // autobiographie, médias). Textes originaux de Verlaine (mort en 1896), Du Bellay (1560) et Ronsard
+  // (1585) ; adaptations libres de Molière, Marivaux, Voltaire, Rousseau, Verne et Sophocle (tous dans
+  // le domaine public) ; deux documents originaux MathQuest.
+
+  fr_6e_chanson_automne_01:{
+   id:'fr_6e_chanson_automne_01',level:'6e',subject:'francais',type:'literary_text',documentType:'poème',
+   title:'Chanson d’automne',author:'Paul Verlaine',work:'Poèmes saturniens (1866)',
+   sourceType:'public_domain',sourceReference:'Texte original de Paul Verlaine (mort en 1896), dans le domaine public.',
+   chapterLinks:['fr6e'],verse:true,stanzas:[6,12],
+   competencies:['READ_TIME','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_JUSTIFY','READ_GENRE','READ_INFERENCE'],
+   difficulty:5,estimatedReadingMinutes:2,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Les sanglots longs',
+    'Des violons',
+    'De l’automne',
+    'Blessent mon cœur',
+    'D’une langueur',
+    'Monotone.',
+    'Tout suffocant',
+    'Et blême, quand',
+    'Sonne l’heure,',
+    'Je me souviens',
+    'Des jours anciens',
+    'Et je pleure ;',
+    'Et je m’en vais',
+    'Au vent mauvais',
+    'Qui m’emporte',
+    'Deçà, delà,',
+    'Pareil à la',
+    'Feuille morte.'
+   ],
+   glossary:[{word:'langueur',definition:'Une tristesse fatiguée, sans force.'},{word:'Monotone',definition:'Toujours pareil, sans changement.'},{word:'suffocant',definition:'Qui a du mal à respirer, comme étouffé par l’émotion.'},{word:'blême',definition:'Très pâle.'},{word:'Deçà',definition:'« Deçà, delà » : d’un côté puis de l’autre, au hasard.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_TIME'],difficulty:3,prompt:'À quelle saison le poème se passe-t-il ?',choices:['En automne','Au printemps','En été'],ans:0,evidenceParagraph:2,explanation:'« Les sanglots longs / Des violons / De l’automne » — c’est aussi le titre.'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_INFERENCE'],difficulty:5,prompt:'Que peuvent être les « violons de l’automne » ?',choices:['Une image : les sons de l’automne, comme le vent, ressemblent à des violons qui pleurent','Un vrai orchestre qui joue dans la rue','Des oiseaux qui chantent gaiement'],ans:0,evidenceParagraph:0,explanation:'Le poète compare les bruits de l’automne à des violons qui sanglotent : c’est une image.'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Quel sentiment le poète exprime-t-il ?',choices:['Une profonde tristesse','Une grande joie','De la colère'],ans:0,evidenceParagraph:11,explanation:'Les sanglots « blessent [son] cœur » et il finit par dire « je pleure ».'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Qu’est-ce qui fait pleurer le poète dans la deuxième strophe ?',choices:['Le souvenir des jours anciens','Une dispute avec un ami','Une blessure à la main'],ans:0,evidenceParagraph:10,explanation:'« Je me souviens / Des jours anciens / Et je pleure » : ce sont ses souvenirs qui le font pleurer.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le vers où le poète se compare à une chose emportée par le vent.',evidenceParagraph:17,explanation:'« Pareil à la / Feuille morte » : comme une feuille morte, il se laisse emporter sans pouvoir résister.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Que nous fait comprendre la comparaison avec la « feuille morte » ?',choices:['Le poète se sent sans force, poussé au hasard par la vie','Le poète aime ramasser les feuilles','Le poète va bientôt planter un arbre'],ans:0,evidenceParagraph:16,explanation:'Une feuille morte ne choisit pas où elle va : le poète se sent pareil, triste et sans volonté.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:4,prompt:'Qu’est-ce qui donne à ce poème une musique de « chanson » ?',choices:['Des vers très courts et des sons qui se répètent','De très longues phrases sans rimes','Des dialogues entre personnages'],ans:0,explanation:'Les vers sont très courts et riment souvent (longs/violons, cœur/langueur) : on dirait une mélodie.'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE','READ_VOCAB_CONTEXT'],difficulty:5,prompt:'Quels mots riment entre eux ?',choices:['« automne » et « monotone »','« cœur » et « heure »','« violons » et « souviens »'],ans:0,evidenceParagraph:5,explanation:'« automne » (vers 3) rime avec « monotone » (vers 6).'}
+   ]
+  },
+
+  fr_6e_scapin_galere_01:{
+   id:'fr_6e_scapin_galere_01',level:'6e',subject:'francais',type:'literary_text',documentType:'comédie (extrait adapté)',
+   title:'Que diable allait-il faire dans cette galère ?',author:'Molière',work:'Les Fourberies de Scapin (1671)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 6e de l’acte II, scène 7, d’après Molière (mort en 1673), dans le domaine public. La réplique célèbre de Géronte est conservée.',
+   chapterLinks:['fr6f'],
+   competencies:['READ_EXPLICIT','READ_CHARACTER','READ_INFERENCE','READ_GENRE','READ_JUSTIFY','READ_AUTHOR_INTENT'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'GÉRONTE. — Qu’y a-t-il, Scapin ? Tu as l’air tout bouleversé.',
+    'SCAPIN. — Ah ! Monsieur, quel malheur ! Votre fils Léandre et moi, nous sommes montés visiter une galère turque sur le port. Pendant que nous goûtions des fruits, la galère a pris la mer !',
+    'SCAPIN. — Le Turc m’a renvoyé à terre pour vous dire que, si vous ne lui envoyez pas tout de suite cinq cents écus, il emmène votre fils à Alger.',
+    'GÉRONTE. — Comment, diantre ! cinq cents écus ? Que diable allait-il faire dans cette galère ?',
+    'SCAPIN. — Il ne pensait pas à ce qui est arrivé. Vite, Monsieur, songez qu’on attend !',
+    'GÉRONTE. — Va dire à ce Turc qu’il me renvoie mon fils, et que tu te mets à sa place en attendant que j’aie trouvé l’argent.',
+    'SCAPIN. — Eh, Monsieur ! Le Turc ne prendra jamais un pauvre misérable comme moi à la place de votre fils.',
+    'GÉRONTE. — Que diable allait-il faire dans cette galère ? (Il sort lentement sa bourse, la tend à Scapin, puis la retient.) Tiens, va racheter mon fils.',
+    'SCAPIN. — Il faudrait d’abord, Monsieur, que vous lâchiez la bourse…',
+    'GÉRONTE, lâchant enfin la bourse et sortant en grommelant. — Ah ! maudite galère ! Traître de Turc !',
+    'SCAPIN, seul. — Voilà cinq cents écus qui vont tirer mon jeune maître d’embarras !'
+   ],
+   glossary:[{word:'galère',definition:'Grand navire de l’époque, qui avançait à la rame et à la voile.'},{word:'écus',definition:'Pièces de monnaie de l’époque. Cinq cents écus, c’est une très grosse somme.'},{word:'diantre',definition:'Juron ancien qui marque la surprise ou l’agacement.'},{word:'bourse',definition:'Petit sac où l’on mettait son argent.'},{word:'grommelant',definition:'En se plaignant à voix basse, de mauvaise humeur.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Selon Scapin, qu’est-il arrivé à Léandre ?',choices:['Il a été emmené en mer sur une galère turque','Il s’est perdu dans la forêt','Il est tombé malade'],ans:0,evidenceParagraph:1,explanation:'« ...nous sommes montés visiter une galère turque [...] la galère a pris la mer ! »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Combien le Turc réclame-t-il ?',choices:['Cinq cents écus','Cinquante écus','Mille écus'],ans:0,evidenceParagraph:2,explanation:'« ...si vous ne lui envoyez pas tout de suite cinq cents écus... »'},
+    {id:'q3',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Quel défaut de Géronte cette scène montre-t-elle ?',choices:['Il est avare : il a du mal à donner son argent, même pour sauver son fils','Il est peureux : il a peur des Turcs','Il est paresseux'],ans:0,evidenceParagraph:7,explanation:'Il cherche d’autres solutions et retient sa bourse au moment de la donner : il tient trop à son argent.'},
+    {id:'q4',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Géronte répète plusieurs fois « Que diable allait-il faire dans cette galère ? ». Comment appelle-t-on ce procédé qui fait rire ?',choices:['Le comique de répétition','Une didascalie','Un monologue'],ans:0,evidenceParagraph:3,explanation:'La même réplique revient plusieurs fois : c’est le comique de répétition.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY','READ_GENRE'],difficulty:5,prompt:'Clique sur la réplique qui contient une didascalie montrant que Géronte hésite à donner son argent.',evidenceParagraph:7,explanation:'« (Il sort lentement sa bourse, la tend à Scapin, puis la retient.) » : la didascalie indique les gestes de l’acteur.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Pourquoi Géronte propose-t-il que Scapin prenne la place de son fils ?',choices:['Pour gagner du temps et ne pas payer tout de suite','Parce qu’il veut se débarrasser de Scapin','Parce que Scapin le lui a demandé'],ans:0,evidenceParagraph:5,explanation:'Il cherche une solution « en attendant que j’aie trouvé l’argent » : il veut retarder le paiement.'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE','READ_JUSTIFY'],difficulty:6,prompt:'L’histoire de la galère est-elle vraie ?',choices:['Non, c’est une ruse de Scapin pour obtenir l’argent','Oui, Léandre est vraiment prisonnier','On ne peut pas le savoir'],ans:0,evidenceParagraph:10,explanation:'Seul, Scapin se réjouit : l’argent va « tirer [son] jeune maître d’embarras ». C’était une fourberie, comme l’annonce le titre de la pièce.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT','READ_GENRE'],difficulty:5,prompt:'Que cherche surtout Molière dans cette scène ?',choices:['Faire rire en se moquant de l’avarice','Faire peur aux spectateurs','Raconter un vrai fait divers'],ans:0,explanation:'C’est une comédie : Molière fait rire de l’avare qui préfère son argent à son fils.'}
+   ]
+  },
+
+  fr_5e_ile_esclaves_01:{
+   id:'fr_5e_ile_esclaves_01',level:'5e',subject:'francais',type:'literary_text',documentType:'comédie (extrait adapté)',
+   title:'L’Île des esclaves',author:'Marivaux',work:'L’Île des esclaves (1725)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 5e des scènes 1 et 2, d’après Marivaux (mort en 1763), dans le domaine public.',
+   chapterLinks:['fr5f'],
+   competencies:['READ_PLACE','READ_EXPLICIT','READ_EMOTION_INTENTION','READ_CHARACTER','READ_REFERENCE','READ_AUTHOR_INTENT','READ_INFERENCE','READ_GENRE','READ_CAUSE_CONSEQUENCE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    '(Sur une île, juste après un naufrage. Iphicrate, un maître athénien, et Arlequin, son esclave.)',
+    'IPHICRATE. — Ne perdons pas de temps, Arlequin : il faut quitter cette île au plus vite. Elle est habitée par des esclaves révoltés, et l’on dit qu’ils s’en prennent aux maîtres !',
+    'ARLEQUIN, buvant tranquillement à sa gourde. — Eh bien, chacun son tour, mon cher patron. Moi, je trouve cette île tout à fait charmante.',
+    'TRIVELIN, arrivant avec des habitants. — Rassurez-vous, on ne vous fera pas de mal. Mais nous avons une loi : ici, le maître devient l’esclave, et l’esclave devient le maître. Vous allez échanger vos noms et vos habits.',
+    'IPHICRATE. — Quoi ! Moi, obéir à mon esclave ? C’est le monde à l’envers !',
+    'TRIVELIN. — Ce n’est pas pour vous punir, c’est pour vous corriger. Vous avez été dur et méprisant : en vivant à sa place, vous sentirez ce que vous lui avez fait souffrir. Quand vous serez devenu humain et juste, vous pourrez rentrer à Athènes.',
+    'ARLEQUIN, à Iphicrate. — Allons, Arlequin ! Car c’est maintenant ton nom. Et moi, je m’appelle Monsieur Iphicrate.'
+   ],
+   glossary:[{word:'naufrage',definition:'Accident d’un bateau qui coule.'},{word:'athénien',definition:'Qui vient d’Athènes, en Grèce.'},{word:'révoltés',definition:'Qui se sont soulevés contre ceux qui les commandaient.'},{word:'méprisant',definition:'Qui traite les autres comme s’ils ne valaient rien.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:3,prompt:'Où se passe la scène ?',choices:['Sur une île, après un naufrage','Dans un palais à Athènes','Sur un bateau en pleine mer'],ans:0,evidenceParagraph:0,explanation:'La didascalie du début l’indique : « Sur une île, juste après un naufrage. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Quelle est la loi de l’île ?',choices:['Le maître devient l’esclave et l’esclave devient le maître','Les maîtres sont jetés à la mer','Tout le monde doit travailler aux champs'],ans:0,evidenceParagraph:3,explanation:'« ...ici, le maître devient l’esclave, et l’esclave devient le maître. »'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Comment réagit Iphicrate en apprenant cette loi ?',choices:['Il est indigné','Il est ravi','Il est indifférent'],ans:0,evidenceParagraph:4,explanation:'« Quoi ! Moi, obéir à mon esclave ? » : les exclamations montrent son indignation.'},
+    {id:'q4',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:5,prompt:'Que montre l’attitude d’Arlequin quand il boit tranquillement à sa gourde ?',choices:['Il n’a pas peur : il devine que la situation va tourner à son avantage','Il a très soif après le naufrage, rien de plus','Il veut s’enfuir au plus vite'],ans:0,evidenceParagraph:2,explanation:'Il reste calme et dit « chacun son tour » : il comprend que, sur cette île, c’est son maître qui risque quelque chose.'},
+    {id:'q5',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_EXPLICIT'],difficulty:5,prompt:'Selon Trivelin, à quoi sert l’échange des rôles ?',choices:['À corriger les maîtres en leur faisant vivre ce qu’ont subi leurs esclaves','À punir les maîtres pour toujours','À faire travailler les esclaves davantage'],ans:0,evidenceParagraph:5,explanation:'« Ce n’est pas pour vous punir, c’est pour vous corriger. »'},
+    {id:'q6',type:'choice',competencies:['READ_REFERENCE'],difficulty:5,prompt:'À la fin, Arlequin dit « Allons, Arlequin ! ». À qui parle-t-il ?',choices:['À Iphicrate, qui porte désormais ce nom','À lui-même','À Trivelin'],ans:0,evidenceParagraph:6,explanation:'Les noms ont été échangés : Iphicrate s’appelle maintenant Arlequin.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE','READ_INFERENCE'],difficulty:5,prompt:'Pourquoi peut-on dire que cette pièce met la société « sens dessus dessous » ?',choices:['Les rôles du maître et du serviteur sont inversés','Les personnages marchent sur la tête','La pièce se passe sous la mer'],ans:0,evidenceParagraph:4,explanation:'Iphicrate le dit lui-même : « C’est le monde à l’envers ! »'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:7,prompt:'Que veut faire réfléchir Marivaux à travers cette situation ?',choices:['À la façon dont les puissants traitent ceux qui les servent','Au danger des voyages en bateau','À la meilleure manière de construire une île'],ans:0,explanation:'En inversant les rôles, Marivaux invite les spectateurs à se demander si les maîtres sont justes et humains.'}
+   ]
+  },
+
+  fr_5e_heureux_ulysse_01:{
+   id:'fr_5e_heureux_ulysse_01',level:'5e',subject:'francais',type:'literary_text',documentType:'poème (sonnet)',
+   title:'Heureux qui, comme Ulysse…',author:'Joachim du Bellay',work:'Les Regrets, sonnet XXXI (1558)',
+   sourceType:'public_domain',sourceReference:'Texte original de Joachim du Bellay (mort en 1560), dans le domaine public, en orthographe modernisée.',
+   chapterLinks:['fr5e'],verse:true,stanzas:[4,8,11],
+   competencies:['READ_CHARACTER','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_STRUCTURE','READ_GENRE','READ_INFERENCE','READ_JUSTIFY','READ_PLACE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Heureux qui, comme Ulysse, a fait un beau voyage,',
+    'Ou comme cestuy-là qui conquit la toison,',
+    'Et puis est retourné, plein d’usage et raison,',
+    'Vivre entre ses parents le reste de son âge !',
+    'Quand reverrai-je, hélas, de mon petit village',
+    'Fumer la cheminée, et en quelle saison',
+    'Reverrai-je le clos de ma pauvre maison,',
+    'Qui m’est une province, et beaucoup davantage ?',
+    'Plus me plaît le séjour qu’ont bâti mes aïeux,',
+    'Que des palais romains le front audacieux,',
+    'Plus que le marbre dur me plaît l’ardoise fine :',
+    'Plus mon Loire gaulois, que le Tibre latin,',
+    'Plus mon petit Liré, que le mont Palatin,',
+    'Et plus que l’air marin la douceur angevine.'
+   ],
+   glossary:[{word:'cestuy-là',definition:'« Celui-là », en ancien français : ici, Jason, le héros qui conquit la Toison d’or.'},{word:'toison',definition:'Le pelage d’un mouton. La Toison d’or est un trésor de la mythologie grecque.'},{word:'usage',definition:'Ici : l’expérience de la vie.'},{word:'clos',definition:'Un terrain entouré d’une clôture ou d’un mur.'},{word:'aïeux',definition:'Les ancêtres.'},{word:'angevine',definition:'De l’Anjou, la région natale du poète.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:5,prompt:'Qu’ont en commun Ulysse et « cestuy-là qui conquit la toison » ?',choices:['Ce sont des héros qui sont rentrés chez eux après un long voyage','Ce sont deux poètes romains','Ce sont des habitants de Liré'],ans:0,evidenceParagraph:2,explanation:'Ulysse et Jason ont voyagé, puis « [sont] retourné[s] » vivre chez eux : le poète les trouve « heureux ».'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel sentiment le poète exprime-t-il ?',choices:['La nostalgie : le regret de son pays natal','La joie de découvrir Rome','La peur de voyager'],ans:0,evidenceParagraph:4,explanation:'« Quand reverrai-je, hélas, de mon petit village... » : il souffre d’être loin de chez lui.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE','READ_PLACE'],difficulty:6,prompt:'Où se trouve probablement le poète quand il écrit ?',choices:['Loin de chez lui, à Rome','Dans son village de Liré','Sur le bateau d’Ulysse'],ans:0,evidenceParagraph:9,explanation:'Il compare sans cesse son village aux « palais romains », au « Tibre » et au « mont Palatin », qu’il a sous les yeux. Du Bellay a vécu quatre ans à Rome.'},
+    {id:'q4',type:'choice',competencies:['READ_STRUCTURE','READ_PLACE'],difficulty:6,prompt:'Dans les tercets, quels lieux le poète oppose-t-il ?',choices:['Rome et son Anjou natal','Paris et Londres','La mer et la montagne'],ans:0,evidenceParagraph:12,explanation:'« Plus mon petit Liré, que le mont Palatin » : chaque vers oppose un élément de son pays à un élément de Rome.'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Pourquoi préfère-t-il « l’ardoise fine » au « marbre dur » ?',choices:['Ce qui est simple et familier compte plus pour lui que ce qui est grandiose','L’ardoise coûte plus cher que le marbre','Il n’a jamais vu de marbre'],ans:0,evidenceParagraph:10,explanation:'Le marbre des palais romains est impressionnant, mais l’ardoise des toits de chez lui lui est plus chère au cœur.'},
+    {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'Dans « Vivre entre ses parents », que veut dire « parents » ?',choices:['Sa famille et ses proches','Seulement son père et sa mère','Ses amis de voyage'],ans:0,evidenceParagraph:3,explanation:'À l’époque, « parents » désignait toute la famille.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Ce poème de 14 vers, formé de deux strophes de 4 vers puis deux de 3 vers, est...',choices:['Un sonnet','Une fable','Une chanson'],ans:0,explanation:'Deux quatrains et deux tercets : c’est la forme du sonnet.'},
+    {id:'q8',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le vers où le poète dit que sa maison compte plus pour lui qu’une région entière.',evidenceParagraph:7,explanation:'« Qui m’est une province, et beaucoup davantage ? »'}
+   ]
+  },
+
+  fr_4e_mignonne_rose_01:{
+   id:'fr_4e_mignonne_rose_01',level:'4e',subject:'francais',type:'literary_text',documentType:'poème (ode)',
+   title:'Mignonne, allons voir si la rose…',author:'Pierre de Ronsard',work:'Odes, « À Cassandre »',
+   sourceType:'public_domain',sourceReference:'Texte original de Pierre de Ronsard (mort en 1585), dans le domaine public, en orthographe modernisée.',
+   chapterLinks:['fr4a'],verse:true,stanzas:[6,12],
+   competencies:['READ_CHARACTER','READ_VOCAB_CONTEXT','READ_EXPLICIT','READ_AUTHOR_INTENT','READ_STRUCTURE','READ_SEQUENCE','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:8,
+   paragraphs:[
+    'Mignonne, allons voir si la rose',
+    'Qui ce matin avait déclose',
+    'Sa robe de pourpre au soleil,',
+    'A point perdu cette vesprée',
+    'Les plis de sa robe pourprée,',
+    'Et son teint au vôtre pareil.',
+    'Las ! voyez comme en peu d’espace,',
+    'Mignonne, elle a dessus la place,',
+    'Las, las ses beautés laissé choir !',
+    'Ô vraiment marâtre Nature,',
+    'Puisqu’une telle fleur ne dure',
+    'Que du matin jusques au soir !',
+    'Donc, si vous me croyez, mignonne,',
+    'Tandis que votre âge fleuronne',
+    'En sa plus verte nouveauté,',
+    'Cueillez, cueillez votre jeunesse :',
+    'Comme à cette fleur la vieillesse',
+    'Fera ternir votre beauté.'
+   ],
+   glossary:[{word:'déclose',definition:'Ouverte, épanouie.'},{word:'pourpre',definition:'Rouge foncé.'},{word:'vesprée',definition:'Le soir.'},{word:'Las',definition:'Hélas.'},{word:'choir',definition:'Tomber.'},{word:'marâtre',definition:'Une belle-mère cruelle, comme dans les contes.'},{word:'fleuronne',definition:'Fleurit, est en pleine floraison.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'À qui le poète s’adresse-t-il ?',choices:['À une jeune femme qu’il appelle « Mignonne »','À une rose','À la Nature'],ans:0,evidenceParagraph:0,explanation:'Il s’adresse à « Mignonne », une jeune femme, et la vouvoie.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'À quoi la jeune femme est-elle comparée ?',choices:['À la rose','Au soleil','À la nuit'],ans:0,evidenceParagraph:5,explanation:'Le teint de la rose est « au vôtre pareil » : la femme et la fleur se ressemblent.'},
+    {id:'q3',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Qu’est-il arrivé à la rose le soir ?',choices:['Elle a perdu ses pétales et sa beauté','Elle s’est encore plus ouverte','Quelqu’un l’a cueillie'],ans:0,evidenceParagraph:8,explanation:'« ...ses beautés laissé choir ! » : ses pétales sont tombés en une seule journée.'},
+    {id:'q4',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:6,prompt:'Pourquoi le poète traite-t-il la Nature de « marâtre » ?',choices:['Parce qu’elle est cruelle : elle laisse la beauté mourir si vite','Parce qu’elle est la mère des fleurs','Parce qu’elle fait pousser les roses'],ans:0,evidenceParagraph:9,explanation:'Une marâtre est une belle-mère méchante : la Nature est cruelle, car une si belle fleur ne vit « que du matin jusques au soir ».'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le vers qui contient le conseil principal du poète.',evidenceParagraph:15,explanation:'« Cueillez, cueillez votre jeunesse » : l’impératif répété donne le conseil.'},
+    {id:'q6',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:7,prompt:'Quel est le message du poème ?',choices:['La jeunesse passe vite : il faut en profiter sans attendre','Il faut planter beaucoup de roses','La vieillesse est le plus bel âge'],ans:0,evidenceParagraph:16,explanation:'Comme la rose, la beauté se fanera : profite du moment présent. On appelle ce thème le « carpe diem ».'},
+    {id:'q7',type:'order',competencies:['READ_STRUCTURE','READ_SEQUENCE'],difficulty:6,prompt:'Remets dans l’ordre les trois étapes du poème.',tokens:['Une invitation à aller voir la rose','Le constat que la rose est déjà fanée','Le conseil de profiter de sa jeunesse'],ans:'Une invitation à aller voir la rose Le constat que la rose est déjà fanée Le conseil de profiter de sa jeunesse',explanation:'Chaque strophe correspond à une étape : invitation, constat, conseil (annoncé par « Donc »).'},
+    {id:'q8',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'« Tandis que votre âge fleuronne / En sa plus verte nouveauté » signifie...',choices:['Pendant que vous êtes encore toute jeune','Pendant que vous jardinez','Quand vous serez vieille'],ans:0,evidenceParagraph:13,explanation:'L’âge qui « fleuronne » dans sa « plus verte nouveauté », c’est la pleine jeunesse.'}
+   ]
+  },
+
+  fr_4e_candide_surinam_01:{
+   id:'fr_4e_candide_surinam_01',level:'4e',subject:'francais',type:'literary_text',documentType:'conte philosophique (extrait adapté)',
+   title:'Le prix du sucre',author:'Voltaire',work:'Candide ou l’Optimisme (1759), chapitre 19',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 4e, d’après Voltaire (mort en 1778), dans le domaine public. Les répliques principales sont conservées ; le vocabulaire de l’époque désignant l’homme réduit en esclavage a été remplacé.',
+   chapterLinks:['fr4b'],
+   competencies:['READ_PLACE','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_AUTHOR_INTENT','READ_VOCAB_CONTEXT','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_ARGUMENT'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'En approchant de la ville de Surinam, en Amérique du Sud, Candide et son valet Cacambo rencontrent un homme noir étendu par terre. Il ne porte plus qu’un caleçon de toile bleue ; il manque à ce pauvre homme la jambe gauche et la main droite.',
+    '« Eh, mon Dieu ! lui dit Candide, que fais-tu là, mon ami, dans l’état horrible où je te vois ? » L’homme répond qu’il attend son maître, M. Vanderdendur, le fameux négociant.',
+    '« Est-ce lui qui t’a traité ainsi ? — Oui, monsieur, c’est l’usage. Quand nous travaillons aux sucreries et que la meule nous attrape le doigt, on nous coupe la main ; quand nous voulons nous enfuir, on nous coupe la jambe. Je me suis trouvé dans les deux cas. C’est à ce prix que vous mangez du sucre en Europe. »',
+    '« Ô Pangloss ! s’écrie Candide, tu n’avais pas deviné cette abomination ; c’en est fait, il faudra qu’enfin je renonce à ton optimisme.',
+    '— Qu’est-ce qu’optimisme ? demande Cacambo. — Hélas ! répond Candide, c’est la rage de soutenir que tout est bien quand on est mal. »',
+    'Et il versa des larmes en regardant le malheureux.'
+   ],
+   glossary:[{word:'négociant',definition:'Un riche commerçant.'},{word:'sucreries',definition:'Les ateliers où l’on fabrique le sucre à partir de la canne à sucre.'},{word:'meule',definition:'Grosse roue de pierre qui écrase la canne à sucre.'},{word:'abomination',definition:'Une chose horrible, révoltante.'},{word:'Pangloss',definition:'Le maître de Candide, qui lui répétait que « tout est au mieux » dans le monde.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:4,prompt:'Où se passe cette scène ?',choices:['Près de Surinam, en Amérique du Sud','En Europe','En Afrique'],ans:0,evidenceParagraph:0,explanation:'« En approchant de la ville de Surinam, en Amérique du Sud... »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi a-t-on coupé la jambe de l’homme ?',choices:['Parce qu’il a essayé de s’enfuir','Parce qu’il a eu un accident à la meule','Parce qu’il était malade'],ans:0,evidenceParagraph:2,explanation:'« ...quand nous voulons nous enfuir, on nous coupe la jambe. » (La main, elle, a été coupée après l’accident à la meule.)'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Que signifie « C’est à ce prix que vous mangez du sucre en Europe » ?',choices:['Le sucre des Européens est produit grâce à la souffrance des esclaves','Le sucre coûte très cher en Europe','Les esclaves achètent le sucre aux Européens'],ans:0,evidenceParagraph:2,explanation:'Le « prix » n’est pas de l’argent : c’est la main et la jambe de cet homme. Voltaire rend les lecteurs européens complices.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE','READ_ARGUMENT'],difficulty:7,prompt:'L’homme dit « c’est l’usage ». Qu’est-ce que cela révèle ?',choices:['Ces violences sont si fréquentes qu’elles semblent normales','Il approuve ce qu’on lui a fait','C’est une règle de politesse'],ans:0,evidenceParagraph:2,explanation:'Ces mutilations sont devenues une habitude : c’est justement ce qui rend le système révoltant.'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'D’après Candide, qu’est-ce que l’optimisme ?',choices:['S’obstiner à dire que tout va bien quand tout va mal','Être toujours de bonne humeur','Croire que demain sera meilleur'],ans:0,evidenceParagraph:4,explanation:'« ...c’est la rage de soutenir que tout est bien quand on est mal. »'},
+    {id:'q6',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Comment Candide réagit-il ?',choices:['Il est bouleversé et pleure','Il se moque de l’homme','Il ne remarque rien'],ans:0,evidenceParagraph:5,explanation:'« Et il versa des larmes en regardant le malheureux. »'},
+    {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe où Candide remet en cause ce que son maître lui a appris.',evidenceParagraph:3,explanation:'« ...il faudra qu’enfin je renonce à ton optimisme. »'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT','READ_ARGUMENT'],difficulty:7,prompt:'Que veut dénoncer Voltaire dans ce passage ?',choices:['L’esclavage et la cruauté de ceux qui en profitent','Les dangers des voyages','La paresse des valets'],ans:0,explanation:'En montrant les mutilations et en citant le sucre que mangent les Européens, Voltaire dénonce l’esclavage.'}
+   ]
+  },
+
+  fr_4e_photo_legende_01:{
+   id:'fr_4e_photo_legende_01',level:'4e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
+   title:'Une photo, deux légendes',author:null,work:null,sourceType:'original_mathquest',
+   sourceReference:'Document original MathQuest. L’exemple de la photographie et des deux journaux est imaginé pour l’exercice.',
+   chapterLinks:['fr4g'],
+   competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_COMPARE_DOCUMENTS','READ_VOCAB_CONTEXT','READ_INFERENCE','READ_DOCUMENT_SOURCE','READ_JUSTIFY'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Imaginons une photographie prise pendant une manifestation, sur la place d’une ville. On y voit, en gros plan, une trentaine de personnes serrées les unes contre les autres, qui brandissent des pancartes sous la pluie.',
+    'Le journal A publie la photo avec cette légende : « Une foule immense envahit le centre-ville ». Le journal B choisit une autre légende : « Quelques dizaines de manifestants bravent la pluie ».',
+    'Les deux journaux utilisent pourtant la même image. Mais la légende oriente notre regard : « foule immense » nous fait imaginer des milliers de personnes, alors que « quelques dizaines » souligne au contraire leur petit nombre.',
+    'Le cadrage compte aussi. Un gros plan sur un groupe serré donne l’impression d’une foule nombreuse. Une photo prise de plus loin aurait peut-être montré une place presque vide autour des manifestants.',
+    'Pour se faire une idée juste, il faut donc observer l’image elle-même, lire la légende avec un œil critique, et comparer plusieurs sources avant de se forger une opinion.'
+   ],
+   glossary:[{word:'légende',definition:'Ici : le court texte placé sous une photo pour dire ce qu’elle montre.'},{word:'bravent',definition:'Affrontent sans avoir peur.'},{word:'cadrage',definition:'Ce que le photographe choisit de faire entrer dans l’image, et ce qu’il laisse en dehors.'},{word:'gros plan',definition:'Une image prise de très près.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:5,prompt:'Quelle est l’idée principale du document ?',choices:['La légende et le cadrage peuvent changer ce qu’on croit voir sur une photo','Les manifestations ont toujours lieu sous la pluie','Le journal A est meilleur que le journal B'],ans:0,explanation:'Tout le texte montre comment une même image peut être présentée de façons différentes.'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Combien de personnes voit-on vraiment sur la photo ?',choices:['Une trentaine','Des milliers','Personne'],ans:0,evidenceParagraph:0,explanation:'« On y voit, en gros plan, une trentaine de personnes... »'},
+    {id:'q3',type:'choice',competencies:['READ_COMPARE_DOCUMENTS'],difficulty:5,prompt:'Quelle légende exagère ce que montre la photo ?',choices:['Celle du journal A, « Une foule immense »','Celle du journal B','Aucune des deux'],ans:0,evidenceParagraph:2,explanation:'Une trentaine de personnes, ce n’est pas une « foule immense ».'},
+    {id:'q4',type:'choice',competencies:['READ_COMPARE_DOCUMENTS'],difficulty:4,prompt:'Qu’ont en commun les deux articles ?',choices:['Ils utilisent la même photo','Ils ont la même légende','Ils ont été écrits par le même journaliste'],ans:0,evidenceParagraph:2,explanation:'« Les deux journaux utilisent pourtant la même image. »'},
+    {id:'q5',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'Dans ce texte, le « cadrage » d’une photo, c’est...',choices:['Ce que le photographe choisit de montrer ou de laisser hors de l’image','Le cadre doré autour de la photo','Le nom du photographe'],ans:0,evidenceParagraph:3,explanation:'Le texte explique qu’un gros plan et une vue de loin ne montrent pas la même chose.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe qui explique comment un gros plan peut tromper.',evidenceParagraph:3,explanation:'« Un gros plan sur un groupe serré donne l’impression d’une foule nombreuse. »'},
+    {id:'q7',type:'choice',competencies:['READ_INFERENCE','READ_DOCUMENT_SOURCE'],difficulty:7,prompt:'Pourquoi un journal pourrait-il choisir la légende « Une foule immense » ?',choices:['Pour donner plus d’importance à l’événement','Parce qu’il a compté les personnes une par une','Parce que la loi l’oblige'],ans:0,evidenceParagraph:2,explanation:'La légende oriente le regard : elle peut grossir un événement pour attirer l’attention ou soutenir une cause.'},
+    {id:'q8',type:'choice',competencies:['READ_DOCUMENT_SOURCE'],difficulty:5,prompt:'Que conseille le texte pour se faire une idée juste ?',choices:['Observer l’image, lire la légende avec un œil critique et comparer plusieurs sources','Croire le premier journal que l’on lit','Ne jamais regarder de photos'],ans:0,evidenceParagraph:4,explanation:'C’est le conseil donné dans le dernier paragraphe.'}
+   ]
+  },
+
+  fr_3e_peigne_casse_01:{
+   id:'fr_3e_peigne_casse_01',level:'3e',subject:'francais',type:'literary_text',documentType:'autobiographie (extrait adapté)',
+   title:'Le peigne cassé',author:'Jean-Jacques Rousseau',work:'Les Confessions, livre I',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 3e, d’après Jean-Jacques Rousseau (mort en 1778), dans le domaine public.',
+   chapterLinks:['fr3a'],
+   competencies:['READ_NARRATOR_POV','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_TIME','READ_EMOTION_INTENTION','READ_INFERENCE','READ_JUSTIFY','READ_GENRE','READ_STRUCTURE','READ_AUTHOR_INTENT'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'J’étais alors un enfant, en pension chez le pasteur Lambercier et sa sœur, à Bossey, près de Genève. Un jour, j’apprenais seul ma leçon dans la chambre voisine de la cuisine.',
+    'La servante avait mis à sécher sur le poêle les peignes de Mlle Lambercier. Quand elle revint les prendre, l’un d’eux avait toute une rangée de dents cassées.',
+    'Personne d’autre que moi n’était entré dans la pièce. On m’interroge ; je nie avoir touché le peigne. On ne me croit pas. On me menace, on écrit à mon oncle, on me punit sévèrement.',
+    'Je résistai à tout. Je préférais souffrir plutôt que d’avouer une faute que je n’avais pas commise.',
+    'Il y a maintenant près de cinquante ans de cette aventure, et je déclare encore aujourd’hui que j’étais innocent. Ce fut ma première rencontre avec l’injustice, et ce jour-là prit fin la sérénité de mon enfance.'
+   ],
+   glossary:[{word:'pension',definition:'Ici : logé et nourri chez quelqu’un qui s’occupe aussi de son éducation.'},{word:'pasteur',definition:'Le responsable religieux d’une communauté protestante.'},{word:'poêle',definition:'Ici (au masculin) : un appareil de chauffage.'},{word:'sérénité',definition:'Le calme, la paix intérieure.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_NARRATOR_POV','READ_GENRE'],difficulty:6,prompt:'Qui raconte cette histoire ?',choices:['Rousseau lui-même, qui raconte sa propre enfance','Mlle Lambercier','Un narrateur extérieur qui ne participe pas à l’histoire'],ans:0,evidenceParagraph:0,explanation:'Le narrateur dit « je » et raconte sa vie : l’auteur, le narrateur et le personnage sont la même personne. C’est une autobiographie.'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Qu’est-ce qui a été abîmé ?',choices:['Un peigne de Mlle Lambercier','Un livre de leçons','Le poêle de la cuisine'],ans:0,evidenceParagraph:1,explanation:'« ...l’un d’eux avait toute une rangée de dents cassées. »'},
+    {id:'q3',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi accuse-t-on l’enfant ?',choices:['Parce qu’il était le seul à être entré dans la pièce','Parce qu’on l’a vu casser le peigne','Parce qu’il a avoué'],ans:0,evidenceParagraph:2,explanation:'« Personne d’autre que moi n’était entré dans la pièce. » Il n’y a aucune preuve, seulement une supposition.'},
+    {id:'q4',type:'choice',competencies:['READ_TIME'],difficulty:6,prompt:'Combien de temps s’est écoulé entre l’événement et le moment où Rousseau l’écrit ?',choices:['Près de cinquante ans','Quelques jours','Un an'],ans:0,evidenceParagraph:4,explanation:'« Il y a maintenant près de cinquante ans de cette aventure... »'},
+    {id:'q5',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_INFERENCE'],difficulty:6,prompt:'Que montre le fait que Rousseau se déclare encore innocent cinquante ans plus tard ?',choices:['Cette injustice l’a profondément et durablement marqué','Il a oublié toute l’histoire','Il veut s’amuser de ce souvenir'],ans:0,evidenceParagraph:4,explanation:'Un demi-siècle après, il éprouve toujours le besoin de le dire : la blessure ne s’est pas refermée.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe qui montre la fermeté de l’enfant face à la punition.',evidenceParagraph:3,explanation:'« Je résistai à tout. Je préférais souffrir plutôt que d’avouer une faute que je n’avais pas commise. »'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE','READ_STRUCTURE'],difficulty:8,prompt:'Dans le troisième paragraphe, le récit passe au présent (« On m’interroge ; je nie »). Quel est l’effet produit ?',choices:['La scène semble se dérouler sous nos yeux, de manière vive et rapide','Cela montre que l’histoire se passe aujourd’hui','C’est une erreur de l’auteur'],ans:0,evidenceParagraph:2,explanation:'C’est le présent de narration : les phrases courtes au présent rendent l’accusation plus vivante et plus oppressante.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:7,prompt:'Pourquoi Rousseau raconte-t-il cet épisode dans son autobiographie ?',choices:['Parce que c’est un moment qui a changé sa vie : sa première expérience de l’injustice','Pour donner une recette de nettoyage des peignes','Pour accuser la servante'],ans:0,evidenceParagraph:4,explanation:'« Ce fut ma première rencontre avec l’injustice, et ce jour-là prit fin la sérénité de mon enfance. »'}
+   ]
+  },
+
+  fr_3e_antigone_01:{
+   id:'fr_3e_antigone_01',level:'3e',subject:'francais',type:'literary_text',documentType:'tragédie (récit adapté)',
+   title:'Antigone face à Créon',author:'Sophocle',work:'Antigone (Ve siècle av. J.-C.)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 3e, d’après la tragédie de Sophocle (Ve siècle av. J.-C.), dans le domaine public — aucune traduction existante reprise.',
+   chapterLinks:['fr3d'],
+   competencies:['READ_CAUSE_CONSEQUENCE','READ_CHARACTER','READ_ARGUMENT','READ_JUSTIFY','READ_GENRE','READ_MAIN_IDEA','READ_INFERENCE'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'À Thèbes, deux frères se sont entretués pour le pouvoir : Étéocle, qui défendait la ville, et Polynice, qui l’attaquait avec une armée étrangère. Leur oncle Créon, devenu roi, a fait proclamer un ordre : Étéocle aura des funérailles, mais le corps de Polynice, le traître, restera sans sépulture. Qui désobéira sera puni de mort.',
+    'Antigone, leur sœur, ne peut accepter qu’on laisse son frère sans tombeau. Sa sœur Ismène refuse de l’aider : « Nous ne sommes que des femmes, nous ne pouvons pas lutter contre le roi. » Antigone y va seule et recouvre le corps d’une fine couche de poussière.',
+    'Un garde la surprend et l’amène devant Créon. Le roi lui demande : « Connaissais-tu mon ordre ? » — « Je le connaissais. Comment l’ignorer ? Il était public. »',
+    '« Et tu as osé l’enfreindre ? » — « Oui, car ce n’est pas Zeus qui l’avait proclamé. Ton ordre n’est qu’un ordre d’homme. Il ne peut pas l’emporter sur les lois non écrites des dieux, qui sont éternelles. »',
+    'Créon s’emporte : « Si je laisse une jeune fille me désobéir sans la punir, ce n’est plus moi qui suis le roi, c’est elle ! Une cité ne tient debout que si l’on obéit à ses chefs. »',
+    'Il la condamne à être enfermée vivante dans un tombeau creusé dans le roc.'
+   ],
+   glossary:[{word:'funérailles',definition:'La cérémonie pour enterrer un mort.'},{word:'sépulture',definition:'Le fait d’être enterré, ou le lieu où l’on est enterré.'},{word:'enfreindre',definition:'Ne pas respecter une loi, un ordre.'},{word:'cité',definition:'Dans la Grèce antique : une ville et son territoire, avec leurs lois.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi Créon refuse-t-il une sépulture à Polynice ?',choices:['Parce que Polynice a attaqué Thèbes : Créon le considère comme un traître','Parce que Polynice était trop pauvre','Parce qu’Antigone le lui a demandé'],ans:0,evidenceParagraph:0,explanation:'Polynice « attaquait [la ville] avec une armée étrangère » : Créon le traite en traître.'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:5,prompt:'Comment se comporte Ismène ?',choices:['Elle a peur et refuse de désobéir au roi','Elle aide Antigone à enterrer son frère','Elle dénonce Antigone au roi'],ans:0,evidenceParagraph:1,explanation:'« ...nous ne pouvons pas lutter contre le roi » : elle se soumet par crainte.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Antigone savait-elle qu’elle risquait la mort ?',choices:['Oui : l’ordre et la peine étaient publics, et elle les connaissait','Non : personne ne l’avait prévenue','Non : elle pensait que le roi l’épargnerait forcément'],ans:0,evidenceParagraph:2,explanation:'« Je le connaissais. Comment l’ignorer ? Il était public. » Et l’ordre précisait : « Qui désobéira sera puni de mort. »'},
+    {id:'q4',type:'choice',competencies:['READ_ARGUMENT'],difficulty:7,prompt:'Quel argument Antigone oppose-t-elle à Créon ?',choices:['Les lois éternelles des dieux sont supérieures à l’ordre d’un homme','Elle ne savait pas que c’était interdit','Polynice n’était pas vraiment un traître'],ans:0,evidenceParagraph:3,explanation:'« Ton ordre n’est qu’un ordre d’homme. Il ne peut pas l’emporter sur les lois non écrites des dieux. »'},
+    {id:'q5',type:'choice',competencies:['READ_ARGUMENT'],difficulty:7,prompt:'Quel argument Créon défend-il ?',choices:['L’ordre de la cité exige que chacun obéisse à ses chefs','Les dieux lui ont demandé de punir Antigone','Il veut se venger d’Ismène'],ans:0,evidenceParagraph:4,explanation:'« Une cité ne tient debout que si l’on obéit à ses chefs. »'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe où Créon montre qu’il craint pour son autorité.',evidenceParagraph:4,explanation:'« ...ce n’est plus moi qui suis le roi, c’est elle ! »'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:7,prompt:'Quel conflit cette scène met-elle en scène ?',choices:['La conscience d’une personne face à la loi du pouvoir','Une dispute entre deux sœurs à propos d’un héritage','Une guerre entre deux cités'],ans:0,explanation:'Antigone obéit à sa conscience et aux dieux ; Créon défend la loi de l’État. Chacun a ses raisons.'},
+    {id:'q8',type:'choice',competencies:['READ_GENRE'],difficulty:6,prompt:'Pourquoi cette histoire est-elle une tragédie ?',choices:['Les personnages sont pris dans un conflit sans issue qui mène à la mort','Elle se termine par un mariage joyeux','Elle fait rire le public'],ans:0,evidenceParagraph:5,explanation:'Ni Antigone ni Créon ne peuvent céder : le conflit conduit à la mort, c’est le propre de la tragédie.'}
+   ]
+  },
+
+  fr_3e_nautilus_01:{
+   id:'fr_3e_nautilus_01',level:'3e',subject:'francais',type:'literary_text',documentType:'roman d’anticipation (extrait adapté)',
+   title:'L’âme du Nautilus',author:'Jules Verne',work:'Vingt mille lieues sous les mers (1870)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 3e, d’après Jules Verne (mort en 1905), dans le domaine public.',
+   chapterLinks:['fr3e'],
+   competencies:['READ_NARRATOR_POV','READ_EXPLICIT','READ_REFERENCE','READ_TIME','READ_INFERENCE','READ_CHARACTER','READ_GENRE','READ_JUSTIFY'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Depuis quelques jours, j’étais l’hôte — ou plutôt le prisonnier — du capitaine Nemo, à bord du Nautilus. Ce jour-là, il accepta de m’expliquer comment fonctionnait son étonnant navire.',
+    '« Professeur, me dit-il, il existe une force puissante, obéissante, rapide, qui se plie à tous les usages et règne en maître à mon bord. Tout se fait par elle. Elle m’éclaire, elle me chauffe, elle est l’âme de mes machines. Cette force, c’est l’électricité. »',
+    'Je restai stupéfait. À notre époque, on ne savait utiliser l’électricité que pour de petites choses ; personne n’imaginait qu’elle pût faire avancer un navire aussi grand, à une telle vitesse.',
+    '« Et comment la produisez-vous, en plein océan ? » demandai-je. Nemo sourit : « C’est la mer elle-même qui me fournit de quoi la fabriquer. Je ne dépends d’aucun pays de la Terre. »',
+    'Il me fit ensuite visiter le grand salon, avec ses milliers de livres et ses immenses vitres, derrière lesquelles défilaient les poissons. Je compris que cet homme avait rompu tout lien avec le monde, et je me demandai quel secret le poussait à vivre ainsi sous les mers.'
+   ],
+   glossary:[{word:'hôte',definition:'Ici : celui qui est reçu chez quelqu’un, l’invité.'},{word:'stupéfait',definition:'Extrêmement étonné, au point de ne plus savoir quoi dire.'},{word:'rompu',definition:'Cassé, coupé.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:5,prompt:'Qui raconte l’histoire ?',choices:['Un professeur prisonnier à bord du Nautilus','Le capitaine Nemo','Un narrateur extérieur qui n’est pas à bord'],ans:0,evidenceParagraph:0,explanation:'Le narrateur dit « je » et Nemo l’appelle « Professeur » : c’est un personnage de l’histoire (le professeur Aronnax).'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:4,prompt:'Quelle énergie fait fonctionner le Nautilus ?',choices:['L’électricité','La vapeur','Le vent'],ans:0,evidenceParagraph:1,explanation:'« Cette force, c’est l’électricité. »'},
+    {id:'q3',type:'choice',competencies:['READ_REFERENCE'],difficulty:5,prompt:'Dans « Elle m’éclaire, elle me chauffe », que désigne « elle » ?',choices:['L’électricité','La mer','La machine'],ans:0,evidenceParagraph:1,explanation:'« Elle » reprend « une force puissante », que Nemo nomme ensuite : l’électricité.'},
+    {id:'q4',type:'choice',competencies:['READ_TIME','READ_INFERENCE'],difficulty:7,prompt:'Pourquoi le narrateur est-il « stupéfait » ?',choices:['Parce qu’à son époque on n’imaginait pas l’électricité assez puissante pour faire avancer un tel navire','Parce qu’il n’a jamais vu de bateau','Parce que Nemo lui a menti'],ans:0,evidenceParagraph:2,explanation:'« À notre époque, on ne savait utiliser l’électricité que pour de petites choses. » Le roman date de 1870.'},
+    {id:'q5',type:'choice',competencies:['READ_CHARACTER','READ_INFERENCE'],difficulty:6,prompt:'Que révèle la phrase « Je ne dépends d’aucun pays de la Terre » sur Nemo ?',choices:['Il tient à sa liberté et vit à l’écart du monde','Il est perdu en mer','Il cherche un pays où s’installer'],ans:0,evidenceParagraph:3,explanation:'Nemo est fier d’être indépendant : le narrateur comprend qu’il « avait rompu tout lien avec le monde ».'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe où le narrateur s’interroge sur le mystère de Nemo.',evidenceParagraph:4,explanation:'« ...je me demandai quel secret le poussait à vivre ainsi sous les mers. »'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:6,prompt:'Pourquoi parle-t-on de « roman d’anticipation » ?',choices:['L’auteur imagine des techniques en avance sur son époque','Le roman raconte des faits historiques réels','Le roman se passe dans un passé très lointain'],ans:0,explanation:'En 1870, un grand sous-marin électrique relevait du rêve : Jules Verne anticipe les progrès de la science.'},
+    {id:'q8',type:'choice',competencies:['READ_NARRATOR_POV','READ_INFERENCE'],difficulty:6,prompt:'Le narrateur se dit « l’hôte — ou plutôt le prisonnier » de Nemo. Que comprend-on ?',choices:['Il est bien traité, mais il ne peut pas quitter le navire','Il a été invité à une fête','Il est enfermé dans un cachot'],ans:0,evidenceParagraph:0,explanation:'Il est reçu comme un invité (on lui fait visiter le navire), mais il n’est pas libre de partir.'}
+   ]
+  },
+
+  fr_3e_ecrans_soir_01:{
+   id:'fr_3e_ecrans_soir_01',level:'3e',subject:'francais',type:'document',documentType:'texte argumentatif',
+   title:'Faut-il éteindre les écrans le soir ?',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr3g'],
+   competencies:['READ_ARGUMENT','READ_STRUCTURE','READ_AUTHOR_INTENT','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_MAIN_IDEA','READ_SEQUENCE'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Téléphone, tablette, console : les écrans occupent une grande place dans la vie des adolescents, souvent jusque tard le soir. Je pense pourtant qu’il faudrait les éteindre au moins une heure avant de dormir.',
+    'D’abord, les écrans gênent le sommeil. Selon de nombreux spécialistes, leur lumière et les contenus qui nous tiennent en éveil retardent l’endormissement. Or un adolescent qui dort mal a plus de mal à se concentrer le lendemain en classe.',
+    'Ensuite, cette heure sans écran laisse du temps pour autre chose : lire, discuter avec sa famille, préparer son sac. Par exemple, dix pages de roman chaque soir, cela fait plusieurs livres dans l’année.',
+    'Certes, les écrans ne sont pas mauvais en eux-mêmes : ils permettent de garder le contact avec ses amis, de regarder un bon film ou même d’apprendre. Mais il ne s’agit pas de les interdire : il s’agit seulement de choisir le bon moment pour s’en servir.',
+    'En conclusion, éteindre les écrans une heure avant de dormir est une habitude simple, qui permet de mieux dormir, de mieux apprendre et de profiter d’autres plaisirs.'
+   ],
+   glossary:[{word:'endormissement',definition:'Le moment où l’on s’endort.'},{word:'Certes',definition:'Mot qui sert à reconnaître qu’un argument adverse a du vrai, avant d’y répondre.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_ARGUMENT','READ_MAIN_IDEA'],difficulty:5,prompt:'Quelle est la thèse défendue par l’auteur ?',choices:['Il faudrait éteindre les écrans au moins une heure avant de dormir','Il faut interdire les écrans aux adolescents','Les écrans n’ont aucun effet sur le sommeil'],ans:0,evidenceParagraph:0,explanation:'« Je pense pourtant qu’il faudrait les éteindre au moins une heure avant de dormir. » (« Je pense » signale la thèse.)'},
+    {id:'q2',type:'choice',competencies:['READ_ARGUMENT'],difficulty:5,prompt:'Quel est le premier argument ?',choices:['Les écrans gênent le sommeil','Les écrans coûtent cher','Les écrans abîment les yeux'],ans:0,evidenceParagraph:1,explanation:'« D’abord, les écrans gênent le sommeil. »'},
+    {id:'q3',type:'choice',competencies:['READ_ARGUMENT','READ_STRUCTURE'],difficulty:6,prompt:'À quoi sert la phrase « dix pages de roman chaque soir, cela fait plusieurs livres dans l’année » ?',choices:['C’est un exemple qui illustre le deuxième argument','C’est la thèse de l’auteur','C’est un argument contre la thèse'],ans:0,evidenceParagraph:2,explanation:'Elle est introduite par « Par exemple » : elle rend concret l’argument du temps libéré.'},
+    {id:'q4',type:'choice',competencies:['READ_ARGUMENT','READ_VOCAB_CONTEXT'],difficulty:7,prompt:'Que fait l’auteur au début du quatrième paragraphe, avec « Certes » ?',choices:['Il reconnaît que l’avis opposé a une part de vérité (une concession)','Il change complètement d’avis','Il donne sa conclusion'],ans:0,evidenceParagraph:3,explanation:'« Certes » introduit une concession : il admet que les écrans ont des qualités.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY','READ_ARGUMENT'],difficulty:7,prompt:'Clique sur le paragraphe où l’auteur répond à une objection.',evidenceParagraph:3,explanation:'Après la concession, « Mais il ne s’agit pas de les interdire » réfute l’objection : l’auteur ne demande pas d’interdire les écrans.'},
+    {id:'q6',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_ARGUMENT'],difficulty:7,prompt:'Dans le deuxième paragraphe, quel est le rôle du mot « Or » ?',choices:['Il ajoute une idée qui fait avancer le raisonnement : mal dormir nuit à la concentration','Il annonce un exemple','Il introduit la conclusion du texte'],ans:0,evidenceParagraph:1,explanation:'« Or » introduit une nouvelle donnée qui, reliée à la première, mène à une conséquence.'},
+    {id:'q7',type:'order',competencies:['READ_STRUCTURE','READ_SEQUENCE'],difficulty:6,prompt:'Remets les étapes du texte dans l’ordre.',tokens:['La thèse','L’argument du sommeil','L’argument du temps libéré','La concession et la réfutation','La conclusion'],ans:'La thèse L’argument du sommeil L’argument du temps libéré La concession et la réfutation La conclusion',explanation:'Les connecteurs le montrent : « D’abord », « Ensuite », « Certes... Mais », « En conclusion ».'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:5,prompt:'Quel est le but de ce texte ?',choices:['Convaincre le lecteur d’adopter une habitude','Raconter une histoire inventée','Décrire le fonctionnement d’un téléphone'],ans:0,explanation:'C’est un texte argumentatif : il défend une thèse avec des arguments pour convaincre.'}
    ]
   }
 
