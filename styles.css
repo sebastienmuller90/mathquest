@@ -221,6 +221,29 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .libsearch{width:100%;margin:4px 0 10px}.libchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.libchips .pillbtn{padding:6px 11px;font-size:14px}
 .libcard{display:flex;flex-direction:column;align-items:flex-start;gap:3px;width:100%;text-align:left;cursor:pointer;color:var(--text);font:inherit;margin:0 0 10px;padding:12px 14px;border:2px solid var(--border)}.libcard:hover,.libcard:focus-visible{border-color:var(--accent)}
 .libmeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:13px;color:var(--muted)}.libmeta .pill{font-size:12px;padding:2px 8px}.libtitle{font-size:18px;line-height:1.25}.libdone{font-size:13px;font-weight:800}
+/* Parcours du jour (js/app-path.js) */
+.pathcard{display:flex;align-items:center;gap:8px}.pathcard-go{display:flex;align-items:center;gap:12px;flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer}.pathcard .pinfo{flex:0 0 auto}
+.path-head{display:flex;align-items:center;gap:10px}
+.path{list-style:none;margin:6px 0 24px;padding:0;position:relative}
+.path::before{content:"";position:absolute;left:50%;top:18px;bottom:18px;width:6px;margin-left:-3px;border-radius:3px;background:repeating-linear-gradient(var(--border) 0 10px,transparent 10px 18px)}
+.path li{position:relative;z-index:1}
+.pend{margin:10px auto;width:max-content;max-width:100%;padding:8px 16px;border-radius:999px;background:var(--surface);border:2px solid var(--border);font-weight:800}
+.pend.won{border-color:var(--good)}
+.pgate{margin:12px auto;text-align:center;max-width:300px;padding:8px 12px;border-radius:14px;background:var(--surface2);font-weight:700;font-size:14px}.pgate.open{background:color-mix(in srgb,var(--good) 18%,var(--surface))}
+.pstep{display:flex;align-items:center;gap:10px;margin:14px 0;width:100%}
+.pstep.pl{flex-direction:row;padding-right:12%}.pstep.pr{flex-direction:row-reverse;padding-left:12%;text-align:right}
+.pstep .plab{flex:1;min-width:0;display:flex;flex-direction:column;background:color-mix(in srgb,var(--surface) 88%,transparent);border-radius:12px;padding:4px 8px}.pstep .plab small{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.pbubble{flex:0 0 auto;width:64px;height:64px;border-radius:50%;border:4px solid var(--border);background:var(--surface);font-size:26px;font-weight:800;cursor:pointer;color:var(--text);box-shadow:0 4px 0 var(--border)}
+.pstep.next .pbubble{border-color:var(--accent);background:var(--accent);color:var(--on-accent);animation:ppulse 1.6s ease-in-out infinite}
+.pstep.done .pbubble{border-color:var(--good);background:color-mix(in srgb,var(--good) 25%,var(--surface));color:var(--good)}
+.pstep.review .pbubble{border-color:#E8892B;background:color-mix(in srgb,#E8892B 22%,var(--surface));color:#B35F0F}
+.pstep.locked .pbubble{opacity:.55;cursor:not-allowed}
+.ptag{display:inline-block;margin-left:6px;font-size:11px;font-weight:800;color:#8A4A0B;background:color-mix(in srgb,#E8892B 25%,var(--surface));border-radius:999px;padding:1px 8px;vertical-align:2px}
+.pdrow{grid-template-columns:1fr auto;align-items:center}.pathbonus{display:inline-block;margin-left:6px;font-weight:800;color:var(--accent-text)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ptag{color:#FFD9B3;background:#6B3A10}:root:not([data-theme="light"]) .pstep.review .pbubble{color:#FFC48A}}
+:root[data-theme="dark"] .ptag{color:#FFD9B3;background:#6B3A10}:root[data-theme="dark"] .pstep.review .pbubble{color:#FFC48A}
+@keyframes ppulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@media (prefers-reduced-motion:reduce){.pstep.next .pbubble{animation:none}}
 .reread{margin:4px 0 14px}.reread>summary{cursor:pointer;font-weight:700;color:var(--accent);padding:6px 0}.reread .reading-text{font-size:17px;margin-top:6px}
 .reading-text.verse p{margin:0 0 .15em;padding-left:1.2em;text-indent:-1.2em}.reading-text.verse p.stz{margin-top:.9em}
 .reading-glossary-hint{margin-top:8px;font-size:13px;color:var(--muted)}

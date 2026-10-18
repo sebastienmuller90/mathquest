@@ -58,7 +58,7 @@ const FINOT_FAQ=[
  {kw:['xp','niveau','experience'],a:'Les <b>XP</b> (points d’expérience) se gagnent à chaque bonne réponse. Plus tu en as, plus tu montes de niveau — et ça ne redescend jamais !'},
  {kw:['piece','pieces','monnaie'],a:'Les <b>pièces 🪙</b> se gagnent en jouant. Elles servent à acheter des avatars et des thèmes dans la <b>Boutique</b> 🛍️.'},
  {kw:['serie','jours de suite','flamme','record'],a:'La <b>série 🔥</b> compte tes jours de suite où tu as joué au moins une fois. Ton <b>record</b> ne redescend jamais, même si tu rates un jour : je m’en souviens toujours.'},
- {kw:['objectif du jour','objectif quotidien'],a:'L’<b>objectif du jour</b> est un nombre de bonnes réponses à atteindre. Une fois fait, tu gagnes +30 🪙 et ça compte pour ta série du jour.'},
+ {kw:['objectif du jour','objectif quotidien'],a:'Ton <b>objectif du jour</b>, c’est maintenant le <b>parcours du jour 🗺️</b> : 4 leçons de matières différentes, puis 2 séries d’exercices. Au bout, un coffre t’attend ! Chaque bonne réponse compte aussi pour ta série 🔥.'},
  {kw:['boutique','theme','themes','avatar'],a:'Dans la <b>Boutique 🛍️</b>, tu peux débloquer de nouveaux avatars et de nouveaux thèmes de couleurs avec tes pièces 🪙.'},
  {kw:['badge','badges','trophee'],a:'Les <b>badges 🏆</b> récompensent des exploits (première mission, série de bonnes réponses…). Tu les retrouves dans l’écran <b>Badges</b>.'},
  {kw:['bon point','bons points','recompense','recompenses'],a:'Les <b>bons points 🎖️</b> sont donnés par tes parents. Tu peux les échanger contre des récompenses qu’ils ont préparées pour toi, dans l’écran <b>Récompenses</b>.'},
@@ -77,6 +77,7 @@ const FINOT_FAQ=[
  {kw:['dictee'],a:'Pour une <b>dictée</b>, écoute bien la phrase 🔊, puis écris-la. Je regarde chaque mot : accents, accords, ponctuation… tout compte un peu, mais rien n’est éliminatoire d’un coup !'},
  {kw:['comment marche le cours','etapes du cours'],a:'Un <b>cours</b> se déroule en plusieurs étapes : découverte, exemples, méthode, pièges à éviter, ce qu’il faut retenir, puis entraînement et petit quiz.'},
  {kw:['bibliotheque','livre','lire un texte','histoire a lire','textes'],a:'Dans la <b>bibliothèque 📚</b> (onglet <b>Progrès</b>, ou <b>Matières</b> quand tu es en Français), tu peux lire tous les textes que tu veux : histoires, contes, poèmes, théâtre et documents. Cherche un titre ou un auteur, choisis ta classe, puis réponds aux questions !'},
+ {kw:['parcours','parcours du jour','coffre','bonus','chemin'],a:'Le <b>parcours du jour 🗺️</b> : 4 leçons de matières différentes, puis 2 séries d’exercices sur ces leçons. Les bonnes réponses d’affilée rapportent de plus en plus de pièces (jusqu’à ×5), et un coffre t’attend au bout ! Ouvre-le depuis l’accueil.'},
  {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre. Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
  {kw:['hors ligne','sans internet','pas de wifi'],a:'MathQuest fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
  {kw:['exporter','importer','changer d appareil'],a:'Dans l’Espace parents (Réglages), un <b>code d’export</b> permet de copier ta progression vers un autre appareil.'}
@@ -133,8 +134,7 @@ function home(){PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSub
    <span class="muted" aria-hidden="true">→</span>
   </button>
   <button class="reco card hero" data-a="chap:${r.id}"><span class="ri">${r.icon}</span><span><small>Mission conseillée</small><b>${r.name}</b><span class="muted">${curS().name} ${WMAP[r.id].lvl} ${starStr(S.chap[r.id]?.stars||0)}</span></span><span class="go">Jouer</span></button>
-  <section class="goal card"><svg viewBox="0 0 52 52" class="ring" aria-hidden="true"><circle cx="26" cy="26" r="22" class="rb"/><circle cx="26" cy="26" r="22" class="rf" style="stroke-dashoffset:${138.2*(1-g)}"/><text x="26" y="31" text-anchor="middle">${S.daily.done?'✓':S.daily.ok}</text></svg>
-   <div><b>Objectif du jour</b><div class="muted">${S.daily.done?'Réussi ! Reviens demain pour garder ta série 🔥':`${S.daily.ok}/${goal} bonnes réponses, +30 🪙 à la clé`}</div></div></section>`,
+  ${typeof pathHomeCard==='function'?pathHomeCard():''}`,
   matieres:()=>`<h2 class="sec">Mes matières</h2>
   ${isCollege?`<nav class="subj" aria-label="Catégorie de matières">${Object.entries(FINOT_CATS).map(([k,c])=>`<button class="sbtn ${k===curCat?'on':''}" data-a="opencat:${k}" aria-pressed="${k===curCat}">${c.img?`<img src="${c.img}" alt="" aria-hidden="true" style="width:20px;height:20px;object-fit:contain;vertical-align:-4px;margin-right:4px;">`:`<span aria-hidden="true">${c.emoji}</span>`}${c.label}</button>`).join('')}</nav>
   <nav class="subj" aria-label="Matière" style="margin-top:8px;">${vs.filter(x=>FINOT_CATS[curCat].ids.includes(x.id)).map(x=>`<button class="sbtn ${x.id===S.subj?'on':''}" data-a="subj:${x.id}" aria-pressed="${x.id===S.subj}">${x.img?`<img src="${x.img}" alt="" aria-hidden="true" style="width:20px;height:20px;object-fit:contain;vertical-align:-4px;margin-right:4px;">`:`<span aria-hidden="true">${x.emoji}</span>`}${x.name}</button>`).join('')}</nav>`
@@ -200,7 +200,7 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
  if(q.type==='choice')document.querySelectorAll('.choice').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('good');else if(i===pick)b.classList.add('bad');});
  else document.querySelectorAll('.ans input').forEach(x=>{x.disabled=true;x.classList.add(ok?'good':'bad');});
  markOrd(ok);result(ok);}
-function result(ok){M.locked=true;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
+function result(ok){M.locked=true;const pb=M.path?pathAnswer(ok):0;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
  if(ok&&M.dict&&!M.dict.perfect)MQAdaptive.recordMistake(S,M.cid,dictMistake(M.q,M.dict));MQAdaptive.recordAnswer(S,M.cid,ok,{source:'practice'});M.lastOk=ok;
  const qb=$('.qbtns');if(qb)qb.remove();
  if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);
@@ -209,8 +209,7 @@ function result(ok){M.locked=true;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:
   addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
   const g=M.flash?5:Math.round(10*M.d*mult()*(M.hint?.5:1)),c=M.flash?1:1+(M.streak%3===0?1:0);M.xp+=g;S.xp+=g;M.coins+=c;S.coins+=c;
   {const od=M.d;M.d=M.flash?Math.min(2,MQAdaptive.nextDifficulty(M.d,true,M.streak)):MQAdaptive.nextDifficulty(M.d,true,M.streak);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
-  $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}</div>`;
-  if(!S.daily.done&&S.daily.ok>=(S.dailyGoal||DEFAULT_GOAL)){S.daily.done=true;S.coins+=30;S.goalsDone++;addMerit(S.merit.rules.goal,'Objectif du jour 🎁');sfx('coin');toast('🎁 Objectif du jour atteint ! +30 🪙');}
+  $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}${pb?`<span class="pathbonus">🔥 Bonus parcours ×${pb} : +${pb} 🪙</span>`:''}</div>`;
   if(M.dict&&!M.dict.perfect){$('#fb .fb').insertAdjacentHTML('beforeend',`${MQDictation.feedbackHTML(M.dict,{young:dictYoung()})}<button class="btn primary wide" data-a="next">Exercice suivant</button>`);const b=$('[data-a="next"]');if(b)b.focus();}
   else M.tid=setTimeout(advance,M.flash?400:1100);}
  else{M.streak=0;{const od=M.d;M.d=MQAdaptive.nextDifficulty(M.d,false,0);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('bad');
@@ -236,7 +235,7 @@ const notThis=(id,your)=>isPrimaryCh(id)&&your?`<div class="notthis">Ce n’est 
 function advance(){if(!M||!M.locked)return;clearTimeout(M.tid);M.i++;nextQ();}
 function pauseCard(){if(Date.now()-T0<20*60000)return '';T0=Date.now();return `<div class="pause">🧠 <b>Pause cerveau !</b> 20 minutes d’apprentissage, bravo. ${PAUSES[Math.floor(Math.random()*PAUSES.length)]}, puis reviens quand tu es prêt.</div>`;}
 function nextChap(id){const a=SCH(sOf(WMAP[id].id).id),i=a.findIndex(c=>c.id===id);return a[i+1]||null;}
-function endMission(){const m=M;M=null;padClose();const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,cid=m.ids[0],cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0});cs.stars=Math.max(cs.stars,st);if(st>=2)addMerit(S.merit.rules.mission,'Mission réussie : '+byId(cid).name,m);if(st===3)addMerit(S.merit.rules.perfect,'Sans faute : '+byId(cid).name,m);
+function endMission(){const m=M;M=null;padClose();if(m.path)pathExoDone(m);const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,cid=m.ids[0],cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0});cs.stars=Math.max(cs.stars,st);if(st>=2)addMerit(S.merit.rules.mission,'Mission réussie : '+byId(cid).name,m);if(st===3)addMerit(S.merit.rules.perfect,'Sans faute : '+byId(cid).name,m);
  const bx=st*20,bc=st*5;S.xp+=bx;S.coins+=bc;S.missions++;const ar=MQAdaptive.practiceResult(S,cid);save();checkBadges(m);const L=lvl(S.xp),up=L>m.L0,nx=nextChap(cid);
  if(up)sfx('lvl');if(st>=2)confetti(45);
  const msg=['On recommence ? Tu vas y arriver 💪','Pas mal, continue !','Très bien !','Sans faute !'][st];
@@ -245,7 +244,7 @@ function endMission(){const m=M;M=null;padClose();const st=m.ok>=8?3:m.ok>=6?2:m
   <div class="bigstars">${[1,2,3].map(i=>`<span class="${i<=st?'on':''}" style="animation-delay:${i*.18}s">★</span>`).join('')}</div>
   <h1>${m.ok}/${m.n}</h1><p class="lead">${msg}</p><div class="adaptive-card"><b>🧠 Maîtrise du chapitre : ${ar.mastery}%</b><p class="muted small">${MQAdaptive.masteryLabel(ar.mastery).e} ${MQAdaptive.masteryLabel(ar.mastery).t} · prochaine révision ${MQAdaptive.dueInText(S,cid)} · ${m.wrong||0} erreur${(m.wrong||0)>1?'s':''} analysée${(m.wrong||0)>1?'s':''}</p></div><div class="gains"><span>+${m.xp+bx} XP</span><span>+${m.coins+bc} 🪙</span>${m.mg?`<span>+${m.mg} 🎖️</span>`:''}</div>
   ${m.newB.length?`<div class="nb">🏆 ${m.newB.map(b=>b[1]+' '+b[2]).join(', ')}</div>`:''}${pauseCard()}
-  <div class="col"><button class="btn primary big" data-a="start:${cid}">🔁 Rejouer</button>${nx?`<button class="btn big" data-a="chap:${nx.id}">${nx.icon} Suivant : ${nx.name}</button>`:''}<button class="btn ghost wide" data-a="world:${WMAP[cid].id}">🗺️ Retour au monde</button></div></div>`;}
+  <div class="col">${m.path?'<button class="btn primary big" data-a="path">🗺️ Continuer mon parcours</button>':''}<button class="btn ${m.path?'':'primary '}big" data-a="start:${cid}">🔁 Rejouer</button>${nx?`<button class="btn big" data-a="chap:${nx.id}">${nx.icon} Suivant : ${nx.name}</button>`:''}<button class="btn ghost wide" data-a="world:${WMAP[cid].id}">🗺️ Retour au monde</button></div></div>`;}
 function flashMenu(){app.innerHTML=`${bar('⚡ Défi éclair')}<div class="card center"><p class="lead">60 secondes. Un maximum de bonnes réponses.</p><p class="muted">Ton record : <b>${S.flashBest}</b></p></div>
  <div class="worlds">${WS().map(w=>`<button class="world" data-a="flash:${w.id}" style="--wc:${w.col}"><span class="we">${w.emoji}</span><span class="wl">${w.lvl}</span><span class="wn">${w.name}</span></button>`).join('')}</div>
  <button class="btn primary big" data-a="flash:all">🎲 Tout le programme</button>`;}
