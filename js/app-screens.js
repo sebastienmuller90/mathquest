@@ -76,6 +76,7 @@ const FINOT_FAQ=[
  {kw:['changer de classe','niveau scolaire'],a:'Tu peux changer de classe depuis l’Espace parents, onglet <b>Réglages</b>. Les matières proposées s’adaptent automatiquement.'},
  {kw:['dictee'],a:'Pour une <b>dictée</b>, écoute bien la phrase 🔊, puis écris-la. Je regarde chaque mot : accents, accords, ponctuation… tout compte un peu, mais rien n’est éliminatoire d’un coup !'},
  {kw:['comment marche le cours','etapes du cours'],a:'Un <b>cours</b> se déroule en plusieurs étapes : découverte, exemples, méthode, pièges à éviter, ce qu’il faut retenir, puis entraînement et petit quiz.'},
+ {kw:['bibliotheque','livre','lire un texte','histoire a lire','textes'],a:'Dans la <b>bibliothèque 📚</b> (onglet <b>Progrès</b>, ou <b>Matières</b> quand tu es en Français), tu peux lire tous les textes que tu veux : histoires, contes, poèmes, théâtre et documents. Cherche un titre ou un auteur, choisis ta classe, puis réponds aux questions !'},
  {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre. Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
  {kw:['hors ligne','sans internet','pas de wifi'],a:'MathQuest fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
  {kw:['exporter','importer','changer d appareil'],a:'Dans l’Espace parents (Réglages), un <b>code d’export</b> permet de copier ta progression vers un autre appareil.'}
