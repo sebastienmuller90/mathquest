@@ -23,17 +23,17 @@ function normGrade(g){if(g==null)return null;const s=String(g).trim();const u=s.
 /* Matières du primaire. `short` sert à construire les identifiants de mondes et de chapitres.
    `pair` relie la matière à son équivalent collège pour le passage CM2 → 6e. */
 const SUBJ={
-  'p-francais':{name:'Français',emoji:'✒️',short:'fr',col:'#be185d',pair:'francais'},
-  'p-maths':{name:'Maths',emoji:'🧮',short:'ma',col:'#0ea5e9',pair:'maths'},
-  'p-anglais':{name:'Anglais',emoji:'🇬🇧',short:'en',col:'#dc2626',pair:'anglais',lang:'en'},
-  'p-sciences':{name:'Sciences et technologie',emoji:'🔬',short:'sc',col:'#16a34a',pair:'svt'},
-  'p-qlm':{name:'Questionner le monde',emoji:'🔎',short:'qm',col:'#0d9488',pair:'svt'},
-  'p-hg':{name:'Histoire-géographie',emoji:'🌍',short:'hg',col:'#b45309',pair:'hg'},
-  'p-emc':{name:'EMC',emoji:'⚖️',short:'emc',col:'#0f766e',pair:'emc'},
-  'p-arts':{name:'Arts plastiques',emoji:'🎨',short:'ap',col:'#db2777',pair:'arts'},
-  'p-musique':{name:'Éducation musicale',emoji:'🎵',short:'mu',col:'#7c3aed',pair:'musique'},
-  'p-eps':{name:'EPS',emoji:'🏃',short:'eps',col:'#ea580c',pair:'eps'},
-  'p-evar':{name:'Vivre ensemble et grandir (EVAR)',emoji:'💛',short:'evar',col:'#ca8a04',pair:'evars'}
+  'p-francais':{name:'Français',emoji:'✒️',img:'data/images/icons/icon-francais.png',short:'fr',col:'#be185d',pair:'francais'},
+  'p-maths':{name:'Maths',emoji:'🧮',img:'data/images/icons/icon-maths.png',short:'ma',col:'#0ea5e9',pair:'maths'},
+  'p-anglais':{name:'Anglais',emoji:'🇬🇧',img:'data/images/icons/icon-anglais.png',short:'en',col:'#dc2626',pair:'anglais',lang:'en'},
+  'p-sciences':{name:'Sciences et technologie',emoji:'🔬',img:'data/images/icons/icon-sciences-tech.png',short:'sc',col:'#16a34a',pair:'svt'},
+  'p-qlm':{name:'Questionner le monde',emoji:'🔎',img:'data/images/icons/icon-questionner-monde.png',short:'qm',col:'#0d9488',pair:'svt'},
+  'p-hg':{name:'Histoire-géographie',emoji:'🌍',img:'data/images/icons/icon-hg.png',short:'hg',col:'#b45309',pair:'hg'},
+  'p-emc':{name:'EMC',emoji:'⚖️',img:'data/images/icons/icon-emc.png',short:'emc',col:'#0f766e',pair:'emc'},
+  'p-arts':{name:'Arts plastiques',emoji:'🎨',img:'data/images/icons/icon-arts.png',short:'ap',col:'#db2777',pair:'arts'},
+  'p-musique':{name:'Éducation musicale',emoji:'🎵',img:'data/images/icons/icon-musique.png',short:'mu',col:'#7c3aed',pair:'musique'},
+  'p-eps':{name:'EPS',emoji:'🏃',img:'data/images/icons/icon-eps.png',short:'eps',col:'#ea580c',pair:'eps'},
+  'p-evar':{name:'Vivre ensemble et grandir (EVAR)',emoji:'💛',img:'data/images/icons/icon-evar-primaire.png',short:'evar',col:'#ca8a04',pair:'evars'}
 };
 const SUBJ_ORDER=['p-francais','p-maths','p-anglais','p-sciences','p-qlm','p-hg','p-emc','p-arts','p-musique','p-eps','p-evar'];
 
@@ -269,7 +269,7 @@ function build(){const subjects=[],worlds={},cours={},chapters={};
     for(const g of GRADES){const list=REG.grades[g]&&REG.grades[g][sid];if(!list||!list.length)continue;
       const wid=worldId(g,sid);w.push({id:wid,lvl:g,name:worldName(g,sid),emoji:S.emoji,col:S.col,stage:'primaire'});
       chapters[wid]=list.map(chapter);list.forEach(c=>{cours[c.id]=course(c);});}
-    if(w.length)subjects.push({id:sid,name:S.name,emoji:S.emoji,worlds:w,stage:'primaire',lang:S.lang||null,pair:S.pair||null});}
+    if(w.length)subjects.push({id:sid,name:S.name,emoji:S.emoji,img:S.img,worlds:w,stage:'primaire',lang:S.lang||null,pair:S.pair||null});}
   return {subjects,chapters,cours};}
 function subjectsForGrade(g){return SUBJ_ORDER.filter(sid=>REG.grades[g]&&REG.grades[g][sid]&&REG.grades[g][sid].length);}
 

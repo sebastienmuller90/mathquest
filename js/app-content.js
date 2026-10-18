@@ -2064,7 +2064,7 @@ const EXTRA_SUBJECTS=[];
      id:sid+l,lvl:l+'e',name:(meta.worldNames&&meta.worldNames[l])||meta.name,
      emoji:meta.emoji,col:meta.color||'#64748b'
    }));
-   EXTRA_SUBJECTS.push({id:sid,name:meta.name,emoji:meta.emoji,worlds});
+   EXTRA_SUBJECTS.push({id:sid,name:meta.name,emoji:meta.emoji,img:meta.img,worlds});
  });
  window.MQ_EXTRA_AUDIT={
    version:'8.11-recovery',schoolYear:D.schoolYear||'2026-2027',
@@ -2078,12 +2078,12 @@ const EXTRA_SUBJECTS=[];
 const PRIMARY=window.MQPrimary?MQPrimary.build():{subjects:[],chapters:{},cours:{}};
 Object.assign(COURS,PRIMARY.cours);
 const SUBJECTS=[
- {id:'maths',name:'Maths',emoji:'🧮',worlds:WORLDS},
- {id:'francais',name:'Français',emoji:'✒️',worlds:WORLDS_FR},
- {id:'anglais',name:'Anglais',emoji:'🇬🇧',worlds:WORLDS_EN},
- {id:'italien',name:'Italien',emoji:'🇮🇹',worlds:WORLDS_IT},
- {id:'hg',name:'Histoire-Géo',emoji:'🌍',worlds:WORLDS_HG},
- {id:'emc',name:'EMC',emoji:'⚖️',worlds:WORLDS_EMC},
+ {id:'maths',name:'Maths',emoji:'🧮',img:'data/images/icons/icon-maths.png',worlds:WORLDS},
+ {id:'francais',name:'Français',emoji:'✒️',img:'data/images/icons/icon-francais.png',worlds:WORLDS_FR},
+ {id:'anglais',name:'Anglais',emoji:'🇬🇧',img:'data/images/icons/icon-anglais.png',worlds:WORLDS_EN},
+ {id:'italien',name:'Italien',emoji:'🇮🇹',img:'data/images/icons/icon-italien.png',worlds:WORLDS_IT},
+ {id:'hg',name:'Histoire-Géo',emoji:'🌍',img:'data/images/icons/icon-hg.png',worlds:WORLDS_HG},
+ {id:'emc',name:'EMC',emoji:'⚖️',img:'data/images/icons/icon-emc.png',worlds:WORLDS_EMC},
  ...EXTRA_SUBJECTS
 ].map(s=>({...s,stage:s.stage||'college'})).concat(PRIMARY.subjects);
 const WCH={...CH,...CH_FR,...CH_EN,...CH_IT,...CH_HG,...CH_EMC,...CH_EXTRA,...PRIMARY.chapters},WALL=SUBJECTS.flatMap(s=>s.worlds),ALLCH=Object.values(WCH).flat(),WMAP={};
