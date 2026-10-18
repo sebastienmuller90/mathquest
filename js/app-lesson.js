@@ -80,6 +80,8 @@ function primaryLessonSteps(id){const c=COURS[id],ch=byId(id),cg=stageOf(S.grade
  if(c.method.length)st.push({k:'method',t:yg?'🛠️ Comment faire ?':'🛠️ La méthode',h:`<div class="method-box">${c.method.map((x,i)=>`<div class="method-step"><span class="num">${i+1}</span><div>${x}</div></div>`).join('')}</div>`});
  if(c.traps.length)st.push({k:'piege',t:'🚨 Attention !',h:`<div class="piege">${c.traps.map(x=>`<p>${x}</p>`).join('')}</div>`});
  st.push({k:'ret',t:'🧠 Je retiens',h:`<div class="memory-map">${c.retenir.map((x,i)=>`<div><span>${['🟣','🟡','🟢'][i%3]}</span><b>${x}</b></div>`).join('')}</div>`});
+ const rres=window.MQReading?MQReading.pickResource(id,S):null;
+ if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});
  st.push({k:'practice',t:'🎯 Je m’entraîne'});
  st.push({k:'confidence',t:yg?'🙂 Comment te sens-tu ?':'✅ Es-tu prêt pour le quiz ?',h:`<p>${yg?'Choisis :':'Choisis ton ressenti, il sert à régler le niveau du quiz :'}</p><div class="confidence"><button class="pillbtn ${S.confidence?.[id]?.value===1?'on':''}" data-a="conf:1">😕 Pas encore</button><button class="pillbtn ${S.confidence?.[id]?.value===2?'on':''}" data-a="conf:2">🙂 Presque</button><button class="pillbtn ${S.confidence?.[id]?.value===3?'on':''}" data-a="conf:3">😎 ${yg?'Oui !':'Je peux l’expliquer'}</button></div>`});
  if(pronLang(id))st.push({k:'pron',t:'Prononciation 🎤 (facultatif)'});
@@ -92,7 +94,9 @@ function lessonSteps(id){if(COURS[id]&&(COURS[id].primary||COURS[id].structured)
  {k:'know',t:'🧠 Mets ton cerveau en route',h:x.know}
  ];
  c.parts.forEach((p,i)=>{st.push({k:'part',t:`${i+1}. ${p.t}`,h:p.h});if(i===0)st.push({k:'why',t:'💡 Le prof t’explique autrement',h:x.why});});
- st.push({k:'method',t:'🛠️ La méthode du champion',h:x.method},{k:'ex',t:'👣 Exemple guidé pas à pas',ex:c.ex},{k:'check',t:'🎯 Mini-défi avant de continuer',h:x.check},{k:'piege',t:'🚨 Le piège classique',h:`<div class="piege">${c.piege}</div>`},{k:'ret',t:'🧠 Carte mémoire',h:x.memory},{k:'practice',t:'🎯 Je m’entraîne (correction expliquée)'},{k:'confidence',t:'✅ Est-ce que tu te sens prêt ?',h:`<p>Choisis ton ressenti. Il sert à adapter le niveau du quiz :</p><div class="confidence"><button class="pillbtn ${S.confidence?.[id]?.value===1?'on':''}" data-a="conf:1">😕 Pas encore</button><button class="pillbtn ${S.confidence?.[id]?.value===2?'on':''}" data-a="conf:2">🙂 Presque</button><button class="pillbtn ${S.confidence?.[id]?.value===3?'on':''}" data-a="conf:3">😎 Je peux l’expliquer</button></div><p class="muted">MathQuest compare ensuite ce ressenti avec tes réponses. Si tu te sous-estimes ou te surestimes, ce n’est pas grave : le niveau se recale automatiquement.</p>`});
+ st.push({k:'method',t:'🛠️ La méthode du champion',h:x.method},{k:'ex',t:'👣 Exemple guidé pas à pas',ex:c.ex},{k:'check',t:'🎯 Mini-défi avant de continuer',h:x.check},{k:'piege',t:'🚨 Le piège classique',h:`<div class="piege">${c.piege}</div>`},{k:'ret',t:'🧠 Carte mémoire',h:x.memory});
+ {const rres=window.MQReading?MQReading.pickResource(id,S):null;if(rres)st.push({k:'read',t:'📖 Je lis',h:MQReading.textHTML(rres),resourceId:rres.id},{k:'readq',t:'✍️ Je réponds aux questions',resourceId:rres.id});}
+ st.push({k:'practice',t:'🎯 Je m’entraîne (correction expliquée)'},{k:'confidence',t:'✅ Est-ce que tu te sens prêt ?',h:`<p>Choisis ton ressenti. Il sert à adapter le niveau du quiz :</p><div class="confidence"><button class="pillbtn ${S.confidence?.[id]?.value===1?'on':''}" data-a="conf:1">😕 Pas encore</button><button class="pillbtn ${S.confidence?.[id]?.value===2?'on':''}" data-a="conf:2">🙂 Presque</button><button class="pillbtn ${S.confidence?.[id]?.value===3?'on':''}" data-a="conf:3">😎 Je peux l’expliquer</button></div><p class="muted">MathQuest compare ensuite ce ressenti avec tes réponses. Si tu te sous-estimes ou te surestimes, ce n’est pas grave : le niveau se recale automatiquement.</p>`});
  if(pronLang(id))st.push({k:'pron',t:'Prononciation 🎤'});
  st.push({k:'quiz',t:'À toi de jouer ! 🎮'});return st;}
 function openLesson(id,mode='full'){if(!COURS[id])return;if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}stopPron();const pt=pronTargets(id),saved=S.confidence?.[id]?.value||0;L={id,i:0,steps:lessonSteps(id),exn:1,qn:0,ok:0,q:null,locked:false,pronTargets:pt,pronIndex:0,pronPassed:!pt.length,pronPassedCount:0,confidence:saved,quizDifficulty:MQAdaptive.lessonDifficulty(S,id),quizStreak:0,wrong:0,mode,pq:null,pn:0,tl:Date.now()};if(mode==='fast'){L.steps=L.steps.filter(x=>['profile','disc','ret','practice','confidence','pron','quiz'].includes(x.k));}renderLesson();}
@@ -103,14 +107,23 @@ function renderLesson(fromReveal){CUR='lesson';ttsStop();{const now=Date.now();S
   body=`<p class="muted">Question ${L.qn+1} sur ${LESSON_QUIZ_N} · niveau ${'⚡'.repeat(L.quizDifficulty)}</p><div class="qtext">${L.q.q}</div>${audioHTML(L.q)}${L.q.svg||''}${inputHTML(L.q,'lpick')}<div id="fb" aria-live="polite" role="status"></div><div class="qbtns"><button class="btn ghost" data-a="padtoggle">✏️ Brouillon</button>${L.q.type!=='choice'?'<button class="btn primary" data-a="lvalid">Valider</button>':''}</div>`;}
  else if(s.k==='practice'){if(!L.pq){L.pq=ch.g(Math.max(1,L.quizDifficulty-1));L.locked=false;padReset(L.pq.q);if(L.pq.audio&&TTS.ok){const qq=L.pq;setTimeout(()=>{if(L&&L.pq===qq&&!L.locked)ttsSay(qq.audio);},350);}}
   body=`<p class="muted">Exercice ${L.pn+1} sur ${PRACTICE_N} · la correction est expliquée.</p><div class="qtext">${L.pq.q}</div>${audioHTML(L.pq)}${L.pq.svg||''}${inputHTML(L.pq,'ppick')}<div id="fb" aria-live="polite" role="status"></div><div class="qbtns"><button class="btn ghost" data-a="padtoggle">✏️ Brouillon</button>${L.pq.type!=='choice'?'<button class="btn primary" data-a="pvalid">Valider</button>':''}</div>`;}
+ else if(s.k==='readq'){const rres=MQReading.get(s.resourceId);
+  if(!L.rSession){L.rSession=MQReading.pickSession(rres,S,rres.sessionSize);L.rqn=0;L.rResults=[];L.rhints=0;}
+  if(!L.rq){L.rq=L.rSession[L.rqn];L.locked=false;if(L.rq.type==='order')L.rq._sel=[];}
+  const q=L.rq;
+  const qBody=q.type==='evidence'
+   ?`<p class="muted">Clique sur la phrase du texte qui le montre.</p><div class="evid-text">${rres.paragraphs.map((p,i)=>`<button class="evid-para" data-a="rpick:${i}">${esc(p)}</button>`).join('')}</div>`
+   :inputHTML(q,'rpick');
+  const hintRow=L.rhints<2?`<button class="btn ghost sm" data-a="rhint">💡 Indice</button>`:'';
+  body=`<p class="muted">Question ${L.rqn+1} sur ${L.rSession.length}</p><div class="qtext">${esc(q.prompt)}</div>${qBody}<div id="fb" aria-live="polite" role="status"></div><div class="qbtns">${hintRow}${q.type!=='choice'&&q.type!=='evidence'?'<button class="btn primary" data-a="rvalid">Valider</button>':''}</div>`;}
  else body=s.h;
  const exMore=s.k==='ex'&&L.exn<s.ex.s.length;
  const pronOpt=isPrimaryCh(L.id),pronBlocked=s.k==='pron'&&!L.pronPassed&&!!SpeechRec&&!pronOpt;
  const wimg=FINOT_WORLD_IMG[WMAP[L.id].id];
  app.innerHTML=`${bar(ch.icon+' '+ch.name)}${wimg&&L.i===0?`<div class="lesson-banner"><img src="${wimg}" alt="" aria-hidden="true"></div>`:''}<div class="ldots" aria-label="Étape ${L.i+1} sur ${n}">${L.steps.map((_,i)=>`<i class="${i<L.i?'done':i===L.i?'on':''}"></i>`).join('')}</div>
- <div class="card lcard ${s.k==='quiz'?'qcard':''}"><div class="lhead"><div class="ltag">${sOf(WMAP[L.id].id).name} ${WMAP[L.id].lvl}, étape ${L.i+1} sur ${n}</div>${ttsBar()}</div><h2>${s.t}</h2><div class="lbody">${body}</div></div>
- ${s.k!=='quiz'?`<div class="lnav"><button class="btn" data-a="lprev" ${L.i===0?'disabled':''} aria-label="Étape précédente">←</button><button class="btn primary grow" data-a="lnext" ${pronBlocked?'disabled':''}>${s.k==='pron'&&!L.pronPassed?(pronOpt?'Passer cette étape →':'Valide la prononciation 🎤'):exMore?`👀 Étape suivante (${L.exn}/${s.ex.s.length})`:L.i===n-2?'Passer au quiz 🎮':'Suivant'}</button></div>`:''}`;
- const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;if(s.k==='practice'||s.k==='quiz'){const q=s.k==='quiz'?L.q:L.pq;if(q&&q.type==='choice')setTimeout(()=>{const b=document.querySelector('.lcard .choice');if(b&&!PAD.open)b.focus();},30);}
+ <div class="card lcard ${s.k==='quiz'||s.k==='readq'?'qcard':''}"><div class="lhead"><div class="ltag">${sOf(WMAP[L.id].id).name} ${WMAP[L.id].lvl}, étape ${L.i+1} sur ${n}</div>${ttsBar()}</div><h2>${s.t}</h2><div class="lbody">${body}</div></div>
+ ${s.k!=='quiz'&&s.k!=='readq'?`<div class="lnav"><button class="btn" data-a="lprev" ${L.i===0?'disabled':''} aria-label="Étape précédente">←</button><button class="btn primary grow" data-a="lnext" ${pronBlocked?'disabled':''}>${s.k==='pron'&&!L.pronPassed?(pronOpt?'Passer cette étape →':'Valide la prononciation 🎤'):exMore?`👀 Étape suivante (${L.exn}/${s.ex.s.length})`:L.i===n-2?'Passer au quiz 🎮':'Suivant'}</button></div>`:''}`;
+ const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;if(s.k==='practice'||s.k==='quiz'||s.k==='readq'){const q=s.k==='quiz'?L.q:s.k==='readq'?L.rq:L.pq;if(q&&q.type==='choice')setTimeout(()=>{const b=document.querySelector('.lcard .choice');if(b&&!PAD.open)b.focus();},30);}
  if(S.tts.auto&&TTS.ok)setTimeout(()=>{if(!L||!$('.lcard'))return;if(fromReveal){const li=[...document.querySelectorAll('.exs li')].pop();ttsSpeak([li]);}else ttsSpeak(lessonChunks());},250);}
 function lvalidate(pick,mode){if(!L)return;const isP=mode==='practice'||L.steps[L.i].k==='practice',q=isP?L.pq:L.q;if(L.locked||!q)return;let v;
  if(q.type==='choice')v=pick;else if(q.type==='order'){if(q._sel.length<q.tokens.length)return shake();v=q._sel.map(i=>q.tokens[i]).join(' ');}else if(q.type==='multi'){v=q.labels.map((_,i)=>$('#in'+i).value);if(v.some(x=>!x.trim()))return shake();}else{v=$('#in0').value;if(!v.trim())return shake();}
@@ -124,6 +137,23 @@ function lvalidate(pick,mode){if(!L)return;const isP=mode==='practice'||L.steps[
  if(ok){if(!isP)L.ok++;sfx('ok');confetti(12);}else sfx('bad');
  $('#fb').innerHTML=`<div class="fb ${ok?'good':'bad'} pop"><img src="${ok?FINOT_IMG.victoire:FINOT_IMG.encouragement}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:'Presque !'}</b>${dict?MQDictation.feedbackHTML(dict,{young:dictYoung()}):`${ok?'':`${notThis(cid,L.your)} Bonne réponse : <b>${answerText(q)}</b>`}${q.expl?`<div class="expl">${q.expl}</div>`:''}`}<div class="coach-feedback"><b>👩‍🏫 Ton prof particulier</b><br>${coachFor(cid,ok)}${oldD!==L.quizDifficulty?`<br><small>Le prochain exercice passe au niveau ${L.quizDifficulty}/3.</small>`:''}</div>${isP?`<button class="btn primary wide" data-a="pnext">${L.pn<PRACTICE_N-1?'Exercice suivant':'Continuer le cours'}</button>`:`<button class="btn primary wide" data-a="lqnext">${L.qn<LESSON_QUIZ_N-1?'Question suivante':'Voir mon résultat'}</button>`}</div>`;
  const b=$('[data-a="lqnext"],[data-a="pnext"]');if(b)b.focus();if(S.tts.auto)ttsSpeak([$('#fb .fb')]);saveLocal();}
+/* ===== Lecture et compréhension : même schéma que lvalidate(), branché sur MQReading plutôt que
+   sur le générateur d'exercices du chapitre (ch.g) — le résultat alimente la maîtrise par compétence
+   ET le carnet d'erreurs existant du chapitre lié, voir MQReading.recordResult(). */
+function rvalidate(pick){if(!L||!L.rq||L.locked)return;const q=L.rq;let v;
+ if(q.type==='choice'||q.type==='evidence')v=pick;
+ else if(q.type==='order'){if(q._sel.length<q.tokens.length)return shake();v=q._sel.map(i=>q.tokens[i]).join(' ');}
+ else{v=$('#in0').value;if(!v.trim())return shake();}
+ const ok=MQReading.gradeAnswer(q,v);L.locked=true;
+ L.rResults=L.rResults||[];L.rResults.push({q,ok,hintsUsed:L.rhints||0,response:v});L.rhints=0;
+ if(q.type==='choice')document.querySelectorAll('.choice').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('good');else if(i===pick)b.classList.add('bad');});
+ else if(q.type==='evidence')document.querySelectorAll('.evid-para').forEach((b,i)=>{b.disabled=true;if(i===q.evidenceParagraph)b.classList.add('good');else if(i===pick)b.classList.add('bad');});
+ else document.querySelectorAll('.ans input').forEach(x=>{x.disabled=true;x.classList.add(ok?'good':'bad');});
+ markOrd(ok);const qb=$('.lcard .qbtns');if(qb)qb.remove();
+ if(ok){sfx('ok');confetti(10);}else sfx('bad');
+ const isLast=L.rqn>=L.rSession.length-1;
+ $('#fb').innerHTML=`<div class="fb ${ok?'good':'bad'} pop"><img src="${ok?FINOT_IMG.victoire:FINOT_IMG.encouragement}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:'Presque !'}</b>${ok?'':` Bonne réponse : <b>${q.type==='evidence'?'le paragraphe '+(q.evidenceParagraph+1):answerText(q)}</b>.`}${q.explanation?`<div class="expl">${q.explanation}</div>`:''}<button class="btn primary wide" data-a="rqnext">${isLast?'Continuer le cours':'Question suivante'}</button></div>`;
+ const b=$('[data-a="rqnext"]');if(b)b.focus();if(S.tts.auto)ttsSpeak([$('#fb .fb')]);saveLocal();}
 function endLesson(){const l=L;L=null;padClose();S.time+=Math.min(180,Math.max(0,(Date.now()-(l.tl||Date.now()))/1000));const c=byId(l.id),score=Math.round(l.ok/LESSON_QUIZ_N*100),passed=score>=LESSON_PASS*100,prev=S.lessonScores[l.id]||0;
  S.lessonScores[l.id]=Math.max(prev,score);const first=passed&&!S.lessons[l.id];let mg=0;
  if(first){S.lessons[l.id]=Date.now();S.xp+=30;S.coins+=5;const r=S.merit.rules.lesson||0;addMerit(r,'Cours : '+c.name,null);mg=r;}
