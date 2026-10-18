@@ -66,7 +66,26 @@
       return {q,score};
     });
     scored.sort((a,b)=>b.score-a.score);
-    return scored.slice(0,n).map(x=>x.q);
+    return scored.slice(0,n).map(x=>prepare(x.q));
+  }
+
+  // Les questions sont écrites avec la bonne réponse en premier (QCM) et les étiquettes dans le bon
+  // ordre (remise en ordre) : on mélange une copie à chaque session, comme le font les générateurs
+  // d'exercices (H.ch / shuffle), sans jamais modifier la banque partagée.
+  function shuffled(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+  function prepare(q){
+    const c={...q};
+    if(q.type==='choice'&&Array.isArray(q.choices)){
+      // Vrai/Faux (et Oui/Non) gardent leur ordre naturel.
+      const fixed=q.choices.length===2&&/^(vrai|oui)$/i.test(q.choices[0]);
+      const order=fixed?[0,1]:shuffled(q.choices.map((_,i)=>i));
+      c.choices=order.map(i=>q.choices[i]);c.ans=order.indexOf(q.ans);
+    }else if(q.type==='order'&&Array.isArray(q.tokens)){
+      let t=shuffled(q.tokens),k=0;
+      while(q.tokens.length>1&&t.join('\u0001')===q.tokens.join('\u0001')&&k++<30)t=shuffled(q.tokens);
+      c.tokens=t;c._orig=q.tokens.slice();c._sel=[];
+    }
+    return c;
   }
 
   // Notation : les types standards (choice/text/order) sont délégués à la fonction check() déjà
@@ -136,6 +155,8 @@
 
   // HTML du texte à lire, avec glossaire cliquable (point 16) — un seul passage par mot pour ne pas
   // surcharger visuellement un paragraphe qui répéterait le même mot plusieurs fois.
+  // Pas de lookbehind (absent de Safari < 16.4) : le caractère qui précède est capturé puis remis.
+  function glossRe(word){return new RegExp('(^|[^\\p{L}\\p{N}_])('+word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![\\p{L}\\p{N}_])','iu');}
   function textHTML(resource){
     const glossary=resource.glossary||[];
     const used=new Set();
@@ -143,16 +164,17 @@
       let out=esc(p);
       glossary.forEach(g=>{
         if(used.has(g.word))return;
-        const re=new RegExp('\\b('+g.word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')\\b','i');
-        if(re.test(out)){used.add(g.word);out=out.replace(re,(m)=>`<button class="gloss-word" data-a="glossdef:${encodeURIComponent(g.word)}">${m}</button>`);}
+        // Bornes de mot compatibles avec les lettres accentuées (\b ne les reconnaît pas).
+        const re=glossRe(g.word);
+        if(re.test(out)){used.add(g.word);out=out.replace(re,(m,pre,w)=>`${pre}<button class="gloss-word" data-a="glossdef:${encodeURIComponent(g.word)}">${w}</button>`);}
       });
       return out;
     };
     const typeLabel={literary_text:'Texte littéraire',document:'Document',press_article:'Article de presse'}[resource.type]||'Texte';
     return `<div class="reading-meta"><span class="rm-badge">${esc(resource.documentType||typeLabel)}</span><span class="rm-time">⏱ ${resource.estimatedReadingMinutes||3} min</span>${resource.author?`<span class="rm-author">${esc(resource.author)}${resource.work?' · '+esc(resource.work):''}</span>`:''}</div>
-<div class="reading-text">${resource.paragraphs.map((p,i)=>`<p data-para="${i}">${wrap(p)}</p>`).join('')}</div>
+<div class="reading-text${resource.verse?' verse':''}">${resource.paragraphs.map((p,i)=>`<p data-para="${i}"${(resource.stanzas||[]).includes(i)?' class="stz"':''}>${wrap(p)}</p>`).join('')}</div>
 ${glossary.length?`<p class="reading-glossary-hint">💡 Les mots soulignés ont une petite définition — touche-les pour l’afficher.</p>`:''}`;
   }
 
-  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,masterySummary,avgReadingMastery,textHTML};
+  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,masterySummary,avgReadingMastery,textHTML,prepare,glossRe};
 })();
