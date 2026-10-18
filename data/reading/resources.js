@@ -14,7 +14,7 @@
      du domaine public en France.
    Aucune œuvre encore protégée (ex. Tolkien, auteurs vivants) n'est utilisée ici. */
 window.MQ_READING={
- version:'1.6-lot7-2026-10-18',
+ version:'1.7-lot8-2026-10-18',
  resources:{
 
   fr_cp_lila_chat_01:{
@@ -2302,6 +2302,359 @@ window.MQ_READING={
     {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui explique pourquoi Pluton n’est plus une planète.',evidenceParagraph:4,explanation:'« ...en 2006, les astronomes l’ont classée parmi les planètes naines... »'},
     {id:'q7',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Quelle est la plus grosse planète ?',choices:['Jupiter','La Terre','Mars'],ans:0,evidenceParagraph:2,explanation:'« ...Jupiter est la plus grosse de toutes. »'},
     {id:'q8',type:'choice',competencies:['READ_MAIN_IDEA','READ_STRUCTURE'],difficulty:4,prompt:'Quel serait le meilleur résumé de ce texte ?',choices:['Le Soleil, une étoile, est entouré de huit planètes, dont la Terre','La Terre est la plus grosse planète','Pluton est la planète la plus chaude'],ans:0,explanation:'Ce résumé reprend l’idée principale sans s’arrêter sur un seul détail.'}
+   ]
+  },
+
+  // ===== Lot 8 (18/10/2026) : derniers renforts pour atteindre ~90 supports. Texte original de
+  // Rimbaud ; adaptations libres de Chrétien de Troyes, Voltaire, Maupassant, Hugo et Perrault
+  // (domaine public) ; récits et documents originaux MathQuest.
+
+  fr_cm1_panne_01:{
+   id:'fr_cm1_panne_01',level:'CM1',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'La panne de courant',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm1-fr-comprendre'],
+   competencies:['READ_TIME','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_EMOTION_INTENTION','READ_INFERENCE','READ_REFERENCE','READ_JUSTIFY','READ_SEQUENCE'],
+   difficulty:4,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Ce soir-là, un violent orage éclata au-dessus de la ville. Soudain, toutes les lumières de l’appartement s’éteignirent. Même la télévision se tut.',
+    'Malik, qui avait horreur du noir, se blottit contre sa mère. Sa petite sœur Inaya, elle, applaudit : « Une aventure ! »',
+    'Maman alluma des bougies et les posa sur la table. Leurs flammes dansaient et faisaient bouger des ombres immenses sur les murs.',
+    'Papa eut une idée : avec ses mains, il fit apparaître sur le mur l’ombre d’un lapin, puis celle d’un loup. Malik oublia sa peur et se mit à rire.',
+    'Quand la lumière revint, une heure plus tard, les deux enfants protestèrent : « Oh non ! On peut éteindre encore un peu ? »'
+   ],
+   glossary:[{word:'se blottit',definition:'Se serra tout contre quelqu’un, pour être protégé.'},{word:'protestèrent',definition:'Dirent qu’ils n’étaient pas d’accord.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:3,prompt:'Qu’est-ce qui provoque la panne ?',choices:['Un violent orage','Une erreur de Papa','Une tempête de neige'],ans:0,evidenceParagraph:0,explanation:'Un « violent orage éclata », puis les lumières s’éteignirent.'},
+    {id:'q2',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:3,prompt:'Comment réagissent les deux enfants au début ?',choices:['Malik a peur, Inaya est ravie','Ils ont peur tous les deux','Ils sont ravis tous les deux'],ans:0,evidenceParagraph:1,explanation:'Malik « avait horreur du noir » ; Inaya « applaudit : « Une aventure ! » ».'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:4,prompt:'Pourquoi Papa fait-il des ombres sur le mur ?',choices:['Pour rassurer Malik et l’amuser','Pour réparer la panne','Pour faire peur aux enfants'],ans:0,evidenceParagraph:3,explanation:'Résultat : « Malik oublia sa peur et se mit à rire. »'},
+    {id:'q4',type:'choice',competencies:['READ_TIME','READ_EXPLICIT'],difficulty:3,prompt:'Combien de temps dure la panne ?',choices:['Une heure','Une nuit entière','Deux minutes'],ans:0,evidenceParagraph:4,explanation:'« Quand la lumière revint, une heure plus tard... »'},
+    {id:'q5',type:'choice',competencies:['READ_REFERENCE'],difficulty:4,prompt:'Dans « Leurs flammes dansaient », de quoi parle « Leurs » ?',choices:['Des bougies','Des enfants','Des murs'],ans:0,evidenceParagraph:2,explanation:'Ce sont les flammes des bougies, citées juste avant.'},
+    {id:'q6',type:'choice',competencies:['READ_INFERENCE','READ_EMOTION_INTENTION'],difficulty:5,prompt:'Que montre la réaction des enfants à la fin ?',choices:['Ils ont fini par aimer ce moment passé ensemble dans le noir','Ils ont toujours peur','Ils veulent regarder la télévision'],ans:0,evidenceParagraph:4,explanation:'Ils demandent à « éteindre encore un peu » : la soirée est devenue un bon souvenir.'},
+    {id:'q7',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où Malik n’a plus peur.',evidenceParagraph:3,explanation:'« Malik oublia sa peur et se mit à rire. »'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:3,prompt:'Remets l’histoire dans l’ordre.',tokens:['Les lumières s’éteignent','Maman allume des bougies','Papa fait des ombres','La lumière revient'],ans:'Les lumières s’éteignent Maman allume des bougies Papa fait des ombres La lumière revient',explanation:'C’est l’ordre du texte.'}
+   ]
+  },
+
+  fr_cm1_coeur_doc_01:{
+   id:'fr_cm1_coeur_doc_01',level:'CM1',subject:'francais',type:'document',documentType:'texte documentaire',
+   title:'Le cœur, une pompe infatigable',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['cm1-fr-documentaire'],
+   competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_VOCAB_CONTEXT','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_JUSTIFY','READ_STRUCTURE'],
+   difficulty:4,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Le cœur est un muscle, à peu près de la taille de ton poing. Il se trouve dans ta poitrine, entre les deux poumons.',
+    'Son rôle est de pomper le sang et de l’envoyer dans tout le corps, à travers des tuyaux appelés vaisseaux sanguins.',
+    'Le sang transporte l’oxygène et les nutriments dont chaque partie du corps a besoin pour fonctionner.',
+    'Au repos, le cœur d’un adulte bat environ soixante à cent fois par minute. Quand tu cours, il bat plus vite, car tes muscles ont besoin de plus d’oxygène.',
+    'Pour garder un cœur en bonne santé, il est conseillé de bouger chaque jour et de manger de façon équilibrée.'
+   ],
+   glossary:[{word:'vaisseaux sanguins',definition:'Les tuyaux dans lesquels circule le sang.'},{word:'oxygène',definition:'Un gaz de l’air, indispensable à la vie.'},{word:'nutriments',definition:'Les éléments utiles tirés des aliments.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:3,prompt:'Quel est le sujet du texte ?',choices:['Le cœur et son rôle','Les poumons','La course à pied'],ans:0,explanation:'Le titre et tous les paragraphes parlent du cœur.'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Quelle est la taille du cœur ?',choices:['À peu près celle de ton poing','Celle d’un ballon de football','Celle d’un petit pois'],ans:0,evidenceParagraph:0,explanation:'« ...à peu près de la taille de ton poing. »'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:3,prompt:'Que sont les « vaisseaux sanguins » ?',choices:['Les tuyaux dans lesquels circule le sang','Des bateaux','Des muscles du bras'],ans:0,evidenceParagraph:1,explanation:'« ...à travers des tuyaux appelés vaisseaux sanguins. »'},
+    {id:'q4',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi le cœur bat-il plus vite quand tu cours ?',choices:['Tes muscles ont besoin de plus d’oxygène','Tu as peur','Le sang devient plus lourd'],ans:0,evidenceParagraph:3,explanation:'« ...car tes muscles ont besoin de plus d’oxygène. »'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi peut-on dire que le cœur est « infatigable » ?',choices:['Il bat sans jamais s’arrêter, jour et nuit','Il ne bat que quand on court','Il dort la nuit'],ans:0,evidenceParagraph:3,explanation:'Soixante à cent battements par minute, à chaque minute de la vie : il ne s’arrête jamais.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe qui donne des conseils de santé.',evidenceParagraph:4,explanation:'« ...bouger chaque jour et manger de façon équilibrée. »'},
+    {id:'q7',type:'choice',competencies:['READ_STRUCTURE'],difficulty:4,prompt:'Dans quel ordre le texte est-il organisé ?',choices:['Ce qu’est le cœur, son rôle, son fonctionnement, puis des conseils','Des conseils, puis une histoire','Une liste de maladies'],ans:0,explanation:'On va de la description du cœur jusqu’aux conseils pour en prendre soin.'}
+   ]
+  },
+
+  fr_cm2_les_fees_01:{
+   id:'fr_cm2_les_fees_01',level:'CM2',subject:'francais',type:'literary_text',documentType:'conte',
+   title:'Les Fées',author:'Charles Perrault',work:'Histoires ou contes du temps passé (1697)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour le CM2, d’après Charles Perrault (mort en 1703), dans le domaine public.',
+   chapterLinks:['cm2-fr-temps-recit','cm2-fr-litterature'],
+   competencies:['READ_CHARACTER','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_STRUCTURE','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_EXPLICIT'],
+   difficulty:4,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Il était une fois une veuve qui avait deux filles. L’aînée lui ressemblait : elle était orgueilleuse et désagréable. La cadette était douce et polie. La mère préférait l’aînée et obligeait la cadette à travailler sans cesse.',
+    'Chaque jour, la cadette allait chercher de l’eau à une fontaine, loin de la maison. Un jour, une pauvre femme lui demanda à boire. La jeune fille lui offrit de l’eau de bon cœur.',
+    'C’était une fée. « Vous êtes si bonne, dit-elle, qu’à chaque parole que vous direz, il vous sortira de la bouche une fleur ou une pierre précieuse. »',
+    'Voyant ce prodige, la mère envoya l’aînée à la fontaine. Cette fois, la fée apparut sous l’aspect d’une princesse magnifiquement vêtue et lui demanda à boire. L’aînée répondit avec insolence : « Servez-vous vous-même ! »',
+    'La fée lui dit : « Puisque vous êtes si peu aimable, à chaque parole, il vous sortira de la bouche un serpent ou un crapaud. »',
+    'La cadette, chassée par sa mère, rencontra un prince qui l’épousa. L’aînée, détestée de tous, finit seule au fond d’un bois.'
+   ],
+   glossary:[{word:'veuve',definition:'Une femme dont le mari est mort.'},{word:'cadette',definition:'La plus jeune des enfants.'},{word:'prodige',definition:'Un phénomène extraordinaire.'},{word:'insolence',definition:'Un manque de respect.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:3,prompt:'Comment est la cadette ?',choices:['Douce et polie','Orgueilleuse','Paresseuse'],ans:0,evidenceParagraph:0,explanation:'« La cadette était douce et polie. »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:4,prompt:'Pourquoi la fée fait-elle un don merveilleux à la cadette ?',choices:['Parce qu’elle lui a donné à boire avec gentillesse','Parce qu’elle est la plus belle','Parce que sa mère l’a demandé'],ans:0,evidenceParagraph:2,explanation:'« Vous êtes si bonne... » : la fée récompense sa bonté.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi la fée apparaît-elle en princesse devant l’aînée, et non en pauvre femme ?',choices:['Pour voir si l’aînée serait polie même avec quelqu’un d’important','Parce qu’elle a changé de métier','Pour la récompenser'],ans:0,evidenceParagraph:3,explanation:'Même face à une princesse, l’aînée est insolente : la fée vérifie son vrai caractère.'},
+    {id:'q4',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Que sort-il de la bouche de l’aînée quand elle parle ?',choices:['Des serpents ou des crapauds','Des fleurs','Des pierres précieuses'],ans:0,evidenceParagraph:4,explanation:'« ...il vous sortira de la bouche un serpent ou un crapaud. »'},
+    {id:'q5',type:'choice',competencies:['READ_STRUCTURE'],difficulty:5,prompt:'Comment le conte est-il construit ?',choices:['La même scène se répète avec les deux sœurs, et chacune est jugée selon son comportement','Les deux sœurs vivent des aventures sans rapport','On ne suit qu’une seule sœur'],ans:0,explanation:'Fontaine, demande à boire, don de la fée : la scène est répétée pour opposer les deux sœurs.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur le paragraphe où l’aînée manque de respect à la fée.',evidenceParagraph:3,explanation:'« Servez-vous vous-même ! »'},
+    {id:'q7',type:'choice',competencies:['READ_STRUCTURE'],difficulty:5,prompt:'Dans le premier paragraphe, pourquoi trouve-t-on surtout l’imparfait (« avait », « était ») ?',choices:['Pour présenter les personnages et la situation de départ','Pour raconter une action soudaine','Pour parler de l’avenir'],ans:0,evidenceParagraph:0,explanation:'L’imparfait décrit ; le passé simple (« demanda », « offrit ») raconte les actions qui font avancer le conte.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:5,prompt:'Quelle est la morale du conte ?',choices:['La gentillesse et la politesse finissent par être récompensées','Il faut toujours obéir à sa mère','Les fées sont dangereuses'],ans:0,explanation:'Les paroles aimables se changent en trésors, les paroles méchantes en serpents.'}
+   ]
+  },
+
+  fr_6e_gateau_disparu_01:{
+   id:'fr_6e_gateau_disparu_01',level:'6e',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le gâteau disparu',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr6b'],
+   competencies:['READ_EXPLICIT','READ_INFERENCE','READ_JUSTIFY','READ_CHARACTER','READ_EMOTION_INTENTION','READ_REFERENCE'],
+   difficulty:5,estimatedReadingMinutes:2,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Mamie avait laissé refroidir son gâteau au chocolat sur le rebord de la fenêtre de la cuisine, puis elle était allée au jardin.',
+    'Quand elle revint, l’assiette était vide. Sur le carrelage, elle remarqua des miettes brunes et de petites traces de pattes qui menaient vers le salon.',
+    'Dans le salon, Lucas lisait tranquillement une bande dessinée. « Ce n’est pas moi ! » dit-il aussitôt, avant même qu’on lui pose la question.',
+    'Sous le canapé, on entendait un drôle de bruit, comme quelqu’un qui se lèche les babines. Le chien, Biscuit, avait le museau tout marron.',
+    'Mamie éclata de rire. Lucas, lui, eut l’air soulagé… mais il rougit un peu en essuyant discrètement le coin de sa bouche.'
+   ],
+   glossary:[{word:'babines',definition:'Les lèvres d’un animal.'},{word:'soulagé',definition:'Libéré d’une inquiétude.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT'],difficulty:3,prompt:'Où Mamie avait-elle posé le gâteau ?',choices:['Sur le rebord de la fenêtre de la cuisine','Dans le réfrigérateur','Sur la table du jardin'],ans:0,evidenceParagraph:0,explanation:'« ...sur le rebord de la fenêtre de la cuisine. »'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Quels indices accusent le chien ?',choices:['Les traces de pattes, le bruit sous le canapé et son museau marron','Ses aboiements','Il dort dans la cuisine'],ans:0,evidenceParagraph:3,explanation:'Traces de pattes vers le salon, bruit de babines, museau « tout marron » comme du chocolat.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE','READ_CHARACTER'],difficulty:6,prompt:'Pourquoi est-il suspect que Lucas dise « Ce n’est pas moi ! » si vite ?',choices:['Il se défend avant même d’être accusé : il a peut-être quelque chose à cacher','Il est poli','Il ne sait pas parler'],ans:0,evidenceParagraph:2,explanation:'Se justifier « avant même qu’on lui pose la question » est un indice : il se sent coupable de quelque chose.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Que suggère la dernière phrase ?',choices:['Lucas a sans doute mangé lui aussi un morceau de gâteau','Lucas a froid','Lucas est malade'],ans:0,evidenceParagraph:4,explanation:'Il rougit et s’essuie discrètement la bouche : le texte ne le dit pas, mais tout le laisse penser. C’est de l’implicite.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe qui laisse deviner que Lucas n’est pas tout à fait innocent.',evidenceParagraph:4,explanation:'« ...il rougit un peu en essuyant discrètement le coin de sa bouche. »'},
+    {id:'q6',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:4,prompt:'Comment réagit Mamie en découvrant le coupable ?',choices:['Elle éclate de rire','Elle se met en colère','Elle pleure'],ans:0,evidenceParagraph:4,explanation:'« Mamie éclata de rire. »'},
+    {id:'q7',type:'choice',competencies:['READ_REFERENCE'],difficulty:4,prompt:'Dans « elle remarqua des miettes », qui est « elle » ?',choices:['Mamie','L’assiette','La cuisine'],ans:0,evidenceParagraph:1,explanation:'C’est Mamie, qui revient du jardin.'}
+   ]
+  },
+
+  fr_6e_visite_chateau_doc_01:{
+   id:'fr_6e_visite_chateau_doc_01',level:'6e',subject:'francais',type:'document',documentType:'document pratique (dépliant)',
+   title:'Visiter le château de Montclair',author:null,work:null,sourceType:'original_mathquest',
+   sourceReference:'Document original MathQuest : le château de Montclair et ses informations pratiques sont imaginaires.',
+   chapterLinks:['fr6c'],
+   competencies:['READ_EXPLICIT','READ_STRUCTURE','READ_INFERENCE','READ_DOCUMENT_SOURCE','READ_TIME','READ_JUSTIFY'],
+   difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'CHÂTEAU DE MONTCLAIR — Venez découvrir une forteresse du XIIIe siècle et son jardin médiéval !',
+    'HORAIRES : du 1er avril au 31 octobre, tous les jours de 10 h à 18 h. Du 1er novembre au 31 mars, uniquement le week-end, de 14 h à 17 h. Fermé le 25 décembre et le 1er janvier.',
+    'TARIFS : adulte, 9 € ; de 7 à 17 ans, 5 € ; gratuit pour les moins de 7 ans. Billet famille (2 adultes et 2 enfants) : 24 €.',
+    'À NE PAS MANQUER : la visite du donjon (à partir de 8 ans, 120 marches) et le spectacle de chevalerie, chaque dimanche à 15 h en juillet et en août.',
+    'Accès : parking gratuit à 300 mètres. Les chiens tenus en laisse sont acceptés dans le jardin, mais pas dans le château.'
+   ],
+   glossary:[{word:'forteresse',definition:'Un lieu fortifié pour se défendre.'},{word:'médiéval',definition:'Du Moyen Âge.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_DOCUMENT_SOURCE','READ_STRUCTURE'],difficulty:4,prompt:'Quel type de document est-ce ?',choices:['Un dépliant d’informations pratiques pour les visiteurs','Un roman de chevalerie','Un article scientifique'],ans:0,explanation:'Horaires, tarifs, accès : il sert à préparer une visite.'},
+    {id:'q2',type:'choice',competencies:['READ_STRUCTURE'],difficulty:4,prompt:'À quoi servent les mots en majuscules (HORAIRES, TARIFS…) ?',choices:['À repérer vite chaque rubrique','À crier','À décorer le texte'],ans:0,evidenceParagraph:1,explanation:'Ce sont des intertitres : ils permettent de trouver une information sans tout lire.'},
+    {id:'q3',type:'choice',competencies:['READ_TIME','READ_EXPLICIT'],difficulty:5,prompt:'Un mercredi de janvier, le château est-il ouvert ?',choices:['Non, en hiver il n’ouvre que le week-end','Oui, de 10 h à 18 h','Oui, de 14 h à 17 h'],ans:0,evidenceParagraph:1,explanation:'Du 1er novembre au 31 mars, il est ouvert « uniquement le week-end ».'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Une famille de 2 adultes et 2 enfants de 10 et 12 ans : quel est le tarif le plus avantageux ?',choices:['Le billet famille à 24 €','Les billets séparés à 28 €','La visite est gratuite'],ans:0,evidenceParagraph:2,explanation:'Billets séparés : 9 + 9 + 5 + 5 = 28 € ; le billet famille coûte 24 €, soit 4 € de moins.'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Léo a 6 ans. Que ne pourra-t-il pas faire ?',choices:['Monter dans le donjon','Entrer gratuitement','Voir le jardin'],ans:0,evidenceParagraph:3,explanation:'Le donjon se visite « à partir de 8 ans ». (Il entrera, en revanche, gratuitement.)'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:4,prompt:'Clique sur la rubrique qui dit si l’on peut venir avec son chien.',evidenceParagraph:4,explanation:'« Les chiens tenus en laisse sont acceptés dans le jardin, mais pas dans le château. »'},
+    {id:'q7',type:'choice',competencies:['READ_TIME'],difficulty:4,prompt:'Quand a lieu le spectacle de chevalerie ?',choices:['Le dimanche à 15 h, en juillet et en août','Tous les jours à 10 h','Le 25 décembre'],ans:0,evidenceParagraph:3,explanation:'« ...chaque dimanche à 15 h en juillet et en août. »'}
+   ]
+  },
+
+  fr_6e_ma_boheme_01:{
+   id:'fr_6e_ma_boheme_01',level:'6e',subject:'francais',type:'literary_text',documentType:'poème (sonnet)',
+   title:'Ma Bohème',author:'Arthur Rimbaud',work:'Poésies (1870)',
+   sourceType:'public_domain',sourceReference:'Texte original d’Arthur Rimbaud (mort en 1891), dans le domaine public.',
+   chapterLinks:['fr6e'],verse:true,stanzas:[4,8,11],
+   competencies:['READ_NARRATOR_POV','READ_EMOTION_INTENTION','READ_VOCAB_CONTEXT','READ_INFERENCE','READ_GENRE','READ_JUSTIFY','READ_PLACE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioRecommended',sessionSize:7,
+   paragraphs:[
+    'Je m’en allais, les poings dans mes poches crevées ;',
+    'Mon paletot aussi devenait idéal ;',
+    'J’allais sous le ciel, Muse ! et j’étais ton féal ;',
+    'Oh ! là ! là ! que d’amours splendides j’ai rêvées !',
+    'Mon unique culotte avait un large trou.',
+    '— Petit-Poucet rêveur, j’égrenais dans ma course',
+    'Des rimes. Mon auberge était à la Grande-Ourse.',
+    '— Mes étoiles au ciel avaient un doux frou-frou',
+    'Et je les écoutais, assis au bord des routes,',
+    'Ces bons soirs de septembre où je sentais des gouttes',
+    'De rosée à mon front, comme un vin de vigueur ;',
+    'Où, rimant au milieu des ombres fantastiques,',
+    'Comme des lyres, je tirais les élastiques',
+    'De mes souliers blessés, un pied près de mon cœur !'
+   ],
+   glossary:[{word:'paletot',definition:'Un manteau court.'},{word:'Muse',definition:'Divinité qui inspire les poètes.'},{word:'féal',definition:'Fidèle serviteur.'},{word:'égrenais',definition:'Laissais tomber un à un, comme des grains.'},{word:'lyres',definition:'Instruments de musique à cordes de l’Antiquité.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:4,prompt:'Qui parle dans ce poème ?',choices:['Le poète, qui raconte ses propres errances','Le Petit Poucet','Une étoile'],ans:0,evidenceParagraph:0,explanation:'« Je m’en allais... » : le poète parle de lui-même.'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Que nous apprennent les « poches crevées » et l’« unique culotte » avec « un large trou » ?',choices:['Le poète est pauvre, mais cela ne l’empêche pas d’être heureux','Le poète est très riche','Le poète est un couturier'],ans:0,evidenceParagraph:4,explanation:'Ses vêtements sont usés, mais le ton reste joyeux (« Oh ! là ! là ! »).'},
+    {id:'q3',type:'choice',competencies:['READ_PLACE','READ_VOCAB_CONTEXT'],difficulty:6,prompt:'« Mon auberge était à la Grande-Ourse » : que veut dire le poète ?',choices:['Il dort à la belle étoile, sous le ciel','Il dort dans un hôtel de luxe','Il habite chez un ours'],ans:0,evidenceParagraph:6,explanation:'La Grande Ourse est une constellation : son « auberge », c’est le ciel étoilé.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Pourquoi le poète se compare-t-il au « Petit-Poucet » ?',choices:['Comme Poucet semait des cailloux, il sème des rimes sur son chemin','Parce qu’il est très petit','Parce qu’il est perdu dans la forêt'],ans:0,evidenceParagraph:5,explanation:'« ...j’égrenais dans ma course / Des rimes » : au lieu de cailloux, ce sont des vers.'},
+    {id:'q5',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Quel sentiment domine ce poème ?',choices:['Le bonheur d’une vie libre et vagabonde','La peur de la nuit','La colère contre la pauvreté'],ans:0,evidenceParagraph:3,explanation:'« Oh ! là ! là ! que d’amours splendides j’ai rêvées ! » : il est heureux de vagabonder.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le vers qui transforme des lacets de chaussures en instrument de musique.',evidenceParagraph:12,explanation:'« Comme des lyres, je tirais les élastiques / De mes souliers » : même ses souliers abîmés deviennent poésie.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE'],difficulty:5,prompt:'Ce poème de 14 vers (deux quatrains et deux tercets) est...',choices:['Un sonnet','Une fable','Une chanson à refrain'],ans:0,explanation:'Deux quatrains puis deux tercets : c’est la forme du sonnet.'}
+   ]
+  },
+
+  fr_5e_carnet_croquis_01:{
+   id:'fr_5e_carnet_croquis_01',level:'5e',subject:'francais',type:'literary_text',documentType:'récit',
+   title:'Le carnet de croquis',author:null,work:null,sourceType:'original_mathquest',
+   chapterLinks:['fr5a'],
+   competencies:['READ_CHARACTER','READ_EMOTION_INTENTION','READ_INFERENCE','READ_NARRATOR_POV','READ_CAUSE_CONSEQUENCE','READ_JUSTIFY','READ_MAIN_IDEA'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Depuis la rentrée, Yanis ne parlait à personne. Au fond de la classe, il dessinait sans relâche dans un vieux carnet à la couverture bleue.',
+    'Un matin, en rangeant les tables, je trouvai le carnet par terre. Je n’aurais pas dû l’ouvrir. Je l’ouvris quand même.',
+    'Chaque page montrait l’un d’entre nous, croqué en quelques traits : Chloé en train de rire, le professeur avec ses lunettes sur le front, moi-même, penché sur mon cahier. Tout était si juste que j’en restai bouche bée.',
+    'Je rendis le carnet à Yanis à la récréation. Il devint écarlate et murmura : « Tu l’as regardé ? » Je hochai la tête : « Tu as un talent fou. »',
+    'Pour la première fois, je le vis sourire. Le lendemain, il s’assit à côté de moi à la cantine.'
+   ],
+   glossary:[{word:'croqué',definition:'Dessiné rapidement, en quelques traits.'},{word:'écarlate',definition:'Rouge vif.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_NARRATOR_POV'],difficulty:5,prompt:'Qui raconte l’histoire ?',choices:['Un élève de la classe, qui dit « je »','Yanis','Le professeur'],ans:0,evidenceParagraph:1,explanation:'« ...je trouvai le carnet... » : le narrateur est un camarade de Yanis.'},
+    {id:'q2',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Comment Yanis se comporte-t-il au début ?',choices:['Il est solitaire et ne parle à personne','Il est bavard','Il est le chef de la classe'],ans:0,evidenceParagraph:0,explanation:'« Depuis la rentrée, Yanis ne parlait à personne. »'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'« Je n’aurais pas dû l’ouvrir. Je l’ouvris quand même. » Que montrent ces phrases ?',choices:['Le narrateur sait qu’il ne devrait pas, mais sa curiosité est plus forte','Le narrateur n’a pas de curiosité','Le narrateur est fier de lui'],ans:0,evidenceParagraph:1,explanation:'Les deux phrases courtes opposées montrent son hésitation, puis sa curiosité.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE','READ_EMOTION_INTENTION'],difficulty:6,prompt:'Pourquoi Yanis devient-il « écarlate » ?',choices:['Il est gêné qu’on ait découvert ses dessins','Il a trop couru','Il est en colère contre Chloé'],ans:0,evidenceParagraph:3,explanation:'Son carnet était secret : il rougit d’embarras en apprenant qu’on l’a regardé.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe qui décrit le contenu du carnet.',evidenceParagraph:2,explanation:'« Chaque page montrait l’un d’entre nous, croqué en quelques traits... »'},
+    {id:'q6',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE','READ_INFERENCE'],difficulty:6,prompt:'Pourquoi Yanis s’assoit-il à côté du narrateur le lendemain ?',choices:['Le compliment sincère lui a donné confiance : une amitié commence','Il n’y avait plus d’autre place','Il veut récupérer un dessin'],ans:0,evidenceParagraph:4,explanation:'« Pour la première fois, je le vis sourire » : le compliment a créé un lien.'},
+    {id:'q7',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:6,prompt:'Quel est le thème principal de ce récit ?',choices:['Une rencontre qui brise la solitude','Un vol de carnet','Un concours de dessin'],ans:0,explanation:'Un élève isolé, un talent caché, un compliment sincère : le récit raconte la naissance d’une amitié.'}
+   ]
+  },
+
+  fr_5e_yvain_lion_01:{
+   id:'fr_5e_yvain_lion_01',level:'5e',subject:'francais',type:'literary_text',documentType:'roman de chevalerie (adaptation)',
+   title:'Yvain et le lion',author:'Chrétien de Troyes',work:'Yvain ou le Chevalier au lion (vers 1177-1181)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre en français moderne pour la 5e, d’après Chrétien de Troyes (XIIe siècle), dans le domaine public — aucune traduction existante reprise.',
+   chapterLinks:['fr5d'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_INFERENCE','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_GENRE','READ_SEQUENCE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Yvain chevauchait seul dans une forêt profonde quand il entendit un cri terrible. Il se dirigea vers le bruit et découvrit, dans une clairière, un lion aux prises avec un serpent.',
+    'Le serpent tenait le lion par la queue et lui brûlait les flancs de son souffle de feu. Yvain hésita : lequel des deux devait-il aider ?',
+    'Il se décida vite : le serpent était une bête venimeuse et perfide, tandis que le lion était un animal noble. Il tira son épée et attaqua le serpent.',
+    'Il le trancha en deux, puis dut couper un petit bout de la queue du lion, que le monstre tenait encore serrée entre ses mâchoires.',
+    'Yvain s’attendait à ce que le lion se jette sur lui. Mais l’animal s’agenouilla devant lui, les yeux pleins de larmes, comme pour le remercier. Dès lors, il ne le quitta plus et le suivit dans toutes ses aventures.'
+   ],
+   glossary:[{word:'clairière',definition:'Un endroit sans arbres au milieu d’une forêt.'},{word:'venimeuse',definition:'Qui a du venin, un poison.'},{word:'perfide',definition:'Traître, sournois.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_EXPLICIT','READ_CHARACTER'],difficulty:3,prompt:'Que découvre Yvain dans la clairière ?',choices:['Un lion attaqué par un serpent','Un dragon endormi','Un chevalier blessé'],ans:0,evidenceParagraph:0,explanation:'« ...un lion aux prises avec un serpent. »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi Yvain choisit-il d’aider le lion ?',choices:['Le lion est un animal noble, le serpent une bête venimeuse et perfide','Le lion est plus petit','Le serpent l’a attaqué en premier'],ans:0,evidenceParagraph:2,explanation:'Pour un chevalier, il faut défendre ce qui est noble contre ce qui est perfide.'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi Yvain coupe-t-il un bout de la queue du lion ?',choices:['Pour le libérer des mâchoires du serpent mort','Pour le punir','Par maladresse'],ans:0,evidenceParagraph:3,explanation:'Le serpent tenait encore la queue « serrée entre ses mâchoires » : c’était le seul moyen de libérer le lion.'},
+    {id:'q4',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Que montre le geste du lion qui s’agenouille ?',choices:['Sa reconnaissance envers Yvain','Sa peur','Sa fatigue'],ans:0,evidenceParagraph:4,explanation:'« ...les yeux pleins de larmes, comme pour le remercier. »'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe où Yvain hésite.',evidenceParagraph:1,explanation:'« Yvain hésita : lequel des deux devait-il aider ? »'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE','READ_CHARACTER'],difficulty:6,prompt:'Quelles qualités du chevalier ce passage met-il en valeur ?',choices:['Le courage et le sens de la justice','La ruse et le mensonge','La richesse'],ans:0,explanation:'Yvain affronte un monstre et défend le plus noble : ce sont des valeurs de la chevalerie.'},
+    {id:'q7',type:'choice',competencies:['READ_GENRE','READ_INFERENCE'],difficulty:6,prompt:'Pourquoi le roman s’appelle-t-il « le Chevalier au lion » ?',choices:['Le lion devient le fidèle compagnon d’Yvain dans ses aventures','Yvain est roi d’un pays de lions','Yvain se transforme en lion'],ans:0,evidenceParagraph:4,explanation:'« Dès lors, il ne le quitta plus et le suivit dans toutes ses aventures. »'},
+    {id:'q8',type:'order',competencies:['READ_SEQUENCE'],difficulty:4,prompt:'Remets l’épisode dans l’ordre.',tokens:['Yvain entend un cri','Il hésite','Il tue le serpent','Le lion s’agenouille'],ans:'Yvain entend un cri Il hésite Il tue le serpent Le lion s’agenouille',explanation:'C’est l’ordre du récit.'}
+   ]
+  },
+
+  fr_4e_micromegas_01:{
+   id:'fr_4e_micromegas_01',level:'4e',subject:'francais',type:'literary_text',documentType:'conte philosophique (adaptation)',
+   title:'Micromégas sur la Terre',author:'Voltaire',work:'Micromégas (1752)',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 4e, d’après Voltaire (mort en 1778), dans le domaine public.',
+   chapterLinks:['fr4c'],
+   competencies:['READ_CHARACTER','READ_INFERENCE','READ_AUTHOR_INTENT','READ_VOCAB_CONTEXT','READ_JUSTIFY','READ_GENRE','READ_ARGUMENT'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Micromégas, un géant venu d’une planète tournant autour de l’étoile Sirius, mesurait plus de trente kilomètres de haut. Avec un compagnon de voyage, habitant de Saturne, il arriva un jour sur la Terre.',
+    'D’abord, ils crurent la planète vide : les hommes étaient bien trop petits pour être vus. Puis, à l’aide d’un diamant qui servait de loupe, Micromégas aperçut un navire, qu’il prit délicatement sur son ongle.',
+    'Il découvrit avec stupeur que ces « atomes » savaient parler et penser. Ils lui expliquèrent qu’au même moment, des milliers d’hommes se massacraient pour un morceau de terre.',
+    '« Pour quoi se battent-ils ? demanda le géant. — Pour un petit tas de boue grand comme votre talon, lui répondit-on. Et la plupart de ceux qui se battent ne savent même pas pourquoi. »',
+    'Micromégas fut saisi d’indignation : « Malheureux ! On devrait écraser d’un coup de pied tous ces ridicules assassins ! » Puis il se calma, mais il garda une profonde pitié pour ces petits êtres si fiers et si cruels.'
+   ],
+   glossary:[{word:'Sirius',definition:'L’étoile la plus brillante du ciel nocturne.'},{word:'stupeur',definition:'Un étonnement extrême.'},{word:'indignation',definition:'Une colère causée par une injustice.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Qui est Micromégas ?',choices:['Un géant venu d’une planète de l’étoile Sirius','Un savant de la Terre','Un capitaine de navire'],ans:0,evidenceParagraph:0,explanation:'« Micromégas, un géant venu d’une planète tournant autour de l’étoile Sirius... »'},
+    {id:'q2',type:'choice',competencies:['READ_INFERENCE'],difficulty:5,prompt:'Pourquoi les voyageurs croient-ils d’abord la Terre inhabitée ?',choices:['Les hommes sont beaucoup trop petits pour qu’ils les voient','La Terre est couverte de nuages','Les hommes se cachent'],ans:0,evidenceParagraph:1,explanation:'« ...les hommes étaient bien trop petits pour être vus. »'},
+    {id:'q3',type:'choice',competencies:['READ_VOCAB_CONTEXT','READ_INFERENCE'],difficulty:6,prompt:'Pourquoi Voltaire appelle-t-il les hommes des « atomes » ?',choices:['Pour montrer à quel point ils sont minuscules aux yeux du géant','Parce que ce sont des scientifiques','Parce qu’ils sont invisibles même entre eux'],ans:0,evidenceParagraph:2,explanation:'Vus par un géant, les hommes sont aussi petits que des atomes : c’est un changement de point de vue.'},
+    {id:'q4',type:'choice',competencies:['READ_ARGUMENT','READ_INFERENCE'],difficulty:7,prompt:'Qu’est-ce que l’expression « un petit tas de boue grand comme votre talon » fait comprendre ?',choices:['Les guerres des hommes sont absurdes, car l’enjeu est minuscule','Les hommes cultivent la boue','Le géant a les pieds sales'],ans:0,evidenceParagraph:3,explanation:'Vu de loin, le territoire disputé est dérisoire : les guerres paraissent ridicules.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe où le géant exprime sa colère.',evidenceParagraph:4,explanation:'« Micromégas fut saisi d’indignation... »'},
+    {id:'q6',type:'choice',competencies:['READ_GENRE','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Pourquoi Voltaire fait-il observer les hommes par un géant venu d’ailleurs ?',choices:['Le regard extérieur permet de critiquer plus librement les défauts humains','Pour écrire un roman de science-fiction sans message','Pour décrire la vie sur Sirius'],ans:0,explanation:'Ce regard naïf et lointain fait apparaître l’absurdité de nos guerres : c’est le procédé du conte philosophique.'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:7,prompt:'Que dénonce surtout ce passage ?',choices:['La guerre et l’orgueil des hommes','L’exploration spatiale','La pêche en mer'],ans:0,explanation:'Des êtres minuscules qui s’entretuent pour un « tas de boue » tout en se croyant importants : c’est une critique de la guerre et de l’orgueil.'}
+   ]
+  },
+
+  fr_4e_fait_opinion_doc_01:{
+   id:'fr_4e_fait_opinion_doc_01',level:'4e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
+   title:'Fait ou opinion ?',author:null,work:null,sourceType:'original_mathquest',
+   sourceReference:'Document original MathQuest. Le parc et les chiffres cités sont imaginaires, inventés pour l’exercice.',
+   chapterLinks:['fr4d'],
+   competencies:['READ_MAIN_IDEA','READ_VOCAB_CONTEXT','READ_ARGUMENT','READ_DOCUMENT_SOURCE','READ_JUSTIFY','READ_INFERENCE'],
+   difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Un fait est une information que l’on peut vérifier : une date, un chiffre, un événement. Par exemple : « Le nouveau parc de la ville a ouvert le 3 mai et compte 200 arbres. »',
+    'Une opinion est un avis personnel, avec lequel on peut être d’accord ou non. Par exemple : « Ce parc est le plus beau de la région. »',
+    'Les opinions se repèrent souvent grâce à certains mots : des adjectifs qui jugent (« magnifique », « décevant »), des verbes comme « je pense », « je trouve », ou des expressions comme « à mon avis ».',
+    'Un bon article d’information présente d’abord les faits. S’il donne des opinions, il doit les attribuer clairement à quelqu’un : « Selon le maire, ce parc est une réussite. »',
+    'Avant de partager une information, pose-toi la question : est-ce un fait vérifiable, ou l’avis de quelqu’un ?'
+   ],
+   glossary:[{word:'vérifier',definition:'Contrôler que quelque chose est vrai.'},{word:'attribuer',definition:'Ici : indiquer qui a dit quelque chose.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:5,prompt:'Quel est le but de ce document ?',choices:['Apprendre à distinguer un fait d’une opinion','Présenter le nouveau parc de la ville','Donner l’avis du maire'],ans:0,explanation:'Le titre et les paragraphes expliquent la différence entre fait et opinion.'},
+    {id:'q2',type:'choice',competencies:['READ_VOCAB_CONTEXT'],difficulty:5,prompt:'Qu’est-ce qu’un fait ?',choices:['Une information que l’on peut vérifier','Un avis personnel','Une rumeur'],ans:0,evidenceParagraph:0,explanation:'« Un fait est une information que l’on peut vérifier. »'},
+    {id:'q3',type:'choice',competencies:['READ_ARGUMENT'],difficulty:6,prompt:'« Le match a été un spectacle décevant. » Est-ce un fait ou une opinion ?',choices:['Une opinion : « décevant » est un jugement','Un fait : on peut le vérifier','Ni l’un ni l’autre'],ans:0,evidenceParagraph:2,explanation:'L’adjectif « décevant » exprime un jugement personnel.'},
+    {id:'q4',type:'choice',competencies:['READ_ARGUMENT'],difficulty:6,prompt:'« Le match s’est terminé sur le score de 2 à 1. » Est-ce un fait ou une opinion ?',choices:['Un fait : le score se vérifie','Une opinion','Une rumeur'],ans:0,evidenceParagraph:0,explanation:'Un score est un chiffre vérifiable : c’est un fait.'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:5,prompt:'Clique sur le paragraphe qui donne des indices pour repérer une opinion.',evidenceParagraph:2,explanation:'Adjectifs qui jugent, « je pense », « à mon avis »…'},
+    {id:'q6',type:'choice',competencies:['READ_DOCUMENT_SOURCE','READ_INFERENCE'],difficulty:7,prompt:'Pourquoi un article doit-il écrire « Selon le maire, ce parc est une réussite » plutôt que « Ce parc est une réussite » ?',choices:['Pour montrer que c’est l’opinion d’une personne et non un fait établi','Pour faire plaisir au maire','Parce que c’est plus court'],ans:0,evidenceParagraph:3,explanation:'En citant la source de l’opinion, l’article reste honnête : le lecteur sait qui pense quoi.'},
+    {id:'q7',type:'choice',competencies:['READ_ARGUMENT'],difficulty:6,prompt:'Lequel de ces deux exemples du texte est un fait ?',choices:['« Le parc a ouvert le 3 mai et compte 200 arbres »','« Ce parc est le plus beau de la région »','Les deux'],ans:0,evidenceParagraph:1,explanation:'La date et le nombre d’arbres se vérifient ; « le plus beau » est un avis.'}
+   ]
+  },
+
+  fr_4e_aux_champs_01:{
+   id:'fr_4e_aux_champs_01',level:'4e',subject:'francais',type:'literary_text',documentType:'nouvelle réaliste (adaptation)',
+   title:'Aux champs',author:'Guy de Maupassant',work:'Aux champs (1882)',
+   sourceType:'public_domain',sourceReference:'Résumé-adaptation libre pour la 4e, d’après Guy de Maupassant (mort en 1893), dans le domaine public.',
+   chapterLinks:['fr4f'],
+   competencies:['READ_CHARACTER','READ_EXPLICIT','READ_CAUSE_CONSEQUENCE','READ_TIME','READ_INFERENCE','READ_EMOTION_INTENTION','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_STRUCTURE'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Deux familles de paysans très pauvres, les Tuvache et les Vallin, vivaient côte à côte dans deux chaumières. Chacune avait quatre enfants, qui grandissaient ensemble devant les portes.',
+    'Un jour, une riche dame, Mme d’Hubières, qui n’avait pas d’enfant, s’arrêta devant les maisons. Elle proposa aux Tuvache de leur prendre leur petit Charlot pour l’élever comme son fils, contre une rente de cent francs par mois.',
+    'La mère Tuvache refusa, indignée : « Vendre son enfant ! Ah, non ! » Alors Mme d’Hubières alla chez les Vallin, qui, après avoir discuté le prix, acceptèrent de lui donner leur fils Jean.',
+    'Pendant des années, la mère Tuvache méprisa ses voisins et répéta partout qu’elle, au moins, n’avait pas vendu son enfant. Les Vallin, eux, vivaient désormais à l’aise grâce à la rente.',
+    'Bien des années plus tard, quand les enfants furent devenus de jeunes hommes, une belle voiture s’arrêta devant les chaumières : Jean Vallin, devenu un élégant jeune homme, revenait voir ses parents. Charlot Tuvache, resté pauvre, le regarda passer et lança à ses parents : « Faut-il être bête pour ne pas avoir voulu ! » Puis il partit pour toujours.'
+   ],
+   glossary:[{word:'chaumières',definition:'Petites maisons de paysans au toit de chaume (paille).'},{word:'rente',definition:'Une somme d’argent versée régulièrement.'},{word:'indignée',definition:'Révoltée par ce qui lui paraît injuste ou honteux.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_CHARACTER'],difficulty:4,prompt:'Qui sont les Tuvache et les Vallin ?',choices:['Deux familles de paysans pauvres et voisines','Deux familles riches','Deux familles de commerçants en ville'],ans:0,evidenceParagraph:0,explanation:'« Deux familles de paysans très pauvres [...] vivaient côte à côte. »'},
+    {id:'q2',type:'choice',competencies:['READ_EXPLICIT','READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Que propose Mme d’Hubières ?',choices:['D’élever un de leurs enfants comme son fils, contre une rente','D’acheter leurs chaumières','De leur donner du travail'],ans:0,evidenceParagraph:1,explanation:'Elle veut « l’élever comme son fils, contre une rente de cent francs par mois ».'},
+    {id:'q3',type:'choice',competencies:['READ_EMOTION_INTENTION'],difficulty:5,prompt:'Pourquoi la mère Tuvache refuse-t-elle ?',choices:['Elle trouve honteux de « vendre » son enfant','Elle trouve la rente trop faible','Elle n’aime pas Mme d’Hubières'],ans:0,evidenceParagraph:2,explanation:'« Vendre son enfant ! Ah, non ! »'},
+    {id:'q4',type:'choice',competencies:['READ_TIME','READ_STRUCTURE'],difficulty:5,prompt:'Combien de temps s’écoule avant le retour de Jean ?',choices:['Bien des années : les enfants sont devenus de jeunes hommes','Quelques jours','Un mois'],ans:0,evidenceParagraph:4,explanation:'« Bien des années plus tard... » : une ellipse fait passer d’un coup de nombreuses années.'},
+    {id:'q5',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Que reproche Charlot à ses parents ?',choices:['De l’avoir gardé dans la misère au lieu de le laisser partir vers une vie riche','De l’avoir donné à Mme d’Hubières','De ne pas l’avoir laissé aller à l’école'],ans:0,evidenceParagraph:4,explanation:'« Faut-il être bête pour ne pas avoir voulu ! » : il pense que ses parents l’ont privé de la richesse.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe qui montre l’orgueil de la mère Tuvache.',evidenceParagraph:3,explanation:'« ...répéta partout qu’elle, au moins, n’avait pas vendu son enfant. »'},
+    {id:'q7',type:'choice',competencies:['READ_AUTHOR_INTENT','READ_STRUCTURE'],difficulty:8,prompt:'Qu’y a-t-il d’ironique dans la fin de la nouvelle ?',choices:['La mère qui a refusé par amour est rejetée par son propre fils','Les Vallin deviennent pauvres','Mme d’Hubières rend Jean'],ans:0,evidenceParagraph:4,explanation:'La décision dont la mère Tuvache était si fière se retourne contre elle : c’est une chute ironique.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:8,prompt:'Quelle question la nouvelle pose-t-elle au lecteur, sans donner de réponse simple ?',choices:['L’argent peut-il compter plus que les liens familiaux quand on est très pauvre ?','Faut-il habiter à la campagne ?','Comment construire une chaumière ?'],ans:0,explanation:'Maupassant ne juge pas ouvertement : il montre comment la misère pousse à des choix déchirants.'}
+   ]
+  },
+
+  fr_3e_image_virale_doc_01:{
+   id:'fr_3e_image_virale_doc_01',level:'3e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
+   title:'Vérifier une image avant de la partager',author:null,work:null,sourceType:'original_mathquest',
+   sourceReference:'Document original MathQuest. L’exemple de la photo du requin est imaginaire, inventé pour l’exercice.',
+   chapterLinks:['fr3h'],
+   competencies:['READ_MAIN_IDEA','READ_DOCUMENT_SOURCE','READ_SEQUENCE','READ_INFERENCE','READ_JUSTIFY','READ_STRUCTURE','READ_ARGUMENT'],
+   difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
+   paragraphs:[
+    'Une photo montre un requin nageant dans une rue inondée, après une tempête. Elle a été partagée des milliers de fois en quelques heures, avec le message : « Incroyable ! Ça se passe en ce moment ! »',
+    'Avant de la partager à ton tour, commence par chercher l’origine de l’image. Une recherche d’image inversée, proposée par plusieurs moteurs de recherche, permet de retrouver où et quand elle a été publiée pour la première fois.',
+    'Si l’on découvre que la même photo circulait déjà des années plus tôt, à propos d’une autre tempête, le message « en ce moment » est faux.',
+    'Observe aussi les détails : une ombre incohérente, un contour flou autour de l’animal ou une taille étrange peuvent révéler un montage.',
+    'Enfin, cherche si des médias reconnus ou des services de vérification en parlent. Une image vraiment exceptionnelle serait reprise et vérifiée par des journalistes.'
+   ],
+   glossary:[{word:'inversée',definition:'Ici : on part de l’image pour retrouver les pages où elle apparaît.'},{word:'incohérente',definition:'Qui ne correspond pas avec le reste, illogique.'},{word:'montage',definition:'Une image fabriquée en assemblant plusieurs images.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_MAIN_IDEA'],difficulty:5,prompt:'Quel est le but de ce document ?',choices:['Donner une méthode pour vérifier une image avant de la partager','Raconter une tempête','Expliquer la vie des requins'],ans:0,explanation:'Le titre l’annonce, et chaque paragraphe donne une étape de vérification.'},
+    {id:'q2',type:'choice',competencies:['READ_DOCUMENT_SOURCE'],difficulty:6,prompt:'À quoi sert une recherche d’image inversée ?',choices:['À retrouver où et quand l’image a été publiée pour la première fois','À retourner l’image à l’envers','À effacer l’image'],ans:0,evidenceParagraph:1,explanation:'« ...permet de retrouver où et quand elle a été publiée pour la première fois. »'},
+    {id:'q3',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Si la photo circulait déjà il y a plusieurs années, que peut-on conclure ?',choices:['Le message « en ce moment » est faux, même si la photo est vraie','La photo est forcément vraie','Le requin est très vieux'],ans:0,evidenceParagraph:2,explanation:'Une image ancienne présentée comme récente trompe sur la date : c’est une fausse information.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:6,prompt:'Quel indice peut révéler un montage ?',choices:['Une ombre incohérente ou un contour flou','Une photo en couleur','Une photo partagée par un ami'],ans:0,evidenceParagraph:3,explanation:'« ...une ombre incohérente, un contour flou autour de l’animal ou une taille étrange... »'},
+    {id:'q5',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe qui conseille de consulter des médias reconnus.',evidenceParagraph:4,explanation:'« ...cherche si des médias reconnus ou des services de vérification en parlent. »'},
+    {id:'q6',type:'order',competencies:['READ_SEQUENCE','READ_STRUCTURE'],difficulty:6,prompt:'Remets les étapes de vérification dans l’ordre du texte.',tokens:['Chercher l’origine de l’image','Vérifier la date','Observer les détails','Consulter des médias reconnus'],ans:'Chercher l’origine de l’image Vérifier la date Observer les détails Consulter des médias reconnus',explanation:'C’est l’ordre des paragraphes 2 à 5.'},
+    {id:'q7',type:'choice',competencies:['READ_ARGUMENT','READ_INFERENCE'],difficulty:7,prompt:'Pourquoi le fait qu’une image soit partagée « des milliers de fois » ne prouve-t-il pas qu’elle est vraie ?',choices:['Beaucoup de gens la partagent sans l’avoir vérifiée','Parce que les partages sont toujours faux','Parce que les requins n’existent pas'],ans:0,evidenceParagraph:0,explanation:'Le nombre de partages mesure la popularité, pas la vérité.'}
+   ]
+  },
+
+  fr_3e_gavroche_01:{
+   id:'fr_3e_gavroche_01',level:'3e',subject:'francais',type:'literary_text',documentType:'roman (extrait adapté)',
+   title:'La mort de Gavroche',author:'Victor Hugo',work:'Les Misérables (1862), cinquième partie',
+   sourceType:'public_domain',sourceReference:'Adaptation libre et abrégée pour la 3e, d’après Victor Hugo (mort en 1885), dans le domaine public. Les couplets chantés par Gavroche sont cités d’après l’original.',
+   chapterLinks:['fr3k'],
+   competencies:['READ_CHARACTER','READ_PLACE','READ_INFERENCE','READ_EMOTION_INTENTION','READ_STRUCTURE','READ_JUSTIFY','READ_AUTHOR_INTENT','READ_CAUSE_CONSEQUENCE'],
+   difficulty:8,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
+   paragraphs:[
+    'Paris, juin 1832. Derrière une barricade, les insurgés manquaient de munitions. Gavroche, un gamin des rues d’une douzaine d’années, eut une idée : de l’autre côté, dans la rue, des soldats morts gisaient avec leurs cartouchières pleines.',
+    'Il sortit, un panier à la main, et se mit à ramasser les cartouches, en rampant d’un corps à l’autre. Une fumée épaisse le cachait d’abord aux soldats.',
+    'Mais la fumée se dissipa. Une balle frappa le cadavre près de lui. Gavroche se redressa, les cheveux au vent, et se mit à chanter : « Je suis tombé par terre, / C’est la faute à Voltaire, / Le nez dans le ruisseau, / C’est la faute à Rousseau. »',
+    'Les balles pleuvaient autour de lui ; il les esquivait, continuait de remplir son panier, et chantait de plus belle. C’était un spectacle épouvantable et charmant : on aurait dit un moineau qui se moquait des chasseurs.',
+    'Soudain, une balle l’atteignit. Il chancela, puis s’affaissa. Il commença à chanter un dernier couplet, mais une seconde balle l’arrêta net. Cette petite grande âme venait de s’envoler.'
+   ],
+   glossary:[{word:'barricade',definition:'Un amas d’objets dressé en travers d’une rue pour se protéger pendant un combat.'},{word:'insurgés',definition:'Des personnes qui se révoltent contre le pouvoir.'},{word:'cartouchières',definition:'Des ceintures où les soldats rangent leurs cartouches.'},{word:'esquivait',definition:'Évitait d’un mouvement rapide.'}],
+   questions:[
+    {id:'q1',type:'choice',competencies:['READ_PLACE'],difficulty:5,prompt:'Où et quand se passe la scène ?',choices:['À Paris, en juin 1832, sur une barricade','À Londres, en 1900','À la campagne, au Moyen Âge'],ans:0,evidenceParagraph:0,explanation:'« Paris, juin 1832. Derrière une barricade... »'},
+    {id:'q2',type:'choice',competencies:['READ_CAUSE_CONSEQUENCE'],difficulty:5,prompt:'Pourquoi Gavroche sort-il de la barricade ?',choices:['Pour ramasser les cartouches des soldats morts, car les insurgés en manquent','Pour s’enfuir','Pour aller chercher à manger'],ans:0,evidenceParagraph:0,explanation:'Les insurgés « manquaient de munitions » : il va en chercher.'},
+    {id:'q3',type:'choice',competencies:['READ_CHARACTER','READ_EMOTION_INTENTION'],difficulty:6,prompt:'Que montre le fait que Gavroche chante sous les balles ?',choices:['Son audace et sa manière de se moquer du danger','Qu’il ne comprend pas le danger','Qu’il veut attirer l’attention de ses amis'],ans:0,evidenceParagraph:3,explanation:'Il chante « de plus belle » : c’est un défi lancé aux soldats.'},
+    {id:'q4',type:'choice',competencies:['READ_INFERENCE'],difficulty:7,prompt:'Pourquoi la chanson de Gavroche accuse-t-elle « Voltaire » et « Rousseau » ?',choices:['C’est une chanson moqueuse de l’époque, qui rendait ces philosophes responsables de tout','Ce sont ses amis','Ce sont les soldats qui tirent'],ans:0,evidenceParagraph:2,explanation:'Les adversaires des idées de liberté accusaient ces philosophes de tous les maux ; Gavroche reprend cette rengaine pour s’en moquer.'},
+    {id:'q5',type:'choice',competencies:['READ_STRUCTURE'],difficulty:7,prompt:'« Un spectacle épouvantable et charmant » : quelle figure de style rapproche deux mots presque opposés ?',choices:['Une antithèse','Une répétition','Une énumération'],ans:0,evidenceParagraph:3,explanation:'« Épouvantable » et « charmant » s’opposent : la scène est à la fois terrible et gracieuse.'},
+    {id:'q6',type:'evidence',competencies:['READ_JUSTIFY'],difficulty:6,prompt:'Clique sur le paragraphe où Gavroche est comparé à un oiseau.',evidenceParagraph:3,explanation:'« ...on aurait dit un moineau qui se moquait des chasseurs. »'},
+    {id:'q7',type:'choice',competencies:['READ_EMOTION_INTENTION','READ_AUTHOR_INTENT'],difficulty:7,prompt:'Que veut faire ressentir Hugo avec l’expression « cette petite grande âme » ?',choices:['L’admiration et l’émotion devant un enfant héroïque','Le mépris pour Gavroche','L’indifférence'],ans:0,evidenceParagraph:4,explanation:'« Petite » (un enfant) et « grande » (son courage) s’opposent : Hugo rend hommage à son héroïsme.'},
+    {id:'q8',type:'choice',competencies:['READ_AUTHOR_INTENT'],difficulty:8,prompt:'Que dénonce Hugo à travers la mort de Gavroche ?',choices:['La misère et la violence qui frappent même les enfants','Le courage inutile des soldats','La vie à la campagne'],ans:0,explanation:'Un enfant des rues, abandonné, meurt dans un combat d’adultes : c’est l’une des « misères » du titre.'}
    ]
   }
 
