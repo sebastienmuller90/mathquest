@@ -134,6 +134,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 @media (prefers-reduced-motion: reduce){.finot-live,#app.view-pop,.finot-boing{animation:none!important}}
 /* V8.16 — Assistant Finot : aide scolaire + appli, scripté (pas d'IA générative, pas d'Internet requis). */
 .finot-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:70;padding:0;cursor:pointer;background:var(--accent);display:none}
+.finot-fab.raised{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 .finot-fab img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 35%}
 .finot-fab.show{display:block}
 #finotchat{position:fixed;left:0;right:0;bottom:0;height:72vh;z-index:71;display:none;flex-direction:column;background:var(--surface);border-top:3px solid var(--accent);border-radius:24px 24px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
@@ -150,7 +151,15 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .fch-row{display:flex;gap:8px}
 .fch-row input{flex:1}
 @media (prefers-reduced-motion: reduce){#finotchat.open{animation:none!important}}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,150%);background:var(--text);color:var(--bg);padding:12px 20px;border-radius:16px;font-weight:600;z-index:100;transition:transform .3s;width:max-content;max-width:92vw;text-align:center}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 100px));background:var(--text);color:var(--bg);padding:12px 20px;border-radius:16px;font-weight:600;z-index:100;transition:transform .3s;width:max-content;max-width:92vw;text-align:center}
+#toast.raised{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+.hometab-body{padding-bottom:76px}
+.hometabs{position:fixed;left:0;right:0;bottom:0;display:none;background:var(--surface);border-top:2px solid var(--border);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:60;box-shadow:0 -3px 10px rgba(0,0,0,.08)}
+.hometabs.show{display:flex}
+.htab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;color:var(--muted);padding:6px 2px;border-radius:14px;cursor:pointer;font-family:'Nunito',sans-serif}
+.htab .hti{font-size:22px}
+.htab .htl{font-size:11px;font-weight:700}
+.htab.on{color:var(--accent-text);background:color-mix(in srgb,var(--accent) 14%,transparent)}
 #toast.show{transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:560px){.tools,.kpis{grid-template-columns:1fr 1fr}.choices{grid-template-columns:1fr}.qtext{font-size:22px}.world{min-height:130px}.we{font-size:42px}.pills .pill{font-size:14px;padding:3px 8px}.av{width:52px;height:52px;font-size:28px}}

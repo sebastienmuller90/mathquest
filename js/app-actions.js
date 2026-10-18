@@ -199,6 +199,7 @@ const ACT={
  ttsrate:(_,el)=>{S.tts.rate=S.tts.rate<1?1:.8;saveLocal();el.textContent=S.tts.rate<1?'🐢 Lent':'🐇 Normal';if(TTS.playing){const q=TTS.q.slice(Math.max(0,TTS.i-1));ttsSpeak(q);}},
  subj:id=>{if(SUBMAP[id])S.subj=id;saveLocal();home();},
  opencat:id=>{OPENCAT=FINOT_CATS[id]?id:null;home();},
+ hometab:k=>{if(HOMETABS.some(t=>t[0]===k))HOMETAB=k;home();},
  qlisten:()=>{const q=curQ();if(q&&q.audio)ttsSay(q.audio);},qlistenslow:()=>{const q=curQ();if(q&&q.audio)ttsSay(q.audio,{slow:true});},
  voicediag:()=>{const box=$('#vdiag');if(box)box.innerHTML=voiceDiagHTML();},voicetest:l=>{MQAudio.setPrefs(voicePrefsFromForm());ttsSpeak([{segs:[{l,t:VOICE_SAMPLES[l],fresh:true}]}]);},
  voicesave:()=>{S.tts.voices=voicePrefsFromForm();saveLocal();MQAudio.setPrefs(S.tts.voices);toast('🔊 Voix enregistrées');const box=$('#vdiag');if(box)box.innerHTML=voiceDiagHTML();},
@@ -248,7 +249,7 @@ document.addEventListener('click',e=>{const sp=e.target.closest('.lcard [lang],.
 /* V8.15 — Finot réagit quand on le touche. */
 document.addEventListener('click',e=>{let f=e.target.closest('.finot-live');if(!f){const host=e.target.closest('button,a,[data-a]');f=host?host.querySelector('.finot-live'):null;}if(!f)return;f.classList.remove('finot-boing');void f.offsetWidth;f.classList.add('finot-boing');setTimeout(()=>f.classList.remove('finot-boing'),650);});
 /* V8.15 — transition douce à chaque changement d'écran (observe #app, sans toucher chaque fonction d'écran). */
-(function(){const appEl=document.getElementById('app');if(!appEl)return;let t=null;new MutationObserver(()=>{finotFabSync();if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;appEl.classList.remove('view-pop');void appEl.offsetWidth;appEl.classList.add('view-pop');clearTimeout(t);t=setTimeout(()=>appEl.classList.remove('view-pop'),350);}).observe(appEl,{childList:true});})();
+(function(){const appEl=document.getElementById('app');if(!appEl)return;let t=null;new MutationObserver(()=>{finotFabSync();hometabsSync();if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;appEl.classList.remove('view-pop');void appEl.offsetWidth;appEl.classList.add('view-pop');clearTimeout(t);t=setTimeout(()=>appEl.classList.remove('view-pop'),350);}).observe(appEl,{childList:true});})();
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('.ans input'))lastIn=e.target;});
 document.addEventListener('change',e=>{const pf=e.target?.dataset?.pf;if(pf&&PARENT){PF[pf]=e.target.value;if(pf==='grade')PF.subj='';parentScreen('suivi');return;}const id=e.target?.dataset?.profileGrade;if(id&&PDB?.profiles?.[id]){const p=normalizeState(PDB.profiles[id]);p.grade=e.target.value;PDB.profiles[id]=p;if(id===ACTIVE){S=p;ensureSubj();applyStage();}saveLocal();toast('Classe mise à jour : '+p.grade);}});
 document.addEventListener('keydown',e=>{
@@ -261,6 +262,6 @@ document.addEventListener('keydown',e=>{
 
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadSW)toast('🆕 Une nouvelle version de MathQuest est installée : elle sera utilisée au prochain lancement.');});window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}),{once:true});}
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='finotin'&&e.key==='Enter'){e.preventDefault();ACT.finotsend();}});
-load();applyTheme();home();syncNow();finotChatDOM();finotFabSync();
+load();applyTheme();hometabsDOM();home();syncNow();finotChatDOM();finotFabSync();hometabsSync();
 setInterval(()=>{if(document.visibilityState==='visible')syncNow();},30000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')ttsStop();if(document.visibilityState==='visible')syncNow();else if(S.sync.child)syncNow();});
