@@ -262,7 +262,11 @@ const ACT={
  finotopen:()=>finotOpen(),finotclose:()=>finotClose(),
  finotsend:()=>{const el=document.getElementById('finotin');if(!el)return;const v=el.value;el.value='';finotAsk(v);},
  finotsug:i=>finotAsk(FINOT_SUGGEST[+i]||''),
- finotcoach:()=>{const cid=finotCurrentChapterId();if(!cid)return;finotChatEnsure();finotPush('you',esc('📖 Aide sur l’exercice en cours'));const h=finotLessonHelp(cid);finotPush('finot',h?`<b>${esc(h.name)}</b><br>${h.html}`:FINOT_FALLBACK);},
+ finotcoach:()=>{const cid=finotCurrentChapterId();if(!cid)return;finotChatEnsure();finotPush('you',esc('📖 Aide sur l’exercice en cours'));
+ const sk=L&&!M&&L.steps[L.i]?L.steps[L.i].k:'';
+ if(window.MQReading&&sk==='readq'&&L.rq){finotPush('finot',`<b>Méthode de lecture</b><br>${MQReading.coachHTML(L.rq)}`);return;}
+ if(window.MQReading&&sk==='read'){finotPush('finot',`<b>Pour bien lire ce texte</b><br>${MQReading.READING_TIPS}`);return;}
+ const h=finotLessonHelp(cid);finotPush('finot',h?`<b>${esc(h.name)}</b><br>${h.html}`:FINOT_FALLBACK);},
  celebclose:()=>{const d=document.getElementById('celeb');if(d){d.classList.remove('show');clearTimeout(CELEB_T);}}
 };
 document.addEventListener('click',e=>{const sp=e.target.closest('.lcard [lang],.qcard .qtext [lang],.fiche [lang]');if(sp&&!e.target.closest('button,[data-a]')&&TTS.ok){ttsSpeak([{segs:[{l:sp.getAttribute('lang').slice(0,2),t:spokenFor(sp.textContent)}]}]);return;}const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const s=el.dataset.a,i=s.indexOf(':'),a=i<0?s:s.slice(0,i),arg=i<0?undefined:s.slice(i+1);if(!/^(tts|pad|chip|otok|oundo|qlisten)/.test(a))ttsStop();if(ACT[a])ACT[a](arg,el);});

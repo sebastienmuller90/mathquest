@@ -106,6 +106,37 @@
     ];
     return texts[Math.max(0,Math.min(level,texts.length-1))];
   }
+  // Méthode par compétence pour le Prof particulier (Finot) : une démarche à appliquer, jamais la réponse
+  // ni le numéro du paragraphe (c'est le rôle du bouton Indice, qui réduit la maîtrise gagnée).
+  const STRATEGIES={
+    READ_EXPLICIT:'La réponse est écrite dans le texte. Repère un mot important de la question, puis cherche-le dans le texte.',
+    READ_CHARACTER:'Cherche les noms et les pronoms (il, elle…) : qui parle, qui agit, à qui ?',
+    READ_PLACE:'Cherche les mots qui disent où : dans, sur, près de, un nom de lieu…',
+    READ_TIME:'Cherche les mots qui disent quand : un moment de la journée, une saison, une date…',
+    READ_SEQUENCE:'Retrouve chaque événement dans le texte : celui qui est écrit le plus haut s’est en général passé en premier. Attention aux mots « puis », « ensuite », « enfin ».',
+    READ_CAUSE_CONSEQUENCE:'Une cause répond à « pourquoi ? ». Cherche « parce que », « car », « donc », « c’est pour cela », ou la phrase juste avant l’événement.',
+    READ_VOCAB_CONTEXT:'Relis la phrase où se trouve le mot, et celle d’avant : le sens se devine souvent grâce à elles. Essaie de remplacer le mot par chaque proposition.',
+    READ_REFERENCE:'Un pronom remplace un nom déjà cité. Remonte dans le texte et cherche le nom qui convient (même genre, même nombre).',
+    READ_INFERENCE:'La réponse n’est pas écrite mot pour mot : rassemble plusieurs indices du texte, puis choisis l’explication qu’ils rendent la plus probable.',
+    READ_EMOTION_INTENTION:'Regarde ce que fait et dit le personnage (sourire, pleurer, crier…) : ses gestes montrent ce qu’il ressent.',
+    READ_NARRATOR_POV:'Qui raconte ? Si tu vois « je » ou « nous » hors des dialogues, le narrateur est un personnage de l’histoire.',
+    READ_MAIN_IDEA:'Demande-toi de quoi parle l’ensemble du texte, pas un seul détail. Une bonne idée principale résume tous les paragraphes.',
+    READ_AUTHOR_INTENT:'Demande-toi ce que l’auteur veut nous faire comprendre ou ressentir. Élimine les réponses trop extrêmes ou qui ne parlent que d’un détail.',
+    READ_JUSTIFY:'Relis chaque paragraphe et demande-toi : « Est-ce que cette phrase prouve vraiment la réponse ? » Une preuve doit le dire clairement.',
+    READ_DOCUMENT_SOURCE:'Cherche qui a écrit le document, où et quand il a été publié : cela aide à comprendre son but et à juger s’il est fiable.',
+    READ_ARGUMENT:'Repère la thèse (l’avis défendu), puis les arguments qui la soutiennent et les exemples qui les illustrent.',
+    READ_STRUCTURE:'Observe comment le texte est organisé : titre, paragraphes, ordre des parties. Chaque partie a un rôle.',
+    READ_GENRE:'Observe la forme : vers ou prose ? dialogues ? morale ? informations vraies ou histoire inventée ?',
+    READ_COMPARE_DOCUMENTS:'Repère ce que les documents ont en commun, puis ce qui les différencie.'
+  };
+  function coachHTML(q){
+    const comps=(q&&q.competencies)||[];
+    const tips=[...new Set(comps.map(c=>STRATEGIES[c]).filter(Boolean))].slice(0,2);
+    const lines=tips.length?tips:['Relis calmement le texte, puis la question : tu as tout ce qu’il faut.'];
+    return lines.map(t=>'• '+esc(t)).join('<br>')+'<br><small>Bloqué ? Le bouton « 💡 Indice » sous la question te guide vers le bon passage.</small>';
+  }
+  const READING_TIPS='• Lis d’abord le titre : il annonce le sujet.<br>• Touche les mots soulignés pour voir leur définition.<br>• Tu peux écouter le texte avec le bouton 🔊 Écouter.<br>• Prends ton temps : tu pourras relire le texte pendant les questions.';
+
   function hintPenalty(hintsUsed){return hintsUsed<=0?1:hintsUsed===1?.65:.35;}
 
   function updateMastery(state,competency,ok,hintsUsed){
@@ -171,10 +202,10 @@
       return out;
     };
     const typeLabel={literary_text:'Texte littéraire',document:'Document',press_article:'Article de presse'}[resource.type]||'Texte';
-    return `<div class="reading-meta"><span class="rm-badge">${esc(resource.documentType||typeLabel)}</span><span class="rm-time">⏱ ${resource.estimatedReadingMinutes||3} min</span>${resource.author?`<span class="rm-author">${esc(resource.author)}${resource.work?' · '+esc(resource.work):''}</span>`:''}</div>
+    return `<h3 class="reading-title">${esc(resource.title)}</h3><div class="reading-meta"><span class="rm-badge">${esc(resource.documentType||typeLabel)}</span><span class="rm-time">⏱ ${resource.estimatedReadingMinutes||3} min</span>${resource.author?`<span class="rm-author">${esc(resource.author)}${resource.work?' · '+esc(resource.work):''}</span>`:''}</div>
 <div class="reading-text${resource.verse?' verse':''}">${resource.paragraphs.map((p,i)=>`<p data-para="${i}"${(resource.stanzas||[]).includes(i)?' class="stz"':''}>${wrap(p)}</p>`).join('')}</div>
 ${glossary.length?`<p class="reading-glossary-hint">💡 Les mots soulignés ont une petite définition — touche-les pour l’afficher.</p>`:''}`;
   }
 
-  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,masterySummary,avgReadingMastery,textHTML,prepare,glossRe};
+  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,masterySummary,avgReadingMastery,textHTML,prepare,glossRe,STRATEGIES,coachHTML,READING_TIPS};
 })();

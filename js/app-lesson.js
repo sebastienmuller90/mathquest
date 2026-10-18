@@ -113,7 +113,7 @@ function renderLesson(fromReveal){CUR='lesson';ttsStop();{const now=Date.now();S
   const q=L.rq;
   const qBody=q.type==='evidence'
    ?`<p class="muted">Clique sur la phrase du texte qui le montre.</p><div class="evid-text">${rres.paragraphs.map((p,i)=>`<button class="evid-para" data-a="rpick:${i}">${esc(p)}</button>`).join('')}</div>`
-   :inputHTML(q,'rpick');
+   :`<details class="reread"><summary>📖 Relire le texte</summary>${MQReading.textHTML(rres)}</details>${inputHTML(q,'rpick')}`;
   const hintRow=L.rhints<2?`<button class="btn ghost sm" data-a="rhint">💡 Indice</button>`:'';
   body=`<p class="muted">Question ${L.rqn+1} sur ${L.rSession.length}</p><div class="qtext">${esc(q.prompt)}</div>${qBody}<div id="fb" aria-live="polite" role="status"></div><div class="qbtns">${hintRow}${q.type!=='choice'&&q.type!=='evidence'?'<button class="btn primary" data-a="rvalid">Valider</button>':''}</div>`;}
  else body=s.h;
@@ -193,7 +193,7 @@ function ttsChunks(root){const out=[];let run=[];if(!root)return out;
  const flush=()=>{if(run.length&&run.map(n=>n.textContent).join('').trim()){const sp=document.createElement('span');sp.className='rdc';run[0].parentNode.insertBefore(sp,run[0]);run.forEach(n=>sp.appendChild(n));out.push(sp);}run=[];};
  [...root.childNodes].forEach(n=>{if(n.nodeType===3||(n.nodeType===1&&/^(B|I|SPAN|SUP|SMALL|EM|STRONG)$/.test(n.tagName))){run.push(n);return;}
   flush();if(n.nodeType!==1)return;const t=n.tagName.toUpperCase(),cl=n.classList;
-  if(t==='BR'||t==='SVG'||t==='BUTTON'||t==='INPUT'||cl.contains('ans')||cl.contains('qbtns')||n.id==='fb')return;
+  if(t==='BR'||t==='SVG'||t==='BUTTON'||t==='INPUT'||cl.contains('ans')||cl.contains('qbtns')||cl.contains('reread')||n.id==='fb')return;
   if(cl.contains('tw'))return n.querySelectorAll('tr').forEach(r=>out.push(r));
   if(t==='OL'||t==='UL')return n.querySelectorAll(':scope>li').forEach(li=>out.push(li));
   if(cl.contains('bubble'))return out.push(n.querySelector('div'));
