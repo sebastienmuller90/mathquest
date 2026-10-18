@@ -209,7 +209,7 @@ const ACT={
  pnext:()=>{if(!L)return;L.pn++;L.pq=null;L.locked=false;if(L.pn>=PRACTICE_N){L.pn=0;if(L.i<L.steps.length-1)L.i++;L.exn=1;window.scrollTo(0,0);}renderLesson();},
  lqnext:()=>{if(!L)return;L.qn++;L.q=null;L.locked=false;if(L.qn>=LESSON_QUIZ_N)return endLesson();renderLesson();},
  rvalid:()=>rvalidate(),rpick:i=>rvalidate(+i),
- rqnext:()=>{if(!L)return;L.rqn++;L.rq=null;L.locked=false;if(L.rqn>=L.rSession.length){const rid=L.steps[L.i].resourceId;MQReading.recordResult(S,MQReading.get(rid),L.id,L.rResults);save();L.rqn=0;L.rResults=[];L.rSession=null;if(L.i<L.steps.length-1)L.i++;L.exn=1;window.scrollTo(0,0);}renderLesson();},
+ rqnext:()=>{if(!L)return;L.rqn++;L.rq=null;L.locked=false;if(L.rqn>=L.rSession.length){const rid=L.steps[L.i].resourceId;const rres=MQReading.recordResult(S,MQReading.get(rid),L.id,L.rResults);save();if(L.lib)return libEnd(rres);L.rqn=0;L.rResults=[];L.rSession=null;if(L.i<L.steps.length-1)L.i++;L.exn=1;window.scrollTo(0,0);}renderLesson();},
  rhint:()=>{if(!L||!L.rq)return;const lvl=L.rhints||0;toast('💡 '+MQReading.hintText(L.rq,lvl));L.rhints=lvl+1;renderLesson();},
  glossdef:w=>{const s=L&&L.steps[L.i];const res=s&&s.resourceId?MQReading.get(s.resourceId):null;const word=decodeURIComponent(w);const g=res&&(res.glossary||[]).find(x=>x.word.toLowerCase()===word.toLowerCase());if(g)toast(`📖 <b>${esc(g.word)}</b> : ${esc(g.definition)}`);},
  pronlisten:pronListen,pronsay:pronStart,pronskip:()=>{if(!L||SpeechRec)return;L.pronPassed=true;renderLesson();},

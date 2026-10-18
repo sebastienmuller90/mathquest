@@ -4,12 +4,12 @@
    impossible de mélanger un index.html récent avec des données anciennes.
    ⚠️ À chaque publication, incrémenter VERSION : le navigateur installe alors la nouvelle version complète,
    puis supprime l'ancienne. La page en cours continue avec sa version ; la suivante utilise la nouvelle. */
-const VERSION='8.39.0-lecture-lot8-2026-10-18';
+const VERSION='8.40.0-bibliotheque-lecture-2026-10-18';
 const CACHE='mathquest-'+VERSION;
 const CORE=[
   './','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css',
   './fonts/fonts.css','./fonts/fredoka-latin.woff2','./fonts/fredoka-latin-ext.woff2','./fonts/nunito-latin.woff2','./fonts/nunito-latin-ext.woff2','./js/vendor/qrcode.min.js',
-  './js/app-content.js','./js/app-state.js','./js/app-screens.js','./js/app-lesson.js','./js/app-actions.js',
+  './js/app-content.js','./js/app-state.js','./js/app-screens.js','./js/app-lesson.js','./js/app-actions.js','./js/app-library.js',
   './data/program-2026-2027.js','./data/math-2026-2027.js','./data/french-2026-2027.js','./data/languages-2026-2027.js',
   './data/hg-emc-2026-2027.js','./data/remaining-2026-2027.js','./data/lexicon.js',
   './js/adaptive-engine.js','./js/primary-engine.js','./js/college-engine.js','./js/reading-engine.js','./data/reading/resources.js','./js/audio-engine.js','./js/dictation-engine.js','./data/college/maths-6.js','./data/college/maths-3.js','./data/college/maths-4.js','./data/college/maths-5.js','./data/college/maths-6b.js','./data/college/pc-6-5.js','./data/college/musique.js','./data/college/francais-3.js','./data/college/francais-4.js','./data/college/francais-5.js','./data/college/francais-6.js','./data/college/svt.js','./data/college/pc-4-3.js','./data/college/tech.js','./data/college/pix.js','./data/college/evars-orientation.js','./data/college/emi.js','./data/college/ia.js','./data/college/eps.js','./data/college/hda.js','./data/college/arts.js','./data/college/enrich-anglais.js','./data/college/enrich-italien.js','./data/college/enrich-hg.js','./data/pronunciation-lexicon.js',
