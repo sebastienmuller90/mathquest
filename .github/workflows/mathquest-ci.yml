@@ -23,3 +23,12 @@ jobs:
           find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
       - name: Tests de non-régression MathQuest
         run: node tests/mathquest-regression.mjs
+      - name: Audit intégral des leçons et exercices
+        run: node tests/full-content-audit.mjs
+      - name: Publier le rapport d’audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathquest-full-content-audit
+          path: tests/full-content-audit-report.json
+          if-no-files-found: ignore
