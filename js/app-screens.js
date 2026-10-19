@@ -169,10 +169,17 @@ function chapGroups(id){const C=window.MQ_CHCATS,cfg=C&&C.subjects[sOf(id).id],c
  const other={k:'Z',icon:'📁',name:'Autres chapitres',subs:[],chs:[]};
  for(const c of chs){const [ck,sk]=code(c).split('.'),g=groups.find(x=>x.k===ck)||other,sub=sk&&g.subs.find(x=>x.k===sk);(sub||g).chs.push(c);}
  return [...groups,other].map(g=>({...g,subs:g.subs.filter(x=>x.chs.length)})).filter(g=>g.chs.length||g.subs.length);}
+// Catégories repliables : seule celle où l'élève en est (premier chapitre pas encore à 3 étoiles) s'ouvre d'office ;
+// les choix d'ouverture/fermeture sont retenus le temps de la session (CATOPEN), sans rien enregistrer dans la sauvegarde.
+const CATOPEN={};
+function chapRow(c){const s=S.chap[c.id],rd=S.lessons[c.id],st=s?.stars||0;
+ return `<div class="chap crow"><span class="ci">${c.icon}</span><span class="cn"><b>${c.name}</b><span class="cmeta">${starStr(st)} <span class="muted">${s&&s.tot?Math.round(s.ok/s.tot*100)+' %':'Nouveau'}</span>${MQAdaptive.isDue(S,c.id)?' <span class="due">🔁 À réviser</span>':''}</span></span><div class="cbtn"><button class="btn sm2 ${rd?'':'hi'}" data-a="lesson:${c.id}" aria-label="Cours : ${esc(c.name)}">${rd?'✅':'📖'}<span class="cbl"> Cours</span></button><button class="btn primary sm2" data-a="chap:${c.id}" aria-label="Jouer : ${esc(c.name)}">🎮<span class="cbl"> Jouer</span></button></div></div>`;}
 function chapGroupsHTML(id,w){const G=chapGroups(id),wrap=a=>`<div class="chaps" style="--wc:${w.col}">${a.map(chapCard).join('')}</div>`;if(!G)return wrap(WCH[id]);
- const all=g=>[...g.chs,...g.subs.flatMap(x=>x.chs)],stars=g=>all(g).reduce((n,c)=>n+(S.chap[c.id]?.stars||0),0);
- return `<nav class="catnav" aria-label="Catégories">${G.map(g=>`<button class="chip" data-a="catgo:${g.k}">${g.icon} ${g.name} <small>${all(g).length}</small></button>`).join('')}</nav>`+
-  G.map(g=>`<section class="catgrp" id="cat-${g.k}" style="--wc:${w.col}"><h2 class="cath"><span>${g.icon} ${g.name}</span><small>★ ${stars(g)}/${all(g).length*3}</small></h2>${g.chs.length?wrap(g.chs):''}${g.subs.map(x=>`<h3 class="subh">${x.name}</h3>${wrap(x.chs)}`).join('')}</section>`).join('');}
+ const all=g=>[...g.chs,...g.subs.flatMap(x=>x.chs)],stars=g=>all(g).reduce((n,c)=>n+(S.chap[c.id]?.stars||0),0),rows=a=>`<div class="crows">${a.map(chapRow).join('')}</div>`;
+ const cur=WCH[id].find(c=>(S.chap[c.id]?.stars||0)<3)||WCH[id][0],om=CATOPEN[id]=CATOPEN[id]||{};
+ return `<p class="muted small center cathint">Touche une catégorie pour voir ses chapitres.</p>`+G.map(g=>{const n=all(g).length,st=stars(g),open=g.k in om?om[g.k]:all(g).includes(cur);
+  return `<details class="catgrp" id="cat-${g.k}" data-cat="${id}|${g.k}" style="--wc:${w.col}" ${open?'open':''}><summary class="cath"><span class="cico" aria-hidden="true">${g.icon}</span><span class="ctit"><b>${g.name}</b><small>${n} chapitre${n>1?'s':''} · ★ ${st}/${n*3}</small><span class="mbar"><i style="width:${Math.round(st/(n*3)*100)}%;background:${w.col}"></i></span></span><span class="chev" aria-hidden="true">›</span></summary>
+  ${g.chs.length?rows(g.chs):''}${g.subs.map(x=>`<h3 class="subh">${x.name}</h3>${rows(x.chs)}`).join('')}</details>`;}).join('');}
 
 function fiche(id){const c=byId(id),f=c.f,wimg=FINOT_WORLD_IMG[WMAP[id].id];app.innerHTML=`${bar(c.icon+' '+c.name)}${wimg?`<div class="lesson-banner"><img src="${wimg}" alt="" aria-hidden="true"></div>`:''}<div class="card fiche pop"><div class="fh">📘 Rappel express</div><h2>${f.t}</h2><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul><div class="ex"><b>Exemple</b><br>${f.ex}</div></div>
  ${!S.lessons[id]?`<button class="reco card" data-a="lesson:${id}"><span class="ri">📖</span><span><small>Nouveau chapitre ?</small><b>Commence par le cours</b><span class="muted">Explications, exemple, mini-quiz</span></span><span class="go">Lire</span></button>`:''}<button class="btn primary big" data-a="start:${id}">C’est parti ! 8 questions</button><button class="btn wide" data-a="lesson:${id}">📖 Revoir le cours complet</button><button class="btn ghost wide" data-a="world:${WMAP[id].id}">Retour au monde</button>`;}
