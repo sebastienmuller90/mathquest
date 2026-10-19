@@ -1,0 +1,25 @@
+name: MathQuest CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Vérifier la syntaxe JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check sw.js
+          find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
+      - name: Tests de non-régression MathQuest
+        run: node tests/mathquest-regression.mjs
