@@ -9,7 +9,7 @@ const page=await ctx.newPage(),runtime=[];page.on('pageerror',e=>runtime.push('P
 await page.goto(base+'/index.html',{waitUntil:'load',timeout:120000});
 await page.waitForFunction(()=>window.MQPedagogy&&window.MQPedagogyContent&&window.MQFinotLearning&&typeof CHMAP!=='undefined'&&Object.keys(CHMAP).length>1000,{timeout:60000});
 const report=await page.evaluate(()=>{
- const o={chapters:0,pickers:0,easy:0,medium:0,hard:0,strategies:0,selfChecks:0,finotChecks:0,finotSearches:0,errors:[],warnings:[]};
+ const o={chapters:0,pickers:0,easy:0,medium:0,hard:0,strategies:0,selfChecks:0,manualExerciseChecks:0,manualConfidenceChecks:0,finotChecks:0,finotSearches:0,errors:[],warnings:[]};
  const fail=(id,e)=>o.errors.push(id+': '+(e?.message||e));
  const invalid=el=>/\bundefined\b|\bNaN\b|\[object Object\]/.test(el?.innerText||'');
  for(const ch of Object.values(CHMAP)){
@@ -22,11 +22,19 @@ const report=await page.evaluate(()=>{
     if(d===1&&!ks.includes('mqeasy'))throw Error('version facile sans guidage');if(d===2&&(ks.includes('mqeasy')||ks.includes('mqhard')))throw Error('version moyenne altérée');if(d===3&&!ks.includes('mqhard'))throw Error('version difficile sans approfondissement');
     const targets=d===1?['mqeasy','mqstrategy','mqselfcheck']:d===3?['mqhard','mqstrategy','mqselfcheck']:['mqstrategy','mqselfcheck'];for(const k of targets){const at=L.steps.findIndex(x=>x.k===k);if(at<0)throw Error('étape '+k+' absente');L.i=at;L.q=null;L.pq=null;L.locked=false;renderLesson();const card=document.querySelector('.lcard');if(!card||!card.innerText.trim()||invalid(card))throw Error('rendu '+k+' invalide niveau '+d);}
     const badge=document.querySelector('.lcard .mq-level-badge');if(!badge||!badge.textContent.includes(MQPedagogy.levels[d].name))throw Error('badge niveau absent '+d);
+    ACT.conf(d===1?3:1,null);if(L.quizDifficulty!==d)throw Error('la confiance a changé le niveau manuel '+d);o.manualConfidenceChecks++;
     if(d===1)o.easy++;else if(d===2)o.medium++;else o.hard++;
    }
    ACT.start(ch.id);if(document.querySelectorAll('.mq-level-card').length!==3)throw Error('sélecteur exercice != 3 niveaux');
   }catch(e){fail(ch.id,e)}
  }
+ // Exercices : un échantillon de chaque classe vérifie le maintien du niveau après une réponse.
+ for(const g of ['CP','CE1','CE2','CM1','CM2','6e','5e','4e','3e'])try{
+  S.grade=g;ensureSubj();const ch=Object.values(CHMAP).find(c=>WMAP[c.id]?.lvl===g);if(!ch)throw Error('chapitre introuvable');
+  for(const d of [1,2,3]){M=null;MQPedagogy.startMissionAtLevel(ch.id,d);if(!M||M.d!==d||M.forcedDifficulty!==d||!M.q)throw Error('mission niveau '+d+' non initialisée');result(true);if(M&&(M.d!==d||M.dById?.[ch.id]!==d))throw Error('niveau '+d+' modifié après réponse');o.manualExerciseChecks++;M=null;}
+ }catch(e){fail('mission '+g,e)}
+ // Recherche scolaire : au moins une notion de chaque classe doit être retrouvée uniquement dans la bonne classe.
+ for(const g of ['CP','CE1','CE2','CM1','CM2','6e','5e','4e','3e'])try{S.grade=g;ensureSubj();const ch=Object.values(CHMAP).find(c=>WMAP[c.id]?.lvl===g);const found=MQFinotLearning.search('je veux réviser '+ch.name);if(!found.length||found.some(x=>WMAP[x.id]?.lvl!==g))throw Error('recherche incorrecte');o.finotSearches++;}catch(e){fail('recherche Finot '+g,e)}
  // Finot jeune enfant : utilisable sans clavier et capable de retrouver le programme de sa classe.
  try{
   const cp=Object.values(CHMAP).find(c=>WMAP[c.id]?.lvl==='CP');if(!cp)throw Error('chapitre CP introuvable');S.grade='CP';ensureSubj();MQPedagogy.openLessonAtLevel(cp.id,1);finotOpen();
@@ -34,9 +42,8 @@ const report=await page.evaluate(()=>{
   const n=FCHAT.msgs.length;finotAsk("j'ai pas compris");if(FCHAT.msgs.length<=n)throw Error('intention aide non traitée');if(!/simple|retenir|réflexe/i.test(FCHAT.msgs.at(-1)?.html||''))throw Error('réponse aide inattendue');o.finotChecks++;
   finotAsk('donne moi un indice');if(!/indice|regarde|réflexe|retenir/i.test(FCHAT.msgs.at(-1)?.html||''))throw Error('intention indice non traitée');o.finotChecks++;
   finotAsk('lis moi la question');o.finotChecks++;
-  const found=MQFinotLearning.search('je veux travailler '+cp.name);if(!found.length||found.some(x=>WMAP[x.id]?.lvl!=='CP'))throw Error('recherche scolaire CP incorrecte');o.finotSearches++;
   const before=FCHAT.msgs.length;finotAsk('je veux travailler '+cp.name);if(FCHAT.msgs.length<=before||!/Cours facile|Exercices|Fiche/.test(FCHAT.msgs.at(-1)?.html||''))throw Error('Finot ne propose pas les actions scolaires');o.finotSearches++;
-  finotClose();
+  ACT.finotvoice();o.finotChecks++;finotClose();
  }catch(e){fail('Finot CP',e)}
  return o;
 });
