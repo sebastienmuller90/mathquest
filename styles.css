@@ -342,7 +342,10 @@ tr.reading td,tr.reading th{background:color-mix(in srgb,var(--gold) 30%,var(--s
 .lexlearn{max-width:520px;margin:15px auto;text-align:center}.lexlearn .lexpic{font-size:92px}.lexlearn .lexword{font-size:34px}.lexlearn .lextr{font-size:21px}
 .lexprogress{font-size:14px;color:var(--muted);text-align:center;margin:8px 0}
 .lexq .lexpic{font-size:70px;text-align:center}.lexq h2{text-align:center}
-@media(max-width:520px){.lexgrid{grid-template-columns:1fr 1fr}.lexword{font-size:18px}.lexpic{font-size:38px}}
+.lximg{display:block;width:76px;height:76px;border-radius:16px;background:#fff;object-fit:contain}
+.lexlearn .lximg{width:170px;height:170px;margin:0 auto;border-radius:26px}.lexq .lximg{width:140px;height:140px;margin:0 auto 6px;border-radius:22px}
+.lexcat .lximg{width:52px;height:52px;border-radius:12px;margin-bottom:6px}.lexhero .lximg{width:64px;height:64px;flex:none}
+@media(max-width:520px){.lexgrid{grid-template-columns:1fr 1fr}.lexword{font-size:18px}.lexpic{font-size:38px}.lexgrid .lximg{width:64px;height:64px}}
 @media(max-width:370px){.lexgrid{grid-template-columns:1fr}}
 
 /* ===== Mode prof particulier V5 ===== */
