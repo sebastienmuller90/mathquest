@@ -133,8 +133,8 @@ function home(){PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSub
    <div style="flex:1;"><b style="color:var(--accent-text)">Finot</b> <span class="muted small">· ${finotNiveau(S).nom}</span><div>${esc(fe.texte)}</div></div>
    <span class="muted" aria-hidden="true">→</span>
   </button>
-  <button class="reco card hero" data-a="chap:${r.id}"><span class="ri">${r.icon}</span><span><small>Mission conseillée</small><b>${r.name}</b><span class="muted">${curS().name} ${WMAP[r.id].lvl} ${starStr(S.chap[r.id]?.stars||0)}</span></span><span class="go">Jouer</span></button>
-  ${typeof pathHomeCard==='function'?pathHomeCard():''}`,
+  ${typeof pathHomeCard==='function'?pathHomeCard():''}
+  <button class="reco card hero" data-a="chap:${r.id}"><span class="ri">${r.icon}</span><span><small>Mission conseillée</small><b>${r.name}</b><span class="muted">${curS().name} ${WMAP[r.id].lvl} ${starStr(S.chap[r.id]?.stars||0)}</span></span><span class="go">Jouer</span></button>`,
   matieres:()=>`<h2 class="sec">Mes matières</h2>
   ${isCollege?`<nav class="subj" aria-label="Catégorie de matières">${Object.entries(FINOT_CATS).map(([k,c])=>`<button class="sbtn ${k===curCat?'on':''}" data-a="opencat:${k}" aria-pressed="${k===curCat}">${c.img?`<img src="${c.img}" alt="" aria-hidden="true" style="width:20px;height:20px;object-fit:contain;vertical-align:-4px;margin-right:4px;">`:`<span aria-hidden="true">${c.emoji}</span>`}${c.label}</button>`).join('')}</nav>
   <nav class="subj" aria-label="Matière" style="margin-top:8px;">${vs.filter(x=>FINOT_CATS[curCat].ids.includes(x.id)).map(x=>`<button class="sbtn ${x.id===S.subj?'on':''}" data-a="subj:${x.id}" aria-pressed="${x.id===S.subj}">${x.img?`<img src="${x.img}" alt="" aria-hidden="true" style="width:20px;height:20px;object-fit:contain;vertical-align:-4px;margin-right:4px;">`:`<span aria-hidden="true">${x.emoji}</span>`}${x.name}</button>`).join('')}</nav>`
@@ -159,7 +159,20 @@ function profileStrip(){return `<div class="profile-strip" aria-label="Profils e
 
 function worldScreen(id){CUR='';const w=WALL.find(x=>x.id===id);S.subj=sOf(id).id;const isLang=/^(en|it)/.test(id)||!!sOf(id).lang;app.innerHTML=`${bar(w.emoji+' '+w.name)}<p class="muted center">${sOf(id).name}, programme de ${w.lvl} : ${WCH[id].length} chapitres, 3 étoiles à gagner dans chacun.</p>
  ${isLang?`<button class="reco card" data-a="lexicon:${id}"><span class="ri">📚</span><span><small>Vocabulaire</small><b>Lexique illustré</b><span class="muted">Images, traduction, écoute et mini-quiz</span></span><span class="go">Ouvrir</span></button>`:''}
- <div class="chaps" style="--wc:${w.col}">${WCH[id].map(c=>{const s=S.chap[c.id];const rd=S.lessons[c.id];return `<div class="chap"><span class="ci">${c.icon}</span><span class="cn">${c.tag?`<small class="ctag t${c.tag}">${TAGS[c.tag]}</small>`:''}${c.name}</span>${starStr(s?.stars||0)}<span class="cp muted">${s&&s.tot?Math.round(s.ok/s.tot*100)+' % réussi':'Nouveau'}<br>${masteryHTML(c.id)}${MQAdaptive.isDue(S,c.id)?'<br><span class="due">🔁 Révision due</span>':''}</span><div class="cbtn"><button class="btn sm2 ${rd?'':'hi'}" data-a="lesson:${c.id}">${rd?'✅':'📖'} Cours</button><button class="btn primary sm2" data-a="chap:${c.id}">🎮 Jouer</button></div></div>`;}).join('')}</div>`;}
+ ${chapGroupsHTML(id,w)}`;}
+function chapCard(c){const s=S.chap[c.id];const rd=S.lessons[c.id];return `<div class="chap"><span class="ci">${c.icon}</span><span class="cn">${c.tag?`<small class="ctag t${c.tag}">${TAGS[c.tag]}</small>`:''}${c.name}</span>${starStr(s?.stars||0)}<span class="cp muted">${s&&s.tot?Math.round(s.ok/s.tot*100)+' % réussi':'Nouveau'}<br>${masteryHTML(c.id)}${MQAdaptive.isDue(S,c.id)?'<br><span class="due">🔁 Révision due</span>':''}</span><div class="cbtn"><button class="btn sm2 ${rd?'':'hi'}" data-a="lesson:${c.id}">${rd?'✅':'📖'} Cours</button><button class="btn primary sm2" data-a="chap:${c.id}">🎮 Jouer</button></div></div>`;}
+/* Catégories et sous-catégories (data/chapter-categories.js) : simple regroupement à l'affichage, tous les
+   chapitres restent visibles et accessibles, dans l'ordre du programme à l'intérieur de chaque groupe. */
+function chapGroups(id){const C=window.MQ_CHCATS,cfg=C&&C.subjects[sOf(id).id],chs=WCH[id];if(!cfg||chs.length<C.MIN)return null;
+ const code=c=>(cfg.byId&&cfg.byId[c.id])||cfg.map[c.id]||cfg.map[c.id.slice(id.length+1)]||'';
+ const groups=cfg.cats.map(([k,icon,name,subs])=>({k,icon,name,subs:Object.entries(subs).map(([sk,sn])=>({k:sk,name:sn,chs:[]})),chs:[]}));
+ const other={k:'Z',icon:'📁',name:'Autres chapitres',subs:[],chs:[]};
+ for(const c of chs){const [ck,sk]=code(c).split('.'),g=groups.find(x=>x.k===ck)||other,sub=sk&&g.subs.find(x=>x.k===sk);(sub||g).chs.push(c);}
+ return [...groups,other].map(g=>({...g,subs:g.subs.filter(x=>x.chs.length)})).filter(g=>g.chs.length||g.subs.length);}
+function chapGroupsHTML(id,w){const G=chapGroups(id),wrap=a=>`<div class="chaps" style="--wc:${w.col}">${a.map(chapCard).join('')}</div>`;if(!G)return wrap(WCH[id]);
+ const all=g=>[...g.chs,...g.subs.flatMap(x=>x.chs)],stars=g=>all(g).reduce((n,c)=>n+(S.chap[c.id]?.stars||0),0);
+ return `<nav class="catnav" aria-label="Catégories">${G.map(g=>`<button class="chip" data-a="catgo:${g.k}">${g.icon} ${g.name} <small>${all(g).length}</small></button>`).join('')}</nav>`+
+  G.map(g=>`<section class="catgrp" id="cat-${g.k}" style="--wc:${w.col}"><h2 class="cath"><span>${g.icon} ${g.name}</span><small>★ ${stars(g)}/${all(g).length*3}</small></h2>${g.chs.length?wrap(g.chs):''}${g.subs.map(x=>`<h3 class="subh">${x.name}</h3>${wrap(x.chs)}`).join('')}</section>`).join('');}
 
 function fiche(id){const c=byId(id),f=c.f,wimg=FINOT_WORLD_IMG[WMAP[id].id];app.innerHTML=`${bar(c.icon+' '+c.name)}${wimg?`<div class="lesson-banner"><img src="${wimg}" alt="" aria-hidden="true"></div>`:''}<div class="card fiche pop"><div class="fh">📘 Rappel express</div><h2>${f.t}</h2><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul><div class="ex"><b>Exemple</b><br>${f.ex}</div></div>
  ${!S.lessons[id]?`<button class="reco card" data-a="lesson:${id}"><span class="ri">📖</span><span><small>Nouveau chapitre ?</small><b>Commence par le cours</b><span class="muted">Explications, exemple, mini-quiz</span></span><span class="go">Lire</span></button>`:''}<button class="btn primary big" data-a="start:${id}">C’est parti ! 8 questions</button><button class="btn wide" data-a="lesson:${id}">📖 Revoir le cours complet</button><button class="btn ghost wide" data-a="world:${WMAP[id].id}">Retour au monde</button>`;}

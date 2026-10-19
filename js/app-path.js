@@ -39,14 +39,14 @@ function pathStepLabel(s){if(s.kind==='lesson'){const x=SUBMAP[s.subj];return 'L
  return 'Exercices ('+PATH_EXO_N+' questions)';}
 function pathScreen(){if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}stopPron();L=null;padClose();ttsStop();CUR='path';
  const p=ensurePath();
- if(!p){app.innerHTML=`${bar('🗺️ Parcours du jour')}<p class="muted center">Aucun parcours disponible pour cette classe.</p>`;return;}
+ if(!p){app.innerHTML=`${bar('📝 Devoir du jour')}<p class="muted center">Aucun parcours disponible pour cette classe.</p>`;return;}
  const n=pathDoneCount(p),open=p.steps.slice(0,PATH_LESSONS).every(s=>s.status==='done'||s.status==='review');
  const node=(s,i)=>{const st=s.status;
   const icon=st==='done'?'✓':st==='review'?'!':st==='locked'?'🔒':s.kind==='lesson'?pathSubjIcon(s.subj):'🎯';
   const sub=s.kind==='lesson'?esc(byId(s.cid).name)+(s.score!=null?` · quiz ${s.score} %`:''):(s.score!=null?`${s.score}/${PATH_EXO_N} · meilleure série ${s.bestStreak||0}`:'Sur tes 4 leçons du jour');
   const tag=st==='review'?' <span class="ptag">À revoir</span>':'';
   return `<li class="pstep ${st} ${i%2?'pr':'pl'}"><button class="pbubble" data-a="pathgo:${i}" aria-label="Étape ${i+1} : ${esc(pathStepLabel(s))}${st==='locked'?' (verrouillée)':''}">${icon}</button><div class="plab"><b>${esc(pathStepLabel(s))}${tag}</b><small>${sub}</small></div></li>`;};
- app.innerHTML=`${bar('🗺️ Parcours du jour')}
+ app.innerHTML=`${bar('📝 Devoir du jour')}
  <div class="card path-head"><div class="grow"><b>${n}/6 étapes</b><div class="muted small">${p.chest?'Parcours terminé, bravo ! Un nouveau t’attend demain.':'4 leçons, puis 2 séries d’exercices. Un coffre t’attend au bout !'}</div></div><button class="btn ghost sm" data-a="pathinfo" aria-label="Comment marche le parcours du jour ?">ⓘ</button></div>
  <ol class="path"><li class="pend">🏁 Départ</li>${p.steps.slice(0,PATH_LESSONS).map(node).join('')}
  <li class="pgate ${open?'open':''}">${open?'🔓 Le chemin des exercices est ouvert !':'🔒 Termine les 4 leçons pour ouvrir le chemin des exercices'}</li>
@@ -54,7 +54,11 @@ function pathScreen(){if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}st
  <li class="pend ${p.chest?'won':''}">${p.chest?'🏆 Coffre ouvert !':'🎁 Coffre'}</li></ol>`;}
 function pathHomeCard(){const p=ensurePath();if(!p)return '';const n=pathDoneCount(p),nx=p.steps.find(s=>s.status==='next'),g=n/6;
  const txt=p.chest?'Terminé ! Reviens demain pour un nouveau parcours 🔥':nx?'Prochaine étape : '+pathStepLabel(nx):'';
- return `<section class="goal card pathcard"><button class="pathcard-go" data-a="path" aria-label="Ouvrir le parcours du jour"><svg viewBox="0 0 52 52" class="ring" aria-hidden="true"><circle cx="26" cy="26" r="22" class="rb"/><circle cx="26" cy="26" r="22" class="rf" style="stroke-dashoffset:${138.2*(1-g)}"/><text x="26" y="31" text-anchor="middle">${p.chest?'✓':n+'/6'}</text></svg><div><b>🗺️ Parcours du jour</b><div class="muted">${esc(txt)}</div></div></button><button class="btn ghost sm pinfo" data-a="pathinfo" aria-label="Comment marche le parcours du jour ?">ⓘ</button></section>`;}
+ // 19/10/2026 : présenté sur l'accueil comme le « Devoir du jour », avec ses 6 étapes visibles d'un coup d'œil
+ const mini=p.steps.map((s,i)=>{const st=s.status,ic=st==='done'?'✓':st==='review'?'!':st==='locked'?'🔒':s.kind==='lesson'?pathSubjIcon(s.subj):'🎯',
+  lab=s.kind==='lesson'?((SUBMAP[s.subj]||{}).name||'Leçon'):'Exos';
+  return `<button class="pmini ${st}" data-a="pathgo:${i}" aria-label="Étape ${i+1} : ${esc(pathStepLabel(s))}${st==='locked'?' (verrouillée)':''}"><span class="pmi" aria-hidden="true">${ic}</span><small>${esc(lab)}</small></button>`;}).join('');
+ return `<h2 class="sec daily-h">📝 Devoir du jour</h2><section class="goal card pathcard daily"><div class="pathrow"><button class="pathcard-go" data-a="path" aria-label="Ouvrir le devoir du jour"><svg viewBox="0 0 52 52" class="ring" aria-hidden="true"><circle cx="26" cy="26" r="22" class="rb"/><circle cx="26" cy="26" r="22" class="rf" style="stroke-dashoffset:${138.2*(1-g)}"/><text x="26" y="31" text-anchor="middle">${p.chest?'✓':n+'/6'}</text></svg><div><b>Leçons et exercices de plusieurs matières</b><div class="muted">${esc(txt)}</div></div></button><button class="btn ghost sm pinfo" data-a="pathinfo" aria-label="Comment marche le devoir du jour ?">ⓘ</button></div><div class="pathmini">${mini}</div></section>`;}
 const PATH_INFO='<b>🗺️ Ton parcours du jour</b><br>Chaque jour, je te prépare un parcours : <b>4 leçons</b> de matières différentes, puis <b>2 séries d’exercices</b> sur ce que tu viens d’apprendre.<br>🔥 Plus tu enchaînes les bonnes réponses dans les exercices, plus tu gagnes de pièces : 1, puis 2, 3, 4… jusqu’à <b>×5</b> !<br>🎁 Au bout, un <b>coffre</b> t’attend (pièces, XP et bons points).<br>🟠 Si une leçon est difficile, pas de panique : tu continues, et on la reverra ensemble.';
 function pathInfo(){finotOpen();finotPush('finot',PATH_INFO);}
 function pathGo(i){const p=ensurePath();if(!p)return;const s=p.steps[+i];if(!s)return;
