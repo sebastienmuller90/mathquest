@@ -36,3 +36,8 @@ function pathParentBody(state){const hist=Array.isArray(state&&state.pathHist)?s
 function pathCompact(p){return {date:p.date,completed:!!p.chest,chest:!!p.chest,steps:(p.steps||[]).map(s=>s.kind==='lesson'
  ?{kind:'lesson',cid:s.cid,subj:s.subj,status:s.status,score:s.score,ms:s.ms}
  :{kind:'exo',ids:(s.ids||[]).slice(),status:s.status,score:s.score,ms:s.ms,bestStreak:s.bestStreak||0,answers:(s.answers||[]).map(a=>({cid:a.cid,ok:!!a.ok}))})};}
+
+/* Correctifs d'audit partagés par l'application et parent.html. */
+if(typeof document!=='undefined'&&!document.querySelector('script[data-mq-audit-fixes]')){
+ const s=document.createElement('script');s.src='js/audit-fixes.js';s.dataset.mqAuditFixes='1';s.async=false;document.head.appendChild(s);
+}
