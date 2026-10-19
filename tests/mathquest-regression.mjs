@@ -36,10 +36,12 @@ assert.equal(verdicts.find(x=>x.cid==='d').good,false);
 assert.equal(context.pathCompact(p).steps.length,6);
 
 const sw=read('sw.js');
-assert.ok(sw.includes("8.46.0-audit-fixes-2026-10-20"),'Version du service worker non incrémentée');
+assert.ok(sw.includes("8.47.0-pedagogy-levels-2026-10-20"),'Version du service worker pédagogique incorrecte');
 assert.ok(sw.includes('lexiconImages'),'Le service worker doit pré-cacher le lexique dynamique');
 assert.ok(sw.includes("cache:'reload'"),'Le pré-cache doit contourner le cache HTTP');
 
 const index=read('index.html');
 assert.ok(index.indexOf('js/path-report.js')<index.indexOf('js/app-path.js'),'path-report.js doit être chargé avant app-path.js');
+for(const ref of ['pedagogy-upgrade.css','js/pedagogy-upgrade.js','js/pedagogy-upgrade-followup.js','js/pedagogy-content-enrichment.js','js/finot-learning-agent.js'])assert.ok(index.includes(ref),`Couche pédagogique non chargée : ${ref}`);
+assert.ok(index.indexOf('js/app-path.js')<index.indexOf('js/pedagogy-upgrade.js'),'La couche pédagogique doit être chargée après le moteur principal');
 console.log('MathQuest regression audit: OK');
