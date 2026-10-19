@@ -1,8 +1,8 @@
 /* MathQuest — service worker hors ligne.
-   V8.46 : le cache n'est plus une liste géante maintenue à la main. L'installation part des deux pages,
-   suit leurs scripts/styles/assets locaux, puis découvre les images référencées dans les fichiers texte.
-   Le lexique est traité spécialement car ses images sont construites dynamiquement à partir d'un nom. */
-const VERSION='8.46.0-audit-fixes-2026-10-20';
+   V8.47 : cache auto-découvert + nouvelle couche pédagogique trois niveaux et Finot enrichi.
+   L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
+   référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
+const VERSION='8.47.0-pedagogy-levels-2026-10-20';
 const CACHE='mathquest-'+VERSION;
 const SEEDS=['./','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css','./fonts/fonts.css'];
 const TEXT_EXT=/\.(?:html?|js|css|webmanifest)$/i;
