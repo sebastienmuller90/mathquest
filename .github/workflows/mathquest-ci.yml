@@ -57,6 +57,8 @@ jobs:
           exit 1
       - name: Audit navigateur intégral
         run: node tests/browser-audit.mjs
+      - name: Audit des 3 niveaux et de Finot
+        run: node tests/pedagogy-browser-audit.mjs
       - name: Publier rapport et captures navigateur
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,5 +66,6 @@ jobs:
           name: mathquest-browser-audit
           path: |
             tests/browser-audit-report.json
+            tests/pedagogy-browser-audit-report.json
             tests/screenshots/*.png
           if-no-files-found: ignore
