@@ -172,7 +172,8 @@ const PINOK=v=>/^\d{4,8}$/.test(v);
 const LEX=window.MQ_LEXICON||{};
 // Image partagée anglais/italien (data/images/lexique) ; pictogramme de secours tant qu'elle manque.
 const lexImg=n=>`<img class="lximg" src="data/images/lexique/${n}.webp" alt="" width="192" height="192" loading="lazy" decoding="async">`;
-const lexPic=w=>w[3]?lexImg(w[3]):(w[2]||'🖼️');
+// Pas d'emoji fidèle (aucun emoji « table », « agneau »…) : le mot français s'affiche plutôt qu'un dessin trompeur.
+const lexPic=w=>w[3]?lexImg(w[3]):(w[2]||`<span class="lxtxt">${esc(w[1])}</span>`);
 let LX={wid:null,lang:null,cat:null,i:0,q:null};
 const lexLang=wid=>wid.startsWith('it')?'it':'en';
 const vocabKey=(lang,cat,w)=>lang+'|'+cat+'|'+String(w).toLowerCase();
