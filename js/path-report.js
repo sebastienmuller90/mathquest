@@ -38,6 +38,8 @@ function pathCompact(p){return {date:p.date,completed:!!p.chest,chest:!!p.chest,
  :{kind:'exo',ids:(s.ids||[]).slice(),status:s.status,score:s.score,ms:s.ms,bestStreak:s.bestStreak||0,answers:(s.answers||[]).map(a=>({cid:a.cid,ok:!!a.ok}))})};}
 
 /* Correctifs d'audit partagés par l'application et parent.html. */
-if(typeof document!=='undefined'&&!document.querySelector('script[data-mq-audit-fixes]')){
- const s=document.createElement('script');s.src='js/audit-fixes.js';s.dataset.mqAuditFixes='1';s.async=false;document.head.appendChild(s);
+if(typeof document!=='undefined'){
+ for(const src of ['js/audit-fixes.js','js/audit-followup.js'])if(!document.querySelector(`script[src="${src}"]`)){
+  const s=document.createElement('script');s.src=src;s.async=false;s.dataset.mqAuditFixes='1';document.head.appendChild(s);
+ }
 }
