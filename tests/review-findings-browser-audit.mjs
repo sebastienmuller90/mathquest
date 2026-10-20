@@ -5,7 +5,7 @@ const browser=await chromium.launch({headless:true});
 
 // Élève : reprise fiable d'une interrogation + journalisation des exercices nivelés.
 const ctx=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
-await ctx.addInitScript(()=>{const id='reviewqa',p={version:3,active:id,profiles:{[id]:{name:'QA',avatar:'🦊',grade:'CP',subj:'p-maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}}}}};localStorage.setItem('mathquest_profiles_v2',JSON.stringify(p));});
+await ctx.addInitScript(()=>{if(localStorage.getItem('mathquest_profiles_v2'))return;const id='reviewqa',p={version:3,active:id,profiles:{[id]:{name:'QA',avatar:'🦊',grade:'CP',subj:'p-maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}}}}};localStorage.setItem('mathquest_profiles_v2',JSON.stringify(p));});
 let page=await ctx.newPage();page.on('pageerror',e=>fail('élève: '+e.message));await page.goto(base+'/index.html',{waitUntil:'load'});await page.waitForFunction(()=>window.MQInterrogation?.uiIsolation&&window.MQQuestionRotation?.generateSeeded&&window.MQActivity&&window.MQPedagogy);
 const setup=await page.evaluate(()=>{const ch=Object.values(CHMAP).find(c=>WMAP[c.id]?.lvl==='CP'&&typeof c.g==='function');S.studyLog=[];S.answerLog=[];S.interrogations={active:null,history:[]};S.activityLog=[];MQInterrogation.markStudy(ch.id,'lesson-open');const r=MQInterrogation.create(10,'review');if(!r.ok)return {error:r.reason};ACT.iqstart();const a=S.interrogations.active,it=a.questions[a.i],before=JSON.stringify(it.q);saveLocal();return {cid:ch.id,seed:it.seed,before,index:a.i};});
 if(setup.error)fail('création interrogation: '+setup.error);if(!setup.seed)fail('graine stable absente');
