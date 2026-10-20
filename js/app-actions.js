@@ -291,7 +291,8 @@ document.addEventListener('keydown',e=>{
  if(document.activeElement&&(document.activeElement.id==='padtx'||document.activeElement.id==='finotin'))return;
  if(!M&&L&&$('.lcard')){const s=L.steps[L.i],onBtn=document.activeElement&&document.activeElement.matches&&document.activeElement.matches('button[data-a]');if(s.k==='quiz'||s.k==='practice'){const P=s.k==='practice',q=P?L.pq:L.q;if(e.key==='Enter'){if(onBtn)return;e.preventDefault();if(L.locked)(P?ACT.pnext:ACT.lqnext)();else if(q&&q.type!=='choice')lvalidate(undefined,P?'practice':undefined);}else if(!L.locked&&q&&q.type==='choice'&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<q.choices.length)lvalidate(i,P?'practice':undefined);}}else if(e.key==='ArrowRight'||(e.key==='Enter'&&!onBtn)){e.preventDefault();ACT.lnext();}else if(e.key==='ArrowLeft')ACT.lprev();return;}
  if(!M){if(e.key!=='Enter')return;const id=document.activeElement&&document.activeElement.id;if(id==='nm')ACT.begin();else if(id==='pin'||id==='pin2')ACT.pinok();else if(id==='rk'||id==='np2')ACT.recov();else if(id==='pdelpin'&&DELPEND)ACT.pdelok(DELPEND);return;}
- if(e.key==='Enter'){e.preventDefault();if(M.locked){if($('[data-a="next"]'))advance();}else if(M.q.type!=='choice')validate();}
+ // Entrée sur un bouton qui a le focus (réponse, « suivant »…) : son clic natif suffit, une seule fois.
+ if(e.key==='Enter'){if(document.activeElement&&document.activeElement.matches&&document.activeElement.matches('button[data-a]'))return;e.preventDefault();if(M.locked){if($('[data-a="next"]'))advance();}else if(M.q.type!=='choice')validate();}
  else if(!M.locked&&M.q.type==='choice'&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<M.q.choices.length)validate(i);}});
 
 // Service worker, version visible et mise à jour : js/app-pwa.js.

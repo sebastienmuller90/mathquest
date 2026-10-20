@@ -5,7 +5,7 @@
    jamais un index.html neuf avec des scripts anciens. Le cache auto-découvert suit les pages, scripts et styles.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.58.2-parent-hooks-2026-10-20';
+const VERSION='8.59.0-a11y-revalidation-2026-10-21';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).
@@ -37,7 +37,8 @@ self.addEventListener('fetch',e=>{const req=e.request;if(req.method!=='GET')retu
  if(req.mode==='navigate'){e.respondWith((async()=>{const c=await caches.open(CACHE),key=pageKey(req.url),hit=await c.match(key);if(hit)return hit;try{const r=await fetch(req);if(r&&r.ok)await c.put(key,r.clone());return r;}catch(err){return (await c.match(new URL('./index.html',scopeURL).href))||Response.error();}})());return;}
  // Images à la demande : réponse immédiate depuis le cache, revalidation réseau en arrière-plan (« stale-while-revalidate »).
  if(ONDEMAND.test(url.pathname)){e.respondWith((async()=>{const c=await caches.open(IMGCACHE),hit=await c.match(req,{ignoreSearch:true});
-  const net=fetch(req).then(async r=>{if(r&&r.ok&&r.type==='basic')await c.put(req,r.clone());return r;}).catch(()=>null);
+  // cache:'no-cache' : revalidation auprès du serveur (le cache HTTP du navigateur garderait sinon l'ancienne image ~10 min).
+  const net=fetch(req,{cache:'no-cache'}).then(async r=>{if(r&&r.ok&&r.type==='basic')await c.put(req,r.clone());return r;}).catch(()=>null);
   if(hit){e.waitUntil(net);return hit;}return (await net)||Response.error();})());return;}
  e.respondWith((async()=>{const c=await caches.open(CACHE),hit=await c.match(req,{ignoreSearch:true});if(hit)return hit;try{const r=await fetch(req);if(r&&r.ok&&r.type==='basic')await c.put(req,r.clone());return r;}catch(err){return Response.error();}})());
 });

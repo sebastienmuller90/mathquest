@@ -106,8 +106,10 @@ function finotChipsRender(){const box=document.getElementById('fchChips');if(!bo
  if(inChapter)chips.push('<button class="fch-chip" data-a="finotcoach">📖 Aide sur l’exercice en cours</button>');
  FINOT_SUGGEST.forEach((q,i)=>chips.push(`<button class="fch-chip" data-a="finotsug:${i}">${esc(q)}</button>`));
  chips=MQHooks.filter('finot:chip-list',chips,{inChapter});box.innerHTML=chips.join('');MQHooks.emit('finot:chips',{box});}
-function finotOpen(){finotChatEnsure();finotChatDOM();finotChipsRender();finotChatRender();document.getElementById('finotchat').classList.add('open');document.getElementById('finotin')?.focus();MQHooks.emit('finot:open');}
-function finotClose(){document.getElementById('finotchat')?.classList.remove('open');}
+// Le focus revient, à la fermeture, sur l'élément qui a ouvert Finot (clavier, lecteur d'écran).
+let finotReturnFocus=null;
+function finotOpen(){const ae=document.activeElement;if(ae&&ae!==document.body&&!ae.closest('#finotchat'))finotReturnFocus=ae;finotChatEnsure();finotChatDOM();finotChipsRender();finotChatRender();document.getElementById('finotchat').classList.add('open');document.getElementById('finotin')?.focus();MQHooks.emit('finot:open');}
+function finotClose(){const fc=document.getElementById('finotchat');const was=!!(fc&&fc.classList.contains('open'));fc?.classList.remove('open');const r=finotReturnFocus;finotReturnFocus=null;if(was&&r&&r.isConnected&&typeof r.focus==='function')r.focus();}
 function finotPush(who,html){FCHAT.msgs.push({who,html});if(FCHAT.msgs.length>40)FCHAT.msgs.shift();finotChatRender();MQHooks.emit('finot:message',{who,html});}
 /* Question écrite ou dictée à Finot : les intentions (erreur à expliquer, compétences, recherche de leçon, aiguillage)
    sont des abonnés 'finot:intent' ordonnés ; le premier qui répond prend la main, sinon la FAQ répond.
@@ -220,7 +222,9 @@ function inputHTML(q,pa='pick'){if(q.type==='order'){q._sel=q._sel||[];return `<
  const chips=Array.isArray(q.chips)?q.chips:q.type==='text'&&q.lang==='fr'?[]:q.type==='text'&&q.lang==='it'?['à','è','é','ì','ò','ù',"'"]:q.type==='text'&&q.lang==='en'?["'"]:{num:['−',','],frac:['/','−'],text:['x','+','−'],multi:['−',',']}[q.type];
  const ins=q.type==='multi'?q.labels.map((l,i)=>`<label class="ml"><span>${l}</span><input id="in${i}" class="big" autocomplete="off" inputmode="decimal"></label>`).join(''):
   `<div class="inrow"><input id="in0" class="big" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" ${q.lang?'autocapitalize="off" spellcheck="false"':''} placeholder="${(q.lang&&q.type==='text'?'Écris ta réponse':{num:'Ta réponse',frac:'ex : 3/4',text:'ex : 5x+2'}[q.type])}">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div>`;
- return `<div class="ans">${ins}<div class="chips">${chips.map(c=>`<button class="chip" data-a="chip:${c}" tabindex="-1">${c}</button>`).join('')}</div></div>`;}
+ return `<div class="ans">${ins}<div class="chips">${chips.map(c=>`<button class="chip" data-a="chip:${c}" tabindex="-1"${CHIP_LABEL[c]?` aria-label="${CHIP_LABEL[c]}"`:''}>${c}</button>`).join('')}</div></div>`;}
+// Nom accessible des puces de saisie (un lecteur d'écran n'annonce rien pour « − » ou « / » seuls).
+const CHIP_LABEL={'−':'Insérer le signe moins',',':'Insérer une virgule','/':'Insérer une barre de fraction','+':'Insérer le signe plus','x':'Insérer la lettre x',"'":'Insérer une apostrophe'};
 // Écran d'exercice : CUR n'est plus 'home' (sinon la barre d'onglets de l'accueil restait affichée par-dessus les réponses).
 const FINOT_QBTN='<button class="btn ghost" data-a="finotopen" aria-label="Demander de l’aide à Finot">🦊 Finot</button>';
 function renderQ(){const q=M.q,c=byId(M.cid);CUR=M.flash?'flash':'mission';
