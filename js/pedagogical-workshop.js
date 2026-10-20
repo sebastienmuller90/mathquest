@@ -1,50 +1,380 @@
 /* MathQuest — atelier pédagogique transversal.
    Ajoute aux cours un objet à étudier (document de synthèse, situation, données ou enquête)
    à partir des contenus déjà validés du chapitre. Aucun faux document historique n'est présenté comme authentique. */
-(function(){
-'use strict';
-if(typeof window==='undefined'||typeof lessonSteps!=='function'||typeof CHMAP==='undefined')return;
-const strip=s=>String(s??'').replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;| | /g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s+/g,' ').trim();
-const norm=s=>strip(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const hash=s=>{let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
-function subject(id){try{let s=sOf(WMAP[id].id).id.replace(/^p-/,'');if(s==='sciences'||s==='qlm')s='svt';if(s==='evar')s='evars';return s;}catch(e){return'autre';}}
-function grade(id){return WMAP[id]?.lvl||'';}
-function facts(id){const c=COURS[id]||{},ch=CHMAP[id]||{},out=[];const add=x=>{const t=strip(x);if(t.length>=12&&!out.some(y=>y.toLowerCase()===t.toLowerCase()))out.push(t)};(c.retenir||[]).forEach(add);(ch.f?.l||[]).forEach(add);for(const p of (c.parts||[])){add(p.t);if(out.length<5)add(p.h);}return out.slice(0,4);}
-function chapterText(id){return norm([CHMAP[id]?.name,...facts(id)].join(' '));}
-function example(id){const c=COURS[id]||{},out=[];for(const p of (c.parts||[])){const t=strip(p.h);if(t.length>=20)out.push(t);}for(const x of (c.ex?.s||[])){const t=strip(x);if(t)out.push(t);}return out[0]||facts(id)[0]||'';}
-function bank(id){const b=window.MQPedagogyBanks||{},s=subject(id);return {situations:b.realLife?.[s]||b.realLife?.autre||[],prompts:b.prompts?.[s]||b.prompts?.autre||[],errors:b.misconceptions?.[s]||b.misconceptions?.autre||[]};}
-function pick(a,n){return a?.length?a[n%a.length]:'';}
-function errorBox(id,n){const e=pick(bank(id).errors,n);if(!e)return'';return `<div class="whybox"><b>⚠️ Piège fréquent</b><br><b>${esc(e[0])}</b><br><span>${esc(e[1])}</span></div>`;}
-function analysisList(list){return `<div class="checkpoint"><div class="q">🧠 À toi d'analyser</div><ol>${list.map(x=>`<li>${esc(x)}</li>`).join('')}</ol><p class="muted small">Réponds oralement, sur ton cahier ou à un adulte. L'objectif est de justifier, pas seulement de donner un mot.</p></div>`;}
-function questions(id,n,max=3){const p=bank(id).prompts||[];if(!p.length)return'';const list=[];for(let i=0;i<Math.min(max,p.length);i++)list.push(p[(n+i)%p.length]);return analysisList(list);}
-function synthesis(id,n){const fs=facts(id),s=subject(id),name=CHMAP[id]?.name||'la notion';const label=/hg|hda|emi|emc/.test(s)?'Dossier de synthèse':/francais|anglais|italien/.test(s)?'Petit document à étudier':'Informations de départ';return `<div class="card" style="margin:10px 0"><b>📄 ${label}</b><p class="muted small">Document pédagogique MathQuest construit à partir du cours « ${esc(name)} ».</p>${fs.length?`<ul>${fs.slice(0,3).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:`<p>${esc(example(id))}</p>`}</div>${questions(id,n,grade(id)==='CP'||grade(id)==='CE1'?2:3)}`;}
-function situation(id,n){const b=bank(id),sit=pick(b.situations,n)||'une situation concrète',ex=example(id),name=CHMAP[id]?.name||'la notion';return `<div class="card" style="margin:10px 0"><b>🌍 Situation de transfert</b><p>Imagine que tu rencontres <b>${esc(sit)}</b>. Ta mission est de réutiliser ce que tu viens d'apprendre sur <b>${esc(name)}</b>, sans recopier mécaniquement l'exemple du cours.</p>${ex?`<p class="muted small"><b>Point d'appui du cours :</b> ${esc(ex).slice(0,360)}</p>`:''}</div>${questions(id,n,grade(id)==='CP'||grade(id)==='CE1'?2:3)}`;}
-function science(id,n){const fs=facts(id),name=CHMAP[id]?.name||'la notion';return `<div class="card" style="margin:10px 0"><b>🔬 Enquête scientifique</b><p class="muted small">On part uniquement des informations du cours. Distingue bien observation, hypothèse et conclusion.</p><div class="coach-grid"><div class="coach-card"><b>1 · Informations disponibles</b>${fs.slice(0,2).map(x=>`<p>${esc(x)}</p>`).join('')||`<p>${esc(name)}</p>`}</div><div class="coach-card"><b>2 · Hypothèse</b><p>Quelle explication ou prévision pourrais-tu proposer avant de conclure ?</p></div></div></div>${questions(id,n,3)}`;}
-function dataSeed(id){const h=hash(id+'|data'),a=10+(h%12),b=a+3+((h>>>3)%9),c=Math.max(2,a-2-((h>>>7)%5)),d=b+2+((h>>>11)%7);return {h,vals:[a,b,c,d]};}
-function dataSpec(id){const s=subject(id),txt=chapterText(id),{h,vals}=dataSeed(id);
- if(s==='maths'&&/fonction|affine|lineaire|image|antecedent/.test(txt)){const a=1+(h%4),b=2+((h>>>4)%7),xs=[0,1,2,3],ys=xs.map(x=>a*x+b);return {topic:'function',title:'Tableau de valeurs d’une fonction d’entraînement',context:'On étudie une fonction créée uniquement pour cet exercice. Observe comment la valeur de y évolue quand x augmente.',labels:xs.map(x=>'x = '+x),values:ys,unit:'valeur de y',questions:['Quand x augmente de 1, de combien y augmente-t-il à chaque étape ?','Quelle valeur de y correspond à x = 2 ?','En poursuivant la même régularité, quelle valeur de y prévois-tu pour x = 4 ?']};}
- if(s==='maths'&&/vitesse|distance|duree/.test(txt)){const dists=vals.map(v=>v*5);return {topic:'speed',title:'Distances parcourues pendant la même durée',context:'Quatre mobiles fictifs avancent chacun pendant exactement 5 secondes. Comparer leurs distances permet de raisonner sur la vitesse.',labels:['Mobile A','Mobile B','Mobile C','Mobile D'],values:dists,unit:'m en 5 s',questions:['Quel mobile est le plus rapide ? Justifie uniquement avec le tableau.','Calcule la vitesse moyenne du mobile A en mètres par seconde.','Explique pourquoi on peut comparer directement les distances ici, alors que ce ne serait pas toujours possible.']};}
- if(s==='maths'&&/pourcent|proportion|frequence/.test(txt))return {topic:'proportion',title:'Répartition fictive dans un groupe',context:'On répartit un groupe fictif entre quatre activités. Les effectifs sont inventés pour travailler proportions, fréquences ou pourcentages.',labels:['Lecture','Sport','Musique','Jeux'],values:vals,unit:'élèves',questions:['Quel est l’effectif total du groupe ?','Quelle activité représente la plus grande proportion du groupe ?','Choisis une activité et calcule sa fréquence dans le groupe.']};
- if(s==='maths'&&/moyenne|statist|diagram|graph|donnee|tableau/.test(txt))return {topic:'statistics',title:'Série statistique fictive',context:'Quatre résultats fictifs sont regroupés pour travailler lecture de données et indicateurs statistiques.',labels:['Série A','Série B','Série C','Série D'],values:vals,unit:'points',questions:['Quelle est l’étendue de cette série ?','Calcule la moyenne des quatre valeurs.','Quelle représentation graphique te semblerait la plus claire pour comparer ces valeurs ?']};
- if(s==='hg'&&/climat|temperature|precip/.test(txt))return {topic:'climate',title:'Températures saisonnières d’une ville fictive',context:'Dans la ville imaginaire de Montelune, on relève une température moyenne fictive pour chaque saison. Ces valeurs servent uniquement à lire un graphique climatique simplifié.',labels:['Hiver','Printemps','Été','Automne'],values:vals,unit:'°C',questions:['Quelle saison est la plus chaude dans ce jeu de données ?','Décris l’évolution de l’hiver à l’été puis de l’été à l’automne.','Quelles autres données faudrait-il connaître pour décrire réellement un climat ?']};
- if(s==='hg'&&/population|demograph/.test(txt))return {topic:'population',title:'Population d’un territoire fictif',context:'Dans le territoire imaginaire de Valoria, on relève la population à quatre dates. Toutes les valeurs sont inventées uniquement pour apprendre à lire un tableau et une évolution.',labels:['1990','2000','2010','2020'],values:vals,unit:'milliers d’habitants',questions:['Où et quand ces données fictives sont-elles situées ?','Entre quelles deux dates consécutives l’évolution semble-t-elle la plus forte ?','Décris l’évolution entre 1990 et 2020 sans inventer de cause.']};
- if(s==='svt'&&/temperature|therm/.test(txt))return {topic:'temperature',title:'Températures fictives relevées au cours du temps',context:'On suit une enceinte expérimentale fictive à quatre moments. Les valeurs sont simulées pour apprendre à décrire une évolution.',labels:['Début','Après 5 min','Après 10 min','Après 15 min'],values:vals,unit:'°C',questions:['À quel moment la valeur est-elle maximale ?','Décris l’évolution sans proposer encore d’explication.','Quelle hypothèse pourrait ensuite être testée pour expliquer cette évolution ?']};
- if(s==='svt'&&/population|effectif|frequence/.test(txt))return {topic:'population',title:'Effectif fictif d’une population',context:'On compte une population fictive à quatre dates dans la même zone. Les effectifs sont inventés pour travailler l’évolution d’une population.',labels:['Année 1','Année 2','Année 3','Année 4'],values:vals,unit:'individus',questions:['Entre quelles dates l’effectif augmente-t-il ?','À quelle date l’effectif est-il le plus faible ?','Quelle information supplémentaire faudrait-il pour expliquer une variation ?']};
- if(s==='svt'&&/croissance/.test(txt))return {topic:'growth',title:'Croissance de plants fictifs',context:'Quatre plants imaginaires de la même espèce sont mesurés après la même durée de culture. Les valeurs servent uniquement à s’entraîner à observer et comparer.',labels:['Plant A','Plant B','Plant C','Plant D'],values:vals,unit:'cm',questions:['Quel plant est le plus grand et quelle hauteur mesure-t-il ?','Calcule l’écart entre le plant le plus grand et le plus petit.','Quelle hypothèse pourrais-tu tester pour expliquer un écart de croissance, sans affirmer qu’elle est vraie ?']};
- if(s==='pc'&&/vitesse|mouvement|distance/.test(txt)){const distances=vals.map(v=>v*3);return {topic:'speed',title:'Distances fictives parcourues en 6 secondes',context:'Quatre mobiles fictifs se déplacent chacun pendant exactement 6 secondes. On mesure la distance parcourue afin de travailler la notion de vitesse.',labels:['Mobile A','Mobile B','Mobile C','Mobile D'],values:distances,unit:'m en 6 s',questions:['Quel mobile a la plus grande vitesse ? Justifie avec les données.','Calcule la vitesse moyenne du mobile B en mètres par seconde.','Pourquoi faudrait-il connaître aussi la durée si les quatre essais n’avaient pas duré le même temps ?']};
- if(s==='pc'&&/temperature|therm/.test(txt))return {topic:'temperature',title:'Quatre températures expérimentales fictives',context:'Lors de quatre essais imaginaires menés dans les mêmes conditions, on relève une température. Ces mesures sont simulées et ne décrivent aucune expérience réelle.',labels:['Essai 1','Essai 2','Essai 3','Essai 4'],values:vals,unit:'°C',questions:['Lors de quel essai la température est-elle la plus élevée ?','Calcule l’écart entre la valeur maximale et la valeur minimale.','Que faudrait-il contrôler dans un vrai protocole avant d’attribuer cet écart à une cause ?']};
- if(s==='pc'&&/tension|volt/.test(txt))return {topic:'voltage',title:'Tensions fictives mesurées aux bornes de quatre dipôles',context:'Dans un montage fictif, un voltmètre mesure quatre tensions. Les valeurs sont simulées pour travailler la lecture et la comparaison de mesures.',labels:['Dipôle A','Dipôle B','Dipôle C','Dipôle D'],values:vals,unit:'V',questions:['Quel dipôle présente la tension la plus élevée ?','Calcule l’écart entre les deux valeurs extrêmes.','Quel appareil doit-on utiliser dans un vrai montage pour mesurer une tension ?']};
- if(s==='pc'&&/intensit|ampere|courant/.test(txt))return {topic:'current',title:'Intensités fictives dans quatre branches',context:'Un ampèremètre fictif fournit quatre valeurs d’intensité. Elles servent uniquement à s’entraîner à lire et comparer des mesures.',labels:['Branche A','Branche B','Branche C','Branche D'],values:vals,unit:'mA',questions:['Quelle branche présente l’intensité la plus élevée ?','Classe les quatre intensités de la plus petite à la plus grande.','Quel appareil utilise-t-on pour mesurer une intensité électrique ?']};
- if(s==='pc'&&/masse/.test(txt))return {topic:'mass',title:'Masses fictives de quatre échantillons',context:'Quatre échantillons fictifs sont pesés avec la même balance. Les valeurs sont simulées pour travailler comparaison et exploitation de mesures.',labels:['Échantillon A','Échantillon B','Échantillon C','Échantillon D'],values:vals,unit:'g',questions:['Quel échantillon est le plus massif ?','Calcule l’écart de masse entre les deux valeurs extrêmes.','Quelle précaution simple améliorerait la fiabilité d’une vraie mesure ?']};
- if(s==='pc'&&/volume/.test(txt))return {topic:'volume',title:'Volumes fictifs de quatre échantillons',context:'On mesure quatre volumes fictifs avec le même matériel. Ces valeurs servent à entraîner la lecture et la comparaison.',labels:['Échantillon A','Échantillon B','Échantillon C','Échantillon D'],values:vals,unit:'mL',questions:['Quel échantillon possède le plus grand volume ?','Calcule l’écart entre le plus grand et le plus petit volume.','Quel matériel pourrait être utilisé pour mesurer un volume de liquide ?']};
- if(s==='eps'&&/frequence|cardiaque|pouls/.test(txt))return {topic:'heart-rate',title:'Fréquence cardiaque fictive pendant une séance',context:'On suit un sportif fictif à quatre moments d’une séance. Les valeurs servent uniquement à interpréter une évolution.',labels:['Repos','Échauffement','Effort','Récupération'],values:vals.map(v=>50+v*3),unit:'bpm',questions:['À quel moment la fréquence cardiaque est-elle la plus élevée ?','Compare la valeur au repos et celle de récupération.','Pourquoi plusieurs mesures seraient-elles utiles pour suivre réellement la récupération ?']};
- if(s==='eps'&&/performance|temps|vitesse/.test(txt))return {topic:'performance',title:'Temps fictifs sur un parcours sportif',context:'Un élève fictif effectue quatre essais du même parcours, dans les mêmes conditions. Ici, un temps plus petit correspond à une performance plus rapide.',labels:['Essai 1','Essai 2','Essai 3','Essai 4'],values:vals,unit:'s',questions:['Quel essai est le plus rapide ?','Calcule l’écart entre le temps le plus long et le temps le plus court.','La série suffit-elle à prouver une progression régulière ? Justifie à partir des quatre valeurs.']};
- return null;}
-function dataWorkshop(id,n){const name=CHMAP[id]?.name||'la notion',spec=dataSpec(id);if(!spec)return synthesis(id,n);const vals=spec.values,mx=Math.max(...vals);return `<div class="card mq-data-workshop" data-topic="${esc(spec.topic)}" style="margin:10px 0"><b>📊 ${esc(spec.title)}</b><p>${esc(spec.context)}</p><p class="muted small">Jeu de données d'entraînement MathQuest lié au travail de lecture et de raisonnement autour de « ${esc(name)} ». <b>Ce n'est pas une donnée historique ou scientifique réelle.</b></p><table style="width:100%;border-collapse:collapse;text-align:center"><caption class="sr-only">${esc(spec.title)} — unité : ${esc(spec.unit)}</caption><thead><tr>${spec.labels.map(x=>`<th style="padding:6px;border-bottom:1px solid #ddd">${esc(x)}</th>`).join('')}</tr></thead><tbody><tr>${vals.map(x=>`<td style="padding:8px"><b>${x}</b><br><small>${esc(spec.unit)}</small></td>`).join('')}</tr></tbody></table><div role="img" aria-label="Graphique de ${esc(spec.title)} en ${esc(spec.unit)}" style="display:flex;gap:5px;align-items:flex-end;height:108px;margin:12px 4px 0">${vals.map((x,i)=>`<div style="flex:1;text-align:center"><div title="${x} ${esc(spec.unit)}" style="height:${Math.max(18,Math.round(x/mx*72))}px;background:currentColor;opacity:${.35+i*.12};border-radius:6px 6px 0 0"></div><small>${esc(spec.labels[i])}</small></div>`).join('')}</div></div>${analysisList(spec.questions)}`;}
-function kind(id){const s=subject(id),txt=chapterText(id);if(s==='maths'&&/graph|statist|moyenne|pourcent|proportion|fonction|affine|lineaire|vitesse|distance|duree|donnee|tableau|frequence/.test(txt))return'data';if(s==='svt'&&/temperature|therm|croissance|population|effectif|frequence/.test(txt))return'data';if(s==='pc'&&/temperature|therm|vitesse|mouvement|distance|tension|volt|intensit|ampere|courant|masse|volume/.test(txt))return'data';if(s==='hg'&&/population|demograph|climat|temperature|precip/.test(txt))return'data';if(s==='eps'&&/performance|temps|vitesse|frequence|cardiaque|pouls/.test(txt))return'data';if(/svt|pc/.test(s))return'science';if(/maths|tech|pix|ia|orientation/.test(s))return'situation';return'synthesis';}
-function build(id){const n=hash(id+'|workshop'),k=kind(id),spec=k==='data'?dataSpec(id):null,actual=k==='data'&&!spec?'synthesis':k,body=actual==='data'?dataWorkshop(id,n):actual==='science'?science(id,n):actual==='situation'?situation(id,n):synthesis(id,n);return {k:'mqworkshop',t:'🔎 Atelier : observer, raisonner, justifier',h:`<div class="mq-workshop">${body}${errorBox(id,n)}</div>`,meta:{kind:actual,subject:subject(id),topic:actual==='data'?spec.topic:actual}};}
-const base=lessonSteps;
-lessonSteps=function(id){const st=base(id);if(!Array.isArray(st)||st.some(x=>x.k==='mqworkshop'))return st;const out=st.slice(),w=build(id);let i=out.findIndex(x=>x.k==='mqselfcheck');if(i<0)i=out.findIndex(x=>x.k==='practice'||x.k==='confidence'||x.k==='quiz');out.splice(i<0?out.length:i,0,w);return out;};
-window.MQPedagogicalWorkshop={version:'1.3',subject,facts,chapterText,kind,dataSpec,build};
+(function () {
+  'use strict';
+
+  if (typeof window === 'undefined' || typeof lessonSteps !== 'function' || typeof CHMAP === 'undefined') return;
+
+  const strip = s => String(s ?? '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;|&#160;| | /g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const norm = s => strip(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+
+  const hash = s => {
+    let h = 2166136261 >>> 0;
+    for (const c of String(s)) {
+      h ^= c.charCodeAt(0);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  };
+
+  function subject(id) {
+    try {
+      let s = sOf(WMAP[id].id).id.replace(/^p-/, '');
+      if (s === 'sciences' || s === 'qlm') s = 'svt';
+      if (s === 'evar') s = 'evars';
+      return s;
+    } catch (e) {
+      return 'autre';
+    }
+  }
+
+  const grade = id => WMAP[id]?.lvl || '';
+
+  function facts(id) {
+    const c = COURS[id] || {};
+    const ch = CHMAP[id] || {};
+    const out = [];
+    const add = x => {
+      const t = strip(x);
+      if (t.length >= 12 && !out.some(y => y.toLowerCase() === t.toLowerCase())) out.push(t);
+    };
+    (c.retenir || []).forEach(add);
+    (ch.f?.l || []).forEach(add);
+    for (const p of (c.parts || [])) {
+      add(p.t);
+      if (out.length < 5) add(p.h);
+    }
+    return out.slice(0, 4);
+  }
+
+  const chapterText = id => norm([CHMAP[id]?.name, ...facts(id)].join(' '));
+
+  function example(id) {
+    const c = COURS[id] || {};
+    const out = [];
+    for (const p of (c.parts || [])) {
+      const t = strip(p.h);
+      if (t.length >= 20) out.push(t);
+    }
+    for (const x of (c.ex?.s || [])) {
+      const t = strip(x);
+      if (t) out.push(t);
+    }
+    return out[0] || facts(id)[0] || '';
+  }
+
+  function bank(id) {
+    const b = window.MQPedagogyBanks || {};
+    const s = subject(id);
+    return {
+      situations: b.realLife?.[s] || b.realLife?.autre || [],
+      prompts: b.prompts?.[s] || b.prompts?.autre || [],
+      errors: b.misconceptions?.[s] || b.misconceptions?.autre || []
+    };
+  }
+
+  const pick = (a, n) => a?.length ? a[n % a.length] : '';
+
+  function errorBox(id, n) {
+    const e = pick(bank(id).errors, n);
+    if (!e) return '';
+    return `<div class="whybox"><b>⚠️ Piège fréquent</b><br><b>${esc(e[0])}</b><br><span>${esc(e[1])}</span></div>`;
+  }
+
+  function analysisList(list) {
+    return `<div class="checkpoint"><div class="q">🧠 À toi d'analyser</div><ol>${list.map(x => `<li>${esc(x)}</li>`).join('')}</ol><p class="muted small">Réponds oralement, sur ton cahier ou à un adulte. L'objectif est de justifier, pas seulement de donner un mot.</p></div>`;
+  }
+
+  function questions(id, n, max = 3) {
+    const p = bank(id).prompts || [];
+    if (!p.length) return '';
+    const list = [];
+    for (let i = 0; i < Math.min(max, p.length); i++) list.push(p[(n + i) % p.length]);
+    return analysisList(list);
+  }
+
+  function synthesis(id, n) {
+    const fs = facts(id);
+    const s = subject(id);
+    const name = CHMAP[id]?.name || 'la notion';
+    const label = /hg|hda|emi|emc/.test(s)
+      ? 'Dossier de synthèse'
+      : /francais|anglais|italien/.test(s) ? 'Petit document à étudier' : 'Informations de départ';
+    const content = fs.length
+      ? `<ul>${fs.slice(0, 3).map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+      : `<p>${esc(example(id))}</p>`;
+    return `<div class="card" style="margin:10px 0"><b>📄 ${label}</b><p class="muted small">Document pédagogique MathQuest construit à partir du cours « ${esc(name)} ».</p>${content}</div>${questions(id, n, grade(id) === 'CP' || grade(id) === 'CE1' ? 2 : 3)}`;
+  }
+
+  function situation(id, n) {
+    const b = bank(id);
+    const sit = pick(b.situations, n) || 'une situation concrète';
+    const ex = example(id);
+    const name = CHMAP[id]?.name || 'la notion';
+    return `<div class="card" style="margin:10px 0"><b>🌍 Situation de transfert</b><p>Imagine que tu rencontres <b>${esc(sit)}</b>. Ta mission est de réutiliser ce que tu viens d'apprendre sur <b>${esc(name)}</b>, sans recopier mécaniquement l'exemple du cours.</p>${ex ? `<p class="muted small"><b>Point d'appui du cours :</b> ${esc(ex).slice(0, 360)}</p>` : ''}</div>${questions(id, n, grade(id) === 'CP' || grade(id) === 'CE1' ? 2 : 3)}`;
+  }
+
+  function science(id, n) {
+    const fs = facts(id);
+    const name = CHMAP[id]?.name || 'la notion';
+    const info = fs.slice(0, 2).map(x => `<p>${esc(x)}</p>`).join('') || `<p>${esc(name)}</p>`;
+    return `<div class="card" style="margin:10px 0"><b>🔬 Enquête scientifique</b><p class="muted small">On part uniquement des informations du cours. Distingue bien observation, hypothèse et conclusion.</p><div class="coach-grid"><div class="coach-card"><b>1 · Informations disponibles</b>${info}</div><div class="coach-card"><b>2 · Hypothèse</b><p>Quelle explication ou prévision pourrais-tu proposer avant de conclure ?</p></div></div></div>${questions(id, n, 3)}`;
+  }
+
+  function dataSeed(id) {
+    const h = hash(id + '|data');
+    const a = 10 + (h % 12);
+    const b = a + 3 + ((h >>> 3) % 9);
+    const c = Math.max(2, a - 2 - ((h >>> 7) % 5));
+    const d = b + 2 + ((h >>> 11) % 7);
+    return { h, vals: [a, b, c, d] };
+  }
+
+  function dataSpec(id) {
+    const s = subject(id);
+    const txt = chapterText(id);
+    const { h, vals } = dataSeed(id);
+
+    if (s === 'maths' && /fonction|affine|lineaire|image|antecedent/.test(txt)) {
+      const a = 1 + (h % 4);
+      const b = 2 + ((h >>> 4) % 7);
+      const xs = [0, 1, 2, 3];
+      const ys = xs.map(x => a * x + b);
+      return {
+        topic: 'function',
+        title: 'Tableau de valeurs d’une fonction d’entraînement',
+        context: 'On étudie une fonction créée uniquement pour cet exercice. Observe comment la valeur de y évolue quand x augmente.',
+        labels: xs.map(x => 'x = ' + x), values: ys, unit: 'valeur de y',
+        questions: ['Quand x augmente de 1, de combien y augmente-t-il à chaque étape ?', 'Quelle valeur de y correspond à x = 2 ?', 'En poursuivant la même régularité, quelle valeur de y prévois-tu pour x = 4 ?']
+      };
+    }
+
+    if (s === 'maths' && /vitesse|distance|duree/.test(txt)) {
+      return {
+        topic: 'speed',
+        title: 'Distances parcourues pendant la même durée',
+        context: 'Quatre mobiles fictifs avancent chacun pendant exactement 5 secondes. Comparer leurs distances permet de raisonner sur la vitesse.',
+        labels: ['Mobile A', 'Mobile B', 'Mobile C', 'Mobile D'], values: vals.map(v => v * 5), unit: 'm en 5 s',
+        questions: ['Quel mobile est le plus rapide ? Justifie uniquement avec le tableau.', 'Calcule la vitesse moyenne du mobile A en mètres par seconde.', 'Explique pourquoi on peut comparer directement les distances ici, alors que ce ne serait pas toujours possible.']
+      };
+    }
+
+    if (s === 'maths' && /pourcent|proportion|frequence/.test(txt)) {
+      return {
+        topic: 'proportion', title: 'Répartition fictive dans un groupe',
+        context: 'On répartit un groupe fictif entre quatre activités. Les effectifs sont inventés pour travailler proportions, fréquences ou pourcentages.',
+        labels: ['Lecture', 'Sport', 'Musique', 'Jeux'], values: vals, unit: 'élèves',
+        questions: ['Quel est l’effectif total du groupe ?', 'Quelle activité représente la plus grande proportion du groupe ?', 'Choisis une activité et calcule sa fréquence dans le groupe.']
+      };
+    }
+
+    if (s === 'maths' && /moyenne|statist|diagram|graph|donnee|tableau/.test(txt)) {
+      return {
+        topic: 'statistics', title: 'Série statistique fictive',
+        context: 'Quatre résultats fictifs sont regroupés pour travailler lecture de données et indicateurs statistiques.',
+        labels: ['Série A', 'Série B', 'Série C', 'Série D'], values: vals, unit: 'points',
+        questions: ['Quelle est l’étendue de cette série ?', 'Calcule la moyenne des quatre valeurs.', 'Quelle représentation graphique te semblerait la plus claire pour comparer ces valeurs ?']
+      };
+    }
+
+    if (s === 'hg' && /climat|temperature|precip/.test(txt)) {
+      return {
+        topic: 'climate', title: 'Températures saisonnières d’une ville fictive',
+        context: 'Dans la ville imaginaire de Montelune, on relève une température moyenne fictive pour chaque saison. Ces valeurs servent uniquement à lire un graphique climatique simplifié.',
+        labels: ['Hiver', 'Printemps', 'Été', 'Automne'], values: vals, unit: '°C',
+        questions: ['Quelle saison est la plus chaude dans ce jeu de données ?', 'Décris l’évolution de l’hiver à l’été puis de l’été à l’automne.', 'Quelles autres données faudrait-il connaître pour décrire réellement un climat ?']
+      };
+    }
+
+    if (s === 'hg' && /population|demograph/.test(txt)) {
+      return {
+        topic: 'population', title: 'Population d’un territoire fictif',
+        context: 'Dans le territoire imaginaire de Valoria, on relève la population à quatre dates. Toutes les valeurs sont inventées uniquement pour apprendre à lire un tableau et une évolution.',
+        labels: ['1990', '2000', '2010', '2020'], values: vals, unit: 'milliers d’habitants',
+        questions: ['Où et quand ces données fictives sont-elles situées ?', 'Entre quelles deux dates consécutives l’évolution semble-t-elle la plus forte ?', 'Décris l’évolution entre 1990 et 2020 sans inventer de cause.']
+      };
+    }
+
+    if (s === 'svt' && /temperature|therm/.test(txt)) {
+      return {
+        topic: 'temperature', title: 'Températures fictives relevées au cours du temps',
+        context: 'On suit une enceinte expérimentale fictive à quatre moments. Les valeurs sont simulées pour apprendre à décrire une évolution.',
+        labels: ['Début', 'Après 5 min', 'Après 10 min', 'Après 15 min'], values: vals, unit: '°C',
+        questions: ['À quel moment la valeur est-elle maximale ?', 'Décris l’évolution sans proposer encore d’explication.', 'Quelle hypothèse pourrait ensuite être testée pour expliquer cette évolution ?']
+      };
+    }
+
+    if (s === 'svt' && /population|effectif|frequence/.test(txt)) {
+      return {
+        topic: 'population', title: 'Effectif fictif d’une population',
+        context: 'On compte une population fictive à quatre dates dans la même zone. Les effectifs sont inventés pour travailler l’évolution d’une population.',
+        labels: ['Année 1', 'Année 2', 'Année 3', 'Année 4'], values: vals, unit: 'individus',
+        questions: ['Entre quelles dates l’effectif augmente-t-il ?', 'À quelle date l’effectif est-il le plus faible ?', 'Quelle information supplémentaire faudrait-il pour expliquer une variation ?']
+      };
+    }
+
+    if (s === 'svt' && /croissance/.test(txt)) {
+      return {
+        topic: 'growth', title: 'Croissance de plants fictifs',
+        context: 'Quatre plants imaginaires de la même espèce sont mesurés après la même durée de culture. Les valeurs servent uniquement à s’entraîner à observer et comparer.',
+        labels: ['Plant A', 'Plant B', 'Plant C', 'Plant D'], values: vals, unit: 'cm',
+        questions: ['Quel plant est le plus grand et quelle hauteur mesure-t-il ?', 'Calcule l’écart entre le plant le plus grand et le plus petit.', 'Quelle hypothèse pourrais-tu tester pour expliquer un écart de croissance, sans affirmer qu’elle est vraie ?']
+      };
+    }
+
+    if (s === 'pc' && /vitesse|mouvement|distance/.test(txt)) {
+      return {
+        topic: 'speed', title: 'Distances fictives parcourues en 6 secondes',
+        context: 'Quatre mobiles fictifs se déplacent chacun pendant exactement 6 secondes. On mesure la distance parcourue afin de travailler la notion de vitesse.',
+        labels: ['Mobile A', 'Mobile B', 'Mobile C', 'Mobile D'], values: vals.map(v => v * 3), unit: 'm en 6 s',
+        questions: ['Quel mobile a la plus grande vitesse ? Justifie avec les données.', 'Calcule la vitesse moyenne du mobile B en mètres par seconde.', 'Pourquoi faudrait-il connaître aussi la durée si les quatre essais n’avaient pas duré le même temps ?']
+      };
+    }
+
+    if (s === 'pc' && /temperature|therm/.test(txt)) {
+      return {
+        topic: 'temperature', title: 'Quatre températures expérimentales fictives',
+        context: 'Lors de quatre essais imaginaires menés dans les mêmes conditions, on relève une température. Ces mesures sont simulées et ne décrivent aucune expérience réelle.',
+        labels: ['Essai 1', 'Essai 2', 'Essai 3', 'Essai 4'], values: vals, unit: '°C',
+        questions: ['Lors de quel essai la température est-elle la plus élevée ?', 'Calcule l’écart entre la valeur maximale et la valeur minimale.', 'Que faudrait-il contrôler dans un vrai protocole avant d’attribuer cet écart à une cause ?']
+      };
+    }
+
+    if (s === 'pc' && /tension|volt/.test(txt)) {
+      return {
+        topic: 'voltage', title: 'Tensions fictives mesurées aux bornes de quatre dipôles',
+        context: 'Dans un montage fictif, un voltmètre mesure quatre tensions. Les valeurs sont simulées pour travailler la lecture et la comparaison de mesures.',
+        labels: ['Dipôle A', 'Dipôle B', 'Dipôle C', 'Dipôle D'], values: vals, unit: 'V',
+        questions: ['Quel dipôle présente la tension la plus élevée ?', 'Calcule l’écart entre les deux valeurs extrêmes.', 'Quel appareil doit-on utiliser dans un vrai montage pour mesurer une tension ?']
+      };
+    }
+
+    if (s === 'pc' && /intensit|ampere|courant/.test(txt)) {
+      return {
+        topic: 'current', title: 'Intensités fictives dans quatre branches',
+        context: 'Un ampèremètre fictif fournit quatre valeurs d’intensité. Elles servent uniquement à s’entraîner à lire et comparer des mesures.',
+        labels: ['Branche A', 'Branche B', 'Branche C', 'Branche D'], values: vals, unit: 'mA',
+        questions: ['Quelle branche présente l’intensité la plus élevée ?', 'Classe les quatre intensités de la plus petite à la plus grande.', 'Quel appareil utilise-t-on pour mesurer une intensité électrique ?']
+      };
+    }
+
+    if (s === 'pc' && /masse/.test(txt)) {
+      return {
+        topic: 'mass', title: 'Masses fictives de quatre échantillons',
+        context: 'Quatre échantillons fictifs sont pesés avec la même balance. Les valeurs sont simulées pour travailler comparaison et exploitation de mesures.',
+        labels: ['Échantillon A', 'Échantillon B', 'Échantillon C', 'Échantillon D'], values: vals, unit: 'g',
+        questions: ['Quel échantillon est le plus massif ?', 'Calcule l’écart de masse entre les deux valeurs extrêmes.', 'Quelle précaution simple améliorerait la fiabilité d’une vraie mesure ?']
+      };
+    }
+
+    if (s === 'pc' && /volume/.test(txt)) {
+      return {
+        topic: 'volume', title: 'Volumes fictifs de quatre échantillons',
+        context: 'On mesure quatre volumes fictifs avec le même matériel. Ces valeurs servent à entraîner la lecture et la comparaison.',
+        labels: ['Échantillon A', 'Échantillon B', 'Échantillon C', 'Échantillon D'], values: vals, unit: 'mL',
+        questions: ['Quel échantillon possède le plus grand volume ?', 'Calcule l’écart entre le plus grand et le plus petit volume.', 'Quel matériel pourrait être utilisé pour mesurer un volume de liquide ?']
+      };
+    }
+
+    if (s === 'eps' && /frequence|cardiaque|pouls/.test(txt)) {
+      return {
+        topic: 'heart-rate', title: 'Fréquence cardiaque fictive pendant une séance',
+        context: 'On suit un sportif fictif à quatre moments d’une séance. Les valeurs servent uniquement à interpréter une évolution.',
+        labels: ['Repos', 'Échauffement', 'Effort', 'Récupération'], values: vals.map(v => 50 + v * 3), unit: 'bpm',
+        questions: ['À quel moment la fréquence cardiaque est-elle la plus élevée ?', 'Compare la valeur au repos et celle de récupération.', 'Pourquoi plusieurs mesures seraient-elles utiles pour suivre réellement la récupération ?']
+      };
+    }
+
+    if (s === 'eps' && /performance|temps|vitesse/.test(txt)) {
+      return {
+        topic: 'performance', title: 'Temps fictifs sur un parcours sportif',
+        context: 'Un élève fictif effectue quatre essais du même parcours, dans les mêmes conditions. Ici, un temps plus petit correspond à une performance plus rapide.',
+        labels: ['Essai 1', 'Essai 2', 'Essai 3', 'Essai 4'], values: vals, unit: 's',
+        questions: ['Quel essai est le plus rapide ?', 'Calcule l’écart entre le temps le plus long et le temps le plus court.', 'La série suffit-elle à prouver une progression régulière ? Justifie à partir des quatre valeurs.']
+      };
+    }
+
+    return null;
+  }
+
+  function dataWorkshop(id, n) {
+    const name = CHMAP[id]?.name || 'la notion';
+    const spec = dataSpec(id);
+    if (!spec) return synthesis(id, n);
+    const vals = spec.values;
+    const mx = Math.max(...vals);
+    const headers = spec.labels.map(x => `<th style="padding:6px;border-bottom:1px solid #ddd">${esc(x)}</th>`).join('');
+    const cells = vals.map(x => `<td style="padding:8px"><b>${x}</b><br><small>${esc(spec.unit)}</small></td>`).join('');
+    const bars = vals.map((x, i) => `<div style="flex:1;text-align:center"><div title="${x} ${esc(spec.unit)}" style="height:${Math.max(18, Math.round(x / mx * 72))}px;background:currentColor;opacity:${0.35 + i * 0.12};border-radius:6px 6px 0 0"></div><small>${esc(spec.labels[i])}</small></div>`).join('');
+    return `<div class="card mq-data-workshop" data-topic="${esc(spec.topic)}" style="margin:10px 0"><b>📊 ${esc(spec.title)}</b><p>${esc(spec.context)}</p><p class="muted small">Jeu de données d'entraînement MathQuest lié au travail de lecture et de raisonnement autour de « ${esc(name)} ». <b>Ce n'est pas une donnée historique ou scientifique réelle.</b></p><table style="width:100%;border-collapse:collapse;text-align:center"><caption class="sr-only">${esc(spec.title)} — unité : ${esc(spec.unit)}</caption><thead><tr>${headers}</tr></thead><tbody><tr>${cells}</tr></tbody></table><div role="img" aria-label="Graphique de ${esc(spec.title)} en ${esc(spec.unit)}" style="display:flex;gap:5px;align-items:flex-end;height:108px;margin:12px 4px 0">${bars}</div></div>${analysisList(spec.questions)}`;
+  }
+
+  function kind(id) {
+    const s = subject(id);
+    const txt = chapterText(id);
+    if (s === 'maths' && /graph|statist|moyenne|pourcent|proportion|fonction|affine|lineaire|vitesse|distance|duree|donnee|tableau|frequence/.test(txt)) return 'data';
+    if (s === 'svt' && /temperature|therm|croissance|population|effectif|frequence/.test(txt)) return 'data';
+    if (s === 'pc' && /temperature|therm|vitesse|mouvement|distance|tension|volt|intensit|ampere|courant|masse|volume/.test(txt)) return 'data';
+    if (s === 'hg' && /population|demograph|climat|temperature|precip/.test(txt)) return 'data';
+    if (s === 'eps' && /performance|temps|vitesse|frequence|cardiaque|pouls/.test(txt)) return 'data';
+    if (/svt|pc/.test(s)) return 'science';
+    if (/maths|tech|pix|ia|orientation/.test(s)) return 'situation';
+    return 'synthesis';
+  }
+
+  function build(id) {
+    const n = hash(id + '|workshop');
+    const requested = kind(id);
+    const spec = requested === 'data' ? dataSpec(id) : null;
+    const actual = requested === 'data' && !spec ? 'synthesis' : requested;
+    const body = actual === 'data'
+      ? dataWorkshop(id, n)
+      : actual === 'science'
+        ? science(id, n)
+        : actual === 'situation'
+          ? situation(id, n)
+          : synthesis(id, n);
+    return {
+      k: 'mqworkshop',
+      t: '🔎 Atelier : observer, raisonner, justifier',
+      h: `<div class="mq-workshop">${body}${errorBox(id, n)}</div>`,
+      meta: { kind: actual, subject: subject(id), topic: actual === 'data' ? spec.topic : actual }
+    };
+  }
+
+  const baseLessonSteps = lessonSteps;
+  lessonSteps = function (id) {
+    const st = baseLessonSteps(id);
+    if (!Array.isArray(st) || st.some(x => x.k === 'mqworkshop')) return st;
+    const out = st.slice();
+    const workshop = build(id);
+    let i = out.findIndex(x => x.k === 'mqselfcheck');
+    if (i < 0) i = out.findIndex(x => x.k === 'practice' || x.k === 'confidence' || x.k === 'quiz');
+    out.splice(i < 0 ? out.length : i, 0, workshop);
+    return out;
+  };
+
+  window.MQPedagogicalWorkshop = {
+    version: '1.4',
+    subject,
+    facts,
+    chapterText,
+    kind,
+    dataSpec,
+    build
+  };
 })();
