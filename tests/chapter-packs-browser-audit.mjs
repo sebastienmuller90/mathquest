@@ -28,9 +28,11 @@ const audit=await page.evaluate(ids=>{
   const w=MQPedagogicalWorkshop.build(id),steps=lessonSteps(id),ws=steps.filter(x=>x?.k==='mqworkshop');
   r.lessonWorkshopCount=ws.length;r.specific=w?.meta?.kind==='specific'&&/mq-specific-pack/.test(w?.h||'')&&ws.length===1&&/mq-specific-pack/.test(ws[0]?.h||'');
   if(!r.specific)out.errors.push('specific-workshop-missing:'+id);
-  const rendered=(w?.h||'');
-  for(const n of [1,2,3])for(const q of(p.levels?.[n]?.questions||[]))if(rendered.includes(String(q.a)))r.answersHidden=false;
-  if(!r.answersHidden||/mq-answer|data-answer/i.test(rendered))out.errors.push('answer-leak:'+id);
+  // Sonde indépendante du texte source : remplace temporairement une réponse interne par une sentinelle impossible.
+  // Si le renderer utilisait le champ `a`, cette sentinelle apparaîtrait dans le HTML produit.
+  const probeQ=p.levels?.[1]?.questions?.[0],saved=probeQ?.a,sentinel='__MQ_PRIVATE_ANSWER_'+id+'__';
+  if(probeQ){probeQ.a=sentinel;const probeHtml=MQChapterPackIntegration.buildSpecific(id)?.h||'';r.answersHidden=!probeHtml.includes(sentinel)&&!/mq-pack-answer|data-answer/i.test(probeHtml);probeQ.a=saved;}
+  if(!r.answersHidden)out.errors.push('answer-leak:'+id);
   const generated=CHMAP[id].g(2);r.exerciseSpecific=generated?._mq?.applicationSource==='chapter-pack'&&generated._mq.application===p.exerciseContext;
   if(!r.exerciseSpecific)out.errors.push('specific-exercise-context:'+id);
   const tip=MQFinotRemediation.tipFor({cid:id,q:generated});r.finotSpecific=Array.isArray(tip)&&tip[0]===p.misconception?.[0]&&tip[1]===p.misconception?.[1];
