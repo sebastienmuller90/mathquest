@@ -11,7 +11,7 @@ if(typeof ACT==='object'&&typeof ACT.conf==='function'&&!ACT.conf.__manualLevelF
 
 function speakFinot(html){if(!['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase()))return;try{if(typeof ttsSay==='function'){const d=document.createElement('div');d.innerHTML=String(html||'');const t=(d.textContent||'').replace(/\s+/g,' ').trim();if(t)ttsSay({t,l:'fr-FR'});}}catch(e){}}
 function routeIntent(raw){const t=norm(raw);if(!t)return false;
- const has=(...xs)=>xs.some(x=>t.includes(x));
+ const w=' '+t+' ',has=(...xs)=>xs.some(x=>w.includes(' '+x+' '));
  if(has('j ai pas compris','je comprends pas','je ne comprends pas','explique moi','explique simplement','aide moi','aide-moi')){ACT.finotsimple();return true;}
  if(has('indice','un coup de pouce','aide pour la question','bloque','bloquee','je suis bloque')){ACT.finothint2();return true;}
  if(has('lis moi','lire la question','lis la question','lis le cours','ecoute la question')){ACT.finotread2();return true;}

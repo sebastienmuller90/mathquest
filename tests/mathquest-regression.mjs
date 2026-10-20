@@ -38,7 +38,9 @@ assert.equal(verdicts.find(x=>x.cid==='d').good,false);
 assert.equal(context.pathCompact(p).steps.length,6);
 
 const sw=read('sw.js');
-assert.ok(sw.includes("8.49.0-pwa-path-resolution-2026-10-20"),'Version du service worker PWA incorrecte');
+// Format X.Y.Z-description-AAAA-MM-JJ (CLAUDE.md) et au moins la 8.49 (résolution des chemins PWA) : la version change à chaque mise à jour.
+const swv=(sw.match(/const VERSION='(\d+)\.(\d+)\.(\d+)-[a-z0-9-]+-\d{4}-\d{2}-\d{2}'/)||[]).slice(1).map(Number);
+assert.ok(swv.length===3&&(swv[0]>8||(swv[0]===8&&swv[1]>=49)),'Version du service worker PWA incorrecte');
 assert.ok(sw.includes('lexiconImages'),'Le service worker doit pré-cacher le lexique dynamique');
 assert.ok(sw.includes("cache:'reload'"),'Le pré-cache doit contourner le cache HTTP');
 assert.ok(sw.includes("rootRelative?scopeURL.href:base"),'Les littéraux JS doivent être résolus depuis la racine applicative');

@@ -430,3 +430,11 @@ body.young .choice kbd{display:none}
  body.young .qtext{font-size:26px}
 }
 @media (max-width:440px){.qbtns{flex-wrap:wrap}.qbtns .btn{flex:1 1 auto}.qbtns .primary{flex-basis:100%}}
+
+/* ===== Atlas du monde (20/10/2026) ===== */
+.atlgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}.atlcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;text-align:center;font:inherit;color:inherit;cursor:pointer;min-width:0}.atlcard b{font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}.atlcard small{font-size:11.5px;overflow-wrap:anywhere}
+.atlflag{width:64px;height:43px;object-fit:contain;border-radius:4px}.atlnoflag{display:grid;place-items:center;font-size:28px}
+.atlmaps{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.atlmap{flex:0 0 72%;max-width:320px;scroll-snap-align:start;padding:0;overflow:hidden;display:flex;flex-direction:column;font:inherit;color:inherit;cursor:pointer;text-align:left}.atlmap img{width:100%;height:150px;object-fit:cover;display:block;background:var(--surface2)}.atlmap span{padding:8px 10px;font-weight:700;font-size:14px}
+.atlhead{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 12px}.atlbigflag{width:min(46%,220px);height:auto;border-radius:8px;box-shadow:0 2px 8px var(--edge)}.atlbigmap{width:min(46%,240px);height:auto;border-radius:12px;background:#fff}
+.atlfacts{display:flex;flex-direction:column;gap:6px}.atlfacts .frow b{text-align:right;overflow-wrap:anywhere;max-width:62%}.atlnote{background:var(--surface2)}.atltxt p{margin:0 0 10px;line-height:1.6}.atltxt p:last-child{margin:0}.atlcred{margin-top:12px;overflow-wrap:anywhere}.atlcred a{color:var(--accent-text)}
+.atlbig img{max-height:none;object-fit:contain;background:#fff}

@@ -3,7 +3,7 @@
    rotation anti-mémorisation, tableaux de bord parent détaillés et résolution fiable des assets JS.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.50.0-images-lecons-2026-10-20';
+const VERSION='8.51.0-atlas-fusion-codex-2026-10-20';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).
