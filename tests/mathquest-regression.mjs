@@ -71,4 +71,25 @@ assert.ok(exists('data/questions/transfer-scenarios.js'),'Situations de transfer
 const workshop=read('js/pedagogical-workshop.js');
 assert.ok(workshop.includes('Document pédagogique MathQuest'),'Les documents de synthèse doivent être identifiés comme pédagogiques');
 assert.ok(workshop.includes("Ce n'est pas une donnée historique ou scientifique réelle"),'Les données simulées doivent être explicitement signalées');
+// Packs spécifiques de 6e (PR #6), intégrés après stabilisation : rattachement explicite par chapterId.
+assert.ok(index.indexOf('data/pedagogy/content-banks.js')<index.indexOf('data/pedagogy/chapter-packs-6e.js'),'Les banques transversales doivent précéder les packs spécifiques');
+assert.ok(index.indexOf('data/pedagogy/chapter-packs-6e.js')<index.indexOf('data/pedagogy/chapter-packs-6e-lot2.js'),'Le lot 1 doit être chargé avant son extension lot 2');
+assert.ok(index.indexOf('data/pedagogy/chapter-packs-6e-lot2.js')<index.indexOf('js/pedagogical-workshop.js'),'Tous les packs spécifiques doivent être disponibles avant les ateliers');
+assert.ok(index.indexOf('js/pedagogical-workshop.js')<index.indexOf('js/chapter-pack-integration.js'),'L’intégration spécifique doit suivre l’atelier transversal');
+assert.ok(index.indexOf('js/chapter-pack-integration.js')<index.indexOf('js/pedagogical-exercise-context.js'),'Les packs doivent être intégrés avant le contexte d’exercice');
+assert.ok(exists('data/pedagogy/chapter-packs-6e.js'),'Banque de packs spécifiques 6e absente');
+assert.ok(exists('data/pedagogy/chapter-packs-6e-lot2.js'),'Deuxième lot de packs spécifiques 6e absent');
+assert.ok(exists('js/chapter-pack-integration.js'),'Intégration des packs spécifiques absente');
+const packs=read('data/pedagogy/chapter-packs-6e.js');
+for(const id of ["'6p'","'fr6a'","'hg6o'","'pc6f'"])assert.ok(packs.includes(id),`Pack spécifique lot 1 manquant : ${id}`);
+for(const type of ["type:'simulation'","type:'creation'","type:'reconstitution'"])assert.ok(packs.includes(type),`Provenance de pack lot 1 absente : ${type}`);
+const packs2=read('data/pedagogy/chapter-packs-6e-lot2.js');
+for(const id of ["'6g'","'fr6j'","'svt6a'","'hg6s'"])assert.ok(packs2.includes(id),`Pack spécifique lot 2 manquant : ${id}`);
+for(const marker of ['partage, mesure et quotient','nature grammaticale','conseil alimentaire personnalisé','contrainte naturelle'])assert.ok(packs2.toLowerCase().includes(marker.toLowerCase()),`Contrôle sémantique lot 2 manquant : ${marker}`);
+assert.ok(packs2.includes('questionScope')&&packs2.includes('matchesQuestion'),'Le lot 2 doit permettre de cibler les aides selon la question réellement exercée');
+assert.ok(read('js/pedagogical-exercise-context.js').includes('matchingPack'),'Le contexte d’exercice doit respecter le ciblage par question');
+assert.ok(read('js/finot-remediation-bank.js').includes('matchingPack'),'Finot doit respecter le même ciblage par question');
+assert.ok(read('data/pedagogy/README.md').includes('`creation`'),'Le standard de provenance doit distinguer les créations originales');
+assert.ok(read('js/chapter-pack-integration.js').includes('mq-specific-pack'),'Le rendu spécifique doit être identifiable dans le DOM');
+assert.ok(!read('js/pedagogical-exercise-context.js').includes('Imagine que cette notion apparaisse dans ${'),'Plus de « situation réelle » générique tirée au hasard');
 console.log('MathQuest regression audit: OK');

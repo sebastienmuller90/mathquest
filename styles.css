@@ -22,7 +22,9 @@ h1{font-size:24px;margin:0;font-weight:600}h2{font-weight:600}
 button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .btn{border:2px solid var(--border);background:var(--surface);color:var(--text);border-radius:16px;padding:12px 18px;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 4px 0 var(--border);transition:transform .08s,box-shadow .08s}
-.btn:hover{transform:translateY(-2px) scale(1.02)}.btn:active{transform:translateY(3px) scale(.96);box-shadow:0 1px 0 var(--border)}
+/* Survol : ombre et luminosité seulement, jamais de transformation. Un bouton qui bougeait au survol (montée, agrandissement)
+   faisait sortir puis rentrer un pointeur posé sur son bord : il clignotait sans fin et devenait difficile à cliquer. */
+.btn:hover{box-shadow:0 6px 0 var(--border);filter:brightness(1.04)}.btn:active{transform:translateY(3px) scale(.96);box-shadow:0 1px 0 var(--border)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 55%,#000)}
 .btn.ghost{background:transparent;box-shadow:none;border-color:transparent}
 .btn.sm{padding:6px 12px;font-size:20px}
@@ -48,7 +50,7 @@ button.pill{cursor:pointer}.pill.fire{border-color:var(--gold);background:color-
 .worlds{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .world{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:16px;border-radius:24px;border:0;cursor:pointer;color:#fff;min-height:150px;overflow:hidden;
  background:linear-gradient(150deg,color-mix(in srgb,var(--wc) 80%,#fff),var(--wc) 55%,color-mix(in srgb,var(--wc) 70%,#000));box-shadow:0 6px 0 color-mix(in srgb,var(--wc) 50%,#000);transition:transform .12s}
-.world:hover{transform:translateY(-4px) rotate(-1.5deg) scale(1.03)}.world:active{transform:translateY(2px) scale(.95) rotate(1deg)}
+.world:hover{filter:brightness(1.05);box-shadow:0 8px 18px rgba(0,0,0,.14)}.world:active{transform:translateY(2px) scale(.95) rotate(1deg)}
 .we{font-size:52px;line-height:1;filter:drop-shadow(0 3px 0 rgba(0,0,0,.2))}.wl{font-size:30px;font-weight:700;line-height:1;margin-top:6px}.wn{font-size:15px;opacity:.95}.ws{margin-top:auto;font-size:15px;background:rgba(0,0,0,.2);border-radius:99px;padding:2px 10px}
 .tools{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
 .tool{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:20px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 4px 0 var(--edge);text-align:center}
@@ -89,7 +91,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .chips{display:flex;gap:8px;margin-top:10px}.chip{min-width:48px;padding:6px 12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:20px;font-weight:700;cursor:pointer}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .choice{display:flex;align-items:center;gap:10px;text-align:left;padding:14px;border-radius:18px;border:3px solid color-mix(in srgb,var(--accent) 38%,var(--border));background:var(--surface2);font-size:20px;font-weight:600;cursor:pointer;box-shadow:0 4px 0 var(--edge);transition:transform .1s}
-.choice:hover:not(:disabled){transform:translateX(3px) scale(1.015)}.choice:active:not(:disabled){transform:scale(.97)}
+.choice:hover:not(:disabled){filter:brightness(1.04);border-color:var(--accent)}.choice:active:not(:disabled){transform:scale(.97)}
 .choice kbd{font:600 13px 'Nunito',sans-serif;background:var(--surface);border-radius:8px;padding:2px 7px;color:var(--muted)}
 .choice.good{border-color:var(--good);background:var(--goodbg)}.choice.bad{border-color:var(--bad);background:var(--badbg)}.choice:disabled{cursor:default}
 .qbtns{display:flex;gap:10px;justify-content:space-between;margin-top:16px}.qbtns .primary{flex:1}

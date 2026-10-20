@@ -1,7 +1,9 @@
-import { chromium } from 'playwright';
+import * as playwright from 'playwright';
+// Moteur choisi par la CI (matrice chromium / firefox / webkit) ; chromium par défaut.
+const engine=playwright[process.env.MQ_BROWSER||'chromium'];
 import fs from 'node:fs';
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173',errors=[],warnings=[],fail=m=>errors.push(m);
-const browser=await chromium.launch({headless:true});
+const browser=await engine.launch({headless:true});
 const ctx=await browser.newContext({viewport:{width:430,height:900},reducedMotion:'reduce'});
 await ctx.addInitScript(()=>{const id='phase4qa',profile={name:'Phase4QA',avatar:'🦊',grade:'6e',subj:'maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}},recent:{},chap:{},lessons:{},lessonScores:{},review:{},mistakes:{},confidence:{},adaptive:{answers:0,adaptations:0},competencies:{},xp:0,coins:0,totalQ:0,totalOk:0};localStorage.setItem('mathquest_profiles_v2',JSON.stringify({version:3,active:id,profiles:{[id]:profile}}));});
 const page=await ctx.newPage();page.on('pageerror',e=>fail('runtime:'+e.message));
@@ -62,7 +64,8 @@ const coverage=await page.evaluate(()=>{
     const leaks=(spec?.questions||[]).some(q=>/\(\s*[-+]?\d+(?:[.,]\d+)?/.test(q));if(!leaks)out.dataNoAnswerLeak++;else out.errors.push('data-answer-leak:'+id);
    }
    const steps=lessonSteps(id),n=steps.filter(x=>x.k==='mqworkshop').length;if(n!==1)out.errors.push('lesson-workshop:'+id+':'+n);
-   const q=ch.g(2);if(q?._mq?.application)out.contexts++;else out.errors.push('context:'+id);
+   // Règle de stabilisation : contexte spécifique au chapitre (pack, question dans son périmètre) ou ABSENT.
+   const q=ch.g(2),pk=window.MQChapterPacks?.packs?.[id],ok=((p,q)=>!!p&&(typeof MQChapterPacks.matchesQuestion!=='function'||MQChapterPacks.matchesQuestion(p,q)))(pk,q)?q?._mq?.application===pk.exerciseContext:!q?._mq?.application;if(ok)out.contexts++;else out.errors.push('context:'+id);
    const tip=MQFinotRemediation.tipFor({cid:id,q});if(Array.isArray(tip)&&tip.length===2)out.remediations++;else out.errors.push('remediation:'+id);
   }catch(e){out.errors.push(id+':'+e.message);}
  }
@@ -116,10 +119,11 @@ await page.evaluate(()=>{L.i=L.steps.findIndex(x=>x.k==='mqworkshop');renderLess
 const lessonVisual=await page.evaluate(()=>({workshop:!!document.querySelector('.mq-workshop'),analysis:/À toi d.analyser|À toi d'analyser/.test(document.body.innerText),trap:/Piège fréquent/.test(document.body.innerText)}));
 if(!lessonVisual.workshop||!lessonVisual.analysis||!lessonVisual.trap)fail('workshop-not-rendered');await page.screenshot({path:'tests/screenshots/phase4-workshop.png',fullPage:true});
 await page.evaluate(id=>{home();startMission([id]);},target);await page.waitForSelector('.qcard');await page.waitForTimeout(80);
-const exVisual=await page.evaluate(()=>({context:!!document.querySelector('.mq-application'),text:document.querySelector('.mq-application')?.textContent||'',answer:M?.q?.ans,type:M?.q?.type}));if(!exVisual.context||!exVisual.text.includes('situation réelle'))fail('exercise-context-not-rendered');await page.screenshot({path:'tests/screenshots/phase4-exercise-context.png',fullPage:true});
+const exVisual=await page.evaluate(()=>({context:!!document.querySelector('.mq-application'),text:document.querySelector('.mq-application')?.textContent||'',answer:M?.q?.ans,type:M?.q?.type}));const exExpected=await page.evaluate(()=>((p,q)=>!!p&&(typeof MQChapterPacks.matchesQuestion!=='function'||MQChapterPacks.matchesQuestion(p,q)))(window.MQChapterPacks?.packs?.[M.cid],M.q));if(exVisual.context!==exExpected||(exExpected&&!exVisual.text.includes('Pour ce chapitre')))fail('exercise-context-routing:'+JSON.stringify({exExpected,exVisual}));
+await page.evaluate(()=>{home();startMission(['6p']);});await page.waitForSelector('.qcard');const packVisual=await page.evaluate(()=>({context:!!document.querySelector('.mq-application'),text:document.querySelector('.mq-application')?.textContent||''}));if(!packVisual.context||!packVisual.text.includes('Pour ce chapitre'))fail('pack-context-not-rendered:'+JSON.stringify(packVisual));await page.screenshot({path:'tests/screenshots/phase4-exercise-context.png',fullPage:true});
 const flashCheck=await page.evaluate(()=>{document.querySelector('.mq-application')?.remove();M.flash=true;renderQ();const during=!!document.querySelector('.mq-application');M.flash=false;renderQ();const after=!!document.querySelector('.mq-application');return{during,after};});if(flashCheck.during||!flashCheck.after)fail('flash-context-visibility');
 const finotTip=await page.evaluate(()=>{const t=MQFinotRemediation.tipFor({cid:M.cid,q:M.q});return{ok:Array.isArray(t)&&t.length===2,tip:t};});if(!finotTip.ok)fail('finot-remediation-unavailable');
 await page.evaluate(()=>{finotOpen();result(false);finotAsk('Pourquoi ma réponse est fausse ?');});await page.waitForTimeout(140);
-const typedFinot=await page.evaluate(()=>({last:!!MQFinotError?.last,chat:!!document.querySelector('#finotchat.open'),trap:/Un piège fréquent dans cette matière/.test(document.getElementById('finotchat')?.innerText||''),hook:MQFinotRemediation.hookActive}));if(!typedFinot.last||!typedFinot.chat||!typedFinot.trap||!typedFinot.hook)fail('typed-finot-remediation-missing');
+const typedFinot=await page.evaluate(()=>({last:!!MQFinotError?.last,chat:!!document.querySelector('#finotchat.open'),trap:/Un piège fréquent dans (cette matière|ce chapitre)/.test(document.getElementById('finotchat')?.innerText||''),hook:MQFinotRemediation.hookActive}));if(!typedFinot.last||!typedFinot.chat||!typedFinot.trap||!typedFinot.hook)fail('typed-finot-remediation-missing');
 await browser.close();
 const out={coverage,intentChecks,lessonVisual,exVisual,flashCheck,finotTip,typedFinot,errorCount:errors.length,errors,warnings};fs.writeFileSync('tests/phase4-pedagogy-audit-report.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));if(errors.length)process.exitCode=1;else console.log('PHASE4_PEDAGOGY_AUDIT_OK');
