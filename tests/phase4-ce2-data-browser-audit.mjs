@@ -10,7 +10,7 @@ const page=await ctx.newPage();
 page.on('pageerror',e=>fail('runtime:'+e.message));
 
 await page.goto(base+'/index.html',{waitUntil:'load'});
-await page.waitForFunction(()=>window.MQPedagogicalWorkshop&&window.CHMAP?.['ce2-ma-donnees'],{timeout:8000});
+await page.waitForFunction(()=>window.MQPedagogicalWorkshop&&typeof CHMAP!=='undefined'&&!!CHMAP?.['ce2-ma-donnees'],{timeout:8000});
 
 const audit=await page.evaluate(()=>{
   const id='ce2-ma-donnees';
