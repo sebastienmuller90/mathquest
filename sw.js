@@ -1,8 +1,9 @@
 /* MathQuest — service worker hors ligne.
-   V8.47 : cache auto-découvert + nouvelle couche pédagogique trois niveaux et Finot enrichi.
+   V8.48 : cache auto-découvert + niveaux pédagogiques, Finot enrichi, interrogation parent,
+   rotation anti-mémorisation et tableaux de bord parent détaillés.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.47.0-pedagogy-levels-2026-10-20';
+const VERSION='8.48.0-parent-assessment-dashboard-2026-10-20';
 const CACHE='mathquest-'+VERSION;
 const SEEDS=['./','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css','./fonts/fonts.css'];
 const TEXT_EXT=/\.(?:html?|js|css|webmanifest)$/i;
