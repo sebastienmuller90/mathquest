@@ -34,6 +34,7 @@ const packs={
   },
   'svt6a':{
     subject:'svt',grade:'6e',competency:'Relier les groupes d’aliments à leurs rôles et expliquer pourquoi les besoins alimentaires varient selon les situations.',
+    questionScope:{exclude:['micro-organisme','micro-organismes','levure','ferment','stéril','pasteuris','conserv','réfrigér','congél','yaourtière','saucisson','jambon']},
     provenance:{type:'synthese',label:'Dossier de synthèse MathQuest fondé sur le cours de 6e',refs:['Cycle 3 — sciences et technologie, arrêté du 15 juin 2023 (MENE2314101A), BO n°25 du 22 juin 2023','Éduscol — cycle 3, alimentation humaine et besoins de l’organisme']},
     object:{title:'Dossier : composer et analyser un plateau fictif',html:`<p>Pour un exercice de sciences, on prépare un plateau fictif avec : <b>eau, lentilles, riz, carottes, yaourt nature et pomme</b>.</p><table class="ptable"><tr><th>Élément du cours</th><th>Rôle général à retenir</th></tr><tr><td>Protéines</td><td>Participent notamment à la construction et au renouvellement des tissus.</td></tr><tr><td>Glucides et lipides</td><td>Peuvent fournir de l’énergie à l’organisme.</td></tr><tr><td>Eau, vitamines, sels minéraux, fibres</td><td>Participent au bon fonctionnement de l’organisme selon des rôles différents.</td></tr></table><p class="muted small">Le plateau est une situation pédagogique fictive. Il ne constitue pas un conseil alimentaire personnalisé ni un menu médical.</p>`},
     levels:{
@@ -61,6 +62,16 @@ const packs={
     finot:{steps:['Repère la contrainte naturelle précise.','Cherche ce qu’elle rend plus difficile.','Identifie la technique, la mobilité ou l’aménagement qui répond à cette difficulté.','Ajoute si nécessaire un effet sur le milieu ou une limite.']}
   }
 };
+const normQuestion=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+function matchesQuestion(pack,q){
+ const scope=pack?.questionScope;if(!scope)return true;
+ const text=normQuestion([q?.q,q?.text,q?.prompt].filter(Boolean).join(' '));if(!text)return false;
+ const excludes=Array.isArray(scope.exclude)?scope.exclude:[],includes=Array.isArray(scope.include)?scope.include:[];
+ if(excludes.some(x=>text.includes(normQuestion(x))))return false;
+ if(includes.length&&!includes.some(x=>text.includes(normQuestion(x))))return false;
+ return true;
+}
 Object.assign(window.MQChapterPacks.packs,packs);
-window.MQChapterPacks.version='1.2';
+window.MQChapterPacks.matchesQuestion=matchesQuestion;
+window.MQChapterPacks.version='1.3';
 })();
