@@ -1,0 +1,39 @@
+/* MathQuest — densité et ergonomie adaptées à l'âge. Aucune fonctionnalité n'est masquée. */
+body[data-mq-age="young"] #app{max-width:680px}
+body[data-mq-age="young"] .btn{min-height:52px;font-size:19px}
+body[data-mq-age="young"] .btn.big{min-height:62px;font-size:22px}
+body[data-mq-age="young"] .qtext{font-size:28px;line-height:1.5}
+body[data-mq-age="young"] .choice{min-height:64px;font-size:21px;padding:16px}
+body[data-mq-age="young"] input.big{min-height:60px;font-size:30px}
+body[data-mq-age="young"] .tool{min-height:94px;font-size:16px}
+body[data-mq-age="young"] .tool span{font-size:34px}
+body[data-mq-age="young"] .fch-chip.kid{min-height:50px;font-size:17px}
+body[data-mq-age="young"] .mq-qmeta{gap:5px}
+body[data-mq-age="young"] .mq-skill{font-size:14px;padding:6px 11px}
+body[data-mq-age="young"] .mq-context{font-size:14px;border-radius:16px;padding:7px 10px}
+body[data-mq-age="young"] .diag-home-card .ri{font-size:46px}
+body[data-mq-age="young"] .diag-head p{font-size:15px}
+body[data-mq-age="young"] .world{min-height:128px}
+body[data-mq-age="young"] .wl{font-size:26px}
+
+body[data-mq-age="bridge"] .qtext{font-size:26px}
+body[data-mq-age="bridge"] .choice{min-height:56px}
+body[data-mq-age="bridge"] .btn.big{min-height:56px}
+
+body[data-mq-age="teen"] .card{border-radius:18px}
+body[data-mq-age="teen"] .btn{border-radius:13px}
+body[data-mq-age="teen"] .world{border-radius:18px;min-height:126px}
+body[data-mq-age="teen"] .qtext{font-size:23px}
+body[data-mq-age="teen"] .choice{font-size:18px;border-radius:14px}
+body[data-mq-age="teen"] .tool{border-radius:15px}
+body[data-mq-age="teen"] .mq-context{font-size:12px}
+
+@media(max-width:620px){
+ body[data-mq-age="young"] .worlds{grid-template-columns:1fr}
+ body[data-mq-age="young"] .tools{grid-template-columns:1fr 1fr}
+ body[data-mq-age="young"] .choices{grid-template-columns:1fr}
+ body[data-mq-age="young"] .qbtns{flex-direction:column}
+ body[data-mq-age="young"] .chaps{grid-template-columns:1fr}
+ body[data-mq-age="young"] .lpd-kpis{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){body[data-mq-age] *{scroll-behavior:auto!important}}
