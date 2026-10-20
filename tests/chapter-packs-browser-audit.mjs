@@ -69,6 +69,19 @@ const svtRouting=await page.evaluate(()=>{
 });
 if(!svtRouting.nutritionMatch||svtRouting.fermentationMatch||svtRouting.nutritionSource!=='chapter-pack'||svtRouting.fermentationSource!=='generic'||!svtRouting.nutritionTipSpecific||svtRouting.fermentationTipSpecific)fail('svt-question-scope-routing:'+JSON.stringify(svtRouting));
 
+const frRouting=await page.evaluate(()=>{
+ const pack=MQChapterPacks.packs.fr6a;
+ const expressive={q:'Comment lire cette réplique avec expressivité ? Le personnage murmure puis s’exclame.'};
+ const numeric={q:'Un élève lit correctement 195 mots en 1 min 30 s. Quelle est sa vitesse de lecture, en mots par minute ?'};
+ const expressiveMatch=MQChapterPacks.matchesQuestion(pack,expressive),numericMatch=MQChapterPacks.matchesQuestion(pack,numeric);
+ MQPedagogicalExercise.decorate('fr6a',expressive);MQPedagogicalExercise.decorate('fr6a',numeric);
+ const et=MQFinotRemediation.tipFor({cid:'fr6a',q:expressive}),nt=MQFinotRemediation.tipFor({cid:'fr6a',q:numeric});
+ const expressiveTipSpecific=Array.isArray(et)&&et[0]===pack.misconception[0]&&et[1]===pack.misconception[1];
+ const numericTipSpecific=Array.isArray(nt)&&nt[0]===pack.misconception[0]&&nt[1]===pack.misconception[1];
+ return{expressiveMatch,numericMatch,expressiveSource:expressive._mq?.applicationSource,numericSource:numeric._mq?.applicationSource,expressiveTipSpecific,numericTipSpecific};
+});
+if(!frRouting.expressiveMatch||frRouting.numericMatch||frRouting.expressiveSource!=='chapter-pack'||frRouting.numericSource!=='generic'||!frRouting.expressiveTipSpecific||frRouting.numericTipSpecific)fail('fr6a-question-scope-routing:'+JSON.stringify(frRouting));
+
 for(const id of ids){
  await page.evaluate(id=>openLesson(id),id);
  await page.waitForFunction(id=>typeof L!=='undefined'&&L?.steps?.some(x=>x.k==='mqworkshop'&&/mq-specific-pack/.test(x.h||'')),id);
@@ -81,7 +94,7 @@ for(const id of ids){
 }
 
 await browser.close();
-const report={audit,svtRouting,errorCount:errors.length,errors};
+const report={audit,svtRouting,frRouting,errorCount:errors.length,errors};
 fs.writeFileSync('tests/chapter-packs-audit-report.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report,null,2));
 if(errors.length)process.exitCode=1;else console.log('CHAPTER_PACKS_AUDIT_OK');
