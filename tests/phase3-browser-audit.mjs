@@ -13,7 +13,7 @@ if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eli
 await page.evaluate(()=>ACT.diagstart());
 for(let step=0;step<12;step++){
  await page.waitForSelector('.qcard');
- const acted=await page.evaluate(()=>{const choice=document.querySelector('[data-a^="diagpick:"]');if(choice){choice.click();return'choice';}const toks=[...document.querySelectorAll('[data-a^="diagtok:"]')];if(toks.length){toks.forEach(x=>x.click());document.querySelector('[data-a="diagvalid"]')?.click();return'order';}const ins=[...document.querySelectorAll('[id^="di"]')];if(ins.length){ins.forEach(x=>x.value='0');document.querySelector('[data-a="diagvalid"]')?.click();return'input';}return'';});
+ const acted=await page.evaluate(()=>{const choice=document.querySelector('[data-a^="diagpick:"]');if(choice){const i=+choice.dataset.a.split(':')[1];ACT.diagpick(i);return'choice';}const toks=[...document.querySelectorAll('[data-a^="diagtok:"]')];if(toks.length){const idx=toks.map(x=>+x.dataset.a.split(':')[1]);idx.forEach(i=>ACT.diagtok(i));ACT.diagvalid();return'order';}const ins=[...document.querySelectorAll('[id^="di"]')];if(ins.length){ins.forEach(x=>x.value='0');ACT.diagvalid();return'input';}return'';});
  if(!acted){fail('diagnostic-no-input-step-'+step);break;}await page.waitForTimeout(20);
 }
 await page.waitForFunction(()=>S.diagnostic?.completedAt||document.querySelector('[data-a="home"]'));
@@ -21,16 +21,13 @@ const diag=await page.evaluate(()=>({done:!!S.diagnostic?.completedAt,n:S.diagno
 if(!diag.done||diag.n!==12)fail('diagnostic-not-complete');if(diag.xp!==initial.xp||diag.coins!==initial.coins)fail('diagnostic-rewarded');if(!diag.comp)fail('diagnostic-no-competencies');
 const transfer=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),q=CHMAP[id].g(2);return {id,transfer:q?._mq?.transfer||'',skill:q?._mq?.skillKind||''};});
 if(!transfer.transfer)fail('transfer-missing');if(!transfer.skill)fail('transfer-skill-missing');
-// Crée une faiblesse explicite et vérifie que le parcours peut l'annoter.
 const focus=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),skill=MQCompetency.skillsForChapter(id)[0],q=CHMAP[id].g(1);for(let i=0;i<5;i++)MQCompetency.record(S,id,false,{source:'practice',d:1,q,kind:skill.kind});const f=MQPathSkillFocus.focusFor(id);const p={steps:[{kind:'lesson',cid:id,subj:sOf(WMAP[id].id).id,status:'next',score:null,ms:0}],date:dstr(Date.now())};MQPathSkillFocus.ensureFocus(p);return {id,focus:f,stored:p.skillFocus?.[id]||null};});
 if(!focus.focus||!focus.stored)fail('path-skill-focus-missing');
-// Provoque une erreur standard et vérifie l'analyse Finot.
 await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function');startMission([id]);});
 await page.waitForSelector('.qcard');
 await page.evaluate(()=>{const q=M.q;if(q.type==='choice'){let wrong=0;if(wrong===q.ans)wrong=(wrong+1)%q.choices.length;validate(wrong);}else if(q.type==='order'){q._sel=(q.tokens||[]).map((_,i)=>i).reverse();validate();}else if(q.type==='multi'){document.querySelectorAll('.ans input').forEach(x=>x.value='999999');validate();}else{const x=document.getElementById('in0');if(x)x.value='999999';validate();}});
 await page.waitForTimeout(50);
 const finot=await page.evaluate(()=>({last:!!MQFinotError.last,button:!!document.querySelector('[data-a="finotwhy"]')}));if(!finot.last)fail('finot-error-not-captured');if(!finot.button)fail('finot-why-button-missing');
-// L'interface doit changer de densité avec la classe.
 const age=await page.evaluate(()=>{S.grade='3e';MQAgeUI.apply();return document.body.dataset.mqAge;});if(age!=='teen')fail('3e-age-not-teen');
 await browser.close();
 const out={initial,diag,transfer,focus,finot,teenAge:age,errorCount:errors.length,errors};fs.writeFileSync('tests/phase3-browser-audit-report.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));if(errors.length)process.exitCode=1;else console.log('PHASE3_BROWSER_AUDIT_OK');
