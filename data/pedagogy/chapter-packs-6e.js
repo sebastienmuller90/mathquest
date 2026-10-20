@@ -21,7 +21,7 @@ const packs={
   },
   'fr6a':{
     subject:'francais',grade:'6e',competency:'Préparer une lecture orale fluide et expressive en s’appuyant sur la ponctuation et les indices du texte.',
-    provenance:{type:'reconstitution',label:'Court texte original écrit pour MathQuest',refs:['Français cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Éduscol — exemples pour la mise en œuvre du programme de français en 6e (2025)']},
+    provenance:{type:'creation',label:'Court texte original écrit pour MathQuest',refs:['Français cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Éduscol — exemples pour la mise en œuvre du programme de français en 6e (2025)']},
     object:{title:'Préparer la lecture d’un dialogue',html:`<div class="trad"><p>La pluie frappait les vitres. Lina s’approcha de la porte et tendit l’oreille.</p><p>— Tu as entendu ? murmura-t-elle.</p><p>Un nouveau craquement retentit dans le couloir.</p><p>— Il y a quelqu’un ! s’exclama Sami.</p><p>Lina leva la main.</p><p>— Chut… écoute d’abord.</p></div><p class="muted small">Texte original MathQuest : il ne s’agit pas d’un extrait d’œuvre publiée.</p>`},
     levels:{
       1:{label:'Facile',questions:[{q:'Quel mot indique que Lina parle très doucement ?',a:'murmura',hint:'Cherche le verbe placé après sa première réplique.'},{q:'Quel signe de ponctuation indique une question ?',a:'le point d’interrogation',hint:'Observe la fin de « Tu as entendu ? ».'}]},
@@ -35,7 +35,7 @@ const packs={
   },
   'hg6o':{
     subject:'hg',grade:'6e',competency:'Expliquer les transformations du Néolithique en reliant production de nourriture, sédentarisation et transformation des paysages.',
-    provenance:{type:'synthese',label:'Dossier de synthèse MathQuest construit à partir du cours',refs:['Histoire-Géographie cycle 3 — programme en vigueur en 6e, BO n°31 du 30 juillet 2020']},
+    provenance:{type:'reconstitution',label:'Reconstitution pédagogique originale MathQuest construite à partir du cours',refs:['Histoire-Géographie cycle 3 — programme en vigueur en 6e, BO n°31 du 30 juillet 2020']},
     object:{title:'Dossier : un village néolithique reconstitué',html:`<p><b>Reconstitution pédagogique.</b> Vers 7 000 av. J.-C., dans une région européenne imaginaire, un groupe vit désormais une grande partie de l’année au même endroit. Près des maisons en bois et en terre, on observe des champs de céréales, des enclos avec des animaux, des fosses de stockage et un espace où l’on fabrique des poteries.</p><ul><li>Les céréales sont semées puis récoltées.</li><li>Des animaux domestiqués fournissent viande, lait ou matières premières.</li><li>Le stockage permet de conserver une partie des récoltes.</li><li>Le village nécessite des défrichements et transforme le paysage.</li></ul><p class="muted small">Ce village est une reconstitution originale MathQuest, pas un site archéologique réel ni un document d’époque.</p>`},
     levels:{
       1:{label:'Facile',questions:[{q:'Cite deux indices montrant que ce groupe produit une partie de sa nourriture.',a:'Les champs cultivés et les animaux domestiqués/enclos.',hint:'Cherche ce qui concerne cultures et élevage.'},{q:'Quel indice montre que le groupe est sédentaire ?',a:'Il vit une grande partie de l’année au même endroit dans un village de maisons.',hint:'Sédentaire signifie installé durablement.'}]},
@@ -62,5 +62,5 @@ const packs={
     finot:{steps:['Repère la distance et la durée.','Vérifie leurs unités.','Calcule v = d ÷ t.','Compare uniquement des vitesses exprimées dans la même unité.']}
   }
 };
-window.MQChapterPacks={version:'1.0',packs};
+window.MQChapterPacks={version:'1.1',packs};
 })();
