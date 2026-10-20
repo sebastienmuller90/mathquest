@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173',errors=[],fail=m=>errors.push(m);
-const ids=['6p','fr6a','hg6o','pc6f'];
+const ids=['6p','fr6a','hg6o','pc6f','6g','fr6j','svt6a','hg6s'];
 const browser=await chromium.launch({headless:true});
 const ctx=await browser.newContext({viewport:{width:430,height:900},reducedMotion:'reduce'});
 await ctx.addInitScript(()=>{const id='packqa',profile={name:'PackQA',avatar:'🦊',grade:'6e',subj:'maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}},recent:{},chap:{},lessons:{},lessonScores:{},review:{},mistakes:{},confidence:{},adaptive:{answers:0,adaptations:0},competencies:{},xp:0,coins:0,totalQ:0,totalOk:0};localStorage.setItem('mathquest_profiles_v2',JSON.stringify({version:3,active:id,profiles:{[id]:profile}}));});
@@ -11,7 +11,7 @@ await page.waitForFunction(()=>window.MQChapterPacks&&window.MQChapterPackIntegr
 
 const audit=await page.evaluate(ids=>{
  const allowed=new Set(['source','creation','reconstitution','synthese','simulation']);
- const out={packCount:Object.keys(MQChapterPacks.packs||{}).length,packs:{},genericWitness:null,errors:[]};
+ const out={packCount:Object.keys(MQChapterPacks.packs||{}).length,version:MQChapterPacks.version,packs:{},semantic:{},genericWitness:null,errors:[]};
  for(const id of ids){
   const p=MQChapterPacks.packs?.[id],r={exists:!!p,levels:0,questions:0,answersHidden:true,provenance:null,lessonWorkshopCount:0,specific:false,exerciseSpecific:false,finotSpecific:false};
   if(!p){out.errors.push('missing-pack:'+id);out.packs[id]=r;continue;}
@@ -28,8 +28,6 @@ const audit=await page.evaluate(ids=>{
   const w=MQPedagogicalWorkshop.build(id),steps=lessonSteps(id),ws=steps.filter(x=>x?.k==='mqworkshop');
   r.lessonWorkshopCount=ws.length;r.specific=w?.meta?.kind==='specific'&&/mq-specific-pack/.test(w?.h||'')&&ws.length===1&&/mq-specific-pack/.test(ws[0]?.h||'');
   if(!r.specific)out.errors.push('specific-workshop-missing:'+id);
-  // Sonde indépendante du texte source : remplace temporairement une réponse interne par une sentinelle impossible.
-  // Si le renderer utilisait le champ `a`, cette sentinelle apparaîtrait dans le HTML produit.
   const probeQ=p.levels?.[1]?.questions?.[0],saved=probeQ?.a,sentinel='__MQ_PRIVATE_ANSWER_'+id+'__';
   if(probeQ){probeQ.a=sentinel;const probeHtml=MQChapterPackIntegration.buildSpecific(id)?.h||'';r.answersHidden=!probeHtml.includes(sentinel)&&!/mq-pack-answer|data-answer/i.test(probeHtml);probeQ.a=saved;}
   if(!r.answersHidden)out.errors.push('answer-leak:'+id);
@@ -39,13 +37,20 @@ const audit=await page.evaluate(ids=>{
   if(!r.finotSpecific)out.errors.push('specific-finot:'+id);
   out.packs[id]=r;
  }
+ const allText=id=>{const p=MQChapterPacks.packs?.[id]||{},qs=Object.values(p.levels||{}).flatMap(x=>x.questions||[]);return [p.competency,p.object?.title,p.object?.html,p.exerciseContext,p.transfer?.prompt,...qs.flatMap(x=>[x.q,x.hint])].join(' ').toLowerCase();};
+ out.semantic.fractions=/partage/.test(allText('6g'))&&/quotient/.test(allText('6g'))&&/7\/4/.test(allText('6g'));
+ out.semantic.natureFunction=/nature/.test(allText('fr6j'))&&/fonction/.test(allText('fr6j'))&&/sujet/.test(allText('fr6j'))&&/cod/.test(allText('fr6j'));
+ out.semantic.nutrition=/protéin|protein/.test(allText('svt6a'))&&/énergie|energie/.test(allText('svt6a'))&&/conseil alimentaire personnalisé|conseil alimentaire personnalise/.test(allText('svt6a'));
+ out.semantic.constraints=/contrainte/.test(allText('hg6s'))&&/adaptation/.test(allText('hg6s'))&&/fictif|imaginaire/.test(allText('hg6s'));
  const witness=Object.keys(CHMAP).find(id=>typeof CHMAP[id]?.g==='function'&&!MQChapterPacks.packs?.[id]&&MQPedagogicalWorkshop.build(id)?.meta?.kind!=='specific');
  if(witness){const w=MQPedagogicalWorkshop.build(witness),st=lessonSteps(witness);out.genericWitness={id:witness,kind:w?.meta?.kind||null,oneWorkshop:st.filter(x=>x?.k==='mqworkshop').length===1,specific:/mq-specific-pack/.test(w?.h||'')};}
  else out.errors.push('missing-generic-witness');
  return out;
 },ids);
-if(audit.packCount!==4)fail('unexpected-pack-count:'+audit.packCount);
+if(audit.packCount!==8)fail('unexpected-pack-count:'+audit.packCount);
+if(audit.version!=='1.2')fail('unexpected-pack-version:'+audit.version);
 if(audit.errors.length)errors.push(...audit.errors);
+for(const [name,ok] of Object.entries(audit.semantic))if(!ok)fail('semantic-pack-check:'+name);
 if(!audit.genericWitness||!audit.genericWitness.oneWorkshop||audit.genericWitness.specific)fail('generic-fallback-regression');
 
 for(const id of ids){
@@ -55,7 +60,7 @@ for(const id of ids){
  await page.waitForSelector(`.mq-specific-pack[data-chapter-pack="${id}"]`);
  const dom=await page.evaluate(()=>({levels:document.querySelectorAll('.mq-pack-level').length,prov:document.querySelector('.mq-pack-provenance')?.dataset?.provenance||'',transfer:!!document.querySelector('.mq-pack-transfer'),trap:!!document.querySelector('.mq-pack-misconception')}));
  if(dom.levels!==3||!dom.prov||!dom.transfer||!dom.trap)fail('dom-pack:'+id+':'+JSON.stringify(dom));
- if(id==='6p')await page.screenshot({path:'tests/screenshots/chapter-pack-6p.png',fullPage:true});
+ if(id==='6p'||id==='6g'||id==='hg6s')await page.screenshot({path:`tests/screenshots/chapter-pack-${id}.png`,fullPage:true});
  await page.evaluate(()=>home());
 }
 
