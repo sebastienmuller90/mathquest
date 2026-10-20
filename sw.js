@@ -1,9 +1,9 @@
 /* MathQuest — service worker hors ligne.
-   V8.52 : cache auto-découvert + niveaux pédagogiques, Finot enrichi, interrogation parent,
-   rotation anti-mémorisation, micro-compétences, parcours adaptatif et résolution fiable des assets JS.
+   V8.53 : cache auto-découvert + niveaux pédagogiques, Finot enrichi, interrogation parent,
+   micro-compétences, diagnostic initial, transferts contextualisés, parcours ciblé et UI adaptée à l'âge.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.52.0-adaptive-competencies-2026-10-20';
+const VERSION='8.53.0-diagnostic-finot-context-2026-10-20';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).
@@ -16,11 +16,8 @@ const scopeURL=new URL('./',self.registration.scope);
 const inScope=u=>u.origin===scopeURL.origin&&u.pathname.startsWith(scopeURL.pathname);
 const normalize=(ref,base=scopeURL.href)=>{try{const u=new URL(ref,base);u.hash='';return inScope(u)?u:null;}catch(e){return null;}};
 function refsFromText(text,base){const out=[];const add=(r,b=base)=>{const u=normalize(r,b);if(u&&ASSET_EXT.test(u.pathname))out.push(u.href);};let m;
- // HTML/CSS : les références relatives sont résolues depuis le fichier qui les contient.
  const attr=/(?:src|href)\s*=\s*["']([^"']+)["']/gi;while((m=attr.exec(text)))add(m[1],base);
  const css=/url\(\s*["']?([^"')]+)["']?\s*\)/gi;while((m=css.exec(text)))add(m[1],base);
- // Littéraux applicatifs dans les fichiers JS : `js/...`, `data/...`, `fonts/...` sont des chemins
- // depuis la racine de l'application, pas depuis le dossier du script qui les référence.
  const lit=/["']((?:\.\.?\/)?(?:data|js|fonts)\/[^"'\s)]+?\.(?:js|css|woff2?|png|jpe?g|webp|svg|webmanifest))["']/gi;
  while((m=lit.exec(text))){const ref=m[1],rootRelative=/^(?:data|js|fonts)\//.test(ref);add(ref,rootRelative?scopeURL.href:base);}
  return out;}
