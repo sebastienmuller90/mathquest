@@ -1,8 +1,8 @@
 /* MathQuest — service worker hors ligne.
-   V8.56 : cache auto-découvert + deux premiers lots de packs pédagogiques spécifiques de chapitre.
+   V8.57 : cache auto-découvert + ciblage corrigé des aides de lecture expressive.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.56.0-chapter-packs-2026-10-20';
+const VERSION='8.57.0-chapter-pack-scope-2026-10-20';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).
