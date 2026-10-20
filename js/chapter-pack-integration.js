@@ -4,8 +4,8 @@
 'use strict';
 if(typeof window==='undefined'||typeof lessonSteps!=='function'||!window.MQPedagogicalWorkshop)return;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const labels={source:'Source réelle',reconstitution:'Reconstitution pédagogique',synthese:'Synthèse MathQuest',simulation:'Données simulées'};
-const icons={source:'📚',reconstitution:'🧱',synthese:'📄',simulation:'🧪'};
+const labels={source:'Source réelle',creation:'Création originale MathQuest',reconstitution:'Reconstitution pédagogique',synthese:'Synthèse MathQuest',simulation:'Données simulées'};
+const icons={source:'📚',creation:'✍️',reconstitution:'🧱',synthese:'📄',simulation:'🧪'};
 function getPack(id){return window.MQChapterPacks?.packs?.[id]||null;}
 function provenance(p){
  const x=p?.provenance||{},type=x.type||'synthese',refs=Array.isArray(x.refs)?x.refs:[];
@@ -34,5 +34,5 @@ lessonSteps=function(id){
  if(i>=0)out[i]=specific;else{let at=out.findIndex(x=>x?.k==='mqselfcheck'||x?.k==='practice'||x?.k==='confidence'||x?.k==='quiz');out.splice(at<0?out.length:at,0,specific);}
  return out;
 };
-window.MQChapterPackIntegration={version:'1.0',getPack,buildSpecific,provenance,levelBlock};
+window.MQChapterPackIntegration={version:'1.1',getPack,buildSpecific,provenance,levelBlock};
 })();
