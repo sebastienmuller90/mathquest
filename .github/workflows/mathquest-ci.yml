@@ -70,8 +70,7 @@ jobs:
       - name: Architecture (points d’extension, réponse unique, mission isolée)
         if: matrix.browser == 'chromium'
         run: node tests/hooks.test.js
-      - name: Mise à jour de l’appli installée (N → N+1) et démarrage hors ligne
-        if: matrix.browser == 'chromium'
+      - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
         run: node tests/pwa-update.test.js
       - name: Audit navigateur intégral
         run: node tests/browser-audit.mjs

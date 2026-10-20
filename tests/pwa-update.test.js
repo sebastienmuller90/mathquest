@@ -13,8 +13,9 @@ const stop=srv=>new Promise(r=>{srv.close(()=>r());if(srv.closeAllConnections)sr
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,600)});
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'mq-pwa-'));const site=path.join(tmp,'site'),prof=path.join(tmp,'profile');copyDir(ROOT,site);
  const V1='9.10.0-test-n-2026-10-20',V2='9.11.0-test-n-plus-un-2026-10-20';bump(site,V1);
- const {chromium}=require('playwright-core');const PORT=20000+Math.floor(Math.random()*2000);let {srv,url}=await serve(PORT,site);
- const ctx=await chromium.launchPersistentContext(prof,{executablePath:chromePath(),viewport:{width:390,height:844}});
+ // Moteur : MQ_ENGINES (premier de la liste ; « chromium » par défaut) — en CI, chaque jambe de la matrice teste le sien.
+ const eng=(process.env.MQ_ENGINES||'chromium').split(',')[0].trim(),pw=require('playwright-core');const PORT=20000+Math.floor(Math.random()*2000);let {srv,url}=await serve(PORT,site);
+ const ctx=await pw[eng].launchPersistentContext(prof,{...(eng==='chromium'?{executablePath:chromePath()}:{}),viewport:{width:390,height:844}});
  // Compteur de chargements de page (détecte une boucle de rechargement).
  await ctx.addInitScript(()=>{try{sessionStorage.setItem('mq_loads',String(+(sessionStorage.getItem('mq_loads')||0)+1));}catch(e){}});
  const p=ctx.pages()[0]||await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
@@ -24,7 +25,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  await p.fill('#nm','Maj');await p.click('[data-a="pickstage:college"]');await p.click('[data-a="pickgrade:6e"]');await p.click('[data-a="begin"]');await p.waitForTimeout(200);
  await p.evaluate(()=>MQPWA.refreshVersion());await p.evaluate(()=>{ACT.hometab('plus');});
  const v1=await p.evaluate(()=>({v:window.MQ_APP_VERSION,shown:document.querySelector('.mq-appver')?.textContent||''}));
- T('Version identifiable : celle du service worker, affichée dans « Plus »',v1.v===V1&&v1.shown.includes(V1),JSON.stringify(v1));
+ T(eng+' — Version identifiable : celle du service worker, affichée dans « Plus »',v1.v===V1&&v1.shown.includes(V1),JSON.stringify(v1));
  // Progression à conserver à travers la mise à jour.
  await p.evaluate(()=>{S.xp=123;save();});
  // N → N+1 : nouvelle version publiée pendant que l'onglet est ouvert.
