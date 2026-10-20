@@ -5,9 +5,10 @@ if(typeof window==='undefined'||typeof CHMAP==='undefined')return;
 const hash=s=>{let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function subject(cid){try{let s=sOf(WMAP[cid].id).id.replace(/^p-/,'');if(s==='sciences'||s==='qlm')s='svt';if(s==='evar')s='evars';return s;}catch(e){return'autre';}}
+function matchingPack(cid,q){const pack=window.MQChapterPacks?.packs?.[cid]||null;if(!pack)return null;const match=window.MQChapterPacks?.matchesQuestion;return typeof match==='function'&&!match(pack,q)?null:pack;}
 function decorate(cid,q){
  if(!q||typeof q!=='object')return q;
- const specific=window.MQChapterPacks?.packs?.[cid]?.exerciseContext;
+ const pack=matchingPack(cid,q),specific=pack?.exerciseContext;
  q._mq=q._mq||{};
  if(specific){q._mq.application=String(specific);q._mq.applicationSource='chapter-pack';return q;}
  const b=window.MQPedagogyBanks||{},s=subject(cid),arr=b.realLife?.[s]||b.realLife?.autre||[];if(!arr.length)return q;
@@ -21,5 +22,5 @@ function inject(q){if(flashActive()||!q?._mq?.application)return;const card=docu
 function current(){try{if(typeof M!=='undefined'&&M?.q)return M.q;if(typeof L!=='undefined'&&L){const k=L.steps?.[L.i]?.k;return k==='practice'?L.pq:k==='quiz'?L.q:null;}}catch(e){}return null;}
 if(typeof renderQ==='function'&&!renderQ.__mqPedContext){const base=renderQ;const wrap=function(){const r=base.apply(this,arguments);try{inject(M?.q);}catch(e){}return r;};wrap.__mqPedContext=true;renderQ=wrap;}
 if(typeof renderLesson==='function'&&!renderLesson.__mqPedContext){const base=renderLesson;const wrap=function(){const r=base.apply(this,arguments);try{inject(current());}catch(e){}return r;};wrap.__mqPedContext=true;renderLesson=wrap;}
-window.MQPedagogicalExercise={version:'1.2',subject,decorate,inject,flashActive};
+window.MQPedagogicalExercise={version:'1.3',subject,matchingPack,decorate,inject,flashActive};
 })();
