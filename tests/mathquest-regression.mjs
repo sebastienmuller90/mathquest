@@ -78,7 +78,7 @@ for(const id of ["'6p'","'fr6a'","'hg6o'","'pc6f'"])assert.ok(packs.includes(id)
 for(const type of ["type:'simulation'","type:'creation'","type:'reconstitution'"])assert.ok(packs.includes(type),`Provenance de pack lot 1 absente : ${type}`);
 const packs2=read('data/pedagogy/chapter-packs-6e-lot2.js');
 for(const id of ["'6g'","'fr6j'","'svt6a'","'hg6s'"])assert.ok(packs2.includes(id),`Pack spécifique lot 2 manquant : ${id}`);
-for(const marker of ['partage, mesure et quotient','nature grammaticale','conseil alimentaire personnalisé','espaces à fortes contraintes'])assert.ok(packs2.toLowerCase().includes(marker.toLowerCase()),`Contrôle sémantique lot 2 manquant : ${marker}`);
+for(const marker of ['partage, mesure et quotient','nature grammaticale','conseil alimentaire personnalisé','contrainte naturelle'])assert.ok(packs2.toLowerCase().includes(marker.toLowerCase()),`Contrôle sémantique lot 2 manquant : ${marker}`);
 assert.ok(read('data/pedagogy/README.md').includes('`creation`'),'Le standard de provenance doit distinguer les créations originales');
 assert.ok(read('js/chapter-pack-integration.js').includes('mq-specific-pack'),'Le rendu spécifique doit être identifiable dans le DOM');
 console.log('MathQuest regression audit: OK');
