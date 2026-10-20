@@ -16,8 +16,8 @@ page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE: '+m.text())});
 await page.goto(base+'/index.html',{waitUntil:'load',timeout:120000});
 await page.waitForFunction(()=>document.querySelector('#app')?.textContent?.trim().length>10,{timeout:60000});
 await page.waitForFunction(()=>typeof ACT!=='undefined'&&typeof CHMAP!=='undefined'&&Object.keys(CHMAP).length>1000,{timeout:60000});
-// audit-fixes.js est injecté par path-report.js : il doit être actif dans l'application réellement rendue.
-await page.waitForFunction(()=>window.MQ_AUDIT_FIXES_VERSION||document.querySelector('script[src*="audit-fixes"]'),{timeout:15000}).catch(()=>{});
+// Points d'extension (js/app-hooks.js) chargés statiquement : les abonnements sont actifs dès le chargement.
+await page.waitForFunction(()=>window.MQHooks&&MQHooks.has('answer:after','question-transfer'),{timeout:15000});
 
 const result=await page.evaluate(async()=>{
  const out={chapters:0,worlds:0,lessonSteps:0,grades:{},screens:0,lexCats:0,pathBuilds:0,errors:[],warnings:[]};

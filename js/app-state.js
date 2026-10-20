@@ -72,23 +72,29 @@ function load(){
  const ids=Object.keys(PDB.profiles);if(!ids.length){const id=pid();PDB.profiles[id]=clone(DEF);PDB.active=id;}
  ACTIVE=PDB.profiles[PDB.active]?PDB.active:Object.keys(PDB.profiles)[0];PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);saveLocal();
 }
-function saveLocal(){try{if(!PDB)PDB={version:2,active:ACTIVE||pid(),profiles:{}};if(!ACTIVE)ACTIVE=PDB.active||pid();PDB.version=3;PDB.active=ACTIVE;PDB.profiles[ACTIVE]=clone(S);localStorage.setItem(PROFILES_KEY,JSON.stringify(PDB));localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-function save(){saveLocal();schedSync();}
+/* Sauvegarde locale : renvoie true seulement si les deux écritures ont réussi. En cas d'échec (quota plein, stockage
+   refusé), MQ_STORAGE_STATUS le signale et l'enfant est prévenu au plus une fois toutes les 10 s. */
+let saveWarned=0;
+function saveLocal(){try{if(!PDB)PDB={version:3,active:ACTIVE||pid(),profiles:{}};if(!ACTIVE)ACTIVE=PDB.active||pid();PDB.version=3;PDB.active=ACTIVE;PDB.profiles[ACTIVE]=clone(S);localStorage.setItem(PROFILES_KEY,JSON.stringify(PDB));localStorage.setItem(KEY,JSON.stringify(S));window.MQ_STORAGE_STATUS={ok:true,at:Date.now(),error:''};return true;}
+ catch(e){window.MQ_STORAGE_STATUS={ok:false,at:Date.now(),error:String(e&&e.message||e)};if(Date.now()-saveWarned>10000&&typeof toast==='function'){saveWarned=Date.now();toast('⚠️ Sauvegarde locale impossible. Libère de l’espace ou autorise le stockage avant de continuer.');}return false;}}
+function save(){const ok=saveLocal();if(ok)schedSync();return ok;}
 function profileList(){return Object.entries(PDB?.profiles||{}).map(([id,v])=>[id,normalizeState(v)]);}
 function profileSummary(v){const done=Object.keys(v.lessons||{}).length,stars=Object.values(v.chap||{}).reduce((a,c)=>a+(c.stars||0),0);return `${v.grade||'6e'} · ${done} cours · ★ ${stars} · niv. ${lvl(v.xp||0)}`;}
-function activateProfile(id,goHome=true){if(!PDB?.profiles[id])return;saveLocal();clearTimeout(syncT);stopPron();ttsStop();if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}L=null;padClose();ACTIVE=id;PDB.active=id;S=normalizeState(PDB.profiles[id]);PARENT=false;SYNC={ok:null,at:0,err:''};applyTheme();saveLocal();if(goHome)home();schedSync(300);}
-function createProfile(){saveLocal();const id=pid(),base=clone(DEF);base.sound=S?.sound??true;base.pin=S?.pin||'';base.rec=S?.rec||'';base.theme=S?.theme||'finot';base.merit.rules=clone(S?.merit?.rules||DEF.merit.rules);base.merit.rewards=clone(S?.merit?.rewards||DEF.merit.rewards);PDB.profiles[id]=base;ACTIVE=id;PDB.active=id;S=normalizeState(base);ONB='🦊';saveLocal();onboarding(true);}
+function activateProfile(id,goHome=true){if(!PDB?.profiles[id])return;saveLocal();clearTimeout(syncT);stopPron();ttsStop();if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}L=null;padClose();ACTIVE=id;PDB.active=id;S=normalizeState(PDB.profiles[id]);PARENT=false;SYNC={ok:null,at:0,err:''};applyTheme();MQHooks.emit('profile:changed',{id});saveLocal();if(goHome)home();schedSync(300);}
+function createProfile(){saveLocal();const id=pid(),base=clone(DEF);base.sound=S?.sound??true;base.pin=S?.pin||'';base.rec=S?.rec||'';base.theme=S?.theme||'finot';base.merit.rules=clone(S?.merit?.rules||DEF.merit.rules);base.merit.rewards=clone(S?.merit?.rewards||DEF.merit.rewards);PDB.profiles[id]=base;ACTIVE=id;PDB.active=id;S=normalizeState(base);ONB='🦊';MQHooks.emit('profile:changed',{id,created:true});saveLocal();onboarding(true);}
 function deleteProfile(id){if(!PDB?.profiles[id]||Object.keys(PDB.profiles).length<=1)return false;try{localStorage.setItem('mathquest_profile_deleted_backup',JSON.stringify({id,data:PDB.profiles[id],t:Date.now()}));}catch(e){}delete PDB.profiles[id];if(ACTIVE===id){ACTIVE=Object.keys(PDB.profiles)[0];PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);}saveLocal();return true;}
 let syncT=null,syncing=false,SYNC={ok:null,at:0,err:''},CUR='';
 function snapshot(){const o=clone(S);delete o.pin;delete o.rec;delete o.sync;o.lastSeen=Date.now();return o;}
 function schedSync(ms=2500){if(!S.sync||!S.sync.child)return;clearTimeout(syncT);syncT=setTimeout(syncNow,ms);}
 async function syncNow(){if(!S.sync||!S.sync.child||syncing)return;syncing=true;
  try{const acts=await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});
-  if(acts&&acts.length){acts.forEach(a=>{try{applyAction(a);}catch(e){}});saveLocal();await rpc('mq_ack',{p_child:S.sync.child,p_ids:acts.map(a=>a.id)});await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});if(!M){if(CUR==='home')home();else if(CUR==='rewards')rewardsScreen();}}
+  // ACK distant uniquement des actions réellement appliquées ET sauvegardées localement : sinon le parent les renverra.
+  if(acts&&acts.length){const applied=[];for(const a of acts){try{applyAction(a);applied.push(a.id);}catch(e){console.error('Action parent non appliquée',a&&a.id,e);}}
+   if(applied.length){if(!saveLocal())throw new Error('Sauvegarde locale impossible : actions non acquittées');await rpc('mq_ack',{p_child:S.sync.child,p_ids:applied});await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});if(!M){if(CUR==='home')home();else if(CUR==='rewards')rewardsScreen();}}}
   SYNC={ok:true,at:Date.now(),err:''};}
  catch(e){SYNC={ok:false,at:Date.now(),err:String(e.message||e).slice(0,120)};}
  finally{syncing=false;}}
-function applyAction(a){const p=a.payload||{};
+function applyAction(a){if(MQHooks.first('sync:action',a))return;const p=a.payload||{};
  if(a.kind==='accept')doAccept(p.req);else if(a.kind==='refuse')doRefuse(p.req);
  else if(a.kind==='bonus')doBonus(parseInt(p.n)||0,String(p.why||'').slice(0,60));
  else if(a.kind==='rewards'&&Array.isArray(p.list)){S.merit.rewards=p.list.filter(w=>w&&w.id&&w.n).slice(0,40).map(w=>({id:String(w.id).slice(0,40),e:String(w.e||'🎁').slice(0,8),n:String(w.n).slice(0,50),c:Math.max(1,parseInt(w.c)||1)}));cleanReq();}
@@ -98,6 +104,8 @@ function doAccept(id){const r=S.merit.req.find(x=>x.id===id),w=r&&S.merit.reward
 function doRefuse(id){const r=S.merit.req.find(x=>x.id===id),w=r&&S.merit.rewards.find(x=>x.id===r.rid);S.merit.req=S.merit.req.filter(x=>x.id!==id);if(w)S.merit.notes.push(`Demande pas accordée pour l’instant : ${w.n}`);}
 function doBonus(n,why){if(!n)return;if(n>0){why=why||'Bonus des parents';addMerit(n,why,null);S.merit.notes.push(`🎖️ +${n} bons points : ${why}`);}else{why=why||'Retrait des parents';const d=Math.min(-n,S.merit.pts);S.merit.pts-=d;logM(-d,why);S.merit.notes.push(`🎖️ −${d} bons points : ${why}`);}}
 const dstr=t=>{const d=new Date(t);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
+// Journal horodaté des réponses (2 500 dernières) : filtres de période du suivi parent.
+function logAnswer(cid,ok,source,ms){try{S.answerLog=Array.isArray(S.answerLog)?S.answerLog:[];S.answerLog.push({t:Date.now(),cid:String(cid),ok:!!ok,source:String(source||''),ms:Math.max(0,Math.min(600000,+ms||0))});if(S.answerLog.length>2500)S.answerLog.splice(0,S.answerLog.length-2500);}catch(e){}}
 function touchDaily(){const t=dstr(Date.now());if(S.daily.date!==t)S.daily={date:t,ok:0,done:false};}
 function touchStreak(){const t=dstr(Date.now()),y=dstr(Date.now()-864e5);if(S.streak.last===t)return;S.streak.n=S.streak.last===y?S.streak.n+1:1;S.streak.last=t;S.streak.best=Math.max(S.streak.best,S.streak.n);if(S.streak.n>1)addMerit(S.merit.rules.streak,`Série de ${S.streak.n} jours 🔥`);}
 /* V8.21 — date de naissance facultative (S.birthdate). Âge calculé à la volée, jamais stocké séparément.
@@ -141,7 +149,11 @@ function sfx(k){if(!S.sound)return;try{AC=AC||new(window.AudioContext||window.we
  seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.13,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d);t+=d*.9;});}catch(e){}}
 function confetti(n=24){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cols=['#f59e0b','#22c55e','#3b82f6','#ec4899','#a855f7','#ef4444'];
  for(let i=0;i<n;i++){const e=document.createElement('i');e.className='cf';e.style.left=(25+Math.random()*50)+'vw';e.style.background=cols[i%cols.length];e.style.setProperty('--dx',(Math.random()*50-25)+'vw');e.style.setProperty('--r',(Math.random()*900)+'deg');e.style.animationDelay=(Math.random()*.15)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),1800);}}
-function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('aria-live','polite');t.setAttribute('role','status');document.body.appendChild(t);}t.innerHTML=m;t.classList.toggle('raised',CUR==='home');t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);}
+// Écrans « immersifs » (exercice, cours, interrogation, diagnostic) : le toast passe en haut, loin des réponses et du
+// bouton Valider ; il ne capte jamais les clics (pointer-events:none). Replacé à chaque changement d'écran.
+const IMMERSIVE=/^(mission|flash|lesson|interrogation|diagnostic)$/;
+function toastPlace(t){t=t||document.getElementById('toast');if(!t)return;t.classList.toggle('raised',CUR==='home');t.classList.toggle('top',IMMERSIVE.test(CUR||''));}
+function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('aria-live','polite');t.setAttribute('role','status');document.body.appendChild(t);}t.innerHTML=m;toastPlace(t);t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);}
 function shake(){const c=$('.qcard');if(c){c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
 /* V8.17 — vraie célébration (overlay + confettis) au lieu d'un simple toast, pour les deux temps forts
    « très exubérants » demandés : déblocage d'un badge, et montée de palier du lien avec Finot. */

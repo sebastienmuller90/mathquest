@@ -14,13 +14,17 @@ function localRefs(html){
 }
 for(const page of ['index.html','parent.html'])for(const ref of localRefs(read(page)))assert.ok(exists(ref),`${page} référence un fichier absent : ${ref}`);
 
+// Stabilisation 20/10/2026 : plus aucun correctif cœur injecté dynamiquement ni timer de réinstallation ; les correctifs
+// d'audit vivent dans leur module propriétaire et les extensions s'abonnent à js/app-hooks.js.
 const report=read('js/path-report.js');
-assert.ok(report.includes('js/audit-fixes.js'),'path-report.js doit charger audit-fixes.js');
-assert.ok(report.includes('js/parent-interrogation.js'),'path-report.js doit charger l’interrogation parent distante');
-assert.ok(report.includes('js/parent-dashboard.js'),'path-report.js doit charger le tableau de bord parent distant');
-assert.ok(report.includes('js/parent-competencies.js'),'path-report.js doit charger les micro-compétences parent distantes');
-const fixes=read('js/audit-fixes.js');
-for(const marker of ['expectedReadingAnswer','balancedQueue','pathChestGains','MQDictation.best','saveLocal','applyParent'])assert.ok(fixes.includes(marker),`Correctif manquant : ${marker}`);
+for(const f of fs.readdirSync(path.join(root,'js')).filter(f=>f.endsWith('.js'))){const src=read('js/'+f);
+ assert.ok(!/setInterval\([^;]*,\s*50\s*\)/.test(src),`${f} : timer de 50 ms interdit (réinstallation de hook)`);
+ assert.ok(!/createElement\(['"]script['"]\)/.test(src),`${f} : injection dynamique de script interdite`);}
+assert.ok(!exists('js/audit-fixes.js')&&!exists('js/audit-followup.js'),'audit-fixes.js / audit-followup.js doivent être absorbés');
+const owners={'js/app-screens.js':['balancedQueue','forcedDifficulty','streakById','endPathMission'],'js/app-path.js':['pathChestGains','exerciseAccuracy','pathOfGrade'],'js/app-state.js':['MQ_STORAGE_STATUS','logAnswer','applied.push'],'js/reading-engine.js':['expectedAnswer'],'js/dictation-engine.js':['punctPositions'],'js/parent-compat.js':['MQ_PARENT_EMC_SPLIT']};
+for(const [f,ms] of Object.entries(owners)){const src=read(f);for(const m of ms)assert.ok(src.includes(m),`${f} : correctif manquant ${m}`);}
+const parent=read('parent.html');
+for(const s of ['js/parent-compat.js','js/parent-interrogation.js','js/parent-dashboard.js','js/parent-competencies.js'])assert.ok(parent.includes(`<script src="${s}"></script>`),`parent.html doit charger ${s} statiquement`);
 
 const context={console};vm.createContext(context);vm.runInContext(report,context,{filename:'js/path-report.js'});
 assert.equal(typeof context.pathVerdicts,'function','pathVerdicts doit rester disponible');
@@ -48,6 +52,7 @@ assert.ok(!sw.includes("add(m[1]);\n return out;"),'La résolution des littérau
 
 const index=read('index.html');
 assert.ok(index.indexOf('js/path-report.js')<index.indexOf('js/app-path.js'),'path-report.js doit être chargé avant app-path.js');
+assert.ok(index.indexOf('js/app-hooks.js')>0&&index.indexOf('js/app-hooks.js')<index.indexOf('js/app-content.js'),'js/app-hooks.js doit être chargé avant tous les modules');
 for(const ref of ['pedagogy-upgrade.css','age-adaptive.css','js/pedagogy-upgrade.js','js/pedagogy-upgrade-followup.js','js/pedagogy-content-enrichment.js','js/finot-learning-agent.js','js/question-rotation.js','js/activity-tracker.js','js/interrogation-engine.js','js/interrogation-followup.js','js/local-parent-dashboard.js','data/questions/banks.js','data/questions/transfer-scenarios.js','js/competency-engine.js','js/question-enrichment.js','js/question-transfer.js','js/competency-ui.js','js/adaptive-path-followup.js','js/path-skill-focus.js','js/finot-competency.js','js/finot-error-coach.js','js/competency-integration.js','js/local-parent-competencies.js','js/diagnostic-engine.js','js/age-adaptive-ui.js','data/pedagogy/content-banks.js','js/pedagogical-workshop.js','js/pedagogical-exercise-context.js','js/finot-remediation-bank.js'])assert.ok(index.includes(ref),`Couche fonctionnelle non chargée : ${ref}`);
 assert.ok(index.indexOf('js/app-content.js')<index.indexOf('js/competency-engine.js'),'Le moteur de compétences doit suivre la construction du registre');
 assert.ok(index.indexOf('js/question-rotation.js')<index.indexOf('js/question-enrichment.js'),'L’enrichissement doit suivre la rotation des questions');

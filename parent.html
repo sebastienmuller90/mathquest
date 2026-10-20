@@ -1310,7 +1310,7 @@ function suivi(S,m){const tq=num(S.totalQ),acc=tq?Math.round(num(S.totalOk)/tq*1
  const shown=WALL.filter(w=>w.lvl===G||stat(w).tot>0),mineCh=WALL.filter(w=>w.lvl===G).flatMap(w=>WCH[w.id]);
  const today=(()=>{const x=new Date();return x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();})(),dok=d.date===today?num(d.ok):0;
  const weak=ALLCH.map(c=>({c,s:chap[c.id]})).filter(x=>x.s&&x.s.tot>=4).map(x=>({...x,a:x.s.ok/x.s.tot})).filter(x=>x.a<.8).sort((a,b)=>a.a-b.a).slice(0,5);
- return `<div class="kpis"><div class="kpi"><b>${dok}/20</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>🔥 ${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>📖 ${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
+ return `<div class="kpis"><div class="kpi"><b>${dok}/${Math.max(5,Math.min(100,parseInt(S&&S.dailyGoal)||20))}</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>🔥 ${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>📖 ${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
  <h2 class="sec">À retravailler en priorité</h2>${weak.length?weak.map(x=>`<div class="row"><span>${x.c.icon} ${x.c.name} <small class="muted">${sOf(WMAP[x.c.id].id).emoji} ${WMAP[x.c.id].lvl}</small></span><b class="${x.a<.5?'lo':'mid'}">${Math.round(x.a*100)} %</b></div>`).join(''):'<p class="muted">Rien à signaler (analyse à partir de 4 questions par chapitre).</p>'}
  <h2 class="sec">Détail par matière${G?' ('+esc(G)+' et niveaux déjà travaillés)':''}</h2>${(shown.length?shown:WALL).map(w=>{const {ok,tot}=stat(w);const a=tot?Math.round(ok/tot*100):0;
   return `<details class="card det"><summary><span>${sOf(w.id).emoji} ${esc(sOf(w.id).name)} ${w.lvl}</span><span class="mbar"><i style="width:${a}%;background:${w.col}"></i></span><b>${tot?a+' %':'–'}</b></summary>${WCH[w.id].map(c=>{const s=chap[c.id];return `<div class="drow"><span>${c.icon} ${c.name}</span>${starStr(Math.min(3,num(s?.stars)))}<span class="muted">${s?`${num(s.ok)}/${num(s.tot)}`:'–'}</span></div>`;}).join('')}</details>`;}).join('')}
@@ -1356,4 +1356,9 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
 document.addEventListener('input',e=>{if(e.target.closest('#rwl'))DIRTY=true;});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refresh();});
 refresh(true);setInterval(()=>{if(document.visibilityState==='visible')refresh();},15000);
-</script></body></html>
+</script>
+<script src="js/parent-compat.js"></script>
+<script src="js/parent-interrogation.js"></script>
+<script src="js/parent-dashboard.js"></script>
+<script src="js/parent-competencies.js"></script>
+</body></html>

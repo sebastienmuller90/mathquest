@@ -12,21 +12,15 @@ function begin(kind,ids,meta={}){close('switch');const list=idsClean(ids);CURR={
 function close(reason='done',extra={}){if(!CURR)return null;const t1=now(),ms=Math.max(0,Math.min(MAX_MS,t1-CURR.t0)),mustKeep=CURR.kind==='interrogation';if(ms>=1000||mustKeep){const x={id:CURR.id,t0:CURR.t0,t1,ms:mustKeep?Math.max(1,ms):ms,kind:CURR.kind,ids:CURR.ids,grade:CURR.grade,subj:CURR.subj,reason:String(reason).slice(0,24),...CURR.meta,...extra};const log=ensure();log.push(x);if(log.length>MAX)log.splice(0,log.length-MAX);try{saveLocal();}catch(e){}}const out=CURR;CURR=null;return out;}
 function active(){return CURR;}
 
-// Cours.
-if(typeof openLesson==='function'&&!openLesson.__activity){const base=openLesson;openLesson=function(id){begin('lesson',[id],{cid:String(id)});return base.apply(this,arguments);};openLesson.__activity=true;}
-if(typeof endLesson==='function'&&!endLesson.__activity){const base=endLesson;endLesson=function(){const l=typeof L!=='undefined'&&L?{cid:L.id,ok:L.ok||0,total:typeof LESSON_QUIZ_N!=='undefined'?LESSON_QUIZ_N:0}:null;const r=base.apply(this,arguments);close('lesson-end',l||{});return r;};endLesson.__activity=true;}
-
-// Exercices standards et parcours.
-if(typeof startMission==='function'&&!startMission.__activity){const base=startMission;startMission=function(ids){begin('exercise',ids,{mixed:(ids||[]).length>1});return base.apply(this,arguments);};startMission.__activity=true;}
-if(typeof endMission==='function'&&!endMission.__activity){const base=endMission;endMission=function(){const m=typeof M!=='undefined'&&M?{ok:M.ok||0,total:M.n||0,path:!!M.path,flash:!!M.flash}:{};const r=base.apply(this,arguments);close('exercise-end',m);return r;};endMission.__activity=true;}
-if(typeof startFlash==='function'&&!startFlash.__activity){const base=startFlash;startFlash=function(w){const ids=w==='all'&&typeof SCH==='function'?SCH(S.subj).map(c=>c.id):(typeof WCH!=='undefined'&&WCH[w]?WCH[w].map(c=>c.id):[]);begin('flash',ids,{world:String(w)});return base.apply(this,arguments);};startFlash.__activity=true;}
-if(typeof endFlash==='function'&&!endFlash.__activity){const base=endFlash;endFlash=function(){const m=typeof M!=='undefined'&&M?{ok:M.ok||0,total:M.i||0}:{};const r=base.apply(this,arguments);close('flash-end',m);return r;};endFlash.__activity=true;}
-
-// Lecture de bibliothèque / ressources si ces entrées existent.
-if(typeof openLibraryResource==='function'&&!openLibraryResource.__activity){const base=openLibraryResource;openLibraryResource=function(id){begin('reading',[],{resource:String(id)});return base.apply(this,arguments);};openLibraryResource.__activity=true;}
-
-// Les changements d'écran terminent une séance abandonnée proprement, sans la perdre.
-if(typeof home==='function'&&!home.__activity){const base=home;home=function(){if(CURR&&CURR.kind!=='interrogation')close('home');return base.apply(this,arguments);};home.__activity=true;}
+// Séances suivies par abonnement aux événements des fonctions cœur (js/app-hooks.js), sans les remplacer.
+MQHooks.on('lesson:open',({id})=>begin('lesson',[id],{cid:String(id)}),{id:'activity'});
+MQHooks.on('lesson:end',({l})=>close('lesson-end',l?{cid:l.id,ok:l.ok||0,total:typeof LESSON_QUIZ_N!=='undefined'?LESSON_QUIZ_N:0}:{}),{id:'activity'});
+MQHooks.on('mission:start',({ids,opts})=>begin('exercise',ids,{mixed:(ids||[]).length>1,...(opts&&opts.level?{forcedDifficulty:+opts.level}:{})}),{id:'activity'});
+MQHooks.on('mission:end',({m})=>close('exercise-end',{ok:m.ok||0,total:m.n||0,path:!!m.path,flash:false}),{id:'activity'});
+MQHooks.on('flash:start',({w,ids})=>begin('flash',ids,{world:String(w)}),{id:'activity'});
+MQHooks.on('flash:end',({m})=>close('flash-end',{ok:m.ok||0,total:m.i||0}),{id:'activity'});
+// Retour à l'accueil : une séance abandonnée est close proprement, sans être perdue.
+MQHooks.on('home:before',()=>{if(CURR&&CURR.kind!=='interrogation')close('home');},{id:'activity'});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&CURR)close('hidden');});
 window.addEventListener('pagehide',()=>{if(CURR)close('pagehide');});
 window.MQActivity={version:'1.1',ensure,begin,close,active};

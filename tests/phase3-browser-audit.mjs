@@ -7,9 +7,9 @@ await ctx.addInitScript(()=>{const id='phase3qa',profile={name:'Phase3QA',avatar
 const page=await ctx.newPage();page.on('pageerror',e=>fail('runtime:'+e.message));
 await page.goto(base+'/index.html',{waitUntil:'load'});
 await page.waitForFunction(()=>window.MQDiagnostic&&window.MQFinotError&&window.MQQuestionTransfer&&window.MQPathSkillFocus&&window.MQAgeUI&&window.MQCompetency);
-await page.waitForFunction(()=>window.MQ_AUDIT_FIXES&&MQPathSkillFocus.hookActive&&MQQuestionTransfer.hooksActive,{timeout:5000});
-const initial=await page.evaluate(()=>({grade:S.grade,age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,transferHooks:MQQuestionTransfer.hooksActive,audit:!!window.MQ_AUDIT_FIXES}));
-if(initial.grade!=='CP')fail('test-profile-grade-not-cp');if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('audit-fixes-not-loaded');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');if(!initial.transferHooks)fail('transfer-hook-lost-after-audit-fixes');
+await page.waitForFunction(()=>window.MQHooks&&MQPathSkillFocus.hookActive&&MQQuestionTransfer.hooksActive,{timeout:5000});
+const initial=await page.evaluate(()=>({grade:S.grade,age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,transferHooks:MQQuestionTransfer.hooksActive,audit:!!window.MQHooks&&!document.querySelector('script[src*="audit-fixes"]')}));
+if(initial.grade!=='CP')fail('test-profile-grade-not-cp');if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('hooks-not-loaded-or-legacy-injection');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');if(!initial.transferHooks)fail('transfer-hook-lost-after-audit-fixes');
 await page.evaluate(()=>ACT.diagstart());
 for(let step=0;step<12;step++){
  await page.waitForSelector('.qcard');

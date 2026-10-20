@@ -18,14 +18,13 @@ function simpleIntent(raw){const t=norm(raw);
  if(/\b(lis moi|lire la question|lis la question|repete la question|repetes la question|ecouter la question)\b/.test(t))return 'read';
  return '';
 }
-const base=finotAsk;
-finotAsk=function(text){const raw=String(text||'').trim();if(!raw)return;const intent=simpleIntent(raw);
- if(intent){finotChatEnsure();finotPush('you',typeof esc==='function'?esc(raw):esc3(raw));if(intent==='help'&&typeof ACT.finotsimple==='function')return ACT.finotsimple();if(intent==='hint'&&typeof ACT.finothint2==='function')return ACT.finothint2();if(intent==='read'&&typeof ACT.finotread2==='function')return ACT.finotread2();}
+MQHooks.on('finot:intent',ask=>{const raw=ask.raw,intent=simpleIntent(raw);
+ if(intent){ask.echo();if(intent==='help'&&typeof ACT.finotsimple==='function'){ACT.finotsimple();return true;}if(intent==='hint'&&typeof ACT.finothint2==='function'){ACT.finothint2();return true;}if(intent==='read'&&typeof ACT.finotread2==='function'){ACT.finotread2();return true;}}
  // Question sur l'appli (XP, thèmes…) : la FAQ répond, sauf demande explicite de travail scolaire (« je veux réviser la dictée »).
- if(!/(travaill|revis|apprend|cours|lecon|exercice|controle|interro)/.test(norm(raw))&&typeof finotMatch==='function'&&finotMatch(raw))return base(raw);
- if(looksSchoolSearch(raw)){const found=search(raw);if(found.length){finotChatEnsure();finotPush('you',typeof esc==='function'?esc(raw):esc3(raw));finotPush('finot',resultHTML(found));finotChipsRender();return;}}
- return base(raw);
-};
+ if(!/(travaill|revis|apprend|cours|lecon|exercice|controle|interro)/.test(norm(raw))&&typeof finotMatch==='function'&&finotMatch(raw))return false;
+ if(looksSchoolSearch(raw)){const found=search(raw);if(found.length){ask.echo();finotPush('finot',resultHTML(found));finotChipsRender();return true;}}
+ return false;
+},{id:'finot-learning',order:40});
 Object.assign(ACT,{
  finottopiccourse:id=>{finotClose();MQPedagogy.openLessonAtLevel(id,1);},
  finottopicex:id=>{finotClose();ACT.start(id);},
@@ -33,6 +32,6 @@ Object.assign(ACT,{
  finotsubj:id=>{if(SUBMAP[id]){S.subj=id;saveLocal();finotClose();home();}}
 });
 // Accès tactile supplémentaire pour les plus jeunes quand aucun exercice n’est ouvert.
-if(typeof finotChipsRender==='function'){const baseChips=finotChipsRender;finotChipsRender=function(){baseChips();const box=document.getElementById('fchChips');if(!box||finotCurrentChapterId()||!['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase()))return;for(const [id,label] of [['maths','➕ Maths'],['francais','📖 Français']])if(SUBMAP[id]&&!box.querySelector(`[data-a="finotsubj:${id}"]`))box.insertAdjacentHTML('beforeend',`<button class="fch-chip kid" data-a="finotsubj:${id}">${label}</button>`);};}
+MQHooks.on('finot:chips',({box})=>{if(!box||finotCurrentChapterId()||!['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase()))return;for(const [id,label] of [['maths','➕ Maths'],['francais','📖 Français']])if(SUBMAP[id]&&!box.querySelector(`[data-a="finotsubj:${id}"]`))box.insertAdjacentHTML('beforeend',`<button class="fch-chip kid" data-a="finotsubj:${id}">${label}</button>`);},{id:'finot-learning-chips'});
 window.MQFinotLearning={version:'1.1',search,queryTokens,simpleIntent};
 })();

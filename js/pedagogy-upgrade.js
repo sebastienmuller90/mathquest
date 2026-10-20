@@ -42,9 +42,10 @@ function levelPicker(id,kind){
  CUR='level';app.innerHTML=`${bar(ch.icon+' '+ch.name)}<div class="card mq-level-picker"><h2>${title}</h2><p class="muted">Tu peux changer de niveau à chaque fois. Finot te conseille <b>${LEVELS[adaptive].emoji} ${LEVELS[adaptive].name}</b> d’après ta progression.</p><div class="mq-level-grid">${[1,2,3].map(d=>`<button class="mq-level-card l${d}" data-a="${kind==='lesson'?'lessonlevel':'startlevel'}:${id}|${d}"><span class="mq-level-emoji">${LEVELS[d].emoji}</span><b>${LEVELS[d].name}</b><span>${LEVELS[d].desc}</span>${adaptive===d?'<small>⭐ Conseillé pour toi</small>':''}</button>`).join('')}</div><p class="muted small center">Le parcours du jour reste adaptatif automatiquement : ici, c’est toi qui choisis.</p></div><button class="btn ghost wide" data-a="chap:${id}">← Retour au chapitre</button>`;
 }
 function openLessonAtLevel(id,level){level=Math.max(1,Math.min(3,+level||2));openLesson(id,'full');if(!L)return;L.lessonLevel=level;L.quizDifficulty=level;L.quizStreak=0;L.i=0;L.q=null;L.pq=null;L.qn=0;L.pn=0;L.locked=false;L.steps=adaptSteps(id,L.steps,level);renderLesson();}
-function startMissionAtLevel(id,level){level=Math.max(1,Math.min(3,+level||2));const c=byId(id);if(!c)return;const ids=[id],dById={[id]:level};M={ids,n:8,i:0,ok:0,xp:0,coins:0,streak:0,d:level,dById,forcedDifficulty:level,queue:Array(8).fill(id),L0:lvl(S.xp),newB:[],flash:false,wrong:0,lastOk:null,streakById:{[id]:0}};nextQ();}
+// Niveau imposé : passe par startMission (suivi d'activité, « étudié aujourd'hui », abonnés mission:start), niveau fixe toute la série.
+function startMissionAtLevel(id,level){if(!byId(id))return;startMission([id],{level:Math.max(1,Math.min(3,+level||2))});}
 function levelBadge(){if(!L||!L.lessonLevel)return;const card=document.querySelector('.lcard .lhead');if(!card||card.querySelector('.mq-level-badge'))return;const d=L.lessonLevel,x=document.createElement('span');x.className='mq-level-badge l'+d;x.textContent=LEVELS[d].emoji+' '+LEVELS[d].name;card.appendChild(x);}
-if(typeof renderLesson==='function'){const base=renderLesson;renderLesson=function(...a){const r=base(...a);try{levelBadge();}catch(e){}return r;};}
+MQHooks.on('lesson:rendered',()=>levelBadge(),{id:'pedagogy-level-badge'});
 
 // ---------- Finot : interaction sans clavier, pensée pour CP/CE1 ----------
 let FINOT_REC=null;
@@ -57,12 +58,12 @@ function finotVoice(){const R=window.SpeechRecognition||window.webkitSpeechRecog
 function finotOpenEasyCourse(){const id=finotCurrentChapterId();if(!id)return finotSimpleHelp();finotClose();openLessonAtLevel(id,1);}
 function finotOpenEasyEx(){const id=finotCurrentChapterId();if(!id)return finotSimpleHelp();finotClose();startMissionAtLevel(id,1);}
 function finotYoung(){return ['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase());}
-if(typeof finotChipsRender==='function')finotChipsRender=function(){const box=document.getElementById('fchChips');if(!box)return;const inChapter=!!finotCurrentChapterId(),chips=[];
+MQHooks.on('finot:chip-list',(_,{inChapter})=>{const chips=[];
  if(inChapter){chips.push('<button class="fch-chip kid" data-a="finotsimple">🧩 Explique-moi simplement</button>','<button class="fch-chip kid" data-a="finothint2">💡 Donne-moi un indice</button>','<button class="fch-chip kid" data-a="finotread2">🔊 Lis-moi</button>','<button class="fch-chip kid" data-a="finoteasycourse">🌱 Cours facile</button>','<button class="fch-chip kid" data-a="finoteasyex">🎯 Exercice facile</button>');}
  else chips.push('<button class="fch-chip kid" data-a="path">🗺️ Mon parcours</button>','<button class="fch-chip kid" data-a="library">📚 Lire une histoire</button>','<button class="fch-chip kid" data-a="mistakes">🧠 Revoir mes erreurs</button>');
- if(!finotYoung())FINOT_SUGGEST.slice(0,3).forEach((q,i)=>chips.push(`<button class="fch-chip" data-a="finotsug:${i}">${hesc(q)}</button>`));box.innerHTML=chips.join('');};
+ if(!finotYoung())FINOT_SUGGEST.slice(0,3).forEach((q,i)=>chips.push(`<button class="fch-chip" data-a="finotsug:${i}">${hesc(q)}</button>`));return chips;},{id:'pedagogy-chips',order:10});
 function enhanceFinot(){const box=document.getElementById('finotchat');if(!box)return;box.classList.toggle('young',finotYoung());const row=box.querySelector('.fch-row');if(row&&!row.querySelector('[data-a="finotvoice"]')){const b=document.createElement('button');b.className='btn finot-mic';b.dataset.a='finotvoice';b.type='button';b.textContent='🎤';b.setAttribute('aria-label','Parler à Finot avec le micro');row.insertBefore(b,row.querySelector('[data-a="finotsend"]'));}const inp=document.getElementById('finotin');if(inp&&finotYoung())inp.placeholder='Tu peux parler ou toucher un bouton';}
-if(typeof finotOpen==='function'){const base=finotOpen;finotOpen=function(){base();enhanceFinot();finotChipsRender();if(finotYoung()&&FCHAT&&FCHAT.msgs.length===1){finotPush('finot','Tu n’as pas besoin d’écrire 🙂 Touche un gros bouton ou le micro 🎤, et je t’aide.');finotChipsRender();}};}
+MQHooks.on('finot:open',()=>{enhanceFinot();finotChipsRender();if(finotYoung()&&FCHAT&&FCHAT.msgs.length===1){finotPush('finot','Tu n’as pas besoin d’écrire 🙂 Touche un gros bouton ou le micro 🎤, et je t’aide.');finotChipsRender();}},{id:'pedagogy-finot-open'});
 
 Object.assign(ACT,{
  lesson:id=>levelPicker(id,'lesson'),start:id=>levelPicker(id,'exercise'),

@@ -26,13 +26,16 @@ function makeDailyPath(state,date,seedKey){const by=pathCandidates(state.grade),
  const ids=lessons.map(x=>x.cid);
  const exos=[0,1].map(()=>({kind:'exo',ids:ids.slice(),status:'locked',score:null,ms:0,answers:[],bestStreak:0}));
  const steps=[...lessons,...exos];steps[0].status='next';
- return {date,steps,chest:false};}
-function pathValid(p){return !!p&&Array.isArray(p.steps)&&p.steps.length===PATH_LESSONS+PATH_EXOS&&p.steps.every(s=>s&&(s.kind==='lesson'?!!(CHMAP[s.cid]&&COURS[s.cid]):s.kind==='exo'&&Array.isArray(s.ids)&&s.ids.length>0&&s.ids.every(id=>CHMAP[id])));}
+ // Abonnés 'path:built' : choix adaptatif des leçons (maîtrise, micro-compétences, révisions dues).
+ return MQHooks.filter('path:built',{date,steps,chest:false},{state,date,seedKey});}
+function pathValid(p){return !!p&&Array.isArray(p.steps)&&p.steps.length===PATH_LESSONS+PATH_EXOS&&p.steps.every(s=>s&&(s.kind==='lesson'?!!(CHMAP[s.cid]&&COURS[s.cid]):s.kind==='exo'&&Array.isArray(s.ids)&&s.ids.length>0&&s.ids.every(id=>CHMAP[id])))&&pathOfGrade(p);}
+// Un parcours qui n'appartient plus à la classe active (changement de classe) est invalide et sera refait.
+function pathOfGrade(p){const g=typeof S!=='undefined'&&S?S.grade:null;if(!g)return true;const gr=id=>WMAP[id]?WMAP[id].lvl:null;return p.steps.every(s=>s.kind==='lesson'?gr(s.cid)===g:(s.ids||[]).every(id=>gr(id)===g));}
 function pathArchive(p){S.pathHist=(S.pathHist||[]).concat([pathCompact(p)]).slice(-PATH_HIST_MAX);}
+// Abonnés 'path:ensure' : mise à niveau d'un parcours du jour encore vierge, micro-compétence à renforcer par leçon.
 function ensurePath(){const d=dstr(Date.now());
- if(S.path&&S.path.date===d&&pathValid(S.path))return S.path;
- if(S.path&&S.path.date!==d&&pathValid(S.path))pathArchive(S.path);
- S.path=makeDailyPath(S,d,ACTIVE);saveLocal();return S.path;}
+ if(!(S.path&&S.path.date===d&&pathValid(S.path))){if(S.path&&S.path.date!==d&&pathValid(S.path))pathArchive(S.path);S.path=makeDailyPath(S,d,ACTIVE);saveLocal();}
+ return MQHooks.filter('path:ensure',S.path,{date:d});}
 /* ----- Écran du circuit, carte d'accueil, explication par Finot ----- */
 function pathSubjIcon(s){const x=SUBMAP[s];return (x&&x.emoji)||'📘';}
 function pathStepLabel(s){if(s.kind==='lesson'){const x=SUBMAP[s.subj];return 'Leçon de '+(x?x.name.toLowerCase():'cours');}
@@ -84,6 +87,7 @@ function pathScreen(){if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}st
  ${p.steps.slice(PATH_LESSONS).map((s,j)=>pathNodeHTML(s,j+PATH_LESSONS)).join('')}
  <li class="pend castle ${p.chest?'won':''}" style="left:${cx}%;top:${top(cy)}%"><span class="pcastle" aria-hidden="true">🏰</span>${p.chest?'🏆 Coffre ouvert !':'🎁 Le coffre du château'}</li></ol>
  <img class="pfinot" src="${FINOT_IMG.neutre}" alt="Finot t’attend ici" style="left:${fin[0]}%;top:${top(fin[1])}%"></div>`;
+ MQHooks.emit('path:rendered',{p});
  const nx=document.querySelector('.pstep.next');if(nx&&nx.scrollIntoView)nx.scrollIntoView({block:'center'});}
 function pathHomeCard(){const p=ensurePath();if(!p)return '';const n=pathDoneCount(p),nx=p.steps.find(s=>s.status==='next'),g=n/6,ni=p.steps.indexOf(nx);
  const txt=p.chest?'Terminé ! Reviens demain pour une nouvelle aventure 🔥':nx?'Prochaine étape : '+pathStepLabel(nx):'';
@@ -99,7 +103,7 @@ function pathGo(i){const p=ensurePath();if(!p)return;const s=p.steps[+i];if(!s)r
  if(s.status==='locked')return toast('Termine d’abord l’étape précédente 🙂');
  if(s.kind==='lesson'){openLesson(s.cid);if(L&&s.status==='next')L.path={i:+i,date:p.date,t0:Date.now()};return;}
  if(s.status==='done')return toast('Étape déjà réussie aujourd’hui ✅');
- startMission(s.ids.slice());if(M){M.n=PATH_EXO_N;M.path={i:+i,date:p.date,t0:Date.now(),streak:0,best:0,answers:[]};}}
+ startMission(s.ids.slice(),{n:PATH_EXO_N,path:{i:+i,date:p.date,t0:Date.now(),streak:0,best:0,answers:[]}});}
 /* ----- Fin d'une étape Leçon (appelé par endLesson si L.path) ----- */
 function pathAdvance(p){if(!p.steps.some(s=>s.status==='next')){const nx=p.steps.find(s=>s.status==='locked');if(nx)nx.status='next';}}
 function pathLessonDone(tag,score,passed){const p=S.path;if(!p||!tag||p.date!==tag.date)return;const s=p.steps[tag.i];
@@ -114,11 +118,15 @@ function pathAnswer(ok){const t=M&&M.path;if(!t)return 0;
 function pathExoDone(m){const p=S.path,t=m&&m.path;if(!p||!t||p.date!==t.date)return null;const s=p.steps[t.i];
  if(!s||s.kind!=='exo'||s.status!=='next')return null;
  s.answers=t.answers.map(a=>({cid:a.cid,ok:a.ok,ms:a.ms}));s.bonuses=(t.bonuses||[]).slice();s.score=t.answers.filter(a=>a.ok).length;
- s.ms=Math.max(0,Math.min(PATH_STEP_MS_MAX,Date.now()-t.t0));s.bestStreak=t.best;s.status='done';pathAdvance(p);
+ s.ms=Math.max(0,Math.min(PATH_STEP_MS_MAX,Date.now()-t.t0));s.bestStreak=t.best;
+ // Une série sous 60 % de réussite est « à revoir » (rejouable sans second coffre).
+ s.status=(s.score/PATH_EXO_N)>=.6?'done':'review';pathAdvance(p);
  return p.steps.every(x=>x.status==='done'||x.status==='review')?pathChest(p):null;}
-// Coffre : +40 🪙 +50 XP + bons points « path », −25 % (pièces et bons points) par leçon à revoir, plancher 50 %.
-function pathChestGains(p){const rv=p.steps.filter(s=>s.status==='review').length,f=Math.max(.5,1-.25*rv);
- return {coins:Math.round(40*f),xp:50,merit:Math.round((S.merit.rules.path||0)*f),review:rv};}
+// Coffre : 40 🪙, 50 XP et les bons points « path », modulés par les leçons à revoir (−25 % chacune, plancher 50 %) et
+// par la réussite aux exercices (≥ 80 % : 100 %, ≥ 60 % : 75 %, ≥ 40 % : 50 %, sinon 25 %).
+function pathChestGains(p){const lr=p.steps.filter(s=>s.kind==='lesson'&&s.status==='review').length,ans=[].concat(...p.steps.filter(s=>s.kind==='exo').map(s=>s.answers||[])),acc=ans.length?ans.filter(a=>a.ok).length/ans.length:0,
+ lf=Math.max(.5,1-.25*lr),ef=acc>=.8?1:acc>=.6?.75:acc>=.4?.5:.25,f=lf*ef;
+ return {coins:Math.round(40*f),xp:Math.round(50*f),merit:Math.round((S.merit.rules.path||0)*f),review:lr,exerciseAccuracy:Math.round(acc*100)};}
 function pathChest(p){if(!p||p.chest)return null;const g=pathChestGains(p);p.chest=true;S.coins+=g.coins;S.xp+=g.xp;S.goalsDone++;
  if(g.merit)addMerit(g.merit,'Parcours du jour 🗺️',null);
  setTimeout(()=>finotCeleb(FINOT_IMG.cadeau,'Parcours terminé !',`+${g.coins} 🪙 · +${g.xp} XP${g.merit?` · +${g.merit} 🎖️`:''}${g.review?` · ${g.review} leçon${g.review>1?'s':''} à revoir 🟠`:''}`),900);
