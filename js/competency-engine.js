@@ -43,10 +43,8 @@ const PATTERNS={
  pc:{connaitre:/definition|nomme|quel|molecule|atome|notion|unite/,mesurer:/calcul|mesur|convert|valeur|unite|vitesse|masse|volume|tension|intensite/,raisonner:/explique|pourquoi|dedui|relation|raison/,experimenter:/experience|protocole|observation|resultat|graphique|schema/}
 };
 function inferKind(cid,q){const skills=templateFor(cid),sid=subjectOf(cid),p=PATTERNS[sid]||{},txt=norm([q?.q,q?.hint,q?.expl,q?.type,chapterName(cid)].join(' '));let best=null,bestLen=-1;for(const [kind,re] of Object.entries(p)){const m=txt.match(re);if(m&&m[0].length>bestLen){best=kind;bestLen=m[0].length;}}if(best&&skills.some(x=>x.kind===best))return best;
- // Type de réponse comme indice secondaire.
  if(q?.type==='text'||q?.type==='order')return skills.find(x=>/produ|justif|appli|gramma|expli|raison/.test(x.kind))?.kind||skills[0].kind;
  if(q?.type==='multi')return skills.find(x=>/calcul|mesur|analy|raison|appli/.test(x.kind))?.kind||skills[1]?.kind||skills[0].kind;
- // Répartition déterministe pour ne pas concentrer tous les QCM dans une seule compétence.
  let h=2166136261;for(const c of txt){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return skills[Math.abs(h)%skills.length].kind;
 }
 function ensure(state){if(!state.competencies||typeof state.competencies!=='object'||Array.isArray(state.competencies))state.competencies={};return state.competencies;}
@@ -57,10 +55,10 @@ function entry(state,id){return state?.competencies?.[id]||null;}
 function skillState(state,skill){const e=entry(state,skill.id);return {skill,...(e||{}),attempts:e?.attempts||0,value:e?.value||0};}
 function chapterSkills(state,cid){return templateFor(cid).map(s=>skillState(state,s));}
 function chapterMastery(state,cid){const rows=chapterSkills(state,cid),used=rows.filter(x=>x.attempts>0),attempts=used.reduce((a,x)=>a+x.attempts,0);if(!attempts)return {value:0,attempts:0,coverage:0,skills:rows};const avg=used.reduce((a,x)=>a+x.value,0)/used.length,coverage=used.length/rows.length,value=Math.round(clamp(avg*(.78+.22*coverage),0,100));return {value,attempts,coverage:Math.round(coverage*100),skills:rows};}
-function weakSkills(state,cids=null,limit=8){const ids=cids?.length?cids:Object.keys(CHMAP),out=[];for(const cid of ids){if(!CHMAP[cid])continue;for(const x of chapterSkills(state,cid))if(x.attempts>0)out.push(x);}return out.sort((a,b)=>a.value-b.value||b.attempts-a.attempts).slice(0,limit);}
-function strongSkills(state,cids=null,limit=8){const ids=cids?.length?cids:Object.keys(CHMAP),out=[];for(const cid of ids){if(!CHMAP[cid])continue;for(const x of chapterSkills(state,cid))if(x.attempts>=3)out.push(x);}return out.sort((a,b)=>b.value-a.value||b.attempts-a.attempts).slice(0,limit);}
+function weakSkills(state,cids=null,limit=8){const ids=cids?.length?cids:Object.keys(CHMAP),out=[];for(const cid of ids){if(!CHMAP[cid])continue;for(const x of chapterSkills(state,cid))if(x.attempts>0&&x.value<65)out.push(x);}return out.sort((a,b)=>a.value-b.value||b.attempts-a.attempts).slice(0,limit);}
+function strongSkills(state,cids=null,limit=8){const ids=cids?.length?cids:Object.keys(CHMAP),out=[];for(const cid of ids){if(!CHMAP[cid])continue;for(const x of chapterSkills(state,cid))if(x.attempts>=3&&x.value>=80)out.push(x);}return out.sort((a,b)=>b.value-a.value||b.attempts-a.attempts).slice(0,limit);}
 function chapterNeed(state,cid){const cm=chapterMastery(state,cid);if(!cm.attempts)return 12;const weak=cm.skills.filter(x=>x.attempts>0).sort((a,b)=>a.value-b.value)[0];return clamp((100-cm.value)*.65+(weak?(100-weak.value)*.35:0),0,100);}
 function label(v){v=+v||0;return v>=85?{e:'🏆',t:'Maîtrisé',k:'mastered'}:v>=65?{e:'✅',t:'Acquis',k:'acquired'}:v>=40?{e:'🟠',t:'En cours',k:'learning'}:v>0?{e:'🔴',t:'Fragile',k:'fragile'}:{e:'🌱',t:'Nouveau',k:'new'};}
-function explainWeak(state,cid){const rows=chapterSkills(state,cid).filter(x=>x.attempts>0).sort((a,b)=>a.value-b.value);if(!rows.length)return null;const x=rows[0];return {cid,skill:x.skill||{id:x.id,kind:x.kind,label:x.label},value:x.value,attempts:x.attempts,text:`${x.short||x.label} : ${x.value} %`};}
-window.MQCompetency={version:'1.0',templates:TEMPLATES,skillsForChapter:templateFor,inferKind,ensure,record,entry,chapterSkills,chapterMastery,weakSkills,strongSkills,chapterNeed,label,explainWeak};
+function explainWeak(state,cid){const rows=chapterSkills(state,cid).filter(x=>x.attempts>0&&x.value<65).sort((a,b)=>a.value-b.value);if(!rows.length)return null;const x=rows[0];return {cid,skill:x.skill||{id:x.id,kind:x.kind,label:x.label},value:x.value,attempts:x.attempts,text:`${x.short||x.label} : ${x.value} %`};}
+window.MQCompetency={version:'1.1',templates:TEMPLATES,skillsForChapter:templateFor,inferKind,ensure,record,entry,chapterSkills,chapterMastery,weakSkills,strongSkills,chapterNeed,label,explainWeak};
 })();
