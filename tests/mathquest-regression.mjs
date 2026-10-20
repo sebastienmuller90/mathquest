@@ -73,6 +73,7 @@ assert.ok(workshop.includes('Document pédagogique MathQuest'),'Les documents de
 assert.ok(workshop.includes("Ce n'est pas une donnée historique ou scientifique réelle"),'Les données simulées doivent être explicitement signalées');
 const packs=read('data/pedagogy/chapter-packs-6e.js');
 for(const id of ["'6p'","'fr6a'","'hg6o'","'pc6f'"])assert.ok(packs.includes(id),`Pack spécifique manquant : ${id}`);
-for(const type of ["type:'simulation'","type:'reconstitution'","type:'synthese'"])assert.ok(packs.includes(type),`Provenance de pack absente : ${type}`);
+for(const type of ["type:'simulation'","type:'creation'","type:'reconstitution'"])assert.ok(packs.includes(type),`Provenance de pack absente : ${type}`);
+assert.ok(read('data/pedagogy/README.md').includes('`creation`'),'Le standard de provenance doit distinguer les créations originales');
 assert.ok(read('js/chapter-pack-integration.js').includes('mq-specific-pack'),'Le rendu spécifique doit être identifiable dans le DOM');
 console.log('MathQuest regression audit: OK');
