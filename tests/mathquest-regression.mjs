@@ -38,9 +38,11 @@ assert.equal(verdicts.find(x=>x.cid==='d').good,false);
 assert.equal(context.pathCompact(p).steps.length,6);
 
 const sw=read('sw.js');
-assert.ok(sw.includes("8.48.0-parent-assessment-dashboard-2026-10-20"),'Version du service worker parent/interrogation incorrecte');
+assert.ok(sw.includes("8.49.0-pwa-path-resolution-2026-10-20"),'Version du service worker PWA incorrecte');
 assert.ok(sw.includes('lexiconImages'),'Le service worker doit pré-cacher le lexique dynamique');
 assert.ok(sw.includes("cache:'reload'"),'Le pré-cache doit contourner le cache HTTP');
+assert.ok(sw.includes("rootRelative?scopeURL.href:base"),'Les littéraux JS doivent être résolus depuis la racine applicative');
+assert.ok(!sw.includes("add(m[1]);\n return out;"),'La résolution des littéraux JS ne doit pas reprendre aveuglément le dossier du script');
 
 const index=read('index.html');
 assert.ok(index.indexOf('js/path-report.js')<index.indexOf('js/app-path.js'),'path-report.js doit être chargé avant app-path.js');
