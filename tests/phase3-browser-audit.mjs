@@ -8,8 +8,8 @@ const page=await ctx.newPage();page.on('pageerror',e=>fail('runtime:'+e.message)
 await page.goto(base+'/index.html',{waitUntil:'load'});
 await page.waitForFunction(()=>window.MQDiagnostic&&window.MQFinotError&&window.MQQuestionTransfer&&window.MQPathSkillFocus&&window.MQAgeUI&&window.MQCompetency);
 await page.waitForTimeout(120);
-const initial=await page.evaluate(()=>({age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,audit:!!window.MQ_AUDIT_FIXES}));
-if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('audit-fixes-not-loaded');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');
+const initial=await page.evaluate(()=>({age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,transferHooks:MQQuestionTransfer.hooksActive,audit:!!window.MQ_AUDIT_FIXES}));
+if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('audit-fixes-not-loaded');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');if(!initial.transferHooks)fail('transfer-hook-lost-after-audit-fixes');
 await page.evaluate(()=>ACT.diagstart());
 for(let step=0;step<12;step++){
  await page.waitForSelector('.qcard');
@@ -26,8 +26,8 @@ if(!focus.focus||!focus.stored)fail('path-skill-focus-missing');if(!focus.hook)f
 await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function');startMission([id]);});
 await page.waitForSelector('.qcard');
 await page.evaluate(()=>{const q=M.q;if(q.type==='choice'){let wrong=0;if(wrong===q.ans)wrong=(wrong+1)%q.choices.length;validate(wrong);}else if(q.type==='order'){q._sel=(q.tokens||[]).map((_,i)=>i).reverse();validate();}else if(q.type==='multi'){document.querySelectorAll('.ans input').forEach(x=>x.value='999999');validate();}else{const x=document.getElementById('in0');if(x)x.value='999999';validate();}});
-await page.waitForTimeout(50);
-const finot=await page.evaluate(()=>({last:!!MQFinotError.last,button:!!document.querySelector('[data-a="finotwhy"]')}));if(!finot.last)fail('finot-error-not-captured');if(!finot.button)fail('finot-why-button-missing');
+await page.waitForTimeout(80);
+const finot=await page.evaluate(()=>({last:!!MQFinotError.last,button:!!document.querySelector('[data-a="finotwhy"]'),transferShown:!!document.querySelector('.mq-transfer'),transferHooks:MQQuestionTransfer.hooksActive}));if(!finot.last)fail('finot-error-not-captured');if(!finot.button)fail('finot-why-button-missing');if(!finot.transferShown)fail('transfer-feedback-not-rendered');if(!finot.transferHooks)fail('transfer-hooks-inactive');
 const age=await page.evaluate(()=>{S.grade='3e';MQAgeUI.apply();return document.body.dataset.mqAge;});if(age!=='teen')fail('3e-age-not-teen');
 await browser.close();
 const out={initial,diag,transfer,focus,finot,teenAge:age,errorCount:errors.length,errors};fs.writeFileSync('tests/phase3-browser-audit-report.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));if(errors.length)process.exitCode=1;else console.log('PHASE3_BROWSER_AUDIT_OK');
