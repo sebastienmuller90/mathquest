@@ -27,7 +27,8 @@ await page.screenshot({path:'tests/screenshots/phase4-exercise-context.png',full
 const flashCheck=await page.evaluate(()=>{document.querySelector('.mq-application')?.remove();M.flash=true;renderQ();const during=!!document.querySelector('.mq-application');M.flash=false;renderQ();const after=!!document.querySelector('.mq-application');return {during,after};});
 if(flashCheck.during||!flashCheck.after)fail('flash-context-visibility');
 const finotTip=await page.evaluate(()=>{const t=MQFinotRemediation.tipFor({cid:M.cid,q:M.q});return {ok:Array.isArray(t)&&t.length===2,tip:t};});if(!finotTip.ok)fail('finot-remediation-unavailable');
-await page.evaluate(()=>{result(false);finotAsk('Pourquoi je me suis trompé ?');});await page.waitForTimeout(140);
-const typedFinot=await page.evaluate(()=>({last:!!MQFinotError?.last,trap:/Un piège fréquent dans cette matière/.test(document.body.innerText),hook:MQFinotRemediation.hookActive}));if(!typedFinot.last||!typedFinot.trap||!typedFinot.hook)fail('typed-finot-remediation-missing');
+// Reproduit le vrai chemin utilisateur : la saisie/voix n'existe que dans une fenêtre Finot ouverte.
+await page.evaluate(()=>{finotOpen();result(false);finotAsk('Pourquoi je me suis trompé ?');});await page.waitForTimeout(140);
+const typedFinot=await page.evaluate(()=>({last:!!MQFinotError?.last,chat:!!document.querySelector('#finotchat.open'),trap:/Un piège fréquent dans cette matière/.test(document.getElementById('finotchat')?.innerText||''),hook:MQFinotRemediation.hookActive}));if(!typedFinot.last||!typedFinot.chat||!typedFinot.trap||!typedFinot.hook)fail('typed-finot-remediation-missing');
 await browser.close();
 const out={coverage,lessonVisual,exVisual,flashCheck,finotTip,typedFinot,errorCount:errors.length,errors,warnings};fs.writeFileSync('tests/phase4-pedagogy-audit-report.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));if(errors.length)process.exitCode=1;else console.log('PHASE4_PEDAGOGY_AUDIT_OK');
