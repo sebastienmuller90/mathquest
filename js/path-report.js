@@ -44,7 +44,7 @@ if(typeof document!=='undefined'){
  }
  // parent.html contient son application dans un script inline ; ses extensions sont donc chargées après le load.
  if(typeof location!=='undefined'&&/parent\.html$/i.test(location.pathname||''))window.addEventListener('load',()=>{
-  for(const src of ['js/parent-interrogation.js','js/parent-dashboard.js'])if(!document.querySelector(`script[src="${src}"]`)){
+  for(const src of ['js/parent-interrogation.js','js/parent-dashboard.js','js/parent-competencies.js'])if(!document.querySelector(`script[src="${src}"]`)){
    const s=document.createElement('script');s.src=src;s.async=false;document.body.appendChild(s);
   }
  },{once:true});
