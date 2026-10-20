@@ -1,0 +1,37 @@
+/* MathQuest — banques de situations pédagogiques combinables avec les générateurs procéduraux. */
+(function(){
+'use strict';
+const common={
+ context:[
+  'Mission : trouve la réponse, puis vérifie qu’elle répond exactement à la consigne.',
+  'Défi méthode : avant de répondre, repère l’information vraiment utile.',
+  'Mode expert : réponds, puis demande-toi comment tu pourrais vérifier sans refaire exactement la même chose.',
+  'Enquête : cherche l’indice décisif dans la question avant de choisir ta réponse.'
+ ],
+ reflect:[
+  'Explique en une phrase la règle ou l’idée que tu viens d’utiliser.',
+  'Quelle erreur fréquente pourrait conduire à une mauvaise réponse ici ?',
+  'Comment vérifierais-tu ta réponse si Finot ne te donnait pas la correction ?',
+  'Donne un autre exemple qui utiliserait la même méthode.'
+ ]
+};
+const bySubject={
+ maths:{
+  context:['Problème express : identifie d’abord les données, puis l’opération ou la propriété utile.','Défi de raisonnement : ne calcule pas immédiatement ; prévois d’abord l’ordre de grandeur du résultat.','Mission architecte : organise ton calcul proprement et garde les unités jusqu’à la fin.','Défi logique : cherche une deuxième façon de contrôler ton résultat.'],
+  reflect:['Pourquoi cette opération ou cette propriété est-elle adaptée ?','Ton résultat est-il plausible ? Explique pourquoi.','Peux-tu résoudre le même type de problème avec une autre représentation ?','Quelle étape de ton raisonnement est la plus importante ?']},
+ francais:{
+  context:['Mission détective : trouve dans la phrase ou le texte l’indice qui prouve ta réponse.','Défi langue : donne le nom de la notion, mais surtout explique son rôle ici.','Atelier d’écriture : observe la forme et le sens avant de répondre.','Lecture attentive : distingue ce que le texte dit de ce que tu en déduis.'],
+  reflect:['Quel mot ou groupe de mots justifie ta réponse ?','Que changerait la phrase si cette forme était différente ?','Invente un exemple correct utilisant la même règle.','Quelle erreur d’orthographe ou d’analyse faut-il éviter ici ?']},
+ anglais:{context:['Communication : cherche le sens global avant de traduire mot à mot.','Mission vocabulaire : utilise le contexte pour choisir le mot le plus naturel.','Défi grammaire : repère qui fait l’action et quand elle se passe.','Situation réelle : imagine que tu utilises cette phrase avec quelqu’un.'],reflect:['Redis la phrase avec un autre mot que tu connais.','Quelle règle grammaticale viens-tu d’utiliser ?','Peux-tu produire une nouvelle phrase du même type ?','Quel indice t’a permis de comprendre le sens ?']},
+ italien:{context:['Comunicazione : cherche d’abord le sens global.','Mission vocabulaire : appuie-toi sur le contexte.','Défi grammaire : repère la personne, le genre, le nombre ou le temps utile.','Situation réelle : imagine la phrase dans une conversation.'],reflect:['Produis une autre phrase du même type.','Quelle règle italienne viens-tu d’utiliser ?','Quel mot t’a aidé à comprendre ?','Peux-tu dire la même idée autrement ?']},
+ hg:{context:['Enquête historique : situe d’abord l’époque, les acteurs et le lieu.','Mission géographe : observe l’échelle, le territoire et les relations entre espaces.','Analyse de document : demande-toi qui produit l’information, quand et pourquoi.','Défi causalité : distingue une cause, un événement et une conséquence.'],reflect:['Quel repère chronologique ou spatial est essentiel ?','Quelle preuve soutient ta réponse ?','Quelle cause ou conséquence peux-tu relier à cette notion ?','Comment résumerais-tu cette idée à quelqu’un en 20 secondes ?']},
+ emc:{context:['Cas citoyen : identifie le droit, la règle, la valeur ou la responsabilité en jeu.','Débat raisonné : sépare les faits des opinions.','Situation concrète : cherche une réponse compatible avec les droits de chacun.','Esprit critique : justifie ton choix par un principe précis.'],reflect:['Quel principe justifie ta réponse ?','Un autre point de vue peut-il être défendu ?','Qu’est-ce qui relève d’un fait et qu’est-ce qui relève d’une opinion ?','Que ferais-tu dans une situation proche ?']},
+ svt:{context:['Mission scientifique : observe, formule une hypothèse puis confronte-la aux données.','Enquête du vivant : relie structure, fonction et environnement.','Analyse scientifique : distingue observation et interprétation.','Défi système : cherche les liens entre plusieurs éléments plutôt qu’un fait isolé.'],reflect:['Quelle observation appuie ta conclusion ?','Quelle hypothèse pourrait-on tester ?','Quelle relation de cause à effet vois-tu ?','Comment représenterais-tu cette idée par un schéma ?']},
+ pc:{context:['Mission laboratoire : identifie les grandeurs, unités et données mesurables.','Défi expérimental : prévois le résultat avant de regarder la réponse.','Analyse physique : vérifie les unités et l’ordre de grandeur.','Enquête chimique : relie les observations au modèle étudié.'],reflect:['Quelle mesure ou observation serait utile pour vérifier ?','Pourquoi l’unité est-elle importante ici ?','Quelle expérience pourrait tester cette idée ?','Ton résultat est-il cohérent avec la situation physique ?']},
+ tech:{context:['Mission ingénieur : identifie le besoin avant de choisir une solution.','Défi conception : compare plusieurs solutions selon des critères précis.','Analyse d’objet : relie fonction, composant et contrainte.','Mission sécurité : cherche la solution efficace mais aussi sûre et responsable.'],reflect:['Quel critère permet de choisir entre deux solutions ?','Quelle fonction assure ce composant ?','Quelle contrainte faut-il absolument respecter ?','Comment améliorerais-tu la solution proposée ?']},
+ pix:{context:['Mission numérique : choisis l’outil adapté au besoin, pas seulement celui que tu connais.','Défi données : organise l’information avant de la traiter.','Esprit critique numérique : vérifie source, confidentialité et sécurité.','Mission efficacité : cherche une procédure reproductible.'],reflect:['Pourquoi cet outil est-il adapté ?','Quel risque numérique faut-il surveiller ?','Comment vérifier la fiabilité de l’information ?','Quelle étape pourrait être automatisée ou simplifiée ?']},
+ ia:{context:['Mission IA : distingue ce que le système peut faire de ce qu’il faut vérifier.','Esprit critique : une réponse plausible n’est pas forcément vraie.','Usage responsable : pense aux données personnelles et au droit d’auteur.','Défi prompt : formule précisément le besoin avant d’évaluer la réponse.'],reflect:['Quelle partie doit être vérifiée par un humain ?','Quelle donnée ne faudrait-il pas partager ?','Comment améliorerais-tu la demande faite à l’IA ?','Quel biais ou quelle limite pourrait affecter la réponse ?']},
+ emi:{context:['Enquête média : identifie auteur, source, date et objectif.','Défi info : cherche une deuxième source indépendante.','Esprit critique : distingue information, commentaire, publicité et opinion.','Mission publication : pense aux conséquences avant de partager.'],reflect:['Quel indice rend cette source plus ou moins fiable ?','Comment vérifier cette information ?','Quel est l’objectif probable de ce contenu ?','Que faudrait-il vérifier avant de partager ?']}
+};
+window.MQQuestionBanks={version:'1.0',common,bySubject};
+})();
