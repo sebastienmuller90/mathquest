@@ -14,12 +14,13 @@ function installNextQHook(){
  const wrap=function(){const r=base.apply(this,arguments);try{if(M&&!M.flash&&S.path?.skillFocus&&M.cid&&!M.locked){const f=S.path.skillFocus[M.cid];const q=targetedQuestion(M.cid,M.d,f,M.q);if(q&&q!==M.q){M.q=q;M.qt=Date.now();renderQ();}}}catch(e){console.warn('[MathQuest path focus]',e);}return r;};
  wrap.__mqSkillFocus=true;wrap.__mqSkillFocusBase=base;nextQ=wrap;return true;
 }
-// Premier branchement, puis second branchement après le chargement complet : audit-fixes.js est injecté
-// dynamiquement par path-report.js et peut remplacer nextQ après ce fichier. Le hook de load s'installe donc
-// au-dessus de la version définitive du moteur et garantit que le ciblage n'est pas perdu.
-installNextQHook();
-if(document.readyState==='complete')setTimeout(installNextQHook,0);else window.addEventListener('load',()=>setTimeout(installNextQHook,0),{once:true});
+// audit-fixes.js est injecté dynamiquement et peut remplacer nextQ à n'importe quel moment de la fin
+// de démarrage. On surveille uniquement la courte phase de bootstrap ; dès que les correctifs d'audit sont
+// présents ET que notre hook reste stable plusieurs contrôles de suite, le timer s'arrête définitivement.
+let guardTimer=null;
+function stabilizeHook(){if(guardTimer)return;let stable=0,ticks=0;guardTimer=setInterval(()=>{ticks++;installNextQHook();const auditReady=!!window.MQ_AUDIT_FIXES,hooked=typeof nextQ==='function'&&!!nextQ.__mqSkillFocus;if(auditReady&&hooked)stable++;else stable=0;if(stable>=8||ticks>=200){clearInterval(guardTimer);guardTimer=null;}},50);}
+installNextQHook();stabilizeHook();
 function inject(){const p=ensureFocus(S.path),head=document.querySelector('.path-head');if(!p||!head||document.querySelector('.path-focus-card'))return;const rows=(p.steps||[]).filter(x=>x.kind==='lesson'&&p.skillFocus?.[x.cid]).map(x=>({c:CHMAP[x.cid],f:p.skillFocus[x.cid]}));if(!rows.length)return;head.insertAdjacentHTML('afterend',`<div class="card path-focus-card"><b>🎯 Ce que Finot veut surtout renforcer aujourd’hui</b><div class="muted small">${rows.map(x=>`${escP(x.c?.icon||'📘')} ${escP(x.c?.name||'')} : <b>${escP(x.f.label)}</b> (${x.f.value} %)`).join('<br>')}</div></div>`);}
 if(typeof pathScreen==='function'){const base=pathScreen;pathScreen=function(){const r=base.apply(this,arguments);setTimeout(inject,0);return r;};}
-window.MQPathSkillFocus={version:'1.2',focusFor,ensureFocus,targetedQuestion,installNextQHook,get hookActive(){return typeof nextQ==='function'&&!!nextQ.__mqSkillFocus;}};
+window.MQPathSkillFocus={version:'1.3',focusFor,ensureFocus,targetedQuestion,installNextQHook,stabilizeHook,get hookActive(){return typeof nextQ==='function'&&!!nextQ.__mqSkillFocus;}};
 })();
