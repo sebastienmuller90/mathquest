@@ -258,6 +258,7 @@ tr.reading td,tr.reading th{background:color-mix(in srgb,var(--gold) 30%,var(--s
 <script src="data/primary/enrich-coverage.js"></script>
 <script src="data/reading/resources.js"></script>
 <script src="js/reading-engine.js"></script>
+<script src="js/app-hooks.js"></script>
 <script src="js/path-report.js"></script>
 <script>/* ===== Utilitaires ===== */
 const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
@@ -1303,7 +1304,7 @@ function render(){
  <div class="tabs">${[['suivi','📊 Suivi'],['recomp','🎁 Récompenses'],['reglages','⚙️ Règles']].map(([k,l])=>`<button class="tab ${k===TAB?'on':''}" data-a="tab:${k}">${l}${k==='recomp'&&reqN?` <span class="dotn">${reqN}</span>`:''}</button>`).join('')}</div>
  ${TAB==='suivi'?suivi(S,m):TAB==='recomp'?recomp(S,m,pend):regles(m,pend)}
  <p class="muted small center">Actualisation automatique toutes les 15 secondes.</p>`;
- DIRTY=false;}
+ DIRTY=false;if(window.MQHooks)MQHooks.emit('parent:remote-rendered',{tab:TAB});}
 
 function suivi(S,m){const tq=num(S.totalQ),acc=tq?Math.round(num(S.totalOk)/tq*100):0,mins=Math.round(num(S.time)/60),chap=S.chap||{},d=S.daily||{};
  const G=String(S.grade||''),stat=w=>{let ok=0,tot=0;WCH[w.id].forEach(c=>{const s=chap[c.id];if(s){ok+=num(s.ok);tot+=num(s.tot);}});return {ok,tot};};

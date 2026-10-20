@@ -3,7 +3,7 @@
 'use strict';
 function start(){
  if(typeof render!=='function'||typeof ACT!=='object'||typeof act!=='function'||typeof app==='undefined'){setTimeout(start,100);return;}
- if(render.__parentInterrogation)return;
+
  const dayStart=()=>{const d=new Date();d.setHours(0,0,0,0);return d.getTime();};
  const localDay=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;};
  function chapterMap(){const m={};try{for(const c of ALLCH||[])m[c.id]=c;}catch(e){}return m;}
@@ -21,7 +21,7 @@ function start(){
   if(latest){html+='<div class="card"><b>Dernier résultat : '+latest.score+' % · '+latest.ok+'/'+latest.total+'</b>';if(latest.subjects)Object.keys(latest.subjects).forEach(k=>{var x=latest.subjects[k];html+='<div class="drow"><span>'+esc(x.name)+'</span><b>'+x.score+' %</b></div>';});html+='</div>';}
   return html;
  }
- var original=render;render=function(){var r=original.apply(this,arguments);if(TAB==='suivi'&&D&&!document.querySelector('.parent-iq-title'))app.insertAdjacentHTML('beforeend',panel());return r;};render.__parentInterrogation=true;
+ MQHooks.on('parent:remote-rendered',()=>{if(TAB==='suivi'&&D&&!document.querySelector('.parent-iq-title'))app.insertAdjacentHTML('beforeend',panel());},{id:'parent-interrogation'});
  ACT.iqremotecreate=function(){var ids=todayIds();if(!ids.length)return toast('Aucune notion étudiée aujourd’hui.');var n=parseInt(document.getElementById('iqremoteN')&&document.getElementById('iqremoteN').value)||20;act('interrogation',{n:n,scope:'today'},'📝 Interrogation du jour envoyée');};
  ACT.iqremotecancel=function(){act('interrogation_cancel',{},'Interrogation annulée');};
  render();

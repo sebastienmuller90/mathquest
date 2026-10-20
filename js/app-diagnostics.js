@@ -11,8 +11,8 @@ try{buf=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(buf))buf=[
 // Chemins réduits au nom de fichier (pas d'URL complète), textes tronqués.
 const short=s=>String(s==null?'':s).replace(/https?:\/\/\S*\/([^\/\s?#)]+)/g,'$1').slice(0,200);
 function push(kind,msg,src,line){buf.push({t:Date.now(),kind,msg:short(msg),src:short(src),line:+line||0});if(buf.length>MAX)buf.splice(0,buf.length-MAX);try{localStorage.setItem(KEY,JSON.stringify(buf));}catch(e){}}
-root.addEventListener('error',e=>{if(e&&e.message)push('error',e.message,e.filename,e.lineno);});
-root.addEventListener('unhandledrejection',e=>{const r=e&&e.reason;push('rejection',r&&(r.message||r)||'promesse rejetée','',0);});
+if(typeof root.addEventListener==='function'){root.addEventListener('error',e=>{if(e&&e.message)push('error',e.message,e.filename,e.lineno);});
+root.addEventListener('unhandledrejection',e=>{const r=e&&e.reason;push('rejection',r&&(r.message||r)||'promesse rejetée','',0);});}
 function val(f){try{return f();}catch(e){return null;}}
 root.MQDiag=function(){return {
  version:root.MQ_APP_VERSION||'développement',
