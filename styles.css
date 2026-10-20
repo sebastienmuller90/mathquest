@@ -167,6 +167,9 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 100px));background:var(--text);color:var(--bg);padding:12px 20px;border-radius:16px;font-weight:600;z-index:100;transition:transform .3s;width:max-content;max-width:92vw;text-align:center}
 #toast.raised{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 #toast{pointer-events:none}
+/* Bandeau de mise à jour : dans le flux, au-dessus de l'écran (ne recouvre jamais une réponse). */
+.mq-update{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:8px auto 0;max-width:720px;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--accent) 14%,var(--surface));border:2px solid color-mix(in srgb,var(--accent) 40%,var(--border));font-weight:700;text-align:center}
+.mq-update-btns{display:flex;gap:6px}
 #toast.top{top:calc(10px + env(safe-area-inset-top,0px));bottom:auto;transform:translate(-50%,calc(-100% - 60px))}
 #toast.top.show{transform:translate(-50%,0)}
 .hometab-body{padding-bottom:76px}

@@ -152,7 +152,7 @@ function settingsBody(){return `<h2 class="sec">Profil scolaire</h2><div class="
  <h2 class="sec">📡 Suivi à distance</h2>${syncBody()}
  <h2 class="sec">📦 Transférer la progression</h2><div class="card"><p class="muted small">Pour passer d’un appareil à l’autre : exporte ici, puis importe sur le nouvel appareil.</p>
  <div class="frow"><button class="btn grow" data-a="exp">Exporter</button><button class="btn grow" data-a="impshow">Importer</button></div><div id="xfer"></div></div>
- <h2 class="sec">👧👦 Profils enfants</h2><div class="card"><p class="muted small">Profil actuel : <b>${esc(S.name)}</b>. Chaque enfant possède sa propre progression.</p><button class="btn wide" data-a="profiles">Gérer les profils</button></div><button class="btn ghost danger wide" data-a="reset">🗑️ Réinitialiser la progression de ${esc(S.name)}</button><p class="muted small center">Seul le profil actif est réinitialisé. Les autres enfants ne sont pas modifiés.</p>`;}
+ <h2 class="sec">👧👦 Profils enfants</h2><div class="card"><p class="muted small">Profil actuel : <b>${esc(S.name)}</b>. Chaque enfant possède sa propre progression.</p><button class="btn wide" data-a="profiles">Gérer les profils</button></div><button class="btn ghost danger wide" data-a="reset">🗑️ Réinitialiser la progression de ${esc(S.name)}</button><p class="muted small center">Seul le profil actif est réinitialisé. Les autres enfants ne sont pas modifiés.</p><p class="muted small center mq-appver">${window.MQPWA?MQPWA.label():''}</p>`;}
 const parentLink=()=>new URL('parent.html#'+S.sync.parent,location.href).href;
 const ago=t=>{const s=Math.round((Date.now()-t)/1000);return s<60?'à l’instant':s<3600?`il y a ${Math.round(s/60)} min`:s<86400?`il y a ${Math.round(s/3600)} h`:`il y a ${Math.round(s/86400)} j`;};
 function syncBody(){if(!S.sync.child)return `<div class="card"><p>Envoie automatiquement la progression vers <b>ta page parent</b>, sur ton propre téléphone. Tu pourras y suivre ses résultats et valider ses récompenses à distance.</p><button class="btn primary wide" data-a="syncon">Activer le suivi à distance</button></div>`;
@@ -294,7 +294,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Enter'){e.preventDefault();if(M.locked){if($('[data-a="next"]'))advance();}else if(M.q.type!=='choice')validate();}
  else if(!M.locked&&M.q.type==='choice'&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<M.q.choices.length)validate(i);}});
 
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){const hadSW=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadSW)toast('🆕 Une nouvelle version de MathQuest est installée : elle sera utilisée au prochain lancement.');});window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}),{once:true});}
+// Service worker, version visible et mise à jour : js/app-pwa.js.
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='finotin'&&e.key==='Enter'){e.preventDefault();ACT.finotsend();}});
 load();applyTheme();hometabsDOM();home();syncNow();finotChatDOM();finotFabSync();hometabsSync();
 setInterval(()=>{if(document.visibilityState==='visible')syncNow();},30000);
