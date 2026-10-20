@@ -14,7 +14,7 @@ const coverage=await page.evaluate(()=>{
  const expected=(s,txt)=>{
   const m=re=>re.test(txt);
   if(s==='maths'){
-   if(m(/\b(?:fonction(?:s)?|affine(?:s)?|lineaire(?:s)?|proportionnalite)\b/))return'function';
+   if(m(/\b(?:fonction(?:s)?|affine(?:s)?|lineaire(?:s)?)\b/))return'function';
    if(m(/\b(?:vitesse|vitesses)\b/))return'speed';
    if(m(/\b(?:duree|durees|horaire|horaires|temps)\b/))return'time';
    if(m(/\b(?:pourcentage|pourcentages|proportion|proportions|frequence|frequences)\b/))return'proportion';
