@@ -15,10 +15,10 @@ const coverage=await page.evaluate(()=>{
   const m=re=>re.test(txt);
   if(s==='maths'){
    if(m(/\b(?:fonction(?:s)?|affine(?:s)?|lineaire(?:s)?)\b/))return'function';
+   if(m(/\b(?:moyenne|moyennes|statistique|statistiques|diagramme|diagrammes|graphique|graphiques|donnee|donnees|tableau|tableaux)\b/))return'statistics';
+   if(m(/\b(?:pourcentage|pourcentages|proportion|proportions|proportionnalite|frequence|frequences)\b/))return'proportion';
    if(m(/\b(?:vitesse|vitesses)\b/))return'speed';
    if(m(/\b(?:duree|durees|horaire|horaires|temps)\b/))return'time';
-   if(m(/\b(?:pourcentage|pourcentages|proportion|proportions|frequence|frequences)\b/))return'proportion';
-   if(m(/\b(?:moyenne|moyennes|statistique|statistiques|diagramme|diagrammes|graphique|graphiques|donnee|donnees|tableau|tableaux)\b/))return'statistics';
   }
   if(s==='hg'){
    if(m(/\b(?:climat|climats|temperature|temperatures|precipitation|precipitations)\b/))return'climate';
@@ -34,6 +34,7 @@ const coverage=await page.evaluate(()=>{
    if(m(/\b(?:temperature|temperatures|thermique|thermiques)\b/))return'temperature';
    if(m(/\b(?:tension|tensions|volt|volts)\b/))return'voltage';
    if(m(/\b(?:intensite|intensites|ampere|amperes|courant|courants)\b/))return'current';
+   if(m(/\bmasse(?:s)?\s+volumique(?:s)?\b/))return'density';
    if(m(/\b(?:masse|masses)\b/))return'mass';
    if(m(/\b(?:volume|volumes)\b/))return'volume';
   }
@@ -65,13 +66,22 @@ const coverage=await page.evaluate(()=>{
    const tip=MQFinotRemediation.tipFor({cid:id,q});if(Array.isArray(tip)&&tip.length===2)out.remediations++;else out.errors.push('remediation:'+id);
   }catch(e){out.errors.push(id+':'+e.message);}
  }
- // Cas de non-régression issus de la revue : faux positifs interdits + vraie distinction linéaire/affine.
- const lin=MQPedagogicalWorkshop.dataSpec('3h'),aff=MQPedagogicalWorkshop.dataSpec('3i');
- out.regressionCases.thales={exists:!!CHMAP['3o'],name:CHMAP['3o']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('3o')?.topic||null,kind:MQPedagogicalWorkshop.kind('3o')};
- out.regressionCases.relatives={exists:!!CHMAP['5b'],name:CHMAP['5b']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('5b')?.topic||null,kind:MQPedagogicalWorkshop.kind('5b')};
+ const specOf=id=>MQPedagogicalWorkshop.dataSpec(id);
+ const generalCase=id=>{const x=specOf(id),d=Array.isArray(x?.values)?x.values.slice(1).map((v,i)=>v-x.values[i]):[];return{exists:!!CHMAP[id],name:CHMAP[id]?.name||'',topic:x?.topic||null,subtype:x?.subtype||null,nonConstant:d.length>1&&new Set(d).size>1};};
+ const lin=specOf('3h'),aff=specOf('3i'),weighted=specOf('4j'),elementary=specOf('cp-ma-donnees'),density=specOf('pc5c');
+ out.regressionCases.thales={exists:!!CHMAP['3o'],name:CHMAP['3o']?.name||'',topic:specOf('3o')?.topic||null,kind:MQPedagogicalWorkshop.kind('3o'),html:MQPedagogicalWorkshop.build('3o')?.h||''};
+ out.regressionCases.relatives={exists:!!CHMAP['5b'],name:CHMAP['5b']?.name||'',topic:specOf('5b')?.topic||null,kind:MQPedagogicalWorkshop.kind('5b')};
  out.regressionCases.linearFunction={exists:!!CHMAP['3h'],name:CHMAP['3h']?.name||'',topic:lin?.topic||null,subtype:lin?.subtype||null,y0:Array.isArray(lin?.values)?lin.values[0]:null};
  out.regressionCases.affineFunction={exists:!!CHMAP['3i'],name:CHMAP['3i']?.name||'',topic:aff?.topic||null,subtype:aff?.subtype||null,y0:Array.isArray(aff?.values)?aff.values[0]:null};
- out.regressionCases.pcSpeed={exists:!!CHMAP['pc6f'],name:CHMAP['pc6f']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('pc6f')?.topic||null};
+ out.regressionCases.general3g=generalCase('3g');
+ out.regressionCases.general4i=generalCase('4i');
+ out.regressionCases.general5u=generalCase('5u');
+ out.regressionCases.proportion4g={exists:!!CHMAP['4g'],name:CHMAP['4g']?.name||'',title:MQPedagogicalWorkshop.titleText('4g'),topic:specOf('4g')?.topic||null};
+ out.regressionCases.proportion5t={exists:!!CHMAP['5t'],name:CHMAP['5t']?.name||'',title:MQPedagogicalWorkshop.titleText('5t'),topic:specOf('5t')?.topic||null};
+ out.regressionCases.weighted4j={exists:!!CHMAP['4j'],name:CHMAP['4j']?.name||'',topic:weighted?.topic||null,subtype:weighted?.subtype||null,weights:Array.isArray(weighted?.weights)?weighted.weights.slice():[],values:Array.isArray(weighted?.values)?weighted.values.slice():[],weightRow:/mq-data-weights/.test(MQPedagogicalWorkshop.build('4j')?.h||'')};
+ out.regressionCases.elementaryCp={exists:!!CHMAP['cp-ma-donnees'],name:CHMAP['cp-ma-donnees']?.name||'',grade:WMAP['cp-ma-donnees']?.lvl||'',topic:elementary?.topic||null,subtype:elementary?.subtype||null,values:Array.isArray(elementary?.values)?elementary.values.slice():[],questions:Array.isArray(elementary?.questions)?elementary.questions.slice():[]};
+ out.regressionCases.density5c={exists:!!CHMAP['pc5c'],name:CHMAP['pc5c']?.name||'',topic:density?.topic||null,subtype:density?.subtype||null,values:Array.isArray(density?.values)?density.values.slice():[],secondary:Array.isArray(density?.secondary?.values)?density.secondary.values.slice():[],secondaryRow:/mq-data-secondary/.test(MQPedagogicalWorkshop.build('pc5c')?.h||''),questions:Array.isArray(density?.questions)?density.questions.slice():[]};
+ out.regressionCases.pcSpeed={exists:!!CHMAP['pc6f'],name:CHMAP['pc6f']?.name||'',topic:specOf('pc6f')?.topic||null};
  return out;
 });
 if(coverage.chapters!==1129)fail('unexpected-chapter-count:'+coverage.chapters);
@@ -83,10 +93,16 @@ if((coverage.kinds.data||0)!==coverage.dataAligned)fail('data-alignment:'+covera
 if((coverage.kinds.data||0)!==coverage.dataNoAnswerLeak)fail('data-answer-leak-count:'+coverage.dataNoAnswerLeak+'/'+(coverage.kinds.data||0));
 if(!coverage.special.mathFunction)fail('no-maths-function-data-case');if(!coverage.special.pcSpeed)fail('no-pc-speed-data-case');
 for(const [k,v] of Object.entries(coverage.regressionCases))if(!v.exists)fail('missing-regression-chapter:'+k);
-if(coverage.regressionCases.thales.topic!==null||coverage.regressionCases.thales.kind==='data')fail('thales-false-function-classification');
+if(coverage.regressionCases.thales.topic!==null||coverage.regressionCases.thales.kind!=='synthesis'||/Situation de transfert/.test(coverage.regressionCases.thales.html))fail('thales-must-use-synthesis');
 if(coverage.regressionCases.relatives.topic!==null||coverage.regressionCases.relatives.kind==='data')fail('relatives-false-speed-classification');
 if(coverage.regressionCases.linearFunction.topic!=='function'||coverage.regressionCases.linearFunction.subtype!=='linear'||coverage.regressionCases.linearFunction.y0!==0)fail('linear-function-must-pass-origin');
 if(coverage.regressionCases.affineFunction.topic!=='function'||coverage.regressionCases.affineFunction.subtype!=='affine'||coverage.regressionCases.affineFunction.y0===0)fail('affine-function-must-have-nonzero-intercept');
+for(const k of ['general3g','general4i','general5u']){const x=coverage.regressionCases[k];if(x.topic!=='function'||x.subtype!=='general'||!x.nonConstant)fail(k+'-must-be-general-function');}
+if(coverage.regressionCases.proportion4g.topic!=='proportion')fail('4g-must-be-proportion-not-function');
+if(coverage.regressionCases.proportion5t.topic!=='proportion')fail('5t-must-be-proportion-not-function');
+const w=coverage.regressionCases.weighted4j;if(w.topic!=='statistics'||w.subtype!=='weighted-mean'||w.weights.length!==w.values.length||w.weights.length<2||!w.weights.some(x=>x!==w.weights[0])||!w.weightRow)fail('4j-must-be-weighted-mean-with-visible-weights');
+const cp=coverage.regressionCases.elementaryCp;if(cp.grade!=='CP'||cp.topic!=='statistics'||cp.subtype!=='elementary-table'||!cp.values.length||cp.values.some(v=>v>10)||cp.questions.some(q=>/moyenne|étendue|etendue|pourcent/i.test(q)))fail('cp-table-must-stay-elementary');
+const den=coverage.regressionCases.density5c;if(den.topic!=='density'||den.subtype!=='mass-volume'||den.values.length!==den.secondary.length||den.values.length<2||!den.secondaryRow||!den.questions.some(q=>/masse volumique/i.test(q)))fail('pc5c-must-use-mass-and-volume');
 if(coverage.regressionCases.pcSpeed.topic!=='speed')fail('real-pc-speed-not-recognized');
 if(coverage.errors.length)errors.push(...coverage.errors.slice(0,30));
 for(const k of ['synthesis','situation','science'])if(!coverage.kinds[k])fail('missing-workshop-kind:'+k);if(!coverage.kinds.data)warnings.push('Aucun atelier de données détecté sur le registre actuel');
