@@ -1,0 +1,40 @@
+import { chromium } from 'playwright';
+import fs from 'node:fs';
+const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173',errors=[],warnings=[],fail=m=>errors.push(m);
+const browser=await chromium.launch({headless:true});
+const ctx=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
+await ctx.addInitScript(()=>{if(localStorage.getItem('mathquest_profiles_v2'))return;const id='compqa',p={version:3,active:id,profiles:{[id]:{name:'CompQA',avatar:'🦊',grade:'CP',subj:'p-maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}},recent:{},chap:{},lessons:{},lessonScores:{},review:{},mistakes:{},confidence:{},adaptive:{answers:0,adaptations:0},competencies:{}}}};localStorage.setItem('mathquest_profiles_v2',JSON.stringify(p));});
+const page=await ctx.newPage();page.on('pageerror',e=>fail('runtime: '+e.message));
+await page.goto(base+'/index.html',{waitUntil:'load'});
+await page.waitForFunction(()=>window.MQCompetency&&window.MQQuestionEnrichment&&window.MQAdaptivePath&&window.MQFinotCompetency&&window.MQCompetencyIntegration&&window.MQCompetencyUI);
+await page.waitForTimeout(50);
+const report=await page.evaluate(()=>{
+ const out={chapters:0,skillSets:0,enriched:0,primaryMath:null,initialPathAdaptive:false,profileSwitchAdaptive:false,practiceMeta:false,labelCheck:null,path:null,parent:false,finotWeak:0,classification:null,interrogationWeight:null,errors:[]};
+ // Régression P1 : app-path crée le parcours avant le follow-up. Le follow-up doit convertir le parcours vierge du jour.
+ out.initialPathAdaptive=!!S.path?.adaptive;if(!out.initialPathAdaptive)out.errors.push('initial-path-not-adaptive');
+ const ids=Object.keys(CHMAP);out.chapters=ids.length;
+ for(const id of ids){
+  const skills=MQCompetency.skillsForChapter(id);if(skills.length!==4||new Set(skills.map(x=>x.id)).size!==4)out.errors.push('skills:'+id);else out.skillSets++;
+  let q;try{q=CHMAP[id].g(2);}catch(e){out.errors.push('gen:'+id+':'+e.message);continue;}
+  if(q?._mq?.enriched&&q._mq.skillLabel&&q._mq.context&&q._mq.reflect)out.enriched++;else out.errors.push('enrich:'+id);
+ }
+ const pm=ids.find(id=>WMAP[id]?.lvl==='CP'&&(()=>{try{return sOf(WMAP[id].id).id==='p-maths'}catch{return false}})());
+ if(pm){const kinds=MQCompetency.skillsForChapter(pm).map(x=>x.kind);out.primaryMath={id:pm,kinds};if(!kinds.includes('calculer')||!kinds.includes('raisonner'))out.errors.push('primary-alias');}
+ // Régression revue #2 : changer vers un profil possédant un ancien parcours vierge du jour doit l'adapter immédiatement.
+ try{const second='compqa2',d=dstr(Date.now()),other=JSON.parse(JSON.stringify(S));other.name='CompQA2';other.competencies={};other.recent={};other.chap={};other.lessons={};other.lessonScores={};other.review={};const oldPath=makeDailyPath(other,d,second);delete oldPath.adaptive;delete oldPath.adaptiveReason;other.path=oldPath;PDB.profiles[second]=other;saveLocal();activateProfile(second,true);out.profileSwitchAdaptive=!!S.path?.adaptive;if(!out.profileSwitchAdaptive)out.errors.push('profile-switch-path-not-adaptive');}catch(e){out.errors.push('profile-switch:'+e.message);}
+ // Régression revue #2 : un exercice de pratique de leçon (.lcard sans .qcard) doit afficher compétence et contexte.
+ if(pm)try{const q=CHMAP[pm].g(2);app.innerHTML='<div class="lcard"><div class="qtext">Question pratique</div></div>';MQCompetencyUI.injectQuestionMeta(q);out.practiceMeta=!!document.querySelector('.lcard .mq-qmeta');if(!out.practiceMeta)out.errors.push('lesson-practice-meta-missing');}catch(e){out.errors.push('lesson-practice-meta:'+e.message);}
+ // Régression revue #2 : 0 % jamais tenté = nouveau ; 0 % après échec = fragile.
+ const fresh=MQCompetency.label(0,0),failed=MQCompetency.label(0,1);out.labelCheck={fresh:fresh.k,failed:failed.k};if(fresh.k!=='new')out.errors.push('zero-unattempted-not-new');if(failed.k!=='fragile')out.errors.push('zero-attempted-not-fragile');
+ const mathIds=ids.filter(id=>WMAP[id]?.lvl==='CP'&&(()=>{try{return sOf(WMAP[id].id).id==='p-maths'}catch{return false}})()&&typeof CHMAP[id].g==='function');
+ const weak=mathIds[0];if(weak){S.grade='CP';S.competencies={};S.recent={};S.chap={};S.lessons={};S.lessonScores={};S.review={};const q=CHMAP[weak].g(2),kind=MQCompetency.skillsForChapter(weak)[0].kind;for(let i=0;i<8;i++)MQCompetency.record(S,weak,false,{source:'practice',d:2,q,kind});for(const id of mathIds.slice(1,6)){const qq=CHMAP[id].g(2),kk=MQCompetency.skillsForChapter(id)[0].kind;for(let i=0;i<6;i++)MQCompetency.record(S,id,true,{source:'practice',d:2,q:qq,kind:kk});}
+  const weakRows=MQCompetency.weakSkills(S,mathIds,20),strongRows=MQCompetency.strongSkills(S,mathIds,20),wi=new Set(weakRows.map(x=>x.id)),si=new Set(strongRows.map(x=>x.id));out.classification={weak:weakRows.map(x=>x.value),strong:strongRows.map(x=>x.value),overlap:[...wi].filter(x=>si.has(x))};if(weakRows.some(x=>x.value>=65))out.errors.push('weak-threshold');if(strongRows.some(x=>x.value<80||x.attempts<3))out.errors.push('strong-threshold');if(out.classification.overlap.length)out.errors.push('weak-strong-overlap');
+  const p=makeDailyPath(S,'2026-10-20','compqa'),mathStep=p?.steps?.find(x=>x.kind==='lesson'&&x.subj==='p-maths');out.path={weak,selected:mathStep?.cid||null,adaptive:p?.adaptive||false};if(!p?.adaptive)out.errors.push('path-not-adaptive');if(mathStep&&mathStep.cid!==weak)out.errors.push('path-weak-not-selected');
+  out.finotWeak=MQFinotCompetency.weak(5).length;if(!out.finotWeak)out.errors.push('finot-no-weak');
+ }
+ if(pm){S.competencies={};S.competencyEvalSeen=[];S.interrogations={active:{id:'iqtest',i:1,questions:[{cid:pm,d:2,q:CHMAP[pm].g(2)}],answers:[{ok:true}]},history:[]};MQCompetencyIntegration.recordIQ({id:'iqtest',i:0,it:S.interrogations.active.questions[0]});const e=Object.values(S.competencies)[0];out.interrogationWeight=e?.recent?.[0]?.w||0;if(!(out.interrogationWeight>1))out.errors.push('interrogation-weight');}
+ try{PARENT=true;parentScreen('suivi');out.parent=!!document.querySelector('.mqp');if(!out.parent)out.errors.push('parent-competencies-missing');}catch(e){out.errors.push('parent:'+e.message);}
+ return out;
+});
+errors.push(...report.errors);await ctx.close();await browser.close();
+const out={...report,errorCount:errors.length,errors,warnings};fs.writeFileSync('tests/competency-browser-audit-report.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));if(errors.length)process.exitCode=1;else console.log('COMPETENCY_BROWSER_AUDIT_OK');
