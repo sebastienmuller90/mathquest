@@ -1,0 +1,29 @@
+/* Enrichissement pédagogique transversal de toutes les leçons MathQuest. */
+(function(){
+'use strict';
+if(typeof window==='undefined'||typeof lessonSteps!=='function')return;
+const strip=s=>String(s??'').replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;/g,' ').replace(/\s+/g,' ').trim();
+const esc2=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function sid(id){try{return sOf(WMAP[id].id).id}catch{return''}}
+function strategy(id){const s=sid(id);let title='Ta méthode pour réussir',steps=[];
+ if(/math/.test(s)){title='La méthode du mathématicien';steps=['Je cherche ce que la question demande.','Je choisis une règle ou une représentation adaptée.','Je fais les étapes proprement, sans sauter de raisonnement.','Je vérifie : signe, unité, ordre de grandeur ou opération inverse.'];}
+ else if(/francais/.test(s)){title='La méthode du lecteur et du rédacteur';steps=['Je lis exactement la consigne : identifier, expliquer, justifier, comparer…','Je repère un indice précis dans la phrase ou le texte.','J’utilise la règle, puis j’explique pourquoi elle s’applique ici.','Je relis ma réponse pour le sens, la syntaxe et l’orthographe.'];}
+ else if(/anglais|italien/.test(s)){title='La méthode pour progresser en langue';steps=['J’écoute ou je lis le modèle en entier.','Je repère les mots et la structure utiles.','Je répète puis je produis une phrase nouvelle.','Je vérifie le sens avant de chercher la perfection.'];}
+ else if(/svt|pc|sc|qm/.test(s)){title='La méthode du scientifique';steps=['J’observe les faits avant de conclure.','Je formule une question ou une hypothèse.','Je cherche la preuve, la mesure ou le mécanisme qui répond.','Je distingue ce que je sais, ce que j’en déduis et ce qu’il reste à vérifier.'];}
+ else if(/hg/.test(s)){title='La méthode de l’historien-géographe';steps=['Je situe : où ? quand ? à quelle échelle ?','J’identifie les acteurs, les espaces ou les groupes concernés.','Je relie causes, événements et conséquences.','Je retiens quelques repères précis plutôt qu’une longue liste isolée.'];}
+ else if(/emc|emi/.test(s)){title='La méthode pour argumenter';steps=['Je distingue les faits, les opinions et les règles.','Je cherche le droit, la valeur, la source ou le principe concerné.','Je prends en compte plusieurs points de vue.','Je justifie ma réponse avec une raison précise.'];}
+ else if(/tech|pix|ia/.test(s)){title='La méthode pour comprendre un système';steps=['Je définis le besoin ou le problème.','Je repère les entrées, les étapes et le résultat attendu.','Je teste la solution plutôt que de supposer qu’elle fonctionne.','Je vérifie sécurité, fiabilité, données et conséquences.'];}
+ else if(/arts|hda/.test(s)){title='La méthode pour observer une œuvre';steps=['Je décris d’abord ce que je vois, sans interpréter trop vite.','Je repère formes, couleurs, matériaux, composition ou contexte.','Je relie mes observations à un effet ou une intention.','Je justifie mon interprétation avec un détail précis.'];}
+ else if(/musique/.test(s)){title='La méthode pour écouter';steps=['J’écoute une première fois l’ensemble.','Je repère rythme, hauteur, timbre, intensité ou organisation.','Je nomme ce que j’entends avec le vocabulaire du cours.','Je relie l’élément musical à l’effet produit.'];}
+ else if(/eps/.test(s)){title='La méthode pour progresser en EPS';steps=['Je comprends l’objectif du geste ou de la situation.','Je respecte les consignes de sécurité.','Je me concentre sur un critère technique à la fois.','J’observe le résultat et j’ajuste mon action.'];}
+ else if(/orientation/.test(s)){title='La méthode pour construire ton projet';steps=['Je pars de ce que j’aime, de mes points forts et de ce que je veux découvrir.','Je cherche des informations fiables sur plusieurs possibilités.','Je compare sans croire qu’il existe un seul parcours parfait.','Je garde des étapes concrètes à essayer ou à vérifier.'];}
+ else if(/evar/.test(s)){title='La méthode pour réfléchir avec respect';steps=['Je lis la situation sans juger trop vite.','Je distingue consentement, respect, sécurité, émotion et règle.','Je cherche une réponse qui protège chacun.','Je demande de l’aide à un adulte de confiance si une situation réelle m’inquiète.'];}
+ else {steps=['Je comprends l’idée principale.','Je regarde un exemple.','Je reformule avec mes mots.','Je vérifie avec un nouvel exercice.'];}
+ return {k:'mqstrategy',t:'🧭 '+title,h:`<div class="mq-strategy"><p><b>Dans cette matière, utilise toujours ces quatre réflexes :</b></p><ol>${steps.map(x=>`<li>${esc2(x)}</li>`).join('')}</ol></div>`};
+}
+function facts(id){const c=COURS[id]||{},ch=byId(id),a=[];const add=x=>{const t=strip(x);if(t&&!a.some(y=>y.toLowerCase()===t.toLowerCase()))a.push(t)};(c.retenir||[]).forEach(add);(ch?.f?.l||[]).forEach(add);return a.slice(0,3);}
+function selfCheck(id){const f=facts(id),name=esc2(byId(id)?.name||'la notion');return {k:'mqselfcheck',t:'🧠 Vérifie que tu as vraiment compris',h:`<div class="mq-selfcheck"><p>Avant les exercices, essaie sans regarder le cours :</p><ol><li><b>Explique avec tes mots</b> ce qu’est ${name}.</li>${f[0]?`<li>Peux-tu expliquer pourquoi cette idée est vraie ou utile : <em>${esc2(f[0])}</em> ?</li>`:''}<li><b>Invente un exemple</b> qui n’est pas exactement celui du cours.</li><li><b>Imagine une erreur</b> qu’un élève pourrait faire et comment la corriger.</li></ol><p class="muted small">Si une réponse est difficile, ce n’est pas un échec : reviens à l’étape précédente puis réessaie.</p></div>`};}
+const base=lessonSteps;
+lessonSteps=function(id){const st=base(id);if(!Array.isArray(st)||st.some(x=>x.k==='mqstrategy'))return st;const out=st.slice();out.splice(Math.min(1,out.length),0,strategy(id));const i=out.findIndex(x=>x.k==='practice'||x.k==='confidence'||x.k==='quiz');out.splice(i<0?out.length:Math.max(1,i),0,selfCheck(id));return out;};
+window.MQPedagogyContent={version:'1.0',strategy,selfCheck};
+})();
