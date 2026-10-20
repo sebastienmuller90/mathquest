@@ -24,7 +24,7 @@ jobs:
         run: |
           set -euo pipefail
           node --check sw.js
-          find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
+          find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -not -path '*/node_modules/*' -print0 | xargs -0 -n1 node --check
       - name: Tests de non-régression MathQuest
         run: node tests/mathquest-regression.mjs
       - name: Sonder le registre pédagogique actif
@@ -42,23 +42,37 @@ jobs:
   browser:
     needs: regression
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    env:
+      MQ_BROWSER: ${{ matrix.browser }}
+      MQ_ENGINES: ${{ matrix.browser }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Installer Chromium pour l’audit
-        run: |
-          npm init -y >/dev/null 2>&1
-          npm install --no-save playwright
-          npx playwright install --with-deps chromium
+          cache: npm
+      - name: Installer les dépendances épinglées (package-lock.json)
+        run: npm ci
+      - name: Installer le navigateur ${{ matrix.browser }}
+        run: npx playwright install --with-deps ${{ matrix.browser }}
       - name: Démarrer MathQuest localement
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mathquest-http.log 2>&1 &
-          echo $! >/tmp/mathquest-http.pid
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0; sleep 1; done
           cat /tmp/mathquest-http.log
           exit 1
+      - name: Mise en page mobile réelle (5 tailles, géométrie, aucun élément masqué)
+        run: node tests/mobile-layout.test.js
+      - name: Architecture (points d’extension, réponse unique, mission isolée)
+        if: matrix.browser == 'chromium'
+        run: node tests/hooks.test.js
+      - name: Mise à jour de l’appli installée (N → N+1) et démarrage hors ligne
+        if: matrix.browser == 'chromium'
+        run: node tests/pwa-update.test.js
       - name: Audit navigateur intégral
         run: node tests/browser-audit.mjs
       - name: Audit des 3 niveaux et de Finot
@@ -75,19 +89,14 @@ jobs:
         run: node tests/phase4-pedagogy-browser-audit.mjs
       - name: Audit ciblé des données CE2
         run: node tests/phase4-ce2-data-browser-audit.mjs
-      - name: Publier rapport et captures navigateur
+      - name: Audit des packs pédagogiques spécifiques
+        run: node tests/chapter-packs-browser-audit.mjs
+      - name: Publier rapports et captures navigateur
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mathquest-browser-audit
+          name: mathquest-browser-audit-${{ matrix.browser }}
           path: |
-            tests/browser-audit-report.json
-            tests/pedagogy-browser-audit-report.json
-            tests/interrogation-dashboard-audit-report.json
-            tests/review-findings-audit-report.json
-            tests/competency-browser-audit-report.json
-            tests/phase3-browser-audit-report.json
-            tests/phase4-pedagogy-audit-report.json
-            tests/phase4-ce2-data-audit-report.json
+            tests/*-report.json
             tests/screenshots/*.png
           if-no-files-found: ignore
