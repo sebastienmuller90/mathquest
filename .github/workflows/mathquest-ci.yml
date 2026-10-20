@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: mathquest-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -23,3 +27,55 @@ jobs:
           find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
       - name: Tests de non-régression MathQuest
         run: node tests/mathquest-regression.mjs
+      - name: Sonder le registre pédagogique actif
+        run: node tests/registry-probe.mjs
+      - name: Audit intégral des leçons et exercices
+        run: node tests/full-content-audit-v2.mjs
+      - name: Publier le rapport d’audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathquest-full-content-audit
+          path: tests/full-content-audit-report.json
+          if-no-files-found: ignore
+
+  browser:
+    needs: regression
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer Chromium pour l’audit
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Démarrer MathQuest localement
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mathquest-http.log 2>&1 &
+          echo $! >/tmp/mathquest-http.pid
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0; sleep 1; done
+          cat /tmp/mathquest-http.log
+          exit 1
+      - name: Audit navigateur intégral
+        run: node tests/browser-audit.mjs
+      - name: Audit des 3 niveaux et de Finot
+        run: node tests/pedagogy-browser-audit.mjs
+      - name: Audit interrogation parent et statistiques
+        run: node tests/interrogation-dashboard-browser-audit.mjs
+      - name: Audit ciblé des remarques de revue
+        run: node tests/review-findings-browser-audit.mjs
+      - name: Publier rapport et captures navigateur
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathquest-browser-audit
+          path: |
+            tests/browser-audit-report.json
+            tests/pedagogy-browser-audit-report.json
+            tests/interrogation-dashboard-audit-report.json
+            tests/review-findings-audit-report.json
+            tests/screenshots/*.png
+          if-no-files-found: ignore
