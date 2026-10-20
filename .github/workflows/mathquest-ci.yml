@@ -65,6 +65,8 @@ jobs:
         run: node tests/pedagogy-browser-audit.mjs
       - name: Audit interrogation parent et statistiques
         run: node tests/interrogation-dashboard-browser-audit.mjs
+      - name: Audit ciblé des remarques de revue
+        run: node tests/review-findings-browser-audit.mjs
       - name: Publier rapport et captures navigateur
         if: always()
         uses: actions/upload-artifact@v4
@@ -74,5 +76,6 @@ jobs:
             tests/browser-audit-report.json
             tests/pedagogy-browser-audit-report.json
             tests/interrogation-dashboard-audit-report.json
+            tests/review-findings-audit-report.json
             tests/screenshots/*.png
           if-no-files-found: ignore
