@@ -73,6 +73,8 @@ jobs:
         run: node tests/phase3-browser-audit.mjs
       - name: Audit des ateliers et contextes pédagogiques phase 4
         run: node tests/phase4-pedagogy-browser-audit.mjs
+      - name: Audit ciblé des données CE2
+        run: node tests/phase4-ce2-data-browser-audit.mjs
       - name: Publier rapport et captures navigateur
         if: always()
         uses: actions/upload-artifact@v4
@@ -86,5 +88,6 @@ jobs:
             tests/competency-browser-audit-report.json
             tests/phase3-browser-audit-report.json
             tests/phase4-pedagogy-audit-report.json
+            tests/phase4-ce2-data-audit-report.json
             tests/screenshots/*.png
           if-no-files-found: ignore
