@@ -1,4 +1,4 @@
-/* ===== MathQuest — Bibliothèque de lecture et compréhension (CP → 3e) =====
+/* ===== Finot Académie — Bibliothèque de lecture et compréhension (CP → 3e) =====
    Premier lot pilote : 1 support par niveau (+ 1 support documentaire supplémentaire en 4e pour
    démontrer la diversité des types de documents), choisi parmi les chapitres de Français déjà
    existants où un support de lecture s'intègre naturellement (jamais forcé dans un chapitre qui ne
@@ -6,7 +6,7 @@
    d'auteur appliquées ici.
 
    Droits d'auteur (voir docs/reading-system.md §Droits d'auteur) :
-   - sourceType 'original_mathquest' : texte intégralement écrit pour MathQuest, aucune restriction.
+   - sourceType 'original_mathquest' : texte intégralement écrit pour Finot Académie, aucune restriction.
    - sourceType 'public_domain' : adaptation en français moderne, simplifiée pour le niveau visé, très
      librement inspirée d'une œuvre tombée dans le domaine public (auteur mort depuis plus de 70 ans) —
      jamais une citation verbatim d'une traduction existante encore protégée. Vérifié un par un :
@@ -558,7 +558,7 @@ window.MQ_READING={
     'TEXTE — Chaque année, de nombreuses chouettes sont percutées par des voitures. Elles chassent les souris au bord des routes, où l’herbe est rase, et volent très bas.',
     'CONSEIL — Entre la tombée de la nuit et l’aube, roulez moins vite près des champs et des bois.',
     'IMAGE — Une chouette blanche, ailes ouvertes, éclairée par les phares d’une voiture.',
-    'SOURCE — Affiche réalisée par une association de protection des oiseaux d’un parc naturel régional, distribuée dans les mairies (document fictif créé pour MathQuest).'
+    'SOURCE — Affiche réalisée par une association de protection des oiseaux d’un parc naturel régional, distribuée dans les mairies (document fictif créé pour Finot Académie).'
    ],
    glossary:[{word:'percutées',definition:'Heurtées violemment.'},{word:'aube',definition:'Le tout début du jour, quand il commence à faire clair.'}],
    questions:[
@@ -956,7 +956,7 @@ window.MQ_READING={
   // ===== Lot 4 (18/10/2026) : chapitres du collège encore sans texte (poésie, théâtre, argumentation,
   // autobiographie, médias). Textes originaux de Verlaine (mort en 1896), Du Bellay (1560) et Ronsard
   // (1585) ; adaptations libres de Molière, Marivaux, Voltaire, Rousseau, Verne et Sophocle (tous dans
-  // le domaine public) ; deux documents originaux MathQuest.
+  // le domaine public) ; deux documents originaux Finot Académie.
 
   fr_6e_chanson_automne_01:{
    id:'fr_6e_chanson_automne_01',level:'6e',subject:'francais',type:'literary_text',documentType:'poème',
@@ -1167,7 +1167,7 @@ window.MQ_READING={
   fr_4e_photo_legende_01:{
    id:'fr_4e_photo_legende_01',level:'4e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
    title:'Une photo, deux légendes',author:null,work:null,sourceType:'original_mathquest',
-   sourceReference:'Document original MathQuest. L’exemple de la photographie et des deux journaux est imaginé pour l’exercice.',
+   sourceReference:'Document original Finot Académie. L’exemple de la photographie et des deux journaux est imaginé pour l’exercice.',
    chapterLinks:['fr4g'],
    competencies:['READ_MAIN_IDEA','READ_EXPLICIT','READ_COMPARE_DOCUMENTS','READ_VOCAB_CONTEXT','READ_INFERENCE','READ_DOCUMENT_SOURCE','READ_JUSTIFY'],
    difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:8,
@@ -1590,7 +1590,7 @@ window.MQ_READING={
   // ===== Lot 6 (18/10/2026) : derniers chapitres de lecture du collège (lecture expressive,
   // versification, dénonciation, texte complexe, fantastique, argumentation) et renfort du primaire.
   // Textes originaux de La Fontaine, Baudelaire (mort en 1867) et Hugo ; adaptations libres de
-  // Maupassant et Perrault (domaine public) ; documents et récits originaux MathQuest.
+  // Maupassant et Perrault (domaine public) ; documents et récits originaux Finot Académie.
 
   fr_6e_grenouille_boeuf_01:{
    id:'fr_6e_grenouille_boeuf_01',level:'6e',subject:'francais',type:'literary_text',documentType:'fable',
@@ -2307,7 +2307,7 @@ window.MQ_READING={
 
   // ===== Lot 8 (18/10/2026) : derniers renforts pour atteindre ~90 supports. Texte original de
   // Rimbaud ; adaptations libres de Chrétien de Troyes, Voltaire, Maupassant, Hugo et Perrault
-  // (domaine public) ; récits et documents originaux MathQuest.
+  // (domaine public) ; récits et documents originaux Finot Académie.
 
   fr_cm1_panne_01:{
    id:'fr_cm1_panne_01',level:'CM1',subject:'francais',type:'literary_text',documentType:'récit',
@@ -2416,7 +2416,7 @@ window.MQ_READING={
   fr_6e_visite_chateau_doc_01:{
    id:'fr_6e_visite_chateau_doc_01',level:'6e',subject:'francais',type:'document',documentType:'document pratique (dépliant)',
    title:'Visiter le château de Montclair',author:null,work:null,sourceType:'original_mathquest',
-   sourceReference:'Document original MathQuest : le château de Montclair et ses informations pratiques sont imaginaires.',
+   sourceReference:'Document original Finot Académie : le château de Montclair et ses informations pratiques sont imaginaires.',
    chapterLinks:['fr6c'],
    competencies:['READ_EXPLICIT','READ_STRUCTURE','READ_INFERENCE','READ_DOCUMENT_SOURCE','READ_TIME','READ_JUSTIFY'],
    difficulty:5,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
@@ -2555,7 +2555,7 @@ window.MQ_READING={
   fr_4e_fait_opinion_doc_01:{
    id:'fr_4e_fait_opinion_doc_01',level:'4e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
    title:'Fait ou opinion ?',author:null,work:null,sourceType:'original_mathquest',
-   sourceReference:'Document original MathQuest. Le parc et les chiffres cités sont imaginaires, inventés pour l’exercice.',
+   sourceReference:'Document original Finot Académie. Le parc et les chiffres cités sont imaginaires, inventés pour l’exercice.',
    chapterLinks:['fr4d'],
    competencies:['READ_MAIN_IDEA','READ_VOCAB_CONTEXT','READ_ARGUMENT','READ_DOCUMENT_SOURCE','READ_JUSTIFY','READ_INFERENCE'],
    difficulty:6,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,
@@ -2608,7 +2608,7 @@ window.MQ_READING={
   fr_3e_image_virale_doc_01:{
    id:'fr_3e_image_virale_doc_01',level:'3e',subject:'francais',type:'document',documentType:'texte documentaire (éducation aux médias)',
    title:'Vérifier une image avant de la partager',author:null,work:null,sourceType:'original_mathquest',
-   sourceReference:'Document original MathQuest. L’exemple de la photo du requin est imaginaire, inventé pour l’exercice.',
+   sourceReference:'Document original Finot Académie. L’exemple de la photo du requin est imaginaire, inventé pour l’exercice.',
    chapterLinks:['fr3h'],
    competencies:['READ_MAIN_IDEA','READ_DOCUMENT_SOURCE','READ_SEQUENCE','READ_INFERENCE','READ_JUSTIFY','READ_STRUCTURE','READ_ARGUMENT'],
    difficulty:7,estimatedReadingMinutes:3,audioMode:'audioAllowed',sessionSize:7,

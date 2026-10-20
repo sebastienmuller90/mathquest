@@ -1,4 +1,4 @@
-/* MathQuest — Éducation aux médias et à l'information (EMI) au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (emi6a…emi3f).
+/* Finot Académie — Éducation aux médias et à l'information (EMI) au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (emi6a…emi3f).
    Cadre légal : loi n°2013-595 du 8 juillet 2013 d'orientation et de programmation pour la refondation de l'École de la République,
    qui inscrit l'éducation aux médias et à l'information dans le Code de l'éducation ; le CLEMI (Centre pour l'éducation aux médias
    et à l'information), organisme chargé de cette mission dans tout le système scolaire, est régi par les articles D. 314-99 à

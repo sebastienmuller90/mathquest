@@ -1,4 +1,4 @@
-/* MathQuest V8.3 — Français, programme officiel applicable en 2026-2027
+/* Finot Académie V8.3 — Français, programme officiel applicable en 2026-2027
    6e : BO n°16 du 17 avril 2025 (cycle 3).
    5e : BO n°10 du 5 mars 2026 (nouveau cycle 4, application 2026-2027).
    4e/3e : BO n°31 du 30 juillet 2020, encore applicable en 2026-2027.

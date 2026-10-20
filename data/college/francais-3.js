@@ -1,4 +1,4 @@
-/* MathQuest — Français 3e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr3a … fr3z).
+/* Finot Académie — Français 3e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr3a … fr3z).
    Programme appliqué : programme de français du cycle 4 dans sa version consolidée de 2020 — arrêté du 9 novembre 2015 modifié
    par l’arrêté du 17 juillet 2020 (JO du 28 juillet 2020, NOR MENE2018714A), BO n°31 du 30 juillet 2020, annexe 3
    « Programme d’enseignement du cycle des approfondissements (cycle 4) », partie Français ; complété par les « Attendus de fin
@@ -7,7 +7,7 @@
    Pourquoi pas le nouveau programme : l’arrêté du 18 février 2026 (NOR MENE2602912A, BO n°10 du 5 mars 2026) fixe un nouveau
    programme de français du cycle 4, mais son calendrier d’application, échelonné par niveau, ne fait entrer ce texte en
    vigueur en classe de troisième qu’à la rentrée de l’année scolaire 2028-2029 : en 3e, l’année 2026-2027 relève donc encore
-   du programme de 2020 (même texte et même base documentaire que pour les chapitres de 4e de MathQuest, déjà vérifiés).
+   du programme de 2020 (même texte et même base documentaire que pour les chapitres de 4e de Finot Académie, déjà vérifiés).
    Sources (programme identique pour tout le cycle 4 ; seul le calendrier d’application diffère selon le niveau) :
      https://www.education.gouv.fr/bo/20/Hebdo31/MENE2018714A.htm
      https://www.education.gouv.fr/sites/default/files/imported_files/documents/BO_MENJS_31_1313155.pdf (texte lu)
@@ -15,10 +15,10 @@
      https://www.education.gouv.fr/sites/default/files/document/BO_22_MENJ_1132537.pdf-231744.pdf (texte lu)
      https://www.education.gouv.fr/bo/2026/Hebdo10/MENE2602912A (calendrier d’application par niveau)
    Terminologie : celle de la liste « Terminologie utilisée » du programme 2020. Conjonctions de coordination : mais, ou, et,
-   or, ni, car (« donc » est traité comme un adverbe, convention retenue dans les autres niveaux de collège de MathQuest).
+   or, ni, car (« donc » est traité comme un adverbe, convention retenue dans les autres niveaux de collège de Finot Académie).
    Orthographe traditionnelle ; les graphies rectifiées de 1990 restent acceptées. Les œuvres citées sont, sauf mention
    contraire, antérieures à 1950 (domaine public) ; en cas d’incertitude sur une formulation exacte, le texte décrit l’œuvre
-   sans la citer mot pour mot. Les autres contenus ont été écrits pour MathQuest. */
+   sans la citer mot pour mot. Les autres contenus ont été écrits pour Finot Académie. */
 (function(){
 'use strict';
 const MQ=window.MQCollege;if(!MQ)return;const H=MQ.H;

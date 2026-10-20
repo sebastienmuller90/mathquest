@@ -1,4 +1,4 @@
-/* MathQuest — Arts plastiques au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (arts6a…arts3f).
+/* Finot Académie — Arts plastiques au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (arts6a…arts3f).
    Programme d'enseignement des arts plastiques du cycle 3 et du cycle 4, arrêté du 9 novembre 2015 modifié par l'arrêté du
    17 juillet 2020 (NOR MENE2018714A), BO n°31 du 30 juillet 2020. Trois grandes questions structurent le programme : la
    représentation ; les fabrications et la relation entre l'objet et l'espace ; la matérialité de l'œuvre, l'objet et l'œuvre.

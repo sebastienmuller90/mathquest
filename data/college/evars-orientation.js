@@ -1,4 +1,4 @@
-/* MathQuest — EVARS et orientation au collège, année scolaire 2026-2027 : 32 chapitres reconstruits (evars6a … evars3c, orientation6a … orientation3e).
+/* Finot Académie — EVARS et orientation au collège, année scolaire 2026-2027 : 32 chapitres reconstruits (evars6a … evars3c, orientation6a … orientation3e).
    EVARS : programme d’éducation à la vie affective et relationnelle, et à la sexualité, BO n°6 du 6 février 2025 (NOR MENE2503064A),
    applicable depuis la rentrée 2025 ; au moins trois séances spécifiques par an (article L. 312-16 du Code de l’éducation), une par axe.
    Pour chaque niveau, les trois chapitres suivent l’objectif d’apprentissage officiel de l’axe correspondant et ses « notions et compétences »

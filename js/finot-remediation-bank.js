@@ -1,4 +1,4 @@
-/* MathQuest — complète le diagnostic d'erreur de Finot avec une erreur typique et une remédiation de la matière.
+/* Finot Académie — complète le diagnostic d'erreur de Finot avec une erreur typique et une remédiation de la matière.
    MQFinotError.explain est le chemin partagé clic/texte/voix. L'intention « pourquoi » est un abonné 'finot:intent'. */
 (function(){
 'use strict';

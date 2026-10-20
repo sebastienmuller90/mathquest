@@ -1,4 +1,4 @@
-/* MathQuest — CM1 : enrichissement V8.13 (variété des questions + activités hors écran).
+/* Finot Académie — CM1 : enrichissement V8.13 (variété des questions + activités hors écran).
    Programmes : français et mathématiques 2025 (BO n°16 du 17/04/2025) ; sciences et technologie 2026 (BO n°24 du 11/06/2026) ;
    histoire-géographie et EPS 2026 (BO n°22 de 2026) ; EMC 2024 ; EVAR 2025 ; arts plastiques et éducation musicale 2020.
    Les activités « hors écran » ne sont pas évaluées par l'application. */

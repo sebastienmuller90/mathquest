@@ -1,4 +1,4 @@
-/* MathQuest — Mathématiques 5e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
+/* Finot Académie — Mathématiques 5e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
    Programme appliqué : NOUVEAU programme de mathématiques du cycle 4, fixé par l’arrêté du 18 février 2026 (JO du 4 mars 2026,
    NOR MENE2602912A), annexe 2 publiée au BO n°10 du 5 mars 2026 ; il entre en application en classe de 5e à la rentrée 2026
    (4e en 2027, 3e en 2028). Chaque chapitre suit les objectifs d’apprentissage et automatismes de 5e de ce programme.

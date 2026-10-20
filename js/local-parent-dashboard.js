@@ -1,4 +1,4 @@
-/* MathQuest — tableau de bord synthétique dans l'espace parent local. */
+/* Finot Académie — tableau de bord synthétique dans l'espace parent local. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;

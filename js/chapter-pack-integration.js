@@ -1,15 +1,15 @@
-/* MathQuest — intégration des packs pédagogiques spécifiques par chapterId.
+/* Finot Académie — intégration des packs pédagogiques spécifiques par chapterId.
    Remplace uniquement l'atelier transversal des chapitres disposant d'un pack explicite. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||!window.MQPedagogicalWorkshop)return;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const labels={source:'Source réelle',creation:'Création originale MathQuest',reconstitution:'Reconstitution pédagogique',synthese:'Synthèse MathQuest',simulation:'Données simulées'};
+const labels={source:'Source réelle',creation:'Création originale Finot Académie',reconstitution:'Reconstitution pédagogique',synthese:'Synthèse Finot Académie',simulation:'Données simulées'};
 const icons={source:'📚',creation:'✍️',reconstitution:'🧱',synthese:'📄',simulation:'🧪'};
 function getPack(id){return window.MQChapterPacks?.packs?.[id]||null;}
 function provenance(p){
  const x=p?.provenance||{},type=x.type||'synthese',refs=Array.isArray(x.refs)?x.refs:[];
- return `<div class="mq-pack-provenance" data-provenance="${esc(type)}" style="margin:8px 0;padding:8px 10px;border-radius:10px;background:var(--surface2)"><b>${icons[type]||'📄'} ${esc(labels[type]||type)}</b><br><span class="small">${esc(x.label||'Ressource pédagogique MathQuest')}</span>${refs.length?`<details class="small" style="margin-top:5px"><summary>Références du cours</summary><ul>${refs.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></details>`:''}</div>`;
+ return `<div class="mq-pack-provenance" data-provenance="${esc(type)}" style="margin:8px 0;padding:8px 10px;border-radius:10px;background:var(--surface2)"><b>${icons[type]||'📄'} ${esc(labels[type]||type)}</b><br><span class="small">${esc(x.label||'Ressource pédagogique Finot Académie')}</span>${refs.length?`<details class="small" style="margin-top:5px"><summary>Références du cours</summary><ul>${refs.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></details>`:''}</div>`;
 }
 function levelBlock(level,data){
  const em={1:'🌱',2:'🎯',3:'🚀'}[level]||'•',qs=Array.isArray(data?.questions)?data.questions:[];

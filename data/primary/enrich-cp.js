@@ -1,4 +1,4 @@
-/* MathQuest — CP : enrichissement V8.13 (variété des questions + activités hors écran).
+/* Finot Académie — CP : enrichissement V8.13 (variété des questions + activités hors écran).
    Programmes : français et mathématiques 2024 (BO n°41 du 31/10/2024) ; sciences, histoire-géographie et EPS 2026 ;
    EMC 2024 ; EVAR 2025 (BO n°6 du 06/02/2025) ; arts plastiques et éducation musicale 2020.
    Les activités « hors écran » ne sont pas évaluées par l'application : l'enfant les réalise avec un adulte et s'auto-évalue. */

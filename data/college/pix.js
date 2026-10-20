@@ -1,4 +1,4 @@
-/* MathQuest — Compétences numériques (Pix) au collège, année scolaire 2026-2027 : 32 chapitres reconstruits (pix6a … pix3h).
+/* Finot Académie — Compétences numériques (Pix) au collège, année scolaire 2026-2027 : 32 chapitres reconstruits (pix6a … pix3h).
    Références : cadre de référence des compétences numériques (CRCN), article D. 121-1 du Code de l’éducation (5 domaines, 16 compétences,
    8 niveaux) ; note de service du 23 janvier 2026 « Modalités de formation, d’évaluation et de certification des compétences numériques »
    (NOR MENE2527173N), BO n°6 du 5 février 2026 : attestation de sensibilisation au numérique en fin de 6e (deux parcours Pix, au moins

@@ -1,4 +1,4 @@
-/* MathQuest — cible la micro-compétence la plus fragile dans les exercices du parcours quotidien. */
+/* Finot Académie — cible la micro-compétence la plus fragile dans les exercices du parcours quotidien. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof ACT!=='object')return;

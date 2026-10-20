@@ -1,4 +1,4 @@
-/* MathQuest — affichage léger des micro-compétences et contextes d'exercice. */
+/* Finot Académie — affichage léger des micro-compétences et contextes d'exercice. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;

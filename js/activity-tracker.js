@@ -1,4 +1,4 @@
-/* MathQuest — journal détaillé d'activité pour le suivi parent.
+/* Finot Académie — journal détaillé d'activité pour le suivi parent.
    Enregistre les séances, sans modifier les récompenses ni la progression pédagogique. */
 (function(){
 'use strict';

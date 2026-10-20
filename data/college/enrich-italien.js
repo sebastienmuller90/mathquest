@@ -1,4 +1,4 @@
-/* MathQuest — Italien collège : enrichissement V8.13 (variété ≥ 12 questions distinctes) des chapitres de grammaire historiques.
+/* Finot Académie — Italien collège : enrichissement V8.13 (variété ≥ 12 questions distinctes) des chapitres de grammaire historiques.
    Programme de langues vivantes du cycle 4 (BO n°31 du 30/07/2020), niveau A2. */
 (function(){
 'use strict';

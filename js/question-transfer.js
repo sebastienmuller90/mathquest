@@ -1,4 +1,4 @@
-/* MathQuest — ajoute une situation de transfert après chaque exercice enrichi. */
+/* Finot Académie — ajoute une situation de transfert après chaque exercice enrichi. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof CHMAP==='undefined')return;

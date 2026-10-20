@@ -1,4 +1,4 @@
-# MathQuest — standard de contenu pédagogique
+# Finot Académie — standard de contenu pédagogique
 
 Ce dossier regroupe les banques et futures ressources destinées à enrichir les cours au-delà des exercices procéduraux.
 
@@ -18,9 +18,9 @@ Chaque chapitre doit tendre vers six briques :
 Toute ressource doit appartenir explicitement à l'une de ces catégories :
 
 - `source` : document réel dont la provenance/licence est connue ;
-- `creation` : texte, situation, dialogue, schéma ou autre ressource originale créée par MathQuest, sans prétention à reproduire un document existant ;
+- `creation` : texte, situation, dialogue, schéma ou autre ressource originale créée par Finot Académie, sans prétention à reproduire un document existant ;
 - `reconstitution` : création pédagogique originale qui reconstitue explicitement un contexte historique, scientifique ou technique, jamais présentée comme une source authentique ;
-- `synthese` : document MathQuest construit à partir d'informations déjà présentes dans le cours ;
+- `synthese` : document Finot Académie construit à partir d'informations déjà présentes dans le cours ;
 - `simulation` : valeurs ou données inventées uniquement pour entraîner une méthode de lecture/calcul.
 
 Une `simulation` ne doit jamais être présentée comme une statistique historique, scientifique ou institutionnelle réelle. Une `synthese` ne doit jamais être appelée « document d'époque ». Une `creation` doit être signalée comme originale lorsqu'un élève pourrait la confondre avec un extrait publié. Une `reconstitution` doit être clairement identifiée comme telle dans son contenu.

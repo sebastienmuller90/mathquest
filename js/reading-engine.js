@@ -1,4 +1,4 @@
-/* ===== MathQuest — Moteur de lecture et compréhension (CP → 3e) =====
+/* ===== Finot Académie — Moteur de lecture et compréhension (CP → 3e) =====
    Sélection adaptative de questions depuis la bibliothèque (data/reading/resources.js), notation,
    indices progressifs et suivi de maîtrise par compétence — branché sur le carnet d'erreurs existant
    (MQAdaptive.recordMistake, sur le chapitre lié) plutôt que de dupliquer un système séparé.

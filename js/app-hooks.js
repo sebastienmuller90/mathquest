@@ -1,4 +1,4 @@
-/* MathQuest — points d'extension explicites (20/10/2026, stabilisation).
+/* Finot Académie — points d'extension explicites (20/10/2026, stabilisation).
    Les fonctions cœur (startMission, nextQ, result, lvalidate, renderQ, renderLesson, endMission, ensurePath,
    activateProfile, finotAsk…) restent définies une seule fois dans leur module propriétaire et émettent des
    événements ; les fonctionnalités additionnelles s'y abonnent au lieu de remplacer la fonction globale.

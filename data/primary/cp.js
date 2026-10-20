@@ -1,4 +1,4 @@
-/* MathQuest — CP (cycle 2), année scolaire 2026-2027.
+/* Finot Académie — CP (cycle 2), année scolaire 2026-2027.
    Français et mathématiques : programmes 2024 (BO n°41 du 31/10/2024), applicables depuis 2025-2026.
    Sciences et technologie, histoire-géographie, langues vivantes, EPS : nouveaux programmes 2026 (BO n°24, n°22, n°12 de 2026).
    EMC : programme 2024 (BO n°24 du 13/06/2024). EVAR : programme 2025. Arts : programme 2020.

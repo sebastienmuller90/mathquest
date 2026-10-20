@@ -1,4 +1,4 @@
-/* MathQuest — maîtrise par micro-compétences.
+/* Finot Académie — maîtrise par micro-compétences.
    Complète la maîtrise par chapitre sans invalider les anciennes sauvegardes.
    Chaque réponse est rattachée à une compétence pédagogique adaptée à la matière. */
 (function(){

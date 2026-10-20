@@ -1,4 +1,4 @@
-/* MathQuest — Référentiel officiel 2026-2027
+/* Finot Académie — Référentiel officiel 2026-2027
    Référentiel central utilisé par les phases pédagogiques V8.2 à V8.6. */
 (function(){
   const BO={
@@ -60,7 +60,7 @@
       '3e':rec('CYCLES_2020','transition','Ancien programme de cycle 4 encore applicable en 3e cette année.',{nextSwitch:'2028-2029',nextRef:'LVE_2025'})
     },
     italien:{
-      '6e':rec('LVE_2025','optionnel','Possible en 6e notamment dans un parcours bilangue ; MathQuest ne l’active pas par défaut.'),
+      '6e':rec('LVE_2025','optionnel','Possible en 6e notamment dans un parcours bilangue ; Finot Académie ne l’active pas par défaut.'),
       '5e':rec('LVE_2025','nouveau','Nouveau programme LVE applicable en 5e à la rentrée 2026-2027.'),
       '4e':rec('CYCLES_2020','transition','Ancien programme de cycle 4 encore applicable en 4e cette année.',{nextSwitch:'2027-2028',nextRef:'LVE_2025'}),
       '3e':rec('CYCLES_2020','transition','Ancien programme de cycle 4 encore applicable en 3e cette année.',{nextSwitch:'2028-2029',nextRef:'LVE_2025'})

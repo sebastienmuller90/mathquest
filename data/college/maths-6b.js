@@ -1,4 +1,4 @@
-/* MathQuest — Mathématiques 6e : chapitres reconstruits (complète data/college/maths-6.js), année scolaire 2026-2027.
+/* Finot Académie — Mathématiques 6e : chapitres reconstruits (complète data/college/maths-6.js), année scolaire 2026-2027.
    Programme appliqué : mathématiques du cycle 3, BO n°16 du 17 avril 2025 (MENE2504620A), applicable en 6e depuis la rentrée 2025.
    Chaque chapitre suit les objectifs d’apprentissage de 6e de ce programme (ou du cours moyen qu’il consolide).
    Identifiants des chapitres existants conservés (progression des élèves préservée). */

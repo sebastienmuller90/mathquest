@@ -1,4 +1,4 @@
-/* MathQuest — rotation anti-mémorisation des exercices.
+/* Finot Académie — rotation anti-mémorisation des exercices.
    Les générateurs existants restent la source de vérité ; ce moteur change leur graine toutes les 12 h,
    maintient un historique court et réserve un espace de tirage séparé aux interrogations parent.
    V1.2 : mémoire bornée, écritures groupées et tirages reproductibles pour reprendre un contrôle après rechargement. */

@@ -1,4 +1,4 @@
-/* MathQuest — Physique-chimie 4e et 3e (collège) : 23 chapitres reconstruits, année scolaire 2026-2027.
+/* Finot Académie — Physique-chimie 4e et 3e (collège) : 23 chapitres reconstruits, année scolaire 2026-2027.
    Programme appliqué (4e et 3e) : programme de physique-chimie du cycle 4, arrêté du 9 novembre 2015 modifié par l’arrêté du 17 juillet 2020
    (NOR MENE2018714A), version consolidée publiée au BO n°31 du 30 juillet 2020 (« Programme du cycle 4 en vigueur à la rentrée 2020 », Éduscol).
    Le projet de nouveau programme de physique-chimie du cycle 4 (Conseil supérieur des programmes, juillet 2025 ; consultation nationale

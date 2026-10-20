@@ -1,4 +1,4 @@
-/* MathQuest — packs pédagogiques spécifiques 6e, lot 2.
+/* Finot Académie — packs pédagogiques spécifiques 6e, lot 2.
    Extension explicite du registre de packs : fractions, grammaire, SVT et géographie. */
 (function(){
 'use strict';
@@ -6,8 +6,8 @@ if(typeof window==='undefined'||!window.MQChapterPacks?.packs)return;
 const packs={
   '6g':{
     subject:'maths',grade:'6e',competency:'Interpréter une fraction comme partage, mesure et quotient, puis la situer par rapport à 1.',
-    provenance:{type:'creation',label:'Situations mathématiques originales créées pour MathQuest',refs:['Mathématiques cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Programme de 6e : fractions comme nombres, partage, mesure et quotient']},
-    object:{title:'Trois façons de rencontrer une fraction',html:`<p>Les trois situations ci-dessous sont créées pour travailler plusieurs sens d’une fraction.</p><table class="ptable"><tr><th>Situation</th><th>Information</th></tr><tr><td>A · Partage</td><td>Une bande est partagée en 4 parts égales ; 3 parts sont repérées.</td></tr><tr><td>B · Mesure</td><td>Sur une règle graduée en quarts, un point est placé au 7e quart après 0.</td></tr><tr><td>C · Quotient</td><td>5 litres de jus fictif sont partagés également entre 4 récipients identiques.</td></tr></table><p class="muted small">Ces situations sont des créations pédagogiques MathQuest ; elles ne décrivent aucune mesure réelle.</p>`},
+    provenance:{type:'creation',label:'Situations mathématiques originales créées pour Finot Académie',refs:['Mathématiques cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Programme de 6e : fractions comme nombres, partage, mesure et quotient']},
+    object:{title:'Trois façons de rencontrer une fraction',html:`<p>Les trois situations ci-dessous sont créées pour travailler plusieurs sens d’une fraction.</p><table class="ptable"><tr><th>Situation</th><th>Information</th></tr><tr><td>A · Partage</td><td>Une bande est partagée en 4 parts égales ; 3 parts sont repérées.</td></tr><tr><td>B · Mesure</td><td>Sur une règle graduée en quarts, un point est placé au 7e quart après 0.</td></tr><tr><td>C · Quotient</td><td>5 litres de jus fictif sont partagés également entre 4 récipients identiques.</td></tr></table><p class="muted small">Ces situations sont des créations pédagogiques Finot Académie ; elles ne décrivent aucune mesure réelle.</p>`},
     levels:{
       1:{label:'Facile',questions:[{q:'Dans la situation A, quelle fraction de la bande est repérée ?',a:'3/4',hint:'Le dénominateur indique le nombre total de parts égales ; le numérateur indique combien sont repérées.'},{q:'Le nombre 7/4 est-il inférieur ou supérieur à 1 ?',a:'Supérieur à 1.',hint:'Quatre quarts font une unité complète.'}]},
       2:{label:'Moyen',questions:[{q:'Écris 7/4 sous la forme « un entier + une fraction inférieure à 1 ».',a:'1 + 3/4',hint:'Retire d’abord 4/4, c’est-à-dire une unité.'},{q:'Dans la situation C, quelle quantité reçoit chaque récipient ?',a:'5/4 L, soit 1,25 L.',hint:'Une fraction a/b représente aussi le quotient a ÷ b.'}]},
@@ -20,7 +20,7 @@ const packs={
   },
   'fr6j':{
     subject:'francais',grade:'6e',competency:'Distinguer la nature grammaticale d’un mot ou groupe de sa fonction dans la phrase.',
-    provenance:{type:'creation',label:'Phrases originales créées pour MathQuest',refs:['Français cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Programme de 6e — grammaire et orthographe grammaticale : classes de mots et fonctions']},
+    provenance:{type:'creation',label:'Phrases originales créées pour Finot Académie',refs:['Français cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Programme de 6e — grammaire et orthographe grammaticale : classes de mots et fonctions']},
     object:{title:'Même nature, fonctions différentes',html:`<p>Observe ces quatre phrases originales.</p><ol><li><b>Lina</b> observe le renard.</li><li>Sami appelle <b>Lina</b>.</li><li><b>Le petit renard</b> traverse la clairière.</li><li>Lina photographie <b>le petit renard</b>.</li></ol><p class="muted small">Les groupes en gras gardent leur nature grammaticale, mais leur rôle dans la phrase peut changer.</p>`},
     levels:{
       1:{label:'Facile',questions:[{q:'Quelle est la nature grammaticale de « Lina » dans les phrases 1 et 2 ?',a:'Un nom propre.',hint:'La nature dit ce que le mot est, pas son rôle dans la phrase.'},{q:'Quelle est la fonction de « Lina » dans la phrase 1 ?',a:'Sujet du verbe « observe ».',hint:'Demande-toi qui réalise l’action d’observer.'}]},
@@ -35,7 +35,7 @@ const packs={
   'svt6a':{
     subject:'svt',grade:'6e',competency:'Relier les groupes d’aliments à leurs rôles et expliquer pourquoi les besoins alimentaires varient selon les situations.',
     questionScope:{exclude:['micro-organisme','micro-organismes','levure','ferment','stéril','pasteuris','conserv','réfrigér','congél','yaourtière','saucisson','jambon','kcal']},
-    provenance:{type:'synthese',label:'Dossier de synthèse MathQuest fondé sur le cours de 6e',refs:['Cycle 3 — sciences et technologie, arrêté du 15 juin 2023 (MENE2314101A), BO n°25 du 22 juin 2023','Éduscol — cycle 3, alimentation humaine et besoins de l’organisme']},
+    provenance:{type:'synthese',label:'Dossier de synthèse Finot Académie fondé sur le cours de 6e',refs:['Cycle 3 — sciences et technologie, arrêté du 15 juin 2023 (MENE2314101A), BO n°25 du 22 juin 2023','Éduscol — cycle 3, alimentation humaine et besoins de l’organisme']},
     object:{title:'Dossier : composer et analyser un plateau fictif',html:`<p>Pour un exercice de sciences, on prépare un plateau fictif avec : <b>eau, lentilles, riz, carottes, yaourt nature et pomme</b>.</p><table class="ptable"><tr><th>Élément du cours</th><th>Rôle général à retenir</th></tr><tr><td>Protéines</td><td>Participent notamment à la construction et au renouvellement des tissus.</td></tr><tr><td>Glucides et lipides</td><td>Peuvent fournir de l’énergie à l’organisme.</td></tr><tr><td>Eau, vitamines, sels minéraux, fibres</td><td>Participent au bon fonctionnement de l’organisme selon des rôles différents.</td></tr></table><p class="muted small">Le plateau est une situation pédagogique fictive. Il ne constitue pas un conseil alimentaire personnalisé ni un menu médical.</p>`},
     levels:{
       1:{label:'Facile',questions:[{q:'Quel élément du plateau appartient au groupe des féculents ?',a:'Le riz.',hint:'Le cours cite notamment pain, pâtes et riz parmi les féculents.'},{q:'Quelle boisson est indispensable à l’organisme d’après le cours ?',a:'L’eau.',hint:'Cherche la seule boisson présentée comme indispensable.'}]},

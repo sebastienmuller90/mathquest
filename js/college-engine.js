@@ -1,4 +1,4 @@
-/* MathQuest — Registre des chapitres collège reconstruits (V8.13).
+/* Finot Académie — Registre des chapitres collège reconstruits (V8.13).
    Les chapitres sont déclarés dans data/college/*.js au même format que le primaire :
      MQCollege.add('svt','6',[{id,name,icon,domain,refs:[…],tip,c:C(découverte,parties,exemples,méthode,pièges,je retiens),g:d=>question}, …]);
    Les identifiants sont ceux des chapitres existants (svt6a, fr5k, 6p…) : la progression déjà enregistrée est conservée.

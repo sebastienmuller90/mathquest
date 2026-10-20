@@ -1,4 +1,4 @@
-/* MathQuest — Moteur audio centralisé (synthèse vocale + reconnaissance), V8.13.
+/* Finot Académie — Moteur audio centralisé (synthèse vocale + reconnaissance), V8.13.
    Toutes les lectures passent par window.MQAudio.
    Principes :
    - chaque segment a une langue (fr, en, it) → locale BCP-47 (fr-FR, en-GB, it-IT) ;
@@ -7,12 +7,17 @@
      si l'appareil ne liste aucune voix (certains Android), on confie la locale au moteur du navigateur ;
    - le texte prononcé est préparé (nombres, unités, monnaie, heures, fractions, classes…) ; les sons, lettres et syllabes du CP
      passent par un lexique de prononciation (data/pronunciation-lexicon.js) plutôt que par une lecture isolée ambiguë ;
-   - vitesses : normale (1,0 en français, 0,95 en langue étrangère), lente (0,75), consignes CP/CE1 (0,9). Hauteur de voix inchangée (1). */
+   - vitesses (21/10/2026, lecture plus douce) : normale 0,95 en français, 0,92 en langue étrangère ; lente 0,75 ;
+     consignes CP/CE1 0,88. Hauteur de voix inchangée (1).
+   - voix : féminine et de haute qualité d'abord (Audrey « Premium »/« Améliorée » sur iPhone, Denise/Vivienne Natural sur
+     Edge, Google français…) ; voix « Eloquence » et voix fantaisie d'iOS (Grandma, Eddy, Flo…) écartées ;
+   - fluidité : tous les morceaux d'une lecture sont mis d'un coup dans la file du moteur (aucune attente ni arrêt entre
+     deux phrases, l'intonation n'est plus coupée) ; onsegment(i) signale le morceau en cours pour le surlignage. */
 (function(root){
 'use strict';
 const LOCALES={fr:'fr-FR',en:'en-GB',it:'it-IT'};
 const LANG_NAMES={fr:'française',en:'anglaise',it:'italienne'};
-const RATES={normal:{fr:1,en:.95,it:.95},slow:{fr:.75,en:.75,it:.75},young:.9};
+const RATES={normal:{fr:.95,en:.92,it:.92},slow:{fr:.75,en:.75,it:.75},young:.88};
 const TYPES=['phrase','mot','syllabe','lettre','graphème','phonème','consigne','langue'];
 const st={voices:[],loaded:false,listeners:[],prefs:{},last:null,gen:0,unavailable:{},onUnavailable:null};
 const synth=()=>root.speechSynthesis||null;
@@ -32,19 +37,27 @@ function setPrefs(p){st.prefs=Object.assign({},p||{});}
 // Les voix « Online » ont besoin d'Internet : hors connexion, elles se taisent, on les écarte donc.
 const QUALITY=/natural|neural|online|premium|enhanced|améliorée|wavenet|siri/i;
 const ROBOTIC=/hortense|julie|paul|zira|david desktop|mark|hazel|george|elsa|cosimo|espeak|pico|festival|mbrola/i;
+// iOS / macOS : voix « Eloquence » et voix fantaisie, très mécaniques — jamais choisies si une autre voix existe.
+const NOVELTY=/eloquence|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley|bahh|bells|boing|bubbles|cellos|jester|organ|trinoids|whisper|wobble|zarvox|albert|bad news|good news|superstar|junior|ralph|kathy|fred/i;
+// Voix féminines connues (lecture douce, demande du 21/10/2026) et voix masculines connues.
+const FEMALE=/audrey|am[ée]lie|aur[ée]lie|marie|c[ée]line|l[ée]a|denise|vivienne|eloise|brigitte|virginie|google fran[çc]ais|samantha|karen|serena|kate|moira|tessa|alice|federica|paola|elsa|isabella|libby|sonia|maisie/i;
+const MALE=/thomas|nicolas|daniel|henri|paul|claude|r[ée]my|jacques|antoine|j[ée]r[ôo]me|luca|arthur|oliver|gordon|rishi|diego|giorgio/i;
 function score(v,loc){const vl=String(v.lang||'').replace('_','-').toLowerCase(),L=loc.toLowerCase();let s=0;
   if(vl===L)s+=100;else if(vl.slice(0,2)===L.slice(0,2))s+=50;else return -1;
   const online=/online/i.test(v.name)||v.localService===false,offline=typeof navigator!=='undefined'&&navigator.onLine===false;
   if(online&&offline)return -1;
-  if(QUALITY.test(v.name))s+=30;if(/google/i.test(v.name))s+=12;if(/apple|amélie|thomas|audrey|aurélie|daniel|alice|federica|luca/i.test(v.name))s+=8;
-  if(ROBOTIC.test(v.name)&&!QUALITY.test(v.name))s-=20;if(v.localService)s+=1;return s;}
+  const id=v.name+' '+(v.voiceURI||'');
+  if(/premium/i.test(id))s+=45;else if(/enhanced|améliorée|amelioree/i.test(id))s+=35;else if(QUALITY.test(id))s+=30;if(/compact/i.test(id))s-=5;
+  if(/google/i.test(v.name))s+=12;if(/apple|amélie|thomas|audrey|aurélie|daniel|alice|federica|luca/i.test(v.name))s+=8;
+  if(FEMALE.test(v.name))s+=15;else if(MALE.test(v.name))s-=10;
+  if(NOVELTY.test(id))s-=60;if(ROBOTIC.test(v.name)&&!QUALITY.test(v.name))s-=20;if(v.localService)s+=1;return s;}
 /* Renvoie {voice, status, locale} — status : 'exact' | 'language' | 'preferred' | 'engine-default' (aucune voix listée) | 'unavailable'. */
 function pickVoice(l){const loc=locale(l),la=lang2(l);const vs=st.voices.length?st.voices:refresh();
   if(!vs.length)return {voice:null,status:'engine-default',locale:loc};
   const pref=st.prefs[la];if(pref){const p=vs.find(v=>(v.voiceURI===pref||v.name===pref)&&score(v,loc)>=0);if(p)return {voice:p,status:'preferred',locale:loc};}
   const ranked=vs.map(v=>[score(v,loc),v]).filter(x=>x[0]>=0).sort((a,b)=>b[0]-a[0]);
   if(!ranked.length)return {voice:null,status:'unavailable',locale:loc};
-  return {voice:ranked[0][1],status:ranked[0][0]>=100?'exact':'language',locale:loc};}
+  const best=ranked[0][1],exact=String(best.lang||'').replace('_','-').toLowerCase()===loc.toLowerCase();return {voice:best,status:exact?'exact':'language',locale:loc};}
 function voicesFor(l){const loc=locale(l);return (st.voices.length?st.voices:refresh()).filter(v=>score(v,loc)>=0);}
 
 /* ---------- Préparation du texte (français) ---------- */
@@ -104,18 +117,26 @@ function spokenFor(text,type='phrase',l='fr'){const la=lang2(l),T=String(text??'
 
 /* ---------- Lecture ---------- */
 function rateFor(l,{slow=false,young=false,type='phrase'}={}){const la=lang2(l);if(slow)return RATES.slow[la]||.75;if(young&&(type==='consigne'||type==='phrase')&&la==='fr')return RATES.young;return RATES.normal[la]||1;}
-/* speak([{t,l,type}], {slow, young, onend, onstart, onunavailable}) → renvoie un rapport {spoken:[…], skipped:[…]} */
+/* speak([{t,l,type}], {slow, young, onend, onstart, onsegment, onunavailable}) → rapport {spoken:[…], skipped:[…]}.
+   Tous les énoncés sont confiés d'un coup à la file du moteur : pas de silence ni de remise à zéro de l'intonation entre
+   deux morceaux (les lectures paraissaient hachées, surtout sur iPhone). onsegment(i) : début du morceau i de segs. */
 function speak(segs,opt={}){const rep={spoken:[],skipped:[]};const s=synth(),U=Utt();if(!s||!U){rep.skipped=segs.map(x=>({...x,why:'synthèse indisponible'}));if(opt.onend)opt.onend(rep);return rep;}
-  stop();const g=++st.gen;st.last={segs,opt};const list=(segs||[]).filter(x=>x&&String(x.t||'').trim());let k=0;
-  const next=()=>{if(g!==st.gen)return;if(k>=list.length){if(opt.onend)opt.onend(rep);return;}const sg=list[k++];const la=lang2(sg.l);const pv=pickVoice(la);
-    if(pv.status==='unavailable'){rep.skipped.push({...sg,why:'aucune voix '+(LANG_NAMES[la]||la)});if(!st.unavailable[la]){st.unavailable[la]=1;const cb=opt.onunavailable||st.onUnavailable;if(cb)try{cb(la);}catch(e){}}return next();}
-    const text=spokenFor(sg.t,sg.type||'phrase',la);if(!text)return next();
-    let u;try{u=new U(text);}catch(e){rep.skipped.push({...sg,why:'erreur'});return next();}
+  stop();const g=++st.gen;st.last={segs,opt};const utts=[];
+  (segs||[]).forEach((sg,idx)=>{if(!sg||!String(sg.t||'').trim())return;const la=lang2(sg.l);const pv=pickVoice(la);
+    if(pv.status==='unavailable'){rep.skipped.push({...sg,why:'aucune voix '+(LANG_NAMES[la]||la)});if(!st.unavailable[la]){st.unavailable[la]=1;const cb=opt.onunavailable||st.onUnavailable;if(cb)try{cb(la);}catch(e){}}return;}
+    const text=spokenFor(sg.t,sg.type||'phrase',la);if(!text)return;
+    let u;try{u=new U(text);}catch(e){rep.skipped.push({...sg,why:'erreur'});return;}
     u.lang=pv.locale;if(pv.voice)u.voice=pv.voice;u.rate=sg.rate||rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type});u.pitch=1;
-    rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate});
-    u.onend=next;u.onerror=next;if(opt.onstart&&k===1)try{opt.onstart();}catch(e){}
-    try{s.speak(u);}catch(e){next();}};
-  next();return rep;}
+    rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate});utts.push([u,idx]);});
+  if(!utts.length){if(opt.onend)opt.onend(rep);return rep;}
+  let started=false,finished=false;const finish=()=>{if(finished||g!==st.gen)return;finished=true;if(opt.onend)opt.onend(rep);};
+  utts.forEach(([u,idx],j)=>{const last=j===utts.length-1;
+    u.onstart=()=>{if(g!==st.gen)return;if(!started){started=true;if(opt.onstart)try{opt.onstart();}catch(e){}}if(opt.onsegment)try{opt.onsegment(idx);}catch(e){}};
+    u.onend=()=>{if(last)finish();};u.onerror=()=>{if(last)finish();};
+    try{s.speak(u);}catch(e){if(last)finish();}});
+  // Filet : certains moteurs n'émettent pas toujours onend ; la lecture est finie quand la file est vide.
+  const watch=()=>{if(finished||g!==st.gen)return;let busy=true;try{busy=!!(s.speaking||s.pending);}catch(e){}if(!busy)return finish();setTimeout(watch,1000);};setTimeout(watch,2500);
+  return rep;}
 function stop(){st.gen++;const s=synth();if(s)try{s.cancel();}catch(e){}}
 function replay(){if(st.last)return speak(st.last.segs,st.last.opt);return null;}
 function speaking(){const s=synth();try{return !!(s&&(s.speaking||s.pending));}catch(e){return false;}}

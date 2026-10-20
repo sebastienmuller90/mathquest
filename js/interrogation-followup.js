@@ -1,4 +1,4 @@
-/* MathQuest — isolation interrogation + correctifs de reprise et de suivi des exercices nivelés. */
+/* Finot Académie — isolation interrogation + correctifs de reprise et de suivi des exercices nivelés. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;

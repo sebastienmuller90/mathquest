@@ -1,4 +1,4 @@
-/* MathQuest — Lexique de prononciation (français), V8.13.
+/* Finot Académie — Lexique de prononciation (français), V8.13.
    La synthèse vocale prononce mal un son ou une lettre isolés (« ch », « gn », « e »…). Pour chaque cible, on donne un texte oral
    maîtrisé, avec un mot exemple, qui sera réellement prononcé : le texte affiché peut différer du texte prononcé.
    Champs : cible, type (lettre | graphème | syllabe), langue, graphème, exemple, say (texte audio). */

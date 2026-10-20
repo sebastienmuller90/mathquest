@@ -1,4 +1,4 @@
-/* MathQuest — CM2 : enrichissement V8.13 (variété des questions + activités hors écran).
+/* Finot Académie — CM2 : enrichissement V8.13 (variété des questions + activités hors écran).
    Programmes : français et mathématiques 2025 (BO n°16 du 17/04/2025) ; sciences, histoire-géographie, langues, EPS, arts,
    musique : cycle 3 2020 (BO n°31 du 30/07/2020) ; EMC 2024 ; EVAR 2025. Les activités « hors écran » ne sont pas évaluées. */
 (function(){

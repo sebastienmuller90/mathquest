@@ -1,4 +1,4 @@
-/* MathQuest — appli installée (PWA) : enregistrement du service worker, version visible, mise à jour (20/10/2026).
+/* Finot Académie — appli installée (PWA) : enregistrement du service worker, version visible, mise à jour (20/10/2026).
    - La version active est demandée au service worker (message 'version') et affichée dans « Plus » et l'espace parents
      (classe .mq-appver) ; sans service worker (fichier local, développement) : « Version de développement ».
    - Une nouvelle version installée pendant l'utilisation affiche un bandeau « Nouvelle version disponible » dans le flux
@@ -15,7 +15,7 @@ function askVersion(){const c=navigator.serviceWorker&&navigator.serviceWorker.c
  return new Promise(res=>{const ch=new MessageChannel(),t=setTimeout(()=>res(null),2000);ch.port1.onmessage=e=>{clearTimeout(t);res(e.data&&e.data.version||null);};try{c.postMessage({type:'version'},[ch.port2]);}catch(e){clearTimeout(t);res(null);}});}
 function refreshVersion(){return askVersion().then(v=>{if(v)window.MQ_APP_VERSION=v;paint();return window.MQ_APP_VERSION;});}
 function banner(){if(shown||document.querySelector('.mq-update'))return;shown=true;const b=document.createElement('div');b.className='mq-update';b.setAttribute('role','status');
- b.innerHTML='<span>🆕 Une nouvelle version de MathQuest est prête. Termine ton exercice, puis mets à jour.</span><span class="mq-update-btns"><button class="btn primary sm" data-a="appupdate">Mettre à jour</button><button class="btn ghost sm" data-a="appupdatelater">Plus tard</button></span>';
+ b.innerHTML='<span>🆕 Une nouvelle version de Finot Académie est prête. Termine ton exercice, puis mets à jour.</span><span class="mq-update-btns"><button class="btn primary sm" data-a="appupdate">Mettre à jour</button><button class="btn ghost sm" data-a="appupdatelater">Plus tard</button></span>';
  document.body.insertBefore(b,document.getElementById('app'));}
 function check(force){if(!REG)return;const now=Date.now();if(!force&&now-LAST_CHECK<3600e3)return;LAST_CHECK=now;REG.update().catch(()=>{});}
 Object.assign(ACT,{appupdate:()=>{try{saveLocal();}catch(e){}location.reload();},appupdatelater:()=>{const b=document.querySelector('.mq-update');if(b)b.remove();}});

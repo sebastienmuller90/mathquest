@@ -1,4 +1,4 @@
-/* MathQuest — diagnostic de développement (20/10/2026). Chargé juste après js/app-hooks.js pour capter les premières erreurs.
+/* Finot Académie — diagnostic de développement (20/10/2026). Chargé juste après js/app-hooks.js pour capter les premières erreurs.
    - Les erreurs JavaScript (window.error) et promesses rejetées non gérées (unhandledrejection) sont gardées dans un
      tampon local limité (30 entrées, localStorage 'mathquest_debug_v1') : message, fichier, ligne — jamais de nom, de
      réponse ni de contenu de profil.

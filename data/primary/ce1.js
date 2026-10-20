@@ -1,4 +1,4 @@
-/* MathQuest — CE1 (cycle 2), année scolaire 2026-2027.
+/* Finot Académie — CE1 (cycle 2), année scolaire 2026-2027.
    Français et mathématiques : programmes 2024 (BO n°41 du 31/10/2024), applicables depuis 2025-2026.
    Questionner le monde, langues vivantes, EPS, arts : programme 2020 (BO n°31 du 30/07/2020) encore applicable en CE1
    (les nouveaux programmes de sciences, d'histoire-géographie, de LV et d'EPS n'y entrent en vigueur qu'en 2027-2028).

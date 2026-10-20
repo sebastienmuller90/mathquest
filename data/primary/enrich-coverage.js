@@ -1,4 +1,4 @@
-/* MathQuest — compléments issus de la matrice de couverture officielle 2026-2027 (PRIMARY-COVERAGE-2026-2027.md).
+/* Finot Académie — compléments issus de la matrice de couverture officielle 2026-2027 (PRIMARY-COVERAGE-2026-2027.md).
    Chaque bloc comble un attendu du programme qui n'était pas encore réellement entraîné (cours + questions) :
    niveaux de langue, ordre alphabétique et familles de mots (CP-CE2), sens propre / sens figuré (CE1),
    compréhension de l'oral (CE1, CE2, CM2), moitiés et rendu de monnaie (CE1), vocabulaire terme / somme / différence (CE2),

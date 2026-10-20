@@ -1,4 +1,4 @@
-/* MathQuest — couche pédagogique 3 niveaux + Finot accessible aux jeunes élèves. */
+/* Finot Académie — couche pédagogique 3 niveaux + Finot accessible aux jeunes élèves. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;

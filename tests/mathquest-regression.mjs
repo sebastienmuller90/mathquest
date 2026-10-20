@@ -69,7 +69,7 @@ assert.ok(exists('data/questions/README.md'),'Architecture des banques de questi
 assert.ok(exists('data/questions/banks.js'),'Banques de situations pédagogiques absentes');
 assert.ok(exists('data/questions/transfer-scenarios.js'),'Situations de transfert absentes');
 const workshop=read('js/pedagogical-workshop.js');
-assert.ok(workshop.includes('Document pédagogique MathQuest'),'Les documents de synthèse doivent être identifiés comme pédagogiques');
+assert.ok(workshop.includes('Document pédagogique Finot Académie'),'Les documents de synthèse doivent être identifiés comme pédagogiques');
 assert.ok(workshop.includes("Ce n'est pas une donnée historique ou scientifique réelle"),'Les données simulées doivent être explicitement signalées');
 // Packs spécifiques de 6e (PR #6), intégrés après stabilisation : rattachement explicite par chapterId.
 assert.ok(index.indexOf('data/pedagogy/content-banks.js')<index.indexOf('data/pedagogy/chapter-packs-6e.js'),'Les banques transversales doivent précéder les packs spécifiques');
@@ -92,4 +92,4 @@ assert.ok(read('js/finot-remediation-bank.js').includes('matchingPack'),'Finot d
 assert.ok(read('data/pedagogy/README.md').includes('`creation`'),'Le standard de provenance doit distinguer les créations originales');
 assert.ok(read('js/chapter-pack-integration.js').includes('mq-specific-pack'),'Le rendu spécifique doit être identifiable dans le DOM');
 assert.ok(!read('js/pedagogical-exercise-context.js').includes('Imagine que cette notion apparaisse dans ${'),'Plus de « situation réelle » générique tirée au hasard');
-console.log('MathQuest regression audit: OK');
+console.log('Finot Académie regression audit: OK');

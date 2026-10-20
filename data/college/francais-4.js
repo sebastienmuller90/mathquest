@@ -1,4 +1,4 @@
-/* MathQuest — Français 4e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr4a … fr4z).
+/* Finot Académie — Français 4e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr4a … fr4z).
    Programme appliqué : programme de français du cycle 4 dans sa version consolidée de 2020 — arrêté du 9 novembre 2015 modifié
    par l’arrêté du 17 juillet 2020 (JO du 28 juillet 2020, NOR MENE2018714A), BO n°31 du 30 juillet 2020, annexe 3
    « Programme d’enseignement du cycle des approfondissements (cycle 4) », partie Français ; complété par les « Attendus de fin
@@ -18,7 +18,7 @@
    impersonnelle ; propositions indépendante / principale / subordonnée ; subordonnées relative, conjonctive, interrogative
    indirecte…). Conjonctions de coordination : mais, ou, et, or, ni, car (« donc » est traité comme un adverbe, convention du
    guide DGESCO retenue en 6e et en 5e). Orthographe traditionnelle ; les graphies rectifiées de 1990 restent acceptées.
-   Les extraits d’auteurs cités sont du domaine public et reproduits exactement ; les autres textes ont été écrits pour MathQuest. */
+   Les extraits d’auteurs cités sont du domaine public et reproduits exactement ; les autres textes ont été écrits pour Finot Académie. */
 (function(){
 'use strict';
 const MQ=window.MQCollege;if(!MQ)return;const H=MQ.H;

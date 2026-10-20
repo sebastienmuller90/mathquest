@@ -1,4 +1,4 @@
-/* MathQuest — Anglais collège : enrichissement V8.13 des chapitres de grammaire historiques (variété ≥ 12 questions distinctes).
+/* Finot Académie — Anglais collège : enrichissement V8.13 des chapitres de grammaire historiques (variété ≥ 12 questions distinctes).
    Programme de langues vivantes du cycle 4 (BO n°31 du 30/07/2020) et du cycle 3 pour la 6e ; repères grammaticaux A1-A2.
    Les questions s'ajoutent au générateur d'origine (mélange), avec une explication en français. */
 (function(){

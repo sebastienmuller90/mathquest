@@ -1,4 +1,4 @@
-/* MathQuest — enrichissement non destructif des questions.
+/* Finot Académie — enrichissement non destructif des questions.
    N'altère jamais la réponse attendue : ajoute contexte, compétence cible et question de réflexion. */
 (function(){
 'use strict';

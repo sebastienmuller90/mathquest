@@ -1,4 +1,4 @@
-/* MathQuest — contexte concret visible dans les exercices, sans modifier la réponse attendue. */
+/* Finot Académie — contexte concret visible dans les exercices, sans modifier la réponse attendue. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof CHMAP==='undefined')return;

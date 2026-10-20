@@ -1,4 +1,4 @@
-/* MathQuest — banques pédagogiques transversales.
+/* Finot Académie — banques pédagogiques transversales.
    Elles servent à fabriquer des ateliers de document, situations de transfert et remédiations
    sans modifier les réponses des générateurs existants. */
 (function(){

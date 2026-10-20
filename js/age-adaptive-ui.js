@@ -1,4 +1,4 @@
-/* MathQuest — applique une densité d'interface selon la classe. */
+/* Finot Académie — applique une densité d'interface selon la classe. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;

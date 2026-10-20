@@ -1,4 +1,4 @@
-/* MathQuest — parcours quotidien orienté par maîtrise et micro-compétences. */
+/* Finot Académie — parcours quotidien orienté par maîtrise et micro-compétences. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof makeDailyPath!=='function'||typeof pathCandidates!=='function')return;
@@ -7,7 +7,7 @@ function adapt(state,p,date){if(!p||!Array.isArray(p.steps))return p;const by=pa
  const ids=p.steps.filter(x=>x.kind==='lesson').map(x=>x.cid);for(const step of p.steps.filter(x=>x.kind==='exo'))step.ids=ids.slice();p.adaptive=true;p.adaptiveReason='maîtrise + micro-compétences + révisions dues';return p;}
 MQHooks.on('path:built',(p,{state,date})=>adapt(state,p,date),{id:'adaptive-path'});
 function untouched(p){return !!p&&Array.isArray(p.steps)&&p.steps.every(s=>s&&(+s.ms||0)===0&&s.score==null&&(!Array.isArray(s.answers)||s.answers.length===0)&&(s.status==='next'||s.status==='locked'));}
-function upgradeCurrentPath(p,redraw=false){try{if(typeof S==='undefined'||typeof dstr!=='function')return p;const d=dstr(Date.now());if(!p||p.date!==d||p.adaptive||!untouched(p))return p;S.path=makeDailyPath(S,d,typeof ACTIVE!=='undefined'?ACTIVE:'default');if(typeof saveLocal==='function')saveLocal();if(redraw&&typeof home==='function')setTimeout(()=>{try{if(typeof CUR==='undefined'||!CUR||CUR==='home')home();}catch(e){}},0);return S.path;}catch(e){console.warn('[MathQuest adaptive path] reprise',e);return p;}}
+function upgradeCurrentPath(p,redraw=false){try{if(typeof S==='undefined'||typeof dstr!=='function')return p;const d=dstr(Date.now());if(!p||p.date!==d||p.adaptive||!untouched(p))return p;S.path=makeDailyPath(S,d,typeof ACTIVE!=='undefined'?ACTIVE:'default');if(typeof saveLocal==='function')saveLocal();if(redraw&&typeof home==='function')setTimeout(()=>{try{if(typeof CUR==='undefined'||!CUR||CUR==='home')home();}catch(e){}},0);return S.path;}catch(e){console.warn('[Finot Académie adaptive path] reprise',e);return p;}}
 // Tout appel à ensurePath (notamment après activateProfile) met à niveau un ancien parcours vierge du jour.
 MQHooks.on('path:ensure',p=>upgradeCurrentPath(p,false),{id:'adaptive-path',order:10});
 function upgradeInitialPath(){const before=typeof S!=='undefined'?S.path:null,after=upgradeCurrentPath(before,true);return !!after&&after!==before;}

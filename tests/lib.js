@@ -1,4 +1,4 @@
-/* Outils communs aux tests MathQuest : serveur statique local + lancement de Chromium.
+/* Outils communs aux tests Finot Académie : serveur statique local + lancement de Chromium.
    Usage : cd tests && npm install && npm test
    Le navigateur utilisé est Chromium (playwright-core). Variable CHROME_PATH possible pour en choisir un autre. */
 const http=require('http'),fs=require('fs'),path=require('path');

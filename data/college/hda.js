@@ -1,4 +1,4 @@
-/* MathQuest — Histoire des arts au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (hda6a…hda3f).
+/* Finot Académie — Histoire des arts au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (hda6a…hda3f).
    L'histoire des arts est un enseignement transversal au collège, croisé avec les programmes de français, d'histoire-géographie,
    d'arts plastiques et d'éducation musicale (arrêté du 9 novembre 2015 modifié, BO n°31 du 30 juillet 2020, cycle 3 et cycle 4,
    « enseignements artistiques » et domaines du socle commun). Chaque chapitre identifie des œuvres, artistes et mouvements

@@ -1,4 +1,4 @@
-/* MathQuest — Physique-chimie 6e et 5e (collège) : 22 chapitres reconstruits, année scolaire 2026-2027.
+/* Finot Académie — Physique-chimie 6e et 5e (collège) : 22 chapitres reconstruits, année scolaire 2026-2027.
    Programme(s) appliqué(s) :
    - 6e : programme de sciences et technologie du cycle 3, annexe de l’arrêté du 15 juin 2023 (NOR MENE2314101A) publiée au BO n°25 du 22 juin 2023,
      thème « Matière, mouvement, énergie, information ». Le nouveau programme de cycle 3 (arrêté du 5 juin 2026, NOR MENE2611650A, BO n°24 du 11 juin 2026)

@@ -1937,7 +1937,7 @@ const CH_EMC={'emc6':[],'emc5':[],'emc4':[],'emc3':[]};
      {t:'Les automatismes à installer',h:`${(sp.automatismes&&sp.automatismes.length)?ul(sp.automatismes):`<p>Réactive régulièrement les faits numériques, le vocabulaire et les procédures de ce chapitre. Quelques minutes souvent valent mieux qu'une longue séance rare.</p>`}`},
      {t:'Méthode pas à pas',h:`<div class="method-box">${(sp.method||[]).map((x,i)=>`<div class="method-step"><span class="num">${i+1}</span><div>${x}</div></div>`).join('')}</div>`},
      {t:'Raisonner comme un mathématicien',h:`<div class="whybox"><b>🔎 Explique avant de calculer</b><br>Demande-toi quelles données sont utiles, quelle propriété s'applique et comment tu pourras contrôler le résultat. Une réponse juste sans raisonnement est moins solide qu'une démarche que tu sais expliquer.</div>`},
-     {t:'Je relie au programme officiel',h:`<p>Ce chapitre travaille notamment :</p>${ul(sp.objectives)}<p class="muted small">Référentiel MathQuest : année scolaire 2026-2027. Les 6e suivent le programme cycle 3 publié en 2025 ; les 5e le nouveau programme cycle 4 applicable en 2026 ; les 4e et 3e restent sur le programme 2020 et les attendus Eduscol en vigueur cette année.</p>`}
+     {t:'Je relie au programme officiel',h:`<p>Ce chapitre travaille notamment :</p>${ul(sp.objectives)}<p class="muted small">Référentiel Finot Académie : année scolaire 2026-2027. Les 6e suivent le programme cycle 3 publié en 2025 ; les 5e le nouveau programme cycle 4 applicable en 2026 ; les 4e et 3e restent sur le programme 2020 et les attendus Eduscol en vigueur cette année.</p>`}
    ],
    ex:sp.example,
    piege:sp.trap,
@@ -1981,7 +1981,7 @@ const CH_FR={'fr6':[],'fr5':[],'fr4':[],'fr3':[]};
       {t:'Comment reconnaître la notion dans un texte ou une phrase',h:`<div class="whybox"><b>🔎 Réflexe de lecteur</b><br>Ne cherche pas seulement une étiquette grammaticale ou un procédé : demande-toi toujours <b>ce que cela change dans le sens</b>, puis appuie ta réponse sur un indice précis.</div>${ul(sp.method)}`},
       {t:'Méthode pas à pas',h:`<div class="method-box">${(sp.method||[]).map((x,i)=>`<div class="method-step"><span class="num">${i+1}</span><div>${escF(x)}</div></div>`).join('')}</div>`},
       {t:'Je m’entraîne à expliquer',h:`<div class="checkpoint"><div class="q">🗣️ Explique-le avec tes mots</div>Sans regarder le cours, donne la règle ou l’idée essentielle, puis invente ton propre exemple. Si tu peux expliquer <b>pourquoi</b>, tu ne récites plus : tu maîtrises.</div>`},
-      {t:'Je relie au programme de français',h:`<p>Ce chapitre fait travailler :</p>${ul(sp.objectives)}<p class="muted small">Référentiel MathQuest : 2026-2027. 6e = programme cycle 3 de 2025 ; 5e = nouveau programme cycle 4 de 2026 ; 4e et 3e = programme 2020 encore applicable cette année.</p>`}
+      {t:'Je relie au programme de français',h:`<p>Ce chapitre fait travailler :</p>${ul(sp.objectives)}<p class="muted small">Référentiel Finot Académie : 2026-2027. 6e = programme cycle 3 de 2025 ; 5e = nouveau programme cycle 4 de 2026 ; 4e et 3e = programme 2020 encore applicable cette année.</p>`}
     ],ex:sp.example,piege:escF(sp.trap),retenir:sp.retain};
  };
  const REAL=id=>window.MQCollege&&MQCollege.byId[id];
@@ -2041,13 +2041,13 @@ const EXTRA_SUBJECTS=[];
    }
  });
  const makeCourse=sp=>({
-   hook:`<div class="program-phase"><b>${sp.icon} ${escX(sp.domain)}</b><br>${sp.level}e · parcours MathQuest 2026-2027</div><p>${escX(sp.summary)}</p>`,
+   hook:`<div class="program-phase"><b>${sp.icon} ${escX(sp.domain)}</b><br>${sp.level}e · parcours Finot Académie 2026-2027</div><p>${escX(sp.summary)}</p>`,
    domain:sp.domain,official:true,objectives:[sp.summary],
    parts:[
      {t:'Le cours expliqué comme avec un prof particulier',h:`<p>On commence par comprendre avant de mémoriser.</p>${ul(sp.keys)}`},
      {t:'Méthode pas à pas',h:`<div class="method-box">${(sp.method||[]).map((x,i)=>`<div class="method-step"><span class="num">${i+1}</span><div>${escX(x)}</div></div>`).join('')}</div>`},
      {t:'Je vérifie que j’ai compris',h:`<div class="checkpoint"><div class="q">🧠 Sans regarder le cours</div>Explique « <b>${escX(sp.name)}</b> » avec tes propres mots, donne un exemple puis justifie-le. Si tu bloques, relis uniquement la partie qui te manque.</div>`},
-     {t:'Progression adaptative',h:`<div class="whybox"><b>🎯 Objectif</b><br>Les exercices et le quiz utilisent le moteur adaptatif de MathQuest : la difficulté évolue selon tes réponses, tes erreurs récentes et ton niveau de maîtrise.</div>`}
+     {t:'Progression adaptative',h:`<div class="whybox"><b>🎯 Objectif</b><br>Les exercices et le quiz utilisent le moteur adaptatif de Finot Académie : la difficulté évolue selon tes réponses, tes erreurs récentes et ton niveau de maîtrise.</div>`}
    ],
    ex:sp.example,piege:escX(sp.trap),retenir:sp.retain
  });

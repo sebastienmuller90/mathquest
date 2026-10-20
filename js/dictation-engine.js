@@ -1,4 +1,4 @@
-/* MathQuest — Moteur de dictée (V8.13).
+/* Finot Académie — Moteur de dictée (V8.13).
    Une seule phrase de référence exacte ; la réponse de l'élève est alignée mot à mot et chaque écart est classé :
    mot manquant, mot ajouté, orthographe, accent, majuscule, ponctuation, accord, terminaison verbale, homophone, lettre muette, apostrophe.
    Différences purement typographiques tolérées sans pénalité : espaces multiples, espace final, apostrophe droite/typographique,

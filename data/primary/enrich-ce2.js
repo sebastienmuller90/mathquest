@@ -1,4 +1,4 @@
-/* MathQuest — CE2 : enrichissement V8.13 (variété des questions + activités hors écran).
+/* Finot Académie — CE2 : enrichissement V8.13 (variété des questions + activités hors écran).
    Programmes : français et mathématiques 2024 (BO n°41 du 31/10/2024) ; questionner le monde 2020 ; EMC 2024 ; EVAR 2025 ;
    arts plastiques, éducation musicale, EPS 2020. Les activités « hors écran » ne sont pas évaluées par l'application. */
 (function(){

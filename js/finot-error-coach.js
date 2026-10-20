@@ -1,4 +1,4 @@
-/* MathQuest — Finot analyse une erreur sans IA générative.
+/* Finot Académie — Finot analyse une erreur sans IA générative.
    Diagnostic prudent basé sur la compétence, le type de question et les erreurs récentes. */
 (function(){
 'use strict';

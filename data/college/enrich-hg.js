@@ -1,4 +1,4 @@
-/* MathQuest — Histoire-géographie collège : enrichissement V8.13 des chapitres historiques (variété ≥ 20 questions distinctes).
+/* Finot Académie — Histoire-géographie collège : enrichissement V8.13 des chapitres historiques (variété ≥ 20 questions distinctes).
    Programmes d'histoire-géographie du cycle 3 (6e) et du cycle 4 (5e-3e), BO n°31 du 30/07/2020, toujours applicables au collège
    en 2026-2027. Les questions s'ajoutent au générateur d'origine (mélange) ; chacune a une explication. */
 (function(){

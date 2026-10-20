@@ -1,4 +1,4 @@
-/* Enrichissement pédagogique transversal de toutes les leçons MathQuest. */
+/* Enrichissement pédagogique transversal de toutes les leçons Finot Académie. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof lessonSteps!=='function')return;

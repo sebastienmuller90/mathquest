@@ -1,6 +1,6 @@
 /* ===== Écrans ===== */
 let ONBG='';
-function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><img src="${FINOT_IMG.bienvenue}" alt="" aria-hidden="true" class="finot-live" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 35%;"><h1>${isNew?'Nouveau profil':'MathQuest'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
+function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><img src="${FINOT_IMG.bienvenue}" alt="" aria-hidden="true" class="finot-live" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 35%;"><h1>${isNew?'Nouveau profil':'Finot Académie'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
  <label class="lab">Ton prénom ou pseudo<input id="nm" class="big" maxlength="16" autocomplete="off"></label>
  <label class="lab">Date de naissance <span class="muted small">(facultatif)</span><input id="bd" type="date" class="big" max="${localISODate(Date.now())}"></label>
  <p class="lab" id="stl">Ton école</p><div class="stagepick" role="group" aria-labelledby="stl">${Object.entries(STAGE_INFO).filter(([k])=>k==='college'||PRIMARY_GRADES.length).map(([k,v])=>`<button class="stb ${st===k?'sel':''}" data-a="pickstage:${k}" aria-pressed="${st===k}"><span>${v.emoji}</span>${v.label}</button>`).join('')}</div>
@@ -10,7 +10,7 @@ function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<
 function onbGrades(st){if(!st)return '<p class="muted small">Choisis d’abord ton école, puis ta classe.</p>';const list=st==='primaire'?PRIMARY_GRADES:['6e','5e','4e','3e'];
  return `<p class="lab" id="grl">Ta classe</p><div class="gradepick" role="group" aria-labelledby="grl">${list.map(g=>`<button class="grb ${g===ONBG?'sel':''}" data-a="pickgrade:${g}" aria-pressed="${g===ONBG}">${g}</button>`).join('')}</div>`;}
 
-/* V8.14 — Finot, le compagnon de MathQuest. Le « lien avec Finot » se déduit de S.streak.best (record de
+/* V8.14 — Finot, le compagnon de Finot Académie. Le « lien avec Finot » se déduit de S.streak.best (record de
    jours de suite, ne redescend jamais) : pas de nouveau champ de sauvegarde, rien à migrer. Le message
    contextuel se déduit de S.streak.n/.last (déjà existants). Compagnon distinct de S.avatar (choisi par
    l'enfant) : jamais affiché à sa place. */
@@ -79,11 +79,11 @@ const FINOT_FAQ=[
  {kw:['bibliotheque','livre','lire un texte','histoire a lire','textes'],a:'Dans la <b>bibliothèque 📚</b> (onglet <b>Progrès</b>, ou <b>Matières</b> quand tu es en Français), tu peux lire tous les textes que tu veux : histoires, contes, poèmes, théâtre et documents. Cherche un titre ou un auteur, choisis ta classe, puis réponds aux questions !'},
  {kw:['parcours','parcours du jour','coffre','bonus','chemin'],a:'Le <b>parcours du jour 🗺️</b> : 4 leçons de matières différentes, puis 2 séries d’exercices sur ces leçons. Les bonnes réponses d’affilée rapportent de plus en plus de pièces (jusqu’à ×5), et un coffre t’attend au bout ! Ouvre-le depuis l’accueil.'},
  {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre. Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
- {kw:['hors ligne','sans internet','pas de wifi'],a:'MathQuest fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
+ {kw:['hors ligne','sans internet','pas de wifi'],a:'Finot Académie fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
  {kw:['exporter','importer','changer d appareil'],a:'Dans l’Espace parents (Réglages), un <b>code d’export</b> permet de copier ta progression vers un autre appareil.'}
 ];
 const FINOT_SUGGEST=['C’est quoi les XP ?','Comment débloquer un thème ?','Comment marche mon lien avec toi ?','Pourquoi mon erreur est encore dans mon carnet ?'];
-const FINOT_FALLBACK='Je ne suis pas sûr de pouvoir t’aider là-dessus 🤔 Je sais répondre sur MathQuest (XP, boutique, mon repaire, les cours…) et te donner un coup de pouce sur l’exercice en cours. Essaie de reformuler, ou touche une suggestion ci-dessous !';
+const FINOT_FALLBACK='Je ne suis pas sûr de pouvoir t’aider là-dessus 🤔 Je sais répondre sur Finot Académie (XP, boutique, mon repaire, les cours…) et te donner un coup de pouce sur l’exercice en cours. Essaie de reformuler, ou touche une suggestion ci-dessous !';
 function finotMatch(text){const norm=' '+normLang(text,'fr')+' ';let best=null,score=0;
  for(const e of FINOT_FAQ){let s=0;for(const k of e.kw)if(norm.includes(' '+k+' '))s+=k.length;if(s>score){score=s;best=e;}}
  return best;}
@@ -93,7 +93,7 @@ function finotLessonHelp(id){const ch=CHMAP[id];if(!ch)return null;const c=COURS
  return{name:ch.name||'',html:bits.length?bits.join('<br>'):'Relis bien le cours de ce chapitre : tu vas y arriver 💪'};}
 function finotCurrentChapterId(){if(M&&M.cid)return M.cid;if(L&&L.id)return L.id;return null;}
 let FCHAT=null;
-function finotChatEnsure(){if(!FCHAT)FCHAT={msgs:[{who:'finot',html:'Salut, c’est Finot ! 🦊 Pose-moi une question sur MathQuest, ou demande un coup de pouce sur ton exercice en cours.'}]};}
+function finotChatEnsure(){if(!FCHAT)FCHAT={msgs:[{who:'finot',html:'Salut, c’est Finot ! 🦊 Pose-moi une question sur Finot Académie, ou demande un coup de pouce sur ton exercice en cours.'}]};}
 function finotChatDOM(){if(document.getElementById('finotchat'))return;
  const fab=document.createElement('button');fab.className='finot-fab';fab.dataset.a='finotopen';fab.setAttribute('aria-label','Parler à Finot');
  fab.innerHTML=`<img src="${finotEtat(S).img}" alt="" aria-hidden="true" class="finot-live">`;document.body.appendChild(fab);
@@ -127,7 +127,8 @@ function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)r
 function hometabsDOM(){if(document.getElementById('hometabs'))return;
  const nav=document.createElement('nav');nav.id='hometabs';nav.className='hometabs';nav.setAttribute('aria-label','Navigation principale');
  document.body.appendChild(nav);}
-function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home';nav.classList.toggle('show',show);if(!show)return;
+// Pas de barre d'onglets pendant la création du profil (home() affiche alors l'écran d'accueil sans enfant).
+function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home'&&!!S.name;nav.classList.toggle('show',show);if(!show)return;
  nav.innerHTML=HOMETABS.map(([k,emoji,label])=>`<button class="htab ${HOMETAB===k?'on':''}" data-a="hometab:${k}" aria-current="${HOMETAB===k?'page':'false'}"><span class="hti" aria-hidden="true">${emoji}</span><span class="htl">${label}</span></button>`).join('');}
 function reco(){const list=SCH(S.subj);return MQAdaptive.recommendation(S,list,WMAP,S.grade)||list[0]||ALLCH[0];}
 function home(){MQHooks.emit('home:before');PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSubj();applyStage();touchDaily();checkBirthday();if(S.merit.notes.length){toast(S.merit.notes.map(esc).join('<br>'));S.merit.notes=[];save();}const av=availPts(),rdy=S.merit.rewards.some(w=>av>=w.c&&!isPend(w.id)),nx=S.merit.rewards.filter(w=>!isPend(w.id)&&w.c>av).sort((a,b)=>a.c-b.c)[0];const L=lvl(S.xp),b=150*(L-1)**2,n=150*L**2,pct=Math.round((S.xp-b)/(n-b)*100),goal=S.dailyGoal||DEFAULT_GOAL,g=Math.min(1,S.daily.ok/goal),r=reco(),vs=visibleSubjects(),fe=finotEtat(S),
