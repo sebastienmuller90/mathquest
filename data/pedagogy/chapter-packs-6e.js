@@ -21,6 +21,7 @@ const packs={
   },
   'fr6a':{
     subject:'francais',grade:'6e',competency:'Préparer une lecture orale fluide et expressive en s’appuyant sur la ponctuation et les indices du texte.',
+    questionScope:{exclude:['mots par minute','mots/min','vitesse de lecture','130 mots']},
     provenance:{type:'creation',label:'Court texte original écrit pour MathQuest',refs:['Français cycle 3 — BO n°16 du 17 avril 2025 (MENE2504620A)','Éduscol — exemples pour la mise en œuvre du programme de français en 6e (2025)']},
     object:{title:'Préparer la lecture d’un dialogue',html:`<div class="trad"><p>La pluie frappait les vitres. Lina s’approcha de la porte et tendit l’oreille.</p><p>— Tu as entendu ? murmura-t-elle.</p><p>Un nouveau craquement retentit dans le couloir.</p><p>— Il y a quelqu’un ! s’exclama Sami.</p><p>Lina leva la main.</p><p>— Chut… écoute d’abord.</p></div><p class="muted small">Texte original MathQuest : il ne s’agit pas d’un extrait d’œuvre publiée.</p>`},
     levels:{
