@@ -10,7 +10,7 @@ await page.goto(base+'/index.html',{waitUntil:'load'});
 await page.waitForFunction(()=>window.MQChapterPacks&&window.MQChapterPackIntegration&&window.MQPedagogicalWorkshop&&window.MQPedagogicalExercise&&window.MQFinotRemediation,{timeout:8000});
 
 const audit=await page.evaluate(ids=>{
- const allowed=new Set(['source','reconstitution','synthese','simulation']);
+ const allowed=new Set(['source','creation','reconstitution','synthese','simulation']);
  const out={packCount:Object.keys(MQChapterPacks.packs||{}).length,packs:{},genericWitness:null,errors:[]};
  for(const id of ids){
   const p=MQChapterPacks.packs?.[id],r={exists:!!p,levels:0,questions:0,answersHidden:true,provenance:null,lessonWorkshopCount:0,specific:false,exerciseSpecific:false,finotSpecific:false};
