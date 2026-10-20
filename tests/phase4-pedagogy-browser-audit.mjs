@@ -14,7 +14,7 @@ const coverage=await page.evaluate(()=>{
  const expected=(s,txt)=>{
   const m=re=>re.test(txt);
   if(s==='maths'){
-   if(m(/\b(?:fonction(?:s)?|affine(?:s)?|lineaire(?:s)?)\b/))return'function';
+   if(m(/\b(?:fonction(?:s)?|affine(?:s)?|lineaire(?:s)?|proportionnalite)\b/))return'function';
    if(m(/\b(?:vitesse|vitesses)\b/))return'speed';
    if(m(/\b(?:duree|durees|horaire|horaires|temps)\b/))return'time';
    if(m(/\b(?:pourcentage|pourcentages|proportion|proportions|frequence|frequences)\b/))return'proportion';
@@ -65,10 +65,12 @@ const coverage=await page.evaluate(()=>{
    const tip=MQFinotRemediation.tipFor({cid:id,q});if(Array.isArray(tip)&&tip.length===2)out.remediations++;else out.errors.push('remediation:'+id);
   }catch(e){out.errors.push(id+':'+e.message);}
  }
- // Cas de non-régression issus de la revue : ces deux chapitres ne doivent jamais être classés par un mot incidentel du cours.
+ // Cas de non-régression issus de la revue : faux positifs interdits + vraie distinction linéaire/affine.
+ const lin=MQPedagogicalWorkshop.dataSpec('3h'),aff=MQPedagogicalWorkshop.dataSpec('3i');
  out.regressionCases.thales={exists:!!CHMAP['3o'],name:CHMAP['3o']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('3o')?.topic||null,kind:MQPedagogicalWorkshop.kind('3o')};
  out.regressionCases.relatives={exists:!!CHMAP['5b'],name:CHMAP['5b']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('5b')?.topic||null,kind:MQPedagogicalWorkshop.kind('5b')};
- out.regressionCases.function={exists:!!CHMAP['3i'],name:CHMAP['3i']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('3i')?.topic||null};
+ out.regressionCases.linearFunction={exists:!!CHMAP['3h'],name:CHMAP['3h']?.name||'',topic:lin?.topic||null,subtype:lin?.subtype||null,y0:Array.isArray(lin?.values)?lin.values[0]:null};
+ out.regressionCases.affineFunction={exists:!!CHMAP['3i'],name:CHMAP['3i']?.name||'',topic:aff?.topic||null,subtype:aff?.subtype||null,y0:Array.isArray(aff?.values)?aff.values[0]:null};
  out.regressionCases.pcSpeed={exists:!!CHMAP['pc6f'],name:CHMAP['pc6f']?.name||'',topic:MQPedagogicalWorkshop.dataSpec('pc6f')?.topic||null};
  return out;
 });
@@ -83,7 +85,8 @@ if(!coverage.special.mathFunction)fail('no-maths-function-data-case');if(!covera
 for(const [k,v] of Object.entries(coverage.regressionCases))if(!v.exists)fail('missing-regression-chapter:'+k);
 if(coverage.regressionCases.thales.topic!==null||coverage.regressionCases.thales.kind==='data')fail('thales-false-function-classification');
 if(coverage.regressionCases.relatives.topic!==null||coverage.regressionCases.relatives.kind==='data')fail('relatives-false-speed-classification');
-if(coverage.regressionCases.function.topic!=='function')fail('real-function-not-recognized');
+if(coverage.regressionCases.linearFunction.topic!=='function'||coverage.regressionCases.linearFunction.subtype!=='linear'||coverage.regressionCases.linearFunction.y0!==0)fail('linear-function-must-pass-origin');
+if(coverage.regressionCases.affineFunction.topic!=='function'||coverage.regressionCases.affineFunction.subtype!=='affine'||coverage.regressionCases.affineFunction.y0===0)fail('affine-function-must-have-nonzero-intercept');
 if(coverage.regressionCases.pcSpeed.topic!=='speed')fail('real-pc-speed-not-recognized');
 if(coverage.errors.length)errors.push(...coverage.errors.slice(0,30));
 for(const k of ['synthesis','situation','science'])if(!coverage.kinds[k])fail('missing-workshop-kind:'+k);if(!coverage.kinds.data)warnings.push('Aucun atelier de données détecté sur le registre actuel');
