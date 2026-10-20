@@ -7,9 +7,9 @@ await ctx.addInitScript(()=>{const id='phase3qa',profile={name:'Phase3QA',avatar
 const page=await ctx.newPage();page.on('pageerror',e=>fail('runtime:'+e.message));
 await page.goto(base+'/index.html',{waitUntil:'load'});
 await page.waitForFunction(()=>window.MQDiagnostic&&window.MQFinotError&&window.MQQuestionTransfer&&window.MQPathSkillFocus&&window.MQAgeUI&&window.MQCompetency);
-await page.waitForTimeout(80);
-const initial=await page.evaluate(()=>({age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible()}));
-if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');
+await page.waitForTimeout(120);
+const initial=await page.evaluate(()=>({age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,audit:!!window.MQ_AUDIT_FIXES}));
+if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('audit-fixes-not-loaded');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');
 await page.evaluate(()=>ACT.diagstart());
 for(let step=0;step<12;step++){
  await page.waitForSelector('.qcard');
@@ -21,8 +21,8 @@ const diag=await page.evaluate(()=>({done:!!S.diagnostic?.completedAt,n:S.diagno
 if(!diag.done||diag.n!==12)fail('diagnostic-not-complete');if(diag.xp!==initial.xp||diag.coins!==initial.coins)fail('diagnostic-rewarded');if(!diag.comp)fail('diagnostic-no-competencies');
 const transfer=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),q=CHMAP[id].g(2);return {id,transfer:q?._mq?.transfer||'',skill:q?._mq?.skillKind||''};});
 if(!transfer.transfer)fail('transfer-missing');if(!transfer.skill)fail('transfer-skill-missing');
-const focus=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),skill=MQCompetency.skillsForChapter(id)[0],q=CHMAP[id].g(1);for(let i=0;i<5;i++)MQCompetency.record(S,id,false,{source:'practice',d:1,q,kind:skill.kind});const f=MQPathSkillFocus.focusFor(id);const p={steps:[{kind:'lesson',cid:id,subj:sOf(WMAP[id].id).id,status:'next',score:null,ms:0}],date:dstr(Date.now())};MQPathSkillFocus.ensureFocus(p);return {id,focus:f,stored:p.skillFocus?.[id]||null};});
-if(!focus.focus||!focus.stored)fail('path-skill-focus-missing');
+const focus=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),skill=MQCompetency.skillsForChapter(id)[0],q=CHMAP[id].g(1);for(let i=0;i<5;i++)MQCompetency.record(S,id,false,{source:'practice',d:1,q,kind:skill.kind});const f=MQPathSkillFocus.focusFor(id);const p={steps:[{kind:'lesson',cid:id,subj:sOf(WMAP[id].id).id,status:'next',score:null,ms:0}],date:dstr(Date.now())};MQPathSkillFocus.ensureFocus(p);return {id,focus:f,stored:p.skillFocus?.[id]||null,hook:MQPathSkillFocus.hookActive};});
+if(!focus.focus||!focus.stored)fail('path-skill-focus-missing');if(!focus.hook)fail('path-skill-hook-inactive');
 await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function');startMission([id]);});
 await page.waitForSelector('.qcard');
 await page.evaluate(()=>{const q=M.q;if(q.type==='choice'){let wrong=0;if(wrong===q.ans)wrong=(wrong+1)%q.choices.length;validate(wrong);}else if(q.type==='order'){q._sel=(q.tokens||[]).map((_,i)=>i).reverse();validate();}else if(q.type==='multi'){document.querySelectorAll('.ans input').forEach(x=>x.value='999999');validate();}else{const x=document.getElementById('in0');if(x)x.value='999999';validate();}});
