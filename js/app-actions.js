@@ -195,6 +195,7 @@ function lexAnswer(ans,el){
  if(!LX.q)return;const ok=decodeURIComponent(ans)===LX.q[0];const k=vocabKey(LX.lang,LX.cat,LX.q[0]);S.vocab[k]=MQAdaptive.vocabUpdate(S.vocab[k],ok);saveLocal();document.querySelectorAll('.lexq .choice').forEach(b=>{b.disabled=true;if(b.textContent===LX.q[0])b.classList.add('good');});if(!ok)el.classList.add('bad');setTimeout(()=>{if(ok){toast('✅ Bravo !');sfx('good');}else{sfx('bad');toast('La bonne réponse était : '+LX.q[0]);}LX.review?lexReview(LX.wid):lexQuiz(LX.wid,LX.cat);},850);}
 
 const ACT={
+ credits:()=>creditsScreen(),
  catgo:k=>{const el=document.getElementById('cat-'+k);if(el){el.open=true;el.scrollIntoView({behavior:'smooth',block:'start'});}},
  smartreview:()=>smartReviewScreen(),mistakes:()=>mistakesScreen(),reviewstart:id=>startMission([id]),
  lexicon:id=>lexiconScreen(id),lexreview:id=>lexReview(id),lexmark:x=>{const [l,c,w,st]=x.split('|');vocabMark(l,c,decodeURIComponent(w),st);lexiconScreen(LX.wid||((l==='it'?'it':'en')+S.grade.replace('e','')),c);},lexcat:x=>{const [w,c]=x.split('|');lexiconScreen(w,c);},lexlearn:x=>{const [w,c,i]=x.split('|');lexLearn(w,c,+i);},lexquiz:x=>{const [w,c]=x.split('|');lexQuiz(w,c);},lexanswer:(a,el)=>lexAnswer(a,el),lexlisten:x=>{const [t,l]=x.split('|');ttsSay({t:decodeURIComponent(t),l});},

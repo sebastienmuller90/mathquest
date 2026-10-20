@@ -4,14 +4,17 @@
    impossible de mélanger un index.html récent avec des données anciennes.
    ⚠️ À chaque publication, incrémenter VERSION : le navigateur installe alors la nouvelle version complète,
    puis supprime l'ancienne. La page en cours continue avec sa version ; la suivante utilise la nouvelle. */
-const VERSION='8.45.0-audit-lexique-2026-10-19';
+const VERSION='8.46.0-images-lecons-2026-10-19';
 const CACHE='mathquest-'+VERSION;
+// Images des leçons : trop nombreuses pour être préchargées. Elles sont mises en cache au premier affichage, dans un
+// cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).
+const IMGCACHE='mqimg-lecons-v1';
 const CORE=[
   './','./index.html','./parent.html','./manifest.webmanifest','./icon.png','./styles.css',
   './fonts/fonts.css','./fonts/fredoka-latin.woff2','./fonts/fredoka-latin-ext.woff2','./fonts/nunito-latin.woff2','./fonts/nunito-latin-ext.woff2','./js/vendor/qrcode.min.js',
   './js/app-content.js','./js/app-state.js','./js/app-screens.js','./js/app-lesson.js','./js/app-actions.js','./js/app-library.js','./js/path-report.js','./js/app-path.js',
   './data/program-2026-2027.js','./data/math-2026-2027.js','./data/french-2026-2027.js','./data/languages-2026-2027.js',
-  './data/hg-emc-2026-2027.js','./data/remaining-2026-2027.js','./data/lexicon.js','./data/chapter-categories.js',
+  './data/hg-emc-2026-2027.js','./data/remaining-2026-2027.js','./data/lexicon.js','./data/chapter-categories.js','./data/lesson-images.js',
   './js/adaptive-engine.js','./js/primary-engine.js','./js/college-engine.js','./js/reading-engine.js','./data/reading/resources.js','./js/audio-engine.js','./js/dictation-engine.js','./data/college/maths-6.js','./data/college/maths-3.js','./data/college/maths-4.js','./data/college/maths-5.js','./data/college/maths-6b.js','./data/college/pc-6-5.js','./data/college/musique.js','./data/college/francais-3.js','./data/college/francais-4.js','./data/college/francais-5.js','./data/college/francais-6.js','./data/college/svt.js','./data/college/pc-4-3.js','./data/college/tech.js','./data/college/pix.js','./data/college/evars-orientation.js','./data/college/emi.js','./data/college/ia.js','./data/college/eps.js','./data/college/hda.js','./data/college/arts.js','./data/college/enrich-anglais.js','./data/college/enrich-italien.js','./data/college/enrich-hg.js','./data/pronunciation-lexicon.js',
   './data/primary/cp.js','./data/primary/ce1.js','./data/primary/ce2.js','./data/primary/cm1.js','./data/primary/cm2.js','./data/primary/enrich-cp.js','./data/primary/enrich-ce1.js','./data/primary/enrich-ce2.js','./data/primary/enrich-cm1.js','./data/primary/enrich-cm2.js','./data/primary/enrich-coverage.js',
   './data/images/finot/01-expression-neutre.jpg','./data/images/finot/02-expression-victoire.jpg','./data/images/finot/03-expression-encouragement.jpg','./data/images/finot/04-expression-surprise.jpg','./data/images/finot/06-expression-fatigue.jpg','./data/images/finot/07-expression-indice.jpg','./data/images/finot/08-expression-bravo.jpg','./data/images/finot/09-expression-carnet.jpg','./data/images/finot/10-expression-revision.jpg','./data/images/finot/11-expression-cadeau.jpg','./data/images/finot/12-expression-bienvenue.jpg','./data/images/finot/39-scene-repaire.jpg','./data/images/finot/35-scene-ile-nombres.jpg','./data/images/finot/36-scene-foret-relatifs.jpg','./data/images/finot/37-scene-volcan-puissances.jpg','./data/images/finot/38-scene-galaxie-fonctions.jpg',
@@ -38,6 +41,8 @@ self.addEventListener('fetch',e=>{
       try{return await fetch(req);}catch(err){return (await c.match(pageKey(new URL('./index.html',self.registration.scope).href)))||Response.error();}})());
     return;
   }
+  if(url.pathname.includes('/data/images/lecons/')){e.respondWith((async()=>{const c=await caches.open(IMGCACHE);const hit=await c.match(req,{ignoreSearch:true});if(hit)return hit;
+    try{const r=await fetch(req);if(r&&r.ok&&r.type==='basic')c.put(req,r.clone());return r;}catch(err){return Response.error();}})());return;}
   e.respondWith((async()=>{const c=await caches.open(CACHE);const hit=await c.match(req,{ignoreSearch:true});if(hit)return hit;
     try{const r=await fetch(req);if(r&&r.ok&&r.type==='basic')c.put(req,r.clone());return r;}catch(err){return Response.error();}})());
 });

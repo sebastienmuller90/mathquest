@@ -28,10 +28,16 @@ function ready(timeout=1500){return new Promise(res=>{if(st.loaded||!synth())ret
 function setPrefs(p){st.prefs=Object.assign({},p||{});}
 
 /* ---------- Choix de la voix ---------- */
-const QUALITY=/natural|neural|online|premium|enhanced|wavenet/i;
+// Voix naturelles (neuronales) d'abord ; voix de synthèse anciennes, très robotiques, en dernier recours.
+// Les voix « Online » ont besoin d'Internet : hors connexion, elles se taisent, on les écarte donc.
+const QUALITY=/natural|neural|online|premium|enhanced|améliorée|wavenet|siri/i;
+const ROBOTIC=/hortense|julie|paul|zira|david desktop|mark|hazel|george|elsa|cosimo|espeak|pico|festival|mbrola/i;
 function score(v,loc){const vl=String(v.lang||'').replace('_','-').toLowerCase(),L=loc.toLowerCase();let s=0;
   if(vl===L)s+=100;else if(vl.slice(0,2)===L.slice(0,2))s+=50;else return -1;
-  if(QUALITY.test(v.name))s+=10;if(/google|microsoft|apple|siri/i.test(v.name))s+=4;if(v.localService)s+=1;return s;}
+  const online=/online/i.test(v.name)||v.localService===false,offline=typeof navigator!=='undefined'&&navigator.onLine===false;
+  if(online&&offline)return -1;
+  if(QUALITY.test(v.name))s+=30;if(/google/i.test(v.name))s+=12;if(/apple|amélie|thomas|audrey|aurélie|daniel|alice|federica|luca/i.test(v.name))s+=8;
+  if(ROBOTIC.test(v.name)&&!QUALITY.test(v.name))s-=20;if(v.localService)s+=1;return s;}
 /* Renvoie {voice, status, locale} — status : 'exact' | 'language' | 'preferred' | 'engine-default' (aucune voix listée) | 'unavailable'. */
 function pickVoice(l){const loc=locale(l),la=lang2(l);const vs=st.voices.length?st.voices:refresh();
   if(!vs.length)return {voice:null,status:'engine-default',locale:loc};
