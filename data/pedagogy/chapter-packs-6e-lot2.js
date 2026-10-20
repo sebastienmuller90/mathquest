@@ -34,7 +34,7 @@ const packs={
   },
   'svt6a':{
     subject:'svt',grade:'6e',competency:'Relier les groupes d’aliments à leurs rôles et expliquer pourquoi les besoins alimentaires varient selon les situations.',
-    questionScope:{exclude:['micro-organisme','micro-organismes','levure','ferment','stéril','pasteuris','conserv','réfrigér','congél','yaourtière','saucisson','jambon']},
+    questionScope:{exclude:['micro-organisme','micro-organismes','levure','ferment','stéril','pasteuris','conserv','réfrigér','congél','yaourtière','saucisson','jambon','kcal']},
     provenance:{type:'synthese',label:'Dossier de synthèse MathQuest fondé sur le cours de 6e',refs:['Cycle 3 — sciences et technologie, arrêté du 15 juin 2023 (MENE2314101A), BO n°25 du 22 juin 2023','Éduscol — cycle 3, alimentation humaine et besoins de l’organisme']},
     object:{title:'Dossier : composer et analyser un plateau fictif',html:`<p>Pour un exercice de sciences, on prépare un plateau fictif avec : <b>eau, lentilles, riz, carottes, yaourt nature et pomme</b>.</p><table class="ptable"><tr><th>Élément du cours</th><th>Rôle général à retenir</th></tr><tr><td>Protéines</td><td>Participent notamment à la construction et au renouvellement des tissus.</td></tr><tr><td>Glucides et lipides</td><td>Peuvent fournir de l’énergie à l’organisme.</td></tr><tr><td>Eau, vitamines, sels minéraux, fibres</td><td>Participent au bon fonctionnement de l’organisme selon des rôles différents.</td></tr></table><p class="muted small">Le plateau est une situation pédagogique fictive. Il ne constitue pas un conseil alimentaire personnalisé ni un menu médical.</p>`},
     levels:{
@@ -49,6 +49,7 @@ const packs={
   },
   'hg6s':{
     subject:'hg',grade:'6e',competency:'Identifier une contrainte naturelle et expliquer comment les sociétés adaptent leurs pratiques et leurs aménagements.',
+    questionScope:{exclude:['densité de population']},
     provenance:{type:'synthese',label:'Quatre territoires fictifs de synthèse créés à partir du cours',refs:['Histoire-Géographie cycle 3 — programme applicable en 6e, BO n°31 du 30 juillet 2020','Géographie 6e — habiter un espace à fortes contraintes naturelles ou de grande biodiversité']},
     object:{title:'Quatre territoires fictifs à comparer',html:`<p>Ces quatre territoires imaginaires servent uniquement à raisonner sur contraintes et adaptations.</p><table class="ptable"><tr><th>Territoire fictif</th><th>Contrainte dominante</th><th>Exemples d’adaptations</th></tr><tr><td>Hautes-Roches</td><td>Altitude, pente, isolement hivernal</td><td>Routes en lacets, tunnels, bâtiments adaptés au froid</td></tr><tr><td>Dune-Sèche</td><td>Aridité et rareté de l’eau</td><td>Stockage de l’eau, irrigation économe, activités adaptées</td></tr><tr><td>Nord-Glace</td><td>Froid intense et sols gelés une partie de l’année</td><td>Isolation renforcée, réseaux techniques protégés, mobilités adaptées</td></tr><tr><td>Forêt-Liane</td><td>Végétation très dense, humidité, accès terrestre difficile</td><td>Déplacements fluviaux, constructions adaptées à l’humidité</td></tr></table><p class="muted small">Ces lieux et aménagements sont des synthèses fictives : ils ne décrivent pas une population réelle précise.</p>`},
     levels:{
