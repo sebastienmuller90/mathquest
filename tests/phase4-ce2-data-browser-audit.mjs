@@ -36,7 +36,7 @@ const audit=await page.evaluate(()=>{
 if(!audit.exists)fail('ce2-chapter-missing');
 if(audit.grade!=='CE2')fail('ce2-grade:'+audit.grade);
 if(audit.topic!=='statistics')fail('ce2-topic:'+audit.topic);
-if(audit.subtype!=='elementary-double-entry')fail('ce2-subtype:'+audit.subtype);
+if(audit.subtype!=='elementary-double-table')fail('ce2-subtype:'+audit.subtype);
 if(audit.values.length!==4||audit.secondary.length!==4)fail('ce2-double-entry-shape');
 if(!audit.hasSecondaryRow)fail('ce2-secondary-row-not-rendered');
 if(audit.hasForbidden)fail('ce2-forbidden-statistics-concept');
