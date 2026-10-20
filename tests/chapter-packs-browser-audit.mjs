@@ -38,7 +38,7 @@ const audit=await page.evaluate(ids=>{
   out.packs[id]=r;
  }
  const witness=Object.keys(CHMAP).find(id=>typeof CHMAP[id]?.g==='function'&&!MQChapterPacks.packs?.[id]&&MQPedagogicalWorkshop.build(id)?.meta?.kind!=='specific');
- if(witness){const w=MQPedagogicalWorkshop.build(witness),st=lessonSteps(witness);out.genericWitness={id,kind:w?.meta?.kind||null,oneWorkshop:st.filter(x=>x?.k==='mqworkshop').length===1,specific:/mq-specific-pack/.test(w?.h||'')};}
+ if(witness){const w=MQPedagogicalWorkshop.build(witness),st=lessonSteps(witness);out.genericWitness={id:witness,kind:w?.meta?.kind||null,oneWorkshop:st.filter(x=>x?.k==='mqworkshop').length===1,specific:/mq-specific-pack/.test(w?.h||'')};}
  else out.errors.push('missing-generic-witness');
  return out;
 },ids);
