@@ -60,14 +60,16 @@ const svtRouting=await page.evaluate(()=>{
  const pack=MQChapterPacks.packs.svt6a;
  const nutrition={q:'Quel est le rôle principal des protéines dans les aliments ?'};
  const fermentation={q:'Quel micro-organisme fait lever la pâte à pain ?'};
- const nutritionMatch=MQChapterPacks.matchesQuestion(pack,nutrition),fermentationMatch=MQChapterPacks.matchesQuestion(pack,fermentation);
- MQPedagogicalExercise.decorate('svt6a',nutrition);MQPedagogicalExercise.decorate('svt6a',fermentation);
- const nt=MQFinotRemediation.tipFor({cid:'svt6a',q:nutrition}),ft=MQFinotRemediation.tipFor({cid:'svt6a',q:fermentation});
+ const calories={q:'L’étiquette indique 150 kcal pour 100 g de pâtes. Quelle énergie apporte une portion de 250 g ?'};
+ const nutritionMatch=MQChapterPacks.matchesQuestion(pack,nutrition),fermentationMatch=MQChapterPacks.matchesQuestion(pack,fermentation),caloriesMatch=MQChapterPacks.matchesQuestion(pack,calories);
+ MQPedagogicalExercise.decorate('svt6a',nutrition);MQPedagogicalExercise.decorate('svt6a',fermentation);MQPedagogicalExercise.decorate('svt6a',calories);
+ const nt=MQFinotRemediation.tipFor({cid:'svt6a',q:nutrition}),ft=MQFinotRemediation.tipFor({cid:'svt6a',q:fermentation}),ct=MQFinotRemediation.tipFor({cid:'svt6a',q:calories});
  const nutritionTipSpecific=Array.isArray(nt)&&nt[0]===pack.misconception[0]&&nt[1]===pack.misconception[1];
  const fermentationTipSpecific=Array.isArray(ft)&&ft[0]===pack.misconception[0]&&ft[1]===pack.misconception[1];
- return{nutritionMatch,fermentationMatch,nutritionSource:nutrition._mq?.applicationSource,fermentationSource:fermentation._mq?.applicationSource,nutritionTipSpecific,fermentationTipSpecific};
+ const caloriesTipSpecific=Array.isArray(ct)&&ct[0]===pack.misconception[0]&&ct[1]===pack.misconception[1];
+ return{nutritionMatch,fermentationMatch,caloriesMatch,nutritionSource:nutrition._mq?.applicationSource,fermentationSource:fermentation._mq?.applicationSource,caloriesSource:calories._mq?.applicationSource,nutritionTipSpecific,fermentationTipSpecific,caloriesTipSpecific};
 });
-if(!svtRouting.nutritionMatch||svtRouting.fermentationMatch||svtRouting.nutritionSource!=='chapter-pack'||svtRouting.fermentationSource!=='generic'||!svtRouting.nutritionTipSpecific||svtRouting.fermentationTipSpecific)fail('svt-question-scope-routing:'+JSON.stringify(svtRouting));
+if(!svtRouting.nutritionMatch||svtRouting.fermentationMatch||svtRouting.caloriesMatch||svtRouting.nutritionSource!=='chapter-pack'||svtRouting.fermentationSource!=='generic'||svtRouting.caloriesSource!=='generic'||!svtRouting.nutritionTipSpecific||svtRouting.fermentationTipSpecific||svtRouting.caloriesTipSpecific)fail('svt-question-scope-routing:'+JSON.stringify(svtRouting));
 
 const frRouting=await page.evaluate(()=>{
  const pack=MQChapterPacks.packs.fr6a;
@@ -82,6 +84,19 @@ const frRouting=await page.evaluate(()=>{
 });
 if(!frRouting.expressiveMatch||frRouting.numericMatch||frRouting.expressiveSource!=='chapter-pack'||frRouting.numericSource!=='generic'||!frRouting.expressiveTipSpecific||frRouting.numericTipSpecific)fail('fr6a-question-scope-routing:'+JSON.stringify(frRouting));
 
+const hgRouting=await page.evaluate(()=>{
+ const pack=MQChapterPacks.packs.hg6s;
+ const constraints={q:'Explique comment les habitants peuvent s’adapter à une forte contrainte naturelle.'};
+ const density={q:'Qu’est-ce qu’une densité de population ?'};
+ const constraintsMatch=MQChapterPacks.matchesQuestion(pack,constraints),densityMatch=MQChapterPacks.matchesQuestion(pack,density);
+ MQPedagogicalExercise.decorate('hg6s',constraints);MQPedagogicalExercise.decorate('hg6s',density);
+ const ct=MQFinotRemediation.tipFor({cid:'hg6s',q:constraints}),dt=MQFinotRemediation.tipFor({cid:'hg6s',q:density});
+ const constraintsTipSpecific=Array.isArray(ct)&&ct[0]===pack.misconception[0]&&ct[1]===pack.misconception[1];
+ const densityTipSpecific=Array.isArray(dt)&&dt[0]===pack.misconception[0]&&dt[1]===pack.misconception[1];
+ return{constraintsMatch,densityMatch,constraintsSource:constraints._mq?.applicationSource,densitySource:density._mq?.applicationSource,constraintsTipSpecific,densityTipSpecific};
+});
+if(!hgRouting.constraintsMatch||hgRouting.densityMatch||hgRouting.constraintsSource!=='chapter-pack'||hgRouting.densitySource!=='generic'||!hgRouting.constraintsTipSpecific||hgRouting.densityTipSpecific)fail('hg6s-question-scope-routing:'+JSON.stringify(hgRouting));
+
 for(const id of ids){
  await page.evaluate(id=>openLesson(id),id);
  await page.waitForFunction(id=>typeof L!=='undefined'&&L?.steps?.some(x=>x.k==='mqworkshop'&&/mq-specific-pack/.test(x.h||'')),id);
@@ -94,7 +109,7 @@ for(const id of ids){
 }
 
 await browser.close();
-const report={audit,svtRouting,frRouting,errorCount:errors.length,errors};
+const report={audit,svtRouting,frRouting,hgRouting,errorCount:errors.length,errors};
 fs.writeFileSync('tests/chapter-packs-audit-report.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify(report,null,2));
 if(errors.length)process.exitCode=1;else console.log('CHAPTER_PACKS_AUDIT_OK');
