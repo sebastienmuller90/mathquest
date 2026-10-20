@@ -9,7 +9,7 @@ function ensure(){if(!Array.isArray(S.activityLog))S.activityLog=[];return S.act
 function now(){return Date.now();}
 function idsClean(ids){return [...new Set((ids||[]).map(String).filter(id=>typeof CHMAP!=='undefined'&&CHMAP[id]))].slice(0,20);}
 function begin(kind,ids,meta={}){close('switch');const list=idsClean(ids);CURR={id:'a'+now().toString(36)+Math.random().toString(36).slice(2,6),t0:now(),kind:String(kind||'activity').slice(0,30),ids:list,grade:S.grade,subj:list[0]&&typeof WMAP!=='undefined'&&WMAP[list[0]]&&typeof sOf==='function'?sOf(WMAP[list[0]].id).id:'',meta:{...meta}};return CURR;}
-function close(reason='done',extra={}){if(!CURR)return null;const t1=now(),ms=Math.max(0,Math.min(MAX_MS,t1-CURR.t0));if(ms>=1000){const x={id:CURR.id,t0:CURR.t0,t1,ms,kind:CURR.kind,ids:CURR.ids,grade:CURR.grade,subj:CURR.subj,reason:String(reason).slice(0,24),...CURR.meta,...extra};const log=ensure();log.push(x);if(log.length>MAX)log.splice(0,log.length-MAX);try{saveLocal();}catch(e){}}const out=CURR;CURR=null;return out;}
+function close(reason='done',extra={}){if(!CURR)return null;const t1=now(),ms=Math.max(0,Math.min(MAX_MS,t1-CURR.t0)),mustKeep=CURR.kind==='interrogation';if(ms>=1000||mustKeep){const x={id:CURR.id,t0:CURR.t0,t1,ms:mustKeep?Math.max(1,ms):ms,kind:CURR.kind,ids:CURR.ids,grade:CURR.grade,subj:CURR.subj,reason:String(reason).slice(0,24),...CURR.meta,...extra};const log=ensure();log.push(x);if(log.length>MAX)log.splice(0,log.length-MAX);try{saveLocal();}catch(e){}}const out=CURR;CURR=null;return out;}
 function active(){return CURR;}
 
 // Cours.
@@ -29,6 +29,6 @@ if(typeof openLibraryResource==='function'&&!openLibraryResource.__activity){con
 if(typeof home==='function'&&!home.__activity){const base=home;home=function(){if(CURR&&CURR.kind!=='interrogation')close('home');return base.apply(this,arguments);};home.__activity=true;}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&CURR)close('hidden');});
 window.addEventListener('pagehide',()=>{if(CURR)close('pagehide');});
-window.MQActivity={version:'1.0',ensure,begin,close,active};
+window.MQActivity={version:'1.1',ensure,begin,close,active};
 ensure();
 })();
