@@ -1,0 +1,16 @@
+/* MathQuest — affichage léger des micro-compétences et contextes d'exercice. */
+(function(){
+'use strict';
+if(typeof window==='undefined'||typeof document==='undefined')return;
+const escC=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function style(){if(document.getElementById('mqCompetencyCss'))return;const s=document.createElement('style');s.id='mqCompetencyCss';s.textContent=`.mq-qmeta{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 10px}.mq-skill,.mq-context{border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700}.mq-skill{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--border))}.mq-context{background:color-mix(in srgb,var(--gold) 12%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 35%,var(--border));font-weight:600}.mq-reflect{margin-top:10px;padding:8px 10px;border:1px dashed var(--border);border-radius:12px;background:var(--surface)}.mq-reflect summary{cursor:pointer;font-weight:700}.mq-reflect p{margin:7px 0 0}.mq-comp-list{display:grid;gap:8px}.mq-comp-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.mq-comp-row small{display:block;color:var(--muted)}.mq-comp-bar{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;margin-top:4px}.mq-comp-bar i{display:block;height:100%;background:var(--accent);border-radius:99px}`;document.head.appendChild(s);}
+function currentQuestion(){try{if(typeof M!=='undefined'&&M?.q)return M.q;if(typeof L!=='undefined'&&L){const k=L.steps?.[L.i]?.k;return k==='practice'?L.pq:k==='quiz'?L.q:null;}}catch(e){}return null;}
+function injectQuestionMeta(q){if(!q?._mq)return;const card=document.querySelector('.qcard,.lcard.qcard');if(!card||card.querySelector('.mq-qmeta'))return;const qt=card.querySelector('.qtext');if(!qt)return;const m=q._mq,html=`<div class="mq-qmeta">${m.skillLabel?`<span class="mq-skill">🎯 ${escC(m.skillLabel)}</span>`:''}${m.context?`<span class="mq-context">🧭 ${escC(m.context)}</span>`:''}</div>`;qt.insertAdjacentHTML('beforebegin',html);}
+function injectReflection(q){if(!q?._mq?.reflect)return;const fb=document.querySelector('#fb .fb,.lfb,.lesson-feedback');if(!fb||fb.querySelector('.mq-reflect'))return;fb.insertAdjacentHTML('beforeend',`<details class="mq-reflect"><summary>🧠 Je vérifie que j’ai compris</summary><p>${escC(q._mq.reflect)}</p></details>`);}
+style();
+if(typeof renderQ==='function'){const base=renderQ;renderQ=function(){const r=base.apply(this,arguments);try{injectQuestionMeta(M?.q);}catch(e){}return r;};}
+if(typeof renderLesson==='function'){const base=renderLesson;renderLesson=function(){const r=base.apply(this,arguments);try{injectQuestionMeta(currentQuestion());}catch(e){}return r;};}
+if(typeof result==='function'){const base=result;result=function(){const q=typeof M!=='undefined'&&M?.q;const r=base.apply(this,arguments);try{injectReflection(q);}catch(e){}return r;};}
+if(typeof lvalidate==='function'){const base=lvalidate;lvalidate=function(){const q=currentQuestion();const r=base.apply(this,arguments);try{injectReflection(q);}catch(e){}return r;};}
+window.MQCompetencyUI={version:'1.0',injectQuestionMeta,injectReflection};
+})();
