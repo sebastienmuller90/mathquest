@@ -1,12 +1,34 @@
 /* MathQuest — complète le diagnostic d'erreur de Finot avec une erreur typique et une remédiation de la matière.
-   L'appel est centralisé dans MQFinotError.explain afin que clic, texte et voix suivent exactement le même chemin. */
+   MQFinotError.explain est le chemin partagé clic/texte/voix. Ce module maintient aussi un hook d'intention
+   après les remplacements tardifs éventuels de finotAsk. */
 (function(){
 'use strict';
 if(typeof window==='undefined')return;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hash=s=>{let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const asksWhy=s=>/pourquoi.*(tromp|faux|rate)|qu.*(rate|erreur)|comprend.*erreur/.test(norm(s));
 function subject(cid){try{let s=sOf(WMAP[cid].id).id.replace(/^p-/,'');if(s==='sciences'||s==='qlm')s='svt';if(s==='evar')s='evars';return s;}catch(e){return'autre';}}
 function tipFor(last){if(!last?.cid)return null;const b=window.MQPedagogyBanks||{},arr=b.misconceptions?.[subject(last.cid)]||b.misconceptions?.autre||[];if(!arr.length)return null;const sig=String(last.q?.q||last.cid);return arr[hash(last.cid+'|'+sig)%arr.length];}
 function pushTip(){const last=window.MQFinotError?.last,tip=tipFor(last);if(!tip)return false;try{finotPush?.('finot',`<div class="whybox"><b>⚠️ Un piège fréquent dans cette matière</b><p>${esc(tip[0])}</p><p><b>Pour le corriger :</b> ${esc(tip[1])}</p></div>`);return true;}catch(e){return false;}}
-window.MQFinotRemediation={version:'1.2',subject,tipFor,pushTip};
+function installAskHook(){
+ try{
+  if(typeof finotAsk!=='function')return false;
+  if(finotAsk.__mqRemediationIntent)return true;
+  const base=finotAsk;
+  const wrap=function(text){
+   if(asksWhy(text)&&window.MQFinotError?.last){
+    try{finotChatEnsure?.();finotPush?.('you',esc(String(text||'').trim()));}catch(e){}
+    return window.MQFinotError.explain();
+   }
+   return base.apply(this,arguments);
+  };
+  wrap.__mqRemediationIntent=true;wrap.__mqRemediationBase=base;finotAsk=wrap;return true;
+ }catch(e){return false;}
+}
+installAskHook();
+let tries=0;const stabilize=()=>{installAskHook();if(++tries>=40)clearInterval(timer);};
+const timer=setInterval(stabilize,50);
+if(document.readyState==='complete')setTimeout(stabilize,0);else window.addEventListener('load',()=>setTimeout(stabilize,0),{once:true});
+window.MQFinotRemediation={version:'1.3',subject,tipFor,pushTip,asksWhy,installAskHook,get hookActive(){try{return typeof finotAsk==='function'&&!!finotAsk.__mqRemediationIntent;}catch(e){return false;}}};
 })();
