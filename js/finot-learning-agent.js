@@ -1,4 +1,4 @@
-/* Finot — moteur scolaire hors ligne : recherche de notions dans les chapitres de la classe. */
+/* Finot — moteur scolaire hors ligne : recherche de notions et compréhension d'intentions simples. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof finotAsk!=='function'||typeof CHMAP==='undefined')return;
@@ -12,8 +12,18 @@ function search(raw,limit=4){const q=queryTokens(raw);if(!q.length)return[];cons
 function facts(id){const ch=CHMAP[id],c=COURS[id]||{},a=[];const add=x=>{const d=document.createElement('div');d.innerHTML=String(x||'');const t=(d.textContent||'').replace(/\s+/g,' ').trim();if(t&&!a.includes(t))a.push(t)};(c.retenir||[]).forEach(add);(ch?.f?.l||[]).forEach(add);return a.slice(0,2);}
 function resultHTML(items){return `<b>J’ai trouvé ${items.length>1?'plusieurs leçons':'une leçon'} pour ta classe.</b>`+items.map(x=>{const f=facts(x.id);return `<div class="finot-topic"><div><b>${esc3(x.icon||'📘')} ${esc3(x.name)}</b>${f[0]?`<small>${esc3(f[0])}</small>`:''}</div><div class="finot-topic-actions"><button class="fch-chip kid" data-a="finottopiccourse:${x.id}">🌱 Cours facile</button><button class="fch-chip kid" data-a="finottopicex:${x.id}">🎯 Exercices</button><button class="fch-chip" data-a="finottopicfiche:${x.id}">📘 Fiche</button></div></div>`;}).join('');}
 function looksSchoolSearch(raw){const t=norm(raw);return /\b(travaill|revis|apprend|comprend|explique|cours|lecon|exercice|controle|interro|c est quoi|qu est ce|comment fonctionne)\b/.test(t)||queryTokens(raw).some(x=>x.length>=4&&Object.values(CHMAP).some(c=>norm(c.name).includes(x)));}
+function simpleIntent(raw){const t=norm(raw);
+ if(/\b(j ai pas compris|je n ai pas compris|je comprend pas|je ne comprend pas|comprends pas|aide moi|aide|explique moi|c est trop dur|je sais pas)\b/.test(t))return 'help';
+ if(/\b(indice|donne moi un indice|aide sans donner la reponse|petit coup de pouce)\b/.test(t))return 'hint';
+ if(/\b(lis moi|lire la question|lis la question|repete la question|repetes la question|ecouter la question)\b/.test(t))return 'read';
+ return '';
+}
 const base=finotAsk;
-finotAsk=function(text){const raw=String(text||'').trim();if(raw&&looksSchoolSearch(raw)){const found=search(raw);if(found.length){finotChatEnsure();finotPush('you',typeof esc==='function'?esc(raw):esc3(raw));finotPush('finot',resultHTML(found));finotChipsRender();return;}}return base(raw);};
+finotAsk=function(text){const raw=String(text||'').trim();if(!raw)return;const intent=simpleIntent(raw);
+ if(intent){finotChatEnsure();finotPush('you',typeof esc==='function'?esc(raw):esc3(raw));if(intent==='help'&&typeof ACT.finotsimple==='function')return ACT.finotsimple();if(intent==='hint'&&typeof ACT.finothint2==='function')return ACT.finothint2();if(intent==='read'&&typeof ACT.finotread2==='function')return ACT.finotread2();}
+ if(looksSchoolSearch(raw)){const found=search(raw);if(found.length){finotChatEnsure();finotPush('you',typeof esc==='function'?esc(raw):esc3(raw));finotPush('finot',resultHTML(found));finotChipsRender();return;}}
+ return base(raw);
+};
 Object.assign(ACT,{
  finottopiccourse:id=>{finotClose();MQPedagogy.openLessonAtLevel(id,1);},
  finottopicex:id=>{finotClose();ACT.start(id);},
@@ -22,5 +32,5 @@ Object.assign(ACT,{
 });
 // Accès tactile supplémentaire pour les plus jeunes quand aucun exercice n’est ouvert.
 if(typeof finotChipsRender==='function'){const baseChips=finotChipsRender;finotChipsRender=function(){baseChips();const box=document.getElementById('fchChips');if(!box||finotCurrentChapterId()||!['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase()))return;for(const [id,label] of [['maths','➕ Maths'],['francais','📖 Français']])if(SUBMAP[id]&&!box.querySelector(`[data-a="finotsubj:${id}"]`))box.insertAdjacentHTML('beforeend',`<button class="fch-chip kid" data-a="finotsubj:${id}">${label}</button>`);};}
-window.MQFinotLearning={version:'1.0',search,queryTokens};
+window.MQFinotLearning={version:'1.1',search,queryTokens,simpleIntent};
 })();
