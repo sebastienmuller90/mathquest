@@ -290,7 +290,7 @@ const notThis=(id,your)=>isPrimaryCh(id)&&your?`<div class="notthis">Ce n’est 
 function advance(){if(!M||!M.locked)return;clearTimeout(M.tid);M.i++;nextQ();}
 function pauseCard(){if(Date.now()-T0<20*60000)return '';T0=Date.now();return `<div class="pause">🧠 <b>Pause cerveau !</b> 20 minutes d’apprentissage, bravo. ${PAUSES[Math.floor(Math.random()*PAUSES.length)]}, puis reviens quand tu es prêt.</div>`;}
 function nextChap(id){const a=SCH(sOf(WMAP[id].id).id),i=a.findIndex(c=>c.id===id);return a[i+1]||null;}
-function endMission(){const m=M;if(!m)return;M=null;padClose();if(m.path)pathExoDone(m);
+function endMission(){const m=M;if(!m)return;M=null;CUR='mission-end';padClose();if(m.path)pathExoDone(m);
  if(m.path&&Array.isArray(m.ids)&&m.ids.length>1)endPathMission(m);else endChapterMission(m);
  MQHooks.emit('mission:end',{m});}
 // Fin d'une série mixte du parcours : étoiles, répétition espacée et bilan pour chaque chapitre (pas seulement ids[0]).
@@ -313,7 +313,7 @@ function endChapterMission(m){const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,cid=m.ids
 function flashMenu(){app.innerHTML=`${bar('⚡ Défi éclair')}<div class="card center"><p class="lead">60 secondes. Un maximum de bonnes réponses.</p><p class="muted">Ton record : <b>${S.flashBest}</b></p></div>
  <div class="worlds">${WS().map(w=>`<button class="world" data-a="flash:${w.id}" style="--wc:${w.col}"><span class="we">${w.emoji}</span><span class="wl">${w.lvl}</span><span class="wn">${w.name}</span></button>`).join('')}</div>
  <button class="btn primary big" data-a="flash:all">🎲 Tout le programme</button>`;}
-function endFlash(){if(!M)return;padClose();const m=M;clearInterval(m.tick);clearTimeout(m.tid);M=null;const rec=m.ok>S.flashBest;if(rec)S.flashBest=m.ok;S.missions++;save();checkBadges(m);MQHooks.emit('flash:end',{m});
+function endFlash(){if(!M)return;CUR='flash-end';padClose();const m=M;clearInterval(m.tick);clearTimeout(m.tid);M=null;const rec=m.ok>S.flashBest;if(rec)S.flashBest=m.ok;S.missions++;save();checkBadges(m);MQHooks.emit('flash:end',{m});
  const L=lvl(S.xp),up=L>m.L0;if(rec||up){sfx('lvl');confetti(45);}
  app.innerHTML=`<div class="end card pop">${up?`<div class="lvlup">🎉 Niveau ${L} ! <small>${title(L)}</small></div>`:''}<div class="bigicon">⚡</div><h1>${m.ok} bonne${m.ok>1?'s':''} réponse${m.ok>1?'s':''}</h1>
   <p class="lead">${rec?'🏆 Nouveau record !':`Record à battre : ${S.flashBest}`}</p><div class="gains"><span>+${m.xp} XP</span><span>+${m.coins} 🪙</span>${m.mg?`<span>+${m.mg} 🎖️</span>`:''}</div>${pauseCard()}

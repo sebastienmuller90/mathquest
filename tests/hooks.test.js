@@ -63,6 +63,14 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   Storage.prototype.setItem=function(k){if(/mathquest/.test(k))throw new DOMException('quota','QuotaExceededError');return orig.apply(this,arguments);};
   let ok;try{ok=saveLocal();await syncNow();}finally{Storage.prototype.setItem=orig;window.rpc=origRpc;S.sync.child='';}
   return {ok,status:window.MQ_STORAGE_STATUS,calls,sync:SYNC};});
+ // Niveau Difficile choisi pour le cours : l'entraînement (practice) respecte aussi ce niveau.
+ const lvl3=await p.evaluate(()=>{const id=reco().id;MQPedagogy.openLessonAtLevel(id,3);const i=L.steps.findIndex(s=>s.k==='practice');if(i<0)return {skip:true};L.i=i;L.pq=null;renderLesson();const d=L.pq&&L.pq._mq&&L.pq._mq.d;ACT.home();return {d};});
+ T('Niveau Difficile du cours : l’entraînement est aussi au niveau 3',lvl3.skip||lvl3.d===3,JSON.stringify(lvl3));
+ // Action parent reçue alors que la sauvegarde échoue : non acquittée, puis renvoyée ; elle ne doit compter qu'une fois.
+ const dblSync=await p.evaluate(async()=>{const orig=Storage.prototype.setItem,origRpc=window.rpc;S.sync=S.sync||{};S.sync.child='test-child';const pts0=S.merit.pts;let fail=true;const acts=[{id:'bonus-unique',kind:'bonus',payload:{n:3,why:'Test'}}];
+  window.rpc=async fn=>fn==='mq_push'?acts:null;Storage.prototype.setItem=function(k){if(fail&&/mathquest/.test(k))throw new DOMException('quota','QuotaExceededError');return orig.apply(this,arguments);};
+  try{await syncNow();fail=false;await syncNow();}finally{Storage.prototype.setItem=orig;window.rpc=origRpc;S.sync.child='';}return {gain:S.merit.pts-pts0};});
+ T('Action parent renvoyée après un échec de sauvegarde : appliquée une seule fois',dblSync.gain===3,JSON.stringify(dblSync));
  T('Stockage plein : saveLocal() renvoie false, MQ_STORAGE_STATUS signale l’échec, aucun mq_ack envoyé',sv.ok===false&&sv.status&&sv.status.ok===false&&!sv.calls.includes('mq_ack')&&sv.sync.ok===false,JSON.stringify(sv));
  const hookErrs=await p.evaluate(()=>MQHooks.errors().filter(e=>!/^t:/.test(e.evt)));
  T('Aucune erreur JavaScript ni erreur d’abonné',!errs.length&&!hookErrs.length,errs.join(' | ')+JSON.stringify(hookErrs));

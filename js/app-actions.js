@@ -297,7 +297,9 @@ document.addEventListener('keydown',e=>{
 
 // Service worker, version visible et mise à jour : js/app-pwa.js.
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='finotin'&&e.key==='Enter'){e.preventDefault();ACT.finotsend();}});
-load();applyTheme();hometabsDOM();home();syncNow();finotChatDOM();finotFabSync();hometabsSync();
+// Première synchronisation après le chargement de tous les modules : les abonnés 'sync:action' (interrogation à distance…)
+// doivent être en place, sinon une action reçue tôt serait acquittée sans être appliquée.
+load();applyTheme();hometabsDOM();home();if(document.readyState==='complete')setTimeout(syncNow,0);else window.addEventListener('load',()=>syncNow(),{once:true});finotChatDOM();finotFabSync();hometabsSync();
 setInterval(()=>{if(document.visibilityState==='visible')syncNow();},30000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')ttsStop();if(document.visibilityState==='visible')syncNow();else if(S.sync.child)syncNow();});
 document.addEventListener('toggle',e=>{const d=e.target;if(!d||!d.dataset||!d.dataset.cat||typeof CATOPEN==='undefined')return;const [w,k]=d.dataset.cat.split('|');(CATOPEN[w]=CATOPEN[w]||{})[k]=d.open;},true);

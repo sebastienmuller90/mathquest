@@ -116,7 +116,8 @@ function pathAnswer(ok){const t=M&&M.path;if(!t)return 0;
  let bonus=0;if(ok){t.streak++;t.best=Math.max(t.best,t.streak);bonus=Math.min(PATH_BONUS_MAX,t.streak);S.coins+=bonus;}else t.streak=0;
  (t.bonuses=t.bonuses||[]).push(bonus);return bonus;}
 function pathExoDone(m){const p=S.path,t=m&&m.path;if(!p||!t||p.date!==t.date)return null;const s=p.steps[t.i];
- if(!s||s.kind!=='exo'||s.status!=='next')return null;
+ // Série « à revoir » rejouée : elle est réévaluée (réussie à partir de 60 %) ; le coffre, lui, n'est jamais redonné (pathChest).
+ if(!s||s.kind!=='exo'||(s.status!=='next'&&s.status!=='review'))return null;
  s.answers=t.answers.map(a=>({cid:a.cid,ok:a.ok,ms:a.ms}));s.bonuses=(t.bonuses||[]).slice();s.score=t.answers.filter(a=>a.ok).length;
  s.ms=Math.max(0,Math.min(PATH_STEP_MS_MAX,Date.now()-t.t0));s.bestStreak=t.best;
  // Une série sous 60 % de réussite est « à revoir » (rejouable sans second coffre).

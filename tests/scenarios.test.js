@@ -80,12 +80,12 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const s6=await p.evaluate(()=>({st:S.path.steps.map(s=>s.status).join(','),scores:S.path.steps.slice(4).map(s=>s.score),chest:S.path.chest,goals:S.goalsDone,coins:S.coins}));
  // Rejouer la série « à revoir » ne redonne pas de coffre.
  await p.evaluate(()=>pathGo(5));for(let k=0;k<8;k++){const live=await p.evaluate(()=>!!M&&!!M.path);if(!live)break;await ans(true);await p.waitForSelector('#fb .fb');await next();await p.waitForTimeout(30);}
- const s6b=await p.evaluate(()=>({goals:S.goalsDone,chest:S.path.chest}));
+ const s6b=await p.evaluate(()=>({goals:S.goalsDone,chest:S.path.chest,st:S.path.steps.map(s=>s.status).join(',')}));
  await p.reload({waitUntil:'load'});
  const s6c=await p.evaluate(()=>({st:S.path.steps.map(s=>s.status).join(','),chest:S.path.chest,date:S.path.date}));
  T('6a. Parcours : 4 leçons validées ouvrent les exercices',pth.n===6&&afterLessons.st==='done,done,done,done,next,locked',JSON.stringify(afterLessons));
- T('6b. Parcours : série réussie « done », série ratée « à revoir », coffre ouvert une seule fois',s6.st==='done,done,done,done,done,review'&&s6.scores[0]===8&&s6.scores[1]===0&&s6.chest&&s6.goals===coins0.goals+1&&s6b.goals===s6.goals,JSON.stringify({coins0,s6,s6b}));
- T('6c. Parcours : reprise après rechargement (mêmes étapes, coffre conservé)',s6c.st===s6.st&&s6c.chest&&s6c.date===pth.date,JSON.stringify(s6c));
+ T('6b. Parcours : série réussie « done », série ratée « à revoir » puis réévaluée au rejeu (8/8 → réussie), coffre ouvert une seule fois',s6.st==='done,done,done,done,done,review'&&s6.scores[0]===8&&s6.scores[1]===0&&s6.chest&&s6.goals===coins0.goals+1&&s6b.goals===s6.goals&&s6b.st==='done,done,done,done,done,done',JSON.stringify({coins0,s6,s6b}));
+ T('6c. Parcours : reprise après rechargement (mêmes étapes, coffre conservé)',s6c.st===s6b.st&&s6c.chest&&s6c.date===pth.date,JSON.stringify(s6c));
 
  // 7. Exercices : bonne / mauvaise réponse, indice, suivant, défi éclair, quitter.
  await p.evaluate(()=>{home();startMission([reco().id]);});

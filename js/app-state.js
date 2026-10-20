@@ -86,10 +86,13 @@ function deleteProfile(id){if(!PDB?.profiles[id]||Object.keys(PDB.profiles).leng
 let syncT=null,syncing=false,SYNC={ok:null,at:0,err:''},CUR='';
 function snapshot(){const o=clone(S);delete o.pin;delete o.rec;delete o.sync;o.lastSeen=Date.now();return o;}
 function schedSync(ms=2500){if(!S.sync||!S.sync.child)return;clearTimeout(syncT);syncT=setTimeout(syncNow,ms);}
+// Actions parent déjà appliquées pendant cette session : si la sauvegarde locale échoue, elles ne sont pas acquittées et
+// le serveur les renvoie ; elles ne doivent pas être appliquées une seconde fois (bonus compté deux fois).
+const SYNC_APPLIED=new Set();
 async function syncNow(){if(!S.sync||!S.sync.child||syncing)return;syncing=true;
  try{const acts=await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});
   // ACK distant uniquement des actions réellement appliquées ET sauvegardées localement : sinon le parent les renverra.
-  if(acts&&acts.length){const applied=[];for(const a of acts){try{applyAction(a);applied.push(a.id);}catch(e){console.error('Action parent non appliquée',a&&a.id,e);}}
+  if(acts&&acts.length){const applied=[];for(const a of acts){try{if(!SYNC_APPLIED.has(a.id)){applyAction(a);SYNC_APPLIED.add(a.id);}applied.push(a.id);}catch(e){console.error('Action parent non appliquée',a&&a.id,e);}}
    if(applied.length){if(!saveLocal())throw new Error('Sauvegarde locale impossible : actions non acquittées');await rpc('mq_ack',{p_child:S.sync.child,p_ids:applied});await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});if(!M){if(CUR==='home')home();else if(CUR==='rewards')rewardsScreen();}}}
   SYNC={ok:true,at:Date.now(),err:''};}
  catch(e){SYNC={ok:false,at:Date.now(),err:String(e.message||e).slice(0,120)};}
