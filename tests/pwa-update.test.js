@@ -14,7 +14,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'mq-pwa-'));const site=path.join(tmp,'site'),prof=path.join(tmp,'profile');copyDir(ROOT,site);
  const V1='9.10.0-test-n-2026-10-20',V2='9.11.0-test-n-plus-un-2026-10-20';bump(site,V1);
  // Moteur : MQ_ENGINES (premier de la liste ; « chromium » par défaut) — en CI, chaque jambe de la matrice teste le sien.
- const eng=(process.env.MQ_ENGINES||'chromium').split(',')[0].trim(),pw=require('playwright-core');const PORT=20000+Math.floor(Math.random()*2000);let {srv,url}=await serve(PORT,site);
+ const eng=(process.env.MQ_ENGINES||'chromium').split(',')[0].trim(),pw=require('playwright-core');const PORT=20000+Math.floor(Math.random()*2000);// En-têtes de cache comme GitHub Pages (max-age=600), pas no-store : conditions réelles de production.
+ let {srv,url}=await serve(PORT,site,{cacheControl:'max-age=600'});
  const ctx=await pw[eng].launchPersistentContext(prof,{...(eng==='chromium'?{executablePath:chromePath()}:{}),viewport:{width:390,height:844}});
  // Compteur de chargements de page (détecte une boucle de rechargement).
  await ctx.addInitScript(()=>{try{sessionStorage.setItem('mq_loads',String(+(sessionStorage.getItem('mq_loads')||0)+1));}catch(e){}});
@@ -46,10 +47,11 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const imgSize2=await p.evaluate(async u=>{const r=await fetch(u);return (await r.arrayBuffer()).byteLength;},img);
  T('Image de leçon remplacée au même chemin : la nouvelle version est servie (revalidation en arrière-plan)',imgSize2===imgSize1+777,`${imgSize1} → ${imgSize2}`);
  // Démarrage 100 % hors ligne.
+ const cacheDiag=await p.evaluate(async()=>{const k=(await caches.keys()).find(x=>x.startsWith('mathquest-'));if(!k)return {k:null};const c=await caches.open(k),r=await c.match(location.origin+'/index.html');return {k,n:(await c.keys()).length,idx:!!r,status:r&&r.status,redirected:r&&r.redirected,type:r&&r.type};});
  await stop(srv);const p2=await ctx.newPage();p2.on('pageerror',e=>errs.push(e.message));
  let off={};try{await p2.goto(url+'index.html',{waitUntil:'load',timeout:20000});await p2.waitForTimeout(400);
   off=await p2.evaluate(()=>{const id=reco().id;startMission([id]);return {home:!!S.name,q:!!(M&&M.q),cur:CUR,v:window.MQ_APP_VERSION};});}catch(e){off={err:e.message};}
- T('Démarrage hors ligne (serveur arrêté) : appli et exercice disponibles',off.home&&off.q&&off.cur==='mission',JSON.stringify(off));
+ T('Démarrage hors ligne (serveur arrêté) : appli et exercice disponibles',off.home&&off.q&&off.cur==='mission',JSON.stringify({off,cacheDiag}));
  T('Aucune erreur JavaScript',!errs.length,errs.slice(0,4).join(' | '));
  await ctx.close();try{fs.rmSync(tmp,{recursive:true,force:true});}catch(e){}return R;}
 if(require.main===module)require('./lib').main(()=>run());

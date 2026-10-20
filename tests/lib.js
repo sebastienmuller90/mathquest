@@ -4,11 +4,12 @@
 const http=require('http'),fs=require('fs'),path=require('path');
 const ROOT=path.resolve(__dirname,'..');
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.css':'text/css','.svg':'image/svg+xml','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8'};
-function serve(port=0,root=ROOT){
+// opts.cacheControl : en-tête Cache-Control servi ('no-store' par défaut ; 'max-age=600' imite GitHub Pages).
+function serve(port=0,root=ROOT,opts={}){const CC=opts.cacheControl||'no-store';
   return new Promise(res=>{const srv=http.createServer((req,rsp)=>{
     let u=decodeURIComponent(req.url.split('?')[0]);if(u.endsWith('/'))u+='index.html';
     const f=path.join(root,u);if(!f.startsWith(root)||!fs.existsSync(f)||fs.statSync(f).isDirectory()){rsp.writeHead(404);rsp.end('not found');return;}
-    rsp.writeHead(200,{'Content-Type':TYPES[path.extname(f)]||'application/octet-stream','Cache-Control':'no-store'});fs.createReadStream(f).pipe(rsp);
+    rsp.writeHead(200,{'Content-Type':TYPES[path.extname(f)]||'application/octet-stream','Cache-Control':CC});fs.createReadStream(f).pipe(rsp);
   });srv.listen(port,'127.0.0.1',()=>res({srv,url:`http://127.0.0.1:${srv.address().port}/`}));});
 }
 function chromePath(){
