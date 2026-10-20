@@ -40,7 +40,7 @@ assert.equal(context.pathCompact(p).steps.length,6);
 
 const sw=read('sw.js');
 const swv=(sw.match(/const VERSION='(\d+)\.(\d+)\.(\d+)-[a-z0-9-]+-\d{4}-\d{2}-\d{2}'/)||[]).slice(1).map(Number);
-assert.ok(swv.length===3&&(swv[0]>8||(swv[0]===8&&swv[1]>=54)),'Version du service worker PWA incorrecte pour la phase 4');
+assert.ok(swv.length===3&&(swv[0]>8||(swv[0]===8&&swv[1]>=55)),'Version du service worker PWA incorrecte pour les packs spécifiques');
 assert.ok(sw.includes('lexiconImages'),'Le service worker doit pré-cacher le lexique dynamique');
 assert.ok(sw.includes("cache:'reload'"),'Le pré-cache doit contourner le cache HTTP');
 assert.ok(sw.includes("rootRelative?scopeURL.href:base"),'Les littéraux JS doivent être résolus depuis la racine applicative');
@@ -48,12 +48,15 @@ assert.ok(!sw.includes("add(m[1]);\n return out;"),'La résolution des littérau
 
 const index=read('index.html');
 assert.ok(index.indexOf('js/path-report.js')<index.indexOf('js/app-path.js'),'path-report.js doit être chargé avant app-path.js');
-for(const ref of ['pedagogy-upgrade.css','age-adaptive.css','js/pedagogy-upgrade.js','js/pedagogy-upgrade-followup.js','js/pedagogy-content-enrichment.js','js/finot-learning-agent.js','js/question-rotation.js','js/activity-tracker.js','js/interrogation-engine.js','js/interrogation-followup.js','js/local-parent-dashboard.js','data/questions/banks.js','data/questions/transfer-scenarios.js','js/competency-engine.js','js/question-enrichment.js','js/question-transfer.js','js/competency-ui.js','js/adaptive-path-followup.js','js/path-skill-focus.js','js/finot-competency.js','js/finot-error-coach.js','js/competency-integration.js','js/local-parent-competencies.js','js/diagnostic-engine.js','js/age-adaptive-ui.js','data/pedagogy/content-banks.js','js/pedagogical-workshop.js','js/pedagogical-exercise-context.js','js/finot-remediation-bank.js'])assert.ok(index.includes(ref),`Couche fonctionnelle non chargée : ${ref}`);
+for(const ref of ['pedagogy-upgrade.css','age-adaptive.css','js/pedagogy-upgrade.js','js/pedagogy-upgrade-followup.js','js/pedagogy-content-enrichment.js','js/finot-learning-agent.js','js/question-rotation.js','js/activity-tracker.js','js/interrogation-engine.js','js/interrogation-followup.js','js/local-parent-dashboard.js','data/questions/banks.js','data/questions/transfer-scenarios.js','js/competency-engine.js','js/question-enrichment.js','js/question-transfer.js','js/competency-ui.js','js/adaptive-path-followup.js','js/path-skill-focus.js','js/finot-competency.js','js/finot-error-coach.js','js/competency-integration.js','js/local-parent-competencies.js','js/diagnostic-engine.js','js/age-adaptive-ui.js','data/pedagogy/content-banks.js','data/pedagogy/chapter-packs-6e.js','js/pedagogical-workshop.js','js/chapter-pack-integration.js','js/pedagogical-exercise-context.js','js/finot-remediation-bank.js'])assert.ok(index.includes(ref),`Couche fonctionnelle non chargée : ${ref}`);
 assert.ok(index.indexOf('js/app-content.js')<index.indexOf('js/competency-engine.js'),'Le moteur de compétences doit suivre la construction du registre');
 assert.ok(index.indexOf('js/question-rotation.js')<index.indexOf('js/question-enrichment.js'),'L’enrichissement doit suivre la rotation des questions');
 assert.ok(index.indexOf('js/question-enrichment.js')<index.indexOf('js/question-transfer.js'),'Le transfert doit suivre l’enrichissement des questions');
-assert.ok(index.indexOf('data/pedagogy/content-banks.js')<index.indexOf('js/pedagogical-workshop.js'),'Les banques pédagogiques doivent précéder les ateliers');
+assert.ok(index.indexOf('data/pedagogy/content-banks.js')<index.indexOf('data/pedagogy/chapter-packs-6e.js'),'Les banques transversales doivent précéder les packs spécifiques');
+assert.ok(index.indexOf('data/pedagogy/chapter-packs-6e.js')<index.indexOf('js/pedagogical-workshop.js'),'Les packs spécifiques doivent être disponibles avant les ateliers');
 assert.ok(index.indexOf('js/pedagogy-content-enrichment.js')<index.indexOf('js/pedagogical-workshop.js'),'L’atelier doit enrichir les étapes pédagogiques déjà construites');
+assert.ok(index.indexOf('js/pedagogical-workshop.js')<index.indexOf('js/chapter-pack-integration.js'),'L’intégration spécifique doit suivre l’atelier transversal');
+assert.ok(index.indexOf('js/chapter-pack-integration.js')<index.indexOf('js/pedagogical-exercise-context.js'),'Les packs doivent être intégrés avant le contexte d’exercice');
 assert.ok(index.indexOf('js/question-transfer.js')<index.indexOf('js/pedagogical-exercise-context.js'),'Le contexte pédagogique doit suivre les transferts existants');
 assert.ok(index.indexOf('js/finot-error-coach.js')<index.indexOf('js/finot-remediation-bank.js'),'La remédiation typique doit compléter le diagnostic Finot');
 assert.ok(index.indexOf('js/app-path.js')<index.indexOf('js/adaptive-path-followup.js'),'L’adaptation du parcours doit suivre le moteur de parcours');
@@ -63,7 +66,13 @@ assert.ok(index.indexOf('js/finot-competency.js')<index.indexOf('js/finot-error-
 assert.ok(exists('data/questions/README.md'),'Architecture des banques de questions absente');
 assert.ok(exists('data/questions/banks.js'),'Banques de situations pédagogiques absentes');
 assert.ok(exists('data/questions/transfer-scenarios.js'),'Situations de transfert absentes');
+assert.ok(exists('data/pedagogy/chapter-packs-6e.js'),'Banque de packs spécifiques 6e absente');
+assert.ok(exists('js/chapter-pack-integration.js'),'Intégration des packs spécifiques absente');
 const workshop=read('js/pedagogical-workshop.js');
 assert.ok(workshop.includes('Document pédagogique MathQuest'),'Les documents de synthèse doivent être identifiés comme pédagogiques');
 assert.ok(workshop.includes("Ce n'est pas une donnée historique ou scientifique réelle"),'Les données simulées doivent être explicitement signalées');
+const packs=read('data/pedagogy/chapter-packs-6e.js');
+for(const id of ["'6p'","'fr6a'","'hg6o'","'pc6f'"])assert.ok(packs.includes(id),`Pack spécifique manquant : ${id}`);
+for(const type of ["type:'simulation'","type:'reconstitution'","type:'synthese'"])assert.ok(packs.includes(type),`Provenance de pack absente : ${type}`);
+assert.ok(read('js/chapter-pack-integration.js').includes('mq-specific-pack'),'Le rendu spécifique doit être identifiable dans le DOM');
 console.log('MathQuest regression audit: OK');
