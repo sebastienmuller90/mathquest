@@ -73,6 +73,9 @@ jobs:
       - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
         if: matrix.browser == 'chromium'
         run: node tests/scenarios.test.js
+      - name: Économie anti-triche (anti-farm, barème, assiduité)
+        if: matrix.browser == 'chromium'
+        run: node tests/economy-anticheat.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
