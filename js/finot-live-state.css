@@ -1,0 +1,8 @@
+/* Finot Académie — états visuels transitoires de Finot. */
+.finot-card.mq-finot-reacting{border-color:color-mix(in srgb,var(--accent) 42%,var(--border));box-shadow:0 5px 0 var(--edge),0 0 0 3px color-mix(in srgb,var(--accent) 9%,transparent)}
+.finot-card.mq-finot-reacting .finot-live,.finot-fab.mq-finot-reacting .finot-live{animation:mqFinotReact .34s ease-out both}
+.finot-card[data-finot-state="celebrating"],.finot-card[data-finot-state="proud"]{border-color:color-mix(in srgb,var(--gold) 58%,var(--border))}
+.finot-card[data-finot-state="encouraging"],.finot-card[data-finot-state="sad-but-supportive"]{border-color:color-mix(in srgb,var(--good) 40%,var(--border))}
+.finot-fab.mq-finot-reacting{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent),var(--shadow,0 5px 20px rgba(0,0,0,.16))}
+@keyframes mqFinotReact{0%{transform:scale(.86);opacity:.55}60%{transform:scale(1.07)}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.finot-card.mq-finot-reacting .finot-live,.finot-fab.mq-finot-reacting .finot-live{animation:none!important}}
