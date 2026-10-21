@@ -42,13 +42,19 @@ function prefs(){if(!S.finotLiving||typeof S.finotLiving!=='object'||Array.isArr
 function accessory(){const p=prefs();return ACCESSORIES[p.accessory]||ACCESSORIES.none;}
 function naturalState(){const h=new Date().getHours();if(h>=21||h<6)return'sleeping';try{if(typeof L!=='undefined'&&L)return'reading';}catch(e){}return'encouraging';}
 function state(){if(CURRENT.until&&Date.now()>CURRENT.until){CURRENT={name:naturalState(),reason:'context',until:0};}return STATES[CURRENT.name]?CURRENT:{name:'encouraging',reason:'fallback',until:0};}
-function cleanWrappers(){document.querySelectorAll('.finot-live-wrap').forEach(w=>{if(!w.querySelector('img.finot-live')){w.remove();}});}
+function cleanWrappers(){document.querySelectorAll('.finot-live-wrap').forEach(w=>{if(!w.querySelector('img.finot-live'))w.remove();});}
 function expressionTargets(){return [...document.querySelectorAll('img.finot-live')].filter(img=>/\/finot\/\d{2}-expression-[^/]+\.jpg(?:$|[?#])/i.test(img.getAttribute('src')||img.src||''));}
-function decorate(img){if(!img||!img.isConnected)return;const st=state(),def=STATES[st.name],a=accessory();if(def&&img.getAttribute('src')!==def.img)img.setAttribute('src',def.img);img.dataset.finotState=st.name;img.alt=img.alt||'';
- let wrap=img.closest('.finot-live-wrap');if(!wrap){wrap=document.createElement('span');wrap.className='finot-live-wrap';img.parentNode?.insertBefore(wrap,img);wrap.appendChild(img);}wrap.setAttribute('aria-label',`Finot : ${def?.label||st.name}${a.id!=='none'?`, ${a.name}`:''}`);wrap.querySelectorAll(':scope > .finot-mood-badge,:scope > .finot-accessory-badge').forEach(e=>e.remove());
- const mood=document.createElement('span');mood.className='finot-mood-badge';mood.setAttribute('aria-hidden','true');mood.textContent=def?.emoji||'🦊';wrap.appendChild(mood);
- if(a.id!=='none'){const badge=document.createElement('span');badge.className='finot-accessory-badge';badge.setAttribute('aria-hidden','true');badge.innerHTML=a.img?`<img src="${a.img}" alt="">`:`<span>${a.emoji}</span>`;wrap.appendChild(badge);}
- if(!matchMedia('(prefers-reduced-motion: reduce)').matches){img.classList.remove('finot-state-pop');void img.offsetWidth;img.classList.add('finot-state-pop');}}
+function decorate(img){
+ if(!img||!img.isConnected)return;const st=state(),def=STATES[st.name],a=accessory();if(!def)return;
+ if(img.getAttribute('src')!==def.img)img.setAttribute('src',def.img);img.dataset.finotState=st.name;img.alt=img.alt||'';
+ let wrap=img.closest('.finot-live-wrap');if(!wrap){wrap=document.createElement('span');wrap.className='finot-live-wrap';img.parentNode?.insertBefore(wrap,img);wrap.appendChild(img);}
+ const wantedLabel=`Finot : ${def.label||st.name}${a.id!=='none'?`, ${a.name}`:''}`,same=wrap.dataset.finotState===st.name&&wrap.dataset.finotAccessory===a.id;
+ if(same&&wrap.getAttribute('aria-label')===wantedLabel)return;
+ wrap.dataset.finotState=st.name;wrap.dataset.finotAccessory=a.id;wrap.setAttribute('aria-label',wantedLabel);
+ let mood=wrap.querySelector(':scope > .finot-mood-badge');if(!mood){mood=document.createElement('span');mood.className='finot-mood-badge';mood.setAttribute('aria-hidden','true');wrap.appendChild(mood);}if(mood.textContent!==(def.emoji||'🦊'))mood.textContent=def.emoji||'🦊';
+ let badge=wrap.querySelector(':scope > .finot-accessory-badge');if(a.id==='none'){if(badge)badge.remove();}else{if(!badge){badge=document.createElement('span');badge.className='finot-accessory-badge';badge.setAttribute('aria-hidden','true');wrap.appendChild(badge);}const key=a.img?`img:${a.img}`:`emoji:${a.emoji}`;if(badge.dataset.visual!==key){badge.dataset.visual=key;badge.innerHTML=a.img?`<img src="${a.img}" alt="">`:`<span>${a.emoji}</span>`;}}
+ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){img.classList.remove('finot-state-pop');void img.offsetWidth;img.classList.add('finot-state-pop');}
+}
 function paint(){cleanWrappers();for(const img of expressionTargets())decorate(img);injectWardrobe();}
 function setState(name,{ttl=0,reason='manual'}={}){if(!STATES[name])return false;clearTimeout(TIMER);CURRENT={name,reason,until:ttl>0?Date.now()+ttl:0};paint();if(ttl>0)TIMER=setTimeout(()=>{CURRENT={name:naturalState(),reason:'context',until:0};paint();},ttl+20);return true;}
 function emit(event,payload={}){const spec=EVENT_STATE[event];if(!spec)return false;const [name,ttl]=spec;return setState(name,{ttl,reason:event,payload});}
@@ -63,11 +69,11 @@ MQHooks.on('flash:end',({rec}={})=>emit(rec?'streak.new_record':'mission.complet
 MQHooks.on('lesson:open',()=>emit('lesson.open'),{id:'finot-living-lesson-open',order:110});
 MQHooks.on('lesson:end',({passed}={})=>setState(passed?'proud':'encouraging',{ttl:4500,reason:'lesson.end'}),{id:'finot-living-lesson-end',order:110});
 MQHooks.on('finot:intent',()=>{emit('finot.explaining');return false;},{id:'finot-living-explain',order:200});
-MQHooks.on('home:rendered',()=>{const now=+S.streak?.n||0,best=+S.streak?.best||0;if(LAST_STREAK!=null&&best>LAST_STREAK)emit('streak.new_record');else if(!CURRENT.until)setState(naturalState(),{reason:'home'});LAST_STREAK=best;setTimeout(paint,0);},{id:'finot-living-home',order:200});
+MQHooks.on('home:rendered',()=>{const best=+S.streak?.best||0;if(LAST_STREAK!=null&&best>LAST_STREAK)emit('streak.new_record');else if(!CURRENT.until)setState(naturalState(),{reason:'home'});LAST_STREAK=best;setTimeout(paint,0);},{id:'finot-living-home',order:200});
 MQHooks.on('profile:changed',()=>{clearTimeout(TIMER);CURRENT={name:naturalState(),reason:'profile',until:0};LAST_STREAK=+S.streak?.best||0;prefs();setTimeout(paint,0);},{id:'finot-living-profile',order:200});
 document.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset?.a||'';if(a==='hint')emit('hint.open');if(a==='finot')setTimeout(injectWardrobe,320);});
 ACT.finotwear=id=>selectAccessory(String(id||'none'));
 if(window.MutationObserver){const root=document.getElementById('app');if(root){OBS=new MutationObserver(()=>{clearTimeout(OBS._t);OBS._t=setTimeout(paint,30);});OBS.observe(root,{childList:true,subtree:true});}}
 prefs();LAST_STREAK=+S.streak?.best||0;setTimeout(paint,0);
-window.MQFinotLiving={version:'1.0',states:STATES,accessories:ACCESSORIES,eventMap:EVENT_STATE,state,setState,emit,paint,unlocked,selectAccessory,wardrobeHtml,get current(){return {...state()};},get selectedAccessory(){return accessory().id;}};
+window.MQFinotLiving={version:'1.1',states:STATES,accessories:ACCESSORIES,eventMap:EVENT_STATE,state,setState,emit,paint,unlocked,selectAccessory,wardrobeHtml,get current(){return {...state()};},get selectedAccessory(){return accessory().id;}};
 })();
