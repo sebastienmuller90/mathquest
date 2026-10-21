@@ -76,9 +76,12 @@ jobs:
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
-      - name: Voix de Finot en fin d’exercice
+      - name: Voix de Finot en fin d'exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: Défis en famille
+        if: matrix.browser == 'chromium'
+        run: node tests/family-challenge.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
