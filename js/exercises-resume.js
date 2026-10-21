@@ -1,12 +1,12 @@
 /* Finot Académie — onglet Exercices + reprise exacte.
    La mission et son rendu sont encodés dans le profil : restaurer une correction n'appelle jamais result(),
    donc aucune réponse, XP, pièce ou erreur n'est comptée deux fois. L'historique réutilise activityLog.
-   Un instantané est lié à l'appareil : une sauvegarde importée ne peut pas injecter un rendu HTML à restaurer. */
+   Un instantané est lié à l'appareil et au profil qui a démarré la mission. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined'||typeof ACT!=='object')return;
 const MAX_BLOB=250000,HISTORY_N=30,DEVICE_KEY='mq_exercise_resume_device_v1';
-let RESTORING=false,SAVE_TIMER=null,NAV_OBS=null,FALLBACK_DEVICE='';
+let RESTORING=false,SAVE_TIMER=null,NAV_OBS=null,FALLBACK_DEVICE='',MISSION_PROFILE=null;
 const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o))));
 const dec=s=>JSON.parse(decodeURIComponent(escape(atob(String(s||'')))));
 const escX=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,7 +18,7 @@ function validPayload(p){return !!(p&&p.m&&!p.m.flash&&Array.isArray(p.m.ids)&&p
 function payload(){try{const r=S.exerciseResume;if(!r||r.v!==1||r.device!==deviceToken()||typeof r.blob!=='string')return null;const p=dec(r.blob);if(!validPayload(p))return null;p.html=safeHtml(p.html);return p;}catch(e){return null;}}
 function clearResume(saveIt=true){if(S&&S.exerciseResume){S.exerciseResume=null;if(saveIt)try{saveLocal();}catch(e){}}}
 function captureNow(){
- if(RESTORING||typeof M==='undefined'||!M||M.flash||!M.q)return false;const m=cleanM(),html=safeHtml(document.getElementById('app')?.innerHTML||'');if(!m||!html)return false;
+ if(RESTORING||typeof M==='undefined'||!M||M.flash||!M.q||!MISSION_PROFILE||MISSION_PROFILE!==ACTIVE)return false;const m=cleanM(),html=safeHtml(document.getElementById('app')?.innerHTML||'');if(!m||!html)return false;
  const p={m,html,fields:fields(),scroll:Math.max(0,Math.round(scrollY||0)),phase:M.locked?'feedback':'question'};
  try{const blob=enc(p);if(blob.length>MAX_BLOB)return false;S.exerciseResume={v:1,at:Date.now(),device:deviceToken(),blob};saveLocal();refreshTab();return true;}catch(e){return false;}
 }
@@ -28,7 +28,7 @@ function chapterLabel(info){if(!info)return'Exercice';if((info.m.ids||[]).length
 function restoreFields(p){const els=[...document.querySelectorAll('#app input,#app textarea')];for(const f of p.fields||[]){const el=els[f.i];if(!el)continue;el.value=String(f.v??'');if('checked'in el)el.checked=!!f.c;try{if(f.s!=null)el.setSelectionRange(f.s,f.e==null?f.s:f.e);}catch(e){}}}
 function restore(){const p=payload();if(!p){clearResume();return screen();}
  RESTORING=true;try{
-  if(typeof stopPron==='function')stopPron();if(typeof ttsStop==='function')ttsStop();if(typeof padClose==='function')padClose();if(typeof L!=='undefined')L=null;PARENT=false;M=p.m;delete M.tid;CUR='mission';
+  if(typeof stopPron==='function')stopPron();if(typeof ttsStop==='function')ttsStop();if(typeof padClose==='function')padClose();if(typeof L!=='undefined')L=null;PARENT=false;M=p.m;delete M.tid;CUR='mission';MISSION_PROFILE=ACTIVE;
   const appEl=document.getElementById('app');appEl.innerHTML=p.html;restoreFields(p);
   if(!M.locked)M.qt=Date.now();
   if(M.locked&&!M.flash&&!document.querySelector('[data-a="next"]')){const fb=document.getElementById('fb');if(fb)fb.insertAdjacentHTML('beforeend','<button class="btn primary wide" data-a="next">Exercice suivant</button>');}
@@ -44,11 +44,18 @@ function screen(){if(typeof M!=='undefined'&&M&&!M.flash)captureNow();PARENT=fal
 function addTab(){const nav=document.getElementById('hometabs');if(!nav||!nav.classList.contains('show')||!S?.name)return;let b=nav.querySelector('.mq-exercises-tab');if(!b){b=document.createElement('button');b.className='htab mq-exercises-tab';b.dataset.a='exercises';b.innerHTML='<span class="hti" aria-hidden="true">📝</span><span class="htl">Exercices</span>';const before=nav.children[2]||null;nav.insertBefore(b,before);}const active=typeof HOMETAB!=='undefined'&&HOMETAB==='exercises';b.classList.toggle('on',active);b.setAttribute('aria-current',active?'page':'false');const has=!!resumeInfo();let badge=b.querySelector('.ex-tab-badge');if(has&&!badge){badge=document.createElement('span');badge.className='ex-tab-badge';badge.textContent='1';badge.setAttribute('aria-label','Exercice à reprendre');b.appendChild(badge);}else if(!has&&badge)badge.remove();}
 function refreshTab(){setTimeout(addTab,0);}
 ACT.exercises=()=>screen();ACT.exresume=()=>restore();ACT.exdiscard=()=>{clearResume();screen();};
-if(window.MQHooks){MQHooks.on('question:after-render',({M:m})=>{if(m&&!m.flash)setTimeout(captureNow,0);},{id:'exercise-resume',order:900});MQHooks.on('answer:after',x=>{if(x?.M&&!x.M.flash)setTimeout(captureNow,0);},{id:'exercise-resume-answer',order:900});MQHooks.on('mission:end',()=>clearResume(),{id:'exercise-resume-end',order:900});MQHooks.on('home:rendered',()=>setTimeout(addTab,0),{id:'exercise-tab',order:900});MQHooks.on('profile:changed',()=>setTimeout(addTab,0),{id:'exercise-tab-profile',order:900});}
+if(window.MQHooks){
+ MQHooks.on('mission:start',()=>{MISSION_PROFILE=ACTIVE;},{id:'exercise-resume-owner',order:5});
+ MQHooks.on('question:after-render',({M:m})=>{if(m&&!m.flash)setTimeout(captureNow,0);},{id:'exercise-resume',order:900});
+ MQHooks.on('answer:after',x=>{if(x?.M&&!x.M.flash)setTimeout(captureNow,0);},{id:'exercise-resume-answer',order:900});
+ MQHooks.on('mission:end',()=>{clearResume();MISSION_PROFILE=null;},{id:'exercise-resume-end',order:900});
+ MQHooks.on('home:rendered',()=>setTimeout(addTab,0),{id:'exercise-tab',order:900});
+ MQHooks.on('profile:changed',()=>{clearTimeout(SAVE_TIMER);MISSION_PROFILE=null;setTimeout(addTab,0);},{id:'exercise-tab-profile',order:900});
+}
 document.addEventListener('input',e=>{if(M&&!M.flash&&e.target.closest('#app'))scheduleCapture(180);});
-document.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset?.a||'';if(a==='quit'){clearResume();return;}if(M&&!M.flash&&/^(hint|chip:|otok:|oundo|padtoggle)/.test(a))scheduleCapture(30);});
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')captureNow();else if(M&&!M.flash&&window.MQActivity&&!MQActivity.active())MQActivity.begin('exercise',M.ids,{resumed:true,mixed:M.ids.length>1});});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset?.a||'';if(a==='quit'){clearTimeout(SAVE_TIMER);MISSION_PROFILE=null;clearResume();return;}if(M&&!M.flash&&/^(hint|chip:|otok:|oundo|padtoggle)/.test(a))scheduleCapture(30);});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')captureNow();else if(M&&!M.flash&&MISSION_PROFILE===ACTIVE&&window.MQActivity&&!MQActivity.active())MQActivity.begin('exercise',M.ids,{resumed:true,mixed:M.ids.length>1});});
 window.addEventListener('pagehide',()=>captureNow());
 const nav=document.getElementById('hometabs');if(nav){NAV_OBS=new MutationObserver(()=>addTab());NAV_OBS.observe(nav,{childList:true});}setTimeout(addTab,0);
-window.MQExerciseResume={version:'1.0',capture:captureNow,restore,payload,resumeInfo,history,screen,clear:clearResume,deviceToken};
+window.MQExerciseResume={version:'1.1',capture:captureNow,restore,payload,resumeInfo,history,screen,clear:clearResume,deviceToken,get missionProfile(){return MISSION_PROFILE;}};
 })();
