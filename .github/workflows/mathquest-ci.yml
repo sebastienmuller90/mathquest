@@ -79,6 +79,9 @@ jobs:
       - name: Voix de Finot en fin d’exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: Pourquoi cette activité ?
+        if: matrix.browser == 'chromium'
+        run: node tests/why-this-activity.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
