@@ -12,15 +12,14 @@ const CFG={
  xpByDifficulty:{1:4,2:6,3:9},
  studyMerit:2, dueReviewMerit:2, dueReviewDailyCap:4,
  missionMeritCap:1, perfectMeritCap:1, missionBonusesPerDay:3,
- chest:{coins:12,xp:20,merit:5},
+ // Le coffre du devoir reste volontairement fort : il est unique chaque jour et récompense l'assiduité.
+ chest:{coins:40,xp:50,merit:5},
  rewardedLimit:5000
 };
 const oldAddMerit=typeof addMerit==='function'?addMerit:null;
 const oldRewardsScreen=typeof rewardsScreen==='function'?rewardsScreen:null;
 const oldShop=typeof shop==='function'?shop:null;
-const oldParentScreen=typeof parentScreen==='function'?parentScreen:null;
 const oldPathAnswer=typeof pathAnswer==='function'?pathAnswer:null;
-const oldPathChestGains=typeof pathChestGains==='function'?pathChestGains:null;
 const oldPathInfo=typeof pathInfo==='function'?pathInfo:null;
 let QBASE=null,SESSION=null;
 
@@ -99,14 +98,14 @@ function qualifyDay(reason='Journée d’étude qualifiée'){
 function maybeQualify(){const d=ensure().daily,chapters=Object.keys(d.chapters||{}).length;const ok=d.pathDone||d.dueReview||d.lessonNew||(d.studyUnique>=6&&chapters>=2)||(d.studyUnique>=8&&d.studyMs>=240000);return ok?qualifyDay(d.pathDone?'Devoir du jour terminé':d.dueReview?'Révision programmée effectuée':d.lessonNew?'Nouveau cours validé':'Journée d’étude complète'):false;}
 function restoreBadges(base,m){if(!base||typeof checkBadges!=='function')return;S.badges=base.badges.slice();S.badgeDates={...base.badgeDates};if(m&&Array.isArray(m.newB))m.newB=base.newB.slice();const real=S.totalOk,e=ensure();S.totalOk=Math.min(real,(+e.uniqueCorrectBaseline||0)+(+e.uniqueCorrect||0));checkBadges(m);S.totalOk=real;}
 function updateAnswerFeedback(r){const fb=document.querySelector('#fb .fb.good');if(!fb)return;fb.innerHTML=fb.innerHTML.replace(/\+\d+ XP/,`+${r.xp} XP`);const hot=fb.querySelector('.hot');if(hot){if(r.xp<=0||!r.combo)hot.remove();else hot.textContent=`Série +${Math.round(r.combo*100)} % 🔥`;}
- const old=fb.querySelector('.eco-note');if(old)old.remove();const msg=r.repeat?'Déjà réussie : entraînement utile, sans nouvelle récompense.':r.factor===0?'Plafond atteint sur cette notion aujourd’hui : continue pour apprendre, ou change de chapitre pour regagner des récompenses.':r.factor<1?'Même chapitre : récompense réduite de moitié pour encourager la variété.':r.coins?`Nouvelle question : +${r.coins} 🪙.`:'Nouvelle question récompensée.';fb.insertAdjacentHTML('beforeend',`<small class="eco-note" style="display:block;margin-top:6px">🛡️ ${msg}</small>`);}
+ const pb=fb.querySelector('.pathbonus');if(pb)pb.remove();
+ const old=fb.querySelector('.eco-note');if(old)old.remove();const msg=r.repeat?'Déjà réussie : entraînement utile, sans nouvelle récompense.':r.factor===0?'Plafond atteint sur cette notion aujourd’hui : continue pour apprendre, ou change de chapitre pour regagner des récompenses.':r.factor<1?'Même chapitre : récompense réduite de moitié pour encourager la variété.':r.mode==='path'?'Le devoir récompense surtout le coffre final, pas la répétition des questions.':r.coins?`Nouvelle question : +${r.coins} 🪙.`:'Nouvelle question récompensée.';fb.insertAdjacentHTML('beforeend',`<small class="eco-note" style="display:block;margin-top:6px">🛡️ ${msg}</small>`);}
 function updateEndScreen(m,bonus,st){const starEls=[...document.querySelectorAll('.bigstars span')];starEls.forEach((el,i)=>el.classList.toggle('on',i<st));const g=document.querySelector('.gains');if(g){const spans=g.querySelectorAll('span');if(spans[0])spans[0].textContent=`+${(+m.xp||0)+bonus.xp} XP`;if(spans[1])spans[1].textContent=`+${(+m.coins||0)+bonus.coins} 🪙`;let merit=g.querySelector('[data-eco-merit]');if(m.mg){if(!merit){merit=document.createElement('span');merit.dataset.ecoMerit='1';g.appendChild(merit);}merit.textContent=`+${m.mg} 🎖️`;}}
 }
 function patchEconomyScreens(){
  if(oldRewardsScreen)rewardsScreen=function(){oldRewardsScreen();const how=document.querySelector('.how');if(how)how.innerHTML=`<li><b>+${CFG.studyMerit}</b> journée d’étude qualifiée</li><li><b>+${CFG.dueReviewMerit}</b> révision programmée réussie <small>(plafonnée par jour)</small></li><li><b>+${Math.min(2,+S.merit.rules.lesson||0)}</b> nouveau cours validé</li><li><b>+${Math.min(CFG.chest.merit,+S.merit.rules.path||0)}</b> devoir du jour terminé <small>(selon qualité)</small></li><li><b>+1</b> première mission réussie du chapitre dans la journée</li><li><b>+1</b> sans-faute, une seule fois par mission éligible</li><li><b>+${Math.min(1,+S.merit.rules.streak||0)}</b> jour d’assiduité qualifié consécutif</li><li>Une bonne réponse seule ne donne plus de 🎖️.</li><li>Bonus manuels des parents 🎁</li>`;};
- if(oldShop)shop=function(){oldShop();const p=document.querySelector('.muted.center');if(p)p.textContent='Les pièces récompensent surtout les nouvelles questions, les cours et le devoir du jour. Répéter la même activité ne permet plus de les farmer.';};
- if(oldParentScreen)parentScreen=function(tab){oldParentScreen(tab);const ru=document.querySelector('#ru_ok');if(ru){ru.value='0';ru.disabled=true;ru.title='Désactivé par le système anti-triche : une bonne réponse seule ne donne pas de bon point.';}};
- if(oldPathInfo)pathInfo=function(){finotOpen();finotPush('finot','<b>🗺️ Ton devoir du jour</b><br>4 leçons puis 2 séries d’exercices. Les répétitions restent utiles pour apprendre, mais ne redonnent pas de récompense.<br>🎁 Le coffre final dépend surtout de la qualité du parcours : jusqu’à <b>12 🪙, 20 XP et 5 🎖️</b>.<br>🔥 L’assiduité progresse quand une vraie journée d’étude est accomplie, pas après une seule réponse.');};
+ if(oldShop)shop=function(){oldShop();const p=document.querySelector('.muted.center');if(p)p.textContent='Les pièces récompensent surtout les nouvelles questions et le devoir du jour. Répéter la même activité ne permet plus de les farmer.';};
+ if(oldPathInfo)pathInfo=function(){finotOpen();finotPush('finot','<b>🗺️ Ton devoir du jour</b><br>4 leçons puis 2 séries d’exercices. Les répétitions restent utiles pour apprendre, mais ne redonnent pas de récompense.<br>🎁 Le coffre final est volontairement important parce qu’il ne peut être ouvert qu’une fois par jour : jusqu’à <b>40 🪙, 50 XP et 5 🎖️</b>, selon la qualité du parcours.<br>🔥 L’assiduité progresse quand une vraie journée d’étude est accomplie, pas après une seule réponse.');};
 }
 function installWrappers(){
  // Les bons points physiques ne sont jamais accordés à chaque réponse ; missions/sans-faute sont gérés au mission:end.
@@ -115,7 +114,6 @@ function installWrappers(){
  if(typeof touchStreak==='function')touchStreak=function(){};
  // Plus de bonus pièces 1,2,3,4,5… dans le parcours : le coffre récompense la qualité globale.
  if(oldPathAnswer)pathAnswer=function(ok){const t=M&&M.path;if(!t)return 0;t.answers.push({cid:M.cid,ok:!!ok,ms:Math.max(0,Math.min(600000,Date.now()-(M.qt||Date.now())))});if(ok){t.streak++;t.best=Math.max(t.best,t.streak);}else t.streak=0;(t.bonuses=t.bonuses||[]).push(0);return 0;};
- if(oldPathChestGains)pathChestGains=function(p){const g=oldPathChestGains(p),cf=g.coins/40,xf=g.xp/50;return {...g,coins:Math.round(CFG.chest.coins*cf),xp:Math.round(CFG.chest.xp*xf),merit:Math.min(CFG.chest.merit,Math.max(0,g.merit))};};
  if(ACT?.rulesave){const oldRuleSave=ACT.rulesave;ACT.rulesave=(...a)=>{const ru=document.querySelector('#ru_ok');if(ru)ru.value='0';oldRuleSave(...a);S.merit.rules.ok=0;saveEconomy();};}
  patchEconomyScreens();
 }
