@@ -38,7 +38,7 @@ const ACCESSORIES={
  cape:{id:'cape',name:'Cape d’aventurier',emoji:'🧥',img:'data/images/finot/ui-objet-cape.png',threshold:14},
  crown:{id:'crown',name:'Couronne dorée',emoji:'👑',img:'data/images/finot/ui-objet-couronne.png',threshold:30}
 };
-let CURRENT=null,TIMER=null,SEQ=0,LAST_BEST=null;
+let CURRENT=null,TIMER=null,CHAT_TIMER=null,SEQ=0,LAST_BEST=null;
 const now=()=>Date.now();
 const activeProfile=()=>{try{return typeof ACTIVE==='string'?ACTIVE:'';}catch(e){return'';}};
 const escF=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -57,7 +57,7 @@ function paint(){
  const head=document.querySelector('#finotchat .fch-head img');if(head&&img&&head.getAttribute('src')!==img)head.src=img;
  injectWardrobe();return c||b;
 }
-function clear(repaint=true){clearTimeout(TIMER);TIMER=null;CURRENT=null;if(repaint)paint();}
+function clear(repaint=true){clearTimeout(TIMER);TIMER=null;clearTimeout(CHAT_TIMER);CHAT_TIMER=null;CURRENT=null;if(repaint)paint();}
 function setState(name,opts={}){const s=spec(name);if(!s||!activeProfile())return false;const old=current(),priority=Number.isFinite(+opts.priority)?+opts.priority:s.priority,force=!!opts.force;if(old&&!force&&old.priority>priority&&old.until>now())return false;const ttl=Math.max(500,Math.min(30000,Number.isFinite(+opts.ttl)?+opts.ttl:s.ttl));CURRENT={id:++SEQ,state:name,text:String(opts.text||s.text||''),priority,profile:activeProfile(),at:now(),until:now()+ttl,event:String(opts.event||'')};clearTimeout(TIMER);TIMER=setTimeout(()=>{if(CURRENT&&CURRENT.id===SEQ)clear(true);},ttl+20);paint();return true;}
 function emit(event,payload={}){const m=EVENT_MAP[event];if(!m)return false;const [state,priority]=m;return setState(state,{priority,event,text:payload.text,ttl:payload.ttl,force:payload.force});}
 function selectAccessory(id){id=String(id||'none');if(!ACCESSORIES[id]||!unlocked(id)){try{toast('🔒 Cet accessoire n’est pas encore débloqué.');}catch(e){}return false;}prefs().accessory=id;try{saveLocal();}catch(e){}refreshWardrobe();paint();try{toast(id==='none'?'Finot enlève son accessoire.':`${ACCESSORIES[id].emoji} ${ACCESSORIES[id].name} équipé !`);}catch(e){}return true;}
@@ -71,7 +71,7 @@ function mission({m}={}){if(!m)return;setState(missionState(m),{priority:mission
 function flash({m,rec}={}){if(rec)emit('streak.new_record',{text:'Nouveau record ! Tu peux être fier de toi.'});else if(m)setState((+m.ok||0)>=8?'proud':'happy',{priority:60,event:'flash.completed'});}
 function lessonOpen(){emit('lesson.reading');}
 function lessonEnd(){emit('quiz.completed');}
-function finotMessage({who}={}){if(who==='finot')emit('finot.explaining');}
+function finotMessage({who}={}){if(who!=='finot')return;const profile=activeProfile();clearTimeout(CHAT_TIMER);CHAT_TIMER=setTimeout(()=>{CHAT_TIMER=null;if(activeProfile()===profile)emit('finot.explaining');},180);}
 function finotOpenState(){emit('finot.thinking');}
 MQHooks.on('answer:after',answer,{id:'finot-live-answer',order:92});
 MQHooks.on('mission:end',mission,{id:'finot-live-mission',order:92});
@@ -85,5 +85,5 @@ MQHooks.on('profile:changed',()=>{clear(false);LAST_BEST=+S.streak?.best||0;pref
 document.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset?.a||'';if(a==='hint')emit('finot.thinking');if(a==='finot')setTimeout(()=>{paint();injectWardrobe();},320);});
 ACT.finotwear=id=>selectAccessory(id);
 prefs();LAST_BEST=+S.streak?.best||0;setTimeout(paint,0);
-root.MQFinotLive={version:'1.2',states:STATES,eventMap:EVENT_MAP,accessories:ACCESSORIES,setState,emit,paint,clear,missionState,unlocked,selectAccessory,wardrobeHtml,get current(){return current();},get selectedAccessory(){return selectedAccessory().id;}};
+root.MQFinotLive={version:'1.3',states:STATES,eventMap:EVENT_MAP,accessories:ACCESSORIES,setState,emit,paint,clear,missionState,unlocked,selectAccessory,wardrobeHtml,get current(){return current();},get selectedAccessory(){return selectedAccessory().id;}};
 })(typeof window!=='undefined'?window:globalThis);
