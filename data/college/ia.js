@@ -1,4 +1,4 @@
-/* MathQuest — Intelligence artificielle (IA) au collège, année scolaire 2026-2027 : 23 chapitres reconstruits (ia6a…ia3f).
+/* Finot Académie — Intelligence artificielle (IA) au collège, année scolaire 2026-2027 : 23 chapitres reconstruits (ia6a…ia3f).
    Cadre : enseignement transversal, en lien avec le programme de technologie du cycle 4 (arrêté du 9 février 2024, BO n°9 du
    29 février 2024, qui mentionne explicitement l'intelligence artificielle) et avec le CRCN (cadre de référence des compétences
    numériques, article D. 121-1 du Code de l'éducation) ; en 4e, deux parcours Pix obligatoires sont consacrés à l'IA depuis 2025-2027

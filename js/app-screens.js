@@ -1,6 +1,6 @@
 /* ===== Écrans ===== */
 let ONBG='';
-function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><img src="${FINOT_IMG.bienvenue}" alt="" aria-hidden="true" class="finot-live" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 35%;"><h1>${isNew?'Nouveau profil':'MathQuest'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
+function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<div class="onb card pop"><img src="${FINOT_IMG.bienvenue}" alt="" aria-hidden="true" class="finot-live" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 35%;"><h1>${isNew?'Nouveau profil':'Finot Académie'}</h1><p class="muted">${isNew?'Chaque enfant garde sa progression, ses étoiles et ses récompenses.':'Apprendre en s’amusant, du CP à la 3e.'}</p>
  <label class="lab">Ton prénom ou pseudo<input id="nm" class="big" maxlength="16" autocomplete="off"></label>
  <label class="lab">Date de naissance <span class="muted small">(facultatif)</span><input id="bd" type="date" class="big" max="${localISODate(Date.now())}"></label>
  <p class="lab" id="stl">Ton école</p><div class="stagepick" role="group" aria-labelledby="stl">${Object.entries(STAGE_INFO).filter(([k])=>k==='college'||PRIMARY_GRADES.length).map(([k,v])=>`<button class="stb ${st===k?'sel':''}" data-a="pickstage:${k}" aria-pressed="${st===k}"><span>${v.emoji}</span>${v.label}</button>`).join('')}</div>
@@ -10,7 +10,7 @@ function onboarding(isNew=false){const st=ONBG?stageOf(ONBG):'';app.innerHTML=`<
 function onbGrades(st){if(!st)return '<p class="muted small">Choisis d’abord ton école, puis ta classe.</p>';const list=st==='primaire'?PRIMARY_GRADES:['6e','5e','4e','3e'];
  return `<p class="lab" id="grl">Ta classe</p><div class="gradepick" role="group" aria-labelledby="grl">${list.map(g=>`<button class="grb ${g===ONBG?'sel':''}" data-a="pickgrade:${g}" aria-pressed="${g===ONBG}">${g}</button>`).join('')}</div>`;}
 
-/* V8.14 — Finot, le compagnon de MathQuest. Le « lien avec Finot » se déduit de S.streak.best (record de
+/* V8.14 — Finot, le compagnon de Finot Académie. Le « lien avec Finot » se déduit de S.streak.best (record de
    jours de suite, ne redescend jamais) : pas de nouveau champ de sauvegarde, rien à migrer. Le message
    contextuel se déduit de S.streak.n/.last (déjà existants). Compagnon distinct de S.avatar (choisi par
    l'enfant) : jamais affiché à sa place. */
@@ -79,11 +79,11 @@ const FINOT_FAQ=[
  {kw:['bibliotheque','livre','lire un texte','histoire a lire','textes'],a:'Dans la <b>bibliothèque 📚</b> (onglet <b>Progrès</b>, ou <b>Matières</b> quand tu es en Français), tu peux lire tous les textes que tu veux : histoires, contes, poèmes, théâtre et documents. Cherche un titre ou un auteur, choisis ta classe, puis réponds aux questions !'},
  {kw:['parcours','parcours du jour','coffre','bonus','chemin'],a:'Le <b>parcours du jour 🗺️</b> : 4 leçons de matières différentes, puis 2 séries d’exercices sur ces leçons. Les bonnes réponses d’affilée rapportent de plus en plus de pièces (jusqu’à ×5), et un coffre t’attend au bout ! Ouvre-le depuis l’accueil.'},
  {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre. Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
- {kw:['hors ligne','sans internet','pas de wifi'],a:'MathQuest fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
+ {kw:['hors ligne','sans internet','pas de wifi'],a:'Finot Académie fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
  {kw:['exporter','importer','changer d appareil'],a:'Dans l’Espace parents (Réglages), un <b>code d’export</b> permet de copier ta progression vers un autre appareil.'}
 ];
 const FINOT_SUGGEST=['C’est quoi les XP ?','Comment débloquer un thème ?','Comment marche mon lien avec toi ?','Pourquoi mon erreur est encore dans mon carnet ?'];
-const FINOT_FALLBACK='Je ne suis pas sûr de pouvoir t’aider là-dessus 🤔 Je sais répondre sur MathQuest (XP, boutique, mon repaire, les cours…) et te donner un coup de pouce sur l’exercice en cours. Essaie de reformuler, ou touche une suggestion ci-dessous !';
+const FINOT_FALLBACK='Je ne suis pas sûr de pouvoir t’aider là-dessus 🤔 Je sais répondre sur Finot Académie (XP, boutique, mon repaire, les cours…) et te donner un coup de pouce sur l’exercice en cours. Essaie de reformuler, ou touche une suggestion ci-dessous !';
 function finotMatch(text){const norm=' '+normLang(text,'fr')+' ';let best=null,score=0;
  for(const e of FINOT_FAQ){let s=0;for(const k of e.kw)if(norm.includes(' '+k+' '))s+=k.length;if(s>score){score=s;best=e;}}
  return best;}
@@ -93,7 +93,7 @@ function finotLessonHelp(id){const ch=CHMAP[id];if(!ch)return null;const c=COURS
  return{name:ch.name||'',html:bits.length?bits.join('<br>'):'Relis bien le cours de ce chapitre : tu vas y arriver 💪'};}
 function finotCurrentChapterId(){if(M&&M.cid)return M.cid;if(L&&L.id)return L.id;return null;}
 let FCHAT=null;
-function finotChatEnsure(){if(!FCHAT)FCHAT={msgs:[{who:'finot',html:'Salut, c’est Finot ! 🦊 Pose-moi une question sur MathQuest, ou demande un coup de pouce sur ton exercice en cours.'}]};}
+function finotChatEnsure(){if(!FCHAT)FCHAT={msgs:[{who:'finot',html:'Salut, c’est Finot ! 🦊 Pose-moi une question sur Finot Académie, ou demande un coup de pouce sur ton exercice en cours.'}]};}
 function finotChatDOM(){if(document.getElementById('finotchat'))return;
  const fab=document.createElement('button');fab.className='finot-fab';fab.dataset.a='finotopen';fab.setAttribute('aria-label','Parler à Finot');
  fab.innerHTML=`<img src="${finotEtat(S).img}" alt="" aria-hidden="true" class="finot-live">`;document.body.appendChild(fab);
@@ -101,15 +101,25 @@ function finotChatDOM(){if(document.getElementById('finotchat'))return;
  box.innerHTML=`<div class="fch-head"><img src="${FINOT_IMG.neutre}" alt="" aria-hidden="true"><b>Finot</b><button class="btn ghost sm" data-a="finotclose" aria-label="Fermer">✕</button></div><div class="fch-body" id="fchBody" aria-live="polite" role="log"></div><div class="fch-chips" id="fchChips"></div><div class="fch-row"><label class="sr-only" for="finotin">Pose ta question à Finot</label><input id="finotin" class="fld" maxlength="140" placeholder="Pose ta question…" autocomplete="off"><button class="btn primary" data-a="finotsend">Envoyer</button></div>`;
  document.body.appendChild(box);}
 function finotChatRender(){const body=document.getElementById('fchBody');if(!body)return;body.innerHTML=FCHAT.msgs.map(m=>`<div class="fch-msg ${m.who}">${m.html}</div>`).join('');body.scrollTop=body.scrollHeight;}
-function finotChipsRender(){const box=document.getElementById('fchChips');if(!box)return;const chips=[];
- if(finotCurrentChapterId())chips.push('<button class="fch-chip" data-a="finotcoach">📖 Aide sur l’exercice en cours</button>');
+// Puces de Finot : liste filtrable ('finot:chip-list', ex. gros boutons des jeunes élèves), puis 'finot:chips' pour les ajouts.
+function finotChipsRender(){const box=document.getElementById('fchChips');if(!box)return;let chips=[];const inChapter=!!finotCurrentChapterId();
+ if(inChapter)chips.push('<button class="fch-chip" data-a="finotcoach">📖 Aide sur l’exercice en cours</button>');
  FINOT_SUGGEST.forEach((q,i)=>chips.push(`<button class="fch-chip" data-a="finotsug:${i}">${esc(q)}</button>`));
- box.innerHTML=chips.join('');}
-function finotOpen(){finotChatEnsure();finotChatDOM();finotChipsRender();finotChatRender();document.getElementById('finotchat').classList.add('open');document.getElementById('finotin')?.focus();}
-function finotClose(){document.getElementById('finotchat')?.classList.remove('open');}
-function finotPush(who,html){FCHAT.msgs.push({who,html});if(FCHAT.msgs.length>40)FCHAT.msgs.shift();finotChatRender();}
-function finotAsk(text){const t=String(text||'').trim();if(!t)return;finotChatEnsure();finotPush('you',esc(t));const m=finotMatch(t);finotPush('finot',m?m.a:FINOT_FALLBACK);finotChipsRender();}
-function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)return;const show=!!S.name&&!PARENT;fab.classList.toggle('show',show);fab.classList.toggle('raised',CUR==='home');const img=fab.querySelector('img');if(img)img.src=finotEtat(S).img;if(!show)finotClose();}
+ chips=MQHooks.filter('finot:chip-list',chips,{inChapter});box.innerHTML=chips.join('');MQHooks.emit('finot:chips',{box});}
+// Le focus revient, à la fermeture, sur l'élément qui a ouvert Finot (clavier, lecteur d'écran).
+let finotReturnFocus=null;
+function finotOpen(){const ae=document.activeElement;if(ae&&ae!==document.body&&!ae.closest('#finotchat'))finotReturnFocus=ae;finotChatEnsure();finotChatDOM();finotChipsRender();finotChatRender();document.getElementById('finotchat').classList.add('open');document.getElementById('finotin')?.focus();MQHooks.emit('finot:open');}
+function finotClose(){const fc=document.getElementById('finotchat');const was=!!(fc&&fc.classList.contains('open'));fc?.classList.remove('open');const r=finotReturnFocus;finotReturnFocus=null;if(was&&r&&r.isConnected&&typeof r.focus==='function')r.focus();}
+function finotPush(who,html){FCHAT.msgs.push({who,html});if(FCHAT.msgs.length>40)FCHAT.msgs.shift();finotChatRender();MQHooks.emit('finot:message',{who,html});}
+/* Question écrite ou dictée à Finot : les intentions (erreur à expliquer, compétences, recherche de leçon, aiguillage)
+   sont des abonnés 'finot:intent' ordonnés ; le premier qui répond prend la main, sinon la FAQ répond.
+   ask.echo() affiche une seule fois la question de l'enfant, quel que soit l'abonné qui répond. */
+function finotAsk(text){const t=String(text||'').trim();if(!t)return;let echoed=false;const ask={raw:t,echo(){if(echoed)return;echoed=true;finotChatEnsure();finotPush('you',esc(t));}};
+ if(MQHooks.first('finot:intent',ask))return;ask.echo();const m=finotMatch(t);finotPush('finot',m?m.a:FINOT_FALLBACK);finotChipsRender();}
+// Sur un exercice ou un cours, le bouton flottant pourrait masquer une réponse ou « Suivant » : il laisse la place au
+// bouton « 🦊 Finot » de la barre d'actions (exercice, questions du cours) ou au bouton 🦊 de la navigation du cours. La discussion ouverte n'est fermée qu'en quittant l'enfant.
+function finotQuestionScreen(){return /^(mission|flash|lesson|interrogation|diagnostic)$/.test(CUR||'');}
+function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)return;const allowed=!!S.name&&!PARENT,show=allowed&&!finotQuestionScreen();fab.classList.toggle('show',show);fab.classList.toggle('raised',CUR==='home');const img=fab.querySelector('img');if(img)img.src=finotEtat(S).img;if(!allowed)finotClose();}
 /* V8.27 — barre d'onglets de l'accueil : élément persistant hors de #app (comme .finot-fab), jamais recréé à
    chaque écran. Nécessaire : #app.view-pop a une animation avec transform, ce qui en ferait le référentiel
    de positionnement de tout élément fixed placé DANS #app pendant l'animation (~320ms) — un élément fixed
@@ -117,10 +127,11 @@ function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)r
 function hometabsDOM(){if(document.getElementById('hometabs'))return;
  const nav=document.createElement('nav');nav.id='hometabs';nav.className='hometabs';nav.setAttribute('aria-label','Navigation principale');
  document.body.appendChild(nav);}
-function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home';nav.classList.toggle('show',show);if(!show)return;
+// Pas de barre d'onglets pendant la création du profil (home() affiche alors l'écran d'accueil sans enfant).
+function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home'&&!!S.name;nav.classList.toggle('show',show);if(!show)return;
  nav.innerHTML=HOMETABS.map(([k,emoji,label])=>`<button class="htab ${HOMETAB===k?'on':''}" data-a="hometab:${k}" aria-current="${HOMETAB===k?'page':'false'}"><span class="hti" aria-hidden="true">${emoji}</span><span class="htl">${label}</span></button>`).join('');}
 function reco(){const list=SCH(S.subj);return MQAdaptive.recommendation(S,list,WMAP,S.grade)||list[0]||ALLCH[0];}
-function home(){PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSubj();applyStage();touchDaily();checkBirthday();if(S.merit.notes.length){toast(S.merit.notes.map(esc).join('<br>'));S.merit.notes=[];save();}const av=availPts(),rdy=S.merit.rewards.some(w=>av>=w.c&&!isPend(w.id)),nx=S.merit.rewards.filter(w=>!isPend(w.id)&&w.c>av).sort((a,b)=>a.c-b.c)[0];const L=lvl(S.xp),b=150*(L-1)**2,n=150*L**2,pct=Math.round((S.xp-b)/(n-b)*100),goal=S.dailyGoal||DEFAULT_GOAL,g=Math.min(1,S.daily.ok/goal),r=reco(),vs=visibleSubjects(),fe=finotEtat(S),
+function home(){MQHooks.emit('home:before');PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSubj();applyStage();touchDaily();checkBirthday();if(S.merit.notes.length){toast(S.merit.notes.map(esc).join('<br>'));S.merit.notes=[];save();}const av=availPts(),rdy=S.merit.rewards.some(w=>av>=w.c&&!isPend(w.id)),nx=S.merit.rewards.filter(w=>!isPend(w.id)&&w.c>av).sort((a,b)=>a.c-b.c)[0];const L=lvl(S.xp),b=150*(L-1)**2,n=150*L**2,pct=Math.round((S.xp-b)/(n-b)*100),goal=S.dailyGoal||DEFAULT_GOAL,g=Math.min(1,S.daily.ok/goal),r=reco(),vs=visibleSubjects(),fe=finotEtat(S),
  isCollege=stageOf(S.grade)==='college',curCat=isCollege?(FINOT_CATS[OPENCAT]?OPENCAT:(finotCatOf(S.subj)||Object.keys(FINOT_CATS)[0])):null;
  const header=`<header class="top">
   <button class="av" data-a="shop" aria-label="Changer d’avatar">${S.avatar}</button>
@@ -149,9 +160,9 @@ function home(){PARENT=false;CUR='home';if(!S.name)return onboarding();ensureSub
   ${window.MQ_READING?`<button class="reco card" data-a="library"><span class="ri" aria-hidden="true" style="font-size:30px">📚</span><span><small>Bibliothèque de lecture</small><b>${Object.keys(MQ_READING.resources).length} textes à lire</b><span class="muted">Récits, contes, poèmes, théâtre et documents</span></span><span class="go">Lire</span></button>`:''}
   <button class="reco card" data-a="badges"><span class="ri"><img src="data/images/icons/icon-trophee.png" alt="" aria-hidden="true" style="width:34px;height:34px;object-fit:contain;"></span><span><small>Mes badges</small><b>${S.badges.length}/${BADGES.length} débloqués</b><span class="muted">Continue à jouer pour tous les débloquer</span></span><span class="go">Voir</span></button>`,
   plus:()=>`<h2 class="sec">Plus</h2>
-  <div class="tools"><button class="tool" data-a="flashmenu"><img src="data/images/icons/icon-eclair.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Défi éclair</button><button class="tool" data-a="shop"><img src="data/images/icons/icon-boutique.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Boutique</button><button class="tool" data-a="profiles"><img src="data/images/icons/icon-profils.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Profils</button><button class="tool" data-a="parent"><img src="data/images/icons/icon-parents.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Parents</button></div>${window.MQ_ATLAS?`<button class="reco card" data-a="atlas"><span class="ri" aria-hidden="true" style="font-size:30px">🗺️</span><span><small>Géographie</small><b>Atlas du monde</b><span class="muted">${Object.keys(MQ_ATLAS.pays).length} pays, leurs drapeaux, leurs cartes et leur histoire</span></span><span class="go">Ouvrir</span></button>`:''}<button class="btn ghost wide" data-a="credits">🖼️ Crédits des images</button>`
+  <div class="tools"><button class="tool" data-a="flashmenu"><img src="data/images/icons/icon-eclair.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Défi éclair</button><button class="tool" data-a="shop"><img src="data/images/icons/icon-boutique.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Boutique</button><button class="tool" data-a="profiles"><img src="data/images/icons/icon-profils.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Profils</button><button class="tool" data-a="parent"><img src="data/images/icons/icon-parents.png" alt="" aria-hidden="true" style="width:28px;height:28px;object-fit:contain;">Parents</button></div>${window.MQ_ATLAS?`<button class="reco card" data-a="atlas"><span class="ri" aria-hidden="true" style="font-size:30px">🗺️</span><span><small>Géographie</small><b>Atlas du monde</b><span class="muted">${Object.keys(MQ_ATLAS.pays).length} pays, leurs drapeaux, leurs cartes et leur histoire</span></span><span class="go">Ouvrir</span></button>`:''}<button class="btn ghost wide" data-a="credits">🖼️ Crédits des images</button><p class="muted small center mq-appver">${window.MQPWA?MQPWA.label():''}</p>`
  };
- app.innerHTML=header+`<div class="hometab-body">${(tabs[HOMETAB]||tabs.accueil)()}</div>`;}
+ app.innerHTML=header+`<div class="hometab-body">${(tabs[HOMETAB]||tabs.accueil)()}</div>`;MQHooks.emit('home:rendered');}
 
 let DELPEND=null;
 function profilesScreen(){CUR='profiles';PARENT=false;const ps=profileList();app.innerHTML=`${bar('👧👦 Profils enfants')}<div class="card"><b>Un espace séparé pour chaque enfant</b><p class="muted small">Progression, étoiles, cours terminés, bons points, boutique et suivi sont indépendants. Le code parent et la liste des récompenses sont repris lors de la création d’un nouveau profil.</p></div><h2 class="sec">Choisir un profil</h2><div class="profiles-grid">${ps.map(([id,p])=>`<div class="pcard ${id===ACTIVE?'on':''}"><div class="pav">${p.avatar}</div><div><div class="pn">${esc(p.name||'Profil sans nom')}</div><div class="pm">${profileSummary(p)}</div><select class="fld profile-grade" data-profile-grade="${id}" aria-label="Classe de ${esc(p.name||'ce profil')}">${gradeOptions(p.grade)}</select></div>${DELPEND===id?`<div class="pactions pdel-confirm"><label class="sr-only" for="pdelpin">Code parent pour confirmer la suppression de ${esc(p.name||'ce profil')}</label><input id="pdelpin" class="fld" inputmode="numeric" maxlength="8" placeholder="Code parent" autocomplete="off"><button class="btn primary sm2" data-a="pdelok:${id}">Confirmer</button><button class="btn ghost sm2" data-a="pdelcancel">Annuler</button></div>`:`<div class="pactions"><button class="btn ${id===ACTIVE?'primary':''} sm2" data-a="pswitch:${id}">${id===ACTIVE?'✓ Actif':'Ouvrir'}</button>${ps.length>1?`<button class="btn ghost sm2" data-a="pdel:${id}" aria-label="Supprimer le profil ${esc(p.name||'')}">🗑️</button>`:''}</div>`}</div>`).join('')}<button class="pnew" data-a="pnew"><span style="font-size:36px">➕</span><b>Ajouter un enfant</b><span class="muted small">Nouveau profil vierge</span></button></div><p class="perf-note">Les données restent sur cet appareil et sont enregistrées séparément pour chaque profil.</p>`;if(DELPEND)$('#pdelpin')?.focus();}
@@ -187,10 +198,22 @@ function fiche(id){const c=byId(id),f=c.f,wimg=FINOT_WORLD_IMG[WMAP[id].id];app.
 
 /* ===== Mission ===== */
 const mult=()=>Math.min(4,1+Math.floor(M.streak/3));
-function startMission(ids){const cid=ids[0],d=MQAdaptive.difficulty(S,cid);M={ids,n:8,i:0,ok:0,xp:0,coins:0,streak:0,d,L0:lvl(S.xp),newB:[],flash:false,wrong:0,lastOk:null};nextQ();}
+/* Série mixte : les questions sont réparties équitablement entre les chapitres (2 par chapitre sur 8 pour 4 chapitres),
+   puis mélangées. Difficulté et série de bonnes réponses sont propres à chaque chapitre (M.dById, M.streakById).
+   opts : {level} niveau imposé 1-3 (Facile/Moyen/Difficile, reste fixe toute la série), {n} nombre de questions,
+   {path} étape du parcours du jour — posée AVANT la première question pour que les abonnés la voient. */
+function balancedQueue(ids,n){const u=[...new Set((ids||[]).filter(Boolean))];if(!u.length)return [];const q=[];for(let i=0;i<n;i++)q.push(u[i%u.length]);for(let i=q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q[i],q[j]]=[q[j],q[i]];}return q;}
+function startMission(ids,opts={}){const list=[...new Set((ids||[]).filter(id=>byId(id)))],cid=list[0];if(!cid)return;
+ const lv=opts.level?Math.max(1,Math.min(3,+opts.level||2)):0,n=opts.n||8,dById=Object.fromEntries(list.map(id=>[id,lv||MQAdaptive.difficulty(S,id)]));
+ M={ids:list,n,i:0,ok:0,xp:0,coins:0,streak:0,d:dById[cid],dById,streakById:Object.fromEntries(list.map(id=>[id,0])),queue:balancedQueue(list,n),L0:lvl(S.xp),newB:[],flash:false,wrong:0,lastOk:null};
+ if(lv)M.forcedDifficulty=lv;if(opts.path)M.path=opts.path;
+ MQHooks.emit('mission:start',{ids:list,opts,M});nextQ();}
 function startFlash(w){const ids=(w==='all'?SCH(S.subj):WCH[w]).map(c=>c.id);M={ids,n:1e9,i:0,ok:0,xp:0,coins:0,streak:0,d:1,L0:lvl(S.xp),newB:[],flash:true,w,end:Date.now()+60000};
- M.tick=setInterval(()=>{if(!M||!M.flash)return;const left=M.end-Date.now(),b=$('#tbar'),t=$('#tleft');if(b)b.style.width=Math.max(0,left/600)+'%';if(t)t.textContent=Math.ceil(Math.max(0,left)/1000)+' s';if(left<=0)endFlash();},100);nextQ();}
-function nextQ(){if(M.flash&&Date.now()>=M.end)return endFlash();if(!M.flash&&M.i>=M.n)return endMission();const c=byId(M.ids[Math.floor(Math.random()*M.ids.length)]);M.cid=c.id;M.q=c.g(M.d);M.hint=false;M.locked=false;M.qt=Date.now();renderQ();}
+ M.tick=setInterval(()=>{if(!M||!M.flash)return;const left=M.end-Date.now(),b=$('#tbar'),t=$('#tleft');if(b)b.style.width=Math.max(0,left/600)+'%';if(t)t.textContent=Math.ceil(Math.max(0,left)/1000)+' s';if(left<=0)endFlash();},100);
+ MQHooks.emit('flash:start',{w,ids,M});nextQ();}
+function nextQ(){if(!M)return;if(M.flash&&Date.now()>=M.end)return endFlash();if(!M.flash&&M.i>=M.n)return endMission();
+ const id=!M.flash&&Array.isArray(M.queue)&&M.queue[M.i]?M.queue[M.i]:M.ids[Math.floor(Math.random()*M.ids.length)],c=byId(id);M.cid=c.id;if(M.dById&&M.dById[M.cid]!=null)M.d=M.dById[M.cid];
+ M.q=MQHooks.filter('mission:question',c.g(M.d),{cid:M.cid,d:M.d,M});M.hint=false;M.locked=false;M.qt=Date.now();renderQ();}
 function ordLine(q){return q._sel.length?q._sel.map(i=>`<span class="otw">${q.tokens[i]}</span>`).join(' '):'<span class="muted">Touche les mots dans le bon ordre</span>';}
 function refreshOrd(q){const l=$('#ordline');if(l)l.innerHTML=ordLine(q);document.querySelectorAll('.otok').forEach(b=>b.disabled=q._sel.includes(+b.dataset.a.split(':')[1]));}
 const curQ=()=>(M&&M.q)||(L&&(L.steps[L.i]&&L.steps[L.i].k==='practice'?L.pq:L.steps[L.i]&&L.steps[L.i].k==='readq'?L.rq:L.q))||null,qLocked=()=>M?M.locked:L?L.locked:true;
@@ -200,13 +223,18 @@ function inputHTML(q,pa='pick'){if(q.type==='order'){q._sel=q._sel||[];return `<
  const chips=Array.isArray(q.chips)?q.chips:q.type==='text'&&q.lang==='fr'?[]:q.type==='text'&&q.lang==='it'?['à','è','é','ì','ò','ù',"'"]:q.type==='text'&&q.lang==='en'?["'"]:{num:['−',','],frac:['/','−'],text:['x','+','−'],multi:['−',',']}[q.type];
  const ins=q.type==='multi'?q.labels.map((l,i)=>`<label class="ml"><span>${l}</span><input id="in${i}" class="big" autocomplete="off" inputmode="decimal"></label>`).join(''):
   `<div class="inrow"><input id="in0" class="big" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" ${q.lang?'autocapitalize="off" spellcheck="false"':''} placeholder="${(q.lang&&q.type==='text'?'Écris ta réponse':{num:'Ta réponse',frac:'ex : 3/4',text:'ex : 5x+2'}[q.type])}">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div>`;
- return `<div class="ans">${ins}<div class="chips">${chips.map(c=>`<button class="chip" data-a="chip:${c}" tabindex="-1">${c}</button>`).join('')}</div></div>`;}
-function renderQ(){const q=M.q,c=byId(M.cid);
+ return `<div class="ans">${ins}<div class="chips">${chips.map(c=>`<button class="chip" data-a="chip:${c}" tabindex="-1"${CHIP_LABEL[c]?` aria-label="${CHIP_LABEL[c]}"`:''}>${c}</button>`).join('')}</div></div>`;}
+// Nom accessible des puces de saisie (un lecteur d'écran n'annonce rien pour « − » ou « / » seuls).
+const CHIP_LABEL={'−':'Insérer le signe moins',',':'Insérer une virgule','/':'Insérer une barre de fraction','+':'Insérer le signe plus','x':'Insérer la lettre x',"'":'Insérer une apostrophe'};
+// Écran d'exercice : CUR n'est plus 'home' (sinon la barre d'onglets de l'accueil restait affichée par-dessus les réponses).
+const FINOT_QBTN='<button class="btn ghost" data-a="finotopen" aria-label="Demander de l’aide à Finot">🦊 Finot</button>';
+function renderQ(){const q=M.q,c=byId(M.cid);CUR=M.flash?'flash':'mission';
  const top=M.flash?`<div class="qtop"><button class="btn ghost sm" data-a="quit" aria-label="Quitter">✕</button><div class="prog t"><i id="tbar" style="width:${Math.max(0,(M.end-Date.now())/600)}%"></i></div><span class="pill" id="tleft">${Math.ceil((M.end-Date.now())/1000)} s</span><span class="pill">✅ ${M.ok}</span></div>`
   :`<div class="qtop"><button class="btn ghost sm" data-a="quit" aria-label="Quitter">✕</button><div class="prog"><i style="width:${M.i/M.n*100}%"></i></div><span class="combo ${M.streak>=3?'hot':''}">🔥 ×${mult()}</span></div>`;
  app.innerHTML=`${top}<div class="qcard card slide"><div class="qtag">${c.icon} ${c.name}<span>${TTS.ok&&!M.flash?'<button class="spk" data-a="ttsq" aria-label="Écouter la question">🔊</button>':''}<span title="Difficulté">${'⚡'.repeat(M.d)}</span></span></div><div class="qtext">${q.q}</div>${audioHTML(q)}${q.svg||''}${inputHTML(q)}<div id="fb" aria-live="polite" role="status"></div>
-  <div class="qbtns">${M.flash?'':'<button class="btn ghost" data-a="hint">💡 Indice</button><button class="btn ghost" data-a="padtoggle">✏️ Brouillon</button>'}${q.type!=='choice'?'<button class="btn primary" data-a="valid">Valider</button>':''}</div></div>`;
- padReset(q.q);if(M.flash)padClose();if(q.audio&&TTS.ok)setTimeout(()=>{if(M&&M.q===q&&!M.locked)ttsSay(q.audio);},350);const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;}
+  <div class="qbtns">${M.flash?'':'<button class="btn ghost" data-a="hint">💡 Indice</button><button class="btn ghost" data-a="padtoggle">✏️ Brouillon</button>'+FINOT_QBTN}${q.type!=='choice'?'<button class="btn primary" data-a="valid">Valider</button>':''}</div></div>`;
+ padReset(q.q);if(M.flash)padClose();if(q.audio&&TTS.ok)setTimeout(()=>{if(M&&M.q===q&&!M.locked)ttsSay(q.audio);},350);const f=$('#in0');if(f&&!PAD.open)f.focus();lastIn=f;
+ MQHooks.emit('question:after-render',{q,M,mode:M.flash?'flash':'mission'});}
 function markOrd(ok){const l=$('#ordline');if(l)l.classList.add(ok?'good':'bad');document.querySelectorAll('.otok,[data-a="oundo"]').forEach(b=>b.disabled=true);}
 function insertChip(ch){const el=lastIn||$('#in0');if(!el||el.disabled)return;const v=ch==='−'?'-':ch;const s=el.selectionStart??el.value.length,e=el.selectionEnd??el.value.length;el.setRangeText(v,s,e,'end');el.focus();}
 function showHint(){if(!M||M.locked)return;M.hint=true;$('#fb').innerHTML=`<div class="fb tip"><img src="${FINOT_IMG.indice}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;">💡 ${M.q.hint||'Relis bien la question.'}<small>Indice utilisé : XP divisés par 2 pour cette question.</small></div>`;}
@@ -221,7 +249,12 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
  if(q.type==='choice')document.querySelectorAll('.choice').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('good');else if(i===pick)b.classList.add('bad');});
  else document.querySelectorAll('.ans input').forEach(x=>{x.disabled=true;x.classList.add(ok?'good':'bad');});
  markOrd(ok);result(ok);}
-function result(ok){M.locked=true;const pb=M.path?pathAnswer(ok):0;const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
+/* Difficulté de la question suivante : série propre au chapitre (M.streakById) en mission, niveau imposé
+   (M.forcedDifficulty) toujours prioritaire, plafond 2 en défi éclair. */
+function missionNextD(ok){const cid=M.cid;if(M.flash)return Math.min(2,MQAdaptive.nextDifficulty(M.d,ok,ok?M.streak:0));
+ let s=ok?M.streak:0;if(M.streakById){s=ok?(M.streakById[cid]||0)+1:0;M.streakById[cid]=s;}
+ return M.forcedDifficulty||MQAdaptive.nextDifficulty(M.d,ok,s);}
+function result(ok){if(!M||M.locked)return;M.locked=true;const pb=M.path?pathAnswer(ok):0,src=M.flash?'flash':M.path?'path':'practice',ms=Date.now()-(M.qt||Date.now());const cs=S.chap[M.cid]||(S.chap[M.cid]={stars:0,ok:0,tot:0});S.time+=Math.min(120,(Date.now()-M.qt)/1000);S.totalQ++;cs.tot++;const rh=S.recent[M.cid]||(S.recent[M.cid]=[]);rh.push(ok?1:0);if(rh.length>20)rh.shift();touchDaily();if(ok)resolveIfConsolidated(M.cid);else{M.wrong=(M.wrong||0)+1;MQAdaptive.recordMistake(S,M.cid,{q:plainText(M.q.q),answer:plainText(answerText(M.q)),expl:plainText(M.q.expl||'')});}
  if(ok&&M.dict&&!M.dict.perfect)MQAdaptive.recordMistake(S,M.cid,dictMistake(M.q,M.dict));MQAdaptive.recordAnswer(S,M.cid,ok,{source:'practice'});M.lastOk=ok;
  const qb=$('.qbtns');if(qb)qb.remove();
  if(ok){M.ok++;M.streak++;S.totalOk++;cs.ok++;S.daily.ok++;{const nivAvant=finotNiveau(S).nom;touchStreak();const niv=finotNiveau(S);
@@ -229,14 +262,16 @@ function result(ok){M.locked=true;const pb=M.path?pathAnswer(ok):0;const cs=S.ch
    setTimeout(()=>ami?finotCeleb(ami.img,'Nouvel ami !',`${ami.nom} rejoint votre bande 🎉`):finotCeleb('data/images/finot/ui-celeb-lien.png','Nouveau lien avec Finot !',niv.nom),700);}}
   addMerit(S.merit.rules.ok);S.bestCombo=Math.max(S.bestCombo,M.streak);
   const g=M.flash?5:Math.round(10*M.d*mult()*(M.hint?.5:1)),c=M.flash?1:1+(M.streak%3===0?1:0);M.xp+=g;S.xp+=g;M.coins+=c;S.coins+=c;
-  {const od=M.d;M.d=M.flash?Math.min(2,MQAdaptive.nextDifficulty(M.d,true,M.streak)):MQAdaptive.nextDifficulty(M.d,true,M.streak);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
+  {const od=M.d;M.d=missionNextD(true);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('ok');confetti(M.flash?8:18);
   $('#fb').innerHTML=`<div class="fb good pop"><img src="${FINOT_IMG.victoire}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>${PRAISE[Math.floor(Math.random()*PRAISE.length)]}</b> +${g} XP${S.merit.rules.ok?` +${S.merit.rules.ok} 🎖️`:''}${M.streak>=3?` <span class="hot">Combo ×${mult()} 🔥</span>`:''}${pb?`<span class="pathbonus">🔥 Bonus parcours ×${pb} : +${pb} 🪙</span>`:''}</div>`;
   if(M.dict&&!M.dict.perfect){$('#fb .fb').insertAdjacentHTML('beforeend',`${MQDictation.feedbackHTML(M.dict,{young:dictYoung()})}<button class="btn primary wide" data-a="next">Exercice suivant</button>`);const b=$('[data-a="next"]');if(b)b.focus();}
   else M.tid=setTimeout(advance,M.flash?400:1100);}
- else{M.streak=0;{const od=M.d;M.d=MQAdaptive.nextDifficulty(M.d,false,0);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('bad');
+ else{M.streak=0;{const od=M.d;M.d=missionNextD(false);if(od!==M.d)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;}sfx('bad');
   $('#fb').innerHTML=`<div class="fb bad pop"><img src="${FINOT_IMG.encouragement}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>Presque !</b>${M.dict?MQDictation.feedbackHTML(M.dict,{young:dictYoung()}):`${M.flash?'':notThis(M.cid,M.your)} Bonne réponse : <b>${answerText(M.q)}</b>${M.q.expl&&!M.flash?`<div class="expl">${M.q.expl}</div>`:''}`}${M.flash?'':`<div class="coach-feedback"><b>👩‍🏫 Ton prof particulier</b><br>${coachFor(M.cid,false)}<br><small>La difficulté vient d’être recalée à ${M.d}/3.</small></div><button class="btn primary wide" data-a="next">J’ai compris · exercice suivant</button>`}</div>`;
   if(M.flash)M.tid=setTimeout(advance,1600);else{const b=$('[data-a="next"]');if(b)b.focus();}}
- save();checkBadges(M);}
+ // Maîtrise recalculée après l'écriture réelle de chap.ok ; journal horodaté (filtres de période côté parent).
+ if(M.dById)M.dById[M.cid]=M.d;MQAdaptive.refreshMastery(S,M.cid);logAnswer(M.cid,ok,src,ms);
+ save();checkBadges(M);MQHooks.emit('answer:after',{mode:src==='practice'?'mission':src,ok,q:M.q,cid:M.cid,M});}
 /* Prof particulier : messages adaptés à l'âge au primaire, moteur historique au collège. */
 function coachFor(id,ok){const c=COURS[id]||{},ch=CHMAP[id]||{},mist=(S.mistakes[id]||[]).filter(x=>!x.seen).length;
  // Primaire et chapitres collège reconstruits : prof adapté à l'âge, avec l'astuce et la méthode propres à la notion.
@@ -256,7 +291,17 @@ const notThis=(id,your)=>isPrimaryCh(id)&&your?`<div class="notthis">Ce n’est 
 function advance(){if(!M||!M.locked)return;clearTimeout(M.tid);M.i++;nextQ();}
 function pauseCard(){if(Date.now()-T0<20*60000)return '';T0=Date.now();return `<div class="pause">🧠 <b>Pause cerveau !</b> 20 minutes d’apprentissage, bravo. ${PAUSES[Math.floor(Math.random()*PAUSES.length)]}, puis reviens quand tu es prêt.</div>`;}
 function nextChap(id){const a=SCH(sOf(WMAP[id].id).id),i=a.findIndex(c=>c.id===id);return a[i+1]||null;}
-function endMission(){const m=M;M=null;padClose();if(m.path)pathExoDone(m);const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,cid=m.ids[0],cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0});cs.stars=Math.max(cs.stars,st);if(st>=2)addMerit(S.merit.rules.mission,'Mission réussie : '+byId(cid).name,m);if(st===3)addMerit(S.merit.rules.perfect,'Sans faute : '+byId(cid).name,m);
+function endMission(){const m=M;if(!m)return;M=null;CUR='mission-end';padClose();if(m.path)pathExoDone(m);
+ if(m.path&&Array.isArray(m.ids)&&m.ids.length>1)endPathMission(m);else endChapterMission(m);
+ MQHooks.emit('mission:end',{m});}
+// Fin d'une série mixte du parcours : étoiles, répétition espacée et bilan pour chaque chapitre (pas seulement ids[0]).
+function endPathMission(m){const answers=m.path.answers||[],summary=[];
+ for(const cid of m.ids){const a=answers.filter(x=>x.cid===cid);if(!a.length)continue;const ok=a.filter(x=>x.ok).length,r=ok/a.length,st=r>=.999?3:r>=.75?2:r>=.5?1:0,cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0});cs.stars=Math.max(cs.stars,st);const ar=MQAdaptive.practiceResult(S,cid);summary.push({cid,ok,tot:a.length,mastery:ar.mastery});}
+ const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0;if(st>=2)addMerit(S.merit.rules.mission,'Série du parcours réussie',m);if(st===3)addMerit(S.merit.rules.perfect,'Série du parcours sans faute',m);
+ const bx=st*20,bc=st*5;S.xp+=bx;S.coins+=bc;S.missions++;save();checkBadges(m);const level=lvl(S.xp),up=level>m.L0;if(up)sfx('lvl');if(st>=2)confetti(45);
+ const msg=['On recommence ? Tu vas y arriver 💪','Pas mal, continue !','Très bien !','Sans faute !'][st],details=summary.map(x=>`<div class="drow"><span>${byId(x.cid).icon} ${esc(byId(x.cid).name)}</span><b>${x.ok}/${x.tot} · ${x.mastery}%</b></div>`).join('');
+ app.innerHTML=`<div class="end card pop">${up?`<div class="lvlup">🎉 Niveau ${level} ! <small>${title(level)}</small></div>`:''}${st>=2?`<img src="${FINOT_IMG.bravo}" alt="" aria-hidden="true" class="finot-live" style="width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:50% 35%;display:block;margin:0 auto 4px;">`:''}<div class="bigstars">${[1,2,3].map(i=>`<span class="${i<=st?'on':''}" style="animation-delay:${i*.18}s">★</span>`).join('')}</div><h1>${m.ok}/${m.n}</h1><p class="lead">${msg}</p><div class="adaptive-card"><b>🧠 Bilan par chapitre</b>${details}</div><div class="gains"><span>+${m.xp+bx} XP</span><span>+${m.coins+bc} 🪙</span>${m.mg?`<span>+${m.mg} 🎖️</span>`:''}</div>${m.newB.length?`<div class="nb">🏆 ${m.newB.map(b=>b[1]+' '+b[2]).join(', ')}</div>`:''}${pauseCard()}<div class="col"><button class="btn primary big" data-a="path">🗺️ Continuer mon parcours</button><button class="btn ghost wide" data-a="home">🏠 Accueil</button></div></div>`;}
+function endChapterMission(m){const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,cid=m.ids[0],cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0});cs.stars=Math.max(cs.stars,st);if(st>=2)addMerit(S.merit.rules.mission,'Mission réussie : '+byId(cid).name,m);if(st===3)addMerit(S.merit.rules.perfect,'Sans faute : '+byId(cid).name,m);
  const bx=st*20,bc=st*5;S.xp+=bx;S.coins+=bc;S.missions++;const ar=MQAdaptive.practiceResult(S,cid);save();checkBadges(m);const L=lvl(S.xp),up=L>m.L0,nx=nextChap(cid);
  if(up)sfx('lvl');if(st>=2)confetti(45);
  const msg=['On recommence ? Tu vas y arriver 💪','Pas mal, continue !','Très bien !','Sans faute !'][st];
@@ -269,7 +314,7 @@ function endMission(){const m=M;M=null;padClose();if(m.path)pathExoDone(m);const
 function flashMenu(){app.innerHTML=`${bar('⚡ Défi éclair')}<div class="card center"><p class="lead">60 secondes. Un maximum de bonnes réponses.</p><p class="muted">Ton record : <b>${S.flashBest}</b></p></div>
  <div class="worlds">${WS().map(w=>`<button class="world" data-a="flash:${w.id}" style="--wc:${w.col}"><span class="we">${w.emoji}</span><span class="wl">${w.lvl}</span><span class="wn">${w.name}</span></button>`).join('')}</div>
  <button class="btn primary big" data-a="flash:all">🎲 Tout le programme</button>`;}
-function endFlash(){if(!M)return;padClose();const m=M;clearInterval(m.tick);clearTimeout(m.tid);M=null;const rec=m.ok>S.flashBest;if(rec)S.flashBest=m.ok;S.missions++;save();checkBadges(m);
+function endFlash(){if(!M)return;CUR='flash-end';padClose();const m=M;clearInterval(m.tick);clearTimeout(m.tid);M=null;const rec=m.ok>S.flashBest;if(rec)S.flashBest=m.ok;S.missions++;save();checkBadges(m);MQHooks.emit('flash:end',{m});
  const L=lvl(S.xp),up=L>m.L0;if(rec||up){sfx('lvl');confetti(45);}
  app.innerHTML=`<div class="end card pop">${up?`<div class="lvlup">🎉 Niveau ${L} ! <small>${title(L)}</small></div>`:''}<div class="bigicon">⚡</div><h1>${m.ok} bonne${m.ok>1?'s':''} réponse${m.ok>1?'s':''}</h1>
   <p class="lead">${rec?'🏆 Nouveau record !':`Record à battre : ${S.flashBest}`}</p><div class="gains"><span>+${m.xp} XP</span><span>+${m.coins} 🪙</span>${m.mg?`<span>+${m.mg} 🎖️</span>`:''}</div>${pauseCard()}

@@ -1,8 +1,10 @@
-import { chromium } from 'playwright';
+import * as playwright from 'playwright';
+// Moteur choisi par la CI (matrice chromium / firefox / webkit) ; chromium par défaut.
+const engine=playwright[process.env.MQ_BROWSER||'chromium'];
 import fs from 'node:fs';
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173';
 fs.mkdirSync('tests/screenshots',{recursive:true});
-const browser=await chromium.launch({headless:true});
+const browser=await engine.launch({headless:true});
 const errors=[];const fail=m=>errors.push(m);
 
 // ===== Application élève : interrogation uniquement sur le travail du jour =====

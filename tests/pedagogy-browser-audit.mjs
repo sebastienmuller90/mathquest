@@ -1,8 +1,10 @@
-import { chromium } from 'playwright';
+import * as playwright from 'playwright';
+// Moteur choisi par la CI (matrice chromium / firefox / webkit) ; chromium par défaut.
+const engine=playwright[process.env.MQ_BROWSER||'chromium'];
 import fs from 'node:fs';
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173';
 fs.mkdirSync('tests/screenshots',{recursive:true});
-const browser=await chromium.launch({headless:true});
+const browser=await engine.launch({headless:true});
 const ctx=await browser.newContext({viewport:{width:1280,height:820},reducedMotion:'reduce'});
 await ctx.addInitScript(()=>{const p={version:3,active:'pedqa',profiles:{pedqa:{name:'Petit Test',avatar:'🦊',grade:'CP',subj:'francais',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}}}}};localStorage.setItem('mathquest_profiles_v2',JSON.stringify(p));});
 const page=await ctx.newPage(),runtime=[];page.on('pageerror',e=>runtime.push('PAGE '+e.message));page.on('console',m=>{if(m.type()==='error')runtime.push('CONSOLE '+m.text())});

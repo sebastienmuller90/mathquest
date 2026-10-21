@@ -1,4 +1,4 @@
-/* MathQuest V8.5 — Histoire-Géographie + EMC — année scolaire 2026-2027
+/* Finot Académie V8.5 — Histoire-Géographie + EMC — année scolaire 2026-2027
    Histoire-Géographie : 6e = programme cycle 3 BO n°31 du 30 juillet 2020,
    5e/4e/3e = programme cycle 4 BO n°31 du 30 juillet 2020.
    EMC : BO n°24 du 13 juin 2024, applicable à tous les niveaux en 2026-2027. */

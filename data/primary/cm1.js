@@ -1,4 +1,4 @@
-/* MathQuest — CM1 (cycle 3), année scolaire 2026-2027.
+/* Finot Académie — CM1 (cycle 3), année scolaire 2026-2027.
    Français et mathématiques : programmes 2025 (BO n°16 du 17/04/2025), applicables en CM1 depuis 2025-2026.
    Sciences et technologie : nouveau programme (BO n°24 du 11/06/2026), applicable en CM1 à la rentrée 2026.
    Histoire-géographie et EPS : nouveaux programmes (BO n°22 du 28/05/2026), applicables en CM1 à la rentrée 2026.

@@ -1,4 +1,4 @@
-/* MathQuest — Mathématiques 4e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
+/* Finot Académie — Mathématiques 4e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
    Programme appliqué : mathématiques du cycle 4, BO n°31 du 30 juillet 2020 (programme consolidé), toujours applicable en 4e en 2026-2027 ;
    repères annuels de progression et attendus de fin d'année de 4e (Éduscol). Identifiants des chapitres existants conservés. */
 (function(){

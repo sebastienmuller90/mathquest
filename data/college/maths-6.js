@@ -1,4 +1,4 @@
-/* MathQuest — Mathématiques 6e : chapitres reconstruits (durées, solides, probabilités), année scolaire 2026-2027.
+/* Finot Académie — Mathématiques 6e : chapitres reconstruits (durées, solides, probabilités), année scolaire 2026-2027.
    Programme appliqué : mathématiques du cycle 3, BO n°16 du 17 avril 2025 (MENE2504620A), applicable en 6e depuis la rentrée 2025.
    Ce fichier sert aussi d'exemple de référence pour la rédaction des chapitres collège (voir reports/COLLEGE-AUTHORING-GUIDE.md). */
 (function(){

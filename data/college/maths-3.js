@@ -1,4 +1,4 @@
-/* MathQuest — Mathématiques 3e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
+/* Finot Académie — Mathématiques 3e : chapitres reconstruits (cours propre à chaque notion + générateurs paramétriques), année 2026-2027.
    Programme appliqué : mathématiques du cycle 4, BO n°31 du 30 juillet 2020 (programme consolidé), toujours applicable en 3e en 2026-2027
    (le nouveau programme de cycle 4 entre en vigueur progressivement à partir de la 5e). Repères annuels de progression et attendus de fin
    d'année de 3e (Éduscol). Les identifiants des chapitres existants sont conservés : la progression enregistrée des élèves est préservée. */

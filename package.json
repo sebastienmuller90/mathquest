@@ -1,0 +1,15 @@
+{
+  "name": "mathquest",
+  "private": true,
+  "description": "MathQuest — PWA éducative CP → 3e, sans étape de build. Ce fichier sert uniquement à épingler les outils de test (Playwright) pour une CI reproductible.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test:static": "node tests/mathquest-regression.mjs && node tests/registry-probe.mjs && node tests/full-content-audit-v2.mjs",
+    "test:hooks": "node tests/hooks.test.js",
+    "test:mobile": "node tests/mobile-layout.test.js",
+    "test:pwa": "node tests/pwa-update.test.js"
+  },
+  "devDependencies": {
+    "playwright": "1.57.0"
+  }
+}

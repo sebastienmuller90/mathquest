@@ -1,4 +1,4 @@
-/* MathQuest V8.4 — Langues 2026-2027
+/* Finot Académie V8.4 — Langues 2026-2027
    Anglais + Italien : repères culturels, activités CECRL, oral, écoute, lecture, écriture et lexique.
    Le nouveau programme LVE (BO n°22 du 29 mai 2025) est appliqué en 6e depuis 2025-2026
    et en 5e à partir de 2026-2027. Les 4e/3e restent sur le programme cycle 4 de 2020 cette année.

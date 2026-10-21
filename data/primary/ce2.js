@@ -1,4 +1,4 @@
-/* MathQuest — CE2 (cycle 2), année scolaire 2026-2027.
+/* Finot Académie — CE2 (cycle 2), année scolaire 2026-2027.
    Français et mathématiques : programmes 2024 (BO n°41 du 31/10/2024), applicables depuis 2025-2026.
    EMC : programme 2024, applicable en CE2 à la rentrée 2026.
    Questionner le monde, langues vivantes, EPS, arts : programme 2020 encore applicable en CE2 en 2026-2027.

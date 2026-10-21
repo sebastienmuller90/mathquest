@@ -1,4 +1,4 @@
-/* MathQuest — Technologie (collège, 5e-4e-3e) : 24 chapitres reconstruits, année scolaire 2026-2027.
+/* Finot Académie — Technologie (collège, 5e-4e-3e) : 24 chapitres reconstruits, année scolaire 2026-2027.
    Programme appliqué (5e, 4e et 3e) : programme de technologie du cycle 4, arrêté du 9 février 2024 modifiant l’arrêté du 9 novembre 2015
    (NOR MENE2402802A), annexe « Programme de technologie du cycle 4 » publiée au BO n°9 du 29 février 2024.
    Calendrier d’entrée en application fixé par cet arrêté : rentrée 2024 en 5e, rentrée 2025 en 4e, rentrée 2026 en 3e.

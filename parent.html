@@ -2,8 +2,8 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#7c3aed"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="MathQuest Parents"><link rel="apple-touch-icon" href="icon.png">
-<title>MathQuest Parents</title>
+<meta name="apple-mobile-web-app-title" content="Finot Académie · Parents"><link rel="apple-touch-icon" href="icon.png">
+<title>Finot Académie · Parents</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
 <link href="fonts/fonts.css" rel="stylesheet"><!-- polices locales (hors ligne) -->
 <style>:root{--bg:#f4f1ff;--surface:#ffffff;--surface2:#ece7ff;--text:#1f1a3d;--muted:#6a6590;--border:#ddd5fb;--good:#15803d;--goodbg:#dcfce7;--bad:#dc2626;--badbg:#fee2e2;--gold:#f59e0b;--accent:#7c3aed;--edge:rgba(31,26,61,.12);
@@ -258,6 +258,7 @@ tr.reading td,tr.reading th{background:color-mix(in srgb,var(--gold) 30%,var(--s
 <script src="data/primary/enrich-coverage.js"></script>
 <script src="data/reading/resources.js"></script>
 <script src="js/reading-engine.js"></script>
+<script src="js/app-hooks.js"></script>
 <script src="js/path-report.js"></script>
 <script>/* ===== Utilitaires ===== */
 const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
@@ -1267,7 +1268,7 @@ const WCH={...CH,...CH_FR,...CH_EN,...CH_IT,...CH_HG,...CH_EXTRA,...PRIMARY.chap
 WALL.forEach(w=>WCH[w.id].forEach(c=>WMAP[c.id]=w));
 const sOf=wid=>SUBJECTS.find(s=>s.worlds.some(w=>w.id===wid))||SUBJECTS[0];
 
-/* ===== MathQuest – Page parent (suivi à distance) ===== */
+/* ===== Finot Académie – Page parent (suivi à distance) ===== */
 const CONFIG={url:'https://nctmxxixugoxairmtjsa.supabase.co',key:'sb_publishable_ngN_Y9VsRuThBwS_pazV-A_0_hfbFWd'};
 async function rpc(fn,args){const r=await fetch(`${CONFIG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:CONFIG.key,'Content-Type':'application/json'},body:JSON.stringify(args)});const t=await r.text();if(!r.ok)throw new Error(t||('HTTP '+r.status));return t?JSON.parse(t):null;}
 const RULES=[['ok','Par bonne réponse'],['mission','Mission réussie (2 étoiles ou plus)'],['perfect','Bonus mission sans faute'],['path','Parcours du jour terminé'],['streak','Chaque jour de série (dès le 2e jour)'],['lesson','Cours terminé (1re fois)']];
@@ -1296,21 +1297,21 @@ function render(){
  if(!D)return;
  const S=D.data||{},m=S.merit||{pts:0,req:[],rewards:[],hist:[],rules:{}},seen=S.lastSeen||Date.parse(D.updated_at),online=Date.now()-seen<120000;
  const L=lvl(S.xp),pend=(D.pending||[]),reqN=(m.req||[]).length;
- app.innerHTML=`<header class="top"><div class="av">${esc(S.avatar||'🦊')}</div><div class="who"><div class="nm">${esc(S.name||'MathQuest')}</div><div class="tt">Niveau ${L} : ${title(L)}</div>
+ app.innerHTML=`<header class="top"><div class="av">${esc(S.avatar||'🦊')}</div><div class="who"><div class="nm">${esc(S.name||'Finot Académie')}</div><div class="tt">Niveau ${L} : ${title(L)}</div>
   <div class="small live ${online?'':'off'}"><i></i>${online?'En train de jouer':'Vue '+ago(seen)}</div></div><div class="pills"><span class="pill">🎖️ ${num(m.pts)}</span><button class="pill" data-a="reload" aria-label="Actualiser">🔄</button></div></header>
  ${ERR?`<div class="note">⚠️ ${esc(ERR)}</div>`:''}
  ${pend.length?`<div class="note">⏳ ${pend.length} action${pend.length>1?'s':''} en attente : appliquée${pend.length>1?'s':''} dès que l’appli de ${esc(S.name||'ton enfant')} sera ouverte.</div>`:''}
  <div class="tabs">${[['suivi','📊 Suivi'],['recomp','🎁 Récompenses'],['reglages','⚙️ Règles']].map(([k,l])=>`<button class="tab ${k===TAB?'on':''}" data-a="tab:${k}">${l}${k==='recomp'&&reqN?` <span class="dotn">${reqN}</span>`:''}</button>`).join('')}</div>
  ${TAB==='suivi'?suivi(S,m):TAB==='recomp'?recomp(S,m,pend):regles(m,pend)}
  <p class="muted small center">Actualisation automatique toutes les 15 secondes.</p>`;
- DIRTY=false;}
+ DIRTY=false;if(window.MQHooks)MQHooks.emit('parent:remote-rendered',{tab:TAB});}
 
 function suivi(S,m){const tq=num(S.totalQ),acc=tq?Math.round(num(S.totalOk)/tq*100):0,mins=Math.round(num(S.time)/60),chap=S.chap||{},d=S.daily||{};
  const G=String(S.grade||''),stat=w=>{let ok=0,tot=0;WCH[w.id].forEach(c=>{const s=chap[c.id];if(s){ok+=num(s.ok);tot+=num(s.tot);}});return {ok,tot};};
  const shown=WALL.filter(w=>w.lvl===G||stat(w).tot>0),mineCh=WALL.filter(w=>w.lvl===G).flatMap(w=>WCH[w.id]);
  const today=(()=>{const x=new Date();return x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();})(),dok=d.date===today?num(d.ok):0;
  const weak=ALLCH.map(c=>({c,s:chap[c.id]})).filter(x=>x.s&&x.s.tot>=4).map(x=>({...x,a:x.s.ok/x.s.tot})).filter(x=>x.a<.8).sort((a,b)=>a.a-b.a).slice(0,5);
- return `<div class="kpis"><div class="kpi"><b>${dok}/20</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>🔥 ${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>📖 ${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
+ return `<div class="kpis"><div class="kpi"><b>${dok}/${Math.max(5,Math.min(100,parseInt(S&&S.dailyGoal)||20))}</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>🔥 ${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>📖 ${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
  <h2 class="sec">À retravailler en priorité</h2>${weak.length?weak.map(x=>`<div class="row"><span>${x.c.icon} ${x.c.name} <small class="muted">${sOf(WMAP[x.c.id].id).emoji} ${WMAP[x.c.id].lvl}</small></span><b class="${x.a<.5?'lo':'mid'}">${Math.round(x.a*100)} %</b></div>`).join(''):'<p class="muted">Rien à signaler (analyse à partir de 4 questions par chapitre).</p>'}
  <h2 class="sec">Détail par matière${G?' ('+esc(G)+' et niveaux déjà travaillés)':''}</h2>${(shown.length?shown:WALL).map(w=>{const {ok,tot}=stat(w);const a=tot?Math.round(ok/tot*100):0;
   return `<details class="card det"><summary><span>${sOf(w.id).emoji} ${esc(sOf(w.id).name)} ${w.lvl}</span><span class="mbar"><i style="width:${a}%;background:${w.col}"></i></span><b>${tot?a+' %':'–'}</b></summary>${WCH[w.id].map(c=>{const s=chap[c.id];return `<div class="drow"><span>${c.icon} ${c.name}</span>${starStr(Math.min(3,num(s?.stars)))}<span class="muted">${s?`${num(s.ok)}/${num(s.tot)}`:'–'}</span></div>`;}).join('')}</details>`;}).join('')}
@@ -1356,4 +1357,9 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
 document.addEventListener('input',e=>{if(e.target.closest('#rwl'))DIRTY=true;});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refresh();});
 refresh(true);setInterval(()=>{if(document.visibilityState==='visible')refresh();},15000);
-</script></body></html>
+</script>
+<script src="js/parent-compat.js"></script>
+<script src="js/parent-interrogation.js"></script>
+<script src="js/parent-dashboard.js"></script>
+<script src="js/parent-competencies.js"></script>
+</body></html>

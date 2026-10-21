@@ -1,7 +1,9 @@
-import { chromium } from 'playwright';
+import * as playwright from 'playwright';
+// Moteur choisi par la CI (matrice chromium / firefox / webkit) ; chromium par défaut.
+const engine=playwright[process.env.MQ_BROWSER||'chromium'];
 import fs from 'node:fs';
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173',errors=[],fail=m=>errors.push(m);
-const browser=await chromium.launch({headless:true});
+const browser=await engine.launch({headless:true});
 
 // Élève : reprise fiable d'une interrogation + journalisation des exercices nivelés.
 const ctx=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});

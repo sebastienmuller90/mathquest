@@ -1,4 +1,4 @@
-/* ===== MathQuest — Moteur de lecture et compréhension (CP → 3e) =====
+/* ===== Finot Académie — Moteur de lecture et compréhension (CP → 3e) =====
    Sélection adaptative de questions depuis la bibliothèque (data/reading/resources.js), notation,
    indices progressifs et suivi de maîtrise par compétence — branché sur le carnet d'erreurs existant
    (MQAdaptive.recordMistake, sur le chapitre lié) plutôt que de dupliquer un système séparé.
@@ -158,6 +158,8 @@
 
   // Enregistre les résultats d'une session : met à jour la maîtrise par compétence ET alimente le
   // carnet d'erreurs déjà existant (point 21) sur le chapitre lié, sans créer de système parallèle.
+  // Réponse attendue (pas celle de l'élève) : c'est elle que le carnet d'erreurs doit montrer.
+  function expectedAnswer(q){if(!q)return '';if(q.type==='choice')return q.choices&&q.choices[q.ans]!=null?q.choices[q.ans]:'';if(q.type==='evidence')return q.evidenceParagraph!=null?'Paragraphe '+(q.evidenceParagraph+1):'';if(q.type==='order')return Array.isArray(q._orig)?q._orig.join(' '):String(q.ans||'');if(q.type==='text')return Array.isArray(q.acc)?q.acc[0]:String(q.answer!=null?q.answer:q.ans!=null?q.ans:'');return String(q.ans!=null?q.ans:'');}
   function recordResult(state,resource,chapterId,results){
     state.readingProgress=state.readingProgress||{};
     const prog=state.readingProgress[resource.id]||{started:Date.now(),attempts:0};
@@ -171,7 +173,7 @@
       if(!r.ok){
         window.MQAdaptive.recordMistake(state,chapterId,{
           q:plain(r.q.prompt),
-          answer:plain(responseLabel(r.q,r.response)),
+          answer:plain(expectedAnswer(r.q)),
           expl:plain(r.q.explanation||'')
         });
       }
@@ -210,5 +212,5 @@
 ${glossary.length?`<p class="reading-glossary-hint">💡 Les mots soulignés ont une petite définition — touche-les pour l’afficher.</p>`:''}`;
   }
 
-  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,masterySummary,avgReadingMastery,textHTML,prepare,glossRe,STRATEGIES,coachHTML,READING_TIPS};
+  window.MQReading={COMPETENCIES,get,resourcesForChapter,pickResource,pickSession,gradeAnswer,hintText,hintPenalty,updateMastery,recordResult,expectedAnswer,masterySummary,avgReadingMastery,textHTML,prepare,glossRe,STRATEGIES,coachHTML,READING_TIPS};
 })();

@@ -12,6 +12,10 @@
 !/parent.html
 !/styles.css
 !/pedagogy-upgrade.css
+!/age-adaptive.css
+# Outils de test épinglés pour une CI reproductible (pas d’étape de build).
+!/package.json
+!/package-lock.json
 !/sw.js
 !/manifest.webmanifest
 !/icon.png

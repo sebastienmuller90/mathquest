@@ -1,10 +1,10 @@
-/* MathQuest — Moteur de l'école primaire (CP → CM2), année scolaire 2026-2027.
+/* Finot Académie — Moteur de l'école primaire (CP → CM2), année scolaire 2026-2027.
    Ce fichier ne contient aucun contenu de chapitre : il fournit
    - le référentiel des classes et des matières du primaire ;
    - des aides de génération d'exercices (choix sans doublon, nombres, textes, ordre) ;
    - des générateurs réutilisables (banques de questions, associations, classements, suites) ;
    - des outils de français (conjugaison, nombres en lettres) et des visuels SVG ;
-   - la mise en forme des chapitres pour le moteur commun de MathQuest (index.html) ;
+   - la mise en forme des chapitres pour le moteur commun de Finot Académie (index.html) ;
    - les messages du prof particulier adaptés à l'âge.
    Les chapitres sont déclarés dans data/primary/<classe>.js via MQPrimary.add(). */
 (function(){
@@ -48,7 +48,7 @@ const nf=n=>{const s=String(Math.abs(n));const parts=s.split('.');parts[0]=parts
 const dec=(x,k=2)=>{const v=Math.round(x*10**k)/10**k;return nf(v);};
 const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b)[a,b]=[b,a%b];return a;};
 
-/* Constructeurs de questions compatibles avec la correction de MathQuest (index.html : check/answerText). */
+/* Constructeurs de questions compatibles avec la correction de Finot Académie (index.html : check/answerText). */
 function ch(q,good,bad,o={}){
   // Clé sensible à la casse et à la ponctuation : « le chat dort » et « Le chat dort. » sont deux réponses différentes.
   const key=x=>String(x==null?'':x).replace(/<[^>]*>/g,'').replace(/&nbsp;|\u00a0|\u202f/g,' ').replace(/\s+/g,' ').trim();const gk=key(good);const seen=new Set([gk]);const uniq=[];
@@ -325,7 +325,7 @@ const NOTES={
   'p-sciences':'Nouveau programme de sciences et technologie en CP et CM1 (2026-2027) ; le CM2 suit encore le programme de sciences et technologie du cycle 3 de 2023 (BO n°25 du 22 juin 2023).',
   'p-hg':'Nouveau programme d’histoire-géographie en CP et CM1 (2026-2027) ; le CM2 suit encore le programme de 2020.',
   'p-anglais':'Nouveau programme de langues vivantes en CP et CM1 (2026-2027) ; CE1, CE2 et CM2 suivent encore le programme 2020.',
-  'p-eps':'Nouveau programme d’EPS en CP et CM1 (2026-2027) ; CE1, CE2 et CM2 suivent encore le programme 2020. MathQuest ne travaille que les connaissances (règles, sécurité, vocabulaire) : la pratique physique reste indispensable.',
+  'p-eps':'Nouveau programme d’EPS en CP et CM1 (2026-2027) ; CE1, CE2 et CM2 suivent encore le programme 2020. Finot Académie ne travaille que les connaissances (règles, sécurité, vocabulaire) : la pratique physique reste indispensable.',
   'p-evar':'Programme d’éducation à la vie affective et relationnelle applicable depuis 2025-2026 à l’école.',
   'p-francais':'CP, CE1, CE2 : programme 2024 applicable depuis 2025-2026. CM1 : programme 2025 applicable depuis 2025-2026. CM2 : nouveau programme applicable en 2026-2027.',
   'p-maths':'CP, CE1, CE2 : programme 2024 applicable depuis 2025-2026. CM1 : programme 2025 applicable depuis 2025-2026. CM2 : nouveau programme applicable en 2026-2027.'

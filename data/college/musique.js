@@ -1,4 +1,4 @@
-/* MathQuest — Éducation musicale (collège), année scolaire 2026-2027 : 24 chapitres reconstruits (musique6a … musique3f).
+/* Finot Académie — Éducation musicale (collège), année scolaire 2026-2027 : 24 chapitres reconstruits (musique6a … musique3f).
    Programmes appliqués :
    - 6e (cycle 3) : programme d’éducation musicale du cycle 3, arrêté du 9 novembre 2015 modifié (BOEN spécial n°11 du 26 novembre 2015),
      version consolidée Éduscol « Programme du cycle 3 en vigueur à la rentrée 2023 », d’après le BOEN n°31 du 30 juillet 2020 et le BOEN n°25 du 22 juin 2023.

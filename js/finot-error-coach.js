@@ -1,4 +1,4 @@
-/* MathQuest — Finot analyse une erreur sans IA générative.
+/* Finot Académie — Finot analyse une erreur sans IA générative.
    Diagnostic prudent basé sur la compétence, le type de question et les erreurs récentes. */
 (function(){
 'use strict';
@@ -21,10 +21,11 @@ function historyHint(cid){try{const weak=MQCompetency.explainWeak(S,cid);if(weak
 function explain(){const x=currentLast();if(!x)return finotPush?.('finot','Je n’ai pas encore d’erreur récente à analyser pour ce profil. Fais un exercice, puis reviens me voir si quelque chose bloque.');const c=CHMAP[x.cid],cause=likelyCause(x);finotChatEnsure?.();finotPush?.('finot',`<b>${escF(c?.icon||'📘')} ${escF(c?.name||'Cette notion')}</b><p>${cause}</p>${historyHint(x.cid)}<p class="muted small">Je ne peux pas savoir exactement ce que tu pensais au moment de répondre. Je te montre donc le point le plus probable à vérifier d’abord.</p><div class="finot-topic-actions"><button class="fch-chip kid" data-a="finotremediate:${x.cid}">🌱 Revoir simplement</button><button class="fch-chip kid" data-a="finotretry:${x.cid}">🎯 Réessayer</button></div>`);finotChipsRender?.();setTimeout(()=>window.MQFinotRemediation?.pushTip?.(),0);}
 function remember(){try{const profile=profileId();if(typeof M!=='undefined'&&M?.q&&M?.cid)LAST={profile,cid:M.cid,q:M.q,your:M.your||'',skill:skillOf(M.cid,M.q),at:Date.now()};else if(typeof L!=='undefined'&&L){const k=L.steps?.[L.i]?.k,q=k==='practice'?L.pq:L.q;if(q)LAST={profile,cid:L.id,q,skill:skillOf(L.id,q),at:Date.now()};}}catch(e){}}
 function addButton(){const fb=document.querySelector('#fb .fb,.lfb,.lesson-feedback');if(!fb||fb.querySelector('[data-a="finotwhy"]'))return;fb.insertAdjacentHTML('beforeend','<button class="btn ghost wide" data-a="finotwhy">🦊 Finot, pourquoi je me suis trompé ?</button>');}
-if(typeof result==='function'){const base=result;result=function(ok){if(!ok)remember();const r=base.apply(this,arguments);if(!ok)setTimeout(addButton,0);return r;};}
-if(typeof lvalidate==='function'){const base=lvalidate;lvalidate=function(){let before=null;try{const k=L?.steps?.[L.i]?.k,q=k==='practice'?L?.pq:L?.q;before=q?{profile:profileId(),cid:L.id,q,skill:skillOf(L.id,q),at:Date.now()}:null;}catch(e){}const oldWrong=L?.wrong||0,r=base.apply(this,arguments);try{if(before&&(L?.wrong||0)>oldWrong){LAST=before;setTimeout(addButton,0);}}catch(e){}return r;};}
-if(typeof activateProfile==='function'&&!activateProfile.__mqFinotError){const base=activateProfile;activateProfile=function(){LAST=null;return base.apply(this,arguments);};activateProfile.__mqFinotError=true;}
-const oldAsk=typeof finotAsk==='function'?finotAsk:null;if(oldAsk){finotAsk=function(text){const t=String(text||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(/pourquoi.*(tromp|faux|rate)|qu.*(rate|erreur)|comprend.*erreur/.test(t)){finotChatEnsure?.();finotPush?.('you',escF(text));return explain();}return oldAsk.apply(this,arguments);};}
+// Après une réponse fausse : mémoriser l'erreur (pour ce profil) et proposer « Finot, pourquoi je me suis trompé ? ».
+MQHooks.on('answer:after',x=>{if(x.ok)return;LAST={profile:profileId(),cid:x.cid,q:x.q,your:(x.mode==='lesson'?x.L&&x.L.your:x.M&&x.M.your)||'',skill:skillOf(x.cid,x.q),at:Date.now()};if(x.mode!=='flash')addButton();},{id:'finot-error-coach',order:30});
+
+MQHooks.on('profile:changed',()=>{LAST=null;},{id:'finot-error-coach'});
+MQHooks.on('finot:intent',ask=>{const t=ask.raw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(window.MQFinotRemediation?.asksWhy?.(ask.raw)||/pourquoi.*(tromp|faux|fauss|rate)|qu.*(rate|erreur)|comprend.*erreur/.test(t)){ask.echo();explain();return true;}return false;},{id:'finot-error-why',order:20});
 Object.assign(ACT,{finotwhy:()=>{finotOpen?.();setTimeout(explain,20);},finotremediate:id=>{finotClose?.();window.MQPedagogy?.openLessonAtLevel(id,1);},finotretry:id=>{finotClose?.();if(window.MQPedagogy?.startMissionAtLevel)MQPedagogy.startMissionAtLevel(id,1);else startMission([id]);}});
 window.MQFinotError={version:'1.2',explain,clear(){LAST=null;},get last(){return currentLast();}};
 })();

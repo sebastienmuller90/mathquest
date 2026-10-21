@@ -1,4 +1,4 @@
-/* MathQuest — Français 5e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr5a … fr5z).
+/* Finot Académie — Français 5e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr5a … fr5z).
    Programme appliqué : programme de français du cycle 4, arrêté du 18 février 2026 (JO du 4 mars 2026, NOR MENE2602912A),
    publié au BO n°10 du 5 mars 2026 (annexe 1 « Programme de français pour le cycle 4 ») ; il entre en application en classe de
    cinquième à la rentrée 2026-2027 (en 4e à la rentrée 2027, en 3e à la rentrée 2028) — article 3 de l’arrêté.
@@ -6,7 +6,7 @@
      https://www.education.gouv.fr/bo/2026/Hebdo10/MENE2602912A
      https://www.education.gouv.fr/sites/default/files/document/Annexe%201%20%E2%80%93%20Programme%20de%20fran%C3%A7ais%20pour%20le%20cycle%204-480713.pdf
    Orthographe : les graphies traditionnelles et rectifiées (1990) sont acceptées de manière égale (annexe 1, « Principes »).
-   Les extraits cités sont du domaine public et reproduits exactement ; les autres textes ont été écrits pour MathQuest. */
+   Les extraits cités sont du domaine public et reproduits exactement ; les autres textes ont été écrits pour Finot Académie. */
 (function(){
 'use strict';
 const MQ=window.MQCollege;if(!MQ)return;const H=MQ.H;
@@ -92,7 +92,7 @@ const fieldQ=d=>{const f=P(FK);const other=P(FK.filter(x=>x!==f));
     return ch(`Quel mot n’appartient pas au champ lexical ${f} ?`,intr,ins,{expl:`« ${intr} » relève du champ lexical ${other} ; « ${ins.join(' », « ')} » renvoient au thème ${f}.`,hint:'Un champ lexical regroupe les mots qui se rapportent à un même thème.'});}
   const w=pickN(FIELDS[f],d===1?4:3);return ch(`Les mots « ${w.join(' », « ')} » forment le champ lexical…`,f,pickN(FK.filter(x=>x!==f),3),{expl:`Tous ces mots se rapportent au thème ${f}.`,hint:'Cherche le thème commun.'});};
 
-/* ---------- Textes d'étude écrits pour MathQuest ---------- */
+/* ---------- Textes d'étude écrits pour Finot Académie ---------- */
 const TX1='« Le soir tombait sur la lande. Aélis serra la bride de son cheval : derrière elle, les torches des poursuivants dansaient entre les arbres. Elle aurait pu fuir vers le nord, où l’attendait la sécurité du château paternel. Elle tourna pourtant bride vers le village, où dormaient des enfants qui ne savaient rien du danger. »';
 const TX2='« Au bout de la rue, la ville ouvrait sa gueule de béton. Elle avalait chaque matin des milliers de passants pressés et les recrachait le soir, gris et fatigués. Sur les trottoirs, personne ne levait les yeux. »';
 const TX3='« Maître Renard, par l’odeur alléché, / Lui tint à peu près ce langage : / “Hé ! bonjour, Monsieur du Corbeau. / Que vous êtes joli ! que vous me semblez beau !” » (Jean de La Fontaine, « Le Corbeau et le Renard », <i>Fables</i>, 1668)';

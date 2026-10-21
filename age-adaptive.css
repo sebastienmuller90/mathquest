@@ -1,4 +1,4 @@
-/* MathQuest — densité et ergonomie adaptées à l'âge. Aucune fonctionnalité n'est masquée. */
+/* Finot Académie — densité et ergonomie adaptées à l'âge. Aucune fonctionnalité n'est masquée. */
 body[data-mq-age="young"] #app{max-width:680px}
 body[data-mq-age="young"] .btn{min-height:52px;font-size:19px}
 body[data-mq-age="young"] .btn.big{min-height:62px;font-size:22px}

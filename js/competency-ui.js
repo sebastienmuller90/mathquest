@@ -1,4 +1,4 @@
-/* MathQuest — affichage léger des micro-compétences et contextes d'exercice. */
+/* Finot Académie — affichage léger des micro-compétences et contextes d'exercice. */
 (function(){
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;
@@ -8,9 +8,9 @@ function currentQuestion(){try{if(typeof M!=='undefined'&&M?.q)return M.q;if(typ
 function injectQuestionMeta(q){if(!q?._mq)return;const card=document.querySelector('.qcard,.lcard');if(!card||card.querySelector('.mq-qmeta'))return;const qt=card.querySelector('.qtext');if(!qt)return;const m=q._mq,html=`<div class="mq-qmeta">${m.skillLabel?`<span class="mq-skill">🎯 ${escC(m.skillLabel)}</span>`:''}${m.context?`<span class="mq-context">🧭 ${escC(m.context)}</span>`:''}</div>`;qt.insertAdjacentHTML('beforebegin',html);}
 function injectReflection(q){if(!q?._mq?.reflect)return;const fb=document.querySelector('#fb .fb,.lfb,.lesson-feedback');if(!fb||fb.querySelector('.mq-reflect'))return;fb.insertAdjacentHTML('beforeend',`<details class="mq-reflect"><summary>🧠 Je vérifie que j’ai compris</summary><p>${escC(q._mq.reflect)}</p></details>`);}
 style();
-if(typeof renderQ==='function'){const base=renderQ;renderQ=function(){const r=base.apply(this,arguments);try{injectQuestionMeta(M?.q);}catch(e){}return r;};}
-if(typeof renderLesson==='function'){const base=renderLesson;renderLesson=function(){const r=base.apply(this,arguments);try{injectQuestionMeta(currentQuestion());}catch(e){}return r;};}
-if(typeof result==='function'){const base=result;result=function(){const q=typeof M!=='undefined'&&M?.q;const r=base.apply(this,arguments);try{injectReflection(q);}catch(e){}return r;};}
-if(typeof lvalidate==='function'){const base=lvalidate;lvalidate=function(){const q=currentQuestion();const r=base.apply(this,arguments);try{injectReflection(q);}catch(e){}return r;};}
+MQHooks.on('question:after-render',({q})=>injectQuestionMeta(q),{id:'competency-meta',order:10});
+MQHooks.on('lesson:rendered',({q})=>injectQuestionMeta(q),{id:'competency-meta',order:10});
+MQHooks.on('answer:after',({q})=>injectReflection(q),{id:'competency-reflect',order:10});
+
 window.MQCompetencyUI={version:'1.1',injectQuestionMeta,injectReflection};
 })();

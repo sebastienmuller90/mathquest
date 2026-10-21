@@ -1,4 +1,4 @@
-/* MathQuest — rotation anti-mémorisation des exercices.
+/* Finot Académie — rotation anti-mémorisation des exercices.
    Les générateurs existants restent la source de vérité ; ce moteur change leur graine toutes les 12 h,
    maintient un historique court et réserve un espace de tirage séparé aux interrogations parent.
    V1.2 : mémoire bornée, écritures groupées et tirages reproductibles pour reprendre un contrôle après rechargement. */
@@ -18,14 +18,16 @@ function rng(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=
 function plain(s){return String(s??'').replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;/g,' ').replace(/\s+/g,' ').trim().toLowerCase();}
 function signature(q){if(!q)return 'null';let a='';if(q.type==='choice')a=plain(q.choices?.[q.ans]);else if(q.type==='frac')a=(q.ans||[]).join('/');else if(q.type==='multi')a=(q.ans||[]).join('|');else if(q.type==='text')a=(q.acc||[])[0]||'';else a=String(q.ans??'');return hash32([q.type,plain(q.q),plain(a)].join('|')).toString(36);}
 function original(cid){const ch=CHMAP[cid],orig=ch&&ch.__mqOriginalGenerator;if(!orig)throw new Error('Générateur absent : '+cid);return [ch,orig];}
-function generateSeeded(cid,d,m,seedKey){const [ch,orig]=original(cid),old=Math.random,seed=hash32([cid,d,m||'practice',String(seedKey)].join('|'));try{Math.random=rng(seed);return orig.call(ch,d);}finally{Math.random=old;}}
+// Décorateurs ('question:generated') : compétence/contexte (10), transfert (20), situation (30). Jamais la réponse attendue.
+const decorated=(q,cid,d,m)=>MQHooks.filter('question:generated',q,{cid,d,mode:m||'practice'});
+function generateSeeded(cid,d,m,seedKey){const [ch,orig]=original(cid),old=Math.random,seed=hash32([cid,d,m||'practice',String(seedKey)].join('|'));let q;try{Math.random=rng(seed);q=orig.call(ch,d);}finally{Math.random=old;}return decorated(q,cid,d,m);}
 function bucket(cid,d,m){prune();const M=loadMem(),w=nowWindow(),k=[activeProfile(),cid,d,m].join('|');let b=M.b[k];if(!b||b.w!==w)b=M.b[k]={w,c:0,recent:Array.isArray(b?.recent)?b.recent.slice(-CARRY):[]};return b;}
 function generate(cid,d,m=mode){const [ch,orig]=original(cid),b=bucket(cid,d,m),w=nowWindow();let q=null,sig='';
  for(let attempt=0;attempt<12;attempt++){
   const n=b.c++,seed=hash32([cid,d,m,w,n,attempt].join('|')),old=Math.random;try{Math.random=rng(seed);q=orig.call(ch,d);}finally{Math.random=old;}
   sig=signature(q);if(!b.recent.includes(sig)||attempt===11)break;
  }
- b.recent.push(sig);if(b.recent.length>RECENT_MAX)b.recent.splice(0,b.recent.length-RECENT_MAX);scheduleSave();return q;}
+ b.recent.push(sig);if(b.recent.length>RECENT_MAX)b.recent.splice(0,b.recent.length-RECENT_MAX);scheduleSave();return decorated(q,cid,d,m);}
 for(const ch of Object.values(CHMAP))if(ch&&typeof ch.g==='function'&&!ch.__mqRotationWrapped){ch.__mqOriginalGenerator=ch.g;ch.g=function(d){return generate(ch.id,d,mode);};ch.__mqRotationWrapped=true;}
 function withMode(next,fn){const prev=mode;mode=next||'practice';try{return fn();}finally{mode=prev;}}
 function resetForTests(){mem={v:1,b:{}};dirty=1;persist();}

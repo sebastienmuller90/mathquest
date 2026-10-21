@@ -1,4 +1,4 @@
-/* MathQuest V8.2 — Mathématiques, programme officiel 2026-2027
+/* Finot Académie V8.2 — Mathématiques, programme officiel 2026-2027
    6e : BO n°16 du 17 avril 2025
    5e : BO n°10 du 5 mars 2026
    4e/3e : BO n°31 du 30 juillet 2020 + attendus Eduscol encore applicables en 2026-2027. */

@@ -1,9 +1,11 @@
-import { chromium } from 'playwright';
+import * as playwright from 'playwright';
+// Moteur choisi par la CI (matrice chromium / firefox / webkit) ; chromium par défaut.
+const engine=playwright[process.env.MQ_BROWSER||'chromium'];
 import fs from 'node:fs';
 
 const base=process.env.MQ_BASE_URL||'http://127.0.0.1:4173';
 fs.mkdirSync('tests/screenshots',{recursive:true});
-const browser=await chromium.launch({headless:true});
+const browser=await engine.launch({headless:true});
 const ctx=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'reduce'});
 await ctx.addInitScript(()=>{
  const p={version:3,active:'qa',profiles:{qa:{name:'Audit QA',avatar:'🦊',grade:'6e',subj:'maths',sound:false,dailyGoal:20,sync:{child:'',parent:''},tts:{auto:false,rate:1,voices:{}}}}};
@@ -16,8 +18,8 @@ page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE: '+m.text())});
 await page.goto(base+'/index.html',{waitUntil:'load',timeout:120000});
 await page.waitForFunction(()=>document.querySelector('#app')?.textContent?.trim().length>10,{timeout:60000});
 await page.waitForFunction(()=>typeof ACT!=='undefined'&&typeof CHMAP!=='undefined'&&Object.keys(CHMAP).length>1000,{timeout:60000});
-// audit-fixes.js est injecté par path-report.js : il doit être actif dans l'application réellement rendue.
-await page.waitForFunction(()=>window.MQ_AUDIT_FIXES_VERSION||document.querySelector('script[src*="audit-fixes"]'),{timeout:15000}).catch(()=>{});
+// Points d'extension (js/app-hooks.js) chargés statiquement : les abonnements sont actifs dès le chargement.
+await page.waitForFunction(()=>window.MQHooks&&MQHooks.has('answer:after','question-transfer'),{timeout:15000});
 
 const result=await page.evaluate(async()=>{
  const out={chapters:0,worlds:0,lessonSteps:0,grades:{},screens:0,lexCats:0,pathBuilds:0,errors:[],warnings:[]};
@@ -71,6 +73,6 @@ for(const [name,w,h] of [['mobile',390,844],['tablet',768,1024],['desktop',1440,
 // Page parent distante sans identifiant : elle doit au minimum se charger sans exception JS.
 const parent=await ctx.newPage();parent.on('pageerror',e=>errors.push('PARENT PAGE: '+e.message));parent.on('console',m=>{if(m.type()==='error')errors.push('PARENT CONSOLE: '+m.text())});await parent.goto(base+'/parent.html',{waitUntil:'load',timeout:120000});await parent.waitForTimeout(500);if(!(await parent.locator('body').innerText()).trim())errors.push('PARENT: page vide');await parent.screenshot({path:'tests/screenshots/parent-desktop.png',fullPage:true});
 // Offline PWA : après installation SW, la page doit se recharger depuis le cache.
-await page.bringToFront();await page.setViewportSize({width:390,height:844});await page.goto(base+'/index.html',{waitUntil:'load'});const swReady=await page.evaluate(async()=>{if(!('serviceWorker'in navigator))return false;try{await navigator.serviceWorker.ready;return true}catch{return false}});if(!swReady)errors.push('PWA: service worker non prêt');else{await page.reload({waitUntil:'load'});await ctx.setOffline(true);try{await page.reload({waitUntil:'domcontentloaded',timeout:30000});if(!(await page.locator('#app').innerText()).trim())errors.push('PWA: application vide hors ligne')}catch(e){errors.push('PWA offline reload: '+e.message)}finally{await ctx.setOffline(false)}}
+await page.bringToFront();await page.setViewportSize({width:390,height:844});await page.goto(base+'/index.html',{waitUntil:'load'});const swReady=await page.evaluate(async()=>{if(!('serviceWorker'in navigator))return false;try{await navigator.serviceWorker.ready;return true}catch{return false}});if(!swReady)errors.push('PWA: service worker non prêt');else if(process.env.MQ_BROWSER==='webkit'){/* Playwright WebKit ne sait pas simuler setOffline avec un service worker (« internal error ») : la vraie coupure (serveur arrêté) y est vérifiée par tests/pwa-update.test.js. */console.log('PWA hors ligne : vérifié par tests/pwa-update.test.js sous WebKit (serveur réellement arrêté)');}else{await page.reload({waitUntil:'load'});await ctx.setOffline(true);try{await page.reload({waitUntil:'domcontentloaded',timeout:30000});if(!(await page.locator('#app').innerText()).trim())errors.push('PWA: application vide hors ligne')}catch(e){errors.push('PWA offline reload: '+e.message)}finally{await ctx.setOffline(false)}}
 await browser.close();
 const report={...result,browserErrors:errors,errorCount:result.errors.length+errors.length};fs.writeFileSync('tests/browser-audit-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));if(report.errorCount)process.exitCode=1;else console.log('BROWSER_AUDIT_OK');

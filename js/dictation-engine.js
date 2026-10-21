@@ -1,4 +1,4 @@
-/* MathQuest — Moteur de dictée (V8.13).
+/* Finot Académie — Moteur de dictée (V8.13).
    Une seule phrase de référence exacte ; la réponse de l'élève est alignée mot à mot et chaque écart est classé :
    mot manquant, mot ajouté, orthographe, accent, majuscule, ponctuation, accord, terminaison verbale, homophone, lettre muette, apostrophe.
    Différences purement typographiques tolérées sans pénalité : espaces multiples, espace final, apostrophe droite/typographique,
@@ -52,6 +52,8 @@ function align(ref,ans){const n=ref.length,m=ans.length;const D=Array.from({leng
   const out=[];let i=n,j=m;while(i>0||j>0){const b=B[i][j];if(b==='s'){out.push({r:ref[i-1],a:ans[j-1],ri:i-1});i--;j--;}else if(b==='d'){out.push({r:ref[i-1],a:null,ri:i-1});i--;}else{out.push({r:null,a:ans[j-1],ri:i});j--;}}
   return out.reverse();}
 function levelOf(score){for(const [min,k,label] of LEVELS)if(score>=min)return {k,label};return {k:'reprendre',label:LEVELS[4][2]};}
+/* Position de chaque signe de ponctuation : nombre de mots qui le précèdent, par signe. */
+function punctPositions(str){const t=String(str??'').replace(/[\u00a0\u202f\t\r\n]/g,' ').replace(/['‘`´]/g,'’').replace(/\s+/g,' ').trim(),re=/[\p{L}\p{N}]+(?:[’\-][\p{L}\p{N}]+)*’?|[,.;:!?…«»()"—–]/gu,o={};let m,w=0;while((m=re.exec(t))){if(/^[,.;:!?…«»()"—–]$/u.test(m[0]))(o[m[0]]||(o[m[0]]=[])).push(w);else w++;}return o;}
 /* Analyse principale. opts : {evalCase:false, punctuation:true} */
 function analyze(reference,answer,opts={}){const o={evalCase:false,punctuation:true,...opts};
   const rt=tokenize(reference),at=tokenize(answer);const rw=rt.filter(x=>!x.p).map(x=>x.t),aw=at.filter(x=>!x.p).map(x=>x.t);
@@ -63,6 +65,8 @@ function analyze(reference,answer,opts={}){const o={evalCase:false,punctuation:t
     else{errors.push({type:'extra',ref:'',got:x.a});tokens.push({status:'extra',ref:'',got:x.a});}}
   if(o.punctuation){const cnt=a=>a.reduce((m,p)=>(m[p]=(m[p]||0)+1,m),{});const cr=cnt(rp),ca=cnt(ap);
     for(const p of new Set([...rp,...ap])){const d=(cr[p]||0)-(ca[p]||0);for(let k=0;k<Math.abs(d);k++)errors.push({type:'ponctuation',ref:d>0?p:'',got:d<0?p:''});}}
+  // Ponctuation déplacée (même signe, mais pas après le même mot) : comptée comme une erreur de ponctuation.
+  if(o.punctuation){const A=punctPositions(reference),B=punctPositions(answer);for(const p of new Set([...Object.keys(A),...Object.keys(B)])){const x=A[p]||[],y=B[p]||[];for(let i=0;i<Math.min(x.length,y.length);i++)if(x[i]!==y[i])errors.push({type:'ponctuation',ref:p,got:p,position:true});}}
   const denom=rw.length+(o.punctuation?.25*rp.length:0)||1;const pen=errors.reduce((s,e)=>s+(W[e.type]||1),0);
   const score=errors.length?Math.max(0,Math.min(99,Math.round((1-pen/denom)*100))):100;
   return {reference:typo(reference),answer:typo(answer),score,level:levelOf(score),errors,tokens,

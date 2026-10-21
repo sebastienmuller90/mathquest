@@ -1,4 +1,4 @@
-/* MathQuest — situations de transfert : relier une notion à un contexte nouveau sans modifier la réponse de l'exercice. */
+/* Finot Académie — situations de transfert : relier une notion à un contexte nouveau sans modifier la réponse de l'exercice. */
 (function(){
 'use strict';
 const common=[

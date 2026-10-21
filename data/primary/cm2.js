@@ -1,4 +1,4 @@
-/* MathQuest — CM2 (cycle 3), année scolaire 2026-2027.
+/* Finot Académie — CM2 (cycle 3), année scolaire 2026-2027.
    Français et mathématiques : programmes 2025 (BO n°16 du 17/04/2025), applicables en CM2 à la rentrée 2026.
    Sciences et technologie : programme du cycle 3 de 2023 (BO n°25 du 22/06/2023), toujours en vigueur en CM2 en 2026-2027.
    Histoire-géographie, langues vivantes, EPS, arts plastiques, éducation musicale :

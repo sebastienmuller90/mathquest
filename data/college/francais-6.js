@@ -1,11 +1,11 @@
-/* MathQuest — Français 6e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr6a … fr6z).
+/* Finot Académie — Français 6e (collège), année scolaire 2026-2027 : 26 chapitres reconstruits (fr6a … fr6z).
    Programme appliqué : programme de français du cycle 3 publié au BO n°16 du 17 avril 2025 (NOR MENE2504620A),
    applicable en 6e depuis la rentrée 2025 — annexe 1 « Programme de français pour le cycle 3 »
    (https://www.education.gouv.fr/sites/default/files/ensel620_annexe1.pdf ; BO : https://www.education.gouv.fr/bo/2025/Hebdo16/MENE2504620A).
    Ressources d'accompagnement : Éduscol, « Exemples pour la mise en œuvre du programme de français en 6e » (2025) ;
    DGESCO, « La grammaire du français du CP à la 6e » (guide fondamental) et « La grammaire du français. Terminologie grammaticale » (2020).
    Vérifié le 7 octobre 2026 sur education.gouv.fr (annexe PDF du BO) et eduscol.education.gouv.fr.
-   Textes : extraits écrits pour MathQuest, ou citations courtes et exactes d'œuvres du domaine public (Bible, trad. Segond 1910 ;
+   Textes : extraits écrits pour Finot Académie, ou citations courtes et exactes d'œuvres du domaine public (Bible, trad. Segond 1910 ;
    La Fontaine ; Molière ; Racine ; Hugo ; Verlaine ; Rimbaud ; Baudelaire ; Ronsard). */
 (function(){
 'use strict';

@@ -1,4 +1,4 @@
-/* MathQuest — Sciences de la vie et de la Terre (collège) : 32 chapitres reconstruits (6e, 5e, 4e, 3e), année scolaire 2026-2027.
+/* Finot Académie — Sciences de la vie et de la Terre (collège) : 32 chapitres reconstruits (6e, 5e, 4e, 3e), année scolaire 2026-2027.
    Programme(s) appliqué(s) :
    - 6e : programme de sciences et technologie du cycle 3, annexe de l’arrêté du 15 juin 2023 (NOR MENE2314101A) publiée au BO n°25 du 22 juin 2023
      (version « d’après le BOEN n°31 du 30 juillet 2020 et le BOEN n°25 du 22 juin 2023 »), thèmes « Le vivant, sa diversité et les fonctions qui le

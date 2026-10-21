@@ -1,4 +1,4 @@
-/* MathQuest — banques de situations pédagogiques combinables avec les générateurs procéduraux. */
+/* Finot Académie — banques de situations pédagogiques combinables avec les générateurs procéduraux. */
 (function(){
 'use strict';
 const common={

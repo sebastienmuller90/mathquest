@@ -4,10 +4,7 @@
 if(typeof window==='undefined'||!window.MQPedagogy)return;
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
 
-// Un niveau choisi manuellement reste fixe pendant le quiz/la mission.
-if(typeof lvalidate==='function'&&!lvalidate.__manualLevelFixed){const base=lvalidate;lvalidate=function(...args){const chosen=L&&L.lessonLevel;const r=base(...args);if(chosen&&L){L.quizDifficulty=chosen;L.quizStreak=0;}return r;};lvalidate.__manualLevelFixed=true;}
-if(typeof result==='function'&&!result.__manualLevelFixed){const base=result;result=function(ok){const chosen=M&&M.forcedDifficulty,cid=M&&M.cid,r=base(ok);if(chosen&&M){M.d=chosen;if(M.dById&&cid)M.dById[cid]=chosen;}return r;};result.__manualLevelFixed=true;}
-if(typeof ACT==='object'&&typeof ACT.conf==='function'&&!ACT.conf.__manualLevelFixed){const base=ACT.conf;const fixed=function(v,el){const chosen=L&&L.lessonLevel;const r=base(v,el);if(chosen&&L)L.quizDifficulty=chosen;return r;};fixed.__manualLevelFixed=true;ACT.conf=fixed;}
+// Le niveau choisi (Facile/Moyen/Difficile) reste fixe : géré dans lvalidate, result et ACT.conf (cœur).
 
 function speakFinot(html){if(!['CP','CE1','CE2'].includes(String(S?.grade||'').toUpperCase()))return;try{if(typeof ttsSay==='function'){const d=document.createElement('div');d.innerHTML=String(html||'');const t=(d.textContent||'').replace(/\s+/g,' ').trim();if(t)ttsSay({t,l:'fr-FR'});}}catch(e){}}
 function routeIntent(raw){const t=norm(raw);if(!t)return false;
@@ -22,10 +19,10 @@ function routeIntent(raw){const t=norm(raw);if(!t)return false;
  if(has('mes erreurs','revoir mes erreurs','erreurs')){if(typeof ACT.mistakes==='function'){finotClose();ACT.mistakes();return true;}}
  return false;
 }
-if(typeof finotAsk==='function'&&!finotAsk.__intentUpgrade){const base=finotAsk;finotAsk=function(text){const t=String(text||'').trim();if(!t)return;finotChatEnsure();finotPush('you',typeof esc==='function'?esc(t):t);if(routeIntent(t))return;const m=typeof finotMatch==='function'?finotMatch(t):null;const html=m?m.a:FINOT_FALLBACK;finotPush('finot',html);finotChipsRender();};finotAsk.__intentUpgrade=true;}
+MQHooks.on('finot:intent',ask=>{ask.echo();return routeIntent(ask.raw);},{id:'pedagogy-route',order:50});
 
 // Toute réponse déclenchée par les boutons peut être lue aux jeunes élèves.
-if(typeof finotPush==='function'&&!finotPush.__youngVoice){const base=finotPush;finotPush=function(who,html){const r=base(who,html);if(who==='finot')speakFinot(html);return r;};finotPush.__youngVoice=true;}
+MQHooks.on('finot:message',({who,html})=>{if(who==='finot')speakFinot(html);},{id:'finot-young-voice'});
 
 window.MQPedagogy.intentVersion='1.2';
 })();

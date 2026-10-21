@@ -1,4 +1,4 @@
-/* MathQuest — Éducation physique et sportive (EPS) au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (eps6a…eps3f).
+/* Finot Académie — Éducation physique et sportive (EPS) au collège, année scolaire 2026-2027 : 24 chapitres reconstruits (eps6a…eps3f).
    Programme applicable : programme d'EPS du cycle 3 et du cycle 4, arrêté du 17 juillet 2020 modifiant l'arrêté du 9 novembre 2015
    (NOR MENE2018714A), BO n°31 du 30 juillet 2020. Un nouveau programme de cycle 3 (incluant la 6e) a été publié au BO du
    28 mai 2026 (NOR MENE2608631A) mais sa mise en application est progressive : CP et CM1 dès septembre 2026, déploiement complet

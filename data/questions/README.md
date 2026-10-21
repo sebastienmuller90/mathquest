@@ -1,10 +1,10 @@
-# MathQuest — banques de questions
+# Finot Académie — banques de questions
 
-Ce dossier complète les générateurs procéduraux de MathQuest.
+Ce dossier complète les générateurs procéduraux de Finot Académie.
 
 ## Principe
 
-MathQuest ne stocke pas des milliers de copies presque identiques d’un calcul. Chaque chapitre possède déjà un générateur `g(d)` capable de produire des variantes. Le moteur `js/question-rotation.js` lui ajoute :
+Finot Académie ne stocke pas des milliers de copies presque identiques d’un calcul. Chaque chapitre possède déjà un générateur `g(d)` capable de produire des variantes. Le moteur `js/question-rotation.js` lui ajoute :
 
 - une rotation par fenêtre de 12 heures ;
 - un compteur propre au chapitre et au niveau de difficulté ;
