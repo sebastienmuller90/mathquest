@@ -11,8 +11,8 @@ async function run(){
   await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
   await p.waitForFunction(()=>!!window.MQDys,{timeout:5000});
 
-  const boot=await p.evaluate(()=>({loaded:!!window.MQDys,css:!!document.getElementById('mq-dys-css'),js:!!document.getElementById('mq-dys-js'),defaults:MQDys.ensure(),classes:[...document.documentElement.classList]}));
-  T('Le module DYS est chargé une seule fois et désactivé par défaut',boot.loaded&&boot.css&&boot.js&&!boot.defaults.enabled&&!boot.classes.includes('mq-dys-on'),JSON.stringify(boot));
+  const boot=await p.evaluate(()=>({loaded:!!window.MQDys,css:document.querySelectorAll('link[href="js/dys-mode.css"]').length,js:document.querySelectorAll('script[src="js/dys-mode.js"]').length,defaults:MQDys.ensure(),classes:[...document.documentElement.classList]}));
+  T('Le module DYS est chargé statiquement une seule fois et désactivé par défaut',boot.loaded&&boot.css===1&&boot.js===1&&!boot.defaults.enabled&&!boot.classes.includes('mq-dys-on'),JSON.stringify(boot));
 
   await p.evaluate(()=>parentScreen('reglages'));await p.waitForSelector('.mq-dys-settings');
   const panel=await p.evaluate(()=>({title:document.querySelector('.mq-dys-settings h2')?.textContent,buttons:[...document.querySelectorAll('.mq-dys-settings [data-a^="dystoggle:"]')].length,hidden:[...document.querySelectorAll('.mq-dys-settings .mq-dys-sub')].every(x=>x.hidden)}));
@@ -41,8 +41,8 @@ async function run(){
 
   // Rendu 320 px : panneau parent lisible sans débordement horizontal.
   await p.setViewportSize({width:320,height:700});await p.evaluate(()=>parentScreen('reglages'));await p.waitForSelector('.mq-dys-settings');
-  const mobile=await p.evaluate(()=>{const card=document.querySelector('.mq-dys-settings'),r=card.getBoundingClientRect();return {left:r.left,right:r.right,w:r.width,vw:innerWidth,overflow:document.documentElement.scrollWidth-innerWidth,buttons:[...card.querySelectorAll('.mq-dys-toggle')].map(b=>({w:b.getBoundingClientRect().width,cw:b.closest('.mq-dys-row').getBoundingClientRect().width}))};});
-  T('Mobile 320 px : panneau et boutons restent dans le viewport, aucun débordement horizontal',mobile.left>=-1&&mobile.right<=mobile.vw+1&&mobile.overflow<=1&&mobile.buttons.every(x=>x.w<=x.cw+1),JSON.stringify(mobile));
+  const mobile=await p.evaluate(()=>{const card=document.querySelector('.mq-dys-settings'),r=card.getBoundingClientRect();return {left:r.left,right:r.right,w:r.width,vw:innerWidth,overflow:document.documentElement.scrollWidth-innerWidth,buttons:[...card.querySelectorAll('.mq-dys-toggle:not([hidden])')].filter(b=>b.offsetParent!==null).map(b=>({w:b.getBoundingClientRect().width,cw:b.closest('.mq-dys-row').getBoundingClientRect().width}))};});
+  T('Mobile 320 px : panneau et boutons visibles restent dans le viewport, aucun débordement horizontal',mobile.left>=-1&&mobile.right<=mobile.vw+1&&mobile.overflow<=1&&mobile.buttons.every(x=>x.w<=x.cw+1),JSON.stringify(mobile));
 
   T('Aucune erreur JavaScript pendant le parcours DYS',!errs.length,errs.slice(0,8).join(' | '));
  }finally{await b.close();srv.close();}
