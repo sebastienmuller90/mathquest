@@ -79,6 +79,9 @@ jobs:
       - name: Voix de Finot en fin d’exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: POC lecture à voix haute — capacités et confidentialité
+        if: matrix.browser == 'chromium'
+        run: node tests/reading-aloud-poc.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
