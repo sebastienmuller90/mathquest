@@ -42,15 +42,28 @@ const NOVELTY=/eloquence|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley
 // Voix féminines connues (lecture douce, demande du 21/10/2026) et voix masculines connues.
 const FEMALE=/audrey|am[ée]lie|aur[ée]lie|marie|c[ée]line|l[ée]a|denise|vivienne|eloise|brigitte|virginie|google fran[çc]ais|samantha|karen|serena|kate|moira|tessa|alice|federica|paola|elsa|isabella|libby|sonia|maisie/i;
 const MALE=/thomas|nicolas|daniel|henri|paul|claude|r[ée]my|jacques|antoine|j[ée]r[ôo]me|luca|arthur|oliver|gordon|rishi|diego|giorgio/i;
-function score(v,loc){const vl=String(v.lang||'').replace('_','-').toLowerCase(),L=loc.toLowerCase();let s=0;
+/* who='finot' : voix du personnage (idée du 21/10/2026) — masculine, douce, distincte de la voix des leçons. Une voix
+   masculine correcte passe avant une voix féminine premium ; une voix masculine robotique (Paul, eSpeak…) ne passe jamais
+   avant une voix naturelle : sans voix masculine correcte, Finot garde la meilleure voix, plus aiguë (voir FINOT). */
+function score(v,loc,who){const vl=String(v.lang||'').replace('_','-').toLowerCase(),L=loc.toLowerCase();let s=0;
   if(vl===L)s+=100;else if(vl.slice(0,2)===L.slice(0,2))s+=50;else return -1;
   const online=/online/i.test(v.name)||v.localService===false,offline=typeof navigator!=='undefined'&&navigator.onLine===false;
   if(online&&offline)return -1;
   const id=v.name+' '+(v.voiceURI||'');
   if(/premium/i.test(id))s+=45;else if(/enhanced|améliorée|amelioree/i.test(id))s+=35;else if(QUALITY.test(id))s+=30;if(/compact/i.test(id))s-=5;
   if(/google/i.test(v.name))s+=12;if(/apple|amélie|thomas|audrey|aurélie|daniel|alice|federica|luca/i.test(v.name))s+=8;
-  if(FEMALE.test(v.name))s+=15;else if(MALE.test(v.name))s-=10;
-  if(NOVELTY.test(id))s-=60;if(ROBOTIC.test(v.name)&&!QUALITY.test(v.name))s-=20;if(v.localService)s+=1;return s;}
+  const robotic=ROBOTIC.test(v.name)&&!QUALITY.test(v.name);
+  if(who==='finot'){if(MALE.test(v.name)&&!FEMALE.test(v.name))s+=60;if(robotic)s-=60;}
+  else if(FEMALE.test(v.name))s+=15;else if(MALE.test(v.name))s-=10;
+  if(NOVELTY.test(id))s-=60;if(robotic)s-=20;if(v.localService)s+=1;return s;}
+// Ton de Finot : un peu plus aigu et vif qu'un adulte (personnage de dessin animé), sans devenir criard.
+const FINOT={pitchMale:1.2,pitchOther:1.32,rate:1};
+function isMaleVoice(v){return !!(v&&MALE.test(v.name)&&!FEMALE.test(v.name));}
+/* Voix de Finot : {voice, male, pitch, rate, locale} ; ignore le choix fait pour les leçons (c'est un personnage). */
+function finotVoice(l='fr'){const loc=locale(l),vs=st.voices.length?st.voices:refresh();
+  const ranked=vs.map(v=>[score(v,loc,'finot'),v]).filter(x=>x[0]>=0).sort((a,b)=>b[0]-a[0]);const v=ranked.length?ranked[0][1]:null,male=isMaleVoice(v);
+  const status=!vs.length?'engine-default':!v?'unavailable':String(v.lang||'').replace('_','-').toLowerCase()===loc.toLowerCase()?'exact':'language';
+  return {voice:v,male,pitch:male?FINOT.pitchMale:FINOT.pitchOther,rate:FINOT.rate,locale:loc,status};}
 /* Renvoie {voice, status, locale} — status : 'exact' | 'language' | 'preferred' | 'engine-default' (aucune voix listée) | 'unavailable'. */
 function pickVoice(l){const loc=locale(l),la=lang2(l);const vs=st.voices.length?st.voices:refresh();
   if(!vs.length)return {voice:null,status:'engine-default',locale:loc};
@@ -122,12 +135,13 @@ function rateFor(l,{slow=false,young=false,type='phrase'}={}){const la=lang2(l);
    deux morceaux (les lectures paraissaient hachées, surtout sur iPhone). onsegment(i) : début du morceau i de segs. */
 function speak(segs,opt={}){const rep={spoken:[],skipped:[]};const s=synth(),U=Utt();if(!s||!U){rep.skipped=segs.map(x=>({...x,why:'synthèse indisponible'}));if(opt.onend)opt.onend(rep);return rep;}
   stop();const g=++st.gen;st.last={segs,opt};const utts=[];
-  (segs||[]).forEach((sg,idx)=>{if(!sg||!String(sg.t||'').trim())return;const la=lang2(sg.l);const pv=pickVoice(la);
+  const finot=opt.character==='finot';
+  (segs||[]).forEach((sg,idx)=>{if(!sg||!String(sg.t||'').trim())return;const la=lang2(sg.l);const pv=finot?finotVoice(la):pickVoice(la);
     if(pv.status==='unavailable'){rep.skipped.push({...sg,why:'aucune voix '+(LANG_NAMES[la]||la)});if(!st.unavailable[la]){st.unavailable[la]=1;const cb=opt.onunavailable||st.onUnavailable;if(cb)try{cb(la);}catch(e){}}return;}
     const text=spokenFor(sg.t,sg.type||'phrase',la);if(!text)return;
     let u;try{u=new U(text);}catch(e){rep.skipped.push({...sg,why:'erreur'});return;}
-    u.lang=pv.locale;if(pv.voice)u.voice=pv.voice;u.rate=sg.rate||rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type});u.pitch=1;
-    rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate});utts.push([u,idx]);});
+    u.lang=pv.locale;if(pv.voice)u.voice=pv.voice;u.rate=sg.rate||(finot?pv.rate:rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type}));u.pitch=finot?pv.pitch:1;
+    rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate,pitch:u.pitch});utts.push([u,idx]);});
   if(!utts.length){if(opt.onend)opt.onend(rep);return rep;}
   let started=false,finished=false;const finish=()=>{if(finished||g!==st.gen)return;finished=true;if(opt.onend)opt.onend(rep);};
   utts.forEach(([u,idx],j)=>{const last=j===utts.length-1;
@@ -153,6 +167,6 @@ function diagnostics(){const vs=st.voices.length?st.voices:refresh();
     chosen:Object.fromEntries(Object.keys(LOCALES).map(l=>{const p=pickVoice(l);return [l,{locale:p.locale,status:p.status,voice:p.voice?p.voice.name:null,voiceLang:p.voice?p.voice.lang:null}];}))};}
 
 init();
-root.MQAudio={version:'8.13',LOCALES,TYPES,RATES,locale,lang2,supported,init,refresh,ready,setPrefs,pickVoice,voicesFor,prepare,prepareFR,prepareForeign,spokenFor,graphemeSpoken,rateFor,speak,stop,replay,speaking,recognitionLocale,createRecognizer,diagnostics,
+root.MQAudio={version:'8.13',LOCALES,TYPES,RATES,FINOT,locale,lang2,supported,init,refresh,ready,setPrefs,pickVoice,finotVoice,voicesFor,prepare,prepareFR,prepareForeign,spokenFor,graphemeSpoken,rateFor,speak,stop,replay,speaking,recognitionLocale,createRecognizer,diagnostics,
   set onUnavailable(f){st.onUnavailable=f;},get onUnavailable(){return st.onUnavailable;},_state:st};
 })(typeof window!=='undefined'?window:globalThis);

@@ -465,3 +465,10 @@ body.young .choice kbd{display:none}
 @keyframes splLetter{0%{opacity:0;transform:translateY(22px) scale(.6)}100%{opacity:1;transform:none}}
 @keyframes splTag{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.spl-halo,.spl-logo,.spl-title span,.spl-tag{animation:none;opacity:1}#splash{transition:opacity .3s}#splash.out{transform:none}}
+/* Voix de Finot en fin d'exercice (21/10/2026) : Finot et sa bulle, le texte reste lisible sans le son. */
+.finot-say{display:flex;align-items:center;gap:10px;margin:0 auto 10px;max-width:420px;text-align:left;animation:pop .35s ease-out}
+.finot-say-img{width:64px;height:64px;flex:none;border-radius:50%;object-fit:cover;object-position:50% 35%;animation:finotIdle 2.6s ease-in-out infinite;transform-origin:50% 90%}
+.finot-say-txt{position:relative;flex:1;margin:0;padding:10px 12px;border-radius:16px;background:var(--surface2);color:var(--text);font-weight:600;line-height:1.35}
+.finot-say-txt::before{content:'';position:absolute;left:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-left:0;border-right-color:var(--surface2)}
+.finot-say-play{flex:none;min-width:44px;min-height:44px;border:0;border-radius:50%;background:var(--surface2);color:var(--text);font-size:1.1rem;cursor:pointer}
+@media (prefers-reduced-motion: reduce){.finot-say,.finot-say-img{animation:none!important}}

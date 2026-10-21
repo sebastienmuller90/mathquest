@@ -31,6 +31,7 @@
 !/tests/pwa-update.test.js
 !/tests/scenarios.test.js
 !/tests/keyboard-a11y.test.js
+!/tests/finot-voice.test.js
 !/tests/mathquest-regression.mjs
 !/tests/registry-probe.mjs
 !/tests/full-content-audit.mjs
