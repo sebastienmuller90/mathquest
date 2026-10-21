@@ -13,7 +13,7 @@ const STATES={
  surprised:{img:'surprise',src:'data/images/finot/04-expression-surprise.jpg',text:'Oh ! Il se passe quelque chose de nouveau !',ttl:5500,priority:50},
  celebrating:{img:'cadeau',src:'data/images/finot/11-expression-cadeau.jpg',text:'Bravo ! Ça mérite une vraie célébration !',ttl:9000,priority:80},
  sleeping:{img:'fatigue',src:'data/images/finot/06-expression-fatigue.jpg',text:'Une petite pause peut aussi aider ton cerveau à apprendre.',ttl:6000,priority:20},
- 'sad-but-supportive':{img:'encouragement',src:'data/images/finot/05-expression-tristesse.jpg',text:'Cette erreur va t’aider à apprendre. On la répare ensemble ?',ttl:6500,priority:45},
+ 'sad-but-supportive':{img:'encouragement',src:'data/images/finot/03-expression-encouragement.jpg',text:'Cette erreur va t’aider à apprendre. On la répare ensemble ?',ttl:6500,priority:45},
  reading:{img:'carnet',src:'data/images/finot/09-expression-carnet.jpg',text:'Je lis avec toi. Prends le temps de bien comprendre.',ttl:6500,priority:35},
  explaining:{img:'revision',src:'data/images/finot/10-expression-revision.jpg',text:'Je t’explique ça pas à pas.',ttl:6000,priority:40}
 };
