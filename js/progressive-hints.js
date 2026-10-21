@@ -14,7 +14,9 @@ function lightHint(q,cid){const skill=skillLabel(cid,q);const prefix=skill?`Conc
  case'multi':return prefix+'Traite une ligne à la fois et vérifie-la avant de passer à la suivante.';
  case'text':return prefix+'Relis la consigne et souligne mentalement le mot qui indique exactement ce qu’on te demande.';
  default:return prefix+'Relis la consigne lentement et cherche une seule information utile pour commencer.';}}
-function secondHint(q,cid){const own=String(q?.hint||'').trim();if(own)return own;const skill=skillLabel(cid,q);return skill?`Commence par appliquer la règle liée à « ${skill} » sur la première étape seulement.`:'Commence par écrire ou choisir la première étape de la méthode, sans chercher tout le résultat d’un coup.';}
+function answerStrings(q){const a=q?.ans;return (Array.isArray(a)?a:[a]).flatMap(v=>typeof v==='object'&&v?Object.values(v):[v]).map(v=>String(v??'').trim()).filter(v=>v.length>=1);}
+function safeOwnHint(q){const own=String(q?.hint||'').trim();if(!own)return'';const low=own.toLocaleLowerCase('fr');for(const ans of answerStrings(q)){const a=ans.toLocaleLowerCase('fr');if(a.length>=2&&low.includes(a))return'';}return own;}
+function secondHint(q,cid){const own=safeOwnHint(q);if(own)return own;const skill=skillLabel(cid,q);return skill?`Commence par appliquer la règle liée à « ${skill} » sur la première étape seulement.`:'Commence par écrire ou choisir la première étape de la méthode, sans chercher tout le résultat d’un coup.';}
 function methodHint(q,cid){const skill=skillLabel(cid,q);const s=skill?` pour « ${skill} »`:'';switch(q?.type){
  case'num':return `Méthode${s} : 1) identifie les données utiles ; 2) choisis l’opération ; 3) calcule ; 4) contrôle le signe, l’unité et l’ordre de grandeur.`;
  case'frac':return `Méthode${s} : 1) identifie ce que représentent numérateur et dénominateur ; 2) mets les fractions sous une forme compatible si nécessaire ; 3) effectue l’opération ; 4) simplifie si possible.`;
@@ -30,5 +32,5 @@ function reset({M:m}={}){if(m){m.hintLevel=0;m.hint=false;}}
 MQHooks.on('question:after-render',reset,{id:'progressive-hints-reset',order:4});
 MQHooks.on('profile:changed',()=>{}, {id:'progressive-hints-profile',order:4});
 ACT.hint=show;
-root.MQProgressiveHints={version:'1.0',show,lightHint,secondHint,methodHint,get level(){return level();}};
+root.MQProgressiveHints={version:'1.1',show,lightHint,secondHint,methodHint,safeOwnHint,get level(){return level();}};
 })(typeof window!=='undefined'?window:globalThis);
