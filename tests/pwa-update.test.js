@@ -23,6 +23,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  await p.goto(url+'index.html',{waitUntil:'load'});
  await p.evaluate(async()=>{await navigator.serviceWorker.ready;});await p.waitForFunction(()=>!!navigator.serviceWorker.controller,null,{timeout:60000}).catch(()=>{});
  if(!(await p.evaluate(()=>!!navigator.serviceWorker.controller))){await p.reload({waitUntil:'load'});}
+ // Comme un enfant : on attend la fin de l'écran d'ouverture (plein écran ~2 s) avant d'utiliser l'appli.
+ await p.waitForFunction(()=>!document.getElementById('splash'),null,{timeout:15000});
  await p.fill('#nm','Maj');await p.click('[data-a="pickstage:college"]');await p.click('[data-a="pickgrade:6e"]');await p.click('[data-a="begin"]');await p.waitForTimeout(200);
  await p.evaluate(()=>MQPWA.refreshVersion());await p.evaluate(()=>{ACT.hometab('plus');});
  const v1=await p.evaluate(()=>({v:window.MQ_APP_VERSION,shown:document.querySelector('.mq-appver')?.textContent||''}));
