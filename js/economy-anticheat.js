@@ -23,7 +23,6 @@ const oldPathChestGains=typeof pathChestGains==='function'?pathChestGains:null;
 const oldPathInfo=typeof pathInfo==='function'?pathInfo:null;
 let QBASE=null,SESSION=null;
 
-const clone=o=>JSON.parse(JSON.stringify(o));
 const today=()=>typeof localISODate==='function'?localISODate(Date.now()):(()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;})();
 function canonDate(v){const m=String(v||'').match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);return m?`${m[1]}-${String(+m[2]).padStart(2,'0')}-${String(+m[3]).padStart(2,'0')}`:'';}
 function prevDateKey(k){const m=String(k).match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return'';const d=new Date(+m[1],+m[2]-1,+m[3],12);d.setDate(d.getDate()-1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -59,13 +58,13 @@ function ensure(){
 }
 function saveEconomy(){try{if(typeof saveLocal==='function')saveLocal();else if(typeof save==='function')save();}catch(e){}}
 function pruneRewarded(e){while(e.rewardOrder.length>CFG.rewardedLimit){const k=e.rewardOrder.shift();delete e.rewarded[k];}}
-function comboPct(streak){return streak>=8?.25:streak>=5?.15:streak>=3?.10:0;}
+function comboPct(streak){return streak>=8?0.25:streak>=5?0.15:streak>=3?0.10:0;}
 function quoteQuestion({cid,q,d=1,hint=false,streak=1,mode='mission',ms=0,commit=false}={}){
  const e=ensure(),day=e.daily,fp=fingerprint(cid,q),repeat=!!e.rewarded[fp];
  let factor=0,xp=0,coins=0,combo=0;
  if(!repeat&&mode!=='flash'){
-  const n=+day.chapterRewarded[cid]||0;factor=n<CFG.chapterFull?1:n<CFG.chapterHalf?.5:0;
-  if(factor>0){combo=comboPct(streak);xp=Math.max(1,Math.round((CFG.xpByDifficulty[Math.max(1,Math.min(3,+d||1))]||4)*(1+combo)*(hint?.5:1)*factor));
+  const n=+day.chapterRewarded[cid]||0;factor=n<CFG.chapterFull?1:n<CFG.chapterHalf?0.5:0;
+  if(factor>0){combo=comboPct(streak);xp=Math.max(1,Math.round((CFG.xpByDifficulty[Math.max(1,Math.min(3,+d||1))]||4)*(1+combo)*(hint?0.5:1)*factor));
    if(mode==='mission'&&!hint&&factor===1&&day.questionCoins<CFG.dailyQuestionCoins)coins=1;}
  }
  if(commit){
@@ -116,9 +115,9 @@ function installWrappers(){
  patchEconomyScreens();
 }
 
-MQHooks.on('mission:start',({ids,M:m})=>{const e=ensure();SESSION={ids:[...(ids||[])],xp:S.xp,coins:S.coins,qxp:0,qcoins:0,due:(ids||[]).map(cid=>({cid,due:MQAdaptive.isDue(S,cid),token:S.review?.[cid]?.next||0})),lastBadges:{badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m?.newB)?m.newB.slice():[]}};},{id:'economy-mission-start',order:-90});
-MQHooks.on('question:after-render',({q,M:m,mode})=>{if(!m)return;QBASE={xp:S.xp,coins:S.coins,mxp:+m.xp||0,mcoins:+m.coins||0,d:+m.d||1,mode:mode==='flash'?'flash':m.path?'path':'mission',badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};},{id:'economy-question-base',order:99});
-MQHooks.on('answer:after',({ok,q,cid,M:m,mode})=>{if(!m||!QBASE)return;const ms=Math.max(0,Date.now()-(m.qt||Date.now()));if(ok){const r=quoteQuestion({cid,q,d:QBASE.d,hint:!!m.hint,streak:+m.streak||1,mode:mode==='flash'?'flash':mode==='path'?'path':'mission',ms,commit:true});S.xp=QBASE.xp+r.xp;S.coins=QBASE.coins+r.coins;m.xp=QBASE.mxp+r.xp;m.coins=QBASE.mcoins+r.coins;if(SESSION){SESSION.qxp+=r.xp;SESSION.qcoins+=r.coins;SESSION.lastBadges={badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};}restoreBadges({badges:QBASE.badges,badgeDates:QBASE.badgeDates,newB:QBASE.newB},m);updateAnswerFeedback(r);maybeQualify();}
+MQHooks.on('mission:start',({ids,M:m})=>{ensure();SESSION={ids:[...(ids||[])],xp:S.xp,coins:S.coins,qxp:0,qcoins:0,due:(ids||[]).map(cid=>({cid,due:MQAdaptive.isDue(S,cid),token:S.review?.[cid]?.next||0})),lastBadges:{badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m?.newB)?m.newB.slice():[]}};},{id:'economy-mission-start',order:-90});
+MQHooks.on('question:after-render',({M:m,mode})=>{if(!m)return;QBASE={xp:S.xp,coins:S.coins,mxp:+m.xp||0,mcoins:+m.coins||0,d:+m.d||1,mode:mode==='flash'?'flash':m.path?'path':'mission',badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};},{id:'economy-question-base',order:99});
+MQHooks.on('answer:after',({ok,q,cid,M:m,mode})=>{if(!m||!QBASE)return;const ms=Math.max(0,Date.now()-(m.qt||Date.now()));if(ok){const r=quoteQuestion({cid,q,d:QBASE.d,hint:!!m.hint,streak:+m.streak||1,mode:mode==='flash'?'flash':mode==='path'?'path':'mission',ms,commit:true});S.xp=QBASE.xp+r.xp;S.coins=QBASE.coins+r.coins;m.xp=QBASE.mxp+r.xp;m.coins=QBASE.mcoins+r.coins;if(SESSION){SESSION.qxp+=r.xp;SESSION.qcoins+=r.coins;}restoreBadges({badges:QBASE.badges,badgeDates:QBASE.badgeDates,newB:QBASE.newB},m);if(SESSION)SESSION.lastBadges={badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};updateAnswerFeedback(r);maybeQualify();}
  else if(mode!=='flash'){ensure();}
  QBASE=null;saveEconomy();},{id:'economy-answer',order:200});
 MQHooks.on('mission:end',({m})=>{if(!m)return;const e=ensure(),legacySt=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0;S.xp=Math.max(0,S.xp-legacySt*20);S.coins=Math.max(0,S.coins-legacySt*5);const b=missionBonus(m);S.xp+=b.xp;S.coins+=b.coins;const st=stars(m.ok,m.n),r=m.n?m.ok/m.n:0;
