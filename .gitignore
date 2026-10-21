@@ -19,3 +19,29 @@
 !/sw.js
 !/manifest.webmanifest
 !/icon.png
+# Intégration continue : workflow et tests qu’elle exécute (exception validée le 21/10/2026).
+# Le reste de tests/ (run-all, suites locales, rapports, captures) reste privé.
+!/.github/
+!/.github/workflows/
+!/.github/workflows/mathquest-ci.yml
+!/tests/
+!/tests/lib.js
+!/tests/hooks.test.js
+!/tests/mobile-layout.test.js
+!/tests/pwa-update.test.js
+!/tests/scenarios.test.js
+!/tests/keyboard-a11y.test.js
+!/tests/finot-voice.test.js
+!/tests/mathquest-regression.mjs
+!/tests/registry-probe.mjs
+!/tests/full-content-audit.mjs
+!/tests/full-content-audit-v2.mjs
+!/tests/browser-audit.mjs
+!/tests/pedagogy-browser-audit.mjs
+!/tests/interrogation-dashboard-browser-audit.mjs
+!/tests/review-findings-browser-audit.mjs
+!/tests/competency-browser-audit.mjs
+!/tests/phase3-browser-audit.mjs
+!/tests/phase4-pedagogy-browser-audit.mjs
+!/tests/phase4-ce2-data-browser-audit.mjs
+!/tests/chapter-packs-browser-audit.mjs
