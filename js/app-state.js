@@ -110,7 +110,7 @@ const dstr=t=>{const d=new Date(t);return d.getFullYear()+'-'+(d.getMonth()+1)+'
 // Journal horodaté des réponses (2 500 dernières) : filtres de période du suivi parent.
 function logAnswer(cid,ok,source,ms){try{S.answerLog=Array.isArray(S.answerLog)?S.answerLog:[];S.answerLog.push({t:Date.now(),cid:String(cid),ok:!!ok,source:String(source||''),ms:Math.max(0,Math.min(600000,+ms||0))});if(S.answerLog.length>2500)S.answerLog.splice(0,S.answerLog.length-2500);}catch(e){}}
 function touchDaily(){const t=dstr(Date.now());if(S.daily.date!==t)S.daily={date:t,ok:0,done:false};}
-function touchStreak(){const t=dstr(Date.now()),y=dstr(Date.now()-864e5);if(S.streak.last===t)return;S.streak.n=S.streak.last===y?S.streak.n+1:1;S.streak.last=t;S.streak.best=Math.max(S.streak.best,S.streak.n);if(S.streak.n>1)addMerit(S.merit.rules.streak,`Série de ${S.streak.n} jours 🔥`);}
+function touchStreak(){const now=new Date(),prev=new Date(now);prev.setDate(prev.getDate()-1);const t=dstr(now),y=dstr(prev);if(S.streak.last===t)return;S.streak.n=S.streak.last===y?S.streak.n+1:1;S.streak.last=t;S.streak.best=Math.max(S.streak.best,S.streak.n);if(S.streak.n>1)addMerit(S.merit.rules.streak,`Série de ${S.streak.n} jours 🔥`);}
 /* V8.21 — date de naissance facultative (S.birthdate). Âge calculé à la volée, jamais stocké séparément.
    localISODate (jamais toISOString) : un format local zéro-paddé pour comparer/limiter des dates sans
    décalage de fuseau horaire — voir la leçon retenue sur dstr()/toISOString() pour les tests. */
@@ -172,4 +172,3 @@ function checkBadges(m){const unlocked=[];BADGES.forEach(b=>{if(!S.badges.includ
  unlocked.forEach((b,i)=>setTimeout(()=>finotCeleb('data/images/finot/ui-celeb-badge.png','Nouveau badge !',`${b[1]} ${b[2]}`),i*2600));}
 const starStr=n=>`<span class="st">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
 const bar=(t,back='home')=>`<div class="bar"><button class="btn ghost sm" data-a="${back}" aria-label="${back==='home'?'Accueil':'Retour'}">←</button><h1>${t}</h1><span class="pill">🪙 ${S.coins}</span></div>`;
-
