@@ -5,7 +5,7 @@
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined'||typeof ACT!=='object')return;
 let ACTIVE=null,REPAIR_STREAK=0,SEEN_BEFORE=0;
-const escR=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const escR=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
 function state(){
  if(!S.errorRepair||typeof S.errorRepair!=='object'||Array.isArray(S.errorRepair))S.errorRepair={};
  if(!S.errorRepair.rewarded||typeof S.errorRepair.rewarded!=='object'||Array.isArray(S.errorRepair.rewarded))S.errorRepair.rewarded={};
@@ -17,7 +17,7 @@ function keyOf(cid,x){return'er-'+hash([cid,+x.at||0,x.q||'',x.answer||''].join(
 function attempts(cid,at){return(S.answerLog||[]).filter(a=>a&&a.cid===cid&&(+a.t||0)>=(+at||0));}
 function trailingGood(list){let n=0;for(let i=list.length-1;i>=0&&list[i].ok;i--)n++;return n;}
 function items(){const out=[];for(const [cid,a] of Object.entries(S.mistakes||{})){if(!Array.isArray(a)||!CHMAP[cid])continue;for(const x of a){if(!x||typeof x!=='object')continue;const ans=attempts(cid,x.at),mastery=MQAdaptive.mastery(S,cid),next=+S.review?.[cid]?.next||0,seen=+x.seen||0,key=keyOf(cid,x),rewarded=+state().rewarded[key]||0;let status='due';if(seen)status=mastery>=85?'mastered':'repaired';else if(ans.length)status='progress';else if(next>Date.now())status='planned';out.push({key,cid,x,ans,tries:ans.length,streak:trailingGood(ans),mastery,next,seen,rewarded,status});}}
- return out.sort((a,b)=>(a.seen?1:0)-(b.seen?1:0)||(a.next||0)-(b.next||0)-(+0)||(+b.x.at||0)-(+a.x.at||0));}
+ return out.sort((a,b)=>{const done=(a.seen?1:0)-(b.seen?1:0);if(done)return done;const due=(a.next||0)-(b.next||0);if(due)return due;return(+b.x.at||0)-(+a.x.at||0);});}
 function find(key){return items().find(x=>x.key===key)||null;}
 function label(item){const w=WMAP[item.cid],c=CHMAP[item.cid],s=w&&typeof sOf==='function'?sOf(w.id):null;return `${c?.icon||'📘'} ${escR(c?.name||'Notion')}${s?` <span class="muted small">· ${escR(s.name)} ${escR(w.lvl)}</span>`:''}`;}
 function dueText(item){if(item.seen)return item.status==='mastered'?'Maîtrisée':'Réparée';if(!item.next||item.next<=Date.now())return'À revoir maintenant';return typeof MQAdaptive.dueInText==='function'?MQAdaptive.dueInText(S,item.cid):new Date(item.next).toLocaleDateString('fr-FR');}
