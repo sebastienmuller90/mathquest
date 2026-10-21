@@ -12,10 +12,13 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    const days=await p.evaluate(()=>({spring:MQCalendar.previousLocalDay(new Date('2026-03-30T00:30:00+02:00').getTime()),autumn:MQCalendar.previousLocalDay(new Date('2026-10-26T00:30:00+01:00').getTime()),normal:MQCalendar.previousLocalDay(new Date('2026-10-21T12:00:00+02:00').getTime())}));
    T('Jour civil précédent : correct en heure d’été, heure d’hiver et journée normale',days.spring==='2026-3-29'&&days.autumn==='2026-10-25'&&days.normal==='2026-10-20',JSON.stringify(days));
 
-   const streak=await p.evaluate(()=>{const real=Date.now;try{S.streak={n:4,best:4,last:'2026-3-29'};Date.now=()=>new Date('2026-03-30T00:30:00+02:00').getTime();touchStreak();const a={...S.streak};touchStreak();const b={...S.streak};return {a,b};}finally{Date.now=real;}});
+   // Playwright fixe toute l’horloge navigateur (Date.now ET new Date), contrairement à un simple monkey-patch Date.now.
+   await p.clock.setFixedTime(new Date('2026-03-30T00:30:00+02:00'));
+   const streak=await p.evaluate(()=>{S.streak={n:4,best:4,last:'2026-3-29'};touchStreak();const a={...S.streak};touchStreak();const b={...S.streak};return {a,b};});
    T('Série : le 30 mars prolonge le 29 une fois seulement',streak.a.n===5&&streak.a.last==='2026-3-30'&&streak.b.n===5,JSON.stringify(streak));
 
-   const autumnStreak=await p.evaluate(()=>{const real=Date.now;try{S.streak={n:7,best:7,last:'2026-10-25'};Date.now=()=>new Date('2026-10-26T00:30:00+01:00').getTime();touchStreak();return {...S.streak};}finally{Date.now=real;}});
+   await p.clock.setFixedTime(new Date('2026-10-26T00:30:00+01:00'));
+   const autumnStreak=await p.evaluate(()=>{S.streak={n:7,best:7,last:'2026-10-25'};touchStreak();return {...S.streak};});
    T('Série : le passage à l’heure d’hiver prolonge aussi correctement la veille',autumnStreak.n===8&&autumnStreak.last==='2026-10-26',JSON.stringify(autumnStreak));
 
    const absence=await p.evaluate(()=>({
@@ -27,7 +30,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    }));
    T('Absence Finot : 1/2/3 jours civils exacts malgré les changements d’heure',absence.spring1===1&&absence.spring2===2&&absence.autumn1===1&&absence.normal3===3&&absence.invalid===0,JSON.stringify(absence));
 
-   const finot=await p.evaluate(()=>{const real=Date.now;try{Date.now=()=>new Date('2026-03-30T23:30:00+02:00').getTime();return {a:finotJoursAbsence({streak:{last:'2026-3-29'}}),b:finotJoursAbsence({streak:{last:'2026-3-27'}})};}finally{Date.now=real;}});
+   await p.clock.setFixedTime(new Date('2026-03-30T23:30:00+02:00'));
+   const finot=await p.evaluate(()=>({a:finotJoursAbsence({streak:{last:'2026-3-29'}}),b:finotJoursAbsence({streak:{last:'2026-3-27'}})}));
    T('Finot utilise le calcul civil : 1 jour puis 3 jours d’absence',finot.a===1&&finot.b===3,JSON.stringify(finot));
   }
   T('Aucune erreur JavaScript',!errs.length,errs.join(' | '));
