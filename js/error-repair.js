@@ -5,7 +5,7 @@
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined'||typeof ACT!=='object')return;
 let ACTIVE=null,REPAIR_STREAK=0,SEEN_BEFORE=0;
-const escR=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+const escR=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function state(){
  if(!S.errorRepair||typeof S.errorRepair!=='object'||Array.isArray(S.errorRepair))S.errorRepair={};
  if(!S.errorRepair.rewarded||typeof S.errorRepair.rewarded!=='object'||Array.isArray(S.errorRepair.rewarded))S.errorRepair.rewarded={};
