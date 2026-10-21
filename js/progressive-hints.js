@@ -1,5 +1,5 @@
 /* Finot Académie — indices progressifs.
-   Niveau 1 = petit coup de pouce gratuit. Niveaux 2/3 = aide guidée, pénalité XP existante.
+   Trois niveaux d'aide, avec la pénalité XP historique dès le premier indice.
    Ne donne jamais directement la réponse et ne modifie pas le moteur de validation. */
 (function(root){
 'use strict';
@@ -26,11 +26,11 @@ function methodHint(q,cid){const skill=skillLabel(cid,q);const s=skill?` pour «
  case'text':return `Méthode${s} : 1) repère le mot-clé de la consigne ; 2) retrouve la règle ou l’information utile ; 3) formule une réponse courte ; 4) relis-la dans son contexte.`;
  default:return `Méthode${s} : découpe la tâche en petites étapes, réalise la première, contrôle-la, puis avance une étape à la fois.`;}}
 function level(){return M&&Number.isFinite(+M.hintLevel)?+M.hintLevel:0;}
-function panel(q,cid,lvl){const title=lvl===1?'Petit indice':lvl===2?'Étape suivante':'Méthode guidée',body=lvl===1?lightHint(q,cid):lvl===2?secondHint(q,cid):methodHint(q,cid),cost=lvl===1?'Ce petit coup de pouce ne réduit pas tes XP.':'Aide approfondie utilisée : XP divisés par 2 pour cette question.',next=lvl<3?`<button class="btn ghost ph-next" data-a="hint">${lvl===1?'💡 Encore un indice':'🧭 Voir la méthode'}</button>`:'';return `<div class="fb tip ph-card" data-hint-level="${lvl}"><div class="ph-head"><img src="${FINOT_IMG.indice}" alt="" aria-hidden="true" class="finot-live"><div><b>${title}</b><span class="ph-step">${lvl}/3</span></div></div><p>${escH(body)}</p><small>${cost}</small>${next}</div>`;}
-function show(){if(!M||M.locked||!M.q)return false;const lvl=Math.min(3,level()+1);M.hintLevel=lvl;if(lvl>=2)M.hint=true;const fb=document.querySelector('#fb');if(fb)fb.innerHTML=panel(M.q,M.cid,lvl);try{window.MQFinotLive?.emit?.('finot.thinking',{text:lvl===1?'Je te donne juste un petit coup de pouce.':lvl===2?'On avance d’une étape ensemble.':'Je te montre la méthode, sans donner la réponse.'});}catch(e){}return true;}
+function panel(q,cid,lvl){const title=lvl===1?'Petit indice':lvl===2?'Étape suivante':'Méthode guidée',body=lvl===1?lightHint(q,cid):lvl===2?secondHint(q,cid):methodHint(q,cid),cost='Indice utilisé : XP divisés par 2 pour cette question.',next=lvl<3?`<button class="btn ghost ph-next" data-a="hint">${lvl===1?'💡 Encore un indice':'🧭 Voir la méthode'}</button>`:'';return `<div class="fb tip ph-card" data-hint-level="${lvl}"><div class="ph-head"><img src="${FINOT_IMG.indice}" alt="" aria-hidden="true" class="finot-live"><div><b>${title}</b><span class="ph-step">${lvl}/3</span></div></div><p>${escH(body)}</p><small>${cost}</small>${next}</div>`;}
+function show(){if(!M||M.locked||!M.q)return false;const lvl=Math.min(3,level()+1);M.hintLevel=lvl;M.hint=true;const fb=document.querySelector('#fb');if(fb)fb.innerHTML=panel(M.q,M.cid,lvl);try{window.MQFinotLive?.emit?.('finot.thinking',{text:lvl===1?'Je te donne juste un petit coup de pouce.':lvl===2?'On avance d’une étape ensemble.':'Je te montre la méthode, sans donner la réponse.'});}catch(e){}return true;}
 function reset({M:m}={}){if(m){m.hintLevel=0;m.hint=false;}}
 MQHooks.on('question:after-render',reset,{id:'progressive-hints-reset',order:4});
 MQHooks.on('profile:changed',()=>{}, {id:'progressive-hints-profile',order:4});
 ACT.hint=show;
-root.MQProgressiveHints={version:'1.1',show,lightHint,secondHint,methodHint,safeOwnHint,get level(){return level();}};
+root.MQProgressiveHints={version:'1.2',show,lightHint,secondHint,methodHint,safeOwnHint,get level(){return level();}};
 })(typeof window!=='undefined'?window:globalThis);
