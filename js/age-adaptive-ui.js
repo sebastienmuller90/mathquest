@@ -8,5 +8,13 @@ function apply(){const g=group();document.body.dataset.mqAge=g;document.document
 for(const evt of ['home:before','parent:rendered','profile:changed'])MQHooks.on(evt,()=>{apply();},{id:'age-ui'});
 
 new MutationObserver(apply).observe(document.body,{childList:true,subtree:false});apply();
-window.MQAgeUI={version:'1.1',grade,group,apply};
+window.MQAgeUI={version:'1.2',grade,group,apply};
+
+/* Le module DYS reste isolé et est chargé en dernier, une fois ACT/S disponibles.
+   Les chemins littéraux sont volontairement conservés ici : le service worker les découvre et les pré-cache hors ligne. */
+function loadDys(){
+ if(!document.getElementById('mq-dys-css')){const l=document.createElement('link');l.id='mq-dys-css';l.rel='stylesheet';l.href='js/dys-mode.css';document.head.appendChild(l);}
+ if(!document.getElementById('mq-dys-js')){const s=document.createElement('script');s.id='mq-dys-js';s.src='js/dys-mode.js';s.async=false;document.body.appendChild(s);}
+}
+loadDys();
 })();
