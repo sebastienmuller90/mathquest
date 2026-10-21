@@ -53,18 +53,22 @@ async function run(){
   T('Assiduité : une réponse ne suffit pas ; travail varié réel qualifie la journée',!diligence.one.qualified&&diligence.one.streak===0&&diligence.many.qualified&&diligence.many.streak===1&&diligence.many.merit>=2,JSON.stringify(diligence));
 
   const path=await p.evaluate(()=>{
-   S.merit.rules.path=5;const lesson=(i)=>({kind:'lesson',status:'done',score:100,cid:'x'+i}),ans=Array.from({length:8},(_,i)=>({cid:'x',ok:true,ms:10000}));
+   S.merit.rules.path=5;const lesson=(i)=>({kind:'lesson',status:'done',score:100,cid:'x'+i}),ans=Array.from({length:8},()=>({cid:'x',ok:true,ms:10000}));
    const fake={steps:[lesson(1),lesson(2),lesson(3),lesson(4),{kind:'exo',status:'done',answers:ans},{kind:'exo',status:'done',answers:ans}],chest:false};
    const g=pathChestGains(fake);const before=S.coins;M={path:{answers:[],streak:0,best:0,bonuses:[]},cid:'x',qt:Date.now()};const pb=pathAnswer(true),after=S.coins;M=null;return {g,pb,before,after};
   });
-  T('Devoir du jour : coffre plafonné et ancien bonus pièces ×5 supprimé',path.g.coins<=12&&path.g.xp<=20&&path.g.merit<=5&&path.pb===0&&path.after===path.before,JSON.stringify(path));
+  T('Devoir du jour : gros coffre unique conservé pour l’assiduité, mais ancien bonus pièces ×5 supprimé et 🎖️ plafonnés',path.g.coins===40&&path.g.xp===50&&path.g.merit<=5&&path.pb===0&&path.after===path.before,JSON.stringify(path));
 
   // Intégration réelle : la récompense historique est effectivement remplacée dans result().
-  await p.evaluate(()=>{S.economy={};S.streak={n:0,best:0,last:''};S.merit.pts=0;MQEconomy.ensure();});
-  await p.evaluate(cid=>startMission([cid],{n:2}),ids[0]);const pre=await p.evaluate(()=>({xp:S.xp,coins:S.coins,merit:S.merit.pts,streak:S.streak.n}));
+  await p.evaluate(()=>{S.economy={};S.streak={n:0,best:0,last:''};S.merit.pts=0;S.daily.ok=0;MQEconomy.ensure();});
+  await p.evaluate(cid=>startMission([cid],{n:2}),ids[0]);const pre=await p.evaluate(()=>({xp:S.xp,coins:S.coins,merit:S.merit.pts,streak:S.streak.n,daily:S.daily.ok}));
   await p.evaluate(`(${answerJS})(true)`);await p.waitForSelector('#fb .fb.good');
-  const real=await p.evaluate(x=>({dx:S.xp-x.xp,dc:S.coins-x.coins,dm:S.merit.pts-x.merit,streak:S.streak.n,note:document.querySelector('.eco-note')?.textContent||'',mxp:M?.xp||0,mcoins:M?.coins||0}),pre);
-  T('Intégration : vraie bonne réponse utilise le nouveau barème, sans 🎖️ ni streak instantané',real.dx>0&&real.dx<=12&&real.dc<=1&&real.dm===0&&real.streak===0&&/Nouvelle question|récompens/.test(real.note)&&real.mxp===real.dx&&real.mcoins===real.dc,JSON.stringify({pre,real}));
+  const real=await p.evaluate(x=>({dx:S.xp-x.xp,dc:S.coins-x.coins,dm:S.merit.pts-x.merit,streak:S.streak.n,daily:S.daily.ok-x.daily,note:document.querySelector('.eco-note')?.textContent||'',mxp:M?.xp||0,mcoins:M?.coins||0}),pre);
+  T('Intégration : vraie bonne réponse utilise le nouveau barème, sans 🎖️ ni streak instantané',real.dx>0&&real.dx<=12&&real.dc<=1&&real.dm===0&&real.streak===0&&real.daily===1&&/Nouvelle question|récompens/.test(real.note)&&real.mxp===real.dx&&real.mcoins===real.dc,JSON.stringify({pre,real}));
+
+  // Même empreinte le même jour : l'objectif quotidien ne doit pas progresser une deuxième fois.
+  const dailyRepeat=await p.evaluate(cid=>{const q={type:'num',q:'Test objectif quotidien',ans:7};S.economy={};S.daily.ok=0;MQEconomy.ensure();const a=MQEconomy.quoteQuestion({cid,q,d:1,mode:'mission',commit:true,ms:20000});if(a.studyNew)S.daily.ok++;const d1=S.daily.ok;const b=MQEconomy.quoteQuestion({cid,q,d:1,mode:'mission',commit:true,ms:20000});if(b.studyNew)S.daily.ok++;return {d1,d2:S.daily.ok,a,b};},ids[0]);
+  T('Objectif quotidien : une question exacte répétée ne compte qu’une fois',dailyRepeat.d1===1&&dailyRepeat.d2===1&&dailyRepeat.a.studyNew&&!dailyRepeat.b.studyNew,JSON.stringify(dailyRepeat));
 
   await p.evaluate(()=>rewardsScreen());const rewardTxt=await p.locator('.how').innerText();
   T('Écran récompenses : règles anti-farm expliquées à l’enfant',/journée d’étude qualifiée/i.test(rewardTxt)&&/ne donne plus de/.test(rewardTxt)&&/révision programmée/i.test(rewardTxt),rewardTxt);
