@@ -4,7 +4,7 @@
 'use strict';
 if(typeof window==='undefined'||typeof document==='undefined')return;
 
-const DEFAULTS={enabled:false,largeText:true,spacing:true,focus:true,calm:false,highlight:true,simpleFont:false};
+const DEFAULTS={enabled:false,largeText:true,spacing:true,focus:true,calm:false,highlight:true,simpleFont:false,syllables:false,simpleInstructions:false,wordGuide:false};
 const KEYS=Object.keys(DEFAULTS);
 
 function ensure(){
@@ -24,12 +24,17 @@ function apply(){
  r.classList.toggle('mq-dys-calm',on&&d.calm);
  r.classList.toggle('mq-dys-highlight',on&&d.highlight);
  r.classList.toggle('mq-dys-simplefont',on&&d.simpleFont);
+ r.classList.toggle('mq-dys-syllables',on&&d.syllables);
+ r.classList.toggle('mq-dys-simpleinstructions',on&&d.simpleInstructions);
+ r.classList.toggle('mq-dys-wordguide',on&&d.wordGuide);
  return d;
 }
 
+function changed(){try{window.dispatchEvent(new CustomEvent('mq:dys-change',{detail:{...ensure()}}));}catch(e){}}
 function saveAndApply(){
  apply();
  try{if(typeof saveLocal==='function')saveLocal();else if(typeof save==='function')save();}catch(e){}
+ changed();
 }
 
 function toggle(key){
@@ -40,7 +45,7 @@ function toggle(key){
 
 const row=(key,title,desc)=>{const d=ensure(),on=!!d[key];return `<div class="mq-dys-row mq-dys-sub" ${d.enabled?'':'hidden'}><div class="mq-dys-copy"><b>${title}</b><small>${desc}</small></div><button class="btn mq-dys-toggle" data-a="dystoggle:${key}" aria-pressed="${on}">${on?'Activé':'Désactivé'}</button></div>`;};
 
-function card(){const d=ensure();return `<section class="card mq-dys-settings"><h2>♿ Lecture facilitée</h2><p class="muted small mq-dys-intro">Réglages propres à ${typeof esc==='function'?esc(S.name||'ce profil'):(S.name||'ce profil')}. Ils modifient uniquement l’affichage, jamais les réponses ni la progression.</p><div class="mq-dys-row"><div class="mq-dys-copy"><b>Mode lecture facilitée</b><small>Active ou coupe l’ensemble des adaptations ci-dessous.</small></div><button class="btn mq-dys-toggle" data-a="dystoggle:enabled" aria-pressed="${d.enabled}">${d.enabled?'Activé':'Désactivé'}</button></div>${row('largeText','Texte plus grand','Agrandit les consignes, le cours, les réponses et les corrections.')}${row('spacing','Espacement renforcé','Augmente légèrement l’espace entre lettres, mots et lignes.')}${row('focus','Affichage concentré','Présente les choix en une seule colonne et limite la largeur de lecture.')}${row('simpleFont','Police simple','Utilise une police système très lisible, sans ligatures décoratives.')}${row('highlight','Surlignage de lecture renforcé','Rend le mot lu par la voix plus visible lorsque le surlignage audio est disponible.')}${row('calm','Réduire les animations','Neutralise les animations et transitions supplémentaires pour limiter la distraction.')}</section>`;}
+function card(){const d=ensure();return `<section class="card mq-dys-settings"><h2>♿ Lecture facilitée</h2><p class="muted small mq-dys-intro">Réglages propres à ${typeof esc==='function'?esc(S.name||'ce profil'):(S.name||'ce profil')}. Ils modifient uniquement l’affichage, jamais les réponses ni la progression.</p><div class="mq-dys-row"><div class="mq-dys-copy"><b>Mode lecture facilitée</b><small>Active ou coupe l’ensemble des adaptations ci-dessous.</small></div><button class="btn mq-dys-toggle" data-a="dystoggle:enabled" aria-pressed="${d.enabled}">${d.enabled?'Activé':'Désactivé'}</button></div>${row('largeText','Texte plus grand','Agrandit les consignes, le cours, les réponses et les corrections.')}${row('spacing','Espacement renforcé','Augmente légèrement l’espace entre lettres, mots et lignes.')}${row('focus','Affichage concentré','Présente les choix en une seule colonne et limite la largeur de lecture.')}${row('simpleFont','Police simple','Utilise une police système très lisible, sans ligatures décoratives.')}${row('syllables','Syllabes colorées','Colore uniquement les mots que le lexique pédagogique sait découper entièrement en syllabes connues.')}${row('simpleInstructions','Consignes en étapes','Ajoute sous les consignes longues un découpage visuel qui conserve exactement les mots de la consigne.')}${row('wordGuide','Lecture guidée mot par mot','Ajoute un bouton de lecture lente avec surlignage synchronisé mot par mot, sans remplacer le lecteur normal.')}${row('highlight','Surlignage de lecture renforcé','Rend le passage lu par la voix plus visible lorsque le surlignage audio est disponible.')}${row('calm','Réduire les animations','Neutralise les animations et transitions supplémentaires pour limiter la distraction.')}</section>`;}
 
 function inject({tab}={}){
  if(tab!=='reglages'||document.querySelector('.mq-dys-settings'))return;
@@ -52,10 +57,10 @@ function inject({tab}={}){
 
 if(typeof ACT==='object')ACT.dystoggle=key=>toggle(String(key||''));
 if(window.MQHooks){
- MQHooks.on('profile:changed',()=>apply(),{id:'dys-mode',order:20});
+ MQHooks.on('profile:changed',()=>{apply();changed();},{id:'dys-mode',order:20});
  MQHooks.on('parent:rendered',inject,{id:'dys-mode',order:20});
  MQHooks.on('home:rendered',()=>apply(),{id:'dys-mode-home',order:20});
 }
 apply();
-window.MQDys={version:'1.0',defaults:{...DEFAULTS},ensure,apply,toggle,card};
+window.MQDys={version:'1.1',defaults:{...DEFAULTS},ensure,apply,toggle,card};
 })();
