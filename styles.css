@@ -472,3 +472,19 @@ body.young .choice kbd{display:none}
 .finot-say-txt::before{content:'';position:absolute;left:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-left:0;border-right-color:var(--surface2)}
 .finot-say-play{flex:none;min-width:44px;min-height:44px;border:0;border-radius:50%;background:var(--surface2);color:var(--text);font-size:1.1rem;cursor:pointer}
 @media (prefers-reduced-motion: reduce){.finot-say,.finot-say-img{animation:none!important}}
+/* Cours approfondis (21/10/2026) : explications détaillées, défi « À toi », conseil pour l'adulte, encadré culture. */
+.mq-deep p,.mq-deep li{line-height:1.55}
+.mq-deep ol,.mq-deep ul{padding-left:1.3em}
+.mq-deep li{margin:4px 0}
+.mq-try{margin:12px 0;padding:10px 12px;border-radius:12px;background:var(--surface2);border-left:4px solid var(--accent)}
+.mq-try p{margin:6px 0}
+.mq-try details summary,.mq-adult summary{cursor:pointer;font-weight:600;min-height:32px;display:flex;align-items:center}
+.mq-adult{margin:10px 0;padding:8px 12px;border-radius:12px;border:1px dashed var(--border)}
+.mq-adult p{margin:6px 0 2px}
+.mq-culture{padding:10px 12px;border-radius:12px;background:var(--surface2)}
+.mq-culture h3{margin:4px 0 8px;font-size:1.05em}
+.mq-culture p{line-height:1.55}
+.mq-try summary,.mq-adult summary{list-style:none}
+.mq-try summary::-webkit-details-marker,.mq-adult summary::-webkit-details-marker{display:none}
+.mq-try summary::before,.mq-adult summary::before{content:'▸';display:inline-block;margin-right:8px;transition:transform .2s}
+.mq-try details[open]>summary::before,.mq-adult[open]>summary::before{transform:rotate(90deg)}
