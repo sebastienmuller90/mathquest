@@ -72,7 +72,7 @@ jobs:
         run: node tests/hooks.test.js
       - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
         if: matrix.browser == 'chromium'
-        run: node tests/scenarios.test.js
+        run: node tests/scenarios-economy-compatible.test.js
       - name: Économie anti-triche (anti-farm, barème, assiduité)
         if: matrix.browser == 'chromium'
         run: node tests/economy-anticheat.test.js
