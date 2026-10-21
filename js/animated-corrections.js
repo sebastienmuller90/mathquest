@@ -43,7 +43,7 @@ function parseMultiplication(q){
  const t=plain(q.q).replace(/[  ]/g,' '),m=t.match(/\b(\d[\d ]{0,12})\s*[×x*]\s*(\d[\d ]{0,5})\b/i);
  if(!m)return null;
  const a=+m[1].replace(/\s/g,''),b=+m[2].replace(/\s/g,''),answer=a*b;
- if(!Number.isSafeInteger(a)||!Number.isSafeInteger(b)||a<0||b<0||b>99||answer!==+q.ans)return null;
+ if(!Number.isSafeInteger(a)||!Number.isSafeInteger(b)||a<0||b<=0||b>99||answer!==+q.ans)return null;
  return {a,b,op:'×',answer};
 }
 
@@ -52,7 +52,7 @@ function parseDecimalMultiplication(q){
  const t=plain(q.q),m=t.match(/\b(\d+(?:[,.]\d{1,3}))\s*[×x*]\s*(\d{1,2})\b/i);
  if(!m)return null;
  const raw=m[1],a=decimalValue(raw),b=+m[2],scale=decimalPlaces(raw),factor=10**scale,scaled=Math.round(a*factor),product=scaled*b,answer=product/factor;
- if(!Number.isSafeInteger(scaled)||!Number.isSafeInteger(b)||a<0||b<0||b>99||scale<1||scale>3||!close(answer,q.ans))return null;
+ if(!Number.isSafeInteger(scaled)||!Number.isSafeInteger(b)||a<0||b<=0||b>99||scale<1||scale>3||!close(answer,q.ans))return null;
  return {a,b,raw,scale,factor,scaled,product,answer:+q.ans,op:'×'};
 }
 
@@ -60,8 +60,10 @@ function parseDivision(q){
  if(!q||q.type!=='num'||!Number.isInteger(+q.ans))return null;
  const t=plain(q.q).replace(/[  ]/g,' '),m=t.match(/division(?:\s+euclidienne)?\s+(?:de\s+)?(\d[\d ]*)\s+par\s+(\d[\d ]*).*?\b(quotient|reste)\b/i);
  if(!m)return null;
- const n=+m[1].replace(/\s/g,''),b=+m[2].replace(/\s/g,''),ask=m[3].toLowerCase(),quotient=Math.floor(n/b),remainder=n%b,expected=ask==='reste'?remainder:quotient;
- if(!Number.isSafeInteger(n)||!Number.isSafeInteger(b)||n<0||b<=0||b>99||expected!==+q.ans)return null;
+ const n=+m[1].replace(/\s/g,''),b=+m[2].replace(/\s/g,'');
+ if(!Number.isSafeInteger(n)||!Number.isSafeInteger(b)||n<0||b<=0||b>99)return null;
+ const ask=m[3].toLowerCase(),quotient=Math.floor(n/b),remainder=n%b,expected=ask==='reste'?remainder:quotient;
+ if(expected!==+q.ans)return null;
  return {n,b,ask,quotient,remainder,answer:expected,op:'÷'};
 }
 
@@ -69,10 +71,12 @@ function parseDecimalDivision(q){
  if(!q||q.type!=='num'||!Number.isFinite(+q.ans))return null;
  const t=plain(q.q),m=t.match(/quotient\s+d[ée]cimal[^:]*:\s*(\d+)\s*÷\s*(\d+)/i);
  if(!m)return null;
- const n=+m[1],b=+m[2],answer=n/b;
- if(!Number.isSafeInteger(n)||!Number.isSafeInteger(b)||n<0||b<=0||b>99||Number.isInteger(answer)||!close(answer,q.ans))return null;
+ const n=+m[1],b=+m[2];
+ if(!Number.isSafeInteger(n)||!Number.isSafeInteger(b)||n<0||b<=0||b>99)return null;
+ const answer=n/b;
+ if(Number.isInteger(answer)||!close(answer,q.ans))return null;
  const scaled=Math.round(answer*1000);
- if(!close(scaled/1000,answer))return null; // les générateurs actuels produisent des quotients finis à 3 décimales maximum
+ if(!close(scaled/1000,answer))return null;
  return {n,b,answer:+q.ans,quotientInt:Math.floor(n/b),remainder:n%b,op:'÷'};
 }
 
@@ -133,7 +137,10 @@ function multiplicationModel(x){
    const cin=carry,total=aDigits[i]*x.b+cin,d=total%10,pos=offset+i;out[pos]=String(d);carry=Math.floor(total/10);
    if(i===0&&carry){const cs=String(carry);for(let k=0;k<cs.length;k++)out[k]=cs[k];}
    const extra=cin?` + ${cin} de retenue`:'';
-   steps.push({work:[...out],carry,text:`${aDigits[i]} × ${x.b}${extra} = ${total}. J’écris <b>${d}</b>${carry&&i>0?` et je retiens <b>${carry}</b>`:''}.`});
+   let text=`${aDigits[i]} × ${x.b}${extra} = ${total}. `;
+   if(i===0&&carry)text+=`C’est la dernière colonne : j’écris <b>${total}</b> pour terminer.`;
+   else text+=`J’écris <b>${d}</b>${carry&&i>0?` et je retiens <b>${carry}</b>`:''}.`;
+   steps.push({work:[...out],carry,text});
   }
  }else{
   const units=x.b%10,tens=x.b-units,p1=x.a*units,p2=x.a*tens;
@@ -159,7 +166,7 @@ function divisionModel(x){
  for(let i=0;i<ds.length;i++){
   const cur=rem*10+ds[i],qd=Math.floor(cur/x.b),next=cur%x.b;
   if(qd||started){started=true;qtxt+=String(qd);}else if(i===ds.length-1)qtxt='0';
-  const lowered=i?`J’abaisse le chiffre <b>${ds[i]}</b> : j’obtiens ${cur}. `:'';const small=!started&&cur<x.b;
+  const lowered=i?`J’abaisse le chiffre <b>${ds[i]}</b> : j’obtiens ${cur}. `:'';const small=!started&&cur<x.b&&i<ds.length-1;
   const text=small?`${cur} est plus petit que ${x.b} : je prends aussi le chiffre suivant.`:`${lowered}Dans ${cur}, ${x.b} va <b>${qd} fois</b> (${x.b} × ${qd} = ${x.b*qd}). Il reste <b>${next}</b>.`;
   rem=next;steps.push({current:cur,quotient:qtxt||'—',remainder:rem,digit:i,text});
  }
@@ -247,7 +254,7 @@ if(window.MQHooks){
 }
 
 window.MQCorrections={
- version:'3.0',register,modelFor,
+ version:'3.1',register,modelFor,
  parseIntegerOperation,parseMultiplication,parseDecimalMultiplication,parseDivision,parseDecimalDivision,parseFractionOperation,parseIntegerFractionMultiplication,
  additionModel,subtractionModel,multiplicationModel,decimalMultiplicationModel,divisionModel,decimalDivisionModel,fractionModel,integerFractionMultiplicationModel,
  get adapters(){return ADAPTERS.map(x=>x.name);}
