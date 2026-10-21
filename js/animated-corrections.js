@@ -178,7 +178,8 @@ function decimalDivisionModel(x){
  const steps=[],intQ=x.quotientInt;let rem=x.remainder,shown=String(intQ),digitsAfter=0;
  steps.push({formula:`${x.n} = ${x.b} × ${intQ} + ${rem}`,text:`Je commence par la partie entière : ${x.b} va <b>${intQ} fois</b> dans ${x.n}. Il reste <b>${rem}</b>.`});
  while(rem&&digitsAfter<3){
-  const current=rem*10,digit=Math.floor(current/x.b),next=current%x.b;shown+=(digitsAfter?',':',')+String(digit);digitsAfter++;
+  const current=rem*10,digit=Math.floor(current/x.b),next=current%x.b;
+  shown+=(digitsAfter===0?',':'')+String(digit);digitsAfter++;
   steps.push({formula:`${current} ÷ ${x.b} → ${digit}, reste ${next}`,text:`Je passe aux ${digitsAfter===1?'dixièmes':digitsAfter===2?'centièmes':'millièmes'} : ${rem} devient ${current}. ${x.b} va <b>${digit} fois</b> dans ${current}. Le quotient devient <b>${shown}</b>.`});
   rem=next;
  }
