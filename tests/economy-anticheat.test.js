@@ -63,7 +63,7 @@ async function run(){
   await p.evaluate(()=>{S.economy={};S.streak={n:0,best:0,last:''};S.merit.pts=0;MQEconomy.ensure();});
   await p.evaluate(cid=>startMission([cid],{n:2}),ids[0]);const pre=await p.evaluate(()=>({xp:S.xp,coins:S.coins,merit:S.merit.pts,streak:S.streak.n}));
   await p.evaluate(`(${answerJS})(true)`);await p.waitForSelector('#fb .fb.good');
-  const real=await p.evaluate(()=>({dx:S.xp-arguments[0].xp,dc:S.coins-arguments[0].coins,dm:S.merit.pts-arguments[0].merit,streak:S.streak.n,note:document.querySelector('.eco-note')?.textContent||'',mxp:M?.xp||0,mcoins:M?.coins||0}),pre);
+  const real=await p.evaluate(x=>({dx:S.xp-x.xp,dc:S.coins-x.coins,dm:S.merit.pts-x.merit,streak:S.streak.n,note:document.querySelector('.eco-note')?.textContent||'',mxp:M?.xp||0,mcoins:M?.coins||0}),pre);
   T('Intégration : vraie bonne réponse utilise le nouveau barème, sans 🎖️ ni streak instantané',real.dx>0&&real.dx<=12&&real.dc<=1&&real.dm===0&&real.streak===0&&/Nouvelle question|récompens/.test(real.note)&&real.mxp===real.dx&&real.mcoins===real.dc,JSON.stringify({pre,real}));
 
   await p.evaluate(()=>rewardsScreen());const rewardTxt=await p.locator('.how').innerText();
