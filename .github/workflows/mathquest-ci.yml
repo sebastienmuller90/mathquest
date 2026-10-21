@@ -79,6 +79,9 @@ jobs:
       - name: Voix de Finot en fin d’exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: Carnet d’erreurs — missions de réparation
+        if: matrix.browser == 'chromium'
+        run: node tests/error-repair.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
