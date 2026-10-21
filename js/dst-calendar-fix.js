@@ -3,7 +3,11 @@
    de Finot, qui utilisait encore une durée en millisecondes / 24 h. */
 (function(root){
 'use strict';
+const dayKey=d=>d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
 function civilDayIndex(y,m,d){return Math.floor(Date.UTC(y,m-1,d)/86400000);}
+function previousLocalDay(ts=Date.now()){
+ const d=new Date(ts);if(Number.isNaN(d.getTime()))return'';d.setDate(d.getDate()-1);return dayKey(d);
+}
 function civilDaysSince(dateKey,now=new Date()){
  const m=String(dateKey||'').match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(!m)return 0;
  const y=+m[1],mo=+m[2],d=+m[3];
@@ -12,5 +16,5 @@ function civilDaysSince(dateKey,now=new Date()){
  return Math.max(0,civilDayIndex(now.getFullYear(),now.getMonth()+1,now.getDate())-civilDayIndex(y,mo,d));
 }
 root.finotJoursAbsence=function(state){return civilDaysSince(state&&state.streak&&state.streak.last);};
-root.MQCalendarDays={version:'1.0',civilDaysSince};
+root.MQCalendar={version:'1.0',previousLocalDay,civilDaysSince};
 })(typeof window!=='undefined'?window:globalThis);
