@@ -73,6 +73,9 @@ jobs:
       - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
         if: matrix.browser == 'chromium'
         run: node tests/scenarios.test.js
+      - name: Lexique sans doublons et migration de progression
+        if: matrix.browser == 'chromium'
+        run: node tests/lexicon-cleanup.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
