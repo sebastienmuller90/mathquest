@@ -5,7 +5,7 @@
    réponse du défi cachée par défaut ; HTML bien formé ; typographie française ; parcours réel du cours sans erreur. */
 const {serve,launch}=require('./lib');
 // Lots livrés : [classe, motif du monde (matière), nombre minimal de mots ajoutés par chapitre — au CP, le cours d’origine compte 148 à 234 mots : le cours fait environ deux fois plus long].
-const LOTS=[['CP',/^Maths CP$/,200],['CE1',/^Maths CE1$/,200]];
+const LOTS=[['CP',/^Maths CP$/,200],['CE1',/^Maths CE1$/,200],['CE2',/^Maths CE2$/,200]];
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,700)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});
  await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
