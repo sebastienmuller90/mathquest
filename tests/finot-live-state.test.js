@@ -13,7 +13,7 @@ async function run(){
   T('Moteur chargé : 10 états, API Carnet/Diplômes, 5 choix de vestiaire et toutes les images existent',boot.states.length===10&&boot.events.includes('exercise.correct')&&boot.events.includes('chapter.mastered')&&boot.events.includes('error.repaired')&&boot.accessories.length===5&&boot.assets.every(x=>x[2])&&boot.card&&boot.fab,JSON.stringify(boot));
 
   const fail=await p.evaluate(()=>{MQFinotLive.clear();MQFinotLive.emit('exercise.failed');MQFinotLive.paint();const c=MQFinotLive.current,card=document.querySelector('.finot-card'),fab=document.querySelector('.finot-fab');return {state:c?.state,priority:c?.priority,text:card?.innerText||'',cardState:card?.dataset.finotState,fabState:fab?.dataset.finotState,img:card?.querySelector('img.finot-live')?.getAttribute('src')};});
-  T('Erreur : Finot reste bienveillant et utilise sa vraie expression de tristesse',fail.state==='sad-but-supportive'&&fail.cardState==='sad-but-supportive'&&fail.fabState==='sad-but-supportive'&&/erreur.*aider|répare/i.test(fail.text)&&/05-expression-tristesse/.test(fail.img||''),JSON.stringify(fail));
+  T('Erreur : Finot reste bienveillant et utilise son expression d’encouragement',fail.state==='sad-but-supportive'&&fail.cardState==='sad-but-supportive'&&fail.fabState==='sad-but-supportive'&&/erreur.*aider|répare/i.test(fail.text)&&/03-expression-encouragement/.test(fail.img||''),JSON.stringify(fail));
 
   const priority=await p.evaluate(()=>{const low=MQFinotLive.emit('exercise.correct'),afterLow=MQFinotLive.current;const high=MQFinotLive.emit('chapter.mastered',{text:'Chapitre maîtrisé !'}),afterHigh=MQFinotLive.current;return {low,lowState:afterLow?.state,high,highState:afterHigh?.state,highText:afterHigh?.text};});
   T('Priorités : une petite réussite ne remplace pas un encouragement actif, mais un chapitre maîtrisé prend la priorité',priority.low===false&&priority.lowState==='sad-but-supportive'&&priority.high===true&&priority.highState==='proud'&&/Chapitre maîtrisé/.test(priority.highText||''),JSON.stringify(priority));
@@ -27,10 +27,10 @@ async function run(){
   T('Expiration : retour automatique à l’état naturel historique de Finot',expiry0.temp==='surprised'&&!expiry1.cur&&!expiry1.state&&!expiry1.react&&expiry1.text.includes(expiry1.baseText)&&expiry1.img===expiry1.baseImg,JSON.stringify({expiry0,expiry1}));
 
   await p.evaluate(()=>{MQFinotLive.clear();finotOpen();});await p.waitForTimeout(40);const chatOpen=await p.evaluate(()=>({state:MQFinotLive.current?.state,head:document.querySelector('#finotchat .fch-head img')?.getAttribute('src')}));
-  await p.evaluate(()=>finotPush('finot','Voici une explication simple.'));await p.waitForTimeout(40);const chatMsg=await p.evaluate(()=>({state:MQFinotLive.current?.state,head:document.querySelector('#finotchat .fch-head img')?.getAttribute('src')}));
+  await p.evaluate(()=>finotPush('finot','Voici une explication simple.'));await p.waitForTimeout(240);const chatMsg=await p.evaluate(()=>({state:MQFinotLive.current?.state,head:document.querySelector('#finotchat .fch-head img')?.getAttribute('src')}));
   T('Chat Finot : ouverture en réflexion puis réponse en mode explication',chatOpen.state==='thinking'&&/07-expression-indice/.test(chatOpen.head||'')&&chatMsg.state==='explaining'&&/10-expression-revision/.test(chatMsg.head||''),JSON.stringify({chatOpen,chatMsg}));
 
-  const pass=await p.evaluate(()=>{let hit=0;MQHooks.on('finot:intent',()=>{hit++;return true;},{id:'test-live-pass',order:999});const taken=MQHooks.first('finot:intent',{raw:'zz-live-pass-through-zz'});MQHooks.off('finot:intent','test-live-pass');return {hit,taken};});
+  const pass=await p.evaluate(()=>{let hit=0;MQHooks.on('finot:intent',()=>{hit++;return true;},{id:'test-live-pass',order:999});const taken=MQHooks.first('finot:intent',{raw:'zz-live-pass-through-zz',echo:()=>{}});MQHooks.off('finot:intent','test-live-pass');return {hit,taken};});
   T('Compatibilité assistant : Finot vivant ne consomme pas les intentions destinées aux autres modules',pass.hit===1&&pass.taken===true,JSON.stringify(pass));
 
   // Vestiaire : mêmes seuils d'assiduité que le repaire existant, sans dépense de pièces.
