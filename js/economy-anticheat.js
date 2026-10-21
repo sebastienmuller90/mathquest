@@ -18,6 +18,7 @@ const CFG={
 const oldAddMerit=typeof addMerit==='function'?addMerit:null;
 const oldRewardsScreen=typeof rewardsScreen==='function'?rewardsScreen:null;
 const oldShop=typeof shop==='function'?shop:null;
+const oldParentScreen=typeof parentScreen==='function'?parentScreen:null;
 const oldPathAnswer=typeof pathAnswer==='function'?pathAnswer:null;
 const oldPathChestGains=typeof pathChestGains==='function'?pathChestGains:null;
 const oldPathInfo=typeof pathInfo==='function'?pathInfo:null;
@@ -54,6 +55,8 @@ function ensure(){
   for(const w of S.merit?.rewards||[]){const c=costs[w.id];if(c&&+w.c===c[0])w.c=c[1];}
   e.version=CFG.version;
  }
+ // Même après migration/import, la bonne réponse brute n'est jamais une source de bons points physiques.
+ if(S.merit?.rules)S.merit.rules.ok=0;
  return e;
 }
 function saveEconomy(){try{if(typeof saveLocal==='function')saveLocal();else if(typeof save==='function')save();}catch(e){}}
@@ -61,7 +64,7 @@ function pruneRewarded(e){while(e.rewardOrder.length>CFG.rewardedLimit){const k=
 function comboPct(streak){return streak>=8?0.25:streak>=5?0.15:streak>=3?0.10:0;}
 function quoteQuestion({cid,q,d=1,hint=false,streak=1,mode='mission',ms=0,commit=false}={}){
  const e=ensure(),day=e.daily,fp=fingerprint(cid,q),repeat=!!e.rewarded[fp];
- let factor=0,xp=0,coins=0,combo=0;
+ let factor=0,xp=0,coins=0,combo=0,studyNew=false;
  if(!repeat&&mode!=='flash'){
   const n=+day.chapterRewarded[cid]||0;factor=n<CFG.chapterFull?1:n<CFG.chapterHalf?0.5:0;
   if(factor>0){combo=comboPct(streak);xp=Math.max(1,Math.round((CFG.xpByDifficulty[Math.max(1,Math.min(3,+d||1))]||4)*(1+combo)*(hint?0.5:1)*factor));
@@ -69,18 +72,18 @@ function quoteQuestion({cid,q,d=1,hint=false,streak=1,mode='mission',ms=0,commit
  }
  if(commit){
   // L'assiduité ne compte qu'une question exacte une fois par jour, même si son rendement économique est déjà nul.
-  if(mode!=='flash'&&!day.studySeen[fp]){day.studySeen[fp]=1;day.studyUnique++;day.studyMs+=Math.max(0,Math.min(120000,+ms||0));day.chapters[cid]=1;}
+  if(mode!=='flash'&&!day.studySeen[fp]){day.studySeen[fp]=1;day.studyUnique++;day.studyMs+=Math.max(0,Math.min(120000,+ms||0));day.chapters[cid]=1;studyNew=true;}
   if(!repeat&&factor>0&&mode!=='flash'){
    e.rewarded[fp]=Date.now();e.rewardOrder.push(fp);pruneRewarded(e);day.chapterRewarded[cid]=(+day.chapterRewarded[cid]||0)+1;day.questionCoins+=coins;e.uniqueCorrect++;
   }
  }
- return {fp,repeat,factor,xp,coins,combo,mode};
+ return {fp,repeat,factor,xp,coins,combo,mode,studyNew};
 }
 function stars(ok,n){const r=n?ok/n:0;return r>=.999?3:r>=.75?2:r>=.5?1:0;}
-function missionBonus(m){const e=ensure(),d=e.daily,r=m?.n?(+m.ok||0)/(+m.n||1):0,ids=[...(m?.ids||[])].sort(),key=`${d.date}|${ids.join(',')}`;
- if(m?.path||d.missionKeys[key]||d.missionBonusCount>=CFG.missionBonusesPerDay)return {xp:0,coins:0,key,first:false};
+function missionBonus(m){const d=ensure().daily,r=m?.n?(+m.ok||0)/(+m.n||1):0,ids=[...(m?.ids||[])].sort(),key=`${d.date}|${ids.join(',')}`;
+ if(m?.path||r<.75||d.missionKeys[key]||d.missionBonusCount>=CFG.missionBonusesPerDay)return {xp:0,coins:0,key,first:false};
  d.missionKeys[key]=1;d.missionBonusCount++;
- if(r>=.999)return {xp:10,coins:2,key,first:true};if(r>=.75)return {xp:6,coins:1,key,first:true};if(r>=.5)return {xp:2,coins:0,key,first:true};return {xp:0,coins:0,key,first:true};}
+ if(r>=.999)return {xp:10,coins:2,key,first:true};return {xp:6,coins:1,key,first:true};}
 function addDirectMerit(n,why,m=null){if(!oldAddMerit||!(+n>0))return;oldAddMerit(+n,why,m);}
 function noteDueReviews(m){if(!SESSION||!m||m.path)return;const e=ensure(),d=e.daily,r=m.n?m.ok/m.n:0;if(r<.75)return;
  for(const x of SESSION.due||[]){if(!x.due)continue;const token=`${x.cid}|${x.token||0}`;if(e.reviewRewarded[token])continue;if(d.dueMerit>=CFG.dueReviewDailyCap)break;e.reviewRewarded[token]=Date.now();d.dueReview=true;const gain=Math.min(CFG.dueReviewMerit,CFG.dueReviewDailyCap-d.dueMerit);d.dueMerit+=gain;addDirectMerit(gain,`Révision due réussie : ${byId(x.cid)?.name||x.cid}`,m);}
@@ -102,6 +105,7 @@ function updateEndScreen(m,bonus,st){const starEls=[...document.querySelectorAll
 function patchEconomyScreens(){
  if(oldRewardsScreen)rewardsScreen=function(){oldRewardsScreen();const how=document.querySelector('.how');if(how)how.innerHTML=`<li><b>+${CFG.studyMerit}</b> journée d’étude qualifiée</li><li><b>+${CFG.dueReviewMerit}</b> révision programmée réussie <small>(plafonnée par jour)</small></li><li><b>+${Math.min(2,+S.merit.rules.lesson||0)}</b> nouveau cours validé</li><li><b>+${Math.min(CFG.chest.merit,+S.merit.rules.path||0)}</b> devoir du jour terminé <small>(selon qualité)</small></li><li><b>+1</b> première mission réussie du chapitre dans la journée</li><li><b>+1</b> sans-faute, une seule fois par mission éligible</li><li><b>+${Math.min(1,+S.merit.rules.streak||0)}</b> jour d’assiduité qualifié consécutif</li><li>Une bonne réponse seule ne donne plus de 🎖️.</li><li>Bonus manuels des parents 🎁</li>`;};
  if(oldShop)shop=function(){oldShop();const p=document.querySelector('.muted.center');if(p)p.textContent='Les pièces récompensent surtout les nouvelles questions, les cours et le devoir du jour. Répéter la même activité ne permet plus de les farmer.';};
+ if(oldParentScreen)parentScreen=function(tab){oldParentScreen(tab);const ru=document.querySelector('#ru_ok');if(ru){ru.value='0';ru.disabled=true;ru.title='Désactivé par le système anti-triche : une bonne réponse seule ne donne pas de bon point.';}};
  if(oldPathInfo)pathInfo=function(){finotOpen();finotPush('finot','<b>🗺️ Ton devoir du jour</b><br>4 leçons puis 2 séries d’exercices. Les répétitions restent utiles pour apprendre, mais ne redonnent pas de récompense.<br>🎁 Le coffre final dépend surtout de la qualité du parcours : jusqu’à <b>12 🪙, 20 XP et 5 🎖️</b>.<br>🔥 L’assiduité progresse quand une vraie journée d’étude est accomplie, pas après une seule réponse.');};
 }
 function installWrappers(){
@@ -112,12 +116,13 @@ function installWrappers(){
  // Plus de bonus pièces 1,2,3,4,5… dans le parcours : le coffre récompense la qualité globale.
  if(oldPathAnswer)pathAnswer=function(ok){const t=M&&M.path;if(!t)return 0;t.answers.push({cid:M.cid,ok:!!ok,ms:Math.max(0,Math.min(600000,Date.now()-(M.qt||Date.now())))});if(ok){t.streak++;t.best=Math.max(t.best,t.streak);}else t.streak=0;(t.bonuses=t.bonuses||[]).push(0);return 0;};
  if(oldPathChestGains)pathChestGains=function(p){const g=oldPathChestGains(p),cf=g.coins/40,xf=g.xp/50;return {...g,coins:Math.round(CFG.chest.coins*cf),xp:Math.round(CFG.chest.xp*xf),merit:Math.min(CFG.chest.merit,Math.max(0,g.merit))};};
+ if(ACT?.rulesave){const oldRuleSave=ACT.rulesave;ACT.rulesave=(...a)=>{const ru=document.querySelector('#ru_ok');if(ru)ru.value='0';oldRuleSave(...a);S.merit.rules.ok=0;saveEconomy();};}
  patchEconomyScreens();
 }
 
 MQHooks.on('mission:start',({ids,M:m})=>{ensure();SESSION={ids:[...(ids||[])],xp:S.xp,coins:S.coins,qxp:0,qcoins:0,due:(ids||[]).map(cid=>({cid,due:MQAdaptive.isDue(S,cid),token:S.review?.[cid]?.next||0})),lastBadges:{badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m?.newB)?m.newB.slice():[]}};},{id:'economy-mission-start',order:-90});
-MQHooks.on('question:after-render',({M:m,mode})=>{if(!m)return;QBASE={xp:S.xp,coins:S.coins,mxp:+m.xp||0,mcoins:+m.coins||0,d:+m.d||1,mode:mode==='flash'?'flash':m.path?'path':'mission',badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};},{id:'economy-question-base',order:99});
-MQHooks.on('answer:after',({ok,q,cid,M:m,mode})=>{if(!m||!QBASE)return;const ms=Math.max(0,Date.now()-(m.qt||Date.now()));if(ok){const r=quoteQuestion({cid,q,d:QBASE.d,hint:!!m.hint,streak:+m.streak||1,mode:mode==='flash'?'flash':mode==='path'?'path':'mission',ms,commit:true});S.xp=QBASE.xp+r.xp;S.coins=QBASE.coins+r.coins;m.xp=QBASE.mxp+r.xp;m.coins=QBASE.mcoins+r.coins;if(SESSION){SESSION.qxp+=r.xp;SESSION.qcoins+=r.coins;}restoreBadges({badges:QBASE.badges,badgeDates:QBASE.badgeDates,newB:QBASE.newB},m);if(SESSION)SESSION.lastBadges={badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};updateAnswerFeedback(r);maybeQualify();}
+MQHooks.on('question:after-render',({M:m,mode})=>{if(!m)return;QBASE={xp:S.xp,coins:S.coins,mxp:+m.xp||0,mcoins:+m.coins||0,d:+m.d||1,mode:mode==='flash'?'flash':m.path?'path':'mission',dailyOk:canonDate(S.daily?.date)===today()?(+S.daily.ok||0):0,badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};},{id:'economy-question-base',order:99});
+MQHooks.on('answer:after',({ok,q,cid,M:m,mode})=>{if(!m||!QBASE)return;const ms=Math.max(0,Date.now()-(m.qt||Date.now()));if(ok){const r=quoteQuestion({cid,q,d:QBASE.d,hint:!!m.hint,streak:+m.streak||1,mode:mode==='flash'?'flash':mode==='path'?'path':'mission',ms,commit:true});S.xp=QBASE.xp+r.xp;S.coins=QBASE.coins+r.coins;m.xp=QBASE.mxp+r.xp;m.coins=QBASE.mcoins+r.coins;if(mode!=='flash')S.daily.ok=QBASE.dailyOk+(r.studyNew?1:0);if(SESSION){SESSION.qxp+=r.xp;SESSION.qcoins+=r.coins;}restoreBadges({badges:QBASE.badges,badgeDates:QBASE.badgeDates,newB:QBASE.newB},m);if(SESSION)SESSION.lastBadges={badges:S.badges.slice(),badgeDates:{...S.badgeDates},newB:Array.isArray(m.newB)?m.newB.slice():[]};updateAnswerFeedback(r);maybeQualify();}
  else if(mode!=='flash'){ensure();}
  QBASE=null;saveEconomy();},{id:'economy-answer',order:200});
 MQHooks.on('mission:end',({m})=>{if(!m)return;const e=ensure(),legacySt=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0;S.xp=Math.max(0,S.xp-legacySt*20);S.coins=Math.max(0,S.coins-legacySt*5);const b=missionBonus(m);S.xp+=b.xp;S.coins+=b.coins;const st=stars(m.ok,m.n),r=m.n?m.ok/m.n:0;
