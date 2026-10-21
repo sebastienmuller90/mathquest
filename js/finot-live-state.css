@@ -1,8 +1,12 @@
-/* Finot Académie — états visuels transitoires de Finot. */
+/* Finot Académie — états visuels transitoires et vestiaire de Finot. */
+.finot-card,.finot-fab{position:relative}
 .finot-card.mq-finot-reacting{border-color:color-mix(in srgb,var(--accent) 42%,var(--border));box-shadow:0 5px 0 var(--edge),0 0 0 3px color-mix(in srgb,var(--accent) 9%,transparent)}
 .finot-card.mq-finot-reacting .finot-live,.finot-fab.mq-finot-reacting .finot-live{animation:mqFinotReact .34s ease-out both}
 .finot-card[data-finot-state="celebrating"],.finot-card[data-finot-state="proud"]{border-color:color-mix(in srgb,var(--gold) 58%,var(--border))}
 .finot-card[data-finot-state="encouraging"],.finot-card[data-finot-state="sad-but-supportive"]{border-color:color-mix(in srgb,var(--good) 40%,var(--border))}
 .finot-fab.mq-finot-reacting{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent),var(--shadow,0 5px 20px rgba(0,0,0,.16))}
+.mq-finot-worn{position:absolute;z-index:3;left:-6px;top:-6px;width:32px;height:32px;border-radius:11px;background:var(--surface);border:2px solid var(--border);display:grid;place-items:center;box-shadow:0 2px 6px var(--edge);pointer-events:none}.mq-finot-worn img{width:26px;height:26px;object-fit:contain}.finot-fab>.mq-finot-worn{left:-7px;top:-7px;width:28px;height:28px}.finot-fab>.mq-finot-worn img{width:22px;height:22px}
+.finot-wardrobe{margin-top:16px}.finot-wardrobe h2{margin:0 0 6px}.finot-wardrobe-intro{margin-top:0}.finot-wardrobe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}.finot-wear{display:flex;align-items:center;gap:9px;text-align:left;padding:10px;border:2px solid var(--border);background:var(--surface);color:var(--text);border-radius:16px;min-height:62px;cursor:pointer}.finot-wear img{width:36px;height:36px;object-fit:contain;flex:none}.finot-wear>span{font-size:28px;flex:none}.finot-wear>div{min-width:0}.finot-wear b,.finot-wear small{display:block}.finot-wear small{color:var(--muted);font-size:11px}.finot-wear.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}.finot-wear.lock{opacity:.52;cursor:not-allowed}.finot-wear.none>span{font-size:24px}
 @keyframes mqFinotReact{0%{transform:scale(.86);opacity:.55}60%{transform:scale(1.07)}100%{transform:scale(1);opacity:1}}
+@media(max-width:360px){.finot-wardrobe-grid{grid-template-columns:1fr}.finot-wear{width:100%}}
 @media(prefers-reduced-motion:reduce){.finot-card.mq-finot-reacting .finot-live,.finot-fab.mq-finot-reacting .finot-live{animation:none!important}}
