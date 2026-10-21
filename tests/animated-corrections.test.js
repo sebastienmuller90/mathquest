@@ -1,4 +1,4 @@
-/* Corrections animées — moteur générique et premières opérations posées. */
+/* Corrections animées — moteur générique et opérations posées. */
 const {serve,launch}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
@@ -18,8 +18,20 @@ async function run(){
   const zero=await p.evaluate(()=>{const q={type:'num',q:'Effectue 1002 - 278',ans:724},m=MQCorrections.modelFor({q,cid:'ce2-ma-add-sous'});return {adapter:m?.adapter,first:m?.steps?.[0],last:m?.steps?.at(-1)};});
   T('Soustraction 1002 − 278 : emprunt à travers les zéros correctement propagé',zero.adapter==='soustraction-posée'&&zero.first?.displayA?.join(',')==='0,9,9,12'&&/traversant 2 colonnes/.test(zero.first?.text||'')&&/724/.test(zero.last?.text||''),JSON.stringify(zero));
 
-  const reject=await p.evaluate(()=>({wrong:MQCorrections.modelFor({q:{type:'num',q:'Calcule 20 + 3',ans:99},cid:'ce2-ma-add-sous'}),decimal:MQCorrections.modelFor({q:{type:'num',q:'Calcule 2,5 + 1,2',ans:3.7},cid:'ce2-ma-add-sous'}),text:MQCorrections.modelFor({q:{type:'text',q:'Explique 20 + 3',acc:['23']},cid:'ce2-ma-add-sous'})}));
-  T('Sécurité pédagogique : aucune animation si résultat incohérent, décimal non géré ou question texte',!reject.wrong&&!reject.decimal&&!reject.text,JSON.stringify(reject));
+  const mul=await p.evaluate(()=>{const q={type:'num',q:'Calcule : <b>347 × 26</b>',ans:9022},m=MQCorrections.modelFor({q,cid:'cm1-ma-multiplication'});return {parsed:MQCorrections.parseMultiplication(q),adapter:m?.adapter,steps:m?.steps?.map(s=>({text:s.text,partials:s.partials,sum:s.sum,done:s.done||false}))};});
+  T('Multiplication 347 × 26 : deux produits partiels, décalage des dizaines et résultat 9 022',mul.parsed?.a===347&&mul.parsed?.b===26&&mul.adapter==='multiplication-posée'&&mul.steps?.length===4&&mul.steps[0]?.partials?.[0]===2082&&mul.steps[1]?.partials?.[1]===6940&&mul.steps[2]?.sum===9022&&/9.?022/.test(mul.steps.at(-1)?.text||''),JSON.stringify(mul));
+
+  const div=await p.evaluate(()=>{const qq={type:'num',q:'Division de <b>157</b> par <b>6</b> : quel est le <b>quotient</b> ?',ans:26},qr={type:'num',q:'Division de <b>157</b> par <b>6</b> : quel est le <b>reste</b> ?',ans:1},mq=MQCorrections.modelFor({q:qq,cid:'cm1-ma-division'}),mr=MQCorrections.modelFor({q:qr,cid:'cm1-ma-division'});return {pq:MQCorrections.parseDivision(qq),pr:MQCorrections.parseDivision(qr),aq:mq?.adapter,ar:mr?.adapter,qLast:mq?.steps?.at(-1),rLast:mr?.steps?.at(-1)};});
+  T('Division euclidienne 157 ÷ 6 : quotient 26 et reste 1 reconnus séparément',div.pq?.quotient===26&&div.pq?.remainder===1&&div.pr?.quotient===26&&div.pr?.remainder===1&&div.aq==='division-euclidienne'&&div.ar==='division-euclidienne'&&/quotient demandé.*26/i.test(div.qLast?.text||'')&&/reste demandé.*1/i.test(div.rLast?.text||''),JSON.stringify(div));
+
+  const fracAdd=await p.evaluate(()=>{const q={type:'frac',q:'Calcule : <b>3/4 + 5/8</b>',ans:[11,8]},m=MQCorrections.modelFor({q,cid:'cm2-ma-fractions-calcul'});return {parsed:MQCorrections.parseFractionOperation(q),adapter:m?.adapter,steps:m?.steps};});
+  T('Fractions 3/4 + 5/8 : dénominateur commun 8 puis 11/8',fracAdd.parsed?.common===8&&fracAdd.parsed?.n1===6&&fracAdd.parsed?.n2===5&&fracAdd.adapter==='fractions-calcul'&&fracAdd.steps?.some(s=>/6\/8/.test(s.text||''))&&/11\/8/.test(fracAdd.steps?.at(-1)?.text||''),JSON.stringify(fracAdd));
+
+  const fracSub=await p.evaluate(()=>{const q={type:'frac',q:'Calcule : <b>7/8 − 1/4</b>',ans:[5,8]},m=MQCorrections.modelFor({q,cid:'cm2-ma-fractions-calcul'});return {parsed:MQCorrections.parseFractionOperation(q),adapter:m?.adapter,last:m?.steps?.at(-1)};});
+  T('Fractions 7/8 − 1/4 : soustraction sûre au même dénominateur, résultat 5/8',fracSub.parsed?.op==='−'&&fracSub.parsed?.common===8&&fracSub.parsed?.num===5&&fracSub.adapter==='fractions-calcul'&&/5\/8/.test(fracSub.last?.text||''),JSON.stringify(fracSub));
+
+  const reject=await p.evaluate(()=>({wrong:MQCorrections.modelFor({q:{type:'num',q:'Calcule 20 + 3',ans:99},cid:'ce2-ma-add-sous'}),decimal:MQCorrections.modelFor({q:{type:'num',q:'Calcule 2,5 + 1,2',ans:3.7},cid:'ce2-ma-add-sous'}),text:MQCorrections.modelFor({q:{type:'text',q:'Explique 20 + 3',acc:['23']},cid:'ce2-ma-add-sous'}),equation:MQCorrections.modelFor({q:{type:'num',q:'Trouve n : <b>3 × n = 12</b>',ans:4},cid:'cm1-ma-algebre'})}));
+  T('Sécurité pédagogique : aucune animation si résultat incohérent, décimal non géré, texte ou équation à inconnue',!reject.wrong&&!reject.decimal&&!reject.text&&!reject.equation,JSON.stringify(reject));
 
   // Intégration hook : simule le feedback déjà produit par le moteur historique.
   await p.evaluate(()=>{app.innerHTML='<div id="fb"><div class="fb bad"><b>Pas encore.</b><div class="expl">Correction classique conservée.</div></div></div>';MQHooks.emit('answer:after',{ok:false,mode:'mission',q:{type:'num',q:'Calcule : <b>347 + 286</b>',ans:633},cid:'ce2-ma-add-sous',M:{}});});
