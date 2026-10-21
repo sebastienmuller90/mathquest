@@ -1,4 +1,4 @@
-/* Indices progressifs — 3 niveaux, anti-spoiler, pénalité seulement à partir du niveau 2. */
+/* Indices progressifs — 3 niveaux, anti-spoiler, pénalité historique dès le premier indice. */
 const {serve,launch}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});
@@ -18,11 +18,11 @@ async function run(){
 
   await p.click('[data-a="hint"]');
   const h1=await p.evaluate(()=>({level:M.hintLevel,hint:M.hint,text:document.querySelector('.ph-card')?.textContent||'',next:!!document.querySelector('.ph-next'),attr:document.querySelector('.ph-card')?.dataset.hintLevel}));
-  T('Indice 1 : petit coup de pouce gratuit, sans pénalité XP',h1.level===1&&h1.hint===false&&/Petit indice/.test(h1.text)&&/ne réduit pas tes XP/.test(h1.text)&&h1.next&&h1.attr==='1',JSON.stringify(h1));
+  T('Indice 1 : petit coup de pouce avec la pénalité XP historique',h1.level===1&&h1.hint===true&&/Petit indice/.test(h1.text)&&/XP divisés par 2/.test(h1.text)&&h1.next&&h1.attr==='1',JSON.stringify(h1));
 
   await p.click('[data-a="hint"]');
   const h2=await p.evaluate(()=>({level:M.hintLevel,hint:M.hint,text:document.querySelector('.ph-card')?.textContent||'',next:!!document.querySelector('.ph-next'),attr:document.querySelector('.ph-card')?.dataset.hintLevel}));
-  T('Indice 2 : aide réelle et activation de la pénalité XP existante',h2.level===2&&h2.hint===true&&/Étape suivante/.test(h2.text)&&/XP divisés par 2/.test(h2.text)&&h2.next&&h2.attr==='2',JSON.stringify(h2));
+  T('Indice 2 : étape suivante sans modifier davantage la règle de récompense',h2.level===2&&h2.hint===true&&/Étape suivante/.test(h2.text)&&/XP divisés par 2/.test(h2.text)&&h2.next&&h2.attr==='2',JSON.stringify(h2));
 
   await p.click('[data-a="hint"]');
   const h3=await p.evaluate(()=>({level:M.hintLevel,hint:M.hint,text:document.querySelector('.ph-card')?.textContent||'',next:!!document.querySelector('.ph-next'),attr:document.querySelector('.ph-card')?.dataset.hintLevel}));
@@ -34,7 +34,6 @@ async function run(){
   const reset=await p.evaluate(()=>{MQHooks.emit('question:after-render',{q:M.q,M,mode:'mission'});return {level:M.hintLevel,hint:M.hint};});
   T('Nouvelle question : niveau d’aide et pénalité sont remis à zéro',reset.level===0&&reset.hint===false,JSON.stringify(reset));
 
-  // Tous les types principaux doivent produire une aide sans exception ni réponse fabriquée.
   const coverage=await p.evaluate(()=>['num','frac','choice','order','multi','text','other'].map(type=>({type,a:MQProgressiveHints.lightHint({type},M.cid),b:MQProgressiveHints.methodHint({type},M.cid)})));
   T('Couverture : les principaux types de questions ont un indice léger et une méthode',coverage.every(x=>x.a.length>15&&x.b.length>20),JSON.stringify(coverage));
 
