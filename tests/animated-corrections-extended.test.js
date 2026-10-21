@@ -14,7 +14,7 @@ async function run(){
   T('Registre V3 : 8 adaptateurs spécialisés dans un ordre stable',JSON.stringify(reg)===JSON.stringify(expected),JSON.stringify(reg));
 
   const mul1=await p.evaluate(()=>{const q={type:'num',q:'Calcule : <b>247 × 6</b>',ans:1482},m=MQCorrections.modelFor({q,cid:'cm1-ma-multiplication'});return {parsed:MQCorrections.parseMultiplication(q),adapter:m?.adapter,title:m?.title,steps:m?.steps?.map(s=>({work:s.work,carry:s.carry,text:s.text,done:!!s.done}))};});
-  T('Multiplication 247 × 6 : retenues colonne par colonne et résultat 1482',mul1.parsed?.a===247&&mul1.parsed?.b===6&&mul1.adapter==='multiplication-posée'&&mul1.steps?.length===4&&/7 × 6/.test(mul1.steps[0].text||'')&&/1482/.test((mul1.steps.at(-1).text||'').replace(/\s/g,'')),JSON.stringify(mul1));
+  T('Multiplication 247 × 6 : retenues colonne par colonne et dernière retenue 14 expliquée correctement',mul1.parsed?.a===247&&mul1.parsed?.b===6&&mul1.adapter==='multiplication-posée'&&mul1.steps?.length===4&&/7 × 6/.test(mul1.steps[0].text||'')&&/dernière colonne/i.test(mul1.steps?.[2]?.text||'')&&/>14</.test(mul1.steps?.[2]?.text||'')&&/1482/.test((mul1.steps.at(-1).text||'').replace(/\s/g,'')),JSON.stringify(mul1));
 
   const mul2=await p.evaluate(()=>{const q={type:'num',q:'Calcule : <b>347 × 26</b>',ans:9022},m=MQCorrections.modelFor({q,cid:'cm1-ma-multiplication'});return {adapter:m?.adapter,steps:m?.steps?.map(s=>({partials:s.partials,sum:s.sum,text:s.text,done:!!s.done}))};});
   T('Multiplication 347 × 26 : deux produits partiels 2082 et 6940 puis total 9022',mul2.adapter==='multiplication-posée'&&mul2.steps?.[0]?.partials?.[0]===2082&&mul2.steps?.[1]?.partials?.[1]===6940&&mul2.steps?.[2]?.sum===9022&&/9022/.test((mul2.steps.at(-1).text||'').replace(/\s/g,'')),JSON.stringify(mul2));
@@ -24,6 +24,9 @@ async function run(){
 
   const div=await p.evaluate(()=>{const q1={type:'num',q:'Division de <b>157</b> par <b>6</b> : quel est le <b>quotient</b> ?',ans:26},q2={type:'num',q:'Division de <b>157</b> par <b>6</b> : quel est le <b>reste</b> ?',ans:1},m1=MQCorrections.modelFor({q:q1,cid:'cm1-ma-division'}),m2=MQCorrections.modelFor({q:q2,cid:'cm1-ma-division'});return {p1:MQCorrections.parseDivision(q1),a1:m1?.adapter,last1:m1?.steps?.at(-1),p2:MQCorrections.parseDivision(q2),a2:m2?.adapter,last2:m2?.steps?.at(-1)};});
   T('Division 157 ÷ 6 : quotient 26 et reste 1, avec vérification 157 = 6 × 26 + 1',div.p1?.quotient===26&&div.p1?.remainder===1&&div.a1==='division-euclidienne'&&div.a2==='division-euclidienne'&&/157.*6.*26.*1/.test((div.last1?.text||'').replace(/<[^>]+>/g,''))&&/reste demandé.*1/i.test(div.last2?.text||''),JSON.stringify(div));
+
+  const divZero=await p.evaluate(()=>{const q={type:'num',q:'Division de <b>1005</b> par <b>5</b> : quel est le <b>quotient</b> ?',ans:201},m=MQCorrections.modelFor({q,cid:'cm1-ma-division'});return {parsed:MQCorrections.parseDivision(q),adapter:m?.adapter,steps:m?.steps?.map(s=>({q:s.quotient,r:s.remainder,current:s.current,text:s.text,done:!!s.done}))};});
+  T('Division 1005 ÷ 5 : le zéro intermédiaire du quotient est conservé jusqu’à 201',divZero.parsed?.quotient===201&&divZero.adapter==='division-euclidienne'&&divZero.steps?.some(s=>s.q==='20')&&divZero.steps?.at(-1)?.q==='201'&&/1005.*5.*201/.test((divZero.steps?.at(-1)?.text||'').replace(/<[^>]+>/g,'').replace(/\s/g,'')),JSON.stringify(divZero));
 
   const divDec=await p.evaluate(()=>{const q={type:'num',q:'Calcule le quotient décimal : <b>23 ÷ 5</b>',ans:4.6},m=MQCorrections.modelFor({q,cid:'cm2-ma-division'});return {parsed:MQCorrections.parseDecimalDivision(q),adapter:m?.adapter,title:m?.title,steps:m?.steps};});
   T('Division décimale 23 ÷ 5 : quotient entier 4, reste 3, puis 6 dixièmes = 4,6',divDec.parsed?.quotientInt===4&&divDec.parsed?.remainder===3&&divDec.adapter==='division-décimale'&&/partie entière/.test(divDec.steps?.[0]?.text||'')&&/dixièmes/.test(divDec.steps?.[1]?.text||'')&&/4,6/.test(divDec.steps?.at(-1)?.text||''),JSON.stringify(divDec));
@@ -39,15 +42,18 @@ async function run(){
 
   const reject=await p.evaluate(()=>({
    mulWrong:MQCorrections.modelFor({q:{type:'num',q:'Calcule 12 × 7',ans:99}}),
+   mulZero:MQCorrections.modelFor({q:{type:'num',q:'Calcule 247 × 0',ans:0}}),
    mulDecimalWrong:MQCorrections.modelFor({q:{type:'num',q:'Calcule 2,5 × 3',ans:8}}),
+   mulDecimalZero:MQCorrections.modelFor({q:{type:'num',q:'Calcule 2,5 × 0',ans:0}}),
    equation:MQCorrections.modelFor({q:{type:'num',q:'Trouve n : 3 × n = 12',ans:4}}),
    divWrong:MQCorrections.modelFor({q:{type:'num',q:'Division de 157 par 6 : quel est le quotient ?',ans:25}}),
+   divZero:MQCorrections.modelFor({q:{type:'num',q:'Division de 157 par 0 : quel est le quotient ?',ans:0}}),
    divRecurring:MQCorrections.modelFor({q:{type:'num',q:'Calcule le quotient décimal : 1 ÷ 3',ans:0.3333333333333333}}),
    fracWrong:MQCorrections.modelFor({q:{type:'frac',q:'Calcule 2/3 + 5/6',ans:[8,6]}}),
    fracMulWrong:MQCorrections.modelFor({q:{type:'frac',q:'Calcule 4 × 3/10',ans:[13,10]}}),
    fracOther:MQCorrections.modelFor({q:{type:'frac',q:'Écris 1 + 2/3 sous forme de fraction',ans:[5,3]}})
   }));
-  T('Sécurité V3 : aucun adaptateur sur résultat faux, équation à inconnue, quotient périodique ou fraction hors format',!reject.mulWrong&&!reject.mulDecimalWrong&&!reject.equation&&!reject.divWrong&&!reject.divRecurring&&!reject.fracWrong&&!reject.fracMulWrong&&!reject.fracOther,JSON.stringify(reject));
+  T('Sécurité V3.1 : aucun adaptateur sur ×0, division par 0, résultat faux, équation à inconnue ou forme hors périmètre',!reject.mulWrong&&!reject.mulZero&&!reject.mulDecimalWrong&&!reject.mulDecimalZero&&!reject.equation&&!reject.divWrong&&!reject.divZero&&!reject.divRecurring&&!reject.fracWrong&&!reject.fracMulWrong&&!reject.fracOther,JSON.stringify(reject));
 
   await p.evaluate(()=>{app.innerHTML='<div id="fb"><div class="fb bad"><div class="expl">Correction classique.</div></div></div>';MQHooks.emit('answer:after',{ok:false,mode:'mission',q:{type:'num',q:'Calcule : <b>2,35 × 4</b>',ans:9.4},cid:'cm1-ma-multiplication',M:{}});});await p.waitForSelector('.mq-corr');
   const mounted=await p.evaluate(()=>({head:document.querySelector('.mq-corr-head small')?.innerText,text:document.querySelector('#fb')?.innerText||'',eq:document.querySelector('.mq-corr-eq')?.innerText||'',count:document.querySelector('.mq-corr-count')?.innerText}));
