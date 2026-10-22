@@ -101,6 +101,9 @@ jobs:
       - name: Exercices — sécurité des instantanés de reprise
         if: matrix.browser == 'chromium'
         run: node tests/exercises-resume-security.test.js
+      - name: Checkpoint pédagogique de fin de séance
+        if: matrix.browser == 'chromium'
+        run: node tests/session-checkpoint.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
