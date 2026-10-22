@@ -1,0 +1,114 @@
+name: Patch sciences Earth review
+
+on:
+  push:
+    branches: [amelioration/cours-approfondis-sciences]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: amelioration/cours-approfondis-sciences
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Corriger la classification Terre espace et ajouter la non-régression
+        shell: python
+        run: |
+          from pathlib import Path
+
+          p=Path('data/pedagogy/course-depth-sciences-primary.js')
+          s=p.read_text(encoding='utf-8')
+          old="""function profile(domain){const d=String(domain||'').toLowerCase();
+ if(/vivant|animal|plante|écosyst|environnement|terre|planète/.test(d))return 'living';
+ if(/corps|santé|humain|alimentation/.test(d))return 'health';
+ if(/matière|eau|air|mélange|énergie|physique/.test(d))return 'matter';
+ if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
+ if(/temps|histoire/.test(d))return 'time';
+ if(/espace|géograph|territoire|monde/.test(d))return 'space';
+ return 'method';}
+"""
+          new="""function profile(domain){const d=String(domain||'').toLowerCase();
+ // Terre / climat / astronomie doivent être testés avant « vivant » : certains domaines mentionnent aussi l’environnement.
+ if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';
+ if(/vivant|animal|plante|écosyst|environnement/.test(d))return 'living';
+ if(/corps|santé|humain|alimentation/.test(d))return 'health';
+ if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|signal|lumière|ombre|son/.test(d))return 'matter';
+ if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
+ if(/temps|histoire/.test(d))return 'time';
+ if(/espace|géograph|territoire|monde/.test(d))return 'space';
+ return 'method';}
+"""
+          if new not in s:
+              if s.count(old)!=1: raise SystemExit(f'profile attendu introuvable: {s.count(old)}')
+              s=s.replace(old,new,1)
+
+          anchor=""" matter:{
+  a:`<p>Pour étudier la matière, on décrit des <b>propriétés mesurables ou observables</b> : état, masse, volume, température, solubilité, aspect ou comportement lors d’un changement. Les mots précis sont importants : « disparaître » n’est pas toujours correct. Une substance dissoute peut devenir invisible tout en restant présente dans le mélange.</p><p>Lors d’une expérience, note l’état de départ, ce que l’on modifie et l’état d’arrivée. Cette chronologie permet de distinguer une transformation, un changement d’état, un mélange ou une séparation. Lorsque c’est pertinent, demande-toi aussi si la matière peut être récupérée.</p>`,
+  b:`<p>Une expérience fiable garde les mêmes conditions sauf celle que l’on veut tester. On peut alors comparer. Mesure avant et après quand c’est possible, utilise les mêmes récipients et observe pendant la même durée. Si le résultat est surprenant, on recommence : une expérience répétée est plus convaincante qu’un essai unique.</p><p>Écris ta conclusion sous la forme « J’observe que…, donc je peux conclure que… ». Cela évite de confondre l’hypothèse de départ avec le résultat réellement obtenu.</p>`,
+  culture:`<p>Les laboratoires utilisent des protocoles écrits afin qu’une autre équipe puisse refaire la même expérience. Cette idée de <b>reproductibilité</b> est essentielle : un résultat devient plus solide quand d’autres personnes peuvent l’obtenir dans les mêmes conditions.</p>`},
+"""
+          earth=anchor+""" earth:{
+  a:`<p>Pour étudier la <b>Terre, l’atmosphère et l’espace</b>, on relie des observations faites à des échelles très différentes. La météo décrit l’état de l’atmosphère à un lieu et un moment ; le climat se construit à partir de nombreuses mesures sur de longues durées. En astronomie, on distingue une étoile, une planète et un satellite, puis on utilise des modèles pour comprendre leurs mouvements.</p><p>En géologie, la Terre n’est pas immobile : sa surface évolue. Volcans et séismes témoignent de phénomènes internes, tandis que l’eau, le vent et la glace transforment aussi les paysages. Pour les ressources naturelles, on étudie à la fois leur origine, leurs usages et les conséquences de leur exploitation.</p>`,
+  b:`<p>Commence par préciser <b>l’échelle de temps et d’espace</b> de la question : une journée de pluie n’explique pas à elle seule un climat, et un dessin du Système solaire n’est pas à l’échelle réelle. Compare plusieurs observations, repère les grandeurs mesurées et distingue le modèle de la réalité qu’il représente.</p><p>Pour expliquer un phénomène terrestre ou astronomique, construis une chaîne : observations → mécanisme proposé → conséquences observables. Un schéma peut aider si les positions, mouvements ou couches sont clairement légendés. Évite les raccourcis : la Terre tourne sur elle-même et autour du Soleil ; la Lune tourne autour de la Terre ; le Soleil est une étoile.</p>`,
+  culture:`<p>La météorologie, la géologie et l’astronomie combinent mesures de terrain et instruments à distance : stations météo, sismomètres, satellites et télescopes. Les scientifiques comparent des séries de données sur de longues périodes et améliorent leurs modèles quand de nouvelles observations deviennent disponibles.</p>`},
+"""
+          if ' earth:{\n' not in s:
+              if s.count(anchor)!=1: raise SystemExit(f'ancre matter introuvable: {s.count(anchor)}')
+              s=s.replace(anchor,earth,1)
+
+          oldret=""" return {
+  deep:[
+"""
+          newret=""" return {
+  scienceProfile:k,
+  deep:[
+"""
+          if 'scienceProfile:k' not in s:
+              if s.count(oldret)!=1: raise SystemExit(f'retour entry introuvable: {s.count(oldret)}')
+              s=s.replace(oldret,newret,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('tests/course-depth.test.js'); s=p.read_text(encoding='utf-8')
+          old="""  const scienceTargets=[['CP','p-sciences'],['CE1','p-qlm'],['CE2','p-qlm'],['CM1','p-sciences'],['CM2','p-sciences']].map(([g,sid])=>{
+"""
+          new="""  const earthExpected=['cm1-sc-meteo-climat','cm2-sc-systeme-solaire','cm2-sc-terre-active','cm2-sc-environnement'];
+  const earthProfiles=earthExpected.map(id=>[id,C[id]&&C[id].scienceProfile]);
+  const scienceTargets=[['CP','p-sciences'],['CE1','p-qlm'],['CE2','p-qlm'],['CM1','p-sciences'],['CM2','p-sciences']].map(([g,sid])=>{
+"""
+          if 'const earthExpected=' not in s:
+              if s.count(old)!=1: raise SystemExit('ancre scienceTargets introuvable')
+              s=s.replace(old,new,1)
+          oldret="return {count:ids.length,orphans,lots:lots2,scienceTargets,order,place,bad,typos};"
+          newret="return {count:ids.length,orphans,lots:lots2,scienceTargets,earthProfiles,order,place,bad,typos};"
+          if newret not in s:
+              if s.count(oldret)!=1: raise SystemExit('retour test introuvable')
+              s=s.replace(oldret,newret,1)
+          anchor2=""" T('Chaque chapitre enrichi existe dans le programme (aucun identifiant orphelin)',r.count>0&&!r.orphans.length,r.orphans.join(', '));
+"""
+          add=anchor2+""" T('Terre, climat, géologie et système solaire utilisent le profil Terre & espace',r.earthProfiles.length===4&&r.earthProfiles.every(x=>x[1]==='earth'),JSON.stringify(r.earthProfiles));
+"""
+          if 'profil Terre & espace' not in s:
+              if s.count(anchor2)!=1: raise SystemExit('ancre assertion Terre introuvable')
+              s=s.replace(anchor2,add,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Vérifier la syntaxe
+        run: |
+          node --check data/pedagogy/course-depth-sciences-primary.js
+          node --check tests/course-depth.test.js
+          grep -F "scienceProfile:k" data/pedagogy/course-depth-sciences-primary.js
+          grep -F "profil Terre & espace" tests/course-depth.test.js
+      - name: Committer la correction
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/pedagogy/course-depth-sciences-primary.js tests/course-depth.test.js
+          git commit -m "Corrige le profil Terre et espace des cours de sciences"
+          git push origin HEAD:amelioration/cours-approfondis-sciences
