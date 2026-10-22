@@ -119,6 +119,9 @@ jobs:
       - name: Pourquoi cette activité ?
         if: matrix.browser == 'chromium'
         run: node tests/why-this-activity.test.js
+      - name: Séance 5 minutes intelligentes
+        if: matrix.browser == 'chromium'
+        run: node tests/smart-5min.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
