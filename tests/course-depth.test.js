@@ -24,6 +24,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    return {g:re.replace(/[\^$]/g,''),n:want.length,missing,thin,incomplete};});
   const earthExpected=['cm1-sc-meteo-climat','cm2-sc-systeme-solaire','cm2-sc-terre-active','cm2-sc-environnement'];
   const earthProfiles=earthExpected.map(id=>[id,C[id]&&C[id].scienceProfile]);
+  const namedProfileExpected=[['cm1-sc-lumiere-ombres','matter'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living']];
+  const namedProfiles=namedProfileExpected.map(([id,expected])=>[id,C[id]&&C[id].scienceProfile,expected]);
   const scienceTargets=[['CP','p-sciences'],['CE1','p-qlm'],['CE2','p-qlm'],['CM1','p-sciences'],['CM2','p-sciences']].map(([g,sid])=>{
    const want=((((MQPrimary||{})._reg||{}).grades||{})[g]||{})[sid]||[];const ids2=want.map(ch=>ch.id);
    const missing=ids2.filter(id=>!C[id]);const thin=ids2.filter(id=>C[id]).map(id=>{const d=C[id];const n=(d.deep||[]).reduce((sum,x)=>sum+words(x.h),0)+words(d.culture&&d.culture.h)+String(d.adult||'').split(/\s+/).filter(Boolean).length;return [id,n];}).filter(x=>x[1]<200);
@@ -48,10 +50,11 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   // Français CM1 et CM2 : règles trop absolues nuancées (complément d'objet ; adverbes en -amment/-emment).
   const cm=JSON.stringify([COURS['cm1-fr-complements'],COURS['cm2-fr-adverbes-ment']]);
   typos.push(...[/ni le supprimer ni le déplacer/.test(cm)&&'complément d’objet trop absolu',/seuls les adjectifs en -ant/.test(cm)&&'-amment/-emment trop absolu',!/présentement/.test(cm)&&'exception présentement absente'].filter(Boolean));
-  return {count:ids.length,orphans,lots:lots2,scienceTargets,earthProfiles,order,place,bad,typos};},LOTS.map(([g,re,m])=>[g,re.source,m]));
+  return {count:ids.length,orphans,lots:lots2,scienceTargets,earthProfiles,namedProfiles,order,place,bad,typos};},LOTS.map(([g,re,m])=>[g,re.source,m]));
  T('Cours existant corrigé (français CE1, CE2, CM1, CM2 : mangeons, gâteau, mètre/siècle, question, son/sont, est, complément d’objet, -amment)',!r.typos.length,r.typos.join(', '));
  T('Chaque chapitre enrichi existe dans le programme (aucun identifiant orphelin)',r.count>0&&!r.orphans.length,r.orphans.join(', '));
  T('Terre, climat, géologie et système solaire utilisent le profil Terre & espace',r.earthProfiles.length===4&&r.earthProfiles.every(x=>x[1]==='earth'),JSON.stringify(r.earthProfiles));
+ T('Le nom du chapitre affine le profil sciences (lumière, Lune, développement)',r.namedProfiles.length===3&&r.namedProfiles.every(x=>x[1]===x[2]),JSON.stringify(r.namedProfiles));
  for(const l of r.lots){T(`Lot ${l.g} : tous les chapitres couverts (${l.n})`,l.n>0&&!l.missing.length,l.missing.join(', '));
   T(`Lot ${l.g} : chaque chapitre complet (explications, défi + réponse, conseil adulte, culture)`,!l.incomplete.length,l.incomplete.join(', '));
   T(`Lot ${l.g} : contenu réellement plus détaillé (mots ajoutés par chapitre)`,!l.thin.length,JSON.stringify(l.thin));}

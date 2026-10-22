@@ -16,8 +16,8 @@ const targets=[
 ];
 function profile(domain){const d=String(domain||'').toLowerCase();
  // Terre / climat / astronomie doivent être testés avant « vivant » : certains domaines mentionnent aussi l’environnement.
- if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';
- if(/vivant|animal|plante|écosyst|environnement/.test(d))return 'living';
+ if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource|lune|soleil|étoile|satellite/.test(d))return 'earth';
+ if(/vivant|animal|plante|écosyst|environnement|reproduction|croissance|développement|germination/.test(d))return 'living';
  if(/corps|santé|humain|alimentation/.test(d))return 'health';
  if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|signal|lumière|ombre|son/.test(d))return 'matter';
  if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
@@ -58,7 +58,7 @@ const PACK={
   b:`<p>La méthode la plus sûre est : question → hypothèse → protocole ou recherche → résultats → conclusion. Pendant le travail, note ce qui est réellement observé avant d’expliquer. Si le résultat ne correspond pas à ton idée de départ, on ne le cache pas : on cherche pourquoi et on corrige l’hypothèse.</p><p>Pour vérifier que tu as compris, essaie d’expliquer la notion avec tes propres mots puis donne un exemple différent de celui du cours.</p>`,
   culture:`<p>La science progresse parce que les explications peuvent être discutées et vérifiées. Publier une méthode, des données et une conclusion permet à d’autres personnes de contrôler le raisonnement et, si nécessaire, de l’améliorer.</p>`}
 };
-function entry(ch,grade,sid){const k=profile(ch.domain),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');
+function entry(ch,grade,sid){const k=profile(`${ch.domain||''} ${ch.name||''}`),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');
  return {
   scienceProfile:k,
   deep:[
