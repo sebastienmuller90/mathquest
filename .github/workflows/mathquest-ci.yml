@@ -164,6 +164,9 @@ jobs:
         run: node tests/session-length.test.js
       - name: Interface premium (débordements, navigation, contrastes par thème, symboles ✓/✕, jetons par âge)
         run: node tests/premium-ui.test.js
+      - name: Contraste réel de l’interface premium (3 profils, clair et sombre, 12 écrans)
+        if: matrix.browser == 'chromium'
+        run: node tests/premium-contrast.test.js
       - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
         run: node tests/pwa-update.test.js
       - name: Audit navigateur intégral

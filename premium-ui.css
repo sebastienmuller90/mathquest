@@ -32,6 +32,8 @@
   --warn:#8a5a00;
   --warnbg:#fff4d6;
   --focus:#2563eb;
+  --on-good:#ffffff;
+  --on-bad:#ffffff;
   --sh-1:0 1px 2px rgba(43,36,32,.06),0 1px 1px rgba(43,36,32,.04);
   --sh-2:0 4px 14px rgba(43,36,32,.08),0 1px 3px rgba(43,36,32,.06);
   --sh-3:0 18px 44px rgba(43,36,32,.16),0 2px 8px rgba(43,36,32,.08);
@@ -45,14 +47,14 @@
   :root:not([data-theme="light"]){
     --bg:#16110e;--surface:#211a15;--surface2:#2b221b;--text:#f7f0e8;--muted:#bfb2a5;--border:#3d3128;--edge:rgba(0,0,0,.4);
     --accent:#ff9a52;--accent-d:color-mix(in srgb,var(--accent) 84%,#fff);--accent-text:#ff9a52;--on-accent:#1a1008;--gold:#f0bd4a;
-    --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;
+    --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;--on-good:#1a1008;--on-bad:#1a1008;
     --sh-1:0 1px 2px rgba(0,0,0,.3);--sh-2:0 6px 18px rgba(0,0,0,.32),0 1px 3px rgba(0,0,0,.24);--sh-3:0 20px 48px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
   }
 }
 :root[data-theme="dark"]{
   --bg:#16110e;--surface:#211a15;--surface2:#2b221b;--text:#f7f0e8;--muted:#bfb2a5;--border:#3d3128;--edge:rgba(0,0,0,.4);
   --accent:#ff9a52;--accent-d:color-mix(in srgb,var(--accent) 84%,#fff);--accent-text:#ff9a52;--on-accent:#1a1008;--gold:#f0bd4a;
-  --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;
+  --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;--on-good:#1a1008;--on-bad:#1a1008;
   --sh-1:0 1px 2px rgba(0,0,0,.3);--sh-2:0 6px 18px rgba(0,0,0,.32),0 1px 3px rgba(0,0,0,.24);--sh-3:0 20px 48px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
 }
 
@@ -78,7 +80,7 @@ body[data-mq-age="teen"] :is(.btn,.sbtn,.tool,.choice,.pill,.combo,.reco .go){fo
 #app{max-width:880px;padding:20px 16px 112px}
 
 /* Focus visible unique, lisible sur toute surface */
-:is(.btn,.choice,.world,.tool,.sbtn,.chap,.reco,.pcard,.av,.profile-btn,.htab,summary,input,select,textarea,[data-a],[data-pob]):focus-visible{
+:is(.btn,.choice,.world,.tool,.sbtn,.chap,.reco,.pcard,.av,.profile-btn,.htab,summary,[data-a],[data-pob]):focus-visible{
   outline:3px solid var(--focus);outline-offset:2px;
 }
 /* Champs : un seul anneau (bordure + halo), pas de double contour */
@@ -162,10 +164,10 @@ input.big:focus{border-color:var(--accent);background:var(--surface)}
   position:absolute;right:14px;top:50%;transform:translateY(-50%);
   width:26px;height:26px;border-radius:50%;
   display:grid;place-items:center;
-  font:800 15px/1 var(--font-ui);color:#fff;
+  font:800 15px/1 var(--font-ui);
 }
-.choice.good::after{content:"✓";background:var(--good)}
-.choice.bad::after{content:"✕";background:var(--bad)}
+.choice.good::after{content:"✓";background:var(--good);color:var(--on-good)}
+.choice.bad::after{content:"✕";background:var(--bad);color:var(--on-bad)}
 
 /* Retours de correction */
 .fb{border:1px solid var(--border);border-radius:var(--r-md)}
@@ -232,3 +234,18 @@ input.big:focus{border-color:var(--accent);background:var(--surface)}
 .ico{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .ico .fill{fill:currentColor;stroke:none}
 .btn .ico{margin-right:.3em}
+
+/* Champs : texte indicatif lisible (le gris par défaut du navigateur reste sous 4,5:1) */
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+
+/* Cibles tactiles : au moins 44 px sur les contrôles d'usage courant */
+.btn.sm{min-width:44px}
+.spk,.ttsb,.pmini{min-width:44px;min-height:44px}
+details>summary{padding-block:10px}
+.mq-corr-next{min-height:44px}
+
+/* Mode DYS : les feuilles premium ne doivent jamais annuler l'espacement, l'interligne ou la police choisis */
+html.mq-dys-on :is(h1,h2,h3,.nm,.sec,.qtext,.cn,.cmeta){letter-spacing:normal}
+html.mq-dys-on .lcard h2{line-height:1.75}
+html.mq-dys-on .fh{text-transform:none;font-size:inherit;letter-spacing:normal}
+html.mq-dys-on.mq-dys-simplefont :is(.cn b,.sec,.nm,h1,h2,h3,.reco b,.reco .go,.pill,.wl,.go,.sbtn,.tool,.htab){font-family:Arial,Verdana,system-ui,sans-serif!important}

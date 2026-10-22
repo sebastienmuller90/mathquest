@@ -156,7 +156,7 @@ function home(){MQHooks.emit('home:before');PARENT=false;CUR='home';if(!S.name)r
   <div class="pills"><span class="pill" title="Pièces"><img src="data/images/icons/icon-coins.png" alt="" aria-hidden="true" style="width:18px;height:18px;object-fit:contain;vertical-align:-4px;margin-right:2px;"> ${S.coins}</span><span class="pill ${S.streak.n?'fire':''}" title="Jours d’affilée"><img src="data/images/icons/icon-streak.png" alt="" aria-hidden="true" style="width:18px;height:18px;object-fit:contain;vertical-align:-4px;margin-right:2px;"> ${S.streak.n}</span><button class="pill" data-a="snd" aria-label="${S.sound?'Couper le son':'Activer le son'}"><img src="data/images/icons/${S.sound?'icon-son-on':'icon-son-off'}.png" alt="" aria-hidden="true" style="width:18px;height:18px;object-fit:contain;"></button></div></header>
  <h1 class="sr-only">Accueil de ${esc(S.name)}</h1>`;
  const tabs={
-  accueil:()=>`<button class="card finot-card" data-a="finot" style="display:flex;align-items:center;gap:12px;width:100%;border:none;text-align:left;cursor:pointer;font:inherit;color:inherit;" aria-label="Message de Finot — visiter son repaire">
+  accueil:()=>`<button class="card finot-card" data-a="finot" style="display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;" aria-label="Message de Finot — visiter son repaire">
    <img src="${fe.img}" alt="" aria-hidden="true" class="finot-live" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:50% 35%;flex:0 0 auto;">
    <div style="flex:1;"><b style="color:var(--accent-text)">Finot</b> <span class="muted small">· ${finotNiveau(S).nom}</span><div>${esc(fe.texte)}</div></div>
    <span class="muted" aria-hidden="true">→</span>

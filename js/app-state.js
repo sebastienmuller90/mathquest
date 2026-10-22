@@ -137,7 +137,7 @@ function applyTheme(){const t=THEMES.find(x=>x[0]===S.theme)||THEMES[0],accent=t
  // --surface2 est, empiriquement, la plus exigeante des 3 surfaces (bg/surface/surface2) dans les deux
  // modes clair/sombre de cette palette précise : y passer garantit de passer aussi sur les 2 autres.
  const surf=getComputedStyle(root).getPropertyValue('--surface2').trim()||'#ffe7d3';
- root.style.setProperty('--accent-text',contrastRatio(accent,surf)>=4.6?accent:shadeForContrast(accent,surf,4.6));
+ root.style.setProperty('--accent-text',contrastRatio(accent,surf)>=5.3?accent:shadeForContrast(accent,surf,5.3));
  applyStage();}
 if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>applyTheme());
 // Interface allégée et agrandie au primaire, encore plus pour CP-CE1.

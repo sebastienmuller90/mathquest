@@ -27,12 +27,14 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
   background:var(--surface2);
   box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 14%,transparent);
 }
-.top .profile-btn{grid-area:name;justify-self:start;min-height:36px;border-width:1px;box-shadow:var(--sh-1);font-family:var(--font-display)}
+.top .profile-btn{grid-area:name;justify-self:start;min-height:44px;border-width:1px;box-shadow:var(--sh-1);font-family:var(--font-display)}
 .top .tt{grid-area:tt;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;font-size:13px;color:var(--muted)}
 .top .tt .lvl{white-space:nowrap}
 .top .xpbar{grid-area:xp;height:8px;margin:4px 0 0}
 .top .pills{grid-area:pills;flex-wrap:nowrap;gap:6px}
 .top .pills .pill{display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:3px 10px;font-size:15px}
+.top .pills button.pill{position:relative}
+.top .pills button.pill::after{content:"";position:absolute;inset:-6px -6px}
 .grade-badge{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 22%,var(--border));color:var(--accent-text);font-size:12.5px;font-weight:800}
 
 /* ───── Cartes d'action (mission, révision, badges…) ───── */
@@ -62,8 +64,8 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
   font-size:16px;
 }
 .reco.hero{border-width:1px;border-color:color-mix(in srgb,var(--accent) 35%,var(--border));box-shadow:var(--sh-2);background:linear-gradient(135deg,var(--surface),var(--accent-soft))}
-.finot-card{border:1px solid var(--border)!important;transition:border-color .15s ease,box-shadow .15s ease}
-.finot-card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))!important;box-shadow:var(--sh-2)}
+.finot-card{border:1px solid var(--border);transition:border-color .15s ease,box-shadow .15s ease}
+.finot-card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
 .goal{background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh-1);gap:16px}
 .ring .rf{stroke:var(--brand)}
 
@@ -82,7 +84,7 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
   border:1px solid color-mix(in srgb,var(--wc) 40%,var(--border));
   border-radius:var(--r-lg);
   box-shadow:var(--sh-2);
-  background:linear-gradient(145deg,color-mix(in srgb,var(--wc) 82%,#fff),color-mix(in srgb,var(--wc) 88%,#000));
+  background:linear-gradient(145deg,color-mix(in srgb,var(--wc) 72%,#000),color-mix(in srgb,var(--wc) 60%,#000));
   transition:box-shadow .15s ease,transform .1s ease;
 }
 .world:hover{filter:none;box-shadow:var(--sh-3)}
@@ -291,3 +293,20 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
   #app:has(>.tabs) .tab{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);text-align:center;padding:10px 8px}
   #app:has(>.tabs) .tab.on{background:var(--accent-soft);border-color:var(--accent)}
 }
+
+/* ───── Contrastes : textes qui restaient sous 4,5:1 (audit 23/10/2026) ───── */
+.badge.off{opacity:1;filter:none}
+.badge.off :is(.ie,img){opacity:.45;filter:grayscale(1)}
+.badge.off :is(b,small){color:var(--muted)}
+.item.lock{opacity:1}
+.item.lock :is(.ie,.sw){opacity:.5}
+.item.lock :is(b,small){color:var(--muted)}
+.listen{color:var(--accent-text)}
+.listen.slow{opacity:1}
+.reread>summary{color:var(--accent-text)}
+.lvlup{background:var(--accent);color:var(--on-accent)}
+.combo.hot,.hot{background:linear-gradient(90deg,#c2410c,#b91c1c);color:#fff}
+.ctag.tE{background:#a8266f}
+.ctag.tM{background:#0369a1}
+.scp-row em{color:var(--good)}
+.er-status.progress{background:var(--warnbg);color:var(--warn)}
