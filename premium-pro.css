@@ -248,3 +248,42 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 
 /* Bouton Finot flottant : finot-live-state.css le remettait en position relative, ce qui le décalait hors de l'écran. */
 .finot-fab{position:fixed;width:54px;height:54px;box-shadow:var(--sh-2)}
+
+/* ───── Espace parents intégré : identité adulte ─────
+   Accent indigo, Nunito partout, rayons sobres, onglets soulignés. Seul le contenu de #app change : l'espace enfant garde son thème. */
+#app:has(>.tabs){
+  --accent:#4f46e5;
+  --accent-d:#4338ca;
+  --accent-text:#4338ca;
+  --on-accent:#ffffff;
+  --accent-soft:color-mix(in srgb,#4f46e5 9%,var(--surface));
+  --brand:#4f46e5;
+  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;
+  --font-display:var(--font-ui);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) #app:has(>.tabs){--accent:#a5b4fc;--accent-d:#c7d2fe;--accent-text:#c7d2fe;--on-accent:#1e1b4b;--accent-soft:color-mix(in srgb,#a5b4fc 12%,var(--surface));--brand:#a5b4fc}
+}
+:root[data-theme="dark"] #app:has(>.tabs){--accent:#a5b4fc;--accent-d:#c7d2fe;--accent-text:#c7d2fe;--on-accent:#1e1b4b;--accent-soft:color-mix(in srgb,#a5b4fc 12%,var(--surface));--brand:#a5b4fc}
+#app:has(>.tabs) :is(h1,h2,.sec,.nm,.btn,.tab,.pill){font-weight:700;letter-spacing:-.01em}
+#app:has(>.tabs) .tabs{gap:4px;margin:0 0 20px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+#app:has(>.tabs) .tab{
+  flex:0 0 auto;min-height:44px;padding:10px 16px;
+  border:0;border-bottom:2px solid transparent;border-radius:var(--r-sm) var(--r-sm) 0 0;
+  background:transparent;color:var(--muted);font-family:var(--font-ui);
+  transition:color .15s ease,background-color .15s ease,border-color .15s ease;
+}
+#app:has(>.tabs) .tab:hover{background:var(--surface2);color:var(--text)}
+#app:has(>.tabs) .tab.on{background:transparent;color:var(--accent-text);border-bottom-color:var(--accent)}
+#app:has(>.tabs) .profile-strip{margin-bottom:12px}
+#app:has(>.tabs) .profile-chip{min-height:36px;border:1px solid var(--border);border-radius:99px}
+#app:has(>.tabs) .profile-chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-text)}
+#app:has(>.tabs) .sec{font-size:17px;margin:28px 0 12px}
+#app:has(>.tabs) .kpi{border-radius:var(--r-lg)}
+@media (min-width:900px){body[data-mq-age] #app:has(>.tabs){max-width:960px}}
+@media (max-width:440px){
+  /* Téléphone étroit : les quatre onglets parents tiennent sans défilement horizontal caché */
+  #app:has(>.tabs) .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-bottom:0;overflow:visible}
+  #app:has(>.tabs) .tab{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);text-align:center;padding:10px 8px}
+  #app:has(>.tabs) .tab.on{background:var(--accent-soft);border-color:var(--accent)}
+}
