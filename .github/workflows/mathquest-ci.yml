@@ -143,6 +143,12 @@ jobs:
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js
+      - name: Évaluations nationales — séance complète et bilan
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment.test.js
+      - name: Évaluations nationales — cas de bord
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment-edge.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
