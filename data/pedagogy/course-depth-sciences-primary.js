@@ -14,16 +14,25 @@ const targets=[
  {grade:'CM1',sid:'p-sciences',lot:'sciences-cm1'},
  {grade:'CM2',sid:'p-sciences',lot:'sciences-cm2'}
 ];
-function profile(domain){const d=String(domain||'').toLowerCase();
- // Terre / climat / astronomie doivent être testés avant « vivant » : certains domaines mentionnent aussi l’environnement.
- if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource|lune|soleil|étoile|satellite/.test(d))return 'earth';
- if(/vivant|animal|plante|écosyst|environnement|reproduction|croissance|développement|germination/.test(d))return 'living';
- if(/corps|santé|humain|alimentation/.test(d))return 'health';
- if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|signal|lumière|ombre|son/.test(d))return 'matter';
- if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
- if(/temps|histoire/.test(d))return 'time';
- if(/espace|géograph|territoire|monde/.test(d))return 'space';
- return 'method';}
+function profile(domain,name){const d=String(domain||'').toLowerCase(),n=String(name||'').toLowerCase();
+// Un domaine explicite est prioritaire : le titre ne doit jamais le détourner vers une autre famille.
+if(/météo|climat|atmosph|terre|planète|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';
+if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
+if(/corps|santé|humain|alimentation/.test(d))return 'health';
+if(/vivant|animal|plante|écosyst|environnement|reproduction|croissance|développement|germination/.test(d))return 'living';
+if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|lumière|ombre|son/.test(d))return 'matter';
+if(/temps|histoire/.test(d))return 'time';
+if(/espace|géograph|territoire|monde/.test(d))return 'space';
+// Un domaine ambigu (par ex. « Signaux ») est affiné par le nom du chapitre.
+if(/lune|soleil|étoile|satellite|système solaire|astronom|météo|climat|terre|planète|géolog|volcan|séisme/.test(n))return 'earth';
+if(/objet|techni|électric|numérique|machine|circuit|programm/.test(n))return 'tech';
+if(/corps|santé|humain|alimentation|digestion|respiration|hygiène/.test(n))return 'health';
+if(/vivant|animal|plante|écosyst|reproduction|croissance|développement|germination/.test(n))return 'living';
+if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|signal|lumière|ombre|son/.test(n))return 'matter';
+if(/temps|histoire/.test(n))return 'time';
+if(/espace|géograph|territoire|monde|carte/.test(n))return 'space';
+if(/signal/.test(d))return 'matter';
+return 'method';}
 const PACK={
  living:{
   a:`<p>En sciences du vivant, on ne classe pas une idée parce qu’elle « semble vraie » : on cherche des <b>caractères observables</b>, on compare plusieurs êtres vivants et on relie les faits entre eux. Une ressemblance extérieure ne suffit pas toujours. Deux animaux peuvent vivre dans le même milieu sans appartenir au même groupe ; deux plantes peuvent avoir des formes différentes tout en ayant les mêmes besoins essentiels.</p><p>Pour comprendre un phénomène vivant, pense en <b>cycle</b> et en <b>relations</b> : naissance, croissance, reproduction, alimentation, milieu de vie et interactions. Un changement dans une étape peut avoir des conséquences sur les autres. Cette manière de raisonner aide à expliquer plutôt qu’à seulement mémoriser.</p>`,
@@ -58,7 +67,7 @@ const PACK={
   b:`<p>La méthode la plus sûre est : question → hypothèse → protocole ou recherche → résultats → conclusion. Pendant le travail, note ce qui est réellement observé avant d’expliquer. Si le résultat ne correspond pas à ton idée de départ, on ne le cache pas : on cherche pourquoi et on corrige l’hypothèse.</p><p>Pour vérifier que tu as compris, essaie d’expliquer la notion avec tes propres mots puis donne un exemple différent de celui du cours.</p>`,
   culture:`<p>La science progresse parce que les explications peuvent être discutées et vérifiées. Publier une méthode, des données et une conclusion permet à d’autres personnes de contrôler le raisonnement et, si nécessaire, de l’améliorer.</p>`}
 };
-function entry(ch,grade,sid){const k=profile(`${ch.domain||''} ${ch.name||''}`),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');
+function entry(ch,grade,sid){const k=profile(ch.domain,ch.name),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');
  return {
   scienceProfile:k,
   deep:[

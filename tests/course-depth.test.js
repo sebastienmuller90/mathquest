@@ -24,7 +24,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    return {g:re.replace(/[\^$]/g,''),n:want.length,missing,thin,incomplete};});
   const earthExpected=['cm1-sc-meteo-climat','cm2-sc-systeme-solaire','cm2-sc-terre-active','cm2-sc-environnement'];
   const earthProfiles=earthExpected.map(id=>[id,C[id]&&C[id].scienceProfile]);
-  const namedProfileExpected=[['cm1-sc-lumiere-ombres','matter'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living']];
+  const namedProfileExpected=[['cm1-sc-lumiere-ombres','matter'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living'],['cp-sc-objets','tech'],['cm2-sc-reproduction','health']];
   const namedProfiles=namedProfileExpected.map(([id,expected])=>[id,C[id]&&C[id].scienceProfile,expected]);
   const scienceTargets=[['CP','p-sciences'],['CE1','p-qlm'],['CE2','p-qlm'],['CM1','p-sciences'],['CM2','p-sciences']].map(([g,sid])=>{
    const want=((((MQPrimary||{})._reg||{}).grades||{})[g]||{})[sid]||[];const ids2=want.map(ch=>ch.id);
@@ -54,7 +54,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Cours existant corrigé (français CE1, CE2, CM1, CM2 : mangeons, gâteau, mètre/siècle, question, son/sont, est, complément d’objet, -amment)',!r.typos.length,r.typos.join(', '));
  T('Chaque chapitre enrichi existe dans le programme (aucun identifiant orphelin)',r.count>0&&!r.orphans.length,r.orphans.join(', '));
  T('Terre, climat, géologie et système solaire utilisent le profil Terre & espace',r.earthProfiles.length===4&&r.earthProfiles.every(x=>x[1]==='earth'),JSON.stringify(r.earthProfiles));
- T('Le nom du chapitre affine le profil sciences (lumière, Lune, développement)',r.namedProfiles.length===3&&r.namedProfiles.every(x=>x[1]===x[2]),JSON.stringify(r.namedProfiles));
+ T('Le nom du chapitre affine le profil sciences (lumière, Lune, développement)',r.namedProfiles.length===5&&r.namedProfiles.every(x=>x[1]===x[2]),JSON.stringify(r.namedProfiles));
  for(const l of r.lots){T(`Lot ${l.g} : tous les chapitres couverts (${l.n})`,l.n>0&&!l.missing.length,l.missing.join(', '));
   T(`Lot ${l.g} : chaque chapitre complet (explications, défi + réponse, conseil adulte, culture)`,!l.incomplete.length,l.incomplete.join(', '));
   T(`Lot ${l.g} : contenu réellement plus détaillé (mots ajoutés par chapitre)`,!l.thin.length,JSON.stringify(l.thin));}
