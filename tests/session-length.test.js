@@ -1,7 +1,7 @@
 /* Longueur des séries et quiz (22/10/2026) : les exercices étaient figés à 8 questions et le quiz de cours à 6, quel que soit l'âge.
    1. Choix du niveau d'exercice : l'enfant choisit aussi la longueur (8 / 12 / 20), 8 par défaut, choix mémorisé par profil.
    2. La série lancée a bien la longueur choisie (barre de progression comprise) ; le parcours et « Révision » gardent leur propre longueur.
-   3. Les étoiles de fin de mission restent proportionnelles à la réussite quelle que soit la longueur choisie.
+   3. Les étoiles et l'économie de fin de mission restent proportionnelles à la réussite quelle que soit la longueur choisie.
    4. Quiz de cours adapté à l'âge : 6 questions en CP-CE1, 8 du CE2 au CM2, 10 au collège, seuil de 70 % recalculé.
    5. Mode parent : les erreurs-types déjà repérées par Finot (retenue oubliée, virgule décalée…) apparaissent dans le suivi.
    6. Aucun débordement horizontal à 320 px, aucune erreur JavaScript. */
@@ -31,14 +31,14 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Les séries lancées sans choix explicite (parcours, révisions) gardent leur longueur propre',other.def===8&&other.forced===5,JSON.stringify(other));
  await p.evaluate(()=>{S.seriesLen='abc';save();});const bad=await p.evaluate(id=>{ACT.startlevel(id+'|2');return M.n;},cid);
  T('Valeur mémorisée corrompue : retour à 8 sans erreur',bad===8,String(bad));
- // 3. Barème d'étoiles indépendant de la longueur : même règle historique, exprimée en taux de réussite.
+ // 3. Barème d'étoiles et économie indépendant de la longueur : même règle historique, exprimée en taux de réussite.
  const starCases=await p.evaluate(id=>{const original=JSON.parse(JSON.stringify(S)),cases=[[8,8],[6,8],[8,12],[12,12],[8,20],[15,20],[20,20]],out=[];
   const restore=()=>{for(const k of Object.keys(S))delete S[k];Object.assign(S,JSON.parse(JSON.stringify(original)));};
-  for(const [ok,n] of cases){restore();const cs=S.chap[id]||(S.chap[id]={stars:0,ok:0,tot:0});cs.stars=0;const mm={ok,n,ids:[id],xp:0,coins:0,mg:0,newB:[],wrong:n-ok,L0:lvl(S.xp),path:false};endChapterMission(mm);out.push({ok,n,stars:S.chap[id].stars,label:document.querySelector('.end .lead')?.textContent.trim()||''});}
-  restore();save();return out;
+  for(const [ok,n] of cases){restore();S.xp=1000;S.coins=100;S.economy={};const cs=S.chap[id]||(S.chap[id]={stars:0,ok:0,tot:0});cs.stars=0;const mm={ok,n,ids:[id],xp:0,coins:0,mg:0,newB:[],wrong:n-ok,L0:lvl(S.xp),path:false};MQHooks.emit('mission:start',{ids:[id],M:mm});M=mm;endMission();out.push({ok,n,stars:S.chap[id].stars,label:document.querySelector('.end .lead')?.textContent.trim()||'',dxp:S.xp-1000,dcoins:S.coins-100});}
+  restore();M=null;save();return out;
  },cid);
- const starExpected=[[8,8,3,'Sans faute !'],[6,8,2,'Très bien !'],[8,12,1,'Pas mal, continue !'],[12,12,3,'Sans faute !'],[8,20,0,'On recommence ? Tu vas y arriver 💪'],[15,20,2,'Très bien !'],[20,20,3,'Sans faute !']];
- for(const [ok,n,stars,label] of starExpected){const got=starCases.find(x=>x.ok===ok&&x.n===n);T(`Étoiles ${ok}/${n} : ${stars} étoile${stars>1?'s':''} et libellé cohérent`,!!got&&got.stars===stars&&got.label===label,JSON.stringify(got));}
+ const starExpected=[[8,8,3,'Sans faute !',10,2],[6,8,2,'Très bien !',6,1],[8,12,1,'Pas mal, continue !',0,0],[12,12,3,'Sans faute !',10,2],[8,20,0,'On recommence ? Tu vas y arriver 💪',0,0],[15,20,2,'Très bien !',6,1],[20,20,3,'Sans faute !',10,2]];
+ for(const [ok,n,stars,label,dxp,dcoins] of starExpected){const got=starCases.find(x=>x.ok===ok&&x.n===n);T(`Fin de mission ${ok}/${n} : ${stars}★, libellé et économie cohérents`,!!got&&got.stars===stars&&got.label===label&&got.dxp===dxp&&got.dcoins===dcoins,JSON.stringify(got));}
  // 4. Quiz de cours selon l'âge
  const quiz={};for(const g of ['CP','CE1','CE2','CM2','6e','3e']){await p.evaluate(g=>{S.grade=g;save();},g);
   quiz[g]=await p.evaluate(()=>{const c=SCH(S.subj).find(c=>WMAP[c.id]&&WMAP[c.id].lvl===S.grade)||reco();openLesson(c.id);const n=LESSON_QUIZ_N;L.ok=Math.ceil(.7*n)-1;endLesson();const fail=document.querySelector('#app').innerText;return {n,fail:/pas encore validé/.test(fail),need:(fail.match(/au moins (\d+)\/(\d+)/)||[]).slice(1).join('/')};});}
