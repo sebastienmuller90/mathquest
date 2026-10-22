@@ -1,4 +1,5 @@
 name: Patch science profile priority
+# Workflow temporaire : second push nécessaire pour déclencher après sa création.
 
 on:
   push:
