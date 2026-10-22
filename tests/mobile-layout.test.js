@@ -31,7 +31,7 @@ async function createProfile(p,name='Mobile',stage='college',grade='6e'){
  await p.waitForSelector('.pob-shell',{timeout:6000});await p.fill('#pob-name',name);await p.click('[data-pob="gender"][data-value="boy"]');await p.click('[data-pob="next"]');
  await p.click('[data-pob="next"]');await p.click(`[data-pob="stage"][data-value="${stage}"]`);await p.click(`[data-pob="grade"][data-value="${grade}"]`);await p.click('[data-pob="next"]');
  await p.click('[data-pob="companion"][data-value="finot"]');await p.click('[data-pob="next"]');await p.click('[data-pob="level"][data-value="ok"]');await p.click('[data-pob="confidence"][data-value="medium"]');await p.click('[data-pob="help"][data-value="try"]');await p.click('[data-pob="next"]');
- await p.click('[data-pob="goal"][data-value="understand"]');await p.click('[data-pob="pace"][data-value="balanced"]');await p.click('[data-pob="next"]');await p.click('[data-pob="finish"]');await p.waitForFunction(()=>typeof S!=='undefined'&&S.name===name,null,{timeout:6000});
+ await p.click('[data-pob="goal"][data-value="understand"]');await p.click('[data-pob="pace"][data-value="balanced"]');await p.click('[data-pob="next"]');await p.click('[data-pob="finish"]');await p.waitForFunction(expected=>typeof S!=='undefined'&&S.name===expected,name,{timeout:6000});
 }
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const engines=(process.env.MQ_ENGINES||'chromium,webkit').split(',').map(s=>s.trim()).filter(Boolean);
