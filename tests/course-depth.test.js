@@ -3,7 +3,7 @@
    complet (explications détaillées, défi avec réponse, conseil adulte, culture) ; rien n'est retiré du cours existant
    (toutes les étapes d'origine, dans le même ordre) ; placement (après les parties, culture après « Je retiens ») ;
    réponse du défi cachée par défaut ; HTML bien formé ; typographie française ; parcours réel du cours sans erreur. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 // Lots livrés : [classe, motif du monde (matière), nombre minimal de mots ajoutés par chapitre — au CP, le cours d’origine compte 148 à 234 mots : le cours fait environ deux fois plus long].
 const LOTS=[['CP',/^Maths CP$/,200],['CE1',/^Maths CE1$/,200],['CE2',/^Maths CE2$/,200],['CM1',/^Maths CM1$/,200],['CM2',/^Maths CM2$/,200],
  ['CP',/^Français CP$/,200],['CE1',/^Français CE1$/,200],['CE2',/^Français CE2$/,200],['CM1',/^Français CM1$/,200],['CM2',/^Français CM2$/,200],
@@ -13,7 +13,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
  const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error')errs.push('console: '+m.text());});
  await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
- await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CP"]');await p.click('[data-a="begin"]');await p.waitForTimeout(150);
+ // Profil injecté (l'inscription moderne a son propre test : modern-profile-onboarding.test.js).
+ await seedProfile(p,'Noé','CP');
  const r=await p.evaluate(lots=>{const C=MQCourseDepth.chapters,ids=Object.keys(C),known=new Set(ALLCH.map(c=>c.id));
   const words=h=>{const d=document.createElement('div');d.innerHTML=h||'';return d.textContent.split(/\s+/).filter(Boolean).length;};
   const orphans=ids.filter(id=>!known.has(id));

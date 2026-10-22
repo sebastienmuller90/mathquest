@@ -5,7 +5,7 @@
    sur le choix du niveau (exercice et cours) et sur toutes les étapes d'un cours aux niveaux 1, 2 et 3,
    téléphone en thème sombre, plus un contrôle en thème clair.
    Variable d'environnement MQ_DARK_OLD_CSS=<fichier> : sert l'ancien pedagogy-upgrade.css pour prouver que le test attrape le défaut. */
-const fs=require('fs');const {serve,launch}=require('./lib');
+const fs=require('fs');const {serve,launch,seedProfile}=require('./lib');
 const MIN=3; // contraste minimal accepté (WCAG : 3 pour les gros textes ; on vise bien plus haut, mais 3 évite tout faux échec)
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,700)});
  const {srv,url}=await serve();const b=await launch();const errs=[];
@@ -14,7 +14,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   if(process.env.MQ_DARK_OLD_CSS)await ctx.route('**/pedagogy-upgrade.css',r=>r.fulfill({contentType:'text/css',body:fs.readFileSync(process.env.MQ_DARK_OLD_CSS,'utf8')}));
   const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForTimeout(150);
+  await seedProfile(p,'Noé','CE2');
   if(forced)await p.evaluate(t=>document.documentElement.setAttribute('data-theme',t),forced);
   return {ctx,p};}
  // Contraste de chaque texte visible de l'écran courant.

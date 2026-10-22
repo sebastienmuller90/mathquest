@@ -4,7 +4,7 @@
    6. parcours du jour complet (leçons, séries done/review, coffre unique, reprise) ; 7. exercices (bonne/mauvaise réponse,
    indice, suivant, défi éclair, quitter) ; 8. Finot « Pourquoi ma réponse est fausse ? » isolé par profil ;
    9. espace parents local (périodes, après changement de classe). */
-const {serve,launch}=require('./lib');
+const {serve,launch,createModernProfile}=require('./lib');
 const answerJS=`(correct)=>{const q=M.q;const sel=s=>document.querySelector(s);
  if(q.type==='choice'){const i=correct?q.ans:(q.ans+1)%q.choices.length;document.querySelectorAll('.choice')[i].click();return;}
  if(q.type==='order'){const idx=[];let rest=normLang(q.ans,q.lang);const used=new Set();let guard=0;while(rest.length&&guard++<50){const i=q.tokens.findIndex((t,k)=>!used.has(k)&&rest.startsWith(normLang(t,q.lang)));if(i<0)break;used.add(i);idx.push(i);rest=rest.slice(normLang(q.tokens[i],q.lang).length).trim();}
@@ -19,13 +19,13 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error')errs.push('console: '+m.text());});
  const ans=c=>p.evaluate(`(${answerJS})(${c})`);
  const fresh=async()=>{await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});};
- const onboard=async(name,stage,grade)=>{await p.fill('#nm',name);await p.click(`[data-a="pickstage:${stage}"]`);await p.click(`[data-a="pickgrade:${grade}"]`);await p.click('[data-a="begin"]');await p.waitForTimeout(150);};
+ const onboard=async(name,stage,grade)=>createModernProfile(p,name,stage,grade);
  // Avance après une réponse : bouton « suivant » s'il existe, sinon l'enchaînement automatique est déclenché tout de suite.
  const next=()=>p.evaluate(()=>{if(!M)return;const b=document.querySelector('#fb [data-a="next"]');if(b)b.click();else if(M.locked)advance();});
 
  // 1. Première ouverture sans stockage → onboarding → accueil.
  await fresh();
- const s1a=await p.evaluate(()=>({onb:!!document.querySelector('#nm'),name:S.name}));
+ const s1a=await p.evaluate(()=>({onb:!!document.querySelector('.pob-shell'),name:S.name}));
  await onboard('Lina','college','6e');
  const s1b=await p.evaluate(()=>({cur:CUR,name:S.name,grade:S.grade,stored:!!localStorage.getItem('mathquest_profiles_v2'),profiles:Object.keys(PDB.profiles).length}));
  T('1. Première ouverture sans stockage : accueil de création de profil, puis accueil enregistré',s1a.onb&&!s1a.name&&s1b.cur==='home'&&s1b.name==='Lina'&&s1b.grade==='6e'&&s1b.stored&&s1b.profiles===1,JSON.stringify({s1a,s1b}));
@@ -39,7 +39,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  // 3. Stockage corrompu : l'appli démarre, la donnée illisible est conservée à part.
  await p.evaluate(()=>{localStorage.clear();localStorage.setItem('mathquest_profiles_v2','{oops pas du JSON');});
  const e3=errs.length;await p.goto(url+'index.html',{waitUntil:'load'});
- const s3=await p.evaluate(()=>{const k=Object.keys(localStorage).find(k=>k.startsWith('mathquest_profiles_corrupt_backup_'));return {backup:k?localStorage.getItem(k):null,onb:!!document.querySelector('#nm'),valid:!!JSON.parse(localStorage.getItem('mathquest_profiles_v2')||'null')?.profiles};});
+ const s3=await p.evaluate(()=>{const k=Object.keys(localStorage).find(k=>k.startsWith('mathquest_profiles_corrupt_backup_'));return {backup:k?localStorage.getItem(k):null,onb:!!document.querySelector('.pob-shell'),valid:!!JSON.parse(localStorage.getItem('mathquest_profiles_v2')||'null')?.profiles};});
  T('3. Stockage corrompu : démarrage sans erreur, donnée illisible conservée en sauvegarde de secours, stockage reconstruit',s3.backup==='{oops pas du JSON'&&s3.onb&&s3.valid&&errs.length===e3,JSON.stringify({...s3,errs:errs.slice(e3)}));
 
  // 4. Deux enfants : aucune donnée mélangée ; changement d'enfant en pleine mission.
