@@ -73,15 +73,93 @@ jobs:
       - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
         if: matrix.browser == 'chromium'
         run: node tests/scenarios.test.js
+      - name: "Calendrier civil : séries et changements d’heure Europe/Paris"
+        if: matrix.browser == 'chromium'
+        run: node tests/dst-streak.test.js
+      - name: Lexique sans doublons et migration de progression
+        if: matrix.browser == 'chromium'
+        run: node tests/lexicon-cleanup.test.js
+      - name: Scénarios réels sous l’économie anti-triche (adaptateur de la branche économie)
+        if: matrix.browser == 'chromium'
+        run: node tests/scenarios-economy-compatible.test.js
+      - name: Économie anti-triche (anti-farm, barème, assiduité)
+        if: matrix.browser == 'chromium'
+        run: node tests/economy-anticheat.test.js
+      - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
+        if: matrix.browser == 'chromium'
+        run: node tests/modern-profile-onboarding.test.js
+      - name: Devoirs scolaires parent-validés
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-parent.test.js
+      - name: Aide aux devoirs (matière, thème, cours, exercices, orientations)
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-help.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
-      - name: Voix de Finot en fin d’exercice
+      - name: Voix de Finot en fin d'exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: Carnet d’erreurs — missions de réparation
+        if: matrix.browser == 'chromium'
+        run: node tests/error-repair.test.js
+      - name: Détection prudente des erreurs-types
+        if: matrix.browser == 'chromium'
+        run: node tests/error-patterns.test.js
+      - name: Exercices — reprise exacte et historique
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume.test.js
+      - name: Exercices — sécurité des instantanés de reprise
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume-security.test.js
+      - name: Checkpoint pédagogique de fin de séance
+        if: matrix.browser == 'chromium'
+        run: node tests/session-checkpoint.test.js
+      - name: Mode DYS / lecture facilitée
+        if: matrix.browser == 'chromium'
+        run: node tests/dys-mode.test.js
+      - name: Indices progressifs en trois niveaux
+        if: matrix.browser == 'chromium'
+        run: node tests/progressive-hints.test.js
+      - name: Corrections animées — opérations posées V1
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections.test.js
+      - name: Corrections animées — multiplication, division et fractions V2
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections-extended.test.js
+      - name: Pourquoi cette activité ?
+        if: matrix.browser == 'chromium'
+        run: node tests/why-this-activity.test.js
+      - name: Séance 5 minutes intelligentes
+        if: matrix.browser == 'chromium'
+        run: node tests/smart-5min.test.js
+      - name: Bilan hebdomadaire parent
+        if: matrix.browser == 'chromium'
+        run: node tests/weekly-parent-report.test.js
+      - name: Diplômes de maîtrise
+        if: matrix.browser == 'chromium'
+        run: node tests/diplomas.test.js
+      - name: Finot vivant — états et réactions
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-live-state.test.js
+      - name: Défis en famille
+        if: matrix.browser == 'chromium'
+        run: node tests/family-challenge.test.js
+      - name: Évaluations nationales — séance complète et bilan
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment.test.js
+      - name: Évaluations nationales — cas de bord
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment-edge.test.js
+      - name: POC lecture à voix haute — capacités et confidentialité
+        if: matrix.browser == 'chromium'
+        run: node tests/reading-aloud-poc.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
+      - name: Mode sombre lisible (contraste réel texte / fond)
+        if: matrix.browser == 'chromium'
+        run: node tests/dark-mode.test.js
       - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
         run: node tests/pwa-update.test.js
       - name: Audit navigateur intégral

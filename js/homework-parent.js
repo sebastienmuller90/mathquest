@@ -1,0 +1,51 @@
+/* Finot Académie — devoirs scolaires parent-validés.
+   L'enfant peut signaler « terminé », mais seul le parent valide et déclenche une récompense, une seule fois. */
+(function(root){
+'use strict';
+if(typeof window==='undefined'||typeof MQHooks==='undefined'||typeof ACT!=='object')return;
+const CFG={xp:15,coins:3,merit:2,dailyRewardCap:2,limit:60};
+let EDIT='';
+const escH=s=>typeof esc==='function'?esc(s):String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clean=(s,n=120)=>String(s??'').replace(/[<>`]/g,'').trim().slice(0,n);
+const dateKey=t=>typeof localISODate==='function'?localISODate(t):(()=>{const d=new Date(t);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;})();
+const today=()=>dateKey(Date.now());
+const uid=()=>`hw_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,7)}`;
+function ensure(){if(!Array.isArray(S.homework))S.homework=[];S.homework=S.homework.filter(x=>x&&typeof x==='object'&&/^hw_[\w-]+$/.test(String(x.id||''))).slice(-CFG.limit);return S.homework;}
+function find(id){return ensure().find(x=>x.id===String(id||''));}
+function subjectName(id){try{return SUBMAP[id]?.name||id||'Autre';}catch(e){return id||'Autre';}}
+function subjects(){try{return SUBJECTS.filter(x=>x.stage===stageOf(S.grade)).map(x=>[x.id,`${x.emoji||'📘'} ${x.name}`]);}catch(e){return[];}}
+function statusLabel(x){return x.status==='validated'?'✅ Validé':x.status==='claimed'?'⏳ À valider':'📌 À faire';}
+function dueLabel(x){if(!x.due)return 'Sans échéance';const k=today();return x.due<k?`⚠️ En retard · ${x.due}`:x.due===k?'📅 Pour aujourd’hui':`📅 Pour le ${x.due.split('-').reverse().join('/')}`;}
+function sortTasks(a,b){const rank={claimed:0,todo:1,validated:2};return (rank[a.status]??9)-(rank[b.status]??9)||String(a.due||'9999').localeCompare(String(b.due||'9999'))||(+b.createdAt||0)-(+a.createdAt||0);}
+function rewardCount(day){return ensure().filter(x=>x.rewardDay===day&&x.rewardedAt).length;}
+function grant(x){if(x.rewardedAt)return {granted:false,reason:'already'};const day=today();if(rewardCount(day)>=CFG.dailyRewardCap){x.rewardDay=day;x.reward={xp:0,coins:0,merit:0,capped:true};return {granted:false,reason:'cap'};}
+ // Gains accordés par MQEconomy.award (propriétaire unique de l'économie) : idempotent par devoir, plafonné par jour.
+ const g=root.MQEconomy&&typeof MQEconomy.award==='function'?MQEconomy.award({source:'homework',key:x.id,xp:CFG.xp,coins:CFG.coins,merit:CFG.merit,why:`Devoir scolaire validé : ${x.title}`}):{granted:false,reason:'invalid'};
+ if(!g.granted){x.rewardDay=day;x.reward={xp:0,coins:0,merit:0,capped:g.reason==='cap'};return {granted:false,reason:g.reason};}
+ x.rewardedAt=Date.now();x.rewardDay=day;x.reward={xp:g.xp,coins:g.coins,merit:g.merit};
+ try{if(root.MQEconomy)MQEconomy.qualifyDay('Devoir scolaire validé par le parent');}catch(e){}
+ return {granted:true,reward:x.reward};}
+function saveNow(){try{saveLocal();}catch(e){try{save();}catch(_){}}}
+function createOrUpdate(){const title=clean(document.getElementById('hw-title')?.value,80),subj=clean(document.getElementById('hw-subj')?.value,50),due=clean(document.getElementById('hw-due')?.value,10),note=clean(document.getElementById('hw-note')?.value,240);if(!title)return toast('Ajoute un titre au devoir.');if(due&&!/^\d{4}-\d{2}-\d{2}$/.test(due))return toast('Date d’échéance invalide.');
+ if(EDIT){const x=find(EDIT);if(!x||x.status==='validated'){EDIT='';return refreshParent();}x.title=title;x.subject=subj;x.due=due;x.note=note;x.updatedAt=Date.now();}
+ else ensure().push({id:uid(),title,subject:subj,due,note,status:'todo',createdAt:Date.now(),claimedAt:0,validatedAt:0,rewardedAt:0,rewardDay:'',reward:null});
+ EDIT='';saveNow();refreshParent();try{toast('📚 Devoir enregistré.');}catch(e){}return true;}
+function claim(id){const x=find(id);if(!x||x.status!=='todo')return false;x.status='claimed';x.claimedAt=Date.now();saveNow();refreshChild();try{toast('✅ Terminé signalé. Un parent doit maintenant le valider.');}catch(e){}return true;}
+function validate(id){const x=find(id);if(!x||x.status!=='claimed')return false;x.status='validated';x.validatedAt=Date.now();const r=grant(x);saveNow();refreshParent();
+ try{toast(r.granted?`✅ Devoir validé · +${CFG.xp} XP · +${CFG.coins} 🪙 · +${CFG.merit} 🎖️`:'✅ Devoir validé · plafond de récompenses devoirs atteint aujourd’hui');}catch(e){}return true;}
+function returnTodo(id){const x=find(id);if(!x||x.status==='validated')return false;x.status='todo';x.claimedAt=0;saveNow();refreshParent();return true;}
+function remove(id){const i=ensure().findIndex(x=>x.id===id);if(i<0)return false;const x=S.homework[i];if(x.status==='validated')return toast('Un devoir validé reste dans l’historique.');S.homework.splice(i,1);if(EDIT===id)EDIT='';saveNow();refreshParent();return true;}
+function edit(id){const x=find(id);if(!x||x.status==='validated')return false;EDIT=id;refreshParent();setTimeout(()=>document.getElementById('hw-title')?.focus(),0);return true;}
+function childHtml(){const list=ensure().filter(x=>x.status!=='validated'||dateKey(x.validatedAt)===today()).sort(sortTasks);if(!list.length)return'';return `<section class="card homework-child" data-homework-child="1"><div class="hw-head"><div><span class="hw-kicker">📚 Mes devoirs scolaires</span><h2>À faire et à faire valider</h2></div><span class="pill">${list.filter(x=>x.status!=='validated').length} en cours</span></div><div class="hw-list">${list.slice(0,6).map(x=>`<div class="hw-row ${x.status}"><div class="grow"><b>${escH(x.title)}</b><small>${escH(subjectName(x.subject))} · ${escH(dueLabel(x))}</small>${x.note?`<small class="hw-note">${escH(x.note)}</small>`:''}<span class="hw-status">${statusLabel(x)}</span></div>${x.status==='todo'?`<button class="btn sm" data-a="hwclaim:${x.id}">J’ai terminé</button>`:x.status==='claimed'?'<span class="muted small">Validation parent nécessaire</span>':'<span class="hw-ok">Récompense validée</span>'}</div>`).join('')}</div><p class="muted small">Signaler « terminé » ne donne aucune récompense. C’est la validation d’un parent qui la déclenche.</p></section>`;}
+function parentHtml(){const list=ensure().slice().sort(sortTasks),editTask=EDIT?find(EDIT):null,subs=subjects();return `<section class="card homework-parent" data-homework-parent="1"><div class="hw-head"><div><span class="hw-kicker">📚 Devoirs scolaires</span><h2>${editTask?'Modifier le devoir':'Créer un devoir à suivre'}</h2></div><span class="pill">${list.filter(x=>x.status==='claimed').length} à valider</span></div><div class="hw-form"><input id="hw-title" class="fld" maxlength="80" aria-label="Titre du devoir" placeholder="Ex. Exercices 4 et 5 page 72" value="${escH(editTask?.title||'')}"><select id="hw-subj" class="fld" aria-label="Matière du devoir"><option value="">Matière / autre</option>${subs.map(([id,n])=>`<option value="${escH(id)}" ${editTask?.subject===id?'selected':''}>${escH(n)}</option>`).join('')}</select><input id="hw-due" class="fld" type="date" aria-label="Date d’échéance du devoir" value="${escH(editTask?.due||'')}"><textarea id="hw-note" class="fld" maxlength="240" rows="2" aria-label="Consigne ou précision du devoir" placeholder="Consigne ou précision facultative">${escH(editTask?.note||'')}</textarea><div class="hw-actions"><button class="btn primary" data-a="hwcreate">${editTask?'Enregistrer les modifications':'Ajouter le devoir'}</button>${editTask?'<button class="btn ghost" data-a="hwcancel">Annuler</button>':''}</div></div>${list.length?`<div class="hw-list">${list.slice(0,20).map(x=>`<div class="hw-row ${x.status}"><div class="grow"><b>${escH(x.title)}</b><small>${escH(subjectName(x.subject))} · ${escH(dueLabel(x))}</small>${x.note?`<small class="hw-note">${escH(x.note)}</small>`:''}<span class="hw-status">${statusLabel(x)}${x.rewardedAt?` · +${x.reward?.xp||0} XP · +${x.reward?.coins||0} 🪙 · +${x.reward?.merit||0} 🎖️`:''}</span></div><div class="hw-actions">${x.status==='claimed'?`<button class="btn primary sm" data-a="hwvalidate:${x.id}">Valider</button><button class="btn sm" data-a="hwreturn:${x.id}">À refaire</button>`:''}${x.status!=='validated'?`<button class="btn ghost sm" data-a="hwedit:${x.id}">Modifier</button><button class="btn ghost sm" data-a="hwdelete:${x.id}">Supprimer</button>`:''}</div></div>`).join('')}</div>`:'<p class="muted">Aucun devoir enregistré pour ce profil.</p>'}<p class="muted small">Récompense par devoir validé : +${CFG.xp} XP, +${CFG.coins} 🪙, +${CFG.merit} 🎖️. Maximum ${CFG.dailyRewardCap} devoirs rémunérés par jour. Une validation parentale compte comme preuve d’assiduité.</p></section>`;}
+function refreshChild(){document.querySelector('[data-homework-child="1"]')?.remove();injectChild();}
+function injectChild(){try{if(typeof CUR!=='undefined'&&CUR!=='home')return false;if(document.querySelector('[data-homework-child="1"]'))return false;const html=childHtml();if(!html)return false;const anchor=document.querySelector('.finot-card')||document.querySelector('#app .card');anchor?.insertAdjacentHTML('afterend',html);return !!anchor;}catch(e){return false;}}
+function refreshParent(){const old=document.querySelector('[data-homework-parent="1"]');if(old)old.outerHTML=parentHtml();else injectParent('suivi');}
+function injectParent(tab){if(tab!=='suivi'||document.querySelector('[data-homework-parent="1"]'))return false;const tabs=document.querySelector('.tabs');if(!tabs)return false;tabs.insertAdjacentHTML('afterend',parentHtml());return true;}
+MQHooks.on('home:rendered',()=>setTimeout(injectChild,0),{id:'homework-child-home',order:98});
+MQHooks.on('parent:rendered',({tab}={})=>setTimeout(()=>injectParent(tab),0),{id:'homework-parent-panel',order:98});
+MQHooks.on('profile:changed',()=>{EDIT='';ensure();},{id:'homework-profile',order:98});
+Object.assign(ACT,{hwcreate:createOrUpdate,hwclaim:claim,hwvalidate:validate,hwreturn:returnTodo,hwedit:edit,hwdelete:remove,hwcancel:()=>{EDIT='';refreshParent();}});
+ensure();
+root.MQHomework={version:'1.0',config:CFG,ensure,find,claim,validate,returnTodo,grant,childHtml,parentHtml,get edit(){return EDIT;}};
+})(typeof window!=='undefined'?window:globalThis);

@@ -88,7 +88,7 @@ const FR=[
    if(r<.7)return ch(`Quel est le verbe conjugué : « ${ph} » ?`,v,[c.split(' ').pop(),s.split(' ').pop(),c.split(' ')[0]],{expl:`« ${v} » change si on change le temps : c’est le verbe.`});
    return ch(`Le sujet de « ${ph} » est…`,t,['un pronom','un groupe nominal','un nom propre','plusieurs noms'].filter(x=>x!==t),{expl:`« ${s} » est ${t}.`});};})()},
 {id:'cm1-fr-complements',name:'Compléments d’objet et compléments circonstanciels',icon:'🧩',domain:'Étude de la langue : la phrase',
- c:C(`Le <b>complément d’objet</b> complète le verbe : on ne peut ni le supprimer ni le déplacer. Le <b>complément circonstanciel</b> (CC) précise les circonstances (où, quand, comment, pourquoi) : on peut le supprimer et le déplacer.`,
+ c:C(`Le <b>complément d’objet</b> complète le verbe : on ne peut pas le déplacer et, le plus souvent, on ne peut pas le supprimer. Le <b>complément circonstanciel</b> (CC) précise les circonstances (où, quand, comment, pourquoi) : on peut le supprimer et le déplacer.`,
   [T('COD et COI',`<p><b>COD</b> (direct) : Léa mange <b>une pomme</b>. (mange quoi ?)</p><p><b>COI</b> (indirect, avec une préposition à, de) : Léa parle <b>à son frère</b>. (parle à qui ?)</p>`),T('Le complément circonstanciel',`<p>« <b>Ce matin</b>, Léa mange une pomme <b>dans la cuisine</b>. » → « ce matin » et « dans la cuisine » peuvent être supprimés ou déplacés : ce sont des CC.</p>`)],
   [{q:'Dans « Paul écrit une lettre à sa grand-mère », que sont les compléments ?',s:['Paul écrit quoi ? une lettre → COD.','Paul écrit à qui ? à sa grand-mère → COI.','<b>une lettre</b> : COD ; <b>à sa grand-mère</b> : COI.']}],
   ['Je trouve le verbe.','Je teste la suppression et le déplacement.','Je pose la question (quoi ? à qui ? où ? quand ?).'],

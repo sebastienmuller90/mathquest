@@ -6,7 +6,7 @@
       « suivant » ; Entrée sur ce bouton avance d'UNE seule question ; Espace valide aussi ; raccourcis 1-4.
    3. Focus visible (:focus-visible → contour ou ombre) sur les boutons principaux atteints au clavier.
    4. Finot : ouverture au clavier, focus dans la zone de saisie, fermeture par Échap, bouton de fermeture nommé. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 const NAMES=`(()=>{
  const vis=e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);if(r.width<2||r.height<2||s.visibility==='hidden'||s.display==='none')return false;for(let d=e.parentElement&&e.parentElement.closest('details');d;d=d.parentElement&&d.parentElement.closest('details'))if(!d.open&&!(e.tagName==='SUMMARY'&&e.parentElement===d))return false;return true;};
  const txt=e=>(e.innerText||e.textContent||'').replace(/\\s+/g,' ').trim();
@@ -23,7 +23,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:1024,height:800}});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
  await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
  const n0=await p.evaluate(NAMES);T('Accueil premier lancement (création de profil) : tous les contrôles ont un nom accessible',!n0.length,n0.join(' | '));
- await p.fill('#nm','Clavier');await p.click('[data-a="pickstage:college"]');await p.click('[data-a="pickgrade:6e"]');await p.click('[data-a="begin"]');await p.waitForTimeout(200);
+ await seedProfile(p,'Clavier','6e');
 
  // 1. Noms accessibles sur les écrans principaux.
  const screens={};const look=async(label,fn)=>{if(fn)await p.evaluate(fn);await p.waitForTimeout(80);const r=await p.evaluate(NAMES);if(r.length)screens[label]=r;};
@@ -56,7 +56,6 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    Object.assign(kb,await p.evaluate(()=>({locked:!!(M&&M.locked),wrongShown:!!document.querySelector('#fb .fb.bad'),focus:document.activeElement&&(document.activeElement.dataset.a||document.activeElement.id||document.activeElement.tagName),i:M.i})));
    const i0=kb.i;await p.keyboard.press('Enter');await p.waitForTimeout(200);
    kb.afterNext=await p.evaluate(()=>({i:M?M.i:null,locked:!!(M&&M.locked)}));kb.advancedOnce=kb.afterNext.i===i0+1;}
-  // Espace sur une réponse, puis raccourci numérique.
   await p.evaluate(c=>{home();startMission([c]);for(let k=0;k<30&&M.q.type!=='choice';k++)M.q=CHMAP[c].g(M.d);renderQ();},cid);
   const sp=await p.evaluate(()=>{const b=document.querySelector('.choice');b.focus();return {tq:S.totalQ};});await p.keyboard.press('Space');await p.waitForTimeout(120);
   kb.space=await p.evaluate(t=>S.totalQ===t+1&&!!M.locked,sp.tq);
@@ -70,11 +69,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
 
  // 3. Focus visible au clavier sur les boutons principaux.
  const rings={};
- const ringOf=async(label,prep,sel)=>{await p.evaluate(prep);await p.evaluate(()=>{document.activeElement&&document.activeElement.blur();});
-  let ok=null;for(let i=0;i<60;i++){await p.keyboard.press('Tab');const hit=await p.evaluate(s=>{const e=document.activeElement;if(!e||!e.matches(s))return null;const st=getComputedStyle(e);return {outline:st.outlineStyle!=='none'&&parseFloat(st.outlineWidth)>0,shadow:!!st.boxShadow&&st.boxShadow!=='none',fv:e.matches(':focus-visible')};},sel);if(hit){ok=hit;break;}}
-  rings[label]=ok;};
- if(cid){await ringOf('réponse (.choice)',`(()=>{home();startMission(['${cid}']);for(let k=0;k<30&&M.q.type!=='choice';k++)M.q=CHMAP['${cid}'].g(M.d);renderQ();})()`,'.choice');
-  await ringOf('Indice (.btn)',`(()=>{home();startMission(['${cid}']);})()`,'.btn[data-a="hint"]');}
+ const ringOf=async(label,prep,sel)=>{await p.evaluate(prep);await p.evaluate(()=>{document.activeElement&&document.activeElement.blur();});let ok=null;for(let i=0;i<60;i++){await p.keyboard.press('Tab');const hit=await p.evaluate(s=>{const e=document.activeElement;if(!e||!e.matches(s))return null;const st=getComputedStyle(e);return {outline:st.outlineStyle!=='none'&&parseFloat(st.outlineWidth)>0,shadow:!!st.boxShadow&&st.boxShadow!=='none',fv:e.matches(':focus-visible')};},sel);if(hit){ok=hit;break;}}rings[label]=ok;};
+ if(cid){await ringOf('réponse (.choice)',`(()=>{home();startMission(['${cid}']);for(let k=0;k<30&&M.q.type!=='choice';k++)M.q=CHMAP['${cid}'].g(M.d);renderQ();})()`,'.choice');await ringOf('Indice (.btn)',`(()=>{home();startMission(['${cid}']);})()`,'.btn[data-a="hint"]');}
  await ringOf('onglet d’accueil (.htab)',`(()=>{if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}ACT.hometab('accueil');home();})()`,'.htab');
  await ringOf('bouton de Finot (.finot-fab)',`(()=>{if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}ACT.hometab('accueil');home();})()`,'.finot-fab');
  await ringOf('carte du devoir du jour',`(()=>{if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}ACT.hometab('accueil');home();})()`,'[data-a="path"]');

@@ -1,0 +1,24 @@
+/* Cas de bord : double validation, abandon, changement de profil et limite historique. */
+const {serve,launch,seedProfile}=require('./lib');
+async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});const {srv,url}=await serve();const b=await launch();const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+ try{await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQNationalAssessment);
+  await p.evaluate(()=>MQNationalAssessment.start('CE2'));await p.waitForSelector('.mq-na-qwrap');
+  // Avance proprement jusqu'à une question choice.
+  let guard=0;while(await p.evaluate(()=>MQNationalAssessment.active?.items[MQNationalAssessment.active.i]?.q?.type!=='choice')&&guard++<16){await p.evaluate(()=>{const A=MQNationalAssessment.active,q=A.items[A.i].q;if(q.type==='order'){const solve=(rest,avail,path=[])=>{rest=String(rest).trim();if(!rest)return path;for(const i of avail){const t=String(q.tokens[i]);if(rest===t||rest.startsWith(t+' ')){const r=solve(rest.slice(t.length).trim(),avail.filter(x=>x!==i),path.concat(i));if(r)return r;}}return null;};(solve(q.ans,q.tokens.map((_,i)=>i))||[]).forEach(i=>ACT.nationaltoken(i));ACT.nationalvalid();}else if(q.type==='multi'){q.labels.forEach((_,i)=>document.querySelector('#na-in'+i).value=String(q.ans[i]));ACT.nationalvalid();}else{const e=document.querySelector('#na-in0');if(q.type==='num')e.value=String(q.ans);else if(q.type==='frac')e.value=q.ans[0]+'/'+q.ans[1];else e.value=String(q.acc?.[0]||'');ACT.nationalvalid();}});await p.waitForTimeout(5);}
+  const dbl=await p.evaluate(()=>{const A=MQNationalAssessment.active,q=A?.items[A.i]?.q;if(!A||q?.type!=='choice')return {found:false};const before=A.answers.length,idx=q.ans;ACT.nationalchoice(idx);ACT.nationalchoice(idx);return {found:true,before,after:MQNationalAssessment.active?.answers.length??A.answers.length,i:MQNationalAssessment.active?.i??-1};});
+  T('Double validation : deux appels immédiats sur la même réponse ne comptent qu’une fois',dbl.found&&dbl.after===dbl.before+1,JSON.stringify(dbl));
+
+  // Abandon volontaire : aucun rapport partiel enregistré.
+  const beforeHist=await p.evaluate(()=>S.nationalAssessments?.length||0);await p.evaluate(()=>{if(MQNationalAssessment.active)ACT.nationalquit();else MQNationalAssessment.start('CM1');});if(await p.evaluate(()=>!!MQNationalAssessment.active))await p.evaluate(()=>ACT.nationalquit());await p.waitForTimeout(20);const abandon=await p.evaluate(()=>({active:!!MQNationalAssessment.active,hist:S.nationalAssessments?.length||0,cur:CUR}));
+  T('Abandon : la séance est détruite sans créer de faux bilan partiel',!abandon.active&&abandon.hist===beforeHist&&abandon.cur==='national',JSON.stringify(abandon));
+
+  // Changement de profil en pleine simulation : état éphémère effacé.
+  await p.evaluate(()=>MQNationalAssessment.start('CM1'));await p.waitForSelector('.mq-na-qwrap');await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(30);const profile=await p.evaluate(()=>({name:S.name,active:!!MQNationalAssessment.active,n:S.nationalAssessments?.length||0,classOn:document.documentElement.classList.contains('mq-national-active')}));
+  T('Multi-profils en cours de séance : aucune simulation ni historique ne fuit vers le nouvel enfant',profile.name==='Noé'&&!profile.active&&profile.n===0&&!profile.classOn,JSON.stringify(profile));
+
+  // L'historique est borné à 10 rapports.
+  const bounded=await p.evaluate(()=>{S.nationalAssessments=Array.from({length:14},(_,i)=>({id:'old'+i,level:'CP',startedAt:i,finishedAt:i,questions:16,ok:8,score:50,domains:[],advice:['a','b']}));saveLocal();MQNationalAssessment.start('CP');const A=MQNationalAssessment.active;A.answers=A.items.map(x=>({cid:x.cid,subject:x.subject,skillId:x.skillId,label:x.label,ok:true,t:Date.now()}));A.i=A.items.length;MQNationalAssessment.finish();return {n:S.nationalAssessments.length,first:S.nationalAssessments[0]?.id};});
+  T('Historique : après un nouveau bilan, seuls les 10 plus récents sont conservés',bounded.n===10&&/^na-/.test(bounded.first||''),JSON.stringify(bounded));
+  T('Aucune erreur JavaScript sur les cas de bord',!errs.length,errs.join(' | '));
+ }finally{await b.close();srv.close();}return R;}
+if(require.main===module)require('./lib').main(()=>run());module.exports=run;
