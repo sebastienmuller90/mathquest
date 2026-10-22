@@ -79,6 +79,8 @@ jobs:
       - name: Lexique sans doublons et migration de progression
         if: matrix.browser == 'chromium'
         run: node tests/lexicon-cleanup.test.js
+      - name: Scénarios réels sous l’économie anti-triche (adaptateur de la branche économie)
+        if: matrix.browser == 'chromium'
         run: node tests/scenarios-economy-compatible.test.js
       - name: Économie anti-triche (anti-farm, barème, assiduité)
         if: matrix.browser == 'chromium'
