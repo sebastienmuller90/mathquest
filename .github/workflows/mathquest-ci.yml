@@ -110,6 +110,12 @@ jobs:
       - name: Indices progressifs en trois niveaux
         if: matrix.browser == 'chromium'
         run: node tests/progressive-hints.test.js
+      - name: Corrections animées — opérations posées V1
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections.test.js
+      - name: Corrections animées — multiplication, division et fractions V2
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections-extended.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
