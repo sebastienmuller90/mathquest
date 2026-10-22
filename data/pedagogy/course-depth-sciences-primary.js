@@ -15,9 +15,11 @@ const targets=[
  {grade:'CM2',sid:'p-sciences',lot:'sciences-cm2'}
 ];
 function profile(domain){const d=String(domain||'').toLowerCase();
- if(/vivant|animal|plante|écosyst|environnement|terre|planète/.test(d))return 'living';
+ // Terre / climat / astronomie doivent être testés avant « vivant » : certains domaines mentionnent aussi l’environnement.
+ if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';
+ if(/vivant|animal|plante|écosyst|environnement/.test(d))return 'living';
  if(/corps|santé|humain|alimentation/.test(d))return 'health';
- if(/matière|eau|air|mélange|énergie|physique/.test(d))return 'matter';
+ if(/matière|eau|air|mélange|énergie|physique|mouvement|force|vitesse|signal|lumière|ombre|son/.test(d))return 'matter';
  if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
  if(/temps|histoire/.test(d))return 'time';
  if(/espace|géograph|territoire|monde/.test(d))return 'space';
@@ -35,6 +37,10 @@ const PACK={
   a:`<p>Pour étudier la matière, on décrit des <b>propriétés mesurables ou observables</b> : état, masse, volume, température, solubilité, aspect ou comportement lors d’un changement. Les mots précis sont importants : « disparaître » n’est pas toujours correct. Une substance dissoute peut devenir invisible tout en restant présente dans le mélange.</p><p>Lors d’une expérience, note l’état de départ, ce que l’on modifie et l’état d’arrivée. Cette chronologie permet de distinguer une transformation, un changement d’état, un mélange ou une séparation. Lorsque c’est pertinent, demande-toi aussi si la matière peut être récupérée.</p>`,
   b:`<p>Une expérience fiable garde les mêmes conditions sauf celle que l’on veut tester. On peut alors comparer. Mesure avant et après quand c’est possible, utilise les mêmes récipients et observe pendant la même durée. Si le résultat est surprenant, on recommence : une expérience répétée est plus convaincante qu’un essai unique.</p><p>Écris ta conclusion sous la forme « J’observe que…, donc je peux conclure que… ». Cela évite de confondre l’hypothèse de départ avec le résultat réellement obtenu.</p>`,
   culture:`<p>Les laboratoires utilisent des protocoles écrits afin qu’une autre équipe puisse refaire la même expérience. Cette idée de <b>reproductibilité</b> est essentielle : un résultat devient plus solide quand d’autres personnes peuvent l’obtenir dans les mêmes conditions.</p>`},
+ earth:{
+  a:`<p>Pour étudier la <b>Terre, l’atmosphère et l’espace</b>, on relie des observations faites à des échelles très différentes. La météo décrit l’état de l’atmosphère à un lieu et un moment ; le climat se construit à partir de nombreuses mesures sur de longues durées. En astronomie, on distingue une étoile, une planète et un satellite, puis on utilise des modèles pour comprendre leurs mouvements.</p><p>En géologie, la Terre n’est pas immobile : sa surface évolue. Volcans et séismes témoignent de phénomènes internes, tandis que l’eau, le vent et la glace transforment aussi les paysages. Pour les ressources naturelles, on étudie à la fois leur origine, leurs usages et les conséquences de leur exploitation.</p>`,
+  b:`<p>Commence par préciser <b>l’échelle de temps et d’espace</b> de la question : une journée de pluie n’explique pas à elle seule un climat, et un dessin du Système solaire n’est pas à l’échelle réelle. Compare plusieurs observations, repère les grandeurs mesurées et distingue le modèle de la réalité qu’il représente.</p><p>Pour expliquer un phénomène terrestre ou astronomique, construis une chaîne : observations → mécanisme proposé → conséquences observables. Un schéma peut aider si les positions, mouvements ou couches sont clairement légendés. Évite les raccourcis : la Terre tourne sur elle-même et autour du Soleil ; la Lune tourne autour de la Terre ; le Soleil est une étoile.</p>`,
+  culture:`<p>La météorologie, la géologie et l’astronomie combinent mesures de terrain et instruments à distance : stations météo, sismomètres, satellites et télescopes. Les scientifiques comparent des séries de données sur de longues périodes et améliorent leurs modèles quand de nouvelles observations deviennent disponibles.</p>`},
  tech:{
   a:`<p>Un objet technique répond à un <b>besoin</b>. Pour l’analyser, suis quatre questions : à quoi sert-il ? quelles fonctions réalise-t-il ? avec quels matériaux ou sources d’énergie ? comment l’utiliser sans danger ? Deux objets très différents peuvent répondre au même besoin, et un même objet peut remplir plusieurs fonctions.</p><p>Observe aussi le trajet de l’énergie ou de l’information. Une commande produit une action ; un capteur peut détecter une situation ; un mécanisme transmet ou transforme un mouvement. Cette lecture « entrée → traitement → sortie » aide à comprendre les systèmes simples comme les plus complexes.</p>`,
   b:`<p>Pour comparer deux solutions techniques, fixe d’abord des critères : efficacité, solidité, coût, consommation d’énergie, réparabilité, impact sur l’environnement ou sécurité. Il n’existe pas toujours une solution parfaite : on choisit souvent un compromis.</p><p>En électricité, on travaille uniquement avec le matériel scolaire prévu et des piles adaptées. Une prise secteur n’est jamais un matériel d’expérience. Pour expliquer un montage, suis le circuit étape par étape et vérifie les connexions avant de conclure.</p>`,
@@ -54,6 +60,7 @@ const PACK={
 };
 function entry(ch,grade,sid){const k=profile(ch.domain),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');
  return {
+  scienceProfile:k,
   deep:[
    {t:`Approfondir : ${n}`,h:`<p><b>Objectif :</b> ne pas seulement retenir « ${n} », mais savoir expliquer la notion, reconnaître un exemple nouveau et justifier une réponse.</p>${p.a}`},
    {t:'Raisonner, vérifier, expliquer',h:`${p.b}<p>Pour ce chapitre de <b>${dom}</b>, prépare une réponse complète en quatre étapes : <b>je nomme la notion</b>, <b>je donne un exemple</b>, <b>j’explique le lien de cause ou de fonctionnement</b>, puis <b>je conclus</b>. Si un dessin ou un tableau aide, ajoute uniquement les informations utiles et donne un titre.</p>`}
