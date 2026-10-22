@@ -47,8 +47,9 @@ async function run(){
   const iso=await p.evaluate(()=>({name:S.name,n:(S.nationalAssessments||[]).length}));
   T('Multi-profils : les bilans restent propres à chaque enfant',iso.name==='Noé'&&iso.n===0,JSON.stringify(iso));
 
-  await p.evaluate(()=>{HOMETAB='progres';home();});await p.waitForTimeout(80);const nav=await p.evaluate(()=>({button:!!document.querySelector('[data-a="nationalscreen"]'),tabs:document.querySelectorAll('#hometabs .htab').length,text:document.querySelector('[data-a="nationalscreen"]')?.innerText||''}));
-  T('Navigation : accès depuis Progrès, 8 niveaux indiqués, sans nouvel onglet principal',nav.button&&nav.tabs===4&&/CP.*CM2/i.test(nav.text)&&/6e.*4e/i.test(nav.text),JSON.stringify(nav));
+  await p.evaluate(()=>{HOMETAB='progres';home();});await p.waitForTimeout(80);const nav=await p.evaluate(()=>({button:!!document.querySelector('[data-a="nationalscreen"]'),tabs:document.querySelectorAll('#hometabs .htab').length,ownTab:[...document.querySelectorAll('#hometabs .htab')].some(t=>/national|évaluation/i.test((t.dataset.a||'')+' '+t.textContent)),text:document.querySelector('[data-a="nationalscreen"]')?.innerText||''}));
+  // L'onglet « Exercices » (reprise) est un onglet principal voulu : on vérifie que les évaluations n'en ajoutent pas un à elles.
+  T('Navigation : accès depuis Progrès, 8 niveaux indiqués, sans nouvel onglet principal',nav.button&&nav.tabs>=4&&!nav.ownTab&&/CP.*CM2/i.test(nav.text)&&/6e.*4e/i.test(nav.text),JSON.stringify(nav));
 
   await p.setViewportSize({width:320,height:700});await p.evaluate(()=>MQNationalAssessment.screen());await p.waitForTimeout(40);const mobile=await p.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth,right:document.querySelector('.mq-na')?.getBoundingClientRect().right||0,vw:innerWidth}));
   T('Mobile 320 px : écran sans débordement horizontal',mobile.overflow<=1&&mobile.right<=mobile.vw+2,JSON.stringify(mobile));

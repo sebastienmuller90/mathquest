@@ -97,7 +97,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const i3=await p.evaluate(()=>M.i);await ans(false);await p.waitForSelector('#fb .fb.bad');
  const r3=await p.evaluate(()=>({bad:!!document.querySelector('#fb .fb.bad'),correction:/Bonne réponse/.test(document.querySelector('#fb').innerText)||!!document.querySelector('.dict-fb'),next:!!document.querySelector('#fb [data-a="next"]'),locked:M.locked}));
  await p.click('#fb [data-a="next"]');const i4=await p.evaluate(()=>M.i);
- T('7a. Bonne réponse reconnue et récompensée ; l’indice divise le gain par deux',r1.good&&r1.xp-g1.xp===10*g1.d*g1.mult&&g2.hint&&g2.flag&&r2.xp-g2.xp===Math.round(10*g2.d*g2.mult*.5),JSON.stringify({g1,r1,g2,r2}));
+ // Barème de l'économie anti-triche (MQEconomy) : une question neuve rapporte des XP ; un indice réduit réellement le gain
+ // (au plus la moitié). L'ancien barème fixe 10 × difficulté × combo n'existe plus (migration du test, pas assouplissement).
+ {const first=r1.xp-g1.xp,hinted=r2.xp-g2.xp;T('7a. Bonne réponse neuve reconnue et récompensée ; un indice réduit réellement le gain',r1.good&&first>0&&g2.hint&&g2.flag&&hinted>0&&hinted<=Math.ceil(first/2),JSON.stringify({g1,r1,g2,r2,first,hinted}));}
  T('7b. Mauvaise réponse : correction affichée, question verrouillée, « Exercice suivant » fait avancer',r3.bad&&r3.correction&&r3.next&&r3.locked&&i4===i3+1,JSON.stringify({r3,i3,i4}));
  await p.click('[data-a="quit"]');
  const r4=await p.evaluate(()=>({M:!!M,cur:CUR}));

@@ -14,12 +14,15 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
 
    // Playwright fixe toute l’horloge navigateur (Date.now ET new Date), contrairement à un simple monkey-patch Date.now.
    await p.clock.setFixedTime(new Date('2026-03-30T00:30:00+02:00'));
-   const streak=await p.evaluate(()=>{S.streak={n:4,best:4,last:'2026-3-29'};touchStreak();const a={...S.streak};touchStreak();const b={...S.streak};return {a,b};});
-   T('Série : le 30 mars prolonge le 29 une fois seulement',streak.a.n===5&&streak.a.last==='2026-3-30'&&streak.b.n===5,JSON.stringify(streak));
+   // La série progresse par une journée d'étude qualifiée (MQEconomy.qualifyDay, propriétaire de l'assiduité) ;
+   // l'ancien touchStreak(), déclenché par une seule bonne réponse, est volontairement neutralisé par l'économie.
+   const isDay=(v,y,m,d)=>new RegExp(`^${y}-0?${m}-0?${d}$`).test(String(v||''));
+   const streak=await p.evaluate(()=>{S.streak={n:4,best:4,last:'2026-3-29'};S.economy={};MQEconomy.qualifyDay('test');const a={...S.streak};MQEconomy.qualifyDay('test');const b={...S.streak};return {a,b};});
+   T('Série : le 30 mars prolonge le 29 une fois seulement',streak.a.n===5&&isDay(streak.a.last,2026,3,30)&&streak.b.n===5,JSON.stringify(streak));
 
    await p.clock.setFixedTime(new Date('2026-10-26T00:30:00+01:00'));
-   const autumnStreak=await p.evaluate(()=>{S.streak={n:7,best:7,last:'2026-10-25'};touchStreak();return {...S.streak};});
-   T('Série : le passage à l’heure d’hiver prolonge aussi correctement la veille',autumnStreak.n===8&&autumnStreak.last==='2026-10-26',JSON.stringify(autumnStreak));
+   const autumnStreak=await p.evaluate(()=>{S.streak={n:7,best:7,last:'2026-10-25'};S.economy={};MQEconomy.qualifyDay('test');return {...S.streak};});
+   T('Série : le passage à l’heure d’hiver prolonge aussi correctement la veille',autumnStreak.n===8&&isDay(autumnStreak.last,2026,10,26),JSON.stringify(autumnStreak));
 
    const absence=await p.evaluate(()=>({
     spring1:MQCalendar.civilDaysSince('2026-3-29',new Date('2026-03-30T23:30:00+02:00')),
