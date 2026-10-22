@@ -86,7 +86,7 @@ jobs:
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
-      - name: Voix de Finot en fin d’exercice
+      - name: Voix de Finot en fin d'exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
       - name: Carnet d’erreurs — missions de réparation
@@ -95,6 +95,12 @@ jobs:
       - name: Détection prudente des erreurs-types
         if: matrix.browser == 'chromium'
         run: node tests/error-patterns.test.js
+      - name: Exercices — reprise exacte et historique
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume.test.js
+      - name: Exercices — sécurité des instantanés de reprise
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume-security.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
