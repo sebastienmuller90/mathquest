@@ -86,6 +86,9 @@ jobs:
       - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
         if: matrix.browser == 'chromium'
         run: node tests/modern-profile-onboarding.test.js
+      - name: Devoirs scolaires parent-validés
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-parent.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
