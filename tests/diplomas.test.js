@@ -1,5 +1,5 @@
 /* Diplômes de chapitre — maîtrise réelle, date honnête, unicité, galerie, PNG, profils et mobile. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQDiplomas,{timeout:5000});
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQDiplomas,{timeout:5000});
 
   const setup=await p.evaluate(()=>{const ids=ALLCH.filter(c=>WMAP[c.id]?.lvl===S.grade).map(c=>c.id).slice(0,4);const master=id=>{S.chap[id]={ok:24,tot:24,stars:3};S.lessons[id]=Date.now()-1000;S.lessonScores[id]=100;S.recent[id]=Array(12).fill(true);MQAdaptive.refreshMastery(S,id);return MQAdaptive.mastery(S,id);};return {ids,vals:ids.slice(0,3).map(master)};});
   T('Préparation : trois chapitres atteignent réellement le seuil de maîtrise',setup.ids.length>=4&&setup.vals.every(v=>v>=85),JSON.stringify(setup));
@@ -38,7 +38,7 @@ async function run(){
   T('Rechargement : diplômes persistants et aucune attribution dupliquée',persisted.n===countBefore&&persisted.rows===countBefore,JSON.stringify({countBefore,persisted}));
 
   // Nouveau profil : galerie vierge, sans fuite du premier enfant.
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(100);const iso=await p.evaluate(()=>({name:S.name,n:Object.keys(S.diplomas||{}).length,entries:MQDiplomas.entries().length}));
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(100);const iso=await p.evaluate(()=>({name:S.name,n:Object.keys(S.diplomas||{}).length,entries:MQDiplomas.entries().length}));
   T('Multi-profils : les diplômes de Lina ne sont jamais visibles chez Noé',iso.name==='Noé'&&iso.n===0&&iso.entries===0,JSON.stringify(iso));
 
   await p.setViewportSize({width:320,height:700});await p.evaluate(()=>MQDiplomas.gallery());await p.waitForTimeout(40);const mobile=await p.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth,right:document.querySelector('#app')?.getBoundingClientRect().right||0,vw:innerWidth}));

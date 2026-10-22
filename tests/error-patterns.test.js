@@ -1,5 +1,5 @@
 /* Détection d'erreurs-types — diagnostics déterministes, persistance, faux positifs. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1200)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CM1');
   await p.waitForFunction(()=>!!window.MQErrorPatterns,{timeout:5000});
   const boot=await p.evaluate(()=>({loaded:!!MQErrorPatterns,js:document.querySelectorAll('script[src="js/error-patterns.js"]').length,css:document.querySelectorAll('link[href="js/error-patterns.css"]').length,store:S.errorPatterns}));
   T('Module erreurs-types chargé une seule fois avec stockage par profil',boot.loaded&&boot.js===1&&boot.css===1&&Array.isArray(boot.store?.events)&&!!boot.store?.counts,JSON.stringify(boot));
@@ -53,7 +53,7 @@ async function run(){
   const mobile=await p.evaluate(()=>{const old=document.querySelector('#fb');if(old)old.remove();const fb=document.createElement('div');fb.id='fb';fb.innerHTML='<div class="fb bad">Correction</div>';document.querySelector('#app').appendChild(fb);MQHooks.emit('answer:after',{mode:'mission',ok:false,q:{type:'num',q:'347 + 286',ans:633},cid:ALLCH.find(c=>WMAP[c.id]?.lvl===S.grade)?.id,M:{your:'523'}});const c=document.querySelector('.mq-pattern-card'),r=c.getBoundingClientRect();return {left:r.left,right:r.right,vw:innerWidth,overflow:document.documentElement.scrollWidth-innerWidth,button:c.querySelector('.btn')?.getBoundingClientRect().width||0};});
   T('Mobile 320 px : diagnostic lisible sans débordement',mobile.left>=-1&&mobile.right<=mobile.vw+1&&mobile.overflow<=1&&mobile.button>150,JSON.stringify(mobile));
 
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(80);
   const second=await p.evaluate(()=>({name:S.name,events:S.errorPatterns?.events?.length||0,top:MQErrorPatterns.top(5),last:MQErrorPatterns.last}));
   T('Multi-profils : aucun diagnostic de Lina ne fuit vers Noé',second.name==='Noé'&&second.events===0&&second.top.length===0&&second.last===null,JSON.stringify(second));
 

@@ -1,5 +1,5 @@
 /* Checkpoint de fin de séance — avant/après réel, historique et zéro mutation de récompense. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1200)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQSessionCheckpoint,{timeout:5000});
   const boot=await p.evaluate(()=>({loaded:!!MQSessionCheckpoint,js:document.querySelectorAll('script[src="js/session-checkpoint.js"]').length,css:document.querySelectorAll('link[href="js/session-checkpoint.css"]').length,history:S.sessionCheckpoints?.history||[]}));
   T('Module checkpoint chargé une seule fois avec historique par profil',boot.loaded&&boot.js===1&&boot.css===1&&boot.history.length===0,JSON.stringify(boot));
@@ -40,7 +40,7 @@ async function run(){
   T('Mobile 320 px : checkpoint entièrement visible sans débordement',mobile.left>=-1&&mobile.right<=mobile.vw+1&&mobile.overflow<=1,JSON.stringify(mobile));
 
   // Changement de profil entre start/end : snapshot abandonné.
-  await p.setViewportSize({width:390,height:844});await p.evaluate(id=>MQHooks.emit('mission:start',{ids:[id],M:{ids:[id],n:8,flash:false}}),cid);await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.setViewportSize({width:390,height:844});await p.evaluate(id=>MQHooks.emit('mission:start',{ids:[id],M:{ids:[id],n:8,flash:false}}),cid);await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CE1');await p.waitForTimeout(80);
   const iso=await p.evaluate(()=>({name:S.name,snap:MQSessionCheckpoint.snapshot,history:S.sessionCheckpoints?.history||[],sum:MQSessionCheckpoint.summarize({ids:[],ok:1,n:1})}));
   T('Multi-profils : snapshot de Lina supprimé au passage vers Noé',iso.name==='Noé'&&iso.snap===null&&iso.history.length===0&&iso.sum===null,JSON.stringify(iso));
 

@@ -19,9 +19,10 @@ function dueLabel(x){if(!x.due)return 'Sans échéance';const k=today();return x
 function sortTasks(a,b){const rank={claimed:0,todo:1,validated:2};return (rank[a.status]??9)-(rank[b.status]??9)||String(a.due||'9999').localeCompare(String(b.due||'9999'))||(+b.createdAt||0)-(+a.createdAt||0);}
 function rewardCount(day){return ensure().filter(x=>x.rewardDay===day&&x.rewardedAt).length;}
 function grant(x){if(x.rewardedAt)return {granted:false,reason:'already'};const day=today();if(rewardCount(day)>=CFG.dailyRewardCap){x.rewardDay=day;x.reward={xp:0,coins:0,merit:0,capped:true};return {granted:false,reason:'cap'};}
- S.xp=(+S.xp||0)+CFG.xp;S.coins=(+S.coins||0)+CFG.coins;
- try{if(typeof addMerit==='function')addMerit(CFG.merit,`Devoir scolaire validé : ${x.title}`,null);}catch(e){}
- x.rewardedAt=Date.now();x.rewardDay=day;x.reward={xp:CFG.xp,coins:CFG.coins,merit:CFG.merit};
+ // Gains accordés par MQEconomy.award (propriétaire unique de l'économie) : idempotent par devoir, plafonné par jour.
+ const g=root.MQEconomy&&typeof MQEconomy.award==='function'?MQEconomy.award({source:'homework',key:x.id,xp:CFG.xp,coins:CFG.coins,merit:CFG.merit,why:`Devoir scolaire validé : ${x.title}`}):{granted:false,reason:'invalid'};
+ if(!g.granted){x.rewardDay=day;x.reward={xp:0,coins:0,merit:0,capped:g.reason==='cap'};return {granted:false,reason:g.reason};}
+ x.rewardedAt=Date.now();x.rewardDay=day;x.reward={xp:g.xp,coins:g.coins,merit:g.merit};
  try{if(root.MQEconomy)MQEconomy.qualifyDay('Devoir scolaire validé par le parent');}catch(e){}
  return {granted:true,reward:x.reward};}
 function saveNow(){try{saveLocal();}catch(e){try{save();}catch(_){}}}

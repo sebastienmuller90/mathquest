@@ -1,6 +1,6 @@
 /* Mode DYS / lecture facilitée — vrais parcours navigateur.
    Vérifie : panneau parent, persistance, isolation par profil, aides avancées, rendu 320 px et absence d'erreurs JS. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -8,7 +8,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQDys&&!!window.MQDysReading,{timeout:5000});
 
   const boot=await p.evaluate(()=>({loaded:!!window.MQDys,advanced:!!window.MQDysReading,css:document.querySelectorAll('link[href="js/dys-mode.css"]').length,js:document.querySelectorAll('script[src="js/dys-mode.js"]').length,readingJs:document.querySelectorAll('script[src="js/dys-reading.js"]').length,defaults:MQDys.ensure(),classes:[...document.documentElement.classList]}));
@@ -59,7 +59,7 @@ async function run(){
   T('Rechargement : le profil conserve tous ses réglages DYS, y compris les aides avancées',reload.name==='Lina'&&reload.d.enabled&&reload.d.simpleFont&&reload.d.syllables&&reload.d.simpleInstructions&&reload.d.wordGuide&&reload.classes.includes('mq-dys-on')&&reload.classes.includes('mq-dys-syllables')&&reload.classes.includes('mq-dys-wordguide'),JSON.stringify(reload));
 
   // Second profil : aucune préférence DYS ne doit fuir du premier enfant.
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(100);
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(100);
   const second=await p.evaluate(()=>({name:S.name,d:MQDys.ensure(),on:document.documentElement.classList.contains('mq-dys-on'),profiles:Object.values(PDB.profiles).map(x=>({name:x.name,dys:x.dys}))}));
   T('Multi-profils : un nouvel enfant démarre sans DYS, le premier conserve ses réglages avancés',second.name==='Noé'&&!second.d.enabled&&!second.on&&second.profiles.some(x=>x.name==='Lina'&&x.dys?.enabled&&x.dys?.simpleFont&&x.dys?.syllables&&x.dys?.simpleInstructions&&x.dys?.wordGuide),JSON.stringify(second));
 

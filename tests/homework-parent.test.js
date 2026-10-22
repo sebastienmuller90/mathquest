@@ -1,10 +1,10 @@
 /* Devoirs scolaires parent-validés — aucun gain avant validation adulte, aucune double récompense. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQHomework&&!!window.MQEconomy);
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQHomework&&!!window.MQEconomy);
 
   await p.evaluate(()=>parentScreen('suivi'));await p.waitForSelector('[data-homework-parent="1"]');
   await p.fill('#hw-title','Exercices 4 et 5 page 72');await p.selectOption('#hw-subj','p-maths');await p.fill('#hw-due','2026-10-23');await p.fill('#hw-note','Poser les opérations dans le cahier.');await p.click('[data-a="hwcreate"]');
@@ -31,7 +31,7 @@ async function run(){
   await p.reload({waitUntil:'load'});await p.waitForFunction(()=>!!window.MQHomework);const persist=await p.evaluate(()=>({n:S.homework?.length,valid:S.homework?.filter(x=>x.status==='validated').length,reward:S.homework?.[0]?.rewardedAt}));
   T('Rechargement : devoirs et validations persistent',persist.n>=4&&persist.valid>=3&&persist.reward>0,JSON.stringify(persist));
 
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);const iso=await p.evaluate(()=>({name:S.name,n:S.homework?.length||0}));
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(80);const iso=await p.evaluate(()=>({name:S.name,n:S.homework?.length||0}));
   T('Multi-profils : les devoirs d’un enfant ne fuient pas vers l’autre',iso.name==='Noé'&&iso.n===0,JSON.stringify(iso));
 
   await p.setViewportSize({width:320,height:700});await p.evaluate(()=>{S.homework=[{id:'hw_mobile',title:'Lire le texte de français',subject:'p-francais',due:'2026-10-23',note:'Deux fois à voix haute.',status:'todo',createdAt:Date.now(),claimedAt:0,validatedAt:0,rewardedAt:0,rewardDay:'',reward:null}];home();});await p.waitForSelector('[data-homework-child="1"]');const mob=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,w:innerWidth,r:document.querySelector('[data-homework-child="1"]').getBoundingClientRect().right}));

@@ -1,7 +1,7 @@
 /* Séries de jours — le jour précédent est un jour civil local, jamais « maintenant - 24 h ». */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({timezoneId:'Europe/Paris'});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
- try{await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+ try{await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});await seedProfile(p,'Lina','CE2');
   // Le bug historique : 30 mars 2026 00:30 CEST - 24 h = 28 mars 23:30 CET, donc pas le 29.
   const spring=await p.evaluate(()=>{const now=new Date('2026-03-30T00:30:00+02:00'),raw=new Date(+now-86400000),civil=new Date(now);civil.setDate(civil.getDate()-1);return {now:dstr(+now),raw:dstr(+raw),civil:dstr(+civil)};});
   T('Reproduction heure d’été : −24 h tombe sur avant-hier, setDate(-1) donne bien hier',spring.now==='2026-3-30'&&spring.raw==='2026-3-28'&&spring.civil==='2026-3-29',JSON.stringify(spring));

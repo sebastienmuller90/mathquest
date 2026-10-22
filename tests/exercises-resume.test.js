@@ -1,6 +1,6 @@
 /* Onglet Exercices + reprise exacte — vrais parcours navigateur.
    Vérifie : 5e onglet, reprise avant/après réponse, zéro double comptage, abandon, historique 30, profils et 320 px. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 const answerJS=`(correct)=>{const q=M.q,sel=s=>document.querySelector(s);if(q.type==='choice'){const i=correct?q.ans:(q.ans+1)%q.choices.length;document.querySelectorAll('.choice')[i].click();return;}if(q.type==='order'){const idx=[];let rest=normLang(q.ans,q.lang);const used=new Set();let guard=0;while(rest.length&&guard++<50){const i=q.tokens.findIndex((t,k)=>!used.has(k)&&rest.startsWith(normLang(t,q.lang)));if(i<0)break;used.add(i);idx.push(i);rest=rest.slice(normLang(q.tokens[i],q.lang).length).trim();}if(!correct)idx.reverse();idx.forEach(i=>document.querySelector('[data-a="otok:'+i+'"]').click());}else if(q.type==='multi')q.labels.forEach((_,i)=>sel('#in'+i).value=correct?String(q.ans[i]):'987654');else if(q.type==='num')sel('#in0').value=correct?String(q.ans):'987654';else if(q.type==='frac')sel('#in0').value=correct?q.ans[0]+'/'+q.ans[1]:'987654/1';else sel('#in0').value=correct?q.acc[0]:'zzzzqqq';const v=sel('[data-a="valid"]');if(v)v.click();}`;
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
@@ -10,7 +10,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQExerciseResume,{timeout:5000});await p.waitForTimeout(60);
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQExerciseResume,{timeout:5000});await p.waitForTimeout(60);
 
   const nav=await p.evaluate(()=>({n:document.querySelectorAll('#hometabs .htab').length,ex:!!document.querySelector('#hometabs .mq-exercises-tab'),labels:[...document.querySelectorAll('#hometabs .htl')].map(x=>x.textContent)}));
   T('Barre du bas : 5 onglets dont « Exercices »',nav.n===5&&nav.ex&&nav.labels.includes('Exercices'),JSON.stringify(nav));
@@ -58,7 +58,7 @@ async function run(){
 
   // Isolation des profils : un snapshot du premier enfant n'apparaît jamais chez le second.
   await p.evaluate(id=>{startMission([id]);MQExerciseResume.capture();},cid);await p.waitForSelector('.qcard');const firstHas=await p.evaluate(()=>!!S.exerciseResume);
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(80);
   const iso=await p.evaluate(()=>({name:S.name,resume:!!S.exerciseResume,tabBadge:!!document.querySelector('#hometabs .mq-exercises-tab .ex-tab-badge')}));
   T('Multi-profils : la reprise du premier enfant n’apparaît pas chez le second',firstHas&&iso.name==='Noé'&&!iso.resume&&!iso.tabBadge,JSON.stringify(iso));
 

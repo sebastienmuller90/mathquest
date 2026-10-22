@@ -1,5 +1,5 @@
 /* Corrections animées V3 — multiplication, division, décimaux et fractions. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1200)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQCorrections,{timeout:5000});
+  await seedProfile(p,'Lina','CM1');await p.waitForFunction(()=>!!window.MQCorrections,{timeout:5000});
 
   const reg=await p.evaluate(()=>MQCorrections.adapters);
   const expected=['addition-posée','soustraction-posée','multiplication-posée','multiplication-décimale','division-euclidienne','division-décimale','fractions-calcul','entier-fois-fraction'];

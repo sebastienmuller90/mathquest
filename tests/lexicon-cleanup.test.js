@@ -1,5 +1,5 @@
 /* Nettoyage lexique anglais / italien — doublons ciblés et migration non destructive. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
 
   const catalog=await p.evaluate(()=>{const out={};for(const lang of ['en','it']){const counts={};for(const [cat,c] of Object.entries(MQ_LEXICON[lang].cats))for(const w of c.words){const k=String(w[0]).toLowerCase();(counts[k]||(counts[k]=[])).push(cat);}out[lang]={counts,travel:MQ_LEXICON[lang].cats.travel.words.map(w=>w[0]),hobbies:MQ_LEXICON[lang].cats.hobbies?.words.map(w=>w[0])||[]};}return out;});
   const targetedOk=['train','plane','airport'].every(k=>(catalog.en.counts[k]||[]).length===1)&&['treno','aereo','aeroporto','cucina'].every(k=>(catalog.it.counts[k]||[]).length===1);

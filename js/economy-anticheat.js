@@ -14,7 +14,9 @@ const CFG={
  missionMeritCap:1, perfectMeritCap:1, missionBonusesPerDay:3,
  // Le coffre du devoir reste volontairement fort : il est unique chaque jour et récompense l'assiduité.
  chest:{coins:40,xp:50,merit:5},
- rewardedLimit:5000
+ rewardedLimit:5000,
+ // Récompenses ponctuelles accordées par d'autres modules (une seule fois par clé, plafonnées par jour et par source).
+ awardDailyCap:{'error-repair':5,homework:2},awardsLimit:3000
 };
 const oldAddMerit=typeof addMerit==='function'?addMerit:null;
 const oldRewardsScreen=typeof rewardsScreen==='function'?rewardsScreen:null;
@@ -78,6 +80,20 @@ function quoteQuestion({cid,q,d=1,hint=false,streak=1,mode='mission',ms=0,commit
  }
  return {fp,repeat,factor,xp,coins,combo,mode,studyNew};
 }
+/* Seul point d'entrée des gains ponctuels des autres modules (carnet d'erreurs, devoirs validés…) : MQEconomy reste
+   l'unique propriétaire des XP, pièces et bons points. Idempotent par (source, clé) ; plafond quotidien par source.
+   Renvoie {granted, reason:'already'|'cap'|'invalid', xp, coins, merit}. */
+function award({source,key,xp=0,coins=0,merit=0,why=''}={}){
+ const src=String(source||''),k=String(key||'');if(!src||!k)return {granted:false,reason:'invalid',xp:0,coins:0,merit:0};
+ const e=ensure();if(!e.awards||typeof e.awards!=='object'||Array.isArray(e.awards))e.awards={};if(!Array.isArray(e.awardOrder))e.awardOrder=[];
+ const d=e.daily;if(!d.awards||typeof d.awards!=='object'||Array.isArray(d.awards))d.awards={};
+ const id=src+'|'+k;if(e.awards[id])return {granted:false,reason:'already',xp:0,coins:0,merit:0};
+ const cap=Number.isFinite(+CFG.awardDailyCap[src])?+CFG.awardDailyCap[src]:Infinity;if((+d.awards[src]||0)>=cap)return {granted:false,reason:'cap',xp:0,coins:0,merit:0};
+ const gx=Math.max(0,Math.round(+xp||0)),gc=Math.max(0,Math.round(+coins||0)),gm=Math.max(0,Math.round(+merit||0));
+ S.xp=(+S.xp||0)+gx;S.coins=(+S.coins||0)+gc;if(gm)addDirectMerit(gm,why||'Récompense',null);
+ e.awards[id]=Date.now();e.awardOrder.push(id);while(e.awardOrder.length>CFG.awardsLimit)delete e.awards[e.awardOrder.shift()];
+ d.awards[src]=(+d.awards[src]||0)+1;saveEconomy();return {granted:true,reason:'',xp:gx,coins:gc,merit:gm};
+}
 function stars(ok,n){const r=n?ok/n:0;return r>=.999?3:r>=.75?2:r>=.5?1:0;}
 function missionBonus(m){const d=ensure().daily,r=m?.n?(+m.ok||0)/(+m.n||1):0,ids=[...(m?.ids||[])].sort(),key=`${d.date}|${ids.join(',')}`;
  if(m?.path||r<.75||d.missionKeys[key]||d.missionBonusCount>=CFG.missionBonusesPerDay)return {xp:0,coins:0,key,first:false};
@@ -132,5 +148,5 @@ MQHooks.on('lesson:end',({l,passed})=>{if(!passed||!l)return;const e=ensure(),t=
 MQHooks.on('profile:changed',()=>{QBASE=null;SESSION=null;ensure();},{id:'economy-profile',order:200});
 
 installWrappers();ensure();saveEconomy();
-root.MQEconomy={version:CFG.version,config:CFG,ensure,fingerprint,quoteQuestion,stars,missionBonus,qualifyDay,maybeQualify,get day(){return ensure().daily;}};
+root.MQEconomy={version:CFG.version,config:CFG,ensure,fingerprint,quoteQuestion,award,stars,missionBonus,qualifyDay,maybeQualify,get day(){return ensure().daily;}};
 })(typeof window!=='undefined'?window:globalThis);

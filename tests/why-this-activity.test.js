@@ -1,5 +1,5 @@
 /* Pourquoi cette activité ? — explications fondées sur des preuves, sans modifier la progression. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1200)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQWhyActivity,{timeout:5000});
   const boot=await p.evaluate(()=>({loaded:!!MQWhyActivity,js:document.querySelectorAll('script[src="js/why-this-activity.js"]').length,css:document.querySelectorAll('link[href="js/why-this-activity.css"]').length}));
   T('Module « Pourquoi ? » chargé statiquement une seule fois',boot.loaded&&boot.js===1&&boot.css===1,JSON.stringify(boot));

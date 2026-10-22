@@ -1,5 +1,5 @@
 /* Économie anti-triche : question unique, rendement décroissant, assiduité et devoir du jour. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 const answerJS=`(correct)=>{const q=M.q,sel=s=>document.querySelector(s);if(q.type==='choice'){const i=correct?q.ans:(q.ans+1)%q.choices.length;document.querySelectorAll('.choice')[i].click();return;}if(q.type==='order'){const idx=[];let rest=normLang(q.ans,q.lang);const used=new Set();let guard=0;while(rest.length&&guard++<50){const i=q.tokens.findIndex((t,k)=>!used.has(k)&&rest.startsWith(normLang(t,q.lang)));if(i<0)break;used.add(i);idx.push(i);rest=rest.slice(normLang(q.tokens[i],q.lang).length).trim();}if(!correct)idx.reverse();idx.forEach(i=>document.querySelector('[data-a="otok:'+i+'"]').click());}else if(q.type==='multi')q.labels.forEach((_,i)=>sel('#in'+i).value=correct?String(q.ans[i]):'987654');else if(q.type==='num')sel('#in0').value=correct?String(q.ans):'987654';else if(q.type==='frac')sel('#in0').value=correct?q.ans[0]+'/'+q.ans[1]:'987654/1';else sel('#in0').value=correct?q.acc[0]:'zzzzqqq';const v=sel('[data-a="valid"]');if(v)v.click();}`;
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1200)});
@@ -8,7 +8,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQEconomy,{timeout:5000});
   const boot=await p.evaluate(()=>({loaded:!!MQEconomy,script:document.querySelectorAll('script[src="js/economy-anticheat.js"]').length,okRule:S.merit.rules.ok,costs:S.merit.rewards.map(x=>[x.id,x.c]),version:S.economy?.version}));
   T('Moteur anti-triche chargé ; plus de bon point par simple bonne réponse ; coûts par défaut recalibrés',boot.loaded&&boot.script===1&&boot.okRule===0&&boot.version===1&&boot.costs.find(x=>x[0]==='r1')?.[1]===60&&boot.costs.find(x=>x[0]==='r4')?.[1]===500,JSON.stringify(boot));
@@ -70,6 +70,15 @@ async function run(){
   const dailyRepeat=await p.evaluate(cid=>{const q={type:'num',q:'Test objectif quotidien',ans:7};S.economy={};S.daily.ok=0;MQEconomy.ensure();const a=MQEconomy.quoteQuestion({cid,q,d:1,mode:'mission',commit:true,ms:20000});if(a.studyNew)S.daily.ok++;const d1=S.daily.ok;const b=MQEconomy.quoteQuestion({cid,q,d:1,mode:'mission',commit:true,ms:20000});if(b.studyNew)S.daily.ok++;return {d1,d2:S.daily.ok,a,b};},ids[0]);
   T('Objectif quotidien : une question exacte répétée ne compte qu’une fois',dailyRepeat.d1===1&&dailyRepeat.d2===1&&dailyRepeat.a.studyNew&&!dailyRepeat.b.studyNew,JSON.stringify(dailyRepeat));
 
+  // Gains ponctuels des autres modules : un seul propriétaire (MQEconomy.award), idempotent et plafonné par jour.
+  const aw=await p.evaluate(()=>{S.economy={};MQEconomy.ensure();const c0=S.coins;const a=MQEconomy.award({source:'error-repair',key:'k1',coins:2});const again=MQEconomy.award({source:'error-repair',key:'k1',coins:2});
+   const next=[];for(let i=2;i<=7;i++)next.push(MQEconomy.award({source:'error-repair',key:'k'+i,coins:2}).reason||'ok');const other=MQEconomy.award({source:'homework',key:'hw_1',xp:15,coins:3});
+   return {a:a.granted,again:again.reason,next,other:other.granted,dc:S.coins-c0};});
+  T('Récompenses ponctuelles : une seule fois par clé, 5 réparations rémunérées par jour puis rien, plafond propre à chaque source',aw.a&&aw.again==='already'&&JSON.stringify(aw.next)===JSON.stringify(['ok','ok','ok','ok','cap','cap'])&&aw.other&&aw.dc===13,JSON.stringify(aw));
+  // Propriétaire unique : aucun module ajouté n'écrit lui-même XP, pièces ou bons points.
+  {const fs=require('fs'),path=require('path');const root=path.join(__dirname,'..');const mods=['error-repair','error-patterns','exercises-resume','session-checkpoint','dys-mode','dys-reading','progressive-hints','animated-corrections','why-this-activity','smart-5min','homework-parent','homework-help','weekly-parent-report','diplomas','finot-live-state','family-challenge','national-assessment','reading-aloud-poc','modern-profile-onboarding','modern-profile-persistence','learner-profile-path','dst-calendar-fix','lexicon-cleanup-migration'];
+   const bad=[];for(const m of mods){const f=path.join(root,'js',m+'.js');if(!fs.existsSync(f))continue;const s=fs.readFileSync(f,'utf8');const hit=s.match(/\bS\.(xp|coins)\s*[+\-]?=|\baddMerit\s*\(|\bS\.merit\.pts\s*[+\-]?=/);if(hit)bad.push(m+' : '+hit[0]);}
+   T('Économie : aucun module ajouté n’accorde lui-même XP, pièces ou bons points (tout passe par MQEconomy)',!bad.length,bad.join(' | '));}
   await p.evaluate(()=>rewardsScreen());const rewardTxt=await p.locator('.how').innerText();
   T('Écran récompenses : règles anti-farm expliquées à l’enfant',/journée d’étude qualifiée/i.test(rewardTxt)&&/ne donne plus de/.test(rewardTxt)&&/révision programmée/i.test(rewardTxt),rewardTxt);
   T('Aucune erreur JavaScript pendant l’audit économie',!errs.length,errs.slice(0,10).join(' | '));

@@ -1,5 +1,5 @@
 /* Corrections animées — moteur générique et opérations posées. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQCorrections,{timeout:5000});
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQCorrections,{timeout:5000});
 
   const add=await p.evaluate(()=>{const q={type:'num',q:'Calcule : <b>347 + 286</b>',ans:633},m=MQCorrections.modelFor({q,cid:'ce2-ma-add-sous'});return {parsed:MQCorrections.parseIntegerOperation(q),adapter:m?.adapter,steps:m?.steps?.map(s=>({text:s.text,result:s.result,carries:s.carries,done:s.done||false}))};});
   T('Addition 347 + 286 : adaptateur exact, retenues et résultat 633',add.parsed?.a===347&&add.parsed?.b===286&&add.adapter==='addition-posée'&&add.steps?.length===4&&/13/.test(add.steps[0].text)&&/retiens?/.test(add.steps[0].text)&&/633/.test(add.steps.at(-1).text),JSON.stringify(add));

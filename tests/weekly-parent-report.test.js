@@ -1,5 +1,5 @@
 /* Bilan hebdomadaire parent — données simulées et jours civils Europe/Paris. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844},timezoneId:'Europe/Paris'});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQWeeklyReport,{timeout:5000});
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQWeeklyReport,{timeout:5000});
 
   const dst=await p.evaluate(()=>{const now=new Date('2026-03-30T00:30:00+02:00').getTime(),r=MQWeeklyReport.range(now);const dates=[r.curStart,r.prevStart,r.prevEnd].map(t=>new Date(t).toLocaleString('sv-SE',{timeZone:'Europe/Paris'}));const prev=MQWeeklyReport.dayStart(now,-1);return {dates,prev:new Date(prev).toLocaleString('sv-SE',{timeZone:'Europe/Paris'}),hours:(now-prev)/3600000};});
   T('Calendrier : jours civils corrects au passage à l’heure d’été, sans hypothèse de 24 h',/^2026-03-24/.test(dst.dates[0])&&/^2026-03-17/.test(dst.dates[1])&&/^2026-03-24/.test(dst.dates[2])&&/^2026-03-29/.test(dst.prev)&&dst.hours!==24,JSON.stringify(dst));

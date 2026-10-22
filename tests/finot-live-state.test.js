@@ -1,5 +1,5 @@
 /* Finot vivant — machine d'états, priorités, vestiaire, profils et mobile. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQFinotLive,{timeout:5000});await p.waitForTimeout(60);
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQFinotLive,{timeout:5000});await p.waitForTimeout(60);
 
   const boot=await p.evaluate(async()=>{const states=Object.entries(MQFinotLive.states),assets=await Promise.all(states.map(async([k,v])=>[k,v.src,(await fetch(v.src)).ok]));return {states:states.map(x=>x[0]),events:Object.keys(MQFinotLive.eventMap),accessories:Object.keys(MQFinotLive.accessories),assets,base:finotEtat(S),card:!!document.querySelector('.finot-card'),fab:!!document.querySelector('.finot-fab')};});
   T('Moteur chargé : 10 états, API Carnet/Diplômes, 5 choix de vestiaire et toutes les images existent',boot.states.length===10&&boot.events.includes('exercise.correct')&&boot.events.includes('chapter.mastered')&&boot.events.includes('error.repaired')&&boot.accessories.length===5&&boot.assets.every(x=>x[2])&&boot.card&&boot.fab,JSON.stringify(boot));
@@ -48,7 +48,7 @@ async function run(){
   const persisted=await p.evaluate(()=>({name:S.name,selected:MQFinotLive.selectedAccessory,saved:S.finotLiving?.accessory,best:S.streak.best}));
   T('Rechargement : l’accessoire choisi reste propre au profil',persisted.name==='Lina'&&persisted.selected==='crown'&&persisted.saved==='crown'&&persisted.best===30,JSON.stringify(persisted));
 
-  await p.evaluate(()=>{MQFinotLive.setState('celebrating',{force:true,ttl:10000});createProfile();});await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.evaluate(()=>{MQFinotLive.setState('celebrating',{force:true,ttl:10000});createProfile();});await seedProfile(p,'Noé','CM1');await p.waitForTimeout(80);
   const profile=await p.evaluate(()=>({name:S.name,current:MQFinotLive.current,state:document.querySelector('.finot-card')?.dataset.finotState||'',natural:finotEtat(S).texte,text:document.querySelector('.finot-card')?.innerText||'',accessory:MQFinotLive.selectedAccessory,saved:S.finotLiving?.accessory}));
   T('Multi-profils : ni émotion ni accessoire de Lina ne fuit vers Noé',profile.name==='Noé'&&!profile.current&&!profile.state&&profile.text.includes(profile.natural)&&profile.accessory==='none'&&profile.saved==='none',JSON.stringify(profile));
 

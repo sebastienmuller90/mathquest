@@ -1,5 +1,5 @@
 /* Aide aux devoirs : matière -> thème -> cours/exercices, historique et responsive multi-écrans. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1400)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQHomeworkHelp&&!!window.MQEconomy,null,{timeout:6000});
   const boot=await p.evaluate(()=>({hh:!!MQHomeworkHelp,eco:!!MQEconomy,css:document.querySelectorAll('link[href="js/homework-help.css"]').length,js:document.querySelectorAll('script[src="js/homework-help.js"]').length,subjects:MQHomeworkHelp.subjects().length}));
   T('Aide aux devoirs chargée une seule fois au-dessus de l’économie anti-triche',boot.hh&&boot.eco&&boot.css===1&&boot.js===1&&boot.subjects>0,JSON.stringify(boot));

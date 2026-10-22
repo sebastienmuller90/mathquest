@@ -1,5 +1,5 @@
 /* Défi famille — équité entre niveaux, objectifs personnels, classement et mobile. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844},timezoneId:'Europe/Paris'});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CP"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQFamilyChallenge,{timeout:5000});
+  await seedProfile(p,'Lina','CP');await p.waitForFunction(()=>!!window.MQFamilyChallenge,{timeout:5000});
 
   const data=await p.evaluate(()=>{const now=Date.now(),start=MQFamilyChallenge.startOfWeek(now),mk=(name,grade,goal,correctPerDay,wrongExtra=0,days=5,lessons=3,repairs=3)=>{const s=normalizeState({...S,name,grade,dailyGoal:goal,answerLog:[],activityLog:[],lessons:{},mistakes:{},review:{}});for(let d=0;d<days;d++){const t=start+d*86400000+12*3600000;for(let i=0;i<correctPerDay;i++)s.answerLog.push({t:t+i*1000,cid:'x',ok:true,source:'practice',ms:1000});for(let i=0;i<wrongExtra;i++)s.answerLog.push({t:t+(correctPerDay+i)*1000,cid:'x',ok:false,source:'practice',ms:1000});s.activityLog.push({id:name+d,t0:t,t1:t+600000,ms:600000,kind:'exercise',ids:['x'],grade});}for(let i=0;i<lessons;i++)s.lessons['l'+i]=start+(i+1)*86400000+13*3600000;s.mistakes={x:Array.from({length:repairs},(_,i)=>({q:'e'+i,answer:'a',at:start-1000,seen:start+(i+1)*86400000+14*3600000}))};return s;};
    const cp=mk('Lina','CP',10,10,8),college=mk('Max','3e',20,20,0),low=mk('Noé','CM1',20,5,0,2,0,0);const a=MQFamilyChallenge.metrics(cp,now),bb=MQFamilyChallenge.metrics(college,now),c=MQFamilyChallenge.metrics(low,now);return {now,start,cp:a,college:bb,low:c,cpState:cp,collegeState:college,lowState:low};});

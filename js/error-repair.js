@@ -31,7 +31,12 @@ function screen(){
 }
 function promote(item){const a=S.mistakes?.[item.cid];if(!Array.isArray(a))return;const i=a.indexOf(item.x);if(i>0){a.splice(i,1);a.unshift(item.x);}}
 function start(key){const item=find(key);if(!item||item.seen)return screen();promote(item);ACTIVE={key:item.key,cid:item.cid,at:+item.x.at||0};REPAIR_STREAK=0;SEEN_BEFORE=+item.x.seen||0;try{saveLocal();}catch(e){}startMission([item.cid],{n:3});if(M)M.errorRepair=true;}
-function reward(item){const st=state();if(!item||!item.seen||st.rewarded[item.key])return false;S.coins=(+S.coins||0)+2;st.rewarded[item.key]=+item.seen||Date.now();try{saveLocal();}catch(e){}try{checkBadges();}catch(e){}try{toast('✅ Erreur réparée ! +2 🪙');}catch(e){}return true;}
+// Les pièces passent par MQEconomy.award (propriétaire unique des gains, plafond quotidien anti-farm) : se tromper exprès
+// pour « réparer » ensuite ne peut pas devenir une source illimitée de pièces. La réparation elle-même n'est jamais plafonnée.
+function reward(item){const st=state();if(!item||!item.seen||st.rewarded[item.key])return false;
+ const r=window.MQEconomy&&typeof MQEconomy.award==='function'?MQEconomy.award({source:'error-repair',key:item.key,coins:2,why:'Erreur réparée'}):{granted:false,reason:'invalid'};
+ if(!r.granted){try{saveLocal();}catch(e){}try{toast(r.reason==='cap'?'✅ Erreur réparée ! (pièces de réparation déjà gagnées aujourd’hui)':'✅ Erreur réparée !');}catch(e){}return false;}
+ st.rewarded[item.key]=+item.seen||Date.now();try{saveLocal();}catch(e){}try{checkBadges();}catch(e){}try{toast('✅ Erreur réparée ! +2 🪙');}catch(e){}return true;}
 function afterAnswer(x){if(!ACTIVE||!x||x.cid!==ACTIVE.cid||x.mode==='flash')return;const item=find(ACTIVE.key);if(!item){ACTIVE=null;return;}REPAIR_STREAK=x.ok?REPAIR_STREAK+1:0;
  // Le cœur peut considérer les réponses précédant la mini-mission ; on interdit donc une réparation prématurée.
  if(!SEEN_BEFORE&&item.x.seen&&REPAIR_STREAK<3)item.x.seen=0;

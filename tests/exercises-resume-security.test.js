@@ -1,5 +1,5 @@
 /* Sécurité reprise d'exercice : un instantané est strictement lié à l'appareil qui l'a créé. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,700)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQExerciseResume,{timeout:5000});
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQExerciseResume,{timeout:5000});
   const local=await p.evaluate(()=>{const cid=reco().id;startMission([cid]);MQExerciseResume.capture();return {device:MQExerciseResume.deviceToken(),savedDevice:S.exerciseResume?.device,valid:!!MQExerciseResume.payload(),blob:S.exerciseResume?.blob?.length||0};});
   T('Instantané local : token appareil présent et reprise valide',local.device&&local.savedDevice===local.device&&local.valid&&local.blob>100,JSON.stringify(local));
 

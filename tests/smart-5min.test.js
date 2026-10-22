@@ -1,5 +1,5 @@
 /* Séance 5 minutes intelligentes — sélection adaptative et interface. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
+  await seedProfile(p,'Lina','CE2');
   await p.waitForFunction(()=>!!window.MQSmart5,{timeout:5000});
 
   const boot=await p.evaluate(()=>({loaded:!!MQSmart5,js:document.querySelectorAll('script[src="js/smart-5min.js"]').length,css:document.querySelectorAll('link[href="js/smart-5min.css"]').length,q:MQSmart5.questionCount()}));
@@ -54,7 +54,7 @@ async function run(){
   T('Mobile 320 px : carte entièrement dans le viewport sans débordement horizontal',mobile.left>=-1&&mobile.right<=mobile.vw+1&&mobile.overflow<=1&&mobile.buttons.every(w=>w>80),JSON.stringify(mobile));
 
   // Nouveau profil : le moteur doit produire un plan sans dépendre des données du premier enfant.
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CE1');await p.waitForTimeout(80);
   const second=await p.evaluate(()=>({name:S.name,plan:MQSmart5.plan(),history:S.smart5?.history||[]}));
   T('Multi-profils : un nouvel enfant obtient son propre plan et aucun historique ne fuit',second.name==='Noé'&&second.plan.ids.length>=2&&second.history.length===0,JSON.stringify(second));
 

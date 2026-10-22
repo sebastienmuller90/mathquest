@@ -1,5 +1,5 @@
 /* Évaluations nationales — 8 niveaux, diagnostic isolé, historique, profils et mobile. */
-const {serve,launch}=require('./lib');
+const {serve,launch,seedProfile}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1300)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
@@ -13,7 +13,7 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');await p.waitForFunction(()=>!!window.MQNationalAssessment,{timeout:5000});
+  await seedProfile(p,'Lina','CE2');await p.waitForFunction(()=>!!window.MQNationalAssessment,{timeout:5000});
 
   const registry=await p.evaluate(()=>MQNationalAssessment.levels.map(level=>{const items=MQNationalAssessment.buildQuestions(level),src=MQNationalAssessment.sourceGrades[level];return {level,src,n:items.length,fr:items.filter(x=>x.subject==='francais').length,ma:items.filter(x=>x.subject==='maths').length,skills:[...new Set(items.map(x=>x.skillId))],grades:[...new Set(items.map(x=>WMAP[x.cid]?.lvl))]};}));
   const expected={CP:'CP',CE1:'CP',CE2:'CE1',CM1:'CE2',CM2:'CM1','6e':'CM2','5e':'6e','4e':'5e'};
@@ -43,7 +43,7 @@ async function run(){
   const oldId=rep.hist[0].id;await p.evaluate(()=>MQNationalAssessment.screen());await p.waitForSelector('.mq-na-history');const histUi=await p.evaluate(id=>({rows:document.querySelectorAll('.mq-na-report-row').length,button:!!document.querySelector(`[data-a="nationalreport:${encodeURIComponent(id)}"]`)}),oldId);
   T('Historique : le bilan est rouvrable depuis le profil',histUi.rows===1&&histUi.button,JSON.stringify(histUi));
 
-  await p.evaluate(()=>createProfile());await p.fill('#nm','Noé');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CM1"]');await p.click('[data-a="begin"]');await p.waitForTimeout(80);
+  await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(80);
   const iso=await p.evaluate(()=>({name:S.name,n:(S.nationalAssessments||[]).length}));
   T('Multi-profils : les bilans restent propres à chaque enfant',iso.name==='Noé'&&iso.n===0,JSON.stringify(iso));
 
