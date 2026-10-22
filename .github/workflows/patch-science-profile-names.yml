@@ -1,0 +1,74 @@
+name: Patch science profile names
+
+on:
+  push:
+    branches:
+      - amelioration/cours-approfondis-sciences
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: amelioration/cours-approfondis-sciences
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Corriger le routage et ajouter les non-régressions
+        shell: python
+        run: |
+          from pathlib import Path
+
+          p=Path('data/pedagogy/course-depth-sciences-primary.js')
+          s=p.read_text(encoding='utf-8')
+          replacements=[
+            ("if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';",
+             "if(/météo|climat|atmosph|terre|planète|système solaire|astronom|géolog|volcan|séisme|ressource|lune|soleil|étoile|satellite/.test(d))return 'earth';"),
+            ("if(/vivant|animal|plante|écosyst|environnement/.test(d))return 'living';",
+             "if(/vivant|animal|plante|écosyst|environnement|reproduction|croissance|développement|germination/.test(d))return 'living';"),
+            ("function entry(ch,grade,sid){const k=profile(ch.domain),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');",
+             "function entry(ch,grade,sid){const k=profile(`${ch.domain||''} ${ch.name||''}`),p=PACK[k]||PACK.method,n=esc(ch.name),dom=esc(ch.domain||'sciences');")
+          ]
+          for old,new in replacements:
+              if new in s: continue
+              if s.count(old)!=1: raise SystemExit(f'motif source introuvable ou ambigu: {old[:60]} -> {s.count(old)}')
+              s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('tests/course-depth.test.js')
+          s=p.read_text(encoding='utf-8')
+          anchor="  const earthProfiles=earthExpected.map(id=>[id,C[id]&&C[id].scienceProfile]);\n"
+          insert=anchor+"  const namedProfileExpected=[['cm1-sc-lumiere-ombres','matter'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living']];\n  const namedProfiles=namedProfileExpected.map(([id,expected])=>[id,C[id]&&C[id].scienceProfile,expected]);\n"
+          if 'const namedProfileExpected=' not in s:
+              if s.count(anchor)!=1: raise SystemExit('ancre earthProfiles introuvable')
+              s=s.replace(anchor,insert,1)
+          oldret='return {count:ids.length,orphans,lots:lots2,scienceTargets,earthProfiles,order,place,bad,typos};'
+          newret='return {count:ids.length,orphans,lots:lots2,scienceTargets,earthProfiles,namedProfiles,order,place,bad,typos};'
+          if newret not in s:
+              if s.count(oldret)!=1: raise SystemExit('retour test introuvable')
+              s=s.replace(oldret,newret,1)
+          anchor2=" T('Terre, climat, géologie et système solaire utilisent le profil Terre & espace',r.earthProfiles.length===4&&r.earthProfiles.every(x=>x[1]==='earth'),JSON.stringify(r.earthProfiles));\n"
+          assertion=anchor2+" T('Le nom du chapitre affine le profil sciences (lumière, Lune, développement)',r.namedProfiles.length===3&&r.namedProfiles.every(x=>x[1]===x[2]),JSON.stringify(r.namedProfiles));\n"
+          if 'Le nom du chapitre affine le profil sciences' not in s:
+              if s.count(anchor2)!=1: raise SystemExit('ancre assertion profil introuvable')
+              s=s.replace(anchor2,assertion,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Vérifier la syntaxe
+        run: |
+          node --check data/pedagogy/course-depth-sciences-primary.js
+          node --check tests/course-depth.test.js
+          grep -F 'profile(`${ch.domain' data/pedagogy/course-depth-sciences-primary.js
+          grep -F 'Le nom du chapitre affine le profil sciences' tests/course-depth.test.js
+      - name: Committer la correction
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/pedagogy/course-depth-sciences-primary.js tests/course-depth.test.js
+          git commit -m "Affine les profils sciences avec le nom du chapitre"
+          git push origin HEAD:amelioration/cours-approfondis-sciences
