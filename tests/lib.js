@@ -22,6 +22,17 @@ function chromePath(){
 async function launch(){const {chromium}=require('playwright-core');return chromium.launch({executablePath:chromePath()});}
 // WebKit (moteur de Safari iOS) ou Firefox, installés par « npx playwright-core install webkit firefox ».
 async function launchEngine(name){if(name==='chromium')return launch();const pw=require('playwright-core');if(!pw[name])throw new Error('moteur inconnu : '+name);return pw[name].launch();}
+// Création de profil standard pour les tests qui ne testent PAS l'onboarding lui-même.
+// Le test dédié modern-profile-onboarding.test.js garde, lui, le parcours complet et tous ses choix.
+async function createModernProfile(page,name='Lina',stage='college',grade='6e',opts={}){
+  const gender=opts.gender||'girl',companion=opts.companion||'finot',level=opts.level||'ok',confidence=opts.confidence||'medium',help=opts.help||'try',goal=opts.goal||'understand',pace=opts.pace||'balanced';
+  await page.waitForSelector('.pob-shell',{timeout:6000});await page.fill('#pob-name',name);await page.click(`[data-pob="gender"][data-value="${gender}"]`);await page.click('[data-pob="next"]');
+  await page.click('[data-pob="next"]');await page.click(`[data-pob="stage"][data-value="${stage}"]`);await page.click(`[data-pob="grade"][data-value="${grade}"]`);await page.click('[data-pob="next"]');
+  await page.click(`[data-pob="companion"][data-value="${companion}"]`);await page.click('[data-pob="next"]');await page.click(`[data-pob="level"][data-value="${level}"]`);await page.click(`[data-pob="confidence"][data-value="${confidence}"]`);await page.click(`[data-pob="help"][data-value="${help}"]`);await page.click('[data-pob="next"]');
+  await page.click(`[data-pob="goal"][data-value="${goal}"]`);await page.click(`[data-pob="pace"][data-value="${pace}"]`);await page.click('[data-pob="next"]');await page.click('[data-pob="finish"]');
+  await page.waitForFunction(expected=>typeof S!=='undefined'&&S.name===expected,name,{timeout:6000});
+  if(opts.pauseDiagnostic!==false){await page.waitForFunction(()=>typeof CUR!=='undefined'&&CUR==='diagnostic',null,{timeout:4000});const pause=page.locator('[data-a="diagpause"]');if(await pause.count())await pause.click();await page.waitForFunction(()=>CUR==='home',null,{timeout:3000});}
+}
 // Petit rapport : chaque test renvoie {name, ok, detail}.
 // Toute liste vide ou contenant un échec est un échec : process.exitCode passe à 1 (jamais de « succès » avec un test rouge).
 function report(results){let ok=0;if(!Array.isArray(results)||!results.length){console.log('❌ FAIL  Aucun résultat de test produit');console.log('BILAN PASS=0 FAIL=1');process.exitCode=1;return false;}
@@ -43,4 +54,4 @@ function swPrecache(root=ROOT){const vm=require('vm');const src=fs.readFileSync(
     const file=path.join(root,rel===''?'index.html':rel);if(!fs.existsSync(file))continue;out.push(rel);
     if(X.TEXT_EXT.test(rel||'index.html')){const t=fs.readFileSync(file,'utf8');for(const r of X.refsFromText(t,u))q.push(r);if(rel==='data/lexicon.js')for(const r of X.lexiconImages(t))q.push(r);}}
   return out;}
-module.exports={serve,launch,launchEngine,report,main,ROOT,chromePath,swPrecache};
+module.exports={serve,launch,launchEngine,createModernProfile,report,main,ROOT,chromePath,swPrecache};
