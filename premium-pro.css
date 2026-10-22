@@ -70,6 +70,7 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 /* 5 minutes intelligentes et carte de calibrage : plus compacts, jamais de texte écrasé */
 .smart5-card::after{content:none}
 .smart5-item{background:var(--surface2);border-radius:var(--r-md)}
+.smart5-actions{flex-wrap:nowrap}
 .diag-home-card{flex-wrap:wrap}
 .diag-home-card>span:nth-child(2){flex:1 1 180px}
 
@@ -87,6 +88,8 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 .world:hover{filter:none;box-shadow:var(--sh-3)}
 .world:active{transform:translateY(1px) scale(.995)}
 .world:has(>img) .we{display:none}
+.world:has(>img)::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(0,0,0,0) 15%,rgba(0,0,0,.78));pointer-events:none}
+.world:has(>img) :is(.wl,.wn){text-shadow:0 1px 4px rgba(0,0,0,.7)}
 .we{font-size:44px;filter:none}
 .wl{font-size:28px;font-weight:700;line-height:1.05;text-shadow:0 1px 3px rgba(0,0,0,.35)}
 .wn{font-size:15px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.35)}
@@ -112,6 +115,16 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 .chap:hover{border-color:color-mix(in srgb,var(--wc) 55%,var(--border));box-shadow:var(--sh-1)}
 .crow .cbtn .btn{min-width:44px;min-height:44px}
 .cn{color:var(--text)}
+.crow .cn b{font-family:var(--font-ui);font-weight:800;font-size:15px}
+
+/* ───── Progression : chiffres d'abord ───── */
+.kpis{gap:12px}
+.kpi{border:1px solid var(--border);border-radius:var(--r-md);padding:14px 8px;box-shadow:var(--sh-1)}
+.kpi b{font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{display:block;margin-top:2px;font-weight:700}
+.prog-kpis{margin-top:4px}
+.prog-next{margin:12px 0 6px}
+.prog-next+.xpbar{height:10px;margin:0 0 24px}
 
 /* ───── Outils (onglet Plus) ───── */
 .tools{gap:12px}
@@ -160,6 +173,24 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 .gains span{border:1px solid var(--border)}
 .end .card,.end.card{box-shadow:var(--sh-2)}
 
+/* ───── Encadrés pédagogiques : bords pleins et fins, plus de pointillés épais ───── */
+.listen{
+  min-height:56px;padding:12px 16px;
+  border:1.5px solid color-mix(in srgb,var(--accent) 45%,var(--border));
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  font-size:20px;
+  box-shadow:var(--sh-1);
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.listen:hover{border-color:var(--accent);box-shadow:var(--sh-2)}
+.pause,.checkpoint{
+  border:1px solid color-mix(in srgb,var(--good) 40%,var(--border));
+  background:color-mix(in srgb,var(--good) 8%,var(--surface));
+  border-radius:var(--r-md);
+}
+.ordline,.pnew{border-width:1.5px}
+
 /* ───── Mobile ───── */
 @media (max-width:560px){
   #app{padding:16px 16px 104px}
@@ -194,6 +225,13 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 }
 
 /* ───── Tablette et desktop ───── */
+@media (min-width:1100px){
+  /* Accueil desktop : deux colonnes équilibrées au lieu d'une longue colonne étroite */
+  body[data-mq-age] #app:has(.hometab-body){max-width:1060px}
+  .hometab-body:has(.smart5-card){column-count:2;column-gap:24px}
+  .hometab-body:has(.smart5-card)>*{break-inside:avoid;margin-top:0;margin-bottom:16px}
+  .hometab-body:has(.smart5-card)>.daily-h{break-after:avoid;margin-bottom:8px}
+}
 @media (min-width:900px){
   #app{padding-top:32px}
   .qcard{min-height:min(520px,calc(100vh - 220px))}
@@ -207,3 +245,6 @@ body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
   .qcard{min-height:0}
   .hometabs .htab{min-height:44px;flex-direction:row;justify-content:center;gap:8px}
 }
+
+/* Bouton Finot flottant : finot-live-state.css le remettait en position relative, ce qui le décalait hors de l'écran. */
+.finot-fab{position:fixed;width:54px;height:54px;box-shadow:var(--sh-2)}

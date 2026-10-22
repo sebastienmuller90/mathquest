@@ -81,7 +81,8 @@ body[data-mq-age="teen"] :is(.btn,.sbtn,.tool,.choice,.pill,.combo,.reco .go){fo
 :is(.btn,.choice,.world,.tool,.sbtn,.chap,.reco,.pcard,.av,.profile-btn,.htab,summary,input,select,textarea,[data-a],[data-pob]):focus-visible{
   outline:3px solid var(--focus);outline-offset:2px;
 }
-input.big:focus-visible{outline-width:2px;outline-offset:0}
+/* Champs : un seul anneau (bordure + halo), pas de double contour */
+:is(input,select,textarea):focus-visible{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 30%,transparent)}
 
 /* Cartes */
 .card{
@@ -204,8 +205,8 @@ input.big:focus{border-color:var(--accent);background:var(--surface)}
 }
 .htab:hover{background:var(--surface2)}
 .htab .hti{display:grid;place-items:center;width:28px;height:28px;font-size:22px;line-height:1}
-.htab .hti svg{width:24px;height:24px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.htab .hti svg .fill{fill:currentColor;stroke:none}
+.htab .hti svg{width:24px;height:24px;display:block;vertical-align:baseline}
+
 .htab .htl{font-size:12px;font-weight:700;letter-spacing:.005em}
 .htab.on{color:var(--accent-text);background:var(--accent-soft)}
 .htab.on .hti svg{stroke-width:2.2}
@@ -226,3 +227,8 @@ input.big:focus{border-color:var(--accent);background:var(--surface)}
   .btn,.choice,.sbtn,.htab,input.big{transition:none}
   .btn:active,.choice:active{transform:none}
 }
+
+/* Icônes d'interface (SVG locaux) */
+.ico{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ico .fill{fill:currentColor;stroke:none}
+.btn .ico{margin-right:.3em}
