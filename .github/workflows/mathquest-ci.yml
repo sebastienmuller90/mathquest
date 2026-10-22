@@ -76,6 +76,9 @@ jobs:
       - name: Économie anti-triche (anti-farm, barème, assiduité)
         if: matrix.browser == 'chromium'
         run: node tests/economy-anticheat.test.js
+      - name: Aide aux devoirs (matière, thème, cours, exercices, orientations)
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-help.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
