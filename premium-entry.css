@@ -3,27 +3,25 @@
 
 /* Splash : moins "jeu", plus marque produit. */
 #splash{
-  background:
-    radial-gradient(circle at 50% 32%,rgba(249,115,47,.10),transparent 36%),
-    linear-gradient(180deg,#fbfaf8 0%,#f6f2ed 100%);
-  color:#2f2924;
+  background:radial-gradient(circle at 50% 32%,color-mix(in srgb,var(--brand) 12%,transparent),transparent 38%),var(--bg);
+  color:var(--text);
   padding:28px;
 }
 #splash .spl-halo{
   width:min(62vmin,420px);
-  background:radial-gradient(circle,rgba(249,115,47,.12) 0%,rgba(249,115,47,0) 67%);
+  background:radial-gradient(circle,color-mix(in srgb,var(--brand) 14%,transparent) 0%,transparent 67%);
   animation:splHalo 1.8s ease-out both;
 }
 #splash .spl-logo{
   width:min(36vmin,190px);
   background:#fff;
-  border:1px solid #e9e2db;
-  box-shadow:0 20px 55px rgba(57,45,36,.14),0 2px 8px rgba(57,45,36,.08);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-3);
 }
 #splash .spl-logo img{padding:4%}
 #splash .spl-title{
   margin-top:18px;
-  color:#2f2924;
+  color:var(--text);
   font-size:clamp(30px,7.5vmin,52px);
   font-weight:700;
   letter-spacing:-.035em;
@@ -31,7 +29,7 @@
 }
 #splash .spl-tag{
   margin-top:7px;
-  color:#746b63;
+  color:var(--muted);
   font-size:clamp(14px,3.2vmin,18px);
   font-weight:650;
   letter-spacing:.005em;
@@ -43,100 +41,100 @@ body .onb.card{
   width:min(620px,100%);
   margin:clamp(12px,5vh,56px) auto 0;
   padding:clamp(22px,4vw,36px);
-  border:1px solid var(--pro-line,var(--border));
+  border:1px solid var(--border);
   border-radius:22px;
-  background:var(--pro-panel,var(--surface));
-  box-shadow:var(--pro-shadow-2,0 18px 44px rgba(44,35,28,.08));
+  background:var(--surface);
+  box-shadow:var(--sh-2);
 }
 body .onb.card>img.finot-live{
   width:84px!important;
   height:84px!important;
-  border:1px solid var(--pro-line,var(--border));
-  box-shadow:0 10px 26px rgba(44,35,28,.10);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-2);
 }
 body .onb.card h1{margin-top:14px;font-size:clamp(1.7rem,5vw,2.35rem);font-weight:750}
 body .onb.card>.muted{margin:.4rem 0 1.5rem;line-height:1.55}
-body .onb .lab{display:block;margin:18px 0 8px;font-weight:800;color:var(--pro-ink,var(--text))}
+body .onb .lab{display:block;margin:18px 0 8px;font-weight:800;color:var(--text)}
 body .onb .stagepick,body .onb .gradepick,body .onb .avs{gap:9px}
 body .onb .stb,body .onb .grb,body .onb .avb{
-  border:1px solid var(--pro-line,var(--border));
-  background:var(--pro-panel-soft,var(--surface2));
+  border:1px solid var(--border);
+  background:var(--surface2);
   box-shadow:none;
 }
 body .onb .stb.sel,body .onb .grb.sel,body .onb .avb.sel{
-  border-color:var(--pro-accent,var(--accent));
-  background:color-mix(in srgb,var(--pro-accent,var(--accent)) 8%,var(--pro-panel,var(--surface)));
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--pro-accent,var(--accent)) 10%,transparent);
+  border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,var(--surface));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent);
 }
 
 /* Onboarding moderne : style produit, moins de gros rayons et d'effets décoratifs. */
 body .pob-wrap{
   background:
-    radial-gradient(circle at 12% 0%,color-mix(in srgb,var(--pro-accent,var(--accent)) 7%,transparent),transparent 28%),
-    var(--pro-canvas,var(--bg));
+    radial-gradient(circle at 12% 0%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 28%),
+    var(--bg);
 }
 body .pob-shell{width:min(1180px,100%);gap:16px}
 body .pob-main,body .pob-preview{
-  border:1px solid var(--pro-line,var(--border));
+  border:1px solid var(--border);
   border-radius:20px;
-  background:var(--pro-panel,var(--surface));
-  box-shadow:var(--pro-shadow-1,0 8px 24px rgba(44,35,28,.06));
+  background:var(--surface);
+  box-shadow:var(--sh-1);
 }
 body .pob-main{padding:clamp(24px,4vw,44px)}
-body .pob-preview{padding:26px;background:linear-gradient(180deg,var(--pro-panel,var(--surface)),var(--pro-panel-soft,var(--surface2)))}
+body .pob-preview{padding:26px;background:linear-gradient(180deg,var(--surface),var(--surface2))}
 body .pob-preview:before{opacity:.45}
 body .pob-preview-img{
   width:min(176px,70%);
   border-radius:22px;
-  border:1px solid var(--pro-line,var(--border));
-  box-shadow:0 12px 30px rgba(44,35,28,.10);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-2);
 }
 body .pob-main h1{font-weight:750;letter-spacing:-.035em}
-body .pob-kicker{font-size:.72rem;letter-spacing:.11em;color:var(--pro-accent-strong,var(--accent-text))}
-body .pob-lead{color:var(--pro-muted,var(--muted));max-width:660px}
-body .pob-progress-line{height:5px;background:var(--pro-line,var(--border))}
-body .pob-progress-line i{background:var(--pro-accent,var(--accent))}
+body .pob-kicker{font-size:.72rem;letter-spacing:.11em;color:var(--accent-text)}
+body .pob-lead{color:var(--muted);max-width:660px}
+body .pob-progress-line{height:5px;background:var(--border)}
+body .pob-progress-line i{background:var(--accent)}
 body .pob-progress span{font-size:.72rem;font-weight:750}
 
 body .pob-choice{
   min-height:68px;
-  border:1px solid var(--pro-line,var(--border));
+  border:1px solid var(--border);
   border-radius:14px;
-  background:var(--pro-panel,var(--surface));
-  box-shadow:0 1px 2px rgba(44,35,28,.03);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
   transition:border-color .14s ease,background-color .14s ease,box-shadow .14s ease;
 }
 body .pob-choice:hover,body .pob-choice:focus-visible{
-  border-color:color-mix(in srgb,var(--pro-accent,var(--accent)) 50%,var(--pro-line,var(--border)));
-  box-shadow:0 4px 12px rgba(44,35,28,.06);
+  border-color:color-mix(in srgb,var(--accent) 50%,var(--border));
+  box-shadow:var(--sh-2);
 }
 body .pob-choice.sel{
-  border-color:var(--pro-accent,var(--accent));
-  background:color-mix(in srgb,var(--pro-accent,var(--accent)) 6%,var(--pro-panel,var(--surface)));
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--pro-accent,var(--accent)) 10%,transparent);
+  border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 6%,var(--surface));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent);
 }
 body .pob-choice-icon{font-size:1.35rem}
-body .pob-age{border-radius:14px;background:var(--pro-panel-soft,var(--surface2));border:1px solid var(--pro-line,var(--border))}
+body .pob-age{border-radius:14px;background:var(--surface2);border:1px solid var(--border)}
 body .pob-companion{
-  border:1px solid var(--pro-line,var(--border));
+  border:1px solid var(--border);
   border-radius:16px;
-  box-shadow:0 2px 8px rgba(44,35,28,.04);
+  box-shadow:var(--sh-2);
 }
-body .pob-companion:hover,body .pob-companion:focus-visible{border-color:color-mix(in srgb,var(--pro-accent,var(--accent)) 50%,var(--pro-line,var(--border)));box-shadow:0 6px 18px rgba(44,35,28,.07)}
-body .pob-companion.sel{border-color:var(--pro-accent,var(--accent));box-shadow:0 0 0 3px color-mix(in srgb,var(--pro-accent,var(--accent)) 10%,transparent)}
+body .pob-companion:hover,body .pob-companion:focus-visible{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));box-shadow:var(--sh-2)}
+body .pob-companion.sel{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent)}
 body .pob-companion img{filter:saturate(.96);}
 body .pob-subchip{
-  border:1px solid var(--pro-line,var(--border));
-  background:var(--pro-panel,var(--surface));
+  border:1px solid var(--border);
+  background:var(--surface);
 }
 body .pob-subchip.sel{
-  border-color:var(--pro-accent,var(--accent));
-  background:color-mix(in srgb,var(--pro-accent,var(--accent)) 7%,var(--pro-panel,var(--surface)));
+  border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 7%,var(--surface));
   box-shadow:none;
 }
 body .pob-summary-person,body .pob-plan,body .pob-honest{border-radius:14px}
-body .pob-summary-person{background:var(--pro-panel-soft,var(--surface2));border:1px solid var(--pro-line,var(--border))}
-body .pob-nav{border-top:1px solid var(--pro-line,var(--border));margin-top:24px;padding-top:18px}
+body .pob-summary-person{background:var(--surface2);border:1px solid var(--border)}
+body .pob-nav{border-top:1px solid var(--border);margin-top:24px;padding-top:18px}
 
 @media(max-width:760px){
   #splash{padding:20px}

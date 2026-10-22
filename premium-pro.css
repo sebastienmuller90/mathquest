@@ -1,265 +1,209 @@
-/* Finot Académie — Professional polish
-   Deuxième couche : réduit l'effet "jeu amateur" et installe une esthétique produit premium.
-   Visuel uniquement, aucune logique métier. */
+/* Finot Académie — écrans premium (8.69).
+   Couche 2 sur 3 : accueil, matières, chapitres, cours, exercices, fin de séance, mise en page par âge et par écran.
+   Les couleurs, rayons et ombres viennent exclusivement des jetons de premium-ui.css. Visuel uniquement. */
 
-:root{
-  --pro-canvas:#f8f6f2;
-  --pro-panel:#ffffff;
-  --pro-panel-soft:#fcfaf7;
-  --pro-line:#e8e2db;
-  --pro-ink:#2f2924;
-  --pro-muted:#746b63;
-  --pro-accent:#f9732f;
-  --pro-accent-strong:#dd5b1d;
-  --pro-accent-soft:#fff0e7;
-  --pro-gold:#e9ad22;
-  --pro-success:#197347;
-  --pro-danger:#b93838;
-  --pro-shadow-1:0 1px 2px rgba(44,35,28,.05),0 8px 24px rgba(44,35,28,.06);
-  --pro-shadow-2:0 2px 5px rgba(44,35,28,.06),0 18px 44px rgba(44,35,28,.08);
-  --pro-radius-card:20px;
-  --pro-radius-control:14px;
-}
-
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --pro-canvas:#141210;
-    --pro-panel:#201d1a;
-    --pro-panel-soft:#27231f;
-    --pro-line:#3f3933;
-    --pro-ink:#f8f4ef;
-    --pro-muted:#b9afa6;
-    --pro-accent:#ff8b50;
-    --pro-accent-strong:#ff9d6c;
-    --pro-accent-soft:#352218;
-    --pro-gold:#efbd47;
-    --pro-success:#60cf91;
-    --pro-danger:#ff8d8d;
-    --pro-shadow-1:0 1px 2px rgba(0,0,0,.18),0 8px 24px rgba(0,0,0,.20);
-    --pro-shadow-2:0 2px 5px rgba(0,0,0,.24),0 18px 44px rgba(0,0,0,.30);
-  }
-}
-
-:root[data-theme="dark"]{
-  --pro-canvas:#141210;
-  --pro-panel:#201d1a;
-  --pro-panel-soft:#27231f;
-  --pro-line:#3f3933;
-  --pro-ink:#f8f4ef;
-  --pro-muted:#b9afa6;
-  --pro-accent:#ff8b50;
-  --pro-accent-strong:#ff9d6c;
-  --pro-accent-soft:#352218;
-  --pro-gold:#efbd47;
-  --pro-success:#60cf91;
-  --pro-danger:#ff8d8d;
-  --pro-shadow-1:0 1px 2px rgba(0,0,0,.18),0 8px 24px rgba(0,0,0,.20);
-  --pro-shadow-2:0 2px 5px rgba(0,0,0,.24),0 18px 44px rgba(0,0,0,.30);
-}
-
-body{
-  --bg:var(--pro-canvas);
-  --surface:var(--pro-panel);
-  --surface2:var(--pro-panel-soft);
-  --text:var(--pro-ink);
-  --muted:var(--pro-muted);
-  --border:var(--pro-line);
-  --accent:var(--pro-accent);
-  --accent-d:var(--pro-accent-strong);
-  --accent-text:color-mix(in srgb,var(--pro-accent-strong) 88%,var(--pro-ink));
-  --gold:var(--pro-gold);
-  background:
-    radial-gradient(circle at 8% -10%,color-mix(in srgb,var(--pro-accent) 9%,transparent),transparent 34%),
-    radial-gradient(circle at 95% 0%,color-mix(in srgb,var(--pro-gold) 6%,transparent),transparent 28%),
-    var(--pro-canvas);
-}
-
-#app{max-width:920px;padding-top:24px}
-
-h1,h2,h3,.nm,.sec,.qtext,.cn{
-  color:var(--pro-ink);
-  letter-spacing:-.02em;
-}
-
-h1{font-weight:700}
-.sec{font-size:20px;font-weight:800;margin-top:28px}
-
-.card{
-  border:1px solid var(--pro-line);
-  border-radius:var(--pro-radius-card);
-  background:var(--pro-panel);
-  box-shadow:var(--pro-shadow-1);
-}
-
-.btn{
-  border:1px solid var(--pro-line);
-  border-radius:var(--pro-radius-control);
-  background:var(--pro-panel);
-  box-shadow:0 1px 2px rgba(44,35,28,.05);
-  font-weight:700;
-}
-.btn:hover{filter:none;border-color:color-mix(in srgb,var(--pro-line) 55%,var(--pro-ink));box-shadow:0 3px 10px rgba(44,35,28,.08)}
-.btn:active{transform:translateY(1px) scale(.99);box-shadow:none}
-.btn.primary{
-  background:var(--pro-accent);
-  border-color:var(--pro-accent);
-  color:#fff;
-  box-shadow:0 4px 12px color-mix(in srgb,var(--pro-accent) 24%,transparent);
-}
-.btn.primary:hover{background:color-mix(in srgb,var(--pro-accent) 91%,#000);border-color:color-mix(in srgb,var(--pro-accent) 91%,#000);box-shadow:0 6px 16px color-mix(in srgb,var(--pro-accent) 28%,transparent)}
-.btn.ghost{background:transparent}
-
-.pill{
-  border:1px solid var(--pro-line);
-  background:color-mix(in srgb,var(--pro-panel) 92%,transparent);
-  box-shadow:none;
-  font-weight:700;
-}
-
-.top{
-  padding:4px 0 10px;
-  border-bottom:1px solid color-mix(in srgb,var(--pro-line) 75%,transparent);
-}
-.av{
-  width:62px;height:62px;
-  border:2px solid color-mix(in srgb,var(--pro-accent) 72%,#fff);
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--pro-accent) 8%,transparent);
-}
-.nm{font-weight:800}
-.tt{color:var(--pro-muted)}
-
-.goal{
-  background:var(--pro-panel);
-  border:1px solid var(--pro-line);
-  box-shadow:var(--pro-shadow-1);
-}
-
-.reco{
-  border:1px solid color-mix(in srgb,var(--pro-accent) 28%,var(--pro-line));
-  background:linear-gradient(135deg,var(--pro-panel),color-mix(in srgb,var(--pro-accent-soft) 62%,var(--pro-panel)));
-  box-shadow:var(--pro-shadow-1);
-}
-.reco::after{opacity:.45}
-.reco .go{
-  background:var(--pro-accent);
-  color:#fff;
-  box-shadow:none;
-}
-
-.worlds{gap:12px}
-.world{
-  min-height:148px;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 8px 22px color-mix(in srgb,var(--wc) 18%,transparent);
-  background:linear-gradient(145deg,color-mix(in srgb,var(--wc) 87%,#fff),color-mix(in srgb,var(--wc) 91%,#000));
-}
-.world::before{background:linear-gradient(150deg,rgba(255,255,255,.14),transparent 46%,rgba(0,0,0,.08))}
-.world::after{opacity:.45}
-.world:hover{filter:brightness(1.025);box-shadow:0 12px 28px color-mix(in srgb,var(--wc) 22%,transparent)}
-.world:active{transform:translateY(1px) scale(.99)}
-.we{font-size:48px}
-.wl{font-size:27px;font-weight:750;text-shadow:none}
-.ws{background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.10)}
-
-.tools{gap:10px}
-.tool{
-  min-height:82px;
-  border:1px solid var(--pro-line);
-  border-radius:16px;
-  background:var(--pro-panel);
-  box-shadow:var(--pro-shadow-1);
-  font-weight:700;
-}
-.tool:hover{filter:none;border-color:color-mix(in srgb,var(--pro-line) 62%,var(--pro-ink));box-shadow:var(--pro-shadow-1)}
-.tool:active{transform:translateY(1px)}
-.tool span{font-size:27px;filter:none}
-
-.bar{padding-bottom:8px;border-bottom:1px solid color-mix(in srgb,var(--pro-line) 72%,transparent)}
-.bar h1{font-weight:750}
-
-.catgrp{
-  border:1px solid var(--pro-line);
-  border-left:4px solid var(--wc);
-  border-radius:18px;
-  box-shadow:var(--pro-shadow-1);
-}
-
-.chap,.chap.crow{
-  border:1px solid var(--pro-line);
-  background:var(--pro-panel);
-  box-shadow:0 2px 8px rgba(44,35,28,.05);
-}
-.chap{border-left:4px solid var(--wc);border-radius:16px}
-.chap.crow{border-radius:13px}
-
-.fiche{line-height:1.6}
-.fiche h2{font-weight:750}
-.ex{background:var(--pro-panel-soft);border:1px solid var(--pro-line)}
-
-.qcard{
-  border:1px solid var(--pro-line);
-  border-radius:20px;
-  box-shadow:var(--pro-shadow-2);
-}
-.qtext{font-weight:650}
-.qtag{font-weight:700;color:var(--pro-muted)}
-
-.choice{
-  border:1px solid var(--pro-line);
-  border-radius:14px;
-  background:var(--pro-panel-soft);
-  box-shadow:0 2px 7px rgba(44,35,28,.05);
-}
-.choice:hover:not(:disabled){filter:none;background:var(--pro-panel);border-color:color-mix(in srgb,var(--pro-accent) 46%,var(--pro-line));box-shadow:0 5px 14px rgba(44,35,28,.07)}
-.choice:active:not(:disabled){transform:translateY(1px)}
-.choice.good{border-color:var(--pro-success);background:color-mix(in srgb,var(--goodbg) 82%,var(--pro-panel));box-shadow:none}
-.choice.bad{border-color:var(--pro-danger);background:color-mix(in srgb,var(--badbg) 82%,var(--pro-panel));box-shadow:none}
-
-input.big{
-  border:1px solid var(--pro-line);
-  border-radius:14px;
-  background:var(--pro-panel-soft);
-  box-shadow:inset 0 1px 2px rgba(44,35,28,.04);
-}
-input.big:focus{border-color:var(--pro-accent);background:var(--pro-panel);box-shadow:0 0 0 4px color-mix(in srgb,var(--pro-accent) 12%,transparent)}
-
-.fb{border-radius:14px}
-
-/* Jeunes : chaleureux, mais propre et maîtrisé. */
-body[data-mq-age="young"] .card{border-radius:22px}
-body[data-mq-age="young"] .world{border-radius:22px;min-height:150px}
-body[data-mq-age="young"] .tool{border-radius:18px}
-body[data-mq-age="young"] .choice{border-radius:16px}
-body[data-mq-age="young"] .we{font-size:52px}
-
-/* Transition CM / 6e : équilibre entre ludique et sérieux. */
-body[data-mq-age="bridge"] .card{border-radius:20px}
-body[data-mq-age="bridge"] .world{border-radius:18px}
-
-/* Collège : plus dense, plus éditorial, presque "learning platform". */
+/* Largeur de page par âge (les sélecteurs à identifiant de premium-ui.css ne doivent pas écraser age-adaptive.css) */
+body[data-mq-age="young"] #app{max-width:720px}
+body[data-mq-age="bridge"] #app{max-width:800px}
 body[data-mq-age="teen"] #app{max-width:980px}
-body[data-mq-age="teen"] .card{border-radius:14px;box-shadow:var(--pro-shadow-1)}
-body[data-mq-age="teen"] .world{min-height:122px;border-radius:14px;box-shadow:0 7px 18px color-mix(in srgb,var(--wc) 16%,transparent)}
-body[data-mq-age="teen"] .tool{min-height:72px;border-radius:12px}
-body[data-mq-age="teen"] .choice{border-radius:11px}
-body[data-mq-age="teen"] .reco{border-radius:14px}
-body[data-mq-age="teen"] .qcard{border-radius:14px}
-body[data-mq-age="teen"] .sec{font-size:19px}
-body[data-mq-age="teen"] .we{font-size:42px}
-body[data-mq-age="teen"] .wl{font-size:24px}
+/* Colonne de lecture : cours et exercices ne s'étirent jamais sur desktop */
+body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
 
-@media(max-width:620px){
-  #app{padding-top:14px}
-  .top{padding-bottom:8px}
-  .world{min-height:136px}
-  .wl{font-size:24px}
-  .tool{min-height:78px}
-  .qcard{box-shadow:var(--pro-shadow-1)}
+/* ───── En-tête de l'accueil : une grille lisible au lieu d'un empilement ───── */
+.top{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"av name pills" "av tt tt" "av xp xp";
+  align-items:center;
+  column-gap:12px;row-gap:4px;
+  margin-bottom:16px;padding:0 0 16px;
+  border-bottom:1px solid var(--border);
+}
+.top .who{display:contents}
+.top .av{
+  grid-area:av;
+  width:60px;height:60px;
+  border:2px solid var(--brand);
+  background:var(--surface2);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 14%,transparent);
+}
+.top .profile-btn{grid-area:name;justify-self:start;min-height:36px;border-width:1px;box-shadow:var(--sh-1);font-family:var(--font-display)}
+.top .tt{grid-area:tt;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;font-size:13px;color:var(--muted)}
+.top .tt .lvl{white-space:nowrap}
+.top .xpbar{grid-area:xp;height:8px;margin:4px 0 0}
+.top .pills{grid-area:pills;flex-wrap:nowrap;gap:6px}
+.top .pills .pill{display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:3px 10px;font-size:15px}
+.grade-badge{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 22%,var(--border));color:var(--accent-text);font-size:12.5px;font-weight:800}
+
+/* ───── Cartes d'action (mission, révision, badges…) ───── */
+.reco{
+  gap:16px;padding:16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-1);
+  transition:border-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.reco::after{content:none}
+.reco:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
+.reco:active{transform:translateY(1px)}
+.reco .ri{
+  display:grid;place-items:center;flex:none;
+  width:56px;height:56px;
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  font-size:30px;filter:none;
+}
+.reco b{font-size:19px;color:var(--text)}
+.reco .go{
+  flex:none;
+  padding:9px 16px;min-height:40px;
+  background:var(--accent);color:var(--on-accent);
+  border-radius:var(--r-md);box-shadow:none;
+  font-size:16px;
+}
+.reco.hero{border-width:1px;border-color:color-mix(in srgb,var(--accent) 35%,var(--border));box-shadow:var(--sh-2);background:linear-gradient(135deg,var(--surface),var(--accent-soft))}
+.finot-card{border:1px solid var(--border)!important;transition:border-color .15s ease,box-shadow .15s ease}
+.finot-card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))!important;box-shadow:var(--sh-2)}
+.goal{background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh-1);gap:16px}
+.ring .rf{stroke:var(--brand)}
+
+/* 5 minutes intelligentes et carte de calibrage : plus compacts, jamais de texte écrasé */
+.smart5-card::after{content:none}
+.smart5-item{background:var(--surface2);border-radius:var(--r-md)}
+.diag-home-card{flex-wrap:wrap}
+.diag-home-card>span:nth-child(2){flex:1 1 180px}
+
+/* ───── Matières ───── */
+.subj{gap:8px}
+.worlds{gap:16px}
+.world{
+  min-height:148px;padding:16px;
+  border:1px solid color-mix(in srgb,var(--wc) 40%,var(--border));
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-2);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--wc) 82%,#fff),color-mix(in srgb,var(--wc) 88%,#000));
+  transition:box-shadow .15s ease,transform .1s ease;
+}
+.world:hover{filter:none;box-shadow:var(--sh-3)}
+.world:active{transform:translateY(1px) scale(.995)}
+.world:has(>img) .we{display:none}
+.we{font-size:44px;filter:none}
+.wl{font-size:28px;font-weight:700;line-height:1.05;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.wn{font-size:15px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.ws{background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:700;padding:3px 10px}
+.world .grade-badge{background:#fff;color:#7a2e04;border-color:#fff;font-size:12px}
+
+/* ───── Chapitres ───── */
+.catgrp{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:4px solid var(--wc);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);
+}
+.cath{padding:14px 16px;min-height:60px}
+.chap,.chap.crow{
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:none;
+}
+.chap{border-left:4px solid var(--wc);border-radius:var(--r-md)}
+.chap.crow{border-left-width:1px;border-radius:var(--r-md);padding:10px 12px}
+.chap:hover{border-color:color-mix(in srgb,var(--wc) 55%,var(--border));box-shadow:var(--sh-1)}
+.crow .cbtn .btn{min-width:44px;min-height:44px}
+.cn{color:var(--text)}
+
+/* ───── Outils (onglet Plus) ───── */
+.tools{gap:12px}
+.tool{
+  min-height:88px;justify-content:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);
+  font-weight:700;
+  transition:border-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.tool:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
+.tool:active{transform:translateY(1px)}
+.tool span{filter:none}
+
+/* ───── Cours : manuel numérique ───── */
+.lcard{
+  padding:24px;
+  font-size:18px;line-height:1.7;
+  background:var(--surface);
+  box-shadow:var(--sh-2);
+}
+.lcard h2{font-size:26px;line-height:1.2;margin:.1em 0 .6em}
+.lcard p{margin:.7em 0}
+.lcard :is(ul,ol){padding-left:1.3em}
+.lcard li{margin:.45em 0}
+.ltag{letter-spacing:.02em}
+.fiche{padding:24px}
+.fiche h2{font-size:26px}
+.fh{letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+.ex{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-md)}
+.lesson-banner{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-2)}
+
+/* ───── Exercices ───── */
+.qcard{
+  padding:20px;
+  border:1px solid var(--border);
+  box-shadow:var(--sh-2);
+}
+.qtop .prog{height:10px}
+.qtext{font-weight:700}
+.qtag{font-weight:700;color:var(--muted)}
+.combo{border:1px solid var(--border)}
+.qbtns .btn{min-height:48px}
+.gains span{border:1px solid var(--border)}
+.end .card,.end.card{box-shadow:var(--sh-2)}
+
+/* ───── Mobile ───── */
+@media (max-width:560px){
+  #app{padding:16px 16px 104px}
+  body[data-mq-age] #app{padding-left:16px;padding-right:16px}
+  .top{column-gap:10px}
+  .top .av{width:52px;height:52px}
+  .top .pills .pill{padding:3px 8px;font-size:14px}
+  .world{min-height:136px;padding:14px}
+  .wl{font-size:25px}
+  .reco{gap:12px;padding:14px}
+  .reco .ri{width:48px;height:48px;font-size:26px}
+  .lcard,.fiche{padding:18px}
+  .qcard{padding:16px}
+}
+@media (max-width:560px){
+  .smart5-head{flex-direction:row;align-items:flex-start}
+  .smart5-head p{display:none}
+  .smart5-plan{margin:10px 0;gap:6px}
+  .smart5-item{padding:8px 10px}
+  .smart5-foot{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .smart5-foot>span{flex:1 0 100%;order:2}
+  .smart5-actions{display:flex;width:100%}
+  .smart5-actions .btn{flex:1;white-space:nowrap;padding:10px 12px}
+  .diag-home-card .go{flex:1 1 100%;text-align:center}
+}
+@media (max-width:360px){
+  #app{padding-left:12px;padding-right:12px}
+  body[data-mq-age] #app{padding-left:12px;padding-right:12px}
+  .top .pills{gap:4px}
+  .top .pills .pill{padding:3px 6px;font-size:13px}
+  .reco .go{padding:8px 12px}
 }
 
-@media(max-width:390px){
-  .world{min-height:130px}
-  .we{font-size:44px}
-  .wl{font-size:22px}
+/* ───── Tablette et desktop ───── */
+@media (min-width:900px){
+  #app{padding-top:32px}
+  .qcard{min-height:min(520px,calc(100vh - 220px))}
+  body[data-mq-age="teen"] .worlds{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ───── Paysage téléphone : peu de hauteur ───── */
+@media (max-height:480px) and (orientation:landscape){
+  #app{padding-top:12px;padding-bottom:84px}
+  .top{margin-bottom:12px;padding-bottom:12px}
+  .qcard{min-height:0}
+  .hometabs .htab{min-height:44px;flex-direction:row;justify-content:center;gap:8px}
 }
