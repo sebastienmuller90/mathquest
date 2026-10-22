@@ -137,6 +137,9 @@ jobs:
       - name: Diplômes de maîtrise
         if: matrix.browser == 'chromium'
         run: node tests/diplomas.test.js
+      - name: Finot vivant — états et réactions
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-live-state.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
