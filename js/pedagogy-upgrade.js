@@ -39,11 +39,15 @@ function adaptSteps(id,steps,level){
 }
 function levelPicker(id,kind){
  const ch=byId(id);if(!ch)return;const adaptive=kind==='lesson'?MQAdaptive.lessonDifficulty(S,id):MQAdaptive.difficulty(S,id),title=kind==='lesson'?'Choisis ton niveau de cours':'Choisis ton niveau d’exercice';
- CUR='level';app.innerHTML=`${bar(ch.icon+' '+ch.name)}<div class="card mq-level-picker"><h2>${title}</h2><p class="muted">Tu peux changer de niveau à chaque fois. Finot te conseille <b>${LEVELS[adaptive].emoji} ${LEVELS[adaptive].name}</b> d’après ta progression.</p><div class="mq-level-grid">${[1,2,3].map(d=>`<button class="mq-level-card l${d}" data-a="${kind==='lesson'?'lessonlevel':'startlevel'}:${id}|${d}"><span class="mq-level-emoji">${LEVELS[d].emoji}</span><b>${LEVELS[d].name}</b><span>${LEVELS[d].desc}</span>${adaptive===d?'<small>⭐ Conseillé pour toi</small>':''}</button>`).join('')}</div><p class="muted small center">Le parcours du jour reste adaptatif automatiquement : ici, c’est toi qui choisis.</p></div><button class="btn ghost wide" data-a="chap:${id}">← Retour au chapitre</button>`;
+ CUR='level';app.innerHTML=`${bar(ch.icon+' '+ch.name)}<div class="card mq-level-picker"><h2>${title}</h2><p class="muted">Tu peux changer de niveau à chaque fois. Finot te conseille <b>${LEVELS[adaptive].emoji} ${LEVELS[adaptive].name}</b> d’après ta progression.</p><div class="mq-level-grid">${[1,2,3].map(d=>`<button class="mq-level-card l${d}" data-a="${kind==='lesson'?'lessonlevel':'startlevel'}:${id}|${d}"><span class="mq-level-emoji">${LEVELS[d].emoji}</span><b>${LEVELS[d].name}</b><span>${LEVELS[d].desc}</span>${adaptive===d?'<small>⭐ Conseillé pour toi</small>':''}</button>`).join('')}</div>${kind==='lesson'?'':seriesLenPicker()}<p class="muted small center">Le parcours du jour reste adaptatif automatiquement : ici, c’est toi qui choisis.</p></div><button class="btn ghost wide" data-a="chap:${id}">← Retour au chapitre</button>`;
 }
 function openLessonAtLevel(id,level){level=Math.max(1,Math.min(3,+level||2));openLesson(id,'full');if(!L)return;L.lessonLevel=level;L.quizDifficulty=level;L.quizStreak=0;L.i=0;L.q=null;L.pq=null;L.qn=0;L.pn=0;L.locked=false;L.steps=adaptSteps(id,L.steps,level);renderLesson();}
 // Niveau imposé : passe par startMission (suivi d'activité, « étudié aujourd'hui », abonnés mission:start), niveau fixe toute la série.
-function startMissionAtLevel(id,level){if(!byId(id))return;startMission([id],{level:Math.max(1,Math.min(3,+level||2))});}
+function startMissionAtLevel(id,level){if(!byId(id))return;startMission([id],{level:Math.max(1,Math.min(3,+level||2)),n:seriesLen()});}
+// Longueur de la série choisie par l'enfant (22/10/2026) : 8 par défaut, 12 ou 20 pour s'entraîner plus longtemps. Mémorisée par profil.
+const SERIES_LENS=[[8,'Courte','⚡'],[12,'Normale','🎯'],[20,'Longue','🏋️']];
+function seriesLen(){const n=+S.seriesLen;return SERIES_LENS.some(x=>x[0]===n)?n:8;}
+function seriesLenPicker(){const cur=seriesLen();return `<div class="mq-series-len" role="group" aria-label="Longueur de la série"><span>Longueur de la série</span><div>${SERIES_LENS.map(([n,l,e])=>`<button type="button" class="mq-len-opt${n===cur?' on':''}" data-a="serieslen:${n}" aria-pressed="${n===cur}"><span aria-hidden="true">${e}</span> ${l} <b>${n}</b></button>`).join('')}</div></div>`;}
 function levelBadge(){if(!L||!L.lessonLevel)return;const card=document.querySelector('.lcard .lhead');if(!card||card.querySelector('.mq-level-badge'))return;const d=L.lessonLevel,x=document.createElement('span');x.className='mq-level-badge l'+d;x.textContent=LEVELS[d].emoji+' '+LEVELS[d].name;card.appendChild(x);}
 MQHooks.on('lesson:rendered',()=>levelBadge(),{id:'pedagogy-level-badge'});
 
@@ -69,9 +73,10 @@ Object.assign(ACT,{
  lesson:id=>levelPicker(id,'lesson'),start:id=>levelPicker(id,'exercise'),
  lessonlevel:x=>{const [id,d]=String(x).split('|');openLessonAtLevel(id,+d);},
  startlevel:x=>{const [id,d]=String(x).split('|');startMissionAtLevel(id,+d);},
+ serieslen:x=>{const n=+x;if(!SERIES_LENS.some(v=>v[0]===n))return;S.seriesLen=n;save();document.querySelectorAll('[data-a^="serieslen:"]').forEach(b=>{const on=b.dataset.a==='serieslen:'+n;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});},
  finotsimple:()=>finotSimpleHelp(),finothint2:()=>finotHint(),finotread2:()=>finotRead(),finotvoice:()=>finotVoice(),
  finoteasycourse:()=>finotOpenEasyCourse(),finoteasyex:()=>finotOpenEasyEx()
 });
-window.MQPedagogy={version:'1.0',levels:LEVELS,adaptSteps,chapterFacts,openLessonAtLevel,startMissionAtLevel};
+window.MQPedagogy={version:'1.0',levels:LEVELS,adaptSteps,chapterFacts,openLessonAtLevel,startMissionAtLevel,seriesLen};
 setTimeout(()=>{try{enhanceFinot();}catch(e){}},0);
 })();
