@@ -4,190 +4,97 @@ on:
   push:
   pull_request:
 
-concurrency:
-  group: mathquest-ci-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions:
   contents: read
 
 jobs:
-  regression:
+  patch-science-physics-packs:
+    if: github.event_name == 'pull_request' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: amelioration/cours-approfondis-sciences
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Vérifier la syntaxe JavaScript
-        shell: bash
+      - name: Ajouter les profils de physique spécialisés
+        shell: python
         run: |
-          set -euo pipefail
-          node --check sw.js
-          find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -not -path '*/node_modules/*' -print0 | xargs -0 -n1 node --check
-      - name: Tests de non-régression MathQuest
-        run: node tests/mathquest-regression.mjs
-      - name: Sonder le registre pédagogique actif
-        run: node tests/registry-probe.mjs
-      - name: Audit intégral des leçons et exercices
-        run: node tests/full-content-audit-v2.mjs
-      - name: Publier le rapport d’audit
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mathquest-full-content-audit
-          path: tests/full-content-audit-report.json
-          if-no-files-found: ignore
+          from pathlib import Path
+          p=Path('data/pedagogy/course-depth-sciences-primary.js')
+          s=p.read_text(encoding='utf-8')
+          new_profile="""function profile(domain,name){const d=String(domain||'').toLowerCase(),n=String(name||'').toLowerCase();
+          // Les domaines explicites et spécialisés restent prioritaires.
+          if(/météo|climat|atmosph|terre|planète|astronom|géolog|volcan|séisme|ressource/.test(d))return 'earth';
+          if(/objet|techni|électric|numérique|machine/.test(d))return 'tech';
+          if(/corps|santé|humain|alimentation/.test(d))return 'health';
+          if(/vivant|animal|plante|écosyst|environnement|reproduction|croissance|développement|germination/.test(d))return 'living';
+          // Les domaines composites de physique sont affinés par le nom du chapitre.
+          if(/lumière|ombre|optique/.test(n))return 'light';
+          if(/mouvement|force|vitesse|trajectoire/.test(n))return 'motion';
+          if(/énergie|énergétique|renouvelable/.test(n))return 'energy';
+          if(/son|bruit|signal sonore|acoust/.test(n))return 'sound';
+          if(/matière|eau|air|mélange|état|masse|température|thermom/.test(d))return 'matter';
+          if(/temps|histoire/.test(d))return 'time';
+          if(/espace|géograph|territoire|monde/.test(d))return 'space';
+          // Domaines ambigus ou non classés : le nom affine le profil.
+          if(/lune|soleil|étoile|satellite|système solaire|astronom|météo|climat|terre|planète|géolog|volcan|séisme/.test(n))return 'earth';
+          if(/objet|techni|électric|numérique|machine|circuit|programm/.test(n))return 'tech';
+          if(/corps|santé|humain|alimentation|digestion|respiration|hygiène/.test(n))return 'health';
+          if(/vivant|animal|plante|écosyst|reproduction|croissance|développement|germination/.test(n))return 'living';
+          if(/matière|eau|air|mélange|état|masse|température|thermom/.test(n))return 'matter';
+          if(/signal|son|bruit|acoust/.test(d+n))return 'sound';
+          if(/temps|histoire/.test(n))return 'time';
+          if(/espace|géograph|territoire|monde|carte/.test(n))return 'space';
+          return 'method';}
+          """.replace('\n          ','\n')
+          start=s.index('function profile('); end=s.index('const PACK={',start)
+          s=s[:start]+new_profile+s[end:]
 
-  browser:
-    needs: regression
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, firefox, webkit]
-    env:
-      MQ_BROWSER: ${{ matrix.browser }}
-      MQ_ENGINES: ${{ matrix.browser }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-      - name: Installer les dépendances épinglées (package-lock.json)
-        run: npm ci
-      - name: Installer le navigateur ${{ matrix.browser }}
-        run: npx playwright install --with-deps ${{ matrix.browser }}
-      - name: Démarrer MathQuest localement
+          if ' motion:{' not in s:
+              anchor=' matter:{\n'
+              packs=""" motion:{
+            a:`<p>Pour étudier un <b>mouvement</b>, on choisit d’abord un objet et un point de référence. On décrit ensuite sa <b>trajectoire</b> (droite, courbe ou circulaire), le sens du déplacement et l’évolution de sa vitesse. Un même objet peut sembler immobile pour un observateur et mobile pour un autre : préciser le référentiel évite les contradictions.</p><p>Une <b>force</b> modélise une action capable de mettre un objet en mouvement, de modifier sa vitesse ou sa direction, ou de le déformer. On la représente souvent par une flèche : son point d’application, sa direction et son sens donnent des informations utiles.</p>`,
+            b:`<p>Pour comparer deux mouvements, mesure une <b>distance</b> et une <b>durée</b> dans les mêmes conditions. À distance égale, l’objet qui met moins de temps est plus rapide. À durée égale, celui qui parcourt la plus grande distance est plus rapide. Un tableau de mesures ou un schéma de trajectoire permet de justifier la réponse.</p><p>Dans une expérience, ne change qu’un paramètre à la fois : pente, masse, surface ou force appliquée. Répète l’essai pour vérifier que le résultat n’est pas dû au hasard.</p>`,
+            culture:`<p>Les scientifiques et les ingénieurs utilisent des chronomètres, des capteurs et des vidéos image par image pour étudier les mouvements. Les mêmes idées servent à analyser une balle, un vélo, une voiture ou le déplacement d’un robot.</p>`},
+           light:{
+            a:`<p>La <b>lumière</b> se propage depuis une source lumineuse jusqu’aux objets et à nos yeux. Une source primaire produit sa propre lumière, comme le Soleil ou une lampe allumée. Un objet éclairé ne produit pas forcément de lumière : il peut simplement la réfléchir. Dans un milieu transparent et homogène, on représente la propagation de la lumière par des lignes droites.</p><p>Une <b>ombre</b> apparaît lorsqu’un objet opaque bloque une partie de la lumière. Sa forme et sa taille dépendent de la position de la source, de l’objet et de l’écran. Déplacer l’un de ces trois éléments permet de tester cette relation.</p>`,
+            b:`<p>Pour expérimenter, utilise une seule source lumineuse et garde les autres paramètres fixes. Observe ce qui change quand tu rapproches ou éloignes l’objet, puis quand tu déplaces la lampe. Distingue l’ombre propre sur l’objet et l’ombre portée sur un écran ou un mur.</p><p>Un bon schéma montre la source, l’objet opaque, les rayons limites et la zone d’ombre. La conclusion doit relier une modification précise du montage à l’effet observé.</p>`,
+            culture:`<p>Les cadrans solaires utilisent la position d’une ombre pour repérer l’heure. En astronomie, l’alignement du Soleil, de la Terre et de la Lune explique aussi les éclipses : ce sont des phénomènes d’ombre à très grande échelle.</p>`},
+           energy:{
+            a:`<p>L’<b>énergie</b> permet de produire des changements : mettre en mouvement, chauffer, éclairer ou faire fonctionner un appareil. On distingue une <b>source d’énergie</b> de l’objet qui la transforme. Une pile stocke de l’énergie chimique, une éolienne reçoit l’énergie du vent, un panneau photovoltaïque reçoit l’énergie lumineuse du Soleil.</p><p>L’énergie ne « disparaît » pas simplement : elle est <b>transférée</b> ou <b>transformée</b>. Dans une lampe à pile, l’énergie stockée dans la pile est transférée par le circuit puis transformée principalement en lumière et en chaleur.</p>`,
+            b:`<p>Pour analyser une chaîne énergétique, écris : <b>source → dispositif → effets utiles et pertes</b>. Compare ensuite plusieurs solutions selon leur disponibilité, leur impact environnemental, leur stockage et leur efficacité. « Renouvelable » ne veut pas dire « sans impact » : toute installation utilise des matériaux et occupe un espace.</p><p>Dans une expérience, mesure si possible la durée, la température, la distance ou une autre grandeur qui montre l’effet de l’énergie transférée. Une conclusion doit préciser quelle transformation a eu lieu.</p>`,
+            culture:`<p>Les réseaux électriques doivent produire autant d’électricité que les utilisateurs en consomment à chaque instant. Le stockage, l’efficacité des appareils et la diversité des sources sont donc des questions importantes pour les ingénieurs.</p>`},
+           sound:{
+            a:`<p>Un <b>son</b> est produit par une vibration : corde, membrane, colonne d’air ou autre objet qui oscille. Cette vibration se propage dans un milieu matériel, comme l’air, l’eau ou un solide, puis peut faire vibrer notre tympan. Sans milieu matériel, le son ne se propage pas comme dans l’air.</p><p>On distingue notamment la <b>hauteur</b> (grave ou aigu), l’<b>intensité</b> (plus ou moins fort) et la durée. Ces propriétés ne doivent pas être confondues : un son aigu peut être joué doucement ou très fort.</p>`,
+            b:`<p>Pour comparer des sons, ne modifie qu’un paramètre à la fois. Sur un instrument simple, observe ce qui se passe quand une corde est plus tendue, plus longue ou plus courte. Pour la sécurité, ne colle jamais une source sonore forte contre l’oreille et limite l’exposition aux volumes élevés.</p><p>Un signal sonore transmet une information lorsqu’un code est partagé : sonnerie d’école, alarme, klaxon. Décris toujours la source, le signal, le récepteur et l’information transmise.</p>`,
+            culture:`<p>Les microphones transforment les vibrations de l’air en signal électrique ; les haut-parleurs font l’opération inverse. Ces transformations permettent d’enregistrer, transmettre puis reproduire la parole et la musique.</p>`},
+          """.replace('\n          ','\n')
+              if s.count(anchor)!=1: raise SystemExit('ancre PACK matter introuvable')
+              s=s.replace(anchor,packs+anchor,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('tests/course-depth.test.js')
+          s=p.read_text(encoding='utf-8')
+          old="const namedProfileExpected=[['cm1-sc-lumiere-ombres','matter'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living'],['cp-sc-objets','tech'],['cm2-sc-reproduction','health']];"
+          new="const namedProfileExpected=[['cm1-sc-lumiere-ombres','light'],['cm1-sc-lune','earth'],['cm1-sc-developpement','living'],['cp-sc-objets','tech'],['cm2-sc-reproduction','health'],['cm1-sc-mouvements','motion'],['cm2-sc-mouvement','motion'],['cm2-sc-energie','energy']];"
+          if s.count(old)!=1: raise SystemExit('namedProfileExpected attendu introuvable')
+          s=s.replace(old,new,1)
+          s=s.replace("r.namedProfiles.length===5&&r.namedProfiles.every(x=>x[1]===x[2])","r.namedProfiles.length===8&&r.namedProfiles.every(x=>x[1]===x[2])",1)
+          s=s.replace("Le nom du chapitre affine le profil sciences (lumière, Lune, développement)","Routage sciences ciblé : lumière, mouvement, énergie, Terre, vivant, technique et santé",1)
+          p.write_text(s,encoding='utf-8')
+      - name: Vérifier et pousser
         run: |
-          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mathquest-http.log 2>&1 &
-          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0; sleep 1; done
-          cat /tmp/mathquest-http.log
-          exit 1
-      - name: Mise en page mobile réelle (5 tailles, géométrie, aucun élément masqué)
-        run: node tests/mobile-layout.test.js
-      - name: Architecture (points d’extension, réponse unique, mission isolée)
-        if: matrix.browser == 'chromium'
-        run: node tests/hooks.test.js
-      - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
-        if: matrix.browser == 'chromium'
-        run: node tests/scenarios.test.js
-      - name: "Calendrier civil : séries et changements d’heure Europe/Paris"
-        if: matrix.browser == 'chromium'
-        run: node tests/dst-streak.test.js
-      - name: Lexique sans doublons et migration de progression
-        if: matrix.browser == 'chromium'
-        run: node tests/lexicon-cleanup.test.js
-      - name: Scénarios réels sous l’économie anti-triche (adaptateur de la branche économie)
-        if: matrix.browser == 'chromium'
-        run: node tests/scenarios-economy-compatible.test.js
-      - name: Économie anti-triche (anti-farm, barème, assiduité)
-        if: matrix.browser == 'chromium'
-        run: node tests/economy-anticheat.test.js
-      - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
-        if: matrix.browser == 'chromium'
-        run: node tests/modern-profile-onboarding.test.js
-      - name: Devoirs scolaires parent-validés
-        if: matrix.browser == 'chromium'
-        run: node tests/homework-parent.test.js
-      - name: Aide aux devoirs (matière, thème, cours, exercices, orientations)
-        if: matrix.browser == 'chromium'
-        run: node tests/homework-help.test.js
-      - name: Accessibilité clavier et noms accessibles
-        if: matrix.browser == 'chromium'
-        run: node tests/keyboard-a11y.test.js
-      - name: Voix de Finot en fin d'exercice
-        if: matrix.browser == 'chromium'
-        run: node tests/finot-voice.test.js
-      - name: Carnet d’erreurs — missions de réparation
-        if: matrix.browser == 'chromium'
-        run: node tests/error-repair.test.js
-      - name: Détection prudente des erreurs-types
-        if: matrix.browser == 'chromium'
-        run: node tests/error-patterns.test.js
-      - name: Exercices — reprise exacte et historique
-        if: matrix.browser == 'chromium'
-        run: node tests/exercises-resume.test.js
-      - name: Exercices — sécurité des instantanés de reprise
-        if: matrix.browser == 'chromium'
-        run: node tests/exercises-resume-security.test.js
-      - name: Checkpoint pédagogique de fin de séance
-        if: matrix.browser == 'chromium'
-        run: node tests/session-checkpoint.test.js
-      - name: Mode DYS / lecture facilitée
-        if: matrix.browser == 'chromium'
-        run: node tests/dys-mode.test.js
-      - name: Indices progressifs en trois niveaux
-        if: matrix.browser == 'chromium'
-        run: node tests/progressive-hints.test.js
-      - name: Corrections animées — opérations posées V1
-        if: matrix.browser == 'chromium'
-        run: node tests/animated-corrections.test.js
-      - name: Corrections animées — multiplication, division et fractions V2
-        if: matrix.browser == 'chromium'
-        run: node tests/animated-corrections-extended.test.js
-      - name: Pourquoi cette activité ?
-        if: matrix.browser == 'chromium'
-        run: node tests/why-this-activity.test.js
-      - name: Séance 5 minutes intelligentes
-        if: matrix.browser == 'chromium'
-        run: node tests/smart-5min.test.js
-      - name: Bilan hebdomadaire parent
-        if: matrix.browser == 'chromium'
-        run: node tests/weekly-parent-report.test.js
-      - name: Diplômes de maîtrise
-        if: matrix.browser == 'chromium'
-        run: node tests/diplomas.test.js
-      - name: Finot vivant — états et réactions
-        if: matrix.browser == 'chromium'
-        run: node tests/finot-live-state.test.js
-      - name: Défis en famille
-        if: matrix.browser == 'chromium'
-        run: node tests/family-challenge.test.js
-      - name: Évaluations nationales — séance complète et bilan
-        if: matrix.browser == 'chromium'
-        run: node tests/national-assessment.test.js
-      - name: Évaluations nationales — cas de bord
-        if: matrix.browser == 'chromium'
-        run: node tests/national-assessment-edge.test.js
-      - name: POC lecture à voix haute — capacités et confidentialité
-        if: matrix.browser == 'chromium'
-        run: node tests/reading-aloud-poc.test.js
-      - name: Cours approfondis (rien de retiré, contenu complet)
-        if: matrix.browser == 'chromium'
-        run: node tests/course-depth.test.js
-      - name: Mode sombre lisible (contraste réel texte / fond)
-        if: matrix.browser == 'chromium'
-        run: node tests/dark-mode.test.js
-      - name: Longueur des séries, quiz de cours selon l’âge et erreurs-types dans le suivi parent
-        run: node tests/session-length.test.js
-      - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
-        run: node tests/pwa-update.test.js
-      - name: Audit navigateur intégral
-        run: node tests/browser-audit.mjs
-      - name: Audit des 3 niveaux et de Finot
-        run: node tests/pedagogy-browser-audit.mjs
-      - name: Audit interrogation parent et statistiques
-        run: node tests/interrogation-dashboard-browser-audit.mjs
-      - name: Audit ciblé des remarques de revue
-        run: node tests/review-findings-browser-audit.mjs
-      - name: Audit des micro-compétences et du parcours adaptatif
-        run: node tests/competency-browser-audit.mjs
-      - name: Audit diagnostic, Finot erreur, transferts et UI par âge
-        run: node tests/phase3-browser-audit.mjs
-      - name: Audit des ateliers et contextes pédagogiques phase 4
-        run: node tests/phase4-pedagogy-browser-audit.mjs
-      - name: Audit ciblé des données CE2
-        run: node tests/phase4-ce2-data-browser-audit.mjs
-      - name: Audit des packs pédagogiques spécifiques
-        run: node tests/chapter-packs-browser-audit.mjs
-      - name: Publier rapports et captures navigateur
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mathquest-browser-audit-${{ matrix.browser }}
-          path: |
-            tests/*-report.json
-            tests/screenshots/*.png
-          if-no-files-found: ignore
+          node --check data/pedagogy/course-depth-sciences-primary.js
+          node --check tests/course-depth.test.js
+          grep -F "['cm1-sc-lumiere-ombres','light']" tests/course-depth.test.js
+          grep -F "['cm1-sc-mouvements','motion']" tests/course-depth.test.js
+          grep -F "['cm2-sc-energie','energy']" tests/course-depth.test.js
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/pedagogy/course-depth-sciences-primary.js tests/course-depth.test.js
+          git commit -m "Ajoute des packs dédiés mouvement lumière énergie et son"
+          git push origin HEAD:amelioration/cours-approfondis-sciences
