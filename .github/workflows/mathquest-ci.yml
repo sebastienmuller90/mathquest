@@ -107,6 +107,9 @@ jobs:
       - name: Mode DYS / lecture facilitée
         if: matrix.browser == 'chromium'
         run: node tests/dys-mode.test.js
+      - name: Indices progressifs en trois niveaux
+        if: matrix.browser == 'chromium'
+        run: node tests/progressive-hints.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
