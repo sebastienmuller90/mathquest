@@ -14,6 +14,7 @@ async function run(){
   await p.fill('#pob-name','Lina');await p.click('[data-pob="gender"][data-value="girl"]');await p.click('[data-pob="next"]');
   await p.fill('#pob-birth','2018-03-15');await p.click('[data-pob="next"]');
   await p.click('[data-pob="stage"][data-value="primaire"]');await p.click('[data-pob="grade"][data-value="CE2"]');await p.click('[data-pob="next"]');
+  await p.waitForFunction(()=>{const imgs=[...document.querySelectorAll('.pob-companion img')];return imgs.length===3&&imgs.every(x=>x.complete&&x.naturalWidth>0);},null,{timeout:5000});
   const companions=await p.evaluate(()=>[...document.querySelectorAll('.pob-companion')].map(x=>({v:x.dataset.value,img:x.querySelector('img')?.getAttribute('src'),loaded:(x.querySelector('img')?.naturalWidth||0)>0,name:x.innerText.split('\n')[0]})));
   T('Finot, Momo et Léo utilisent de vraies illustrations chargées',companions.length===3&&companions.every(x=>/data\/images\/finot\/.+\.(jpg|png)/.test(x.img||'')&&x.loaded),JSON.stringify(companions));
   await p.click('[data-pob="companion"][data-value="momo"]');await p.click('[data-pob="next"]');
