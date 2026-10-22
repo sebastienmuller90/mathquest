@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   patch-science-profile-priority:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/amelioration/cours-approfondis-sciences' && github.actor != 'github-actions[bot]'
+    if: github.event_name == 'pull_request' && github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     permissions:
       contents: write
