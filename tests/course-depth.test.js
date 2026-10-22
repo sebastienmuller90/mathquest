@@ -22,6 +22,11 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    const missing=want.filter(id=>!C[id]);const thin=want.filter(id=>C[id]).map(id=>{const d=C[id];const n=(d.deep||[]).reduce((s,x)=>s+words(x.h),0)+words(d.culture&&d.culture.h)+String(d.adult||'').split(/\s+/).length;return [id,n];}).filter(x=>x[1]<min);
    const incomplete=want.filter(id=>{const d=C[id];return d&&!((d.deep||[]).length>=1&&d.try&&d.try.q&&d.try.a&&d.adult&&d.culture&&d.culture.h&&d.culture.t);});
    return {g:re.replace(/[\^$]/g,''),n:want.length,missing,thin,incomplete};});
+  const scienceTargets=[['CP','p-sciences'],['CE1','p-qlm'],['CE2','p-qlm'],['CM1','p-sciences'],['CM2','p-sciences']].map(([g,sid])=>{
+   const want=((((MQPrimary||{})._reg||{}).grades||{})[g]||{})[sid]||[];const ids2=want.map(ch=>ch.id);
+   const missing=ids2.filter(id=>!C[id]);const thin=ids2.filter(id=>C[id]).map(id=>{const d=C[id];const n=(d.deep||[]).reduce((sum,x)=>sum+words(x.h),0)+words(d.culture&&d.culture.h)+String(d.adult||'').split(/\s+/).filter(Boolean).length;return [id,n];}).filter(x=>x[1]<200);
+   const incomplete=ids2.filter(id=>{const d=C[id];return d&&!((d.deep||[]).length>=2&&d.try&&d.try.q&&d.try.a&&d.adult&&d.culture&&d.culture.h&&d.culture.t);});
+   return {g,sid,n:ids2.length,missing,thin,incomplete};});
   // Rien n'est retiré, ordre conservé, placement.
   const order=[],place=[],bad=[];for(const id of ids){if(!known.has(id))continue;
    const all=lessonSteps(id),orig=all.filter(s=>s.k!=='deep'&&s.k!=='culture');
@@ -41,23 +46,26 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   // Français CM1 et CM2 : règles trop absolues nuancées (complément d'objet ; adverbes en -amment/-emment).
   const cm=JSON.stringify([COURS['cm1-fr-complements'],COURS['cm2-fr-adverbes-ment']]);
   typos.push(...[/ni le supprimer ni le déplacer/.test(cm)&&'complément d’objet trop absolu',/seuls les adjectifs en -ant/.test(cm)&&'-amment/-emment trop absolu',!/présentement/.test(cm)&&'exception présentement absente'].filter(Boolean));
-  return {count:ids.length,orphans,lots:lots2,order,place,bad,typos};},LOTS.map(([g,re,m])=>[g,re.source,m]));
+  return {count:ids.length,orphans,lots:lots2,scienceTargets,order,place,bad,typos};},LOTS.map(([g,re,m])=>[g,re.source,m]));
  T('Cours existant corrigé (français CE1, CE2, CM1, CM2 : mangeons, gâteau, mètre/siècle, question, son/sont, est, complément d’objet, -amment)',!r.typos.length,r.typos.join(', '));
  T('Chaque chapitre enrichi existe dans le programme (aucun identifiant orphelin)',r.count>0&&!r.orphans.length,r.orphans.join(', '));
  for(const l of r.lots){T(`Lot ${l.g} : tous les chapitres couverts (${l.n})`,l.n>0&&!l.missing.length,l.missing.join(', '));
   T(`Lot ${l.g} : chaque chapitre complet (explications, défi + réponse, conseil adulte, culture)`,!l.incomplete.length,l.incomplete.join(', '));
   T(`Lot ${l.g} : contenu réellement plus détaillé (mots ajoutés par chapitre)`,!l.thin.length,JSON.stringify(l.thin));}
+ for(const l of r.scienceTargets){T(`Sciences ${l.g}/${l.sid} : tous les chapitres du registre couverts (${l.n})`,l.n>0&&!l.missing.length,l.missing.join(', '));
+  T(`Sciences ${l.g}/${l.sid} : enrichissement complet (2 explications, défi, adulte, culture)`,!l.incomplete.length,l.incomplete.join(', '));
+  T(`Sciences ${l.g}/${l.sid} : profondeur minimale de 200 mots ajoutés`,!l.thin.length,JSON.stringify(l.thin));}
  T('Rien n’est retiré du cours : toutes les étapes d’origine, dans le même ordre',!r.order.length,r.order.join(', '));
  T('Placement : explications juste après les parties (avant les exemples), culture juste après « Je retiens »',!r.place.length,r.place.slice(0,6).join(' | '));
  T('HTML bien formé, typographie française, réponses cachées par défaut',!r.bad.length,r.bad.slice(0,8).join(' | '));
  // Parcours réel d'un cours enrichi : toutes les étapes jusqu'à l'entraînement, sans erreur ; réponse révélée au clic.
- const walk=await p.evaluate(async()=>{openLesson('cp-ma-nombres100');const seen=[];let guard=0;
+ const walk=await p.evaluate(async()=>{openLesson('cp-sc-vivant');const seen=[];let guard=0;
   while(L&&L.steps[L.i]&&L.steps[L.i].k!=='practice'&&guard++<40){const s=L.steps[L.i];seen.push(s.k);
    if(s.k==='deep'&&document.querySelector('.mq-try details')){const d=document.querySelector('.mq-try details');const before=d.open;d.querySelector('summary').click();await new Promise(r=>setTimeout(r,50));seen.push('reveal:'+before+'>'+d.open);}
    if(s.k==='ex'){while(L.exn<s.ex.s.length&&guard++<80)ACT.lnext();}
    ACT.lnext();await new Promise(r=>setTimeout(r,30));}
   return {seen,cur:L&&L.steps[L.i]&&L.steps[L.i].k,deepTitle:[...document.querySelectorAll('h2,h1')].map(x=>x.textContent).join('|')};});
- T('Cours réel « Nombres jusqu’à 100 » : explications, défi (réponse révélée au clic), culture, puis entraînement',walk.cur==='practice'&&walk.seen.filter(k=>k==='deep').length===2&&walk.seen.includes('culture')&&walk.seen.includes('reveal:false>true'),JSON.stringify(walk.seen));
+ T('Cours réel de sciences CP : explications, défi (réponse révélée au clic), culture, puis entraînement',walk.cur==='practice'&&walk.seen.filter(k=>k==='deep').length===2&&walk.seen.includes('culture')&&walk.seen.includes('reveal:false>true'),JSON.stringify(walk.seen));
  T('Aucune erreur JavaScript',!errs.length,errs.slice(0,4).join(' | '));
  await b.close();srv.close();return R;}
 if(require.main===module)require('./lib').main(()=>run());
