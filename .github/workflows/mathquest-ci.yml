@@ -4,40 +4,190 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: mathquest-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  normalize-science-typography:
-    if: github.event_name == 'pull_request' && github.actor != 'github-actions[bot]'
+  regression:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: amelioration/cours-approfondis-sciences
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Normaliser la typographie française
-        shell: python
+      - name: Vérifier la syntaxe JavaScript
+        shell: bash
         run: |
-          from pathlib import Path
-          p=Path('data/pedagogy/course-depth-sciences-primary.js')
-          s=p.read_text(encoding='utf-8')
-          for old,new in [('« ','«\u00a0'),(' »','\u00a0»'),(' :','\u00a0:'),(' ;','\u00a0;'),(' !','\u00a0!'),(' ?','\u00a0?')]:
-              s=s.replace(old,new)
-          p.write_text(s,encoding='utf-8')
-      - name: Vérifier et pousser
+          set -euo pipefail
+          node --check sw.js
+          find js data tests -type f \( -name '*.js' -o -name '*.mjs' \) -not -path '*/node_modules/*' -print0 | xargs -0 -n1 node --check
+      - name: Tests de non-régression MathQuest
+        run: node tests/mathquest-regression.mjs
+      - name: Sonder le registre pédagogique actif
+        run: node tests/registry-probe.mjs
+      - name: Audit intégral des leçons et exercices
+        run: node tests/full-content-audit-v2.mjs
+      - name: Publier le rapport d’audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathquest-full-content-audit
+          path: tests/full-content-audit-report.json
+          if-no-files-found: ignore
+
+  browser:
+    needs: regression
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    env:
+      MQ_BROWSER: ${{ matrix.browser }}
+      MQ_ENGINES: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Installer les dépendances épinglées (package-lock.json)
+        run: npm ci
+      - name: Installer le navigateur ${{ matrix.browser }}
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Démarrer MathQuest localement
         run: |
-          node --check data/pedagogy/course-depth-sciences-primary.js
-          if grep -nE '« | »| [:;!?]' data/pedagogy/course-depth-sciences-primary.js; then
-            echo 'Ponctuation française sécable encore présente' >&2
-            exit 1
-          fi
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/pedagogy/course-depth-sciences-primary.js
-          git commit -m "Normalise la typographie des packs de sciences"
-          git push origin HEAD:amelioration/cours-approfondis-sciences
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/mathquest-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0; sleep 1; done
+          cat /tmp/mathquest-http.log
+          exit 1
+      - name: Mise en page mobile réelle (5 tailles, géométrie, aucun élément masqué)
+        run: node tests/mobile-layout.test.js
+      - name: Architecture (points d’extension, réponse unique, mission isolée)
+        if: matrix.browser == 'chromium'
+        run: node tests/hooks.test.js
+      - name: Scénarios réels (migration, stockage corrompu, profils, rechargements, parcours)
+        if: matrix.browser == 'chromium'
+        run: node tests/scenarios.test.js
+      - name: "Calendrier civil : séries et changements d’heure Europe/Paris"
+        if: matrix.browser == 'chromium'
+        run: node tests/dst-streak.test.js
+      - name: Lexique sans doublons et migration de progression
+        if: matrix.browser == 'chromium'
+        run: node tests/lexicon-cleanup.test.js
+      - name: Scénarios réels sous l’économie anti-triche (adaptateur de la branche économie)
+        if: matrix.browser == 'chromium'
+        run: node tests/scenarios-economy-compatible.test.js
+      - name: Économie anti-triche (anti-farm, barème, assiduité)
+        if: matrix.browser == 'chromium'
+        run: node tests/economy-anticheat.test.js
+      - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
+        if: matrix.browser == 'chromium'
+        run: node tests/modern-profile-onboarding.test.js
+      - name: Devoirs scolaires parent-validés
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-parent.test.js
+      - name: Aide aux devoirs (matière, thème, cours, exercices, orientations)
+        if: matrix.browser == 'chromium'
+        run: node tests/homework-help.test.js
+      - name: Accessibilité clavier et noms accessibles
+        if: matrix.browser == 'chromium'
+        run: node tests/keyboard-a11y.test.js
+      - name: Voix de Finot en fin d'exercice
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-voice.test.js
+      - name: Carnet d’erreurs — missions de réparation
+        if: matrix.browser == 'chromium'
+        run: node tests/error-repair.test.js
+      - name: Détection prudente des erreurs-types
+        if: matrix.browser == 'chromium'
+        run: node tests/error-patterns.test.js
+      - name: Exercices — reprise exacte et historique
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume.test.js
+      - name: Exercices — sécurité des instantanés de reprise
+        if: matrix.browser == 'chromium'
+        run: node tests/exercises-resume-security.test.js
+      - name: Checkpoint pédagogique de fin de séance
+        if: matrix.browser == 'chromium'
+        run: node tests/session-checkpoint.test.js
+      - name: Mode DYS / lecture facilitée
+        if: matrix.browser == 'chromium'
+        run: node tests/dys-mode.test.js
+      - name: Indices progressifs en trois niveaux
+        if: matrix.browser == 'chromium'
+        run: node tests/progressive-hints.test.js
+      - name: Corrections animées — opérations posées V1
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections.test.js
+      - name: Corrections animées — multiplication, division et fractions V2
+        if: matrix.browser == 'chromium'
+        run: node tests/animated-corrections-extended.test.js
+      - name: Pourquoi cette activité ?
+        if: matrix.browser == 'chromium'
+        run: node tests/why-this-activity.test.js
+      - name: Séance 5 minutes intelligentes
+        if: matrix.browser == 'chromium'
+        run: node tests/smart-5min.test.js
+      - name: Bilan hebdomadaire parent
+        if: matrix.browser == 'chromium'
+        run: node tests/weekly-parent-report.test.js
+      - name: Diplômes de maîtrise
+        if: matrix.browser == 'chromium'
+        run: node tests/diplomas.test.js
+      - name: Finot vivant — états et réactions
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-live-state.test.js
+      - name: Défis en famille
+        if: matrix.browser == 'chromium'
+        run: node tests/family-challenge.test.js
+      - name: Évaluations nationales — séance complète et bilan
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment.test.js
+      - name: Évaluations nationales — cas de bord
+        if: matrix.browser == 'chromium'
+        run: node tests/national-assessment-edge.test.js
+      - name: POC lecture à voix haute — capacités et confidentialité
+        if: matrix.browser == 'chromium'
+        run: node tests/reading-aloud-poc.test.js
+      - name: Cours approfondis (rien de retiré, contenu complet)
+        if: matrix.browser == 'chromium'
+        run: node tests/course-depth.test.js
+      - name: Mode sombre lisible (contraste réel texte / fond)
+        if: matrix.browser == 'chromium'
+        run: node tests/dark-mode.test.js
+      - name: Longueur des séries, quiz de cours selon l’âge et erreurs-types dans le suivi parent
+        run: node tests/session-length.test.js
+      - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
+        run: node tests/pwa-update.test.js
+      - name: Audit navigateur intégral
+        run: node tests/browser-audit.mjs
+      - name: Audit des 3 niveaux et de Finot
+        run: node tests/pedagogy-browser-audit.mjs
+      - name: Audit interrogation parent et statistiques
+        run: node tests/interrogation-dashboard-browser-audit.mjs
+      - name: Audit ciblé des remarques de revue
+        run: node tests/review-findings-browser-audit.mjs
+      - name: Audit des micro-compétences et du parcours adaptatif
+        run: node tests/competency-browser-audit.mjs
+      - name: Audit diagnostic, Finot erreur, transferts et UI par âge
+        run: node tests/phase3-browser-audit.mjs
+      - name: Audit des ateliers et contextes pédagogiques phase 4
+        run: node tests/phase4-pedagogy-browser-audit.mjs
+      - name: Audit ciblé des données CE2
+        run: node tests/phase4-ce2-data-browser-audit.mjs
+      - name: Audit des packs pédagogiques spécifiques
+        run: node tests/chapter-packs-browser-audit.mjs
+      - name: Publier rapports et captures navigateur
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathquest-browser-audit-${{ matrix.browser }}
+          path: |
+            tests/*-report.json
+            tests/screenshots/*.png
+          if-no-files-found: ignore
