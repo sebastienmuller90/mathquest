@@ -1,0 +1,65 @@
+name: Patch 8.67 stars and economy
+
+on:
+  push:
+    branches:
+      - amelioration/series-quiz-erreurs-types
+    paths:
+      - .github/workflows/patch-867-stars.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: amelioration/series-quiz-erreurs-types
+          fetch-depth: 0
+
+      - name: Apply guarded replacements
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              Path('js/app-screens.js'): (
+                  "function endChapterMission(m){const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0,",
+                  "function endChapterMission(m){const r=m.n?m.ok/m.n:0,st=r>=.999?3:r>=.75?2:r>=.5?1:0,",
+              ),
+              Path('js/economy-anticheat.js'): (
+                  "const e=ensure(),legacySt=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0;",
+                  "const e=ensure(),legacySt=stars(m.ok,m.n);",
+              ),
+          }
+
+          for path, (old, new) in replacements.items():
+              text = path.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected exactly one guarded match, found {count}')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+              print(f'patched {path}')
+          PY
+
+      - name: Verify JavaScript syntax and guarded result
+        shell: bash
+        run: |
+          node --check js/app-screens.js
+          node --check js/economy-anticheat.js
+          grep -F "function endChapterMission(m){const r=m.n?m.ok/m.n:0,st=r>=.999?3:r>=.75?2:r>=.5?1:0," js/app-screens.js
+          grep -F "const e=ensure(),legacySt=stars(m.ok,m.n);" js/economy-anticheat.js
+          ! grep -F "function endChapterMission(m){const st=m.ok>=8?3:m.ok>=6?2:m.ok>=4?1:0," js/app-screens.js
+
+      - name: Commit patch to PR branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/app-screens.js js/economy-anticheat.js
+          git commit -m "8.67: calculer étoiles et bonus selon la longueur de série"
+          git push origin HEAD:amelioration/series-quiz-erreurs-types
