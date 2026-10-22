@@ -4,9 +4,9 @@
    3. Quiz de cours adapté à l'âge : 6 questions en CP-CE1, 8 du CE2 au CM2, 10 au collège, seuil de 70 % recalculé.
    4. Mode parent : les erreurs-types déjà repérées par Finot (retenue oubliée, virgule décalée…) apparaissent dans le suivi.
    5. Aucun débordement horizontal à 320 px, aucune erreur JavaScript. */
-const {serve,launch,seedProfile}=require('./lib');
+const {serve,launchEngine,seedProfile}=require('./lib');
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,600)});
- const {srv,url}=await serve();const b=await launch();const errs=[];
+ const eng=(process.env.MQ_ENGINES||'chromium').split(',')[0].trim();const {srv,url}=await serve();const b=await launchEngine(eng);const errs=[];
  const ctx=await b.newContext({viewport:{width:320,height:640}});await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
  const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
  await p.goto(url+'index.html',{waitUntil:'load'});await seedProfile(p,'Lou','CE2');
