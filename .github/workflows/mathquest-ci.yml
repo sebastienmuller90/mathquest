@@ -140,6 +140,9 @@ jobs:
       - name: Finot vivant — états et réactions
         if: matrix.browser == 'chromium'
         run: node tests/finot-live-state.test.js
+      - name: Défis en famille
+        if: matrix.browser == 'chromium'
+        run: node tests/family-challenge.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
