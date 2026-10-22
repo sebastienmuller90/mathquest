@@ -116,6 +116,9 @@ jobs:
       - name: Corrections animées — multiplication, division et fractions V2
         if: matrix.browser == 'chromium'
         run: node tests/animated-corrections-extended.test.js
+      - name: Pourquoi cette activité ?
+        if: matrix.browser == 'chromium'
+        run: node tests/why-this-activity.test.js
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
