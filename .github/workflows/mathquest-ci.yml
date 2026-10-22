@@ -79,6 +79,10 @@ jobs:
       - name: Lexique sans doublons et migration de progression
         if: matrix.browser == 'chromium'
         run: node tests/lexicon-cleanup.test.js
+        run: node tests/scenarios-economy-compatible.test.js
+      - name: Économie anti-triche (anti-farm, barème, assiduité)
+        if: matrix.browser == 'chromium'
+        run: node tests/economy-anticheat.test.js
       - name: Accessibilité clavier et noms accessibles
         if: matrix.browser == 'chromium'
         run: node tests/keyboard-a11y.test.js
