@@ -160,6 +160,8 @@ jobs:
       - name: Mode sombre lisible (contraste réel texte / fond)
         if: matrix.browser == 'chromium'
         run: node tests/dark-mode.test.js
+      - name: Longueur des séries, quiz de cours selon l’âge et erreurs-types dans le suivi parent
+        run: node tests/session-length.test.js
       - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
         run: node tests/pwa-update.test.js
       - name: Audit navigateur intégral

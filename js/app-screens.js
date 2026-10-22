@@ -78,7 +78,7 @@ const FINOT_FAQ=[
  {kw:['comment marche le cours','etapes du cours'],a:'Un <b>cours</b> se déroule en plusieurs étapes : découverte, exemples, méthode, pièges à éviter, ce qu’il faut retenir, puis entraînement et petit quiz.'},
  {kw:['bibliotheque','livre','lire un texte','histoire a lire','textes'],a:'Dans la <b>bibliothèque 📚</b> (onglet <b>Progrès</b>, ou <b>Matières</b> quand tu es en Français), tu peux lire tous les textes que tu veux : histoires, contes, poèmes, théâtre et documents. Cherche un titre ou un auteur, choisis ta classe, puis réponds aux questions !'},
  {kw:['parcours','parcours du jour','coffre','bonus','chemin'],a:'Le <b>parcours du jour 🗺️</b> : 4 leçons de matières différentes, puis 2 séries d’exercices sur ces leçons. Les bonnes réponses d’affilée rapportent de plus en plus de pièces (jusqu’à ×5), et un coffre t’attend au bout ! Ouvre-le depuis l’accueil.'},
- {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre. Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
+ {kw:['mission','8 questions'],a:'Une <b>mission</b>, c’est 8 questions sur un chapitre (ou 12, ou 20 si tu choisis une série plus longue). Plus tu enchaînes les bonnes réponses, plus ton <b>combo</b> 🔥 multiplie tes XP !'},
  {kw:['hors ligne','sans internet','pas de wifi'],a:'Finot Académie fonctionne <b>sans connexion Internet</b> une fois ouvert : tu peux jouer même hors ligne.'},
  {kw:['exporter','importer','changer d appareil'],a:'Dans l’Espace parents (Réglages), un <b>code d’export</b> permet de copier ta progression vers un autre appareil.'}
 ];
@@ -194,7 +194,7 @@ function chapGroupsHTML(id,w){const G=chapGroups(id),wrap=a=>`<div class="chaps"
   ${g.chs.length?rows(g.chs):''}${g.subs.map(x=>`<h3 class="subh">${x.name}</h3>${rows(x.chs)}`).join('')}</details>`;}).join('');}
 
 function fiche(id){const c=byId(id),f=c.f,wimg=FINOT_WORLD_IMG[WMAP[id].id];app.innerHTML=`${bar(c.icon+' '+c.name)}${wimg?`<div class="lesson-banner"><img src="${wimg}" alt="" aria-hidden="true"></div>`:''}<div class="card fiche pop"><div class="fh">📘 Rappel express</div><h2>${f.t}</h2><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul><div class="ex"><b>Exemple</b><br>${f.ex}</div></div>
- ${!S.lessons[id]?`<button class="reco card" data-a="lesson:${id}"><span class="ri">📖</span><span><small>Nouveau chapitre ?</small><b>Commence par le cours</b><span class="muted">Explications, exemple, mini-quiz</span></span><span class="go">Lire</span></button>`:''}<button class="btn primary big" data-a="start:${id}">C’est parti ! 8 questions</button><button class="btn wide" data-a="lesson:${id}">📖 Revoir le cours complet</button><button class="btn ghost wide" data-a="world:${WMAP[id].id}">Retour au monde</button>`;}
+ ${!S.lessons[id]?`<button class="reco card" data-a="lesson:${id}"><span class="ri">📖</span><span><small>Nouveau chapitre ?</small><b>Commence par le cours</b><span class="muted">Explications, exemple, mini-quiz</span></span><span class="go">Lire</span></button>`:''}<button class="btn primary big" data-a="start:${id}">C’est parti ! ${typeof MQPedagogy!=='undefined'&&MQPedagogy.seriesLen?MQPedagogy.seriesLen():8} questions</button><button class="btn wide" data-a="lesson:${id}">📖 Revoir le cours complet</button><button class="btn ghost wide" data-a="world:${WMAP[id].id}">Retour au monde</button>`;}
 
 /* ===== Mission ===== */
 const mult=()=>Math.min(4,1+Math.floor(M.streak/3));

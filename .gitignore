@@ -34,6 +34,7 @@
 !/tests/finot-voice.test.js
 !/tests/course-depth.test.js
 !/tests/dark-mode.test.js
+!/tests/session-length.test.js
 # Tests des fonctions intégrées depuis les branches chatgpt/* (22/10/2026).
 !/tests/animated-corrections-extended.test.js
 !/tests/animated-corrections.test.js
