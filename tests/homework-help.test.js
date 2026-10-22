@@ -8,7 +8,7 @@ async function run(){
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
   await p.fill('#nm','Lina');await p.click('[data-a="pickstage:primaire"]');await p.click('[data-a="pickgrade:CE2"]');await p.click('[data-a="begin"]');
-  await p.waitForFunction(()=>!!window.MQHomeworkHelp&&!!window.MQEconomy,{timeout:6000});
+  await p.waitForFunction(()=>!!window.MQHomeworkHelp&&!!window.MQEconomy,null,{timeout:6000});
   const boot=await p.evaluate(()=>({hh:!!MQHomeworkHelp,eco:!!MQEconomy,css:document.querySelectorAll('link[href="js/homework-help.css"]').length,js:document.querySelectorAll('script[src="js/homework-help.js"]').length,subjects:MQHomeworkHelp.subjects().length}));
   T('Aide aux devoirs chargée une seule fois au-dessus de l’économie anti-triche',boot.hh&&boot.eco&&boot.css===1&&boot.js===1&&boot.subjects>0,JSON.stringify(boot));
   await p.waitForSelector('[data-homework-help-card="1"]');T('Carte Aide aux devoirs visible sur l’accueil',await p.locator('[data-homework-help-card="1"]').count()===1);
@@ -25,7 +25,7 @@ async function run(){
   const topic=await p.evaluate(cid=>({hasCourse:!!document.querySelector(`[data-a="hhlesson:${cid}"]`),hasFast:!!document.querySelector(`[data-a="hhfast:${cid}"]`),has5:!!document.querySelector(`[data-a="hhexo:${cid}|5"]`),has8:!!document.querySelector(`[data-a="hhexo:${cid}|8"]`),recap:/Révision express/.test(document.body.innerText),hist:S.homeworkHelp?.history?.length||0}),data.cid);
   T('Thème : fiche express + cours complet + révision rapide + séries 5/8',topic.hasCourse&&topic.hasFast&&topic.has5&&topic.has8&&topic.recap&&topic.hist>=1,JSON.stringify(topic));
 
-  await p.click(`[data-a="hhexo:${data.cid}|5"]`);await p.waitForFunction(()=>!!window.M&&M.n===5,{timeout:5000});
+  await p.click(`[data-a="hhexo:${data.cid}|5"]`);await p.waitForFunction(()=>typeof M!=='undefined'&&!!M&&M.n===5,null,{timeout:5000});
   const mission=await p.evaluate(cid=>({n:M.n,cid:M.ids?.[0],flash:!!M.flash,path:!!M.path,eco:!!MQEconomy} ),data.cid);
   T('5 exercices : vraie mission ciblée, soumise à l’économie anti-triche',mission.n===5&&mission.cid===data.cid&&!mission.flash&&!mission.path&&mission.eco,JSON.stringify(mission));
   await p.evaluate(()=>{M.ok=M.n;M.xp=0;M.coins=0;endMission();});await p.waitForSelector('[data-a^="hhreturn:"]');
