@@ -11,3 +11,10 @@
 @media(max-width:360px){.hh-subjects{grid-template-columns:1fr}.hh-hero{grid-template-columns:1fr}.hh-finot{display:none}}
 @media(orientation:landscape) and (max-height:600px){.hh-hero{grid-template-columns:minmax(0,1fr) 96px;padding:14px}.hh-finot{width:96px;height:96px}.hh-subjects{grid-template-columns:repeat(4,minmax(120px,1fr))}.hh-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.hh-action{min-height:92px}.hh-topics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(min-width:900px){.hh-hero{grid-template-columns:minmax(0,1fr) 150px;padding:24px}.hh-finot{width:150px;height:150px}.hh-subjects{grid-template-columns:repeat(4,minmax(160px,1fr))}.hh-topics{grid-template-columns:repeat(2,minmax(0,1fr))}.hh-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.hh-action{min-height:112px}}
+
+/* Matières au nom long (« Questionner le monde », « Arts plastiques »…) : nom et nombre de thèmes empilés à côté de l'icône,
+   jamais rognés au bord de la carte (contrôle responsive du 22/10/2026). */
+.hh-subject{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:10px;row-gap:0;align-items:center}
+.hh-subject>img,.hh-subject>span{grid-row:span 2}
+.hh-subject b{min-width:0;overflow-wrap:anywhere}
+.hh-subject small{grid-column:2;margin-top:0}
