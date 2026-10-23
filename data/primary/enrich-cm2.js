@@ -357,4 +357,151 @@ E('cm2-hg-habiter',{items:[
  ['Le recyclage du verre permet de…','fabriquer de nouvelles bouteilles',['produire du pétrole','faire pousser des arbres','chauffer les maisons'],'Le verre se recycle à l’infini.'],
  ['Une « ville du quart d’heure » vise à…','avoir commerces, écoles et services à 15 minutes à pied ou à vélo',['construire des tours de 15 étages','limiter les trajets à 15 km en voiture','fermer les rues 15 minutes par jour'],'Réduire les déplacements.',3],
  ['Les toits végétalisés aident à…','isoler les bâtiments et retenir l’eau de pluie',['augmenter la chaleur','attirer les voitures','faire du bruit'],'Ils rafraîchissent et isolent.',2]]});
+
+/* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC et d'histoire-géographie en CM2 ---------- */
+E('cm2-emc-citoyennete',{w:.7,items:[
+ ['La nationalité est…','le lien juridique entre une personne et un État',['un sport','une langue obligatoire','une couleur de passeport'],'Elle se prouve par la carte d’identité ou le passeport.'],
+ ['Quel document prouve l’état civil (naissance) ?','l’acte de naissance',['le carnet de santé','le bulletin scolaire','le ticket de bus'],'Il est délivré par la mairie.',2],
+ ['À partir de quel âge un Français peut-il voter ?','18 ans',['12 ans','16 ans','25 ans'],'La majorité civique est à 18 ans.'],
+ ['Un devoir du citoyen est…','de respecter la loi',['de ne jamais payer d’impôts','de choisir les lois seul','de ne jamais voter'],'Les devoirs permettent de vivre ensemble.'],
+ ['Les impôts servent à financer…','les services publics',['les anniversaires','uniquement les vacances','les jeux vidéo des élus'],'Écoles, hôpitaux, routes, pompiers.'],
+ ['Un étranger qui demande à devenir français demande…','la naturalisation',['une visite','un passeport scolaire','une bourse'],'L’État examine la demande.',3],
+ ['Un citoyen peut être tiré au sort pour être…','juré dans un procès d’assises',['maire','professeur','général'],'C’est un devoir civique.',3],
+ ['Pourquoi les droits s’accompagnent-ils de devoirs ?','pour que chacun respecte les droits des autres',['pour punir les citoyens','pour limiter le nombre d’électeurs','pour fatiguer les gens'],'Une société fonctionne si chacun participe.',2],
+ {tf:'Un enfant n’a aucun droit avant 18 ans.',v:false,e:'Les enfants ont des droits : éducation, protection, santé.'},
+ {tf:'Voter est un droit des citoyens majeurs.',v:true,e:'À 18 ans, sous conditions.'},
+ {tf:'Le passeport et la carte d’identité prouvent la nationalité.',v:true,e:'Ce sont des documents officiels.',d:2},
+ {t:'Complète : à 18 ans, on est inscrit sur les listes … (un mot)',a:['électorales','electorales'],e:'Les listes électorales permettent de voter.',d:3},
+ {n:'En quelle année l’empereur Caracalla donne-t-il la citoyenneté romaine à presque tous les hommes libres de l’Empire ?',a:212,e:'En 212.',d:3},
+ {o:['Je me fais recenser à 16 ans','J’ai 18 ans','Je suis inscrit sur les listes électorales','Je vote'],q:'Remets dans l’ordre le chemin vers le premier vote :',e:'Recensement, majorité, inscription, vote.',d:3}]});
+
+E('cm2-emc-droits',{w:.7,items:[
+ ['La Déclaration des droits de l’homme et du citoyen date de…','1789',['1889','1989','1689'],'Elle est adoptée en août 1789.'],
+ ['La CIDE est…','la Convention internationale des droits de l’enfant',['une compétition sportive','un jeu vidéo','un impôt'],'Adoptée par l’ONU en 1989.'],
+ ['La CIDE a été adoptée le…','20 novembre 1989',['14 juillet 1789','11 novembre 1918','1er mai 1900'],'Le 20 novembre est la Journée internationale des droits de l’enfant.',2],
+ ['Quel droit de l’enfant est respecté quand il va à l’école ?','le droit à l’éducation',['le droit de travailler','le droit de conduire','le droit de voter'],'Chaque enfant a droit à l’éducation.'],
+ ['Quel numéro appeler pour un enfant en danger ?','le 119',['le 19','le 911','le 1119'],'Gratuit, jour et nuit.'],
+ ['Quel droit n’est pas respecté si un enfant travaille toute la journée à l’usine ?','le droit à la protection et à l’éducation',['le droit au sport uniquement','le droit au cinéma','aucun'],'L’exploitation par le travail est interdite.',2],
+ ['« Non-discrimination » signifie que…','tous les enfants ont les mêmes droits',['seuls les enfants riches ont des droits','les filles ont plus de droits','les droits dépendent du pays seulement'],'C’est l’un des principes de la CIDE.',3],
+ ['Pour exercer mon droit de m’exprimer, je dois aussi…','respecter celui des autres',['crier pour imposer','mentir','empêcher les autres de parler'],'Droits et devoirs vont ensemble.',2],
+ {tf:'Les droits de l’enfant valent pour tous les enfants, quel que soit le pays.',v:true,e:'Presque tous les pays ont ratifié la CIDE.',d:2},
+ {tf:'La CIDE a été signée en 1789.',v:false,e:'En 1789, c’est la Déclaration des droits de l’homme et du citoyen ; la CIDE date de 1989.',d:2},
+ {tf:'Un enfant en danger peut appeler le 119 gratuitement.',v:true,e:'Le 119 est gratuit et ouvert jour et nuit.'},
+ {t:'Complète : la Déclaration des droits de l’homme et du citoyen date de 17… (deux chiffres)',a:['89'],e:'1789.',d:3},
+ {n:'En quelle année la Déclaration universelle des droits de l’homme a-t-elle été adoptée par l’ONU ?',a:1948,e:'Le 10 décembre 1948.',d:3},
+ {o:['1789','1948','1989'],q:'Place dans l’ordre chronologique ces dates de textes sur les droits :',e:'DDHC (1789), DUDH (1948), CIDE (1989).',d:2}]});
+
+E('cm2-emc-europe',{w:.7,items:[
+ ['L’Union européenne compte actuellement…','27 États membres',['7 États','50 États','12 États uniquement'],'Depuis le départ du Royaume-Uni en 2020.',2],
+ ['Le drapeau de l’Union européenne est…','bleu avec douze étoiles dorées',['rouge avec une croix','vert et blanc','jaune avec un cercle'],'Les étoiles forment un cercle.'],
+ ['L’hymne de l’Union européenne est tiré de…','la 9e symphonie de Beethoven',['La Marseillaise','un opéra de Mozart','une chanson pop'],'L’Ode à la joie.',3],
+ ['La Journée de l’Europe est le…','9 mai',['14 juillet','11 novembre','1er janvier'],'En souvenir de la déclaration de Robert Schuman, en 1950.',2],
+ ['Erasmus+ est un programme qui permet…','d’étudier ou de se former dans un autre pays européen',['de construire des routes','de jouer au football','de voyager sans papiers dans le monde entier'],'Il porte le nom d’Érasme.'],
+ ['Les élections européennes ont lieu tous les…','5 ans',['2 ans','10 ans','1 an'],'On élit les députés européens.'],
+ ['L’euro est…','la monnaie commune de plusieurs pays de l’Union européenne',['une région','un pays','un fleuve'],'La zone euro regroupe plusieurs pays de l’UE.',2],
+ ['L’Union européenne et l’Europe sont…','deux notions différentes : un continent et une organisation',['exactement la même chose','deux pays','deux océans'],'La Suisse est en Europe mais pas dans l’UE.',2],
+ {tf:'Un citoyen français est aussi citoyen européen.',v:true,e:'Tout citoyen d’un pays de l’UE est citoyen européen.'},
+ {tf:'La Suisse fait partie de l’Union européenne.',v:false,e:'La Suisse est en Europe mais n’est pas membre de l’UE.',d:2},
+ {tf:'Le traité de Maastricht a créé la citoyenneté européenne.',v:true,e:'Signé en 1992, en vigueur en 1993.',d:3},
+ {t:'Complète : le programme d’échanges d’étudiants s’appelle … (un mot)',a:['erasmus','erasmus+'],e:'Erasmus.',d:2},
+ {n:'Combien d’étoiles figurent sur le drapeau européen ?',a:12,e:'Douze étoiles.',d:2},
+ {o:['1957','1992','2020'],q:'Place dans l’ordre chronologique : traité de Rome, traité de Maastricht, sortie du Royaume-Uni :',e:'1957 (Rome), 1992 (Maastricht), 2020 (Brexit).',d:3}]});
+
+E('cm2-hg-deplacer',{w:.7,items:[
+ ['Un déplacement « quotidien » est…','un trajet de tous les jours, comme aller à l’école',['un voyage de vacances','un tour du monde','un déménagement'],'Il revient chaque jour.'],
+ ['Un déplacement « occasionnel » est…','un trajet exceptionnel, comme partir en vacances',['aller à l’école chaque matin','aller au travail chaque jour','aller à la boulangerie'],'Il n’a pas lieu tous les jours.'],
+ ['Le réseau ferroviaire français est dit « en étoile » car…','de nombreuses lignes partent de Paris',['toutes les gares sont étoilées','il a la forme d’un cercle','il est dessiné la nuit'],'Paris est le centre du réseau.'],
+ ['Le TGV est…','un train à grande vitesse',['un bateau','un avion','un tramway'],'Première ligne : Paris-Lyon en 1981.',2],
+ ['Le tunnel sous la Manche relie…','la France et le Royaume-Uni',['la France et l’Espagne','l’Italie et la Suisse','l’Allemagne et la Pologne'],'Ouvert en 1994.',2],
+ ['L’espace Schengen permet…','de circuler sans contrôle aux frontières entre les pays membres',['de voyager gratuitement','de ne plus avoir besoin de papiers d’identité','d’utiliser la même langue'],'Le contrôle aux frontières intérieures est supprimé.',3],
+ ['Quel mode de transport pollue le moins par voyageur sur une longue distance ?','le train',['la voiture avec un seul passager','l’avion','le camion'],'Il émet moins de gaz à effet de serre.',2],
+ ['Pourquoi développer le covoiturage ?','pour réduire le nombre de voitures et la pollution',['pour augmenter les bouchons','pour acheter plus de voitures','pour supprimer les trains'],'Plusieurs personnes partagent une voiture.'],
+ ['Pourquoi des habitants de zones rurales dépendent-ils souvent de la voiture ?','il y a moins de transports en commun',['ils n’aiment pas le train','ils n’ont pas de rues','ils ne voyagent jamais'],'Distances plus grandes, moins de lignes.',2],
+ {tf:'Les transports sont un des principaux secteurs qui émettent des gaz à effet de serre.',v:true,e:'Surtout à cause de la voiture et de l’avion.',d:2},
+ {tf:'Le Royaume-Uni fait partie de l’espace Schengen.',v:false,e:'Il n’en fait pas partie.',d:3},
+ {t:'Complète : le train à grande vitesse s’écrit en trois lettres : … (sigle)',a:['tgv'],e:'Le TGV.',d:2},
+ {n:'En quelle année le tunnel sous la Manche est-il inauguré ?',a:1994,e:'En 1994.',d:3},
+ {o:['Je vais à la gare à pied','Je prends le TGV','J’arrive à Lyon','Je prends le métro'],q:'Remets dans l’ordre un trajet combiné vers le centre de Lyon :',e:'Gare, TGV, arrivée, puis transport en commun.',d:3}]});
+
+E('cm2-hg-ecole',{w:.7,items:[
+ ['Jules Ferry rend l’école primaire gratuite en…','1881',['1789','1914','1958'],'Loi du 16 juin 1881.'],
+ ['Jules Ferry rend l’instruction obligatoire et laïque en…','1882',['1900','1792','1905'],'Loi du 28 mars 1882.'],
+ ['Selon les lois Ferry, l’instruction est obligatoire de…','6 à 13 ans',['3 à 10 ans','10 à 20 ans','6 à 18 ans'],'À l’époque.',2],
+ ['« Laïque » veut dire que l’école publique…','ne donne pas d’enseignement religieux et accueille tous les enfants',['est interdite aux croyants','enseigne une seule religion','est payante'],'Neutralité religieuse.'],
+ ['Pourquoi la République veut-elle instruire tous les enfants ?','former des citoyens qui savent lire, écrire, compter',['pour les occuper','pour les punir','pour augmenter les impôts'],'Un citoyen instruit peut voter et comprendre.',2],
+ ['Qui est Jules Ferry ?','un homme politique, ministre de l’Instruction publique',['un roi','un explorateur','un scientifique'],'IIIe République.'],
+ ['Une classe vers 1900 comportait souvent…','une ardoise, une plume et un tableau noir',['des tablettes numériques','des ordinateurs','des vidéoprojecteurs'],'Le matériel était simple.'],
+ ['Le certificat d’études primaires était…','un examen à la fin de l’école primaire',['un jeu','un livre','une récréation'],'Beaucoup d’élèves quittaient l’école après.',2],
+ {tf:'Avant Jules Ferry, il n’existait aucune école en France.',v:false,e:'Il y avait des écoles, mais pas toujours gratuites ni obligatoires pour tous.',d:2},
+ {tf:'Aujourd’hui, l’instruction est obligatoire de 3 à 16 ans.',v:true,e:'Depuis la rentrée 2019.',d:3},
+ {tf:'Les lois de Ferry rendent l’école gratuite, obligatoire et laïque.',v:true,e:'Les trois mots à retenir.'},
+ {t:'Complète : l’école de Jules Ferry est gratuite, obligatoire et … (un mot)',a:['laïque','laique'],e:'Laïque.',d:2},
+ {n:'En quelle année l’école primaire publique devient-elle gratuite ?',a:1881,e:'En 1881.'},
+ {o:['1881','1882','1886'],q:'Place ces dates des lois scolaires dans l’ordre chronologique :',e:'1881 (gratuité), 1882 (obligation et laïcité), 1886 (personnel laïque).',d:3}]});
+
+E('cm2-hg-guerre-14',{w:.7,items:[
+ ['La Première Guerre mondiale commence en…','1914',['1789','1939','1870'],'Elle dure de 1914 à 1918.'],
+ ['Elle se termine par l’armistice du…','11 novembre 1918',['8 mai 1945','14 juillet 1789','1er janvier 1900'],'Les combats cessent.'],
+ ['Comment appelle-t-on les soldats français de la Première Guerre mondiale ?','les poilus',['les gladiateurs','les chevaliers','les pirates'],'Surnom donné aux soldats français.'],
+ ['Où vivent les soldats sur le front ?','dans des tranchées',['dans des palaces','dans des châteaux','dans des avions'],'Fossés creusés dans la terre.'],
+ ['Que fait la mobilisation générale ?','elle appelle les hommes à rejoindre l’armée',['elle fabrique des avions','elle ferme les écoles pour toujours','elle supprime la guerre'],'La France la décrète le 2 août 1914.',2],
+ ['Quelle bataille de 1916 est restée l’une des plus meurtrières ?','Verdun',['Waterloo','Austerlitz','Bouvines'],'De février à décembre 1916.',2],
+ ['Pendant la guerre, les femmes…','remplacent les hommes dans les usines et les champs',['arrêtent de travailler','partent toutes à l’étranger','sont interdites d’usine'],'Elles font fonctionner le pays.',2],
+ ['Un armistice est…','un accord pour arrêter les combats',['une déclaration de guerre','un monument','un nouveau pays'],'Il précède le traité de paix.',2],
+ ['Le traité de paix est signé à…','Versailles, en 1919',['Rome, en 1914','Paris, en 1939','Londres, en 1918'],'Le 28 juin 1919.',3],
+ ['Pourquoi chaque commune a-t-elle un monument aux morts ?','pour se souvenir des soldats morts',['pour fêter la guerre','pour vendre des souvenirs','pour décorer'],'Le souvenir et le respect des morts.'],
+ {tf:'La Première Guerre mondiale concerne uniquement la France.',v:false,e:'Elle touche beaucoup de pays et les colonies.'},
+ {tf:'Le 11 novembre est un jour de souvenir.',v:true,e:'On se souvient des victimes de la guerre.'},
+ {tf:'La guerre de 1914-1918 a fait des millions de morts.',v:true,e:'Environ 10 millions de soldats ont été tués dans le monde.',d:2},
+ {n:'En quelle année la guerre commence-t-elle ?',a:1914,e:'En 1914.'},
+ {o:['1914','1916','1918'],q:'Place dans l’ordre : début de la guerre, bataille de Verdun, armistice :',e:'1914, 1916, 1918.',d:2}]});
+
+E('cm2-hg-habiter',{w:.7,items:[
+ ['Une ville durable est une ville qui…','répond aux besoins d’aujourd’hui sans abîmer l’avenir',['ne bouge jamais','construit sans limite','supprime la nature'],'Durable = qui peut durer.'],
+ ['Quel est le but des trois R ?','réduire, réutiliser, recycler',['rire, rêver, rester','rouler, ranger, rouler','rien, rien, rien'],'On limite les déchets.'],
+ ['Un îlot de chaleur urbain est…','une zone de la ville plus chaude que les alentours',['une île dans la mer','une piscine','un parc glacé'],'Le béton stocke la chaleur.',3],
+ ['Que fait un toit végétalisé ?','il isole et retient l’eau de pluie',['il augmente la chaleur','il fait du bruit','il attire la pollution'],'Il rafraîchit aussi la ville.',2],
+ ['Un écoquartier comprend souvent…','des bâtiments bien isolés et des espaces verts',['uniquement des parkings','des usines','des bâtiments non isolés'],'Il réduit l’impact sur l’environnement.'],
+ ['Le compostage permet de…','transformer des déchets de cuisine en terreau',['fabriquer du plastique','créer du pétrole','produire du verre'],'Les épluchures deviennent engrais.',2],
+ ['Quelle mobilité est la plus douce pour l’environnement ?','le vélo et la marche',['le camion','la voiture seule','l’avion'],'Pas de pollution émise.'],
+ ['Pourquoi des pistes cyclables ?','pour circuler en sécurité à vélo et réduire les voitures',['pour ralentir les piétons','pour décorer','pour supprimer les trottoirs'],'Elles encouragent le vélo.'],
+ {tf:'Planter des arbres rafraîchit la ville en été.',v:true,e:'Leur ombre et l’eau qu’ils évaporent rafraîchissent l’air.'},
+ {tf:'Tout recycler est inutile.',v:false,e:'Le recyclage économise des matières et de l’énergie.'},
+ {tf:'Le tri des biodéchets est généralisé en France depuis 2024.',v:true,e:'Les déchets alimentaires doivent être triés.',d:3},
+ {t:'Complète : transformer un déchet en nouveau produit, c’est le … (un mot)',a:['recyclage'],e:'Le recyclage.',d:2},
+ {o:['Je constate le problème','Je propose des solutions','On choisit ensemble','On réalise et on vérifie'],q:'Remets dans l’ordre un projet pour mieux habiter :',e:'Constat, solutions, choix, réalisation et vérification.',d:3},
+ ['La High Line de New York est…','un parc créé sur une ancienne voie ferrée',['un gratte-ciel','un aéroport','un stade'],'Premier tronçon ouvert en 2009.',3]]});
+
+E('cm2-hg-industrie',{w:.7,items:[
+ ['L’âge industriel commence en France au…','XIXe siècle',['XVe siècle','XVIIe siècle','XXIe siècle'],'Années 1800.'],
+ ['Quelle énergie alimente les machines à vapeur ?','le charbon',['le vent','le soleil','l’éolienne'],'Il chauffe l’eau.'],
+ ['Où extrait-on le charbon ?','dans les mines',['dans les champs','dans les océans','dans les fermes'],'Mineurs.'],
+ ['Un ouvrier est…','une personne qui travaille dans une usine ou une mine',['un roi','un agriculteur','un enseignant'],'Nouvelle classe sociale.'],
+ ['Qu’est-ce que l’exode rural ?','le départ de paysans vers les villes',['le départ vers la mer','l’arrivée à la campagne','un voyage en train'],'Les villes grandissent.',2],
+ ['Le chemin de fer sert à…','transporter plus vite les personnes et les marchandises',['arroser les champs','ouvrir les écoles','pêcher'],'Il relie mines, usines et villes.'],
+ ['Que défend un syndicat ?','les droits des travailleurs',['les propriétaires uniquement','les rois','les conducteurs de bus uniquement'],'Il est autorisé en 1884.',2],
+ ['Qu’est-ce qu’une grève ?','un arrêt collectif du travail pour réclamer de meilleures conditions',['une fête','un jeu','une récolte'],'Droit reconnu en 1864.',2],
+ ['Pour quelle exposition la tour Eiffel a-t-elle été construite ?','l’Exposition universelle de 1889',['les Jeux olympiques','la Coupe du monde','le Salon de l’agriculture'],'Elle montrait les progrès de l’industrie.',3],
+ {tf:'Au XIXe siècle, des enfants travaillaient dans les usines.',v:true,e:'La loi de 1841 limite leur travail.'},
+ {tf:'La machine à vapeur fonctionne grâce à l’électricité.',v:false,e:'Elle fonctionne avec de la vapeur, obtenue en chauffant de l’eau.'},
+ {tf:'Les villes ont grandi à cause de l’exode rural et de l’industrie.',v:true,e:'Des paysans viennent travailler en ville.',d:2},
+ {t:'Complète : la machine à vapeur utilise le … (un mot : énergie fossile)',a:['charbon'],e:'Le charbon.',d:2},
+ {n:'En quelle année la première loi limite-t-elle le travail des enfants ?',a:1841,e:'En 1841.',d:3},
+ {o:['Extraction du charbon','Transport par le train','Usine à vapeur','Production d’objets'],q:'Remets dans l’ordre la chaîne qui va du charbon à l’objet fabriqué :',e:'Extraction, transport, usine, production.',d:3}]});
+
+E('cm2-hg-internet',{w:.7,items:[
+ ['La fracture numérique est…','l’inégalité d’accès et d’usage du numérique',['une panne d’ordinateur','un câble cassé','un virus'],'Dans le monde et en France.'],
+ ['Qu’est-ce qu’une zone blanche ?','un endroit sans réseau mobile ou Internet',['un endroit couvert de neige','un désert','une zone sans routes'],'Il reste quelques zones mal couvertes.',2],
+ ['La fibre optique transporte les informations sous forme de…','lumière',['eau','vapeur','poussière'],'Elle est en verre.',2],
+ ['L’illectronisme désigne…','la difficulté à utiliser les outils numériques',['la passion pour les écrans','la peur du noir','une langue étrangère'],'Cela exclut de certaines démarches.',3],
+ ['Que veille la CNIL ?','la protection des données personnelles',['la météo','les voyages','les bibliothèques'],'Commission nationale de l’informatique et des libertés.',3],
+ ['Que faire pour vérifier une information en ligne ?','chercher la source, la date et d’autres sites',['la partager vite','croire le premier site','la copier'],'Qui, quand, preuve, autres sources.'],
+ ['Quel lieu aide les personnes à faire leurs démarches en ligne ?','un espace France Services',['un stade','un cinéma','un supermarché'],'Il accompagne les usagers.',3],
+ ['Les centres de données servent à…','stocker et traiter des informations',['fabriquer du papier','cultiver','chauffer les océans'],'Ils consomment de l’électricité.',2],
+ {tf:'Tout le monde dans le monde a Internet.',v:false,e:'Environ un tiers de la population mondiale n’est pas connecté.',d:2},
+ {tf:'Avoir un téléphone ne suffit pas toujours à bien utiliser Internet.',v:true,e:'Il faut aussi le réseau, un forfait et savoir s’en servir.',d:2},
+ {tf:'Le Web a été imaginé par Tim Berners-Lee en 1989.',v:true,e:'Au CERN, en Suisse.',d:3},
+ {t:'Complète : les inégalités d’accès au numérique forment la … numérique (un mot)',a:['fracture'],e:'La fracture numérique.',d:2},
+ {n:'En quelle année Tim Berners-Lee imagine-t-il le Web ?',a:1989,e:'En 1989.',d:3},
+ {o:['Je lis l’information','Je cherche qui l’a publiée','Je compare avec d’autres sources','Je décide de la partager ou non'],q:'Remets dans l’ordre la démarche de vérification d’une information :',e:'Lire, chercher la source, comparer, décider.',d:3}]});
 })();

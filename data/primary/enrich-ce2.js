@@ -176,4 +176,69 @@ E('ce2-evar-droits',{items:[
  ['La Convention internationale des droits de l’enfant date de…','1989',['1789','1945','2020'],'Adoptée le 20 novembre 1989.'],['Le 119 permet…','d’aider les enfants en danger',['de commander une pizza','d’appeler les pompiers seulement','de réserver un voyage'],'Allô Enfance en danger.'],
  ['Le droit à l’éducation, c’est le droit…','d’aller à l’école',['de ne rien apprendre','de travailler à l’usine','de jouer toute la journée'],'Tous les enfants ont droit à l’école.']],
  parts:[HE('📜','Moment hors écran : l’affiche de mes droits',{but:'connaître ses droits.',consigne:'Fais une affiche avec 4 droits de l’enfant (identité, santé, éducation, protection) : un dessin et une phrase pour chacun. Ajoute le numéro 119.',duree:'25 minutes',materiel:'grande feuille, feutres',auto:'Mon affiche montre 4 droits et le 119.'})]});
+
+/* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC en CE2 (formulations, vrai/faux, réponses écrites, ordre) ---------- */
+E('ce2-emc-commune',{w:.7,items:[
+ ['Le territoire où tu habites, village ou ville, s’appelle…','une commune',['un continent','un océan','une planète'],'La commune est le plus petit territoire administré par des élus.'],
+ ['Dans ta commune, qui élit le maire ?','le conseil municipal, élu par les habitants',['le président de la République','le directeur de l’école','le roi'],'Les habitants élisent le conseil municipal, qui choisit le maire.',2],
+ ['Qui aide le maire à diriger la commune ?','les adjoints',['les pompiers','les enseignants','les facteurs'],'Le maire est aidé par des adjoints, élus du conseil municipal.',2],
+ ['La cantine d’une école primaire est organisée par…','la commune',['le ministère de la Santé','l’armée','une radio'],'La commune s’occupe des écoles du primaire et de la cantine.'],
+ ['Pour déclarer la naissance d’un bébé, on va à…','la mairie',['la boulangerie','la gare','le cinéma'],'La mairie tient l’état civil : naissances, mariages.'],
+ ['Si un lampadaire de ta rue est cassé, qui doit le réparer ?','la commune',['les élèves de CE2','le directeur d’école','le président de la République'],'La commune entretient les rues et l’éclairage.'],
+ {tf:'Il y a un maire dans chaque commune, même dans un très petit village.',v:true,e:'Toute commune a un maire et un conseil municipal.'},
+ {tf:'Les enseignants sont payés par la mairie.',v:false,e:'Ils dépendent de l’État. La commune s’occupe des bâtiments et de la cantine.'},
+ {tf:'Le conseil municipal vote le budget de la commune.',v:true,e:'Il décide comment dépenser l’argent de la commune.',d:2},
+ {t:'Complète : le maire travaille à la … (un seul mot)',a:['mairie'],e:'Le maire travaille à la mairie.'},
+ {t:'Complète : les habitants élisent le conseil … (un seul mot)',a:['municipal'],e:'Le conseil municipal est élu par les habitants.',d:2},
+ {n:'Tous les combien d’années élit-on le conseil municipal ?',a:6,u:'ans',e:'Les élections municipales ont lieu tous les 6 ans.',d:2},
+ {o:['Les habitants votent','Le conseil municipal est élu','Le conseil élit le maire','Le maire dirige avec ses adjoints'],q:'Remets dans l’ordre comment on obtient un maire :',e:'D’abord le vote des habitants, puis l’élection du maire par le conseil.',d:3},
+ ['Quel service ne dépend pas de la commune ?','la justice',['le ramassage des déchets','l’état civil','les parcs de la ville'],'La justice dépend de l’État, pas de la commune.',3]]});
+
+E('ce2-emc-engagement',{w:.7,items:[
+ ['Un délégué de classe est choisi…','par un vote des élèves',['par le hasard','par le plus fort','sans consulter personne'],'Le délégué est élu par ses camarades.'],
+ ['Un délégué parle au nom…','de sa classe',['de lui seul','du maire','de sa famille'],'Il représente la classe.'],
+ ['Une personne qui aide dans une association sans être payée est…','bénévole',['salariée','directrice','touriste'],'Un bénévole donne son temps gratuitement.'],
+ ['Une association réunit des personnes qui…','veulent agir ensemble pour un but commun',['veulent gagner de l’argent à tout prix','se disputent','ne font rien ensemble'],'Une association a un projet commun, sans profit pour ses membres.',2],
+ ['Pour aider à protéger la nature dans l’école, tu peux être…','éco-délégué',['gardien de but','capitaine de bateau','chef de gare'],'L’éco-délégué agit pour l’environnement de l’école.'],
+ ['Quel geste montre un engagement pour les autres ?','participer à une collecte de vêtements',['garder un jouet pour soi','arriver en retard','copier sur son voisin'],'Aider les autres est un engagement.'],
+ ['Les Restos du cœur aident surtout…','les personnes qui ont du mal à se nourrir',['les champions sportifs','les touristes','les chefs cuisiniers'],'Ils distribuent des repas et de l’aide.'],
+ {tf:'Un délégué peut prendre toutes les décisions à la place de sa classe.',v:false,e:'Il transmet les idées de la classe, il ne décide pas seul.'},
+ {tf:'On peut s’engager pour les autres même à 8 ans.',v:true,e:'Délégué, collecte, club : les enfants aussi peuvent agir.'},
+ {tf:'Une association est toujours une entreprise qui vend des produits.',v:false,e:'Une association rassemble des personnes pour une cause ou une activité.',d:2},
+ {t:'Complète : celui qui aide sans être payé s’appelle un … (un mot)',a:['bénévole','benevole'],e:'Un bénévole aide gratuitement.'},
+ {o:['Je repère un problème','J’en parle aux camarades','Le délégué transmet l’idée','On essaie la solution'],q:'Remets dans l’ordre les étapes d’un projet de classe :',e:'On repère, on discute, on transmet, puis on agit.',d:3},
+ ['Après un vote pour élire le délégué, on accepte le résultat. C’est…','respecter la décision de la majorité',['tricher','refuser de jouer','se moquer du gagnant'],'On respecte le vote.',2],
+ ['Qui peut créer une association ?','deux personnes ou plus qui ont un projet commun',['seulement le maire','seulement les riches','seulement les personnes très âgées'],'La loi de 1901 permet de s’associer librement.',3]]});
+
+E('ce2-emc-services-publics',{w:.7,items:[
+ ['Appeler le 18, c’est appeler…','les pompiers',['la police','le SAMU','la mairie'],'Le 18 : sapeurs-pompiers.'],
+ ['Appeler le 15, c’est appeler…','le SAMU, pour une urgence médicale',['la poste','le maire','la bibliothèque'],'Le 15 : urgences médicales.',2],
+ ['Appeler le 17, c’est appeler…','la police ou la gendarmerie',['les pompiers','l’hôpital','l’école'],'Le 17 : police et gendarmerie.',2],
+ ['Le numéro d’urgence européen est le…','112',['123','200','999'],'Le 112 fonctionne dans toute l’Union européenne.',2],
+ ['Qui organise le ramassage des déchets de ta commune ?','un service public',['une famille voisine','les élèves','le facteur'],'Le ramassage des déchets est organisé pour tous.'],
+ ['Une bibliothèque municipale est un service public car…','elle est ouverte à tous',['elle appartient à une seule personne','elle est réservée aux enfants riches','elle vend des livres chers'],'Elle sert tous les habitants.'],
+ ['La police et la gendarmerie servent à…','protéger les habitants et faire respecter la loi',['vendre des produits','soigner les malades','enseigner les maths'],'Ce sont des services publics de sécurité.'],
+ ['Qui paie les services publics ?','tous les habitants, par les impôts',['seulement les enfants','personne','les pompiers eux-mêmes'],'Les impôts financent les services publics.'],
+ {tf:'Un service public traite tous les habitants de la même façon.',v:true,e:'C’est le principe d’égalité.'},
+ {tf:'Un magasin de jouets est un service public.',v:false,e:'C’est une entreprise privée qui vend.'},
+ {tf:'On peut appeler le 18 pour s’amuser.',v:false,e:'Les numéros d’urgence sont réservés aux vraies urgences.'},
+ {t:'Complète : l’argent des services publics vient des … (un mot)',a:['impôts','impots'],e:'Les impôts financent les services publics.',d:2},
+ {n:'Quel numéro appelle-t-on pour les pompiers ?',a:18,e:'Le 18.'},
+ ['En cas d’appel d’urgence, il faut surtout…','rester calme et donner son adresse',['raccrocher tout de suite','crier sans expliquer','donner son plat préféré'],'Les secours doivent savoir où aller.',2]]});
+
+E('ce2-emc-valeurs',{w:.7,items:[
+ ['Les trois mots de la devise de la République sont…','Liberté, Égalité, Fraternité',['Force, Argent, Pouvoir','Travail, Famille, Patrie','Courage, Victoire, Gloire'],'La devise de la République : Liberté, Égalité, Fraternité.'],
+ ['« Égalité » veut dire…','avoir les mêmes droits',['être tous identiques','avoir tous le même âge','penser tous la même chose'],'L’égalité, ce sont les mêmes droits, pas l’uniformité.'],
+ ['« Liberté » veut dire…','pouvoir choisir, penser et s’exprimer en respectant les autres',['faire tout ce qu’on veut sans limite','ne jamais obéir','décider pour les autres'],'Ma liberté s’arrête où commence celle des autres.',2],
+ ['La laïcité garantit…','la liberté de croire ou de ne pas croire',['une seule religion obligatoire','l’interdiction de toutes les religions','le droit de se moquer'],'Chacun est libre de sa croyance.'],
+ ['Pourquoi l’école publique est-elle laïque ?','pour accueillir tous les élèves de la même façon',['pour interdire de réfléchir','pour séparer les élèves','pour punir'],'Elle ne favorise aucune religion.',2],
+ ['Où voit-on souvent la devise de la République ?','sur les mairies et les écoles',['sur les voitures','sur les nuages','sur les paquets de gâteaux'],'Elle est inscrite sur les bâtiments publics.'],
+ ['Un personnage qui symbolise la République est…','Marianne',['le Père Noël','Astérix','la fée Clochette'],'Marianne figure sur les mairies et les timbres.',2],
+ {tf:'Une fille et un garçon ont les mêmes droits à l’école.',v:true,e:'C’est l’égalité.'},
+ {tf:'Se moquer de la religion d’un camarade est permis.',v:false,e:'On respecte les croyances de chacun.'},
+ {tf:'La laïcité interdit à quelqu’un d’avoir une religion.',v:false,e:'Elle protège la liberté de croire ou non.'},
+ {t:'Complète : « Liberté, …, Fraternité » (un mot avec accent)',a:['égalité','egalite'],e:'Liberté, Égalité, Fraternité.',d:2},
+ ['Aider un camarade qui est tombé, c’est un exemple de…','fraternité',['laïcité','égoïsme','discrimination'],'La fraternité, c’est l’entraide.'],
+ ['La Charte de la laïcité est affichée…','dans les écoles',['sur la Lune','dans les forêts','dans les stades uniquement'],'Elle explique les règles de la laïcité à l’école.'],
+ {o:['Liberté','Égalité','Fraternité'],q:'Remets dans l’ordre les mots de la devise :',e:'Liberté, Égalité, Fraternité.'}]});
 })();

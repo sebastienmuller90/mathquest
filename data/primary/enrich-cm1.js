@@ -341,4 +341,128 @@ E('cm1-hg-internet',{items:[
  ['Une « zone blanche » est un endroit où…','il n’y a pas ou presque pas de réseau',['il neige toujours','il n’y a pas d’habitants','tout est blanc'],'Pas de couverture mobile ou Internet.'],
  ['Envoyer un message à l’autre bout du monde prend…','quelques secondes',['plusieurs mois','une année','un siècle'],'Internet est presque instantané.'],
  ['Pour protéger sa vie privée sur Internet, on évite de partager…','son adresse et son numéro de téléphone',['son plat préféré','sa couleur préférée','le nom de son animal imaginaire'],'Ce sont des données personnelles.']]});
+
+/* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC et d'histoire-géographie en CM1 ---------- */
+E('cm1-emc-civisme',{w:.7,items:[
+ ['Le civisme, c’est…','respecter les règles de la vie commune et penser à l’intérêt de tous',['faire ce qu’on veut','ne penser qu’à soi','gagner à tout prix'],'Le civisme sert l’intérêt général.'],
+ ['Quel comportement est une incivilité ?','laisser son chien salir le trottoir sans ramasser',['trier ses déchets','aider une personne âgée','tenir la porte'],'Cela gêne les autres et salit l’espace public.'],
+ ['Quel geste est civique ?','respecter la file d’attente',['doubler tout le monde','crier dans le bus','taguer un abribus'],'On respecte les autres.'],
+ ['Écouter de la musique très fort la nuit est…','une incivilité (le tapage nocturne est même puni)',['un geste civique','une obligation','un droit absolu'],'Le bruit gêne le voisinage.',2],
+ ['Pourquoi dit-on qu’une petite incivilité répétée par beaucoup de personnes est grave ?','les effets s’additionnent',['parce qu’elle est très rare','parce qu’elle est amusante','parce qu’elle ne coûte rien'],'Mille papiers jetés salissent toute une rue.',2],
+ ['Qui paie souvent le nettoyage d’un mur tagué ?','la collectivité, donc les habitants par leurs impôts',['personne','le mur lui-même','les oiseaux'],'Les dégradations coûtent à tous.',2],
+ ['Un mot qui désigne la politesse et les bonnes manières est…','la civilité',['l’incivilité','la rapidité','la timidité'],'Civilité : dire bonjour, merci, céder sa place.',2],
+ {tf:'Le civisme se pratique seulement quand un adulte nous regarde.',v:false,e:'Être civique, c’est agir correctement même sans témoin.'},
+ {tf:'Trier ses déchets est un geste civique.',v:true,e:'Il protège l’environnement et profite à tous.'},
+ {tf:'Une incivilité n’a jamais de conséquence.',v:false,e:'Elle gêne, coûte de l’argent et peut être sanctionnée.'},
+ {t:'Complète : un comportement qui nuit à la vie en commun est une … (un mot)',a:['incivilité','incivilite'],e:'Une incivilité.',d:2},
+ {o:['Je constate un problème dans le parc','J’en parle à un adulte ou à la mairie','On propose une action utile','Le parc redevient agréable'],q:'Remets dans l’ordre une action citoyenne :',e:'Constater, alerter, agir, profiter du résultat.',d:3},
+ ['Pour une dégradation grave d’un bien public, la personne peut devoir…','payer une amende ou réparer',['recevoir un cadeau','gagner un prix','être félicitée'],'Les infractions sont sanctionnées.',3]]});
+
+E('cm1-emc-democratie',{w:.7,items:[
+ ['Le mot « démocratie » vient du grec « dêmos », qui signifie…','le peuple',['le roi','l’armée','la loi'],'Démocratie = pouvoir du peuple.',2],
+ ['En France, on peut voter aux élections nationales à partir de…','18 ans',['10 ans','14 ans','21 ans'],'La majorité civique est à 18 ans.'],
+ ['Pour voter, il faut aussi être…','inscrit sur les listes électorales',['membre d’un club','professeur','propriétaire'],'L’inscription est nécessaire.',2],
+ ['Dans un bureau de vote, l’isoloir sert à…','voter en secret',['se reposer','discuter','compter les voix'],'Le vote est secret.'],
+ ['Une personne élue pour défendre les intérêts des citoyens est…','un représentant',['un juge','un touriste','un arbitre'],'Les élus représentent les citoyens.',2],
+ ['Un référendum, c’est quand…','tous les citoyens répondent directement à une question',['on tire au sort un maire','le président choisit seul','les enfants votent à l’école uniquement'],'La réponse est généralement « oui » ou « non ».',3],
+ ['La décision prise par plus de la moitié des voix s’appelle…','la majorité absolue',['l’unanimité','la minorité','l’abstention'],'Plus de la moitié des votes.',3],
+ ['Dans un débat, un bon argument…','donne une raison à son avis',['répète plus fort','insulte l’autre','coupe la parole'],'« Je pense que… parce que… ».'],
+ {tf:'Le vote est personnel : on ne peut pas voter à la place de quelqu’un sans règle précise.',v:true,e:'Le vote est libre, secret et personnel.'},
+ {tf:'En démocratie, la minorité n’a plus aucun droit.',v:false,e:'La minorité doit être respectée.'},
+ {tf:'Les femmes votent en France depuis 1944-1945.',v:true,e:'Elles ont voté pour la première fois en 1945.',d:3},
+ {n:'À quel âge peut-on voter en France ?',a:18,u:'ans',e:'À 18 ans.'},
+ {t:'Complète : le vote est libre, personnel et … (un mot)',a:['secret'],e:'Le vote est secret.',d:2},
+ {o:['Je m’informe','Je débats avec des arguments','Je vote','J’accepte le résultat'],q:'Remets dans l’ordre le parcours d’un citoyen avant et après un vote :',e:'On s’informe, on débat, on vote, on respecte le résultat.',d:3}]});
+
+E('cm1-emc-egalite',{w:.7,items:[
+ ['La dignité, c’est…','la valeur de toute personne, qui mérite le respect',['la richesse','la célébrité','la force'],'Tous les êtres humains ont la même dignité.'],
+ ['Traiter quelqu’un moins bien à cause de sa couleur de peau est…','une discrimination, interdite par la loi',['normal','un jeu','un droit'],'Le racisme est puni par la loi.'],
+ ['Un préjugé est…','un jugement porté avant de connaître la personne',['une preuve','une loi','un diplôme'],'Il peut mener à des discriminations.'],
+ ['Une rampe d’accès pour un fauteuil roulant permet…','l’égalité d’accès',['la discrimination','le bruit','le gaspillage'],'Elle aide à rendre l’accès possible pour tous.'],
+ ['Qui peut aider une personne victime de discrimination ?','le Défenseur des droits',['un arbitre','un commerçant','un chauffeur de bus'],'C’est une autorité indépendante.',2],
+ ['Dire « les filles ne savent pas jouer au foot » est…','un stéréotype',['un fait scientifique','une loi','un compliment'],'Un stéréotype est une idée toute faite sur un groupe.',2],
+ ['L’article 1 de la Déclaration de 1789 dit que les hommes naissent…','libres et égaux en droits',['riches et puissants','seuls et différents','rois et sujets'],'« Les hommes naissent et demeurent libres et égaux en droits ».',3],
+ ['Quelle est la bonne réaction si l’on voit un camarade moqué à cause de son apparence ?','le soutenir et prévenir un adulte',['rire avec les autres','filmer et partager','ne rien dire jamais'],'Il faut aider et alerter.',2],
+ {tf:'Traiter tout le monde pareil, c’est toujours assurer l’égalité.',v:false,e:'Parfois il faut adapter (une rampe, du temps en plus) pour que chacun ait les mêmes chances.',d:3},
+ {tf:'Refuser un enfant dans un club à cause de son handicap est une discrimination.',v:true,e:'Le handicap est un critère interdit de discrimination.'},
+ {tf:'La Déclaration universelle des droits de l’homme date de 1948.',v:true,e:'Adoptée par l’ONU le 10 décembre 1948.',d:3},
+ {t:'Complète : traiter quelqu’un plus mal à cause de ce qu’il est s’appelle une … (un mot)',a:['discrimination'],e:'Une discrimination.',d:2},
+ {n:'En quelle année Rosa Parks refuse-t-elle de céder sa place dans un bus (1er décembre) ?',a:1955,e:'En 1955, à Montgomery.',d:3}]});
+
+E('cm1-emc-fraternite',{w:.7,items:[
+ ['L’empathie permet de…','comprendre ce que l’autre ressent',['gagner un débat','éviter les gens','donner des ordres'],'Se mettre à la place de l’autre.'],
+ ['Être tolérant, c’est…','accepter que d’autres pensent ou vivent différemment',['être d’accord avec tout','se taire toujours','imposer son avis'],'La tolérance a des limites : pas de violence.'],
+ ['Pour dire son désaccord sans blesser, on peut dire…','« Je ne suis pas d’accord parce que… »',['« Tu es nul ! »','« Tais-toi ! »','rien et bouder'],'On argumente avec respect.'],
+ ['La fraternité est…','le troisième mot de la devise de la République',['un jeu de société','un monument','un impôt'],'Liberté, Égalité, Fraternité.'],
+ ['Quel geste est fraternel ?','accueillir un nouvel élève',['se moquer de lui','l’ignorer','le pousser'],'La fraternité, c’est l’entraide et l’accueil.'],
+ ['Que faire quand un conflit éclate dans la cour ?','se calmer, expliquer ce qu’on ressent, chercher une solution',['se battre','insulter','partir en riant'],'On parle, on écoute, on cherche ensemble.',2],
+ ['Un message en « je » est par exemple…','« J’ai été vexé quand tu as pris mon stylo. »',['« Tu es un voleur ! »','« Tu m’énerves ! »','« Tout est de ta faute ! »'],'Parler de soi évite d’accuser.',3],
+ ['Tolérer, c’est aussi accepter…','un camarade qui a d’autres goûts',['la violence','le harcèlement','le vol'],'On tolère les différences, jamais la violence.',2],
+ {tf:'La tolérance oblige à accepter le harcèlement.',v:false,e:'Le harcèlement est interdit et ne se tolère jamais.'},
+ {tf:'Participer à une collecte est un acte de solidarité.',v:true,e:'On aide ceux qui en ont besoin.'},
+ {tf:'Être empathique, c’est donner raison à tout le monde.',v:false,e:'On comprend l’autre sans forcément être d’accord.',d:2},
+ {t:'Complète : se mettre à la place de l’autre, c’est l’… (un mot)',a:['empathie'],e:'L’empathie.',d:2},
+ {o:['Je me calme','Je décris le fait','J’exprime ce que je ressens','On cherche une solution'],q:'Remets dans l’ordre les étapes pour régler un désaccord :',e:'Se calmer, décrire, dire ce qu’on ressent, trouver une solution.',d:3},
+ ['Le 16 novembre est la Journée internationale de…','la tolérance',['la musique','la neige','la cuisine'],'Une journée créée par l’ONU après la Déclaration de l’UNESCO de 1995.',3]]});
+
+E('cm1-emc-numerique',{w:.7,items:[
+ ['Les données d’Internet sont conservées dans…','des centres de données remplis de serveurs',['le ciel','les montagnes','des cahiers'],'Ce sont des bâtiments qui consomment de l’électricité.'],
+ ['Quel geste réduit l’impact du numérique ?','garder et réparer ses appareils',['changer de téléphone chaque année','laisser tout en veille','regarder des vidéos en continu'],'La fabrication est la phase qui pèse le plus.'],
+ ['Pourquoi éteindre un appareil plutôt que le laisser en veille ?','pour économiser de l’électricité',['pour l’user','pour le fatiguer','pour gagner des points'],'La veille consomme encore un peu d’énergie.'],
+ ['Un temps d’écran trop long peut…','fatiguer les yeux et perturber le sommeil',['faire grandir','améliorer la vue','donner plus de force'],'Il faut faire des pauses.'],
+ ['Il vaut mieux ne pas utiliser d’écran juste avant…','de dormir',['de manger une pomme','de jouer dehors','de faire du vélo'],'Les écrans perturbent l’endormissement.',2],
+ ['Les mots de passe doivent être…','gardés secrets',['partagés avec les amis','écrits sur l’appareil','identiques partout et connus de tous'],'Un mot de passe est personnel.',2],
+ ['Publier la photo d’un camarade sans son accord est…','à éviter : on doit respecter son droit à l’image',['obligatoire','toujours autorisé','une règle de politesse'],'Chaque personne a un droit sur son image.',3],
+ ['Quel élément d’un appareil demande des métaux rares ?','les composants électroniques',['le sac de rangement','le chiffon','la boîte en carton'],'Un téléphone contient plusieurs dizaines de métaux.',3],
+ {tf:'Envoyer un message ne consomme aucune énergie.',v:false,e:'Il passe par des réseaux et des serveurs qui consomment de l’électricité.'},
+ {tf:'Supprimer des fichiers inutiles peut aider à réduire un peu la consommation de stockage.',v:true,e:'Moins de stockage, moins de serveurs sollicités.',d:2},
+ {tf:'Il est prudent de donner son adresse à un inconnu en ligne.',v:false,e:'On ne donne jamais ses informations personnelles à un inconnu.'},
+ {t:'Complète : utiliser peu d’écrans et d’énergie, c’est la … numérique (un mot)',a:['sobriété','sobriete'],e:'La sobriété numérique.',d:3},
+ {n:'En quelle année le premier courriel entre deux machines d’un réseau est-il envoyé (Ray Tomlinson) ?',a:1971,e:'En 1971.',d:3}]});
+
+E('cm1-hg-eglise-villes',{w:.7,items:[
+ ['Dans une abbaye vivent…','des moines',['des soldats','des marins','des marchands uniquement'],'Les moines prient, travaillent et recopient des livres.'],
+ ['La dîme est…','une part de la récolte versée à l’Église',['une danse','un château','une monnaie des villes'],'Les paysans la versaient à l’Église.'],
+ ['La salle où les moines recopient les livres s’appelle…','le scriptorium',['le donjon','la nef','le cloître des enfants'],'Les livres étaient recopiés à la main.',3],
+ ['Quel style d’église a de grands vitraux et des voûtes en ogive ?','le gothique',['le roman','le préhistorique','le moderne'],'Les arcs-boutants soutiennent des murs plus fins.',2],
+ ['Quel style d’église a des murs épais et de petites fenêtres ?','le roman',['le gothique','le futuriste','le baroque'],'Les murs épais portent la voûte arrondie.',2],
+ ['Pourquoi les églises romanes sont-elles sombres ?','les murs épais ne permettent que de petites fenêtres',['elles n’ont pas de toit','elles sont enterrées','leurs murs sont en verre'],'Les murs portent la voûte.',3],
+ ['Une ville du Moyen Âge est entourée de…','remparts',['jardins publics','autoroutes','aéroports'],'Ils la protègent.'],
+ ['Où les marchands vendent-ils leurs produits dans la ville ?','sur la place du marché',['dans le cloître','à l’abbaye','dans les remparts uniquement'],'Le marché anime la ville.'],
+ ['Les foires attirent des marchands de…','toute l’Europe',['la Lune','l’Amérique du Sud uniquement','aucun pays'],'Comme les foires de Champagne.',3],
+ {tf:'Au Moyen Âge, presque tout le monde sait lire et écrire.',v:false,e:'Peu de personnes savent lire ; l’Église enseigne.'},
+ {tf:'Notre-Dame de Paris est une cathédrale gothique.',v:true,e:'Sa construction commence vers 1163.'},
+ {tf:'Les moines vivent seuls dans la forêt, sans règle.',v:false,e:'Ils suivent une règle, par exemple celle de saint Benoît.',d:2},
+ {n:'En quelle année la construction de Notre-Dame de Paris commence-t-elle environ ?',a:1163,e:'Vers 1163.',d:3},
+ {o:['Art roman','Art gothique'],q:'Remets dans l’ordre d’apparition les deux styles :',e:'Le roman (XIe-XIIe siècles) précède le gothique (XIIe-XVe siècles).',d:2}]});
+
+E('cm1-hg-inegalites',{w:.7,items:[
+ ['Le « niveau de vie » désigne…','ce que les habitants peuvent se procurer et auquel ils ont accès',['la taille des habitants','la température','la hauteur des montagnes'],'Eau, santé, éducation, logement…'],
+ ['Une eau potable est une eau…','qu’on peut boire sans danger',['bleue','chaude','salée'],'Elle ne rend pas malade.'],
+ ['Quelle conséquence peut avoir le manque d’eau potable ?','des maladies et de l’absentéisme à l’école',['plus de vacances','plus d’électricité','moins de maladies'],'Les enfants tombent malades ou doivent aller chercher l’eau.',2],
+ ['Combien de personnes environ n’ont pas d’eau potable sûre à domicile ?','environ 2 milliards',['environ 2 000','environ 2 millions','toute la population'],'Selon l’ONU et l’OMS.',2],
+ ['Pourquoi des enfants ne vont-ils pas à l’école dans certaines régions ?','pauvreté, éloignement, guerre, travail',['parce qu’ils n’aiment pas apprendre','parce que l’école est interdite à tous','parce qu’il fait trop beau'],'Plusieurs causes se cumulent.',2],
+ ['Que signifie ODD ?','objectifs de développement durable',['organisation de défense','offre de droits','ordre des décisions'],'17 objectifs fixés par l’ONU en 2015 pour 2030.',3],
+ ['La Journée mondiale de l’eau est le…','22 mars',['1er janvier','14 juillet','25 décembre'],'Une journée de l’ONU.',3],
+ ['Dire « tous les habitants d’un continent vivent de la même façon » est…','une généralisation fausse',['une vérité','une loi','une carte'],'Les situations varient beaucoup d’un pays à l’autre.',3],
+ {tf:'Les inégalités existent aussi à l’intérieur d’un même pays.',v:true,e:'Par exemple entre une grande ville et une zone isolée.'},
+ {tf:'Tous les enfants du monde ont accès à l’école.',v:false,e:'Environ 250 millions d’enfants et de jeunes ne sont pas scolarisés.',d:2},
+ {tf:'Partout dans le monde, l’eau coule au robinet.',v:false,e:'Beaucoup de foyers n’ont pas d’eau potable à domicile.'},
+ {t:'Complète : le droit d’aller à l’… est l’un des droits de l’enfant (un mot)',a:['école','ecole'],e:'L’école.',d:2},
+ {n:'En quelle année l’ONU a-t-elle adopté les 17 objectifs de développement durable ?',a:2015,e:'En 2015.',d:3}]});
+
+E('cm1-hg-internet',{w:.7,items:[
+ ['Les câbles sous-marins servent à…','relier les continents pour transporter les données',['pêcher des poissons','alimenter les sous-marins','chauffer l’océan'],'Ils transportent la quasi-totalité des échanges entre continents.'],
+ ['Qu’est-ce qu’un satellite de communication ?','un appareil qui relaie des signaux depuis l’espace',['un bateau','une antenne de télévision sur le toit','un câble sous-terrain'],'Il complète les câbles.'],
+ ['Le Web (les sites) est…','une des choses qui circulent sur Internet',['le nom de l’océan','une machine à laver','un câble'],'Internet est le réseau ; le Web, un de ses usages.',3],
+ ['Où sont stockées de nombreuses données du Web ?','dans des centres de données',['dans des nuages','dans les fils électriques','dans des livres'],'Des bâtiments remplis de serveurs.'],
+ ['Pourquoi dit-on que des zones sont « mal couvertes » ?','elles reçoivent peu ou pas de réseau',['elles ont trop de pluie','elles sont recouvertes de neige','elles n’ont pas de maisons'],'Réseau mobile ou fibre insuffisants.',2],
+ ['Quelle région a un accès à Internet souvent plus faible ?','certaines régions d’Afrique subsaharienne',['l’Europe du Nord','l’Amérique du Nord','le Japon'],'Mais la situation varie beaucoup d’un pays à l’autre.',3],
+ ['Que faire avant de partager une information vue en ligne ?','vérifier la source',['la partager vite','la modifier','l’ignorer toujours'],'Qui, quand, preuve ?',2],
+ ['Pour protéger sa vie privée en ligne, on ne communique pas…','son adresse ni son numéro à un inconnu',['sa couleur préférée','le nom d’un dessin animé','l’heure'],'Ce sont des données personnelles.'],
+ {tf:'Internet passe surtout par le ciel.',v:false,e:'La plus grande partie du trafic passe par des câbles.'},
+ {tf:'Un message envoyé de Lyon vers Montréal peut traverser l’Atlantique par un câble sous-marin.',v:true,e:'Les câbles relient les continents.'},
+ {tf:'En France, tout le territoire est parfaitement couvert partout.',v:false,e:'Il reste des zones moins bien couvertes.',d:2},
+ {t:'Complète : les signaux voyagent dans des fibres de … (un mot)',a:['verre'],e:'Les fibres optiques sont en verre et transportent de la lumière.',d:3},
+ {o:['Ma tablette','La box','Le réseau de l’opérateur','Un câble sous-marin'],q:'Remets dans l’ordre le début du trajet d’un message vers un autre continent :',e:'De l’appareil à la box, puis au réseau, puis au câble sous-marin.',d:3}]});
 })();
