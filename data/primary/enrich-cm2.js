@@ -603,7 +603,7 @@ E('cm2-fr-sujet',{w:.85,items:[
  ['Sujet de « Quand arrivent les vacances ? »','les vacances',['quand','arrivent','arriver'],'Qu’est-ce qui arrive ? les vacances.'],
  ['Sujet de « Courir est excellent pour la santé. »','courir',['la santé','excellent','pour'],'Sujet à l’infinitif.'],
  ['Dans « Les enfants que tu vois jouent », le sujet de « jouent » est…','les enfants',['que','tu','vois'],'Qui est-ce qui joue ? les enfants.',2],
- ['Dans « Le chien qui aboie est mon voisin », le sujet de « aboie » est…','qui',['le chien','mon voisin','est'],'Le pronom relatif « qui » est sujet de aboie.',3],
+ ['Dans « Le chien qui aboie est mon voisin », le sujet de « aboie » est…','qui',['le chien','mon voisin','est'],'Le pronom relatif « qui » est le sujet du verbe « aboie ».',3],
  ['Dans « Au loin brillaient les lumières du port », le verbe s’accorde avec…','les lumières du port',['au loin','le port seul','brillaient'],'Sujet inversé au pluriel.',2],
  ['Quelle question permet de trouver un sujet non animé ?','Qu’est-ce qui … ?',['Où … ?','Quand … ?','Comment … ?'],'Pour une chose : qu’est-ce qui.'],
  ['Quelle question permet de trouver un sujet animé ?','Qui est-ce qui … ?',['Qu’est-ce que … ?','Où … ?','Pourquoi … ?'],'Pour une personne : qui est-ce qui.'],

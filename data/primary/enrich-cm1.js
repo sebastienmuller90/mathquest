@@ -632,7 +632,7 @@ E('cm1-fr-types-formes',{w:.85,items:[
  ['Quelle forme exprime la surprise ou l’émotion ?','la forme exclamative',['la forme négative','la forme interrogative','le type impératif'],'Elle se termine par un point d’exclamation.'],
  ['Dans « Quelle belle journée ! », la phrase est…','exclamative',['interrogative','impérative','négative'],'Elle exprime l’admiration.'],
  {tf:'Le « t » de « mange-t-il » est un t euphonique.',v:true,e:'Il évite que deux voyelles se heurtent.',d:3},
- {tf:'« Il a pas faim » est correct à l’écrit.',v:false,e:'On écrit « Il n’a pas faim » : ne est obligatoire.'},
+ {tf:'« Il a pas faim » est correct à l’écrit.',v:false,e:'On écrit « Il n’a pas faim » : le mot « ne » est obligatoire.'},
  {tf:'Une phrase interrogative peut se construire avec intonation, Est-ce que ou inversion.',v:true,e:'Trois façons d’interroger.'},
  {t:'Écris le mot de la négation qui manque : Elle ne sort … le soir. (jamais / pas)',a:['jamais'],e:'ne … jamais.',d:2},
  {t:'Complète : Va-… -elle au parc ? (une lettre)',a:['t'],e:'Va-t-elle : t euphonique.',d:3}]});

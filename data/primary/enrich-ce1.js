@@ -340,7 +340,7 @@ E('ce1-fr-sujet-verbe',{w:.6,items:[
  ['Dans « Mon frère mange une pomme. », le verbe est…','mange',['frère','pomme','mon'],'Il dit l’action.'],
  ['Dans « Nous jouons. », le sujet est…','nous',['jouons','jouer','joues'],'Un pronom sujet.'],
  ['Pour trouver le verbe, je change…','le temps (hier, demain)',['la couleur','la taille','le nom'],'Le verbe change avec le temps.'],
- ['Quelle phrase a le mot « je » comme sujet ?','Je lis un livre.',['Lis ce livre.','Le livre est beau.','Un livre ici.'],'Je est le sujet.'],
+ ['Quelle phrase a le mot « je » comme sujet ?','Je lis un livre.',['Lis ce livre.','Le livre est beau.','Un livre ici.'],'Le sujet est « je ».'],
  {tf:'Le verbe peut être encadré par ne … pas.',v:true,e:'Il ne dort pas.'},
  {tf:'Le sujet est toujours un nom propre.',v:false,e:'Ce peut être un nom, un groupe nominal ou un pronom.',d:2},
  {t:'Écris le verbe : « Le chien aboie. »',a:['aboie'],e:'Aboie.'},

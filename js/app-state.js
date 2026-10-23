@@ -170,5 +170,5 @@ function finotCeleb(icon,title,sub){finotCelebDOM();const d=document.getElementB
  d.classList.add('show');confetti(32);sfx('lvl');clearTimeout(CELEB_T);CELEB_T=setTimeout(()=>d.classList.remove('show'),2400);}
 function checkBadges(m){const unlocked=[];BADGES.forEach(b=>{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=Date.now();if(m)m.newB.push(b);unlocked.push(b);}});save();
  unlocked.forEach((b,i)=>setTimeout(()=>finotCeleb('data/images/finot/ui-celeb-badge.png','Nouveau badge !',`${b[1]} ${b[2]}`),i*2600));}
-const starStr=n=>`<span class="st">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
+const starStr=n=>`<span class="st">${'★'.repeat(n)}<i aria-hidden="true">${'★'.repeat(3-n)}</i></span>`;
 const bar=(t,back='home')=>`<div class="bar"><button class="btn ghost sm" data-a="${back}" aria-label="${back==='home'?'Accueil':'Retour'}">←</button><h1>${t}</h1><span class="pill">🪙 ${S.coins}</span></div>`;
