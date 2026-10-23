@@ -1,0 +1,200 @@
+/* Finot Académie — finitions premium V2.
+   Couche ciblée chargée après premium-entry.css. Aucun comportement métier n'est modifié.
+   Priorités : espace parent intégré (Programme, bilan hebdomadaire, devoirs) et petits écrans. */
+
+/* ===== Espace parent intégré — navigation ===== */
+#app>.tabs{
+  gap:4px;
+  padding:4px;
+  margin:4px 0 20px;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:color-mix(in srgb,var(--surface) 94%,transparent);
+  box-shadow:var(--sh-1);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+#app>.tabs::-webkit-scrollbar{display:none}
+#app>.tabs>.tab{
+  flex:1 0 auto;
+  min-height:44px;
+  padding:9px 14px;
+  border:0;
+  border-radius:var(--r-md);
+  background:transparent;
+  color:var(--muted);
+  font:700 14px/1.2 var(--font-ui);
+  box-shadow:none;
+}
+#app>.tabs>.tab.on{
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:var(--sh-1);
+}
+#app>.tabs>.tab.on::after{display:none}
+
+/* ===== Programme officiel — présentation éditoriale adulte ===== */
+.program-head{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+  padding:20px;
+  margin:0 0 14px;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
+}
+.program-head .ico{
+  width:46px;height:46px;
+  display:grid;place-items:center;
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  color:var(--accent-text);
+  font-size:25px;
+}
+.program-head h2{margin:0 0 5px;font:800 clamp(20px,4vw,25px)/1.2 var(--font-ui);letter-spacing:-.02em}
+.program-lock{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.5}
+.program-phase{
+  margin:0 0 24px;
+  padding:14px 16px;
+  border:1px solid color-mix(in srgb,var(--accent) 24%,var(--border));
+  border-left:4px solid var(--accent);
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  color:var(--text);
+  line-height:1.55;
+}
+.program-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.program-card{
+  min-width:0;
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
+}
+.program-card .prow{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.program-card h3{margin:0;font:800 17px/1.3 var(--font-ui);color:var(--text)}
+.program-note{margin:10px 0 0;color:var(--text);line-height:1.55}
+.program-ref{margin-top:9px;color:var(--muted);font-size:13px;line-height:1.45}
+.program-src{display:inline-flex;align-items:center;min-height:40px;margin-top:9px;color:var(--accent-text);font:800 13px/1.3 var(--font-ui);text-decoration:none}
+.program-src:hover{text-decoration:underline;text-underline-offset:3px}
+.pstatus{
+  display:inline-flex;align-items:center;
+  min-height:26px;padding:4px 8px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:var(--surface2);
+  color:var(--muted);
+  font:800 12px/1.2 var(--font-ui);
+}
+.pstatus.nouveau{border-color:color-mix(in srgb,var(--good) 40%,var(--border));background:color-mix(in srgb,var(--good) 10%,var(--surface));color:var(--good)}
+.pstatus.actuel{border-color:color-mix(in srgb,var(--good) 32%,var(--border));background:color-mix(in srgb,var(--good) 7%,var(--surface));color:var(--good)}
+.pstatus.transition{border-color:color-mix(in srgb,var(--warn) 40%,var(--border));background:var(--warnbg);color:var(--warn)}
+
+/* ===== Bilan hebdomadaire — lecture adulte, données d'abord ===== */
+.mq-weekly{
+  margin:0 0 20px;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
+}
+.mq-weekly-head{gap:16px;margin-bottom:4px}
+.mq-weekly-head h2{font:800 21px/1.25 var(--font-ui);letter-spacing:-.015em}
+.mq-weekly-range{margin-top:4px;color:var(--muted);font-size:14px;line-height:1.4}
+.mq-weekly-kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.mq-weekly-kpi{
+  min-width:0;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--surface2);
+  text-align:left;
+}
+.mq-weekly-kpi b{display:block;font:800 21px/1.2 var(--font-ui);font-variant-numeric:tabular-nums;color:var(--text)}
+.mq-weekly-kpi span{display:block;margin-top:3px;color:var(--muted);font-size:13px;line-height:1.35}
+.mq-weekly-delta{font-size:13px!important;line-height:1.35;margin-top:6px}
+.mq-weekly-cols{gap:10px}
+.mq-weekly-box{padding:14px;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface2)}
+.mq-weekly-box h3,.mq-weekly-advice h3{font:800 16px/1.35 var(--font-ui)}
+.mq-weekly-box li,.mq-weekly-advice li{line-height:1.55}
+.mq-weekly-advice{padding:14px;border-radius:var(--r-md);background:var(--accent-soft)}
+.mq-weekly-actions .btn{font-family:var(--font-ui)}
+.mq-weekly-note{font-size:13px;line-height:1.55}
+
+/* ===== Devoirs — formulaires et validation parentale ===== */
+.homework-parent{
+  margin:0 0 20px;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
+}
+.homework-parent .hw-head{margin-bottom:16px}
+.homework-parent .hw-kicker{color:var(--accent-text);font:800 12px/1.3 var(--font-ui);letter-spacing:.08em}
+.homework-parent .hw-head h2{margin:3px 0 0;font:800 21px/1.25 var(--font-ui);letter-spacing:-.015em}
+.homework-parent .hw-form{gap:10px;margin-bottom:16px}
+.homework-parent .fld{
+  min-width:0;
+  min-height:44px;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--surface2);
+  color:var(--text);
+  font:600 15px/1.4 var(--font-ui);
+  box-shadow:none;
+}
+.homework-parent textarea.fld{min-height:78px;line-height:1.5}
+.homework-parent .fld:focus-visible{background:var(--surface)}
+.homework-parent .hw-list{gap:10px}
+.homework-parent .hw-row{
+  align-items:flex-start;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--surface2);
+}
+.homework-parent .hw-row.claimed{border-style:solid;border-color:color-mix(in srgb,var(--warn) 40%,var(--border));background:var(--warnbg)}
+.homework-parent .hw-row.validated{opacity:1;border-color:color-mix(in srgb,var(--good) 30%,var(--border));background:color-mix(in srgb,var(--good) 7%,var(--surface))}
+.homework-parent .hw-row small{margin-top:3px;color:var(--muted);font-size:13px;line-height:1.45}
+.homework-parent .hw-status{font-size:13px;line-height:1.45}
+.homework-parent .hw-row.claimed .hw-status{color:var(--warn)}
+.homework-parent .hw-row.validated .hw-status,.homework-parent .hw-ok{color:var(--good)}
+.homework-parent .hw-actions{gap:6px}
+.homework-parent .hw-actions .btn{min-height:40px;padding:8px 11px;font-size:14px;font-family:var(--font-ui)}
+
+/* ===== Finot flottant — aucune action ne doit être masquée =====
+   Sur l'accueil, le FAB est relevé au-dessus de la navigation fixe. On réserve donc assez d'espace en fin de
+   document pour que le dernier contrôle puisse toujours défiler entièrement au-dessus de Finot. */
+.finot-fab.show{right:calc(16px + env(safe-area-inset-right,0px))}
+body:has(.finot-fab.show.raised) #app{padding-bottom:calc(156px + env(safe-area-inset-bottom,0px))}
+
+@media(max-width:700px){
+  .program-list{grid-template-columns:1fr}
+  .mq-weekly-kpis{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  #app>.tabs{margin-left:-2px;margin-right:-2px;padding:3px;border-radius:var(--r-md)}
+  #app>.tabs>.tab{padding:9px 11px;font-size:13px}
+  .program-head,.mq-weekly,.homework-parent{padding:16px}
+  .program-head{grid-template-columns:1fr}
+  .program-head .ico{width:42px;height:42px}
+  .mq-weekly-head{align-items:flex-start;flex-direction:column}
+  .mq-weekly-kpis{grid-template-columns:1fr 1fr}
+  .mq-weekly-kpi{padding:11px}
+  .homework-parent .hw-form{grid-template-columns:1fr}
+  .homework-parent .hw-form textarea,.homework-parent .hw-form>.hw-actions{grid-column:1}
+}
+@media(max-width:340px){
+  .mq-weekly-kpis{grid-template-columns:1fr}
+  #app>.tabs>.tab{padding:8px 9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .program-src,#app>.tabs>.tab{transition:none}
+}

@@ -88,6 +88,9 @@ jobs:
       - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
         if: matrix.browser == 'chromium'
         run: node tests/modern-profile-onboarding.test.js
+      - name: Onboarding historique de secours (mobile, paysage, desktop, sombre)
+        if: matrix.browser == 'chromium'
+        run: node tests/legacy-onboarding-fallback.test.js
       - name: Devoirs scolaires parent-validés
         if: matrix.browser == 'chromium'
         run: node tests/homework-parent.test.js
@@ -136,12 +139,18 @@ jobs:
       - name: Bilan hebdomadaire parent
         if: matrix.browser == 'chromium'
         run: node tests/weekly-parent-report.test.js
+      - name: Finition parent V2 (programme, bilan et devoirs)
+        if: matrix.browser == 'chromium'
+        run: node tests/premium-parent-v2.test.js
       - name: Diplômes de maîtrise
         if: matrix.browser == 'chromium'
         run: node tests/diplomas.test.js
       - name: Finot vivant — états et réactions
         if: matrix.browser == 'chromium'
         run: node tests/finot-live-state.test.js
+      - name: Finot flottant — visibilité et absence de recouvrement
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-fab-layout.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js

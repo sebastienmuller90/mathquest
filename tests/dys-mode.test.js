@@ -58,6 +58,17 @@ async function run(){
   const reload=await p.evaluate(()=>({name:S.name,d:S.dys,classes:[...document.documentElement.classList]}));
   T('Rechargement : le profil conserve tous ses réglages DYS, y compris les aides avancées',reload.name==='Lina'&&reload.d.enabled&&reload.d.simpleFont&&reload.d.syllables&&reload.d.simpleInstructions&&reload.d.wordGuide&&reload.classes.includes('mq-dys-on')&&reload.classes.includes('mq-dys-syllables')&&reload.classes.includes('mq-dys-wordguide'),JSON.stringify(reload));
 
+  // Vrai cours : les grandes lettres doivent agrandir le corps premium du cours, pas seulement quelques sous-éléments.
+  const lessonSizing=await p.evaluate(()=>{
+   const id=ALLCH.find(c=>WMAP[c.id]&&WMAP[c.id].lvl==='CE2'&&COURS[c.id])?.id;
+   if(!id)return {id:null};
+   openLesson(id);const card=document.querySelector('.lcard,.fiche');if(!card)return {id,card:false};
+   const descendants=[...card.querySelectorAll('p,li,small,.small,.fh,.ltag')].filter(x=>x.offsetParent!==null);
+   const px=x=>parseFloat(getComputedStyle(x).fontSize)||0;
+   return {id,card:true,root:px(card),min:descendants.length?Math.min(...descendants.map(px)):px(card),h2:card.querySelector('h2')?px(card.querySelector('h2')):0,overflow:document.documentElement.scrollWidth-innerWidth};
+  });
+  T('Grandes lettres : un vrai cours passe à au moins 20 px et aucun texte utile visible ne descend sous 16 px',lessonSizing.id&&lessonSizing.card&&lessonSizing.root>=20&&lessonSizing.min>=16&&lessonSizing.overflow<=1,JSON.stringify(lessonSizing));
+
   // Second profil : aucune préférence DYS ne doit fuir du premier enfant.
   await p.evaluate(()=>createProfile());await seedProfile(p,'Noé','CM1');await p.waitForTimeout(100);
   const second=await p.evaluate(()=>({name:S.name,d:MQDys.ensure(),on:document.documentElement.classList.contains('mq-dys-on'),profiles:Object.values(PDB.profiles).map(x=>({name:x.name,dys:x.dys}))}));
