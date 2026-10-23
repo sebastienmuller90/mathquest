@@ -1,5 +1,5 @@
 /* Onboarding historique de secours — normalement remplacé par le wizard premium, mais doit rester fiable
-   pour les migrations/cas de fallback. On le rend directement sans modifier la préférence produit. */
+   pour les migrations/cas de fallback. On utilise explicitement le renderer historique exposé par le module moderne. */
 const {serve,launch}=require('./lib');
 async function run(){
  const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,1000)});
@@ -16,17 +16,17 @@ async function run(){
  try{
   await p.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.goto(url+'index.html',{waitUntil:'load'});
-  await p.waitForFunction(()=>typeof onboarding==='function'&&typeof stageOf==='function',{timeout:5000});
+  await p.waitForFunction(()=>!!window.MQProfileOnboarding&&typeof MQProfileOnboarding.legacy==='function'&&typeof stageOf==='function',{timeout:5000});
 
   for(const vp of [{n:'320 px',w:320,h:700},{n:'iPhone',w:390,h:844},{n:'paysage',w:844,h:390},{n:'desktop',w:1280,h:800}]){
    await p.setViewportSize({width:vp.w,height:vp.h});
-   await p.evaluate(()=>{document.documentElement.dataset.theme='light';ONBG='CE2';ONB='🦊';onboarding(false);scrollTo(0,0);});await p.waitForTimeout(40);
+   await p.evaluate(()=>{document.documentElement.dataset.theme='light';ONBG='CE2';ONB='🦊';MQProfileOnboarding.legacy(false);scrollTo(0,0);});await p.waitForTimeout(40);
    const x=await inspect();
    T(`Onboarding historique ${vp.n} : complet et sans débordement`,x.card&&x.stage>=2&&x.grades>=5&&x.selected.trim()==='CE2'&&x.avatars>=3&&x.name&&x.date&&x.begin&&x.sw<=x.vw+1&&x.left>=-1&&x.right<=x.vw+1&&!x.bad.length,JSON.stringify(x));
   }
 
   await p.setViewportSize({width:390,height:844});
-  await p.evaluate(()=>{document.documentElement.dataset.theme='dark';ONBG='4e';ONB='🐼';onboarding(true);});await p.waitForTimeout(40);
+  await p.evaluate(()=>{document.documentElement.dataset.theme='dark';ONBG='4e';ONB='🐼';MQProfileOnboarding.legacy(true);});await p.waitForTimeout(40);
   const dark=await inspect();
   T('Onboarding historique sombre : carte distincte, contrôles présents et 4e sélectionnée',dark.card&&dark.selected.trim()==='4e'&&dark.cardBg!==dark.bodyBg&&dark.cardColor!==dark.cardBg&&!dark.bad.length&&dark.sw<=dark.vw+1,JSON.stringify(dark));
   T('Aucune erreur JavaScript pendant le fallback onboarding',!errs.length,errs.slice(0,8).join(' | '));
