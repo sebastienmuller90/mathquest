@@ -169,6 +169,12 @@
 .homework-parent .hw-actions{gap:6px}
 .homework-parent .hw-actions .btn{min-height:40px;padding:8px 11px;font-size:14px;font-family:var(--font-ui)}
 
+/* ===== Finot flottant — aucune action ne doit être masquée =====
+   Sur l'accueil, le FAB est relevé au-dessus de la navigation fixe. On réserve donc assez d'espace en fin de
+   document pour que le dernier contrôle puisse toujours défiler entièrement au-dessus de Finot. */
+.finot-fab.show{right:calc(16px + env(safe-area-inset-right,0px))}
+body:has(.finot-fab.show.raised) #app{padding-bottom:calc(156px + env(safe-area-inset-bottom,0px))}
+
 @media(max-width:700px){
   .program-list{grid-template-columns:1fr}
   .mq-weekly-kpis{grid-template-columns:1fr 1fr}
