@@ -343,7 +343,7 @@ E('cm1-hg-internet',{items:[
  ['Pour protéger sa vie privée sur Internet, on évite de partager…','son adresse et son numéro de téléphone',['son plat préféré','sa couleur préférée','le nom de son animal imaginaire'],'Ce sont des données personnelles.']]});
 
 /* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC et d'histoire-géographie en CM1 ---------- */
-E('cm1-emc-civisme',{w:.7,items:[
+E('cm1-emc-civisme',{w:.85,items:[
  ['Le civisme, c’est…','respecter les règles de la vie commune et penser à l’intérêt de tous',['faire ce qu’on veut','ne penser qu’à soi','gagner à tout prix'],'Le civisme sert l’intérêt général.'],
  ['Quel comportement est une incivilité ?','laisser son chien salir le trottoir sans ramasser',['trier ses déchets','aider une personne âgée','tenir la porte'],'Cela gêne les autres et salit l’espace public.'],
  ['Quel geste est civique ?','respecter la file d’attente',['doubler tout le monde','crier dans le bus','taguer un abribus'],'On respecte les autres.'],
@@ -358,7 +358,7 @@ E('cm1-emc-civisme',{w:.7,items:[
  {o:['Je constate un problème dans le parc','J’en parle à un adulte ou à la mairie','On propose une action utile','Le parc redevient agréable'],q:'Remets dans l’ordre une action citoyenne :',e:'Constater, alerter, agir, profiter du résultat.',d:3},
  ['Pour une dégradation grave d’un bien public, la personne peut devoir…','payer une amende ou réparer',['recevoir un cadeau','gagner un prix','être félicitée'],'Les infractions sont sanctionnées.',3]]});
 
-E('cm1-emc-democratie',{w:.7,items:[
+E('cm1-emc-democratie',{w:.85,items:[
  ['Le mot « démocratie » vient du grec « dêmos », qui signifie…','le peuple',['le roi','l’armée','la loi'],'Démocratie = pouvoir du peuple.',2],
  ['En France, on peut voter aux élections nationales à partir de…','18 ans',['10 ans','14 ans','21 ans'],'La majorité civique est à 18 ans.'],
  ['Pour voter, il faut aussi être…','inscrit sur les listes électorales',['membre d’un club','professeur','propriétaire'],'L’inscription est nécessaire.',2],
@@ -374,7 +374,7 @@ E('cm1-emc-democratie',{w:.7,items:[
  {t:'Complète : le vote est libre, personnel et … (un mot)',a:['secret'],e:'Le vote est secret.',d:2},
  {o:['Je m’informe','Je débats avec des arguments','Je vote','J’accepte le résultat'],q:'Remets dans l’ordre le parcours d’un citoyen avant et après un vote :',e:'On s’informe, on débat, on vote, on respecte le résultat.',d:3}]});
 
-E('cm1-emc-egalite',{w:.7,items:[
+E('cm1-emc-egalite',{w:.85,items:[
  ['La dignité, c’est…','la valeur de toute personne, qui mérite le respect',['la richesse','la célébrité','la force'],'Tous les êtres humains ont la même dignité.'],
  ['Traiter quelqu’un moins bien à cause de sa couleur de peau est…','une discrimination, interdite par la loi',['normal','un jeu','un droit'],'Le racisme est puni par la loi.'],
  ['Un préjugé est…','un jugement porté avant de connaître la personne',['une preuve','une loi','un diplôme'],'Il peut mener à des discriminations.'],
@@ -389,7 +389,7 @@ E('cm1-emc-egalite',{w:.7,items:[
  {t:'Complète : traiter quelqu’un plus mal à cause de ce qu’il est s’appelle une … (un mot)',a:['discrimination'],e:'Une discrimination.',d:2},
  {n:'En quelle année Rosa Parks refuse-t-elle de céder sa place dans un bus (1er décembre) ?',a:1955,e:'En 1955, à Montgomery.',d:3}]});
 
-E('cm1-emc-fraternite',{w:.7,items:[
+E('cm1-emc-fraternite',{w:.85,items:[
  ['L’empathie permet de…','comprendre ce que l’autre ressent',['gagner un débat','éviter les gens','donner des ordres'],'Se mettre à la place de l’autre.'],
  ['Être tolérant, c’est…','accepter que d’autres pensent ou vivent différemment',['être d’accord avec tout','se taire toujours','imposer son avis'],'La tolérance a des limites : pas de violence.'],
  ['Pour dire son désaccord sans blesser, on peut dire…','« Je ne suis pas d’accord parce que… »',['« Tu es nul ! »','« Tais-toi ! »','rien et bouder'],'On argumente avec respect.'],
@@ -405,7 +405,7 @@ E('cm1-emc-fraternite',{w:.7,items:[
  {o:['Je me calme','Je décris le fait','J’exprime ce que je ressens','On cherche une solution'],q:'Remets dans l’ordre les étapes pour régler un désaccord :',e:'Se calmer, décrire, dire ce qu’on ressent, trouver une solution.',d:3},
  ['Le 16 novembre est la Journée internationale de…','la tolérance',['la musique','la neige','la cuisine'],'Une journée créée par l’ONU après la Déclaration de l’UNESCO de 1995.',3]]});
 
-E('cm1-emc-numerique',{w:.7,items:[
+E('cm1-emc-numerique',{w:.85,items:[
  ['Les données d’Internet sont conservées dans…','des centres de données remplis de serveurs',['le ciel','les montagnes','des cahiers'],'Ce sont des bâtiments qui consomment de l’électricité.'],
  ['Quel geste réduit l’impact du numérique ?','garder et réparer ses appareils',['changer de téléphone chaque année','laisser tout en veille','regarder des vidéos en continu'],'La fabrication est la phase qui pèse le plus.'],
  ['Pourquoi éteindre un appareil plutôt que le laisser en veille ?','pour économiser de l’électricité',['pour l’user','pour le fatiguer','pour gagner des points'],'La veille consomme encore un peu d’énergie.'],
@@ -420,7 +420,7 @@ E('cm1-emc-numerique',{w:.7,items:[
  {t:'Complète : utiliser peu d’écrans et d’énergie, c’est la … numérique (un mot)',a:['sobriété','sobriete'],e:'La sobriété numérique.',d:3},
  {n:'En quelle année le premier courriel entre deux machines d’un réseau est-il envoyé (Ray Tomlinson) ?',a:1971,e:'En 1971.',d:3}]});
 
-E('cm1-hg-eglise-villes',{w:.7,items:[
+E('cm1-hg-eglise-villes',{w:.85,items:[
  ['Dans une abbaye vivent…','des moines',['des soldats','des marins','des marchands uniquement'],'Les moines prient, travaillent et recopient des livres.'],
  ['La dîme est…','une part de la récolte versée à l’Église',['une danse','un château','une monnaie des villes'],'Les paysans la versaient à l’Église.'],
  ['La salle où les moines recopient les livres s’appelle…','le scriptorium',['le donjon','la nef','le cloître des enfants'],'Les livres étaient recopiés à la main.',3],
@@ -436,7 +436,7 @@ E('cm1-hg-eglise-villes',{w:.7,items:[
  {n:'En quelle année la construction de Notre-Dame de Paris commence-t-elle environ ?',a:1163,e:'Vers 1163.',d:3},
  {o:['Art roman','Art gothique'],q:'Remets dans l’ordre d’apparition les deux styles :',e:'Le roman (XIe-XIIe siècles) précède le gothique (XIIe-XVe siècles).',d:2}]});
 
-E('cm1-hg-inegalites',{w:.7,items:[
+E('cm1-hg-inegalites',{w:.85,items:[
  ['Le « niveau de vie » désigne…','ce que les habitants peuvent se procurer et auquel ils ont accès',['la taille des habitants','la température','la hauteur des montagnes'],'Eau, santé, éducation, logement…'],
  ['Une eau potable est une eau…','qu’on peut boire sans danger',['bleue','chaude','salée'],'Elle ne rend pas malade.'],
  ['Quelle conséquence peut avoir le manque d’eau potable ?','des maladies et de l’absentéisme à l’école',['plus de vacances','plus d’électricité','moins de maladies'],'Les enfants tombent malades ou doivent aller chercher l’eau.',2],
@@ -451,7 +451,7 @@ E('cm1-hg-inegalites',{w:.7,items:[
  {t:'Complète : le droit d’aller à l’… est l’un des droits de l’enfant (un mot)',a:['école','ecole'],e:'L’école.',d:2},
  {n:'En quelle année l’ONU a-t-elle adopté les 17 objectifs de développement durable ?',a:2015,e:'En 2015.',d:3}]});
 
-E('cm1-hg-internet',{w:.7,items:[
+E('cm1-hg-internet',{w:.85,items:[
  ['Les câbles sous-marins servent à…','relier les continents pour transporter les données',['pêcher des poissons','alimenter les sous-marins','chauffer l’océan'],'Ils transportent la quasi-totalité des échanges entre continents.'],
  ['Qu’est-ce qu’un satellite de communication ?','un appareil qui relaie des signaux depuis l’espace',['un bateau','une antenne de télévision sur le toit','un câble sous-terrain'],'Il complète les câbles.'],
  ['Le Web (les sites) est…','une des choses qui circulent sur Internet',['le nom de l’océan','une machine à laver','un câble'],'Internet est le réseau ; le Web, un de ses usages.',3],
@@ -467,7 +467,7 @@ E('cm1-hg-internet',{w:.7,items:[
  {o:['Ma tablette','La box','Le réseau de l’opérateur','Un câble sous-marin'],q:'Remets dans l’ordre le début du trajet d’un message vers un autre continent :',e:'De l’appareil à la box, puis au réseau, puis au câble sous-marin.',d:3}]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'histoire-géographie au CM1 ---------- */
-E('cm1-hg-moyen-age',{w:.7,items:[
+E('cm1-hg-moyen-age',{w:.85,items:[
  ['Selon le programme, le Moyen Âge va de…','476 à 1492',['1492 à 1789','1000 à 1100','1789 à 1914'],'De la chute de l’Empire romain d’Occident à la découverte de l’Amérique.'],
  ['Les redevances sont…','une part de la récolte donnée au seigneur',['des cadeaux à l’Église','des impôts du roi','des pièces d’or'],'Les paysans les devaient au seigneur.',2],
  ['Un château fort servait à…','protéger et loger le seigneur',['stocker des livres','accueillir des touristes','abriter une école'],'C’était aussi un symbole de puissance.'],
@@ -481,7 +481,7 @@ E('cm1-hg-moyen-age',{w:.7,items:[
  {n:'En quelle année prend fin le Moyen Âge selon le programme ?',a:1492,e:'1492.',d:2},
  {o:['Labours','Semailles','Moissons','Vendanges'],q:'Remets dans l’ordre quelques travaux de l’année agricole :',e:'Labours, semailles, moissons, vendanges.',d:3}]});
 
-E('cm1-hg-monarchie',{w:.7,items:[
+E('cm1-hg-monarchie',{w:.85,items:[
  ['Quel roi est appelé le Roi-Soleil ?','Louis XIV',['François Ier','Henri IV','Louis XVI'],'Il règne de 1643 à 1715.'],
  ['Quel roi accueille Léonard de Vinci en France ?','François Ier',['Henri IV','Louis XIV','Charlemagne'],'Léonard arrive vers 1516.',2],
  ['Quel roi signe l’édit de Nantes en 1598 ?','Henri IV',['Louis XIV','François Ier','Napoléon'],'Il met fin aux guerres de religion.'],
@@ -496,7 +496,7 @@ E('cm1-hg-monarchie',{w:.7,items:[
  {n:'En quelle année Henri IV signe-t-il l’édit de Nantes ?',a:1598,e:'1598.',d:3},
  {o:['François Ier','Henri IV','Louis XIV'],q:'Place ces rois dans l’ordre de leur règne :',e:'François Ier (1515), Henri IV (1589), Louis XIV (1643).',d:2}]});
 
-E('cm1-hg-explorations',{w:.7,items:[
+E('cm1-hg-explorations',{w:.85,items:[
  ['En 1492, Christophe Colomb atteint…','l’Amérique',['l’Australie','l’Antarctique','l’Inde par l’est'],'Il croyait atteindre l’Asie.'],
  ['La caravelle est…','un navire rapide et maniable',['un avion','un train','un char'],'Elle permet de naviguer au grand large.'],
  ['La boussole sert à…','s’orienter',['pêcher','calculer la dette','repérer les orages'],'Son aiguille montre le Nord.'],
@@ -511,7 +511,7 @@ E('cm1-hg-explorations',{w:.7,items:[
  {n:'En quelle année Colomb atteint-il l’Amérique ?',a:1492,e:'1492.'},
  {o:['1492','1519','1685'],q:'Place dans l’ordre : Colomb, début du tour du monde de Magellan, Code noir :',e:'1492, 1519, 1685.',d:3}]});
 
-E('cm1-hg-1789',{w:.7,items:[
+E('cm1-hg-1789',{w:.85,items:[
  ['Le 14 juillet 1789, les Parisiens prennent…','la Bastille',['le Louvre','Versailles','la tour Eiffel'],'La Bastille est une prison-forteresse.'],
  ['Les cahiers de doléances servent à…','noter les plaintes et les demandes du peuple',['écrire des recettes','compter les soldats','calculer les impôts'],'Rédigés au printemps 1789.',2],
  ['La nuit du 4 août 1789…','les privilèges sont abolis',['le roi s’enfuit','la guerre commence','Napoléon est couronné'],'Fin des privilèges.',2],
@@ -525,7 +525,7 @@ E('cm1-hg-1789',{w:.7,items:[
  {n:'En quelle année éclate la Révolution française ?',a:1789,e:'En 1789.'},
  {o:['5 mai : États généraux','14 juillet : prise de la Bastille','4 août : abolition des privilèges','26 août : DDHC'],q:'Remets ces événements de 1789 dans l’ordre :',e:'5 mai, 14 juillet, 4 août, 26 août.',d:3}]});
 
-E('cm1-hg-se-nourrir',{w:.7,items:[
+E('cm1-hg-se-nourrir',{w:.85,items:[
  ['Un produit agricole est…','un produit qui sort directement de la ferme',['un produit de l’usine','un produit chimique','un jouet'],'Lait, blé, pomme.'],
  ['Un yaourt est…','un produit transformé',['un produit agricole','un fruit','un légume'],'Fabriqué à partir du lait.'],
  ['La sous-nutrition, c’est…','ne pas manger assez',['manger trop sucré','manger trop de légumes','manger trop vite'],'Manque de nourriture.'],
@@ -539,7 +539,7 @@ E('cm1-hg-se-nourrir',{w:.7,items:[
  {t:'Complète : le blé permet de fabriquer la … (un mot)',a:['farine'],e:'La farine.',d:2},
  {o:['Le blé est récolté','Il devient farine','La boulangerie fait le pain','Je mange du pain'],q:'Remets dans l’ordre du champ à l’assiette :',e:'Récolte, farine, pain, repas.',d:3}]});
 
-E('cm1-hg-se-deplacer',{w:.7,items:[
+E('cm1-hg-se-deplacer',{w:.85,items:[
  ['L’avion a besoin d’…','un aéroport',['une gare','un port','une station de métro'],'L’aéroport est l’infrastructure de l’avion.'],
  ['Le bateau a besoin d’…','un port',['un aéroport','une gare','une station'],'Le port accueille les bateaux.'],
  ['Le train a besoin d’…','une gare et de voies ferrées',['un port','un stade','une piscine'],'Les rails guident le train.'],
@@ -559,7 +559,7 @@ E('cm1-hg-se-deplacer',{w:.7,items:[
 const TXT=(t,q)=>`<div class="trad">${t}</div>${q}`;
 const V1='Tous les soirs, Inès regardait par la fenêtre. Le facteur passait devant chez elle sans s’arrêter. Elle avait écrit à son grand-père trois semaines plus tôt. Ce matin-là, une enveloppe bleue dépassait de la boîte aux lettres. Inès dévala l’escalier sans prendre le temps d’enfiler ses chaussons.';
 const V2='Le petit renard n’osait pas quitter le terrier. Dehors, le vent faisait claquer les branches et la nuit semblait remplie de bruits inquiétants. « Viens, dit sa mère doucement. Je serai juste derrière toi. » Alors il posa une patte, puis l’autre, et le monde lui parut soudain moins effrayant.';
-E('cm1-fr-comprendre',{w:.7,items:[
+E('cm1-fr-comprendre',{w:.85,items:[
  [TXT(V1,'Qu’attend Inès chaque soir ?'),'la réponse de son grand-père',['une visite du facteur pour un colis','un cadeau d’anniversaire','le retour de ses parents'],'Elle lui avait écrit : elle attend sa réponse (implicite).',2],
  [TXT(V1,'Pourquoi descend-elle l’escalier sans enfiler ses chaussons ?'),'elle est impatiente',['elle a froid','elle est fâchée','elle est fatiguée'],'Elle se précipite : on déduit son impatience.',2],
  [TXT(V1,'Depuis combien de temps Inès a-t-elle écrit à son grand-père ?'),'trois semaines',['trois jours','trois mois','un an'],'Information explicite : « trois semaines plus tôt ».'],
@@ -573,7 +573,7 @@ E('cm1-fr-comprendre',{w:.7,items:[
  {tf:'Une information implicite est écrite mot pour mot dans le texte.',v:false,e:'Une information implicite se déduit des indices.'},
  {tf:'Pour justifier une réponse, on s’appuie sur des indices du texte.',v:true,e:'On cite le texte.'}]});
 
-E('cm1-fr-documentaire',{w:.7,items:[
+E('cm1-fr-documentaire',{w:.85,items:[
  [TXT('La baleine bleue est le plus grand animal connu. Elle mesure jusqu’à 30 mètres et peut peser jusqu’à 150 tonnes. Elle se nourrit de krill, de minuscules animaux qui ressemblent à de petites crevettes.','De quoi se nourrit la baleine bleue ?'),'de krill',['de poissons géants','d’algues','de requins'],'Information explicite.'],
  [TXT('La baleine bleue est le plus grand animal connu. Elle mesure jusqu’à 30 mètres et peut peser jusqu’à 150 tonnes. Elle se nourrit de krill, de minuscules animaux qui ressemblent à de petites crevettes.','Combien mesure au maximum la baleine bleue ?'),'30 mètres',['3 mètres','150 mètres','15 mètres'],'Information explicite du texte.'],
  ['Un texte documentaire sert à…','donner des informations vraies sur un sujet',['raconter une histoire inventée','faire rire','faire rimer des mots'],'Il informe.'],
@@ -588,7 +588,7 @@ E('cm1-fr-documentaire',{w:.7,items:[
  {tf:'Le titre annonce le sujet du texte.',v:true,e:'C’est sa fonction.'},
  {t:'Complète : le mini-dictionnaire à la fin d’un livre s’appelle le … (un mot)',a:['glossaire'],e:'Le glossaire.',d:2}]});
 
-E('cm1-fr-litterature',{w:.7,items:[
+E('cm1-fr-litterature',{w:.85,items:[
  ['Qui a écrit Le Corbeau et le Renard ?','Jean de La Fontaine',['Charles Perrault','Victor Hugo','Molière'],'Fables du XVIIe siècle.'],
  ['Qui a écrit Le Petit Chaperon rouge dans sa version française classique ?','Charles Perrault',['La Fontaine','Jules Verne','Molière'],'Contes de Perrault, 1697.',2],
  ['Qui a écrit Blanche-Neige (version célèbre) ?','les frères Grimm',['La Fontaine','Perrault','Molière'],'Contes allemands.',2],
@@ -604,7 +604,7 @@ E('cm1-fr-litterature',{w:.7,items:[
  {tf:'La Fontaine a vécu au XVIIe siècle.',v:true,e:'1621-1695.',d:3},
  {t:'Complète : un groupe de vers dans un poème s’appelle une … (un mot)',a:['strophe'],e:'Une strophe.',d:2}]});
 
-E('cm1-fr-lexique-derivation',{w:.7,items:[
+E('cm1-fr-lexique-derivation',{w:.85,items:[
  ['Quel mot est de la famille de « terre » ?','terrain',['terrible','terminer','tonnerre'],'Le radical terr-.',2],
  ['Quel mot est de la famille de « mer » ?','marin',['mercredi','merci','merle'],'Radical mar-/mer- : marin, marée.',2],
  ['Quel mot est de la famille de « fleur » ?','fleuriste',['fleuve','flou','flotte'],'Fleur, fleurir, fleuriste.',2],
@@ -621,7 +621,7 @@ E('cm1-fr-lexique-derivation',{w:.7,items:[
  {tf:'Un mot de la même famille partage le même radical.',v:true,e:'Les mots de la famille ont un sens lié.'},
  {tf:'Dans « relire », le préfixe est « lire ».',v:false,e:'Le préfixe est re- ; le radical est lire.'}]});
 
-E('cm1-fr-types-formes',{w:.7,items:[
+E('cm1-fr-types-formes',{w:.85,items:[
  ['Quelle phrase est à la forme négative ?','Il ne mange jamais de poisson.',['Il mange du poisson.','Mange-t-il du poisson ?','Mange du poisson.'],'ne … jamais encadre le verbe.'],
  ['Transforme avec « Est-ce que » : « Tu viens. »','Est-ce que tu viens ?',['Tu viens ?!','Viens-tu est-ce que.','Est-ce tu viens.'],'On ajoute Est-ce que devant la phrase.'],
  ['Transforme avec inversion : « Elle chante. »','Chante-t-elle ?',['Chante elle ?','Elle chante-t-elle ?','Est chante-t-elle ?'],'Le t euphonique évite le hiatus entre deux voyelles.',3],
@@ -637,7 +637,7 @@ E('cm1-fr-types-formes',{w:.7,items:[
  {t:'Écris le mot de la négation qui manque : Elle ne sort … le soir. (jamais / pas)',a:['jamais'],e:'ne … jamais.',d:2},
  {t:'Complète : Va-… -elle au parc ? (une lettre)',a:['t'],e:'Va-t-elle : t euphonique.',d:3}]});
 
-E('cm1-fr-complements',{w:.7,items:[
+E('cm1-fr-complements',{w:.85,items:[
  ['Dans « Nous regardons un film », « un film » est…','COD',['COI','CC de lieu','sujet'],'Nous regardons quoi ? un film.'],
  ['Dans « Il parle à sa sœur », « à sa sœur » est…','COI',['COD','CC de temps','sujet'],'Il parle à qui ? à sa sœur.'],
  ['Dans « Samedi, nous visitons le musée », « samedi » est…','CC de temps',['COD','COI','sujet'],'On peut le supprimer et le déplacer.'],
@@ -653,7 +653,7 @@ E('cm1-fr-complements',{w:.7,items:[
  {tf:'« Ce matin » est un complément circonstanciel de temps.',v:true,e:'Il répond à la question quand ?'},
  {t:'Écris le sigle du complément qui répond à « quoi ? » après le verbe (3 lettres)',a:['cod'],e:'COD.',d:2}]});
 
-E('cm1-fr-nature-fonction',{w:.7,items:[
+E('cm1-fr-nature-fonction',{w:.85,items:[
  ['Dans « Les élèves lisent un livre », « les élèves » a pour fonction…','sujet',['COD','COI','attribut'],'Qui est-ce qui lit ? les élèves.'],
  ['Dans « Les élèves lisent un livre », « un livre » a pour fonction…','COD',['sujet','COI','CC de lieu'],'Lisent quoi ? un livre.'],
  ['Dans « Les élèves lisent un livre », la nature de « lisent » est…','verbe',['nom','adjectif','adverbe'],'C’est le verbe conjugué.'],
@@ -668,7 +668,7 @@ E('cm1-fr-nature-fonction',{w:.7,items:[
  {tf:'Le mot « chat » est toujours un nom.',v:true,e:'Sa nature est nom.',d:2},
  {t:'Écris la fonction de « Léa » dans « Léa chante » (un mot)',a:['sujet'],e:'Sujet.',d:2}]});
 
-E('cm1-fr-determinants',{w:.7,items:[
+E('cm1-fr-determinants',{w:.85,items:[
  ['« mes » est un déterminant…','possessif',['démonstratif','article défini','article indéfini'],'Il indique à qui appartient le nom.'],
  ['« cette » est un déterminant…','démonstratif',['possessif','article défini','article indéfini'],'Il montre.'],
  ['« une » est un article…','indéfini',['défini','possessif','démonstratif'],'Un, une, des.'],
@@ -684,7 +684,7 @@ E('cm1-fr-determinants',{w:.7,items:[
  {tf:'« ces » est un déterminant possessif.',v:false,e:'C’est un démonstratif.'},
  {t:'Écris le déterminant manquant : « … maison est grande. » (possessif de « moi », féminin)',a:['ma'],e:'Ma maison.',d:2}]});
 
-E('cm1-fr-gn',{w:.7,items:[
+E('cm1-fr-gn',{w:.85,items:[
  ['Dans « le grand arbre vert », le nom noyau est…','arbre',['grand','vert','le'],'C’est le mot principal.'],
  ['Dans « une jolie petite robe », les épithètes sont…','jolie et petite',['robe et une','une et jolie','petite et robe'],'Les adjectifs collés au nom.',2],
  ['Dans « la robe est rouge », « rouge » est…','attribut du sujet',['épithète','déterminant','COD'],'Il est après le verbe être.',3],
@@ -699,7 +699,7 @@ E('cm1-fr-gn',{w:.7,items:[
  {tf:'Le GN « le petit chat » contient un adjectif placé avant le nom.',v:true,e:'Petit est épithète.'},
  {t:'Écris le nom noyau : « une magnifique fleur rouge »',a:['fleur'],e:'Fleur.',d:2}]});
 
-E('cm1-fr-homophones',{w:.7,items:[
+E('cm1-fr-homophones',{w:.85,items:[
  ['Complète : « Léa … Tom jouent. »','et',['est'],'Et = et puis (on peut dire « et puis »).'],
  ['Complète : « Le ciel … bleu. »','est',['et'],'Était bleu : est.'],
  ['Complète : « Elle va … la piscine. »','à',['a'],'À est une préposition (on ne peut pas dire avait).'],
@@ -718,7 +718,7 @@ E('cm1-fr-homophones',{w:.7,items:[
 }
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de sciences en CM1 ---------- */
-E('cm1-sc-lumiere-ombres',{w:.7,items:[
+E('cm1-sc-lumiere-ombres',{w:.85,items:[
  ['La lumière se propage…','en ligne droite',['en zigzag','en cercle uniquement','de façon aléatoire'],'C’est pourquoi les ombres ont des bords nets.'],
  ['Une source de lumière est…','un objet qui produit de la lumière',['un objet qui la reflète seulement','un objet noir','un miroir'],'Le Soleil, une lampe, une bougie.'],
  ['Quelle est une source de lumière ?','le Soleil',['la Lune','un miroir','un mur blanc'],'La Lune réfléchit la lumière du Soleil.'],
@@ -734,7 +734,7 @@ E('cm1-sc-lumiere-ombres',{w:.7,items:[
  {tf:'La lumière du Soleil met environ 8 minutes pour atteindre la Terre.',v:true,e:'Environ 8 minutes.',d:3},
  {o:['Source de lumière','Objet opaque','Ombre'],q:'Remets dans l’ordre de la lumière à l’ombre :',e:'La lumière rencontre l’objet opaque, derrière lui il y a l’ombre.',d:2}]});
 
-E('cm1-sc-lune',{w:.7,items:[
+E('cm1-sc-lune',{w:.85,items:[
  ['La Lune est…','un satellite naturel de la Terre',['une étoile','une planète','une comète'],'Elle tourne autour de la Terre.'],
  ['La Lune brille car…','elle reflète la lumière du Soleil',['elle produit de la lumière','elle est chaude','elle est une étoile'],'Elle est éclairée par le Soleil.'],
  ['Lors d’une pleine lune, nous voyons…','toute la face éclairée de la Lune',['aucune partie','un croissant','la face cachée seulement'],'La face éclairée est tournée vers nous.'],
@@ -749,7 +749,7 @@ E('cm1-sc-lune',{w:.7,items:[
  {tf:'La Lune produit sa propre lumière.',v:false,e:'Elle réfléchit celle du Soleil.'},
  {o:['la nouvelle lune','le premier quartier','la pleine lune','le dernier quartier'],q:'Remets ces phases dans l’ordre du cycle :',e:'Nouvelle lune, premier quartier, pleine lune, dernier quartier.',d:2}]});
 
-E('cm1-sc-classification',{w:.7,items:[
+E('cm1-sc-classification',{w:.85,items:[
  ['Les vertébrés sont des animaux qui ont…','un squelette interne avec une colonne vertébrale',['une carapace externe','six pattes','huit pattes'],'Mammifères, oiseaux, poissons, reptiles, amphibiens.'],
  ['Un insecte a…','six pattes',['quatre pattes','huit pattes','dix pattes'],'Un insecte a six pattes et trois parties au corps.'],
  ['Une araignée a…','huit pattes',['six pattes','quatre pattes','deux pattes'],'Ce n’est pas un insecte.'],
@@ -765,7 +765,7 @@ E('cm1-sc-classification',{w:.7,items:[
  {tf:'On classe les êtres vivants d’après ce qu’ils mangent.',v:false,e:'On classe d’après les attributs qu’ils possèdent.',d:2},
  {o:['Vertébrés','Tétrapodes','Mammifères'],q:'Remets dans l’ordre du groupe le plus large au plus précis :',e:'Vertébrés, tétrapodes, mammifères.',d:3}]});
 
-E('cm1-sc-developpement',{w:.7,items:[
+E('cm1-sc-developpement',{w:.85,items:[
  ['La fécondation est la rencontre…','d’un spermatozoïde et d’un ovule',['de deux œufs','de deux ovules','d’un œuf et d’un nid'],'Elle donne la première cellule d’un nouvel être.'],
  ['Un animal ovipare est un animal qui…','pond des œufs',['met au monde des petits vivants','ne se reproduit pas','vit seulement dans l’eau'],'La poule est ovipare.'],
  ['Un animal vivipare est un animal qui…','met au monde des petits vivants',['pond des œufs','ne se reproduit pas','vit seulement dans l’eau'],'Le chat est vivipare.',2],
@@ -780,7 +780,7 @@ E('cm1-sc-developpement',{w:.7,items:[
  {o:['l’œuf','la chenille','la chrysalide','le papillon'],q:'Remets dans l’ordre les stades du papillon :',e:'Œuf, chenille, chrysalide, papillon.'},
  {o:['l’œuf','le têtard','la grenouille'],q:'Remets dans l’ordre les stades de la grenouille :',e:'Œuf, têtard, grenouille.',d:2}]});
 
-E('cm1-sc-meteo-climat',{w:.7,items:[
+E('cm1-sc-meteo-climat',{w:.85,items:[
  ['Quel instrument mesure la température ?','le thermomètre',['le pluviomètre','l’anémomètre','le baromètre'],'En degrés Celsius.'],
  ['Quel instrument mesure la quantité de pluie ?','le pluviomètre',['le thermomètre','la girouette','l’anémomètre'],'En millimètres.'],
  ['Quel instrument montre la direction du vent ?','la girouette',['l’anémomètre','le baromètre','le thermomètre'],'Elle tourne dans le sens du vent.'],
@@ -795,7 +795,7 @@ E('cm1-sc-meteo-climat',{w:.7,items:[
  {tf:'La météo concerne un moment et un lieu précis.',v:true,e:'Contrairement au climat.'},
  {n:'Au minimum, sur combien d’années calcule-t-on un climat ?',a:30,u:'ans',e:'Au moins 30 ans.',d:3}]});
 
-E('cm1-sc-cerveau',{w:.7,items:[
+E('cm1-sc-cerveau',{w:.85,items:[
  ['Quel organe commande les mouvements ?','le cerveau',['l’estomac','le cœur','les poumons'],'Il envoie des messages aux muscles.'],
  ['Les messages vers le cerveau circulent grâce aux…','nerfs',['veines','os','poumons'],'Réseau de communication du corps.'],
  ['Quel organe des sens sert à voir ?','l’œil',['l’oreille','le nez','la langue'],'La vue.'],
@@ -811,7 +811,7 @@ E('cm1-sc-cerveau',{w:.7,items:[
  {tf:'Trop de distractions rendent l’attention plus difficile.',v:true,e:'Écrans, bruit.'},
  {o:['Les yeux voient une balle','Un nerf transmet l’information','Le cerveau l’analyse','Les muscles se contractent'],q:'Remets dans l’ordre :',e:'Organe des sens, nerf, cerveau, muscles.',d:3}]});
 
-E('cm1-sc-puberte',{w:.7,items:[
+E('cm1-sc-puberte',{w:.85,items:[
  ['La puberté, c’est…','la période où le corps se transforme en corps d’adulte',['une maladie','une punition','un jeu'],'C’est une étape normale.'],
  ['La puberté débute à un âge…','différent selon chacun',['identique pour tous','toujours à 8 ans','toujours à 14 ans'],'Souvent entre 8 et 14 ans.'],
  ['Pendant la puberté, on observe chez tout le monde…','une forte croissance et une transpiration plus forte',['une perte de la taille','une perte de poids toujours','une disparition du sommeil'],'Poils, transpiration, croissance.'],
@@ -825,7 +825,7 @@ E('cm1-sc-puberte',{w:.7,items:[
  {tf:'L’acné peut apparaître pendant la puberté.',v:true,e:'Elle est fréquente et peut être soignée.',d:2},
  {t:'Complète : on parle de la … de la voix chez les garçons (un mot)',a:['mue'],e:'La mue.',d:3}]});
 
-E('cm1-sc-objets-techniques',{w:.7,items:[
+E('cm1-sc-objets-techniques',{w:.85,items:[
  ['Un objet technique est créé pour…','répondre à un besoin',['décorer seulement','être caché','être cassé'],'Il a une utilité.'],
  ['Dans un stylo à bille, la pièce qui contient l’encre est…','le réservoir',['la bille','le capuchon','le corps'],'Le tube contient l’encre.',2],
  ['Dans une lampe de poche, quelle pièce commande l’éclairage ?','l’interrupteur',['la pile','l’ampoule','le boîtier'],'Il ferme ou ouvre le circuit.',2],
@@ -840,7 +840,7 @@ E('cm1-sc-objets-techniques',{w:.7,items:[
  {tf:'Un même besoin peut être satisfait par plusieurs objets.',v:true,e:'Pour se déplacer : vélo, voiture, train.',d:2},
  {o:['Besoin','Fonctions','Solutions techniques'],q:'Remets l’analyse d’un objet dans l’ordre :',e:'On part du besoin, puis des fonctions, puis des solutions.',d:2}]});
 
-E('cm1-sc-programmer-robot',{w:.7,items:[
+E('cm1-sc-programmer-robot',{w:.85,items:[
  ['Un robot qui exécute les instructions dans l’ordre suit…','un programme',['un jeu','un câble','une recette de cuisine'],'Une suite ordonnée d’instructions.'],
  ['Un programme : répéter 3 fois [avancer de 2]. Combien de cases parcourt le robot ?','6 cases',['3 cases','2 cases','5 cases'],'3 × 2 = 6.',2],
  ['Un programme : avancer de 2, reculer de 2. Où est le robot ?','à son point de départ',['2 cases devant','2 cases derrière','4 cases devant'],'Il revient là où il était.',2],
@@ -854,4 +854,98 @@ E('cm1-sc-programmer-robot',{w:.7,items:[
  {n:'Un robot avance de 3 cases, répète cette action 4 fois. Combien de cases parcourt-il en tout ?',a:12,u:'cases',e:'4 × 3 = 12.',d:2},
  {n:'Répéter 5 fois [avancer de 2]. Combien de cases ?',a:10,u:'cases',e:'5 × 2 = 10.'},
  {o:['J’observe le trajet','J’écris le programme','Je teste','Je corrige les erreurs'],q:'Remets dans l’ordre la démarche de programmation :',e:'Observer, écrire, tester, corriger.',d:2}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de mathématiques en CM1 ---------- */
+{
+const TAB=(rows,head=['',''])=>`<table class="ptable"><tr><td><b>${head[0]}</b></td><td><b>${head[1]}</b></td></tr>${rows.map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</table>`;
+const FR=[['pommes',12],['poires',8],['bananes',15],['oranges',10]];
+const TP=[['lundi',8],['mardi',11],['mercredi',9],['jeudi',14],['vendredi',12]];
+const SP=[['football',9],['danse',6],['natation',7],['judo',5]];
+E('cm1-ma-aires',{w:.85,items:[
+ ['L’aire d’une figure mesure…','sa surface',['son contour','sa hauteur','son poids'],'Unité : cm², m²…'],
+ ['Le périmètre d’une figure mesure…','la longueur de son contour',['sa surface','son volume','son angle'],'Unité : cm, m…'],
+ ['Pour mesurer l’aire d’une salle de classe, on utilise plutôt…','le mètre carré (m²)',['le centimètre (cm)','le litre','le gramme'],'Grande surface.'],
+ ['Pour mesurer l’aire d’une page de cahier, on utilise plutôt…','le centimètre carré (cm²)',['le kilomètre','le litre','le kilogramme'],'Petite surface.'],
+ ['Un carré de 1 m de côté a une aire de…','1 m²',['1 m','4 m','2 m²'],'C’est l’unité d’aire.',2],
+ ['Un rectangle a une longueur de 8 cm et une largeur de 3 cm. Son aire est…','24 cm²',['22 cm²','11 cm²','24 cm'],'8 × 3 = 24.'],
+ ['Un rectangle a une aire de 24 cm² et une largeur de 4 cm. Sa longueur est…','6 cm',['20 cm','28 cm','96 cm'],'24 ÷ 4 = 6.',3],
+ ['Deux figures de même aire ont-elles forcément le même périmètre ?','non',['oui, toujours'],'Un rectangle 4×3 et un rectangle 6×2 ont la même aire (12 cm²) mais pas le même périmètre.',3],
+ {n:'Un carré a 6 cm de côté. Quelle est son aire (en cm²) ?',a:36,u:'cm²',e:'6 × 6 = 36.'},
+ {n:'Un rectangle mesure 7 cm sur 5 cm. Quelle est son aire (en cm²) ?',a:35,u:'cm²',e:'7 × 5 = 35.'},
+ {n:'Un rectangle mesure 8 cm sur 3 cm. Quel est son périmètre (en cm) ?',a:22,u:'cm',e:'2 × (8 + 3) = 22.',d:2},
+ {n:'Combien de carreaux de 1 cm² faut-il pour couvrir un rectangle de 6 cm sur 3 cm ?',a:18,e:'6 × 3 = 18.'},
+ {n:'Un carrelage carré de 20 cm de côté a une aire de combien de cm² ?',a:400,u:'cm²',e:'20 × 20 = 400.',d:3},
+ {tf:'L’aire s’exprime en cm.',v:false,e:'L’aire s’exprime en cm² ; cm est une unité de longueur.'},
+ {tf:'Un rectangle 5 cm × 2 cm a un périmètre de 14 cm.',v:true,e:'2 × (5 + 2) = 14.'},
+ {tf:'Un rectangle 5 cm × 2 cm a une aire de 14 cm².',v:false,e:'L’aire est 5 × 2 = 10 cm².'}]});
+
+E('cm1-ma-angles',{w:.85,items:[
+ ['Un angle droit se vérifie avec…','une équerre',['une règle seule','un compas seulement','une balance'],'On place le coin de l’équerre.'],
+ ['Le coin d’une feuille de papier forme un angle…','droit',['aigu','obtus','plat'],'Le coin d’une feuille standard est droit.'],
+ ['Un angle plus petit qu’un angle droit est…','aigu',['obtus','droit','plat'],'Aigu = pointu.'],
+ ['Un angle plus grand qu’un angle droit, mais plus petit qu’un angle plat, est…','obtus',['aigu','droit','nul'],'Obtus.'],
+ ['Quand les aiguilles d’une horloge indiquent 3 h pile, elles forment un angle…','droit',['aigu','plat','obtus'],'Un quart de tour.',2],
+ ['Quand les aiguilles d’une horloge indiquent 6 h pile, elles forment un angle…','plat',['droit','aigu','obtus'],'Elles sont alignées.',3],
+ ['Dans l’angle ABC, le sommet est…','B',['A','C','le milieu de [AC]'],'La lettre du milieu.'],
+ ['Combien d’angles droits a un carré ?','4',['2','3','1'],'Un carré a 4 angles droits.'],
+ ['Combien d’angles droits a un triangle rectangle ?','1',['2','3','0'],'Un seul.',2],
+ ['Combien d’angles droits a un rectangle ?','4',['2','3','1'],'Quatre angles droits.'],
+ ['Un angle plat est égal à…','deux angles droits',['un angle droit','trois angles droits','un angle aigu'],'Il forme une ligne droite.',3],
+ {tf:'Un triangle peut avoir un angle obtus.',v:true,e:'Oui, par exemple un triangle très « aplati ».',d:2},
+ {tf:'La taille d’un angle dépend de la longueur de ses côtés.',v:false,e:'Elle dépend de l’écart entre les deux demi-droites.'},
+ {tf:'Un angle droit est plus grand qu’un angle obtus.',v:false,e:'Un angle obtus est plus grand qu’un angle droit.'},
+ {n:'Combien d’angles droits a un carré ?',a:4,e:'4.'}]});
+
+E('cm1-ma-solides',{w:.85,items:[
+ ['Combien de faces a un pavé droit ?','6',['4','8','12'],'6 rectangles.'],
+ ['Combien de sommets a un pavé droit ?','8',['6','12','4'],'8 sommets.'],
+ ['Combien d’arêtes a un pavé droit ?','12',['6','8','10'],'12 arêtes.'],
+ ['Combien d’arêtes a une pyramide à base carrée ?','8',['5','12','4'],'4 à la base et 4 qui montent au sommet.',2],
+ ['Combien de sommets a une pyramide à base carrée ?','5',['4','8','6'],'4 à la base et 1 au sommet.',2],
+ ['Combien de faces a une pyramide à base triangulaire ?','4',['3','5','6'],'4 triangles.',2],
+ ['Combien d’arêtes a une pyramide à base triangulaire ?','6',['4','8','9'],'3 à la base et 3 vers le sommet.',3],
+ ['Combien de faces rectangulaires a un prisme droit à base triangulaire ?','3',['2','4','5'],'Une par côté du triangle.',2],
+ ['Un cône a…','une base en forme de disque et un sommet',['deux bases carrées','six faces','douze arêtes'],'Sa surface latérale est courbe.',2],
+ ['Un cylindre a…','deux bases en forme de disque',['quatre faces carrées','un sommet','six arêtes'],'Et une face latérale courbe.'],
+ ['Le patron d’un pavé droit est formé de…','6 rectangles',['6 carrés toujours','4 triangles','2 disques'],'Les faces opposées sont identiques.',2],
+ ['Un cube est un pavé droit dont toutes les faces sont…','des carrés',['des triangles','des disques','des losanges'],'Cas particulier.',2],
+ {tf:'Un cylindre est un prisme.',v:false,e:'Ses bases sont des disques et sa face latérale est courbe.',d:3},
+ {n:'Combien de faces a un cube ?',a:6,e:'6.'},
+ {n:'Combien de sommets a un prisme droit à base carrée ?',a:8,e:'4 en haut, 4 en bas.',d:2}]});
+
+E('cm1-ma-donnees',{w:.85,items:[
+ [`Voici les ventes de fruits d’une semaine.${TAB(FR,['Fruit','Nombre vendu'])}Quel fruit a été le plus vendu ?`,'les bananes',['les pommes','les poires','les oranges'],'15 est le plus grand nombre.'],
+ [`Voici les ventes de fruits d’une semaine.${TAB(FR,['Fruit','Nombre vendu'])}Quel fruit a été le moins vendu ?`,'les poires',['les pommes','les bananes','les oranges'],'8 est le plus petit nombre.'],
+ [`Voici les ventes de fruits d’une semaine.${TAB(FR,['Fruit','Nombre vendu'])}Combien de pommes ont été vendues de plus que de poires ?`,'4',['3','20','12'],'12 − 8 = 4.',2],
+ [`${TAB(TP,['Jour','Température (°C)'])}Quel jour a-t-il fait le plus chaud ?`,'jeudi',['lundi','mardi','vendredi'],'14 °C est la valeur la plus élevée.'],
+ [`${TAB(TP,['Jour','Température (°C)'])}Quel jour a-t-il fait le plus froid ?`,'lundi',['mardi','jeudi','vendredi'],'8 °C est la valeur la plus basse.'],
+ [`${TAB(SP,['Sport','Nombre d’élèves'])}Quel sport compte le plus d’élèves ?`,'le football',['la danse','la natation','le judo'],'9 est le plus grand nombre.'],
+ [`${TAB(SP,['Sport','Nombre d’élèves'])}Combien d’élèves font de la danse ou du judo ?`,'11',['6','5','15'],'6 + 5 = 11.',2],
+ ['Pour montrer l’évolution de la température au cours d’une journée, on utilise plutôt…','une courbe',['un tableau de prénoms','un calendrier','une carte'],'La courbe montre une évolution dans le temps.'],
+ ['Pour comparer des quantités entre catégories, on utilise souvent…','un diagramme en barres',['une courbe','un patron','un plan'],'Chaque barre représente une catégorie.'],
+ ['Dans un diagramme en barres, la hauteur d’une barre représente…','la valeur de la catégorie',['son nom','sa couleur','son rang'],'Plus la barre est haute, plus la valeur est grande.'],
+ ['Avant de lire un graphique, il faut regarder…','le titre et les axes',['uniquement la couleur','seulement la dernière barre','rien'],'Le titre et les axes donnent le sens.'],
+ {n:`Combien de fruits ont été vendus en tout (pommes, poires, bananes, oranges : 12, 8, 15 et 10) ?`,a:45,e:'12 + 8 + 15 + 10 = 45.',d:2},
+ {n:'Lundi : 8 °C ; jeudi : 14 °C. De combien de degrés la température a-t-elle augmenté entre lundi et jeudi ?',a:6,u:'°C',e:'14 − 8 = 6.'},
+ {n:'Dans un groupe, 9 élèves font du football, 6 de la danse, 7 de la natation et 5 du judo. Combien d’élèves en tout ?',a:27,e:'9 + 6 + 7 + 5 = 27.',d:2},
+ {tf:'Une courbe est adaptée pour représenter une évolution dans le temps.',v:true,e:'Par exemple la température.'}]});
+
+E('cm1-ma-probabilites',{w:.85,items:[
+ ['Un sac contient 9 billes rouges et 1 bille bleue. Tirer une bille bleue est…','peu probable',['certain','impossible','une chance sur deux'],'Il n’y a qu’une seule bille bleue sur 10.'],
+ ['Un sac contient 9 billes rouges et 1 bille bleue. Tirer une bille rouge est…','probable',['impossible','peu probable','certain'],'Il y a beaucoup plus de rouges, mais ce n’est pas certain.'],
+ ['Un sac contient seulement des billes rouges. Tirer une bille rouge est…','certain',['impossible','probable','une chance sur deux'],'Il n’y a que des rouges.'],
+ ['Un sac contient seulement des billes rouges. Tirer une bille verte est…','impossible',['certain','probable','une chance sur deux'],'Il n’y a aucune verte.'],
+ ['Un sac contient 5 billes rouges et 5 billes bleues. Tirer une bille rouge est…','une chance sur deux',['certain','impossible','peu probable'],'Autant de rouges que de bleues.'],
+ ['Avec un dé à 6 faces, obtenir 7 est…','impossible',['certain','probable','une chance sur deux'],'Il n’y a pas de face 7.'],
+ ['Avec un dé à 6 faces, obtenir un nombre pair est…','une chance sur deux',['certain','impossible','peu probable'],'3 pairs (2, 4, 6) sur 6.'],
+ ['Avec un dé à 6 faces, obtenir un nombre entre 1 et 6 est…','certain',['impossible','peu probable','une chance sur deux'],'Toutes les issues sont entre 1 et 6.'],
+ ['Avec un dé à 6 faces, obtenir 6 est…','peu probable',['certain','impossible','probable'],'Une face sur six.',2],
+ ['Avec un dé à 6 faces, obtenir un nombre inférieur à 5 est…','probable',['impossible','peu probable','certain'],'1, 2, 3, 4 : quatre issues sur six.',2],
+ ['Quand on lance une pièce, le nombre d’issues possibles est…','2 (pile ou face)',['1','3','6'],'Pile ou face.'],
+ ['Un événement dont on ne peut pas prévoir le résultat est…','aléatoire',['certain','impossible','régulier'],'Comme le lancer d’un dé.'],
+ {n:'Combien d’issues possibles pour un dé à 6 faces ?',a:6,e:'1, 2, 3, 4, 5, 6.'},
+ {n:'Combien d’issues possibles pour un dé à 8 faces numérotées de 1 à 8 ?',a:8,e:'8.'},
+ {tf:'Si on obtient pile trois fois de suite, le prochain lancer a plus de chances de donner face.',v:false,e:'La pièce n’a pas de mémoire : une chance sur deux à chaque lancer.',d:2},
+ {tf:'Deux issues possibles signifient toujours une chance sur deux.',v:false,e:'Il faut que les deux issues aient la même chance.',d:3}]});
+}
 })();

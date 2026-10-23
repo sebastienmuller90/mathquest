@@ -178,7 +178,7 @@ E('ce2-evar-droits',{items:[
  parts:[HE('📜','Moment hors écran : l’affiche de mes droits',{but:'connaître ses droits.',consigne:'Fais une affiche avec 4 droits de l’enfant (identité, santé, éducation, protection) : un dessin et une phrase pour chacun. Ajoute le numéro 119.',duree:'25 minutes',materiel:'grande feuille, feutres',auto:'Mon affiche montre 4 droits et le 119.'})]});
 
 /* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC en CE2 (formulations, vrai/faux, réponses écrites, ordre) ---------- */
-E('ce2-emc-commune',{w:.7,items:[
+E('ce2-emc-commune',{w:.85,items:[
  ['Le territoire où tu habites, village ou ville, s’appelle…','une commune',['un continent','un océan','une planète'],'La commune est le plus petit territoire administré par des élus.'],
  ['Dans ta commune, qui élit le maire ?','le conseil municipal, élu par les habitants',['le président de la République','le directeur de l’école','le roi'],'Les habitants élisent le conseil municipal, qui choisit le maire.',2],
  ['Qui aide le maire à diriger la commune ?','les adjoints',['les pompiers','les enseignants','les facteurs'],'Le maire est aidé par des adjoints, élus du conseil municipal.',2],
@@ -194,7 +194,7 @@ E('ce2-emc-commune',{w:.7,items:[
  {o:['Les habitants votent','Le conseil municipal est élu','Le conseil élit le maire','Le maire dirige avec ses adjoints'],q:'Remets dans l’ordre comment on obtient un maire :',e:'D’abord le vote des habitants, puis l’élection du maire par le conseil.',d:3},
  ['Quel service ne dépend pas de la commune ?','la justice',['le ramassage des déchets','l’état civil','les parcs de la ville'],'La justice dépend de l’État, pas de la commune.',3]]});
 
-E('ce2-emc-engagement',{w:.7,items:[
+E('ce2-emc-engagement',{w:.85,items:[
  ['Un délégué de classe est choisi…','par un vote des élèves',['par le hasard','par le plus fort','sans consulter personne'],'Le délégué est élu par ses camarades.'],
  ['Un délégué parle au nom…','de sa classe',['de lui seul','du maire','de sa famille'],'Il représente la classe.'],
  ['Une personne qui aide dans une association sans être payée est…','bénévole',['salariée','directrice','touriste'],'Un bénévole donne son temps gratuitement.'],
@@ -210,7 +210,7 @@ E('ce2-emc-engagement',{w:.7,items:[
  ['Après un vote pour élire le délégué, on accepte le résultat. C’est…','respecter la décision de la majorité',['tricher','refuser de jouer','se moquer du gagnant'],'On respecte le vote.',2],
  ['Qui peut créer une association ?','deux personnes ou plus qui ont un projet commun',['seulement le maire','seulement les riches','seulement les personnes très âgées'],'La loi de 1901 permet de s’associer librement.',3]]});
 
-E('ce2-emc-services-publics',{w:.7,items:[
+E('ce2-emc-services-publics',{w:.85,items:[
  ['Appeler le 18, c’est appeler…','les pompiers',['la police','le SAMU','la mairie'],'Le 18 : sapeurs-pompiers.'],
  ['Appeler le 15, c’est appeler…','le SAMU, pour une urgence médicale',['la poste','le maire','la bibliothèque'],'Le 15 : urgences médicales.',2],
  ['Appeler le 17, c’est appeler…','la police ou la gendarmerie',['les pompiers','l’hôpital','l’école'],'Le 17 : police et gendarmerie.',2],
@@ -226,7 +226,7 @@ E('ce2-emc-services-publics',{w:.7,items:[
  {n:'Quel numéro appelle-t-on pour les pompiers ?',a:18,e:'Le 18.'},
  ['En cas d’appel d’urgence, il faut surtout…','rester calme et donner son adresse',['raccrocher tout de suite','crier sans expliquer','donner son plat préféré'],'Les secours doivent savoir où aller.',2]]});
 
-E('ce2-emc-valeurs',{w:.7,items:[
+E('ce2-emc-valeurs',{w:.85,items:[
  ['Les trois mots de la devise de la République sont…','Liberté, Égalité, Fraternité',['Force, Argent, Pouvoir','Travail, Famille, Patrie','Courage, Victoire, Gloire'],'La devise de la République : Liberté, Égalité, Fraternité.'],
  ['« Égalité » veut dire…','avoir les mêmes droits',['être tous identiques','avoir tous le même âge','penser tous la même chose'],'L’égalité, ce sont les mêmes droits, pas l’uniformité.'],
  ['« Liberté » veut dire…','pouvoir choisir, penser et s’exprimer en respectant les autres',['faire tout ce qu’on veut sans limite','ne jamais obéir','décider pour les autres'],'Ma liberté s’arrête où commence celle des autres.',2],
@@ -243,7 +243,7 @@ E('ce2-emc-valeurs',{w:.7,items:[
  {o:['Liberté','Égalité','Fraternité'],q:'Remets dans l’ordre les mots de la devise :',e:'Liberté, Égalité, Fraternité.'}]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC au CE2 (bien commun) ---------- */
-E('ce2-emc-bien-commun',{w:.7,items:[
+E('ce2-emc-bien-commun',{w:.85,items:[
  ['Quel est un bien commun ?','un parc public',['ta trousse','la chambre d’un camarade','ton goûter'],'Un bien commun appartient à tous.'],
  ['L’intérêt général, c’est…','ce qui est bon pour tout le monde',['ce qui est bon pour moi seul','ce que veut le plus fort','ce qu’on achète'],'Pas seulement pour soi.'],
  ['Jouer au ballon à tour de rôle dans la cour, c’est penser à…','l’intérêt général',['l’intérêt particulier seulement','la punition','l’ennui'],'Chacun a sa chance.',2],
@@ -259,7 +259,7 @@ E('ce2-emc-bien-commun',{w:.7,items:[
  {o:['Je vois un banc abîmé','J’en parle à un adulte','La commune le répare','Tout le monde peut s’asseoir'],q:'Remets dans l’ordre :',e:'On constate, on prévient, on répare, tous en profitent.',d:3}]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de français en CE2 ---------- */
-E('ce2-fr-son-s',{w:.7,items:[
+E('ce2-fr-son-s',{w:.85,items:[
  ['Complète : un gar…on','ç',['c','s','ss'],'Devant o, on écrit ç : garçon.'],
  ['Complète : une for…e (la puissance)','c',['ç','ss','t'],'Devant e, c fait [s] : force.'],
  ['Complète : la ré…ussite','ss',['s','c','ç'],'Entre deux voyelles : ss pour le son [s] : réussite.'],
@@ -273,7 +273,7 @@ E('ce2-fr-son-s',{w:.7,items:[
  ['Le mot « cirque » commence par…','c devant i : c',['ç','ss','s'],'Devant i : c.',2],
  ['Quel mot s’écrit avec un ç ?','façade',['facile','facette','face'],'Devant a : façade.',2]]});
 
-E('ce2-fr-homophones-son-on',{w:.7,items:[
+E('ce2-fr-homophones-son-on',{w:.85,items:[
  ['Complète : « Mes sœurs … fatiguées. »','sont',['son','ont','on'],'On peut dire « étaient fatiguées » : sont.'],
  ['Complète : « Théo a perdu … stylo. »','son',['sont','ont','on'],'On peut dire « mon stylo » : son.'],
  ['Complète : « Ils … un chat. »','ont',['on','son','sont'],'On peut dire « ils avaient » : ont.'],
@@ -290,7 +290,7 @@ E('ce2-fr-homophones-son-on',{w:.7,items:[
  ['Quel test permet de reconnaître « son » ?','remplacer par mon',['remplacer par avaient','remplacer par il','remplacer par étaient'],'Son vélo → mon vélo.',2],
  ['Quel test permet de reconnaître « ont » ?','remplacer par avaient',['remplacer par mon','remplacer par il','remplacer par étaient'],'Ils ont → ils avaient.',2]]});
 
-E('ce2-fr-prefixes-suffixes',{w:.7,items:[
+E('ce2-fr-prefixes-suffixes',{w:.85,items:[
  ['Dans « refaire », le préfixe est…','re-',['fai-','-aire','-faire'],'re- signifie de nouveau.'],
  ['Dans « danseur », le suffixe est…','-eur',['dan-','-anse','-seur'],'Il désigne celui qui fait.'],
  ['Dans « impossible », le préfixe im- signifie…','pas, le contraire',['de nouveau','avant','petit'],'Impossible : pas possible.'],
@@ -307,7 +307,7 @@ E('ce2-fr-prefixes-suffixes',{w:.7,items:[
  {tf:'Le suffixe se place au début du mot.',v:false,e:'Le suffixe se place à la fin.'},
  {tf:'« Redire » signifie dire de nouveau.',v:true,e:'re- = de nouveau.'}]});
 
-E('ce2-fr-phrase',{w:.7,items:[
+E('ce2-fr-phrase',{w:.85,items:[
  ['Quelle phrase est interrogative ?','Viens-tu au parc ?',['Viens au parc.','Je viens au parc.','Viens vite au parc !'],'Elle pose une question.'],
  ['Quelle phrase est impérative ?','Range ta chambre.',['Tu ranges ta chambre.','Ranges-tu ta chambre ?','Elle range sa chambre.'],'Elle donne un ordre.'],
  ['Quelle phrase est déclarative ?','Le chat dort sur le canapé.',['Où dort le chat ?','Dors, petit chat !','Le chat dort-il ?'],'Elle donne une information.'],
@@ -323,7 +323,7 @@ E('ce2-fr-phrase',{w:.7,items:[
  {t:'Écris le mot qui manque : Il ne mange … de pain. (négation : ne … pas)',a:['pas'],e:'Il ne mange pas de pain.'},
  {t:'Écris le mot qui manque dans la négation : Il … joue plus.',a:['ne'],e:'ne … plus.',d:2}]});
 
-E('ce2-fr-constituants',{w:.7,items:[
+E('ce2-fr-constituants',{w:.85,items:[
  ['Dans « Léa chante », le sujet est…','Léa',['chante','Léa chante','il'],'Qui est-ce qui chante ? Léa.'],
  ['Dans « Le chien aboie », le verbe est…','aboie',['chien','le','le chien'],'Le verbe indique l’action.'],
  ['Dans « Hier, Tom a mangé une pomme. », quel groupe peut être déplacé ?','Hier',['Tom','a mangé','une pomme obligatoirement'],'Le complément de phrase peut être déplacé : Tom a mangé une pomme hier.',2],
@@ -338,7 +338,7 @@ E('ce2-fr-constituants',{w:.7,items:[
  {t:'Écris le sujet : « Au zoo, les enfants observent les girafes. » (2 mots)',a:['les enfants','Les enfants'],e:'Qui est-ce qui observe ? Les enfants.',d:2},
  {t:'Écris le verbe : « Mon frère mange une orange. »',a:['mange'],e:'Le verbe est mange.'}]});
 
-E('ce2-fr-pluriels-feminins',{w:.7,items:[
+E('ce2-fr-pluriels-feminins',{w:.85,items:[
  ['Pluriel de « un animal »','des animaux',['des animals','des animales','des animeaux'],'-al devient -aux.'],
  ['Pluriel de « un bateau »','des bateaux',['des bateaus','des batals','des bateau'],'-eau prend un x.'],
  ['Pluriel de « un neveu »','des neveux',['des neveus','des nevaux','des neveuxs'],'-eu prend généralement un x.',2],
@@ -354,4 +354,24 @@ E('ce2-fr-pluriels-feminins',{w:.7,items:[
  {t:'Écris le pluriel : un gâteau → des …',a:['gâteaux','gateaux'],e:'-eau → -eaux.'},
  {tf:'Le pluriel de « un festival » est « des festivals ».',v:true,e:'Exception : festival, bal, carnaval prennent un s.',d:3},
  {tf:'Le pluriel de « un cheval » est « des chevals ».',v:false,e:'Des chevaux.'}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de mathématiques en CE2 ---------- */
+E('ce2-ma-solides',{w:.85,items:[
+ ['Une face d’un solide est…','une surface plane de ce solide',['un coin du solide','un segment du solide','un trou'],'Un cube a 6 faces.'],
+ ['Une arête est…','le segment où deux faces se rejoignent',['un coin','une face','un angle droit'],'Un cube a 12 arêtes.'],
+ ['Un sommet est…','le point où se rejoignent plusieurs arêtes',['une face','un côté','un segment'],'Un cube a 8 sommets.'],
+ ['Un cube a…','6 faces carrées',['4 faces carrées','8 faces carrées','6 faces triangulaires'],'Toutes ses faces sont des carrés égaux.'],
+ ['Les faces d’un pavé droit sont des…','rectangles',['triangles','cercles','losanges'],'Un pavé a 6 faces rectangulaires.'],
+ ['Un cube est un pavé droit particulier car…','toutes ses faces sont des carrés',['il a plus de faces','il a des faces triangulaires','il est rond'],'Un cube est un pavé dont les 6 faces sont des carrés.',3],
+ ['La boule a…','aucune arête et aucun sommet',['12 arêtes','8 sommets','6 faces carrées'],'Elle n’a qu’une surface courbe.',2],
+ ['Un cône a…','un sommet et une face plane en forme de disque',['6 faces','12 arêtes','8 sommets'],'Il a une surface courbe.',2],
+ ['Une boîte de mouchoirs a souvent la forme…','d’un pavé droit',['d’une boule','d’un cône','d’un cylindre'],'Boîte rectangulaire.'],
+ ['Un ballon de football est assimilé à…','une boule',['un cube','une pyramide','un cylindre'],'Solide sans arête.'],
+ ['Un chapeau de clown a la forme d’un…','cône',['cylindre','cube','pavé'],'Pointu avec une base ronde.'],
+ {n:'Combien de sommets a un cube ?',a:8,e:'8 sommets.'},
+ {n:'Combien de faces triangulaires a une pyramide à base carrée ?',a:4,e:'4 triangles et 1 carré.',d:2},
+ {n:'Combien de faces a une pyramide à base carrée ?',a:5,e:'4 triangles et 1 carré.',d:2},
+ {tf:'Un cylindre a deux faces planes en forme de disques.',v:true,e:'Et une surface courbe.'},
+ {tf:'Un pavé droit a 6 faces carrées obligatoirement.',v:false,e:'Ses faces sont des rectangles, pas forcément des carrés.',d:2},
+ {tf:'Un patron de cube est formé de 6 carrés identiques correctement assemblés.',v:true,e:'La disposition compte.',d:2}]});
 })();

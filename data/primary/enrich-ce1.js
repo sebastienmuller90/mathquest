@@ -224,7 +224,7 @@ E('ce1-evar-stereotypes',{items:[
  parts:[HE('⚖️','Moment hors écran : métiers pour tous',{but:'repérer et dépasser les stéréotypes.',consigne:'Avec un adulte, cherchez dans un livre ou un magazine 2 personnes qui font un métier « inattendu » (une pompière, un sage-femme…). Dessine-les.',duree:'15 minutes',materiel:'livres ou magazines, feuille',auto:'J’ai trouvé 2 exemples et j’explique pourquoi c’est possible pour tout le monde.'})]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC au CE1 ---------- */
-E('ce1-emc-alerter',{w:.7,items:[
+E('ce1-emc-alerter',{w:.85,items:[
  ['Pour une urgence médicale, on appelle le…','15',['17','18','119'],'Le 15, c’est le SAMU.'],
  ['Pour la police ou la gendarmerie, on appelle le…','17',['15','18','112'],'Le 17.'],
  ['Pour un incendie, on appelle le…','18',['15','17','119'],'Le 18, les pompiers.'],
@@ -238,7 +238,7 @@ E('ce1-emc-alerter',{w:.7,items:[
  {n:'Quel numéro appelle-t-on pour les pompiers ?',a:18,e:'Le 18.'},
  {o:['Je protège','J’alerte','Je secours'],q:'Remets les trois gestes dans l’ordre :',e:'Protéger, alerter, secourir.',d:2}]});
 
-E('ce1-emc-civilite',{w:.7,items:[
+E('ce1-emc-civilite',{w:.85,items:[
  ['Quand on reçoit un cadeau, on dit…','merci',['rien','non','bof'],'Remercier est poli.'],
  ['Pour demander quelque chose poliment, on dit…','s’il vous plaît',['donne-moi','vite','tout de suite'],'La politesse rend la vie agréable.'],
  ['Dans une file d’attente, on…','attend son tour',['double tout le monde','pousse','crie'],'Chacun son tour.'],
@@ -251,7 +251,7 @@ E('ce1-emc-civilite',{w:.7,items:[
  {tf:'On peut refuser poliment quelque chose.',v:true,e:'Politesse ne veut pas dire se laisser faire.',d:2},
  {o:['Je frappe à la porte','J’attends la réponse','J’entre','Je dis bonjour'],q:'Remets dans l’ordre pour entrer poliment dans une pièce :',e:'On frappe, on attend, on entre, on salue.',d:3}]});
 
-E('ce1-emc-differences',{w:.7,items:[
+E('ce1-emc-differences',{w:.85,items:[
  ['Nous sommes tous différents mais nous avons tous…','les mêmes droits',['le même âge','les mêmes goûts','la même taille'],'Égaux en droits.'],
  ['Une idée toute faite comme « les garçons ne savent pas danser » est…','un stéréotype',['une loi','une vérité','un jeu'],'Un stéréotype est une idée simplifiée.',2],
  ['Si un camarade en fauteuil roulant ne peut pas monter les marches, on…','cherche un moyen de l’aider à accéder aux lieux',['le laisse dehors','se moque','le cache'],'On cherche l’égalité d’accès.',2],
@@ -264,7 +264,7 @@ E('ce1-emc-differences',{w:.7,items:[
  {tf:'Chacun mérite le respect, même s’il est différent.',v:true,e:'C’est le principe de dignité.'},
  ['Si un camarade est moqué, que peux-tu faire ?','l’aider et prévenir un adulte',['rire avec les autres','filmer','ne rien dire jamais'],'On ne laisse pas faire.']]});
 
-E('ce1-emc-harcelement',{w:.7,items:[
+E('ce1-emc-harcelement',{w:.85,items:[
  ['Le harcèlement, c’est quand…','une personne est attaquée de façon répétée',['on se dispute une seule fois','on joue ensemble','on gagne un jeu'],'Répété, contre la même personne.'],
  ['Dans une situation de harcèlement, un témoin est…','quelqu’un qui voit ce qui se passe',['celui qui frappe','celui qui est attaqué','le directeur seulement'],'Il peut agir en prévenant un adulte.',2],
  ['Si je suis victime de harcèlement, je dois…','en parler à un adulte de confiance',['me taire','faire pareil à un autre','ne plus aller à l’école'],'On ne reste pas seul.'],
@@ -276,7 +276,7 @@ E('ce1-emc-harcelement',{w:.7,items:[
  {tf:'Un harcèlement est interdit par la loi.',v:true,e:'Il est puni.',d:3},
  ['Le mot « cible » désigne…','la personne attaquée',['celui qui prévient','l’adulte','le directeur'],'On l’appelle aussi la victime.',2]]});
 
-E('ce1-emc-republique',{w:.7,items:[
+E('ce1-emc-republique',{w:.85,items:[
  ['Dans la devise « Liberté, Égalité, Fraternité », « Fraternité » veut dire…','s’entraider',['se battre','gagner seul','obéir'],'Fraternité : solidarité.'],
  ['La laïcité garantit…','la liberté de croire ou de ne pas croire',['une seule religion','aucune liberté','le silence'],'Chacun est libre.'],
  ['L’école publique accueille…','tous les enfants',['seulement une religion','seulement les riches','seulement les garçons'],'Elle est ouverte à tous.'],

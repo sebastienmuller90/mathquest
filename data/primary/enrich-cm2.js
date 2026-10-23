@@ -359,7 +359,7 @@ E('cm2-hg-habiter',{items:[
  ['Les toits végétalisés aident à…','isoler les bâtiments et retenir l’eau de pluie',['augmenter la chaleur','attirer les voitures','faire du bruit'],'Ils rafraîchissent et isolent.',2]]});
 
 /* ---------- Vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC et d'histoire-géographie en CM2 ---------- */
-E('cm2-emc-citoyennete',{w:.7,items:[
+E('cm2-emc-citoyennete',{w:.85,items:[
  ['La nationalité est…','le lien juridique entre une personne et un État',['un sport','une langue obligatoire','une couleur de passeport'],'Elle se prouve par la carte d’identité ou le passeport.'],
  ['Quel document prouve l’état civil (naissance) ?','l’acte de naissance',['le carnet de santé','le bulletin scolaire','le ticket de bus'],'Il est délivré par la mairie.',2],
  ['À partir de quel âge un Français peut-il voter ?','18 ans',['12 ans','16 ans','25 ans'],'La majorité civique est à 18 ans.'],
@@ -375,7 +375,7 @@ E('cm2-emc-citoyennete',{w:.7,items:[
  {n:'En quelle année l’empereur Caracalla donne-t-il la citoyenneté romaine à presque tous les hommes libres de l’Empire ?',a:212,e:'En 212.',d:3},
  {o:['Je me fais recenser à 16 ans','J’ai 18 ans','Je suis inscrit sur les listes électorales','Je vote'],q:'Remets dans l’ordre le chemin vers le premier vote :',e:'Recensement, majorité, inscription, vote.',d:3}]});
 
-E('cm2-emc-droits',{w:.7,items:[
+E('cm2-emc-droits',{w:.85,items:[
  ['La Déclaration des droits de l’homme et du citoyen date de…','1789',['1889','1989','1689'],'Elle est adoptée en août 1789.'],
  ['La CIDE est…','la Convention internationale des droits de l’enfant',['une compétition sportive','un jeu vidéo','un impôt'],'Adoptée par l’ONU en 1989.'],
  ['La CIDE a été adoptée le…','20 novembre 1989',['14 juillet 1789','11 novembre 1918','1er mai 1900'],'Le 20 novembre est la Journée internationale des droits de l’enfant.',2],
@@ -391,7 +391,7 @@ E('cm2-emc-droits',{w:.7,items:[
  {n:'En quelle année la Déclaration universelle des droits de l’homme a-t-elle été adoptée par l’ONU ?',a:1948,e:'Le 10 décembre 1948.',d:3},
  {o:['1789','1948','1989'],q:'Place dans l’ordre chronologique ces dates de textes sur les droits :',e:'DDHC (1789), DUDH (1948), CIDE (1989).',d:2}]});
 
-E('cm2-emc-europe',{w:.7,items:[
+E('cm2-emc-europe',{w:.85,items:[
  ['L’Union européenne compte actuellement…','27 États membres',['7 États','50 États','12 États uniquement'],'Depuis le départ du Royaume-Uni en 2020.',2],
  ['Le drapeau de l’Union européenne est…','bleu avec douze étoiles dorées',['rouge avec une croix','vert et blanc','jaune avec un cercle'],'Les étoiles forment un cercle.'],
  ['L’hymne de l’Union européenne est tiré de…','la 9e symphonie de Beethoven',['La Marseillaise','un opéra de Mozart','une chanson pop'],'L’Ode à la joie.',3],
@@ -407,7 +407,7 @@ E('cm2-emc-europe',{w:.7,items:[
  {n:'Combien d’étoiles figurent sur le drapeau européen ?',a:12,e:'Douze étoiles.',d:2},
  {o:['1957','1992','2020'],q:'Place dans l’ordre chronologique : traité de Rome, traité de Maastricht, sortie du Royaume-Uni :',e:'1957 (Rome), 1992 (Maastricht), 2020 (Brexit).',d:3}]});
 
-E('cm2-hg-deplacer',{w:.7,items:[
+E('cm2-hg-deplacer',{w:.85,items:[
  ['Un déplacement « quotidien » est…','un trajet de tous les jours, comme aller à l’école',['un voyage de vacances','un tour du monde','un déménagement'],'Il revient chaque jour.'],
  ['Un déplacement « occasionnel » est…','un trajet exceptionnel, comme partir en vacances',['aller à l’école chaque matin','aller au travail chaque jour','aller à la boulangerie'],'Il n’a pas lieu tous les jours.'],
  ['Le réseau ferroviaire français est dit « en étoile » car…','de nombreuses lignes partent de Paris',['toutes les gares sont étoilées','il a la forme d’un cercle','il est dessiné la nuit'],'Paris est le centre du réseau.'],
@@ -423,7 +423,7 @@ E('cm2-hg-deplacer',{w:.7,items:[
  {n:'En quelle année le tunnel sous la Manche est-il inauguré ?',a:1994,e:'En 1994.',d:3},
  {o:['Je vais à la gare à pied','Je prends le TGV','J’arrive à Lyon','Je prends le métro'],q:'Remets dans l’ordre un trajet combiné vers le centre de Lyon :',e:'Gare, TGV, arrivée, puis transport en commun.',d:3}]});
 
-E('cm2-hg-ecole',{w:.7,items:[
+E('cm2-hg-ecole',{w:.85,items:[
  ['Jules Ferry rend l’école primaire gratuite en…','1881',['1789','1914','1958'],'Loi du 16 juin 1881.'],
  ['Jules Ferry rend l’instruction obligatoire et laïque en…','1882',['1900','1792','1905'],'Loi du 28 mars 1882.'],
  ['Selon les lois Ferry, l’instruction est obligatoire de…','6 à 13 ans',['3 à 10 ans','10 à 20 ans','6 à 18 ans'],'À l’époque.',2],
@@ -439,7 +439,7 @@ E('cm2-hg-ecole',{w:.7,items:[
  {n:'En quelle année l’école primaire publique devient-elle gratuite ?',a:1881,e:'En 1881.'},
  {o:['1881','1882','1886'],q:'Place ces dates des lois scolaires dans l’ordre chronologique :',e:'1881 (gratuité), 1882 (obligation et laïcité), 1886 (personnel laïque).',d:3}]});
 
-E('cm2-hg-guerre-14',{w:.7,items:[
+E('cm2-hg-guerre-14',{w:.85,items:[
  ['La Première Guerre mondiale commence en…','1914',['1789','1939','1870'],'Elle dure de 1914 à 1918.'],
  ['Elle se termine par l’armistice du…','11 novembre 1918',['8 mai 1945','14 juillet 1789','1er janvier 1900'],'Les combats cessent.'],
  ['Comment appelle-t-on les soldats français de la Première Guerre mondiale ?','les poilus',['les gladiateurs','les chevaliers','les pirates'],'Surnom donné aux soldats français.'],
@@ -456,7 +456,7 @@ E('cm2-hg-guerre-14',{w:.7,items:[
  {n:'En quelle année la guerre commence-t-elle ?',a:1914,e:'En 1914.'},
  {o:['1914','1916','1918'],q:'Place dans l’ordre : début de la guerre, bataille de Verdun, armistice :',e:'1914, 1916, 1918.',d:2}]});
 
-E('cm2-hg-habiter',{w:.7,items:[
+E('cm2-hg-habiter',{w:.85,items:[
  ['Une ville durable est une ville qui…','répond aux besoins d’aujourd’hui sans abîmer l’avenir',['ne bouge jamais','construit sans limite','supprime la nature'],'Durable = qui peut durer.'],
  ['Quel est le but des trois R ?','réduire, réutiliser, recycler',['rire, rêver, rester','rouler, ranger, rouler','rien, rien, rien'],'On limite les déchets.'],
  ['Un îlot de chaleur urbain est…','une zone de la ville plus chaude que les alentours',['une île dans la mer','une piscine','un parc glacé'],'Le béton stocke la chaleur.',3],
@@ -472,7 +472,7 @@ E('cm2-hg-habiter',{w:.7,items:[
  {o:['Je constate le problème','Je propose des solutions','On choisit ensemble','On réalise et on vérifie'],q:'Remets dans l’ordre un projet pour mieux habiter :',e:'Constat, solutions, choix, réalisation et vérification.',d:3},
  ['La High Line de New York est…','un parc créé sur une ancienne voie ferrée',['un gratte-ciel','un aéroport','un stade'],'Premier tronçon ouvert en 2009.',3]]});
 
-E('cm2-hg-industrie',{w:.7,items:[
+E('cm2-hg-industrie',{w:.85,items:[
  ['L’âge industriel commence en France au…','XIXe siècle',['XVe siècle','XVIIe siècle','XXIe siècle'],'Années 1800.'],
  ['Quelle énergie alimente les machines à vapeur ?','le charbon',['le vent','le soleil','l’éolienne'],'Il chauffe l’eau.'],
  ['Où extrait-on le charbon ?','dans les mines',['dans les champs','dans les océans','dans les fermes'],'Mineurs.'],
@@ -489,7 +489,7 @@ E('cm2-hg-industrie',{w:.7,items:[
  {n:'En quelle année la première loi limite-t-elle le travail des enfants ?',a:1841,e:'En 1841.',d:3},
  {o:['Extraction du charbon','Transport par le train','Usine à vapeur','Production d’objets'],q:'Remets dans l’ordre la chaîne qui va du charbon à l’objet fabriqué :',e:'Extraction, transport, usine, production.',d:3}]});
 
-E('cm2-hg-internet',{w:.7,items:[
+E('cm2-hg-internet',{w:.85,items:[
  ['La fracture numérique est…','l’inégalité d’accès et d’usage du numérique',['une panne d’ordinateur','un câble cassé','un virus'],'Dans le monde et en France.'],
  ['Qu’est-ce qu’une zone blanche ?','un endroit sans réseau mobile ou Internet',['un endroit couvert de neige','un désert','une zone sans routes'],'Il reste quelques zones mal couvertes.',2],
  ['La fibre optique transporte les informations sous forme de…','lumière',['eau','vapeur','poussière'],'Elle est en verre.',2],
@@ -506,7 +506,7 @@ E('cm2-hg-internet',{w:.7,items:[
  {o:['Je lis l’information','Je cherche qui l’a publiée','Je compare avec d’autres sources','Je décide de la partager ou non'],q:'Remets dans l’ordre la démarche de vérification d’une information :',e:'Lire, chercher la source, comparer, décider.',d:3}]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'HG et d'EMC au CM2 ---------- */
-E('cm2-hg-republique',{w:.7,items:[
+E('cm2-hg-republique',{w:.85,items:[
  ['La Première République est proclamée en…','1792',['1789','1848','1870'],'Après la chute de la monarchie.'],
  ['En 1848, la IIe République…','instaure le suffrage universel masculin',['rétablit le roi','donne le vote aux femmes','crée l’Union européenne'],'Et abolit l’esclavage.',2],
  ['Qui fait abolir l’esclavage en 1848 ?','Victor Schœlcher',['Napoléon','Louis XIV','Jules Ferry'],'Il est sous-secrétaire d’État à la Marine.',3],
@@ -521,7 +521,7 @@ E('cm2-hg-republique',{w:.7,items:[
  {n:'En quelle année les femmes obtiennent-elles le droit de vote en France ?',a:1944,e:'1944.',d:2},
  {o:['1792','1848','1870','1905'],q:'Remets ces dates de la République dans l’ordre :',e:'1792, 1848, 1870, 1905.',d:2}]});
 
-E('cm2-hg-guerre-39',{w:.7,items:[
+E('cm2-hg-guerre-39',{w:.85,items:[
  ['La Seconde Guerre mondiale dure de…','1939 à 1945',['1914 à 1918','1789 à 1799','1870 à 1871'],'Elle commence en 1939.'],
  ['Le 18 juin 1940, de Gaulle…','appelle depuis Londres à continuer le combat',['signe la paix','devient roi','quitte la France pour toujours'],'C’est l’appel du 18 juin.',2],
  ['Le régime de Vichy est dirigé par…','le maréchal Pétain',['de Gaulle','Jean Moulin','Louis XIV'],'Il collabore avec l’Allemagne nazie.',2],
@@ -536,7 +536,7 @@ E('cm2-hg-guerre-39',{w:.7,items:[
  {n:'En quelle année commence la Seconde Guerre mondiale ?',a:1939,e:'1939.'},
  {o:['1939','1940','1944','1945'],q:'Remets ces dates dans l’ordre :',e:'1939 début, 1940 défaite française, 1944 débarquement, 1945 fin.',d:2}]});
 
-E('cm2-hg-europe',{w:.7,items:[
+E('cm2-hg-europe',{w:.85,items:[
  ['Le traité de Rome de 1957 crée…','la Communauté économique européenne',['l’ONU','l’OTAN','la Société des Nations'],'Six pays fondateurs.',2],
  ['Combien de pays signent le traité de Rome ?','6',['2','12','27'],'France, Allemagne de l’Ouest, Italie, Belgique, Pays-Bas, Luxembourg.',2],
  ['Le traité de Maastricht crée…','l’Union européenne',['l’euro en 1957','le Parlement français','le TGV'],'Signé en 1992.',2],
@@ -551,7 +551,7 @@ E('cm2-hg-europe',{w:.7,items:[
  {n:'En quelle année le traité de Rome est-il signé ?',a:1957,e:'En 1957.'},
  {o:['1957','1992','2002'],q:'Remets dans l’ordre : traité de Rome, traité de Maastricht, arrivée de l’euro :',e:'1957, 1992, 2002.',d:2}]});
 
-E('cm2-emc-institutions',{w:.7,items:[
+E('cm2-emc-institutions',{w:.85,items:[
  ['Qui vote les lois ?','le Parlement',['le maire','le juge','le préfet'],'Assemblée nationale et Sénat.'],
  ['Qui fait appliquer les lois ?','le Gouvernement',['les députés seulement','les élèves','les professeurs'],'Avec le Président de la République.',2],
  ['Qui sanctionne ceux qui ne respectent pas la loi ?','la justice',['le maire','le facteur','le Parlement'],'Les juges.'],
@@ -566,7 +566,7 @@ E('cm2-emc-institutions',{w:.7,items:[
  {t:'Complète : le Sénat et l’Assemblée nationale forment le … (un mot)',a:['parlement'],e:'Le Parlement.',d:2},
  {n:'En quelle année la Constitution de la Ve République est-elle adoptée ?',a:1958,e:'En 1958.',d:3}]});
 
-E('cm2-emc-symboles',{w:.7,items:[
+E('cm2-emc-symboles',{w:.85,items:[
  ['Qui a écrit la Marseillaise ?','Rouget de Lisle',['Victor Hugo','Molière','Louis XIV'],'Il l’a écrite en 1792.',2],
  ['Marianne porte…','un bonnet phrygien',['une couronne de roi','un casque de pompier','un chapeau de cow-boy'],'Symbole de liberté.',2],
  ['Le 14 juillet rappelle…','la prise de la Bastille (1789) et la fête de la Fédération (1790)',['l’armistice de 1918','le débarquement de 1944','la loi de 1905'],'Fête nationale.',2],
@@ -583,7 +583,7 @@ E('cm2-emc-symboles',{w:.7,items:[
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de français en CM2 ---------- */
 {
-E('cm2-fr-sens',{w:.7,items:[
+E('cm2-fr-sens',{w:.85,items:[
  ['« Il a un caractère de cochon. » Le mot « cochon » est employé au sens…','figuré',['propre','littéral','premier'],'On ne parle pas de l’animal : c’est une image.'],
  ['« Le cochon mange dans l’auge. » Le mot « cochon » est employé au sens…','propre',['figuré','imagé','symbolique'],'On parle de l’animal.'],
  ['« Il pleut des cordes » signifie…','il pleut très fort',['il tombe des cordes','il pleut sur des cordes','il ne pleut pas'],'Expression imagée (sens figuré).'],
@@ -598,7 +598,7 @@ E('cm2-fr-sens',{w:.7,items:[
  {tf:'Éruption et irruption sont des paronymes.',v:true,e:'Ils se ressemblent mais n’ont pas le même sens.',d:2},
  {t:'Écris le mot : pour boire, je prends un … (récipient)',a:['verre'],e:'Verre.',d:2}]});
 
-E('cm2-fr-sujet',{w:.7,items:[
+E('cm2-fr-sujet',{w:.85,items:[
  ['Sujet de « Dans la forêt vivent des loups. »','des loups',['la forêt','vivent','dans'],'Qu’est-ce qui vit ? des loups.'],
  ['Sujet de « Quand arrivent les vacances ? »','les vacances',['quand','arrivent','arriver'],'Qu’est-ce qui arrive ? les vacances.'],
  ['Sujet de « Courir est excellent pour la santé. »','courir',['la santé','excellent','pour'],'Sujet à l’infinitif.'],
@@ -613,7 +613,7 @@ E('cm2-fr-sujet',{w:.7,items:[
  {t:'Écris le sujet de « Sur la table se trouvent trois livres. » (2 mots)',a:['trois livres'],e:'Qu’est-ce qui se trouve ? trois livres.',d:2},
  {t:'Écris le verbe de « Au loin brillaient les lumières. »',a:['brillaient'],e:'Le verbe conjugué.'}]});
 
-E('cm2-fr-attribut',{w:.7,items:[
+E('cm2-fr-attribut',{w:.85,items:[
  ['Dans « Mon voisin est pompier », « pompier » est…','attribut du sujet',['COD','COI','CC de lieu'],'Verbe d’état être.'],
  ['Dans « Il mange une pomme », « une pomme » est…','COD',['attribut du sujet','COI','CC de lieu'],'Verbe d’action : mange quoi ?'],
  ['Dans « Elle parle à sa voisine », « à sa voisine » est…','COI',['COD','attribut','CC de temps'],'Parle à qui ?'],
@@ -628,7 +628,7 @@ E('cm2-fr-attribut',{w:.7,items:[
  {tf:'L’attribut est un COD.',v:false,e:'L’attribut est lié au sujet, le COD complète l’action.'},
  {t:'Écris la fonction de « malade » dans « Léo est malade » (deux mots : attribut du …)',a:['attribut du sujet'],e:'Attribut du sujet.',d:3}]});
 
-E('cm2-fr-cc',{w:.7,items:[
+E('cm2-fr-cc',{w:.85,items:[
  ['Dans « Hier, nous avons visité le musée », « Hier » est un CC de…','temps',['lieu','manière','cause'],'Quand ?'],
  ['Dans « Nous dînons dans le jardin », « dans le jardin » est un CC de…','lieu',['temps','manière','cause'],'Où ?'],
  ['Dans « Elle marche lentement », « lentement » est un CC de…','manière',['temps','lieu','cause'],'Comment ?'],
@@ -642,7 +642,7 @@ E('cm2-fr-cc',{w:.7,items:[
  {tf:'Un adverbe peut être un CC.',v:true,e:'Exemple : lentement.',d:2},
  {t:'Écris le type de CC : « Au bord du lac » répond à la question « où ? » : CC de … (un mot)',a:['lieu'],e:'Lieu.',d:2}]});
 
-E('cm2-fr-classes',{w:.7,items:[
+E('cm2-fr-classes',{w:.85,items:[
  ['Quelle est la classe de « sur » ?','préposition',['conjonction','adverbe','verbe'],'Sur la table.'],
  ['Quelle est la classe de « mais » ?','conjonction de coordination',['préposition','adverbe','pronom'],'Mais, ou, et, or, ni, car.'],
  ['Quelle est la classe de « très » ?','adverbe',['préposition','conjonction','nom'],'Très gentil : il modifie un adjectif.'],
@@ -658,7 +658,7 @@ E('cm2-fr-classes',{w:.7,items:[
  {tf:'« Où » (le lieu) est une conjonction de coordination.',v:false,e:'Il n’appartient pas aux six conjonctions de coordination.',d:3},
  {t:'Écris la classe de « mais » (deux premiers mots : conjonction de …)',a:['conjonction de coordination'],e:'Conjonction de coordination.',d:3}]});
 
-E('cm2-fr-expansions',{w:.7,items:[
+E('cm2-fr-expansions',{w:.85,items:[
  ['Dans « un chat de gouttière », « de gouttière » est…','un complément du nom',['une épithète','une proposition relative','un COD'],'Préposition + nom.'],
  ['Dans « un chat noir », « noir » est…','une épithète',['un complément du nom','une relative','un COD'],'Adjectif collé au nom.'],
  ['Dans « un chat qui ronronne », « qui ronronne » est…','une proposition relative',['une épithète','un complément du nom','un attribut'],'Pronom relatif + verbe.'],
@@ -672,7 +672,7 @@ E('cm2-fr-expansions',{w:.7,items:[
  {tf:'On peut supprimer une expansion sans changer la fonction du nom.',v:true,e:'Les expansions apportent des précisions.',d:2},
  {t:'Écris le pronom relatif : « La maison … j’ai grandi est vieille. » (lieu)',a:['où','ou'],e:'Où.',d:3}]});
 
-E('cm2-fr-participe-passe',{w:.7,items:[
+E('cm2-fr-participe-passe',{w:.85,items:[
  ['« Les fleurs que j’ai (cueillir) sont belles. »','cueillies',['cueilli','cueillis','cueillie'],'COD « que » = fleurs, placé avant : accord au féminin pluriel.',2],
  ['« Nous sommes (rentrer) tard. » (nous = des filles)','rentrées',['rentré','rentrés','rentrée'],'Être : accord avec le sujet.',2],
  ['« Ils ont (finir) leur travail. »','fini',['finis','finie','finies'],'Avoir, COD après le verbe : pas d’accord.'],
@@ -687,7 +687,7 @@ E('cm2-fr-participe-passe',{w:.7,items:[
  {tf:'« Les lettres que j’ai écrites » est correct.',v:true,e:'COD « que » (les lettres) placé avant.',d:2},
  {t:'Écris le participe passé accordé : « Elles sont (sortir) ... »',a:['sorties'],e:'Être : accord avec elles (féminin pluriel).',d:2}]});
 
-E('cm2-fr-homophones',{w:.7,items:[
+E('cm2-fr-homophones',{w:.85,items:[
  ['Complète : « … la rentrée. »','C’est',['S’est','Ces','Ses'],'Cela est : c’est.'],
  ['Complète : « Elle … trompée de route. »','s’est',['c’est','ces','ses'],'Devant un participe passé : s’est.'],
  ['Complète : « Je … ai écrit. » (à eux)','leur',['leurs'],'Devant un verbe : invariable.'],
@@ -704,7 +704,7 @@ E('cm2-fr-homophones',{w:.7,items:[
  {tf:'« Leur » devant un verbe ne prend jamais de s.',v:true,e:'C’est un pronom invariable.',d:2},
  {tf:'« Là » signifie « à cet endroit ».',v:true,e:'On peut dire ici.'}]});
 
-E('cm2-fr-ecrire',{w:.7,items:[
+E('cm2-fr-ecrire',{w:.85,items:[
  ['Quel connecteur indique une chronologie ?','ensuite',['pourtant','car','donc'],'Connecteur de temps.'],
  ['Quel connecteur indique une cause ?','car',['ensuite','puis','enfin'],'Il explique pourquoi.'],
  ['Quel connecteur marque une opposition ?','pourtant',['d’abord','puis','enfin'],'Il oppose deux idées.',2],
@@ -720,7 +720,7 @@ E('cm2-fr-ecrire',{w:.7,items:[
 }
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de sciences en CM2 ---------- */
-E('cm2-sc-etats',{w:.7,items:[
+E('cm2-sc-etats',{w:.85,items:[
  ['Quel est l’état de l’eau à 20 °C ?','liquide',['solide','gazeux','plasma'],'À 20 °C, l’eau est liquide.'],
  ['À quelle température l’eau pure gèle-t-elle (pression habituelle) ?','0 °C',['10 °C','100 °C','−10 °C'],'La température de solidification est 0 °C.'],
  ['À quelle température l’eau pure bout-elle (pression habituelle) ?','100 °C',['0 °C','50 °C','1 000 °C'],'Température d’ébullition.'],
@@ -737,7 +737,7 @@ E('cm2-sc-etats',{w:.7,items:[
  {tf:'L’évaporation de l’eau ne peut se produire qu’à 100 °C.',v:false,e:'Elle a lieu aussi à des températures plus basses.',d:3},
  {n:'À quelle température (en °C) l’eau pure fond-elle (pression habituelle) ?',a:0,u:'°C',e:'À 0 °C.'}]});
 
-E('cm2-sc-biodiversite',{w:.7,items:[
+E('cm2-sc-biodiversite',{w:.85,items:[
  ['La biodiversité est…','la diversité des êtres vivants',['le nombre d’arbres','la quantité d’eau','la hauteur des montagnes'],'Espèces, milieux, individus.'],
  ['Un fossile est…','un reste ou une trace d’être vivant ancien conservé dans une roche',['un animal vivant','une pierre précieuse','un objet fabriqué'],'Dans une roche sédimentaire par exemple.'],
  ['Les dinosaures non aviens ont disparu il y a environ…','66 millions d’années',['66 ans','6 600 ans','6 milliards d’années'],'Fin du Crétacé.',2],
@@ -752,7 +752,7 @@ E('cm2-sc-biodiversite',{w:.7,items:[
  {tf:'Un fossile est toujours un animal complet.',v:false,e:'C’est parfois seulement une empreinte ou un fragment.',d:2},
  {o:['Un être vivant meurt','Il est recouvert de sédiments','Les sédiments deviennent roche','Le fossile est découvert'],q:'Remets dans l’ordre la formation d’un fossile :',e:'Mort, recouvrement, roche, découverte.',d:3}]});
 
-E('cm2-sc-digestion',{w:.7,items:[
+E('cm2-sc-digestion',{w:.85,items:[
  ['Où commence la digestion ?','dans la bouche',['dans l’intestin','dans l’estomac','dans le gros intestin'],'Dents et salive transforment les aliments.'],
  ['Quel organe relie la bouche à l’estomac ?','l’œsophage',['l’intestin grêle','la trachée','le gros intestin'],'Tube musculaire.'],
  ['Où passent les nutriments dans le sang ?','au niveau de l’intestin grêle',['dans la bouche','dans l’estomac','dans le gros intestin'],'Paroi fine et très longue.'],
@@ -767,7 +767,7 @@ E('cm2-sc-digestion',{w:.7,items:[
  {tf:'Les produits sucrés doivent être limités.',v:true,e:'Pour la santé et les dents.'},
  {o:['la bouche','l’œsophage','l’estomac','l’intestin grêle','le gros intestin'],q:'Remets les organes dans l’ordre du trajet des aliments :',e:'Bouche, œsophage, estomac, intestin grêle, gros intestin.',d:2}]});
 
-E('cm2-sc-reproduction',{w:.7,items:[
+E('cm2-sc-reproduction',{w:.85,items:[
  ['Les ovules sont produits par…','les ovaires',['les testicules','l’utérus','l’estomac'],'Organe reproducteur féminin.'],
  ['Les spermatozoïdes sont produits par…','les testicules',['les ovaires','l’utérus','le cœur'],'Organes reproducteurs masculins.'],
  ['La fécondation donne naissance à…','une cellule-œuf',['un bébé directement','un ovule','un spermatozoïde'],'Première cellule du futur bébé.'],
@@ -782,7 +782,7 @@ E('cm2-sc-reproduction',{w:.7,items:[
  {tf:'Le fœtus respire de l’air comme après la naissance.',v:false,e:'Il reçoit le dioxygène par le cordon ombilical.',d:2},
  {o:['la fécondation','la cellule-œuf','l’embryon','le fœtus','la naissance'],q:'Remets les étapes dans l’ordre :',e:'Fécondation, cellule-œuf, embryon, fœtus, naissance.',d:2}]});
 
-E('cm2-sc-systeme-solaire',{w:.7,items:[
+E('cm2-sc-systeme-solaire',{w:.85,items:[
  ['Quelle est l’étoile du système solaire ?','le Soleil',['la Lune','Mars','Jupiter'],'Le Soleil est une étoile.'],
  ['Combien y a-t-il de planètes dans le système solaire ?','8',['9','5','12'],'De Mercure à Neptune.'],
  ['Quelle est la planète la plus proche du Soleil ?','Mercure',['Vénus','Neptune','Mars'],'Mercure.'],
@@ -798,7 +798,7 @@ E('cm2-sc-systeme-solaire',{w:.7,items:[
  {tf:'Le Soleil est une étoile.',v:true,e:'Il produit de la lumière.'},
  {o:['Mercure','Vénus','la Terre','Mars'],q:'Remets ces planètes dans l’ordre en s’éloignant du Soleil :',e:'Mercure, Vénus, la Terre, Mars.',d:2}]});
 
-E('cm2-sc-terre-active',{w:.7,items:[
+E('cm2-sc-terre-active',{w:.85,items:[
  ['Le magma est…','de la roche fondue sous terre',['de l’eau chaude','de la boue','du sable'],'Il remonte par la cheminée.'],
  ['La lave est…','le magma qui coule à la surface',['la fumée du volcan','la roche froide','la cendre'],'Elle sort par le cratère.'],
  ['Quelle partie d’un volcan voit-on au sommet ?','le cratère',['la racine','la mer','la plaine'],'Ouverture par laquelle sortent lave et gaz.'],
@@ -813,7 +813,7 @@ E('cm2-sc-terre-active',{w:.7,items:[
  {tf:'En France, il n’y a aucun volcan.',v:false,e:'Il y a la Chaîne des Puys (endormie) et des volcans en outre-mer.',d:2},
  {o:['Le magma remonte','Il sort par le cratère','La lave s’écoule','Elle refroidit et durcit'],q:'Remets dans l’ordre :',e:'Magma, cratère, lave, refroidissement.',d:3}]});
 
-E('cm2-sc-environnement',{w:.7,items:[
+E('cm2-sc-environnement',{w:.85,items:[
  ['Quel est un exemple de ressource renouvelable ?','le vent',['le pétrole','le charbon','le gaz'],'Le vent se renouvelle sans cesse.'],
  ['Quel est un exemple de ressource non renouvelable à l’échelle humaine ?','le pétrole',['le soleil','le vent','l’eau de pluie'],'Il met des millions d’années à se former.',2],
  ['Les 3 R sont…','réduire, réutiliser, recycler',['rire, rêver, reposer','réparer, remplir, refuser','rouler, ranger, rire'],'Pour limiter les déchets.'],
@@ -828,7 +828,7 @@ E('cm2-sc-environnement',{w:.7,items:[
  {tf:'Le verre peut être recyclé très longtemps.',v:true,e:'Il peut être refondu de nombreuses fois.',d:3},
  {t:'Complète : réduire, réutiliser et … (verbe)',a:['recycler'],e:'Les 3 R.',d:2}]});
 
-E('cm2-sc-electricite',{w:.7,items:[
+E('cm2-sc-electricite',{w:.85,items:[
  ['Pour qu’une lampe s’allume, le circuit doit être…','fermé',['ouvert','coupé','vide'],'Une boucle sans interruption.'],
  ['Un interrupteur ouvert…','coupe le circuit',['ferme le circuit','produit de l’électricité','brille'],'Le courant ne circule plus.'],
  ['Un matériau conducteur est un matériau qui…','laisse passer le courant',['arrête la lumière','est toujours rouge','est toujours en bois'],'Exemple : le cuivre.'],
@@ -841,4 +841,28 @@ E('cm2-sc-electricite',{w:.7,items:[
  {tf:'Le graphite de la mine d’un crayon conduit le courant.',v:true,e:'C’est un conducteur.',d:2},
  {tf:'Un circuit ouvert permet à la lampe de briller.',v:false,e:'Le circuit doit être fermé.'},
  {tf:'Les piles de 4,5 V utilisées en classe sont dangereuses comme la prise.',v:false,e:'Elles sont sans danger ; la prise (230 V) est dangereuse.',d:2}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de mathématiques en CM2 ---------- */
+E('cm2-ma-symetrie',{w:.85,items:[
+ ['Un axe de symétrie d’une figure est une droite telle que…','en pliant la figure le long de cette droite, les deux parties se superposent',['la figure est coupée en deux parties de même couleur','la figure est dessinée sur une feuille quadrillée','la droite passe par un sommet'],'Le pliage superpose les deux parties.'],
+ ['Combien d’axes de symétrie a un carré ?','4',['1','2','8'],'Deux médianes et deux diagonales.'],
+ ['Combien d’axes de symétrie a un rectangle qui n’est pas un carré ?','2',['1','4','0'],'Ses deux médianes.'],
+ ['Combien d’axes de symétrie a un triangle équilatéral ?','3',['1','2','6'],'Un par sommet.'],
+ ['Combien d’axes de symétrie a un triangle isocèle qui n’est pas équilatéral ?','1',['2','3','0'],'L’axe passe par le sommet principal.',2],
+ ['Combien d’axes de symétrie a un losange qui n’est pas un carré ?','2',['1','4','0'],'Ses deux diagonales.',3],
+ ['Combien d’axes de symétrie a un parallélogramme qui n’est ni un rectangle ni un losange ?','0',['1','2','4'],'Aucun.',3],
+ ['Combien d’axes de symétrie a un cercle ?','une infinité',['1','2','4'],'Toute droite passant par le centre.'],
+ ['Combien d’axes de symétrie a un pentagone régulier ?','5',['1','3','10'],'Un par sommet.',3],
+ ['Combien d’axes de symétrie a la lettre H (en capitale d’imprimerie) ?','2',['1','0','4'],'Un vertical et un horizontal.'],
+ ['Combien d’axes de symétrie a la lettre A (en capitale d’imprimerie) ?','1',['0','2','3'],'Un axe vertical.'],
+ ['Combien d’axes de symétrie a la lettre F (en capitale d’imprimerie) ?','0',['1','2','3'],'Aucun.'],
+ ['Quelle lettre capitale a un axe de symétrie horizontal ?','E',['F','G','L'],'Le pliage horizontal superpose le haut et le bas.',3],
+ ['Le symétrique d’un point A par rapport à un axe d est le point A′ tel que…','d est la médiatrice du segment [AA′]',['AA′ est parallèle à d','A′ est sur d','A′ est le milieu de [Ad]'],'A et A′ sont de part et d’autre, à la même distance.',3],
+ ['Si un point est situé sur l’axe de symétrie, son symétrique est…','lui-même',['à l’opposé de l’axe','au bord de la feuille','le milieu de l’axe'],'Il reste sur place.',2],
+ {n:'Un point A est à 4 cm de l’axe de symétrie. Quelle est la distance AA′ entre A et son symétrique ?',a:8,u:'cm',e:'4 + 4 = 8 cm.',d:2},
+ {n:'Un segment mesure 7 cm. Quelle est la longueur de son symétrique ?',a:7,u:'cm',e:'La symétrie axiale conserve les longueurs.',d:2},
+ {tf:'La symétrie axiale conserve les longueurs et les angles.',v:true,e:'La figure et sa symétrique sont superposables.',d:2},
+ {tf:'La diagonale d’un rectangle (non carré) est un axe de symétrie.',v:false,e:'Le pliage ne superpose pas les deux moitiés.',d:2},
+ {tf:'Un carré a plus d’axes de symétrie qu’un rectangle non carré.',v:true,e:'4 contre 2.'},
+ {tf:'Le symétrique d’un cercle est un cercle de même rayon.',v:true,e:'La symétrie conserve les longueurs.',d:3}]});
 })();

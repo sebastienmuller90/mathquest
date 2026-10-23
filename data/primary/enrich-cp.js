@@ -285,7 +285,7 @@ E('cp-evar-famille',{items:[
  parts:[HE('🏡','Moment hors écran : mon arbre des personnes importantes',{but:'parler des personnes qui comptent pour soi.',consigne:'Dessine un arbre. Sur chaque branche, dessine une personne importante pour toi (famille, nounou, ami…). Présente ton arbre à un adulte.',duree:'15 minutes',materiel:'feuille, crayons',auto:'J’ai dessiné les personnes qui comptent pour moi et je les ai présentées.'})]});
 
 /* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'HG et d'EMC au CP ---------- */
-E('cp-hg-avant-apres',{w:.7,items:[
+E('cp-hg-avant-apres',{w:.85,items:[
  ['Hier, c’est…','le passé',['le futur','le présent','le jour de demain'],'Hier est déjà arrivé.'],
  ['Demain, c’est…','le futur',['le passé','le présent','il y a longtemps'],'Demain n’est pas encore arrivé.'],
  ['Aujourd’hui, c’est…','le présent',['le passé','le futur','autrefois'],'Aujourd’hui, c’est maintenant.'],
@@ -299,7 +299,7 @@ E('cp-hg-avant-apres',{w:.7,items:[
  {o:['Je suis bébé','J’apprends à marcher','J’entre au CP'],q:'Remets ces moments de ta vie dans l’ordre :',e:'Bébé, premiers pas, puis CP.'},
  {o:['avant-hier','hier','aujourd’hui','demain'],q:'Remets ces mots du temps dans l’ordre :',e:'Avant-hier, hier, aujourd’hui, demain.',d:2}]});
 
-E('cp-hg-se-reperer',{w:.7,items:[
+E('cp-hg-se-reperer',{w:.85,items:[
  ['Pour jouer dehors à l’école, on va dans…','la cour',['le réfectoire','la bibliothèque','la classe'],'La cour sert à jouer pendant la récréation.'],
  ['Pour emprunter un livre, on va à…','la bibliothèque',['la cour','le portail','les sanitaires'],'La bibliothèque prête des livres.'],
  ['Pour entrer dans l’école, on passe par…','le portail',['le tableau','la cantine','le plan'],'Le portail est l’entrée.'],
@@ -313,7 +313,7 @@ E('cp-hg-se-reperer',{w:.7,items:[
  ['Quel mot est un mot de position ?','à côté',['rouge','joyeux','demain'],'À côté dit où se trouve un objet.'],
  ['Pour décrire la place d’un cartable, je dis qu’il est…','sous la table',['bleu et rond','lourd hier','joyeux'],'Sous donne la position.',2]]});
 
-E('cp-hg-monde',{w:.7,items:[
+E('cp-hg-monde',{w:.85,items:[
  ['Le globe représente la Terre sous la forme…','d’une boule',['d’un carré','d’un triangle','d’une feuille plate'],'La Terre est ronde.'],
  ['Le planisphère est…','une carte plate du monde',['une boule','un océan','un continent'],'On aplatit la Terre sur une carte.'],
  ['Combien y a-t-il de continents ?','6',['2','12','20'],'Europe, Afrique, Asie, Amérique, Océanie, Antarctique.',2],
@@ -327,7 +327,7 @@ E('cp-hg-monde',{w:.7,items:[
  {tf:'Sur une carte, le bleu montre souvent l’eau.',v:true,e:'Le bleu représente les mers et les océans.'},
  {n:'Combien y a-t-il de points cardinaux (Nord, Sud, Est, Ouest) ?',a:4,e:'Nord, Sud, Est, Ouest.'}]});
 
-E('cp-hg-jour-saisons',{w:.7,items:[
+E('cp-hg-jour-saisons',{w:.85,items:[
  ['Quand notre côté de la Terre est tourné vers le Soleil, il fait…','jour',['nuit','hiver','nuageux'],'Le côté éclairé a le jour.'],
  ['En combien de temps la Terre fait-elle un tour sur elle-même ?','24 heures',['1 heure','1 mois','1 an'],'Une journée dure 24 heures.',2],
  ['Combien y a-t-il de saisons ?','4',['2','6','12'],'Printemps, été, automne, hiver.'],
@@ -340,7 +340,7 @@ E('cp-hg-jour-saisons',{w:.7,items:[
  {o:['printemps','été','automne','hiver'],q:'Remets les saisons dans l’ordre en commençant par le printemps :',e:'Printemps, été, automne, hiver.'},
  {o:['le matin','le midi','le soir','la nuit'],q:'Remets les moments de la journée dans l’ordre :',e:'Matin, midi, soir, nuit.'}]});
 
-E('cp-hg-mesurer-temps',{w:.7,items:[
+E('cp-hg-mesurer-temps',{w:.85,items:[
  ['Pour savoir l’heure, je regarde…','une montre',['un sablier','un calendrier','une carte'],'La montre donne l’heure.'],
  ['Pour savoir le jour du mois, je regarde…','un calendrier',['une montre','un sablier','un plan'],'Le calendrier donne les dates.'],
  ['Un sablier sert à mesurer…','une courte durée',['la date de ton anniversaire','la météo','la taille'],'Le sable met un temps limité à couler.'],
@@ -353,7 +353,7 @@ E('cp-hg-mesurer-temps',{w:.7,items:[
  ['Pour me brosser les dents pendant 3 minutes, j’utilise…','un sablier de 3 minutes',['un calendrier','un plan','un globe'],'Il mesure une courte durée.'],
  ['Un événement qui a lieu chaque année à la même date est…','un anniversaire',['une récréation','un sablier','un trajet'],'Il revient chaque année.',2]]});
 
-E('cp-emc-emotions',{w:.7,items:[
+E('cp-emc-emotions',{w:.85,items:[
  ['Quand on a très peur, on ressent…','de la peur',['de la joie','de la fierté','de l’ennui'],'La peur fait battre le cœur plus vite.'],
  ['Quand on a une bonne surprise, on est…','content et surpris',['triste','en colère','endormi'],'La surprise peut être joyeuse.'],
  ['Que faire si une colère est très forte ?','respirer lentement et s’éloigner un peu',['frapper un camarade','casser un objet','crier sur tout le monde'],'On se calme sans faire de mal.'],
@@ -366,7 +366,7 @@ E('cp-emc-emotions',{w:.7,items:[
  ['Quel visage montre la joie ?','😀',['😢','😡','😨'],'Le visage souriant.'],
  ['Le dégoût, c’est ce qu’on ressent quand…','on sent quelque chose de très mauvais',['on reçoit un cadeau','on gagne un jeu','on retrouve un ami'],'Le dégoût protège de ce qui est mauvais.',2]]});
 
-E('cp-emc-regles',{w:.7,items:[
+E('cp-emc-regles',{w:.85,items:[
  ['Pourquoi range-t-on son matériel ?','pour garder la classe agréable et ne rien perdre',['pour embêter les autres','pour faire du bruit','pour rien'],'Ranger aide tout le monde.'],
  ['Quand quelqu’un parle, je…','l’écoute',['crie plus fort','fais du bruit','pars'],'Écouter, c’est respecter.'],
  ['Si j’abîme le livre d’un camarade, je dois…','m’excuser et réparer ou remplacer',['le cacher','accuser un autre','rire'],'Réparer est une conséquence juste.'],
@@ -379,7 +379,7 @@ E('cp-emc-regles',{w:.7,items:[
  ['Quelle règle aide à bien écouter ?','ne pas parler en même temps',['courir en classe','crier','jeter ses affaires'],'Un à la fois.'],
  {o:['Je lève le doigt','Le maître me donne la parole','Je parle','J’écoute la suite'],q:'Remets dans l’ordre pour prendre la parole :',e:'Lever le doigt, attendre la parole, parler, écouter.',d:2}]});
 
-E('cp-emc-droits-enfant',{w:.7,items:[
+E('cp-emc-droits-enfant',{w:.85,items:[
  ['Le droit d’être soigné, c’est le droit…','à la santé',['au chocolat','à la télévision','de choisir sa maîtresse'],'Un enfant malade doit être soigné.'],
  ['Aller à l’école est…','un droit de l’enfant',['une punition','un jeu interdit','un caprice'],'Tous les enfants ont droit à l’éducation.'],
  ['Avoir un nom, c’est le droit à…','une identité',['la télévision','un animal','un vélo'],'Chaque enfant a un nom et une nationalité.',2],
@@ -392,7 +392,7 @@ E('cp-emc-droits-enfant',{w:.7,items:[
  ['Le droit de donner son avis veut dire…','je peux dire ce que je pense, poliment',['je peux crier','je peux insulter','je dois me taire'],'On s’exprime en respectant les autres.'],
  ['En quelle année la Convention des droits de l’enfant a-t-elle été adoptée ?','1989',['1889','2020','1500'],'Adoptée par l’ONU en 1989.',3]]});
 
-E('cp-emc-intimite',{w:.7,items:[
+E('cp-emc-intimite',{w:.85,items:[
  ['Pour être propre, je…','me lave tous les jours',['ne me lave jamais','me lave une fois par an','me lave seulement pour fêter Noël'],'L’hygiène protège la santé.'],
  ['Après être allé aux toilettes, je…','me lave les mains',['mange tout de suite','reste sale','mets mes mains dans la bouche'],'Les mains sales transportent des microbes.'],
  ['Qui décide si on peut toucher mon corps ?','moi : mon corps m’appartient',['tout le monde','le plus fort','celui qui a un cadeau'],'Je peux toujours dire non.',2],
@@ -405,7 +405,7 @@ E('cp-emc-intimite',{w:.7,items:[
  ['Pour être poli avec l’intimité des autres, je…','frappe avant d’entrer dans la salle de bain',['entre sans frapper','regarde par la serrure','ouvre sans demander'],'Je respecte l’intimité des autres.',2],
  {n:'Combien de fois par jour doit-on se brosser les dents (au minimum) ?',a:2,e:'Matin et soir.',d:2}]});
 
-E('cp-emc-republique',{w:.7,items:[
+E('cp-emc-republique',{w:.85,items:[
  ['La première couleur du drapeau français (près du mât) est…','le bleu',['le rouge','le vert','le jaune'],'Bleu, blanc, rouge.'],
  ['La devise de la République commence par…','Liberté',['Égalité','Fraternité','Laïcité'],'Liberté, Égalité, Fraternité.'],
  ['Qui est Marianne ?','le visage qui symbolise la République',['une chanteuse actuelle','une écolière de CP','une reine'],'On la voit dans les mairies.'],
