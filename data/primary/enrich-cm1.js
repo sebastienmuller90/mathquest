@@ -553,4 +553,167 @@ E('cm1-hg-se-deplacer',{w:.7,items:[
  {tf:'Le port est l’infrastructure du train.',v:false,e:'C’est la gare.'},
  {n:'Combien de kilomètres environ séparent Paris et Marseille par la route ?',a:775,u:'km',e:'775 km environ.',d:3},
  {o:['Je choisis un mode de transport','Je rejoins la gare ou l’aéroport','Je voyage','J’arrive à destination'],q:'Remets dans l’ordre les étapes d’un voyage :',e:'Choisir, rejoindre, voyager, arriver.',d:2}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de français en CM1 ---------- */
+{
+const TXT=(t,q)=>`<div class="trad">${t}</div>${q}`;
+const V1='Tous les soirs, Inès regardait par la fenêtre. Le facteur passait devant chez elle sans s’arrêter. Elle avait écrit à son grand-père trois semaines plus tôt. Ce matin-là, une enveloppe bleue dépassait de la boîte aux lettres. Inès dévala l’escalier sans prendre le temps d’enfiler ses chaussons.';
+const V2='Le petit renard n’osait pas quitter le terrier. Dehors, le vent faisait claquer les branches et la nuit semblait remplie de bruits inquiétants. « Viens, dit sa mère doucement. Je serai juste derrière toi. » Alors il posa une patte, puis l’autre, et le monde lui parut soudain moins effrayant.';
+E('cm1-fr-comprendre',{w:.7,items:[
+ [TXT(V1,'Qu’attend Inès chaque soir ?'),'la réponse de son grand-père',['une visite du facteur pour un colis','un cadeau d’anniversaire','le retour de ses parents'],'Elle lui avait écrit : elle attend sa réponse (implicite).',2],
+ [TXT(V1,'Pourquoi descend-elle l’escalier sans enfiler ses chaussons ?'),'elle est impatiente',['elle a froid','elle est fâchée','elle est fatiguée'],'Elle se précipite : on déduit son impatience.',2],
+ [TXT(V1,'Depuis combien de temps Inès a-t-elle écrit à son grand-père ?'),'trois semaines',['trois jours','trois mois','un an'],'Information explicite : « trois semaines plus tôt ».'],
+ [TXT(V1,'De quelle couleur est l’enveloppe ?'),'bleue',['rouge','verte','jaune'],'Information explicite.'],
+ [TXT(V1,'Dans le texte, « elle » désigne…'),'Inès',['le facteur','la fenêtre','l’enveloppe'],'Le pronom reprend le personnage.'],
+ [TXT(V2,'Pourquoi le petit renard n’ose-t-il pas sortir ?'),'il a peur de ce qu’il y a dehors',['il est malade','il veut dormir','il n’a pas de mère'],'Vent, nuit, bruits inquiétants.'],
+ [TXT(V2,'Qui prononce la phrase « Viens » ?'),'la mère du renard',['le petit renard','le narrateur','le vent'],'Les guillemets indiquent la parole ; « dit sa mère » donne le locuteur.'],
+ [TXT(V2,'À quoi servent les paroles de la mère ?'),'à rassurer son petit',['à le gronder','à le punir','à le faire fuir'],'« Je serai juste derrière toi. »',2],
+ [TXT(V2,'Comment se sent le renard à la fin du texte ?'),'rassuré',['en colère','jaloux','affamé'],'Le monde lui parut moins effrayant.',2],
+ {o:['Situation initiale','Élément perturbateur','Péripéties','Résolution','Situation finale'],q:'Remets dans l’ordre les étapes du schéma d’un récit :',e:'Situation initiale, élément perturbateur, péripéties, résolution, situation finale.',d:3},
+ {tf:'Une information implicite est écrite mot pour mot dans le texte.',v:false,e:'Une information implicite se déduit des indices.'},
+ {tf:'Pour justifier une réponse, on s’appuie sur des indices du texte.',v:true,e:'On cite le texte.'}]});
+
+E('cm1-fr-documentaire',{w:.7,items:[
+ [TXT('La baleine bleue est le plus grand animal connu. Elle mesure jusqu’à 30 mètres et peut peser jusqu’à 150 tonnes. Elle se nourrit de krill, de minuscules animaux qui ressemblent à de petites crevettes.','De quoi se nourrit la baleine bleue ?'),'de krill',['de poissons géants','d’algues','de requins'],'Information explicite.'],
+ [TXT('La baleine bleue est le plus grand animal connu. Elle mesure jusqu’à 30 mètres et peut peser jusqu’à 150 tonnes. Elle se nourrit de krill, de minuscules animaux qui ressemblent à de petites crevettes.','Combien mesure au maximum la baleine bleue ?'),'30 mètres',['3 mètres','150 mètres','15 mètres'],'Information explicite du texte.'],
+ ['Un texte documentaire sert à…','donner des informations vraies sur un sujet',['raconter une histoire inventée','faire rire','faire rimer des mots'],'Il informe.'],
+ ['Quel élément explique une image ?','la légende',['le titre','le sommaire','l’index'],'Elle se place près de l’image.'],
+ ['Quel élément explique les mots difficiles à la fin d’un livre ?','le glossaire',['la légende','l’intertitre','le titre'],'Glossaire : mini-dictionnaire du livre.'],
+ ['Pour trouver rapidement la page d’un mot précis (« koala »), on utilise…','l’index',['la légende','le titre','la préface'],'Index : mots classés par ordre alphabétique avec les pages.',2],
+ ['Le sommaire d’un livre indique…','les grandes parties et leurs pages',['les mots difficiles','le résumé de l’histoire','l’auteur uniquement'],'Il est au début ou à la fin du livre.'],
+ ['Un intertitre sert à…','annoncer le sujet d’une partie du texte',['donner le nom de l’auteur','remplacer le texte','faire une image'],'Il découpe le texte en parties.'],
+ ['Dans un texte documentaire, un tableau permet de…','comparer des informations',['raconter une histoire','faire des rimes','inventer des personnages'],'Il présente des données organisées.',2],
+ {tf:'Un schéma peut illustrer un phénomène dans un documentaire.',v:true,e:'Il aide à comprendre.'},
+ {tf:'Un documentaire raconte toujours une histoire inventée.',v:false,e:'Il informe sur la réalité.'},
+ {tf:'Le titre annonce le sujet du texte.',v:true,e:'C’est sa fonction.'},
+ {t:'Complète : le mini-dictionnaire à la fin d’un livre s’appelle le … (un mot)',a:['glossaire'],e:'Le glossaire.',d:2}]});
+
+E('cm1-fr-litterature',{w:.7,items:[
+ ['Qui a écrit Le Corbeau et le Renard ?','Jean de La Fontaine',['Charles Perrault','Victor Hugo','Molière'],'Fables du XVIIe siècle.'],
+ ['Qui a écrit Le Petit Chaperon rouge dans sa version française classique ?','Charles Perrault',['La Fontaine','Jules Verne','Molière'],'Contes de Perrault, 1697.',2],
+ ['Qui a écrit Blanche-Neige (version célèbre) ?','les frères Grimm',['La Fontaine','Perrault','Molière'],'Contes allemands.',2],
+ ['Une fable se termine souvent par…','une morale',['un dessin','une recette','un tableau'],'Elle donne une leçon.'],
+ ['Un poème est écrit en…','vers',['chapitres','scènes','paragraphes'],'Chaque ligne est un vers.'],
+ ['Un groupe de vers s’appelle…','une strophe',['un chapitre','un acte','une scène'],'Strophes séparées par un blanc.'],
+ ['Deux mots riment quand…','ils se terminent par le même son',['ils ont le même sens','ils ont la même première lettre','ils sont très courts'],'Exemple : chat et rat.'],
+ ['« Il était une fois… » commence souvent…','un conte',['une fable seulement','un documentaire','un article de journal'],'Début typique du conte.'],
+ ['Les animaux qui parlent et se comportent comme des humains, on les trouve dans…','les fables',['les documentaires','les modes d’emploi','les journaux'],'La Fontaine.',2],
+ ['« Rien ne sert de courir ; il faut partir à point » est la morale de…','Le Lièvre et la Tortue',['Le Corbeau et le Renard','La Cigale et la Fourmi','Le Loup et l’Agneau'],'Il faut s’y prendre à temps.',2],
+ {tf:'Un poème doit toujours rimer.',v:false,e:'Il peut être en vers libres, sans rimes.'},
+ {tf:'Un conte merveilleux comporte des éléments magiques.',v:true,e:'Fées, objets enchantés.'},
+ {tf:'La Fontaine a vécu au XVIIe siècle.',v:true,e:'1621-1695.',d:3},
+ {t:'Complète : un groupe de vers dans un poème s’appelle une … (un mot)',a:['strophe'],e:'Une strophe.',d:2}]});
+
+E('cm1-fr-lexique-derivation',{w:.7,items:[
+ ['Quel mot est de la famille de « terre » ?','terrain',['terrible','terminer','tonnerre'],'Le radical terr-.',2],
+ ['Quel mot est de la famille de « mer » ?','marin',['mercredi','merci','merle'],'Radical mar-/mer- : marin, marée.',2],
+ ['Quel mot est de la famille de « fleur » ?','fleuriste',['fleuve','flou','flotte'],'Fleur, fleurir, fleuriste.',2],
+ ['Quel est l’intrus dans la famille de « lait » ?','laid',['laitier','laitage','allaiter'],'Laid n’a pas de rapport avec lait.',2],
+ ['Que signifie le préfixe « anti- » ?','contre',['avant','de nouveau','sur'],'Antivol : contre le vol.'],
+ ['Que signifie le préfixe « sur- » dans « surcharger » ?','trop, au-dessus',['de nouveau','contre','petit'],'Charger trop.'],
+ ['Que signifie le suffixe « -able » ?','qu’on peut',['qui est petit','celui qui','de nouveau'],'Lavable : qu’on peut laver.'],
+ ['Que signifie le suffixe « -ier » dans « pommier » ?','l’arbre qui donne des pommes',['la pomme','le jus de pomme','le marchand'],'Nom d’arbre.',2],
+ ['Le contraire de « lisible » est…','illisible',['inlisible','dilisible','relisible'],'Devant l, in- devient il-.'],
+ ['Le contraire de « réel » est…','irréel',['inréel','imréel','dyréel'],'Devant r, in- devient ir-.',2],
+ ['Le contraire de « mortel » (qui peut mourir) est…','immortel',['inmortel','dymortel','remortel'],'Devant m, in- devient im-.',3],
+ {t:'Écris le contraire avec un préfixe : possible → …',a:['impossible'],e:'Devant p : im-.',d:2},
+ {t:'Écris le mot : « qu’on peut manger » → mang…',a:['mangeable'],e:'Mangeable : on garde le e devant -able.',d:3},
+ {tf:'Un mot de la même famille partage le même radical.',v:true,e:'Les mots de la famille ont un sens lié.'},
+ {tf:'Dans « relire », le préfixe est « lire ».',v:false,e:'Le préfixe est re- ; le radical est lire.'}]});
+
+E('cm1-fr-types-formes',{w:.7,items:[
+ ['Quelle phrase est à la forme négative ?','Il ne mange jamais de poisson.',['Il mange du poisson.','Mange-t-il du poisson ?','Mange du poisson.'],'ne … jamais encadre le verbe.'],
+ ['Transforme avec « Est-ce que » : « Tu viens. »','Est-ce que tu viens ?',['Tu viens ?!','Viens-tu est-ce que.','Est-ce tu viens.'],'On ajoute Est-ce que devant la phrase.'],
+ ['Transforme avec inversion : « Elle chante. »','Chante-t-elle ?',['Chante elle ?','Elle chante-t-elle ?','Est chante-t-elle ?'],'Le t euphonique évite le hiatus entre deux voyelles.',3],
+ ['Mets à la forme négative : « Tom a vu le film. »','Tom n’a pas vu le film.',['Tom a pas vu le film.','Tom n’a vu pas le film.','Tom ne a pas vu le film.'],'Au passé composé, la négation encadre l’auxiliaire.',2],
+ ['Quelle phrase est impérative ?','Prends ton manteau.',['Tu prends ton manteau.','Prends-tu ton manteau ?','Il prend son manteau.'],'Elle exprime un ordre.'],
+ ['Quel mot de négation signifie « aucune personne » ?','personne',['rien','jamais','plus'],'ne … personne.',2],
+ ['Quel mot de négation signifie « aucune chose » ?','rien',['personne','jamais','plus'],'ne … rien.',2],
+ ['Quelle forme exprime la surprise ou l’émotion ?','la forme exclamative',['la forme négative','la forme interrogative','le type impératif'],'Elle se termine par un point d’exclamation.'],
+ ['Dans « Quelle belle journée ! », la phrase est…','exclamative',['interrogative','impérative','négative'],'Elle exprime l’admiration.'],
+ {tf:'Le « t » de « mange-t-il » est un t euphonique.',v:true,e:'Il évite que deux voyelles se heurtent.',d:3},
+ {tf:'« Il a pas faim » est correct à l’écrit.',v:false,e:'On écrit « Il n’a pas faim » : ne est obligatoire.'},
+ {tf:'Une phrase interrogative peut se construire avec intonation, Est-ce que ou inversion.',v:true,e:'Trois façons d’interroger.'},
+ {t:'Écris le mot de la négation qui manque : Elle ne sort … le soir. (jamais / pas)',a:['jamais'],e:'ne … jamais.',d:2},
+ {t:'Complète : Va-… -elle au parc ? (une lettre)',a:['t'],e:'Va-t-elle : t euphonique.',d:3}]});
+
+E('cm1-fr-complements',{w:.7,items:[
+ ['Dans « Nous regardons un film », « un film » est…','COD',['COI','CC de lieu','sujet'],'Nous regardons quoi ? un film.'],
+ ['Dans « Il parle à sa sœur », « à sa sœur » est…','COI',['COD','CC de temps','sujet'],'Il parle à qui ? à sa sœur.'],
+ ['Dans « Samedi, nous visitons le musée », « samedi » est…','CC de temps',['COD','COI','sujet'],'On peut le supprimer et le déplacer.'],
+ ['Dans « Il habite à Lyon », « à Lyon » est…','CC de lieu',['COD','COI','sujet'],'Où habite-t-il ? à Lyon.',3],
+ ['Dans « Elle chante joyeusement », « joyeusement » est…','CC de manière',['COD','COI','sujet'],'Comment chante-t-elle ?'],
+ ['Dans « Le boulanger vend du pain », « du pain » est…','COD',['COI','CC de lieu','CC de temps'],'Vend quoi ? du pain.'],
+ ['Dans « Il obéit à ses parents », « à ses parents » est…','COI',['COD','CC de temps','CC de lieu'],'Obéit à qui ? à ses parents.',2],
+ ['Un complément circonstanciel peut être…','supprimé ou déplacé',['jamais supprimé','toujours obligatoire','le verbe'],'Test de suppression et de déplacement.'],
+ ['Quelle question permet de trouver un COD ?','Qui ? Quoi ?',['Où ?','Quand ?','Comment ?'],'Verbe + qui ? / quoi ?'],
+ ['Quelle question permet de trouver un CC de temps ?','Quand ?',['Qui ?','Quoi ?','Où ?'],'Quand + verbe ?'],
+ {tf:'Un COI est introduit par une préposition (à, de).',v:true,e:'Parler à, se souvenir de.'},
+ {tf:'On peut déplacer un COD comme un complément circonstanciel.',v:false,e:'Le COD complète le verbe et se place derrière lui.',d:2},
+ {tf:'« Ce matin » est un complément circonstanciel de temps.',v:true,e:'Il répond à la question quand ?'},
+ {t:'Écris le sigle du complément qui répond à « quoi ? » après le verbe (3 lettres)',a:['cod'],e:'COD.',d:2}]});
+
+E('cm1-fr-nature-fonction',{w:.7,items:[
+ ['Dans « Les élèves lisent un livre », « les élèves » a pour fonction…','sujet',['COD','COI','attribut'],'Qui est-ce qui lit ? les élèves.'],
+ ['Dans « Les élèves lisent un livre », « un livre » a pour fonction…','COD',['sujet','COI','CC de lieu'],'Lisent quoi ? un livre.'],
+ ['Dans « Les élèves lisent un livre », la nature de « lisent » est…','verbe',['nom','adjectif','adverbe'],'C’est le verbe conjugué.'],
+ ['La nature de « rapidement » est…','adverbe',['adjectif','nom','verbe'],'Terminaison -ment.'],
+ ['La nature de « petit » dans « un petit chat » est…','adjectif',['nom','verbe','déterminant'],'Il décrit le nom.'],
+ ['La nature de « il » est…','pronom',['nom','verbe','adjectif'],'Il remplace un nom.'],
+ ['Dans « Chaque jour, Léa court », « chaque jour » a pour fonction…','complément circonstanciel de temps',['sujet','COD','attribut'],'Il est supprimable et déplaçable.',2],
+ ['« Sujet » est…','une fonction',['une nature','un nom','un adverbe'],'Elle dépend de la phrase.'],
+ ['« Adjectif » est…','une nature',['une fonction','un sujet','un complément'],'Elle ne change pas.'],
+ {tf:'La nature d’un mot change selon la phrase.',v:false,e:'La nature reste la même ; c’est la fonction qui change.'},
+ {tf:'Un groupe nominal peut être sujet ou COD.',v:true,e:'Sa nature est la même, sa fonction change.'},
+ {tf:'Le mot « chat » est toujours un nom.',v:true,e:'Sa nature est nom.',d:2},
+ {t:'Écris la fonction de « Léa » dans « Léa chante » (un mot)',a:['sujet'],e:'Sujet.',d:2}]});
+
+E('cm1-fr-determinants',{w:.7,items:[
+ ['« mes » est un déterminant…','possessif',['démonstratif','article défini','article indéfini'],'Il indique à qui appartient le nom.'],
+ ['« cette » est un déterminant…','démonstratif',['possessif','article défini','article indéfini'],'Il montre.'],
+ ['« une » est un article…','indéfini',['défini','possessif','démonstratif'],'Un, une, des.'],
+ ['« les » est un article…','défini',['indéfini','possessif','démonstratif'],'Le, la, l’, les.'],
+ ['Complète : « … oiseau chante. » (démonstratif)','Cet',['Ce','Cette','Ces'],'Cet devant voyelle ou h muet : cet oiseau.',2],
+ ['Complète : « … amie arrive. » (possessif féminin)','Mon',['Ma','Mes','Me'],'Devant une voyelle : mon amie.',3],
+ ['Complète : « Il range … livres. » (les siens)','ses',['ces','c’est','s’est'],'Les siens : ses.'],
+ ['Complète : « Regarde … nuages ! » (démonstratif)','ces',['ses','c’est','s’est'],'Montrer : ces.',2],
+ ['Où se place le déterminant ?','devant le nom',['derrière le verbe','à la fin de la phrase','devant le sujet seulement'],'Il accompagne le nom.'],
+ ['Le déterminant indique…','le genre et le nombre du nom',['seulement la couleur','la fonction du nom','le temps du verbe'],'Masculin/féminin, singulier/pluriel.',2],
+ ['Quel mot est un déterminant possessif ?','notre',['cet','un','ces'],'Notre maison.'],
+ {tf:'« leurs » est un déterminant possessif.',v:true,e:'Il s’accorde avec le nom pluriel.',d:2},
+ {tf:'« ces » est un déterminant possessif.',v:false,e:'C’est un démonstratif.'},
+ {t:'Écris le déterminant manquant : « … maison est grande. » (possessif de « moi », féminin)',a:['ma'],e:'Ma maison.',d:2}]});
+
+E('cm1-fr-gn',{w:.7,items:[
+ ['Dans « le grand arbre vert », le nom noyau est…','arbre',['grand','vert','le'],'C’est le mot principal.'],
+ ['Dans « une jolie petite robe », les épithètes sont…','jolie et petite',['robe et une','une et jolie','petite et robe'],'Les adjectifs collés au nom.',2],
+ ['Dans « la robe est rouge », « rouge » est…','attribut du sujet',['épithète','déterminant','COD'],'Il est après le verbe être.',3],
+ ['Un GN contient obligatoirement…','un nom noyau',['un adjectif','un verbe','un adverbe'],'Le nom est le noyau.'],
+ ['Dans « mes amis », « mes » est…','le déterminant',['le nom','l’épithète','le verbe'],'Il précède le nom.'],
+ ['Dans « des fleurs rouges », l’épithète est…','rouges',['des','fleurs','des fleurs'],'Elle s’accorde au féminin pluriel.'],
+ ['L’épithète s’accorde avec…','le nom qu’elle complète',['le verbe','le sujet seulement','le pronom'],'Genre et nombre.'],
+ ['Quel GN contient une épithète ?','un chat noir',['un chat','le chat','mon chat'],'Noir est l’épithète.'],
+ ['Quel est le noyau du GN « les vieilles maisons blanches » ?','maisons',['vieilles','blanches','les'],'Mot principal.'],
+ {tf:'Un adjectif épithète est séparé du nom par un verbe.',v:false,e:'Il est collé au nom (ou à un déterminant).'},
+ {tf:'On peut supprimer l’épithète sans changer la fonction du GN.',v:true,e:'Elle donne seulement une précision.',d:2},
+ {tf:'Le GN « le petit chat » contient un adjectif placé avant le nom.',v:true,e:'Petit est épithète.'},
+ {t:'Écris le nom noyau : « une magnifique fleur rouge »',a:['fleur'],e:'Fleur.',d:2}]});
+
+E('cm1-fr-homophones',{w:.7,items:[
+ ['Complète : « Léa … Tom jouent. »','et',['est'],'Et = et puis (on peut dire « et puis »).'],
+ ['Complète : « Le ciel … bleu. »','est',['et'],'Était bleu : est.'],
+ ['Complète : « Elle va … la piscine. »','à',['a'],'À est une préposition (on ne peut pas dire avait).'],
+ ['Complète : « Il … faim. »','a',['à'],'Avait faim : a.'],
+ ['Complète : « … habites-tu ? » (lieu)','Où',['Ou'],'Où indique le lieu.'],
+ ['Complète : « Thé … café ? »','ou',['où'],'Ou bien.'],
+ ['Complète : « Il … cache derrière l’arbre. »','se',['ce'],'Se devant un verbe.'],
+ ['Complète : « … soir, nous sortons. »','Ce',['Se'],'Ce soir : ce devant un nom.'],
+ ['Complète : « Les enfants … amusent. »','s’',['c’'],'S’amusent : verbe pronominal.',3],
+ ['Complète : « Marie range … jouets. » (les siens)','ses',['ces'],'Les siens : ses.'],
+ ['Complète : « Regarde … oiseaux ! » (ceux-là)','ces',['ses'],'Montrer : ces.'],
+ {t:'Écris le mot : « Il … pris son vélo. » (a / à)',a:['a'],e:'Il avait pris : a.'},
+ {t:'Écris le mot : « Où / Ou ? … vas-tu ? »',a:['où'],e:'Où indique le lieu.',d:2},
+ {tf:'On écrit « Il a mal à la tête » avec a puis à.',v:true,e:'Il a (avait) ; à la tête (préposition).',d:2},
+ {tf:'« Où » prend un accent quand il indique le lieu.',v:true,e:'Il remplace « à quel endroit ».'}]});
+}
 })();

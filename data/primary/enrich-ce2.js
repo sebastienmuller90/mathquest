@@ -257,4 +257,101 @@ E('ce2-emc-bien-commun',{w:.7,items:[
  {tf:'L’intérêt particulier et l’intérêt général sont toujours identiques.',v:false,e:'Parfois, il faut renoncer à un avantage pour le bien de tous.',d:3},
  {t:'Complète : un parc, une école, une bibliothèque forment le bien … (un mot)',a:['commun'],e:'Le bien commun.'},
  {o:['Je vois un banc abîmé','J’en parle à un adulte','La commune le répare','Tout le monde peut s’asseoir'],q:'Remets dans l’ordre :',e:'On constate, on prévient, on répare, tous en profitent.',d:3}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de français en CE2 ---------- */
+E('ce2-fr-son-s',{w:.7,items:[
+ ['Complète : un gar…on','ç',['c','s','ss'],'Devant o, on écrit ç : garçon.'],
+ ['Complète : une for…e (la puissance)','c',['ç','ss','t'],'Devant e, c fait [s] : force.'],
+ ['Complète : la ré…ussite','ss',['s','c','ç'],'Entre deux voyelles : ss pour le son [s] : réussite.'],
+ ['Complète : une pa…erelle','ss',['s','c','ç'],'Passerelle : ss entre deux voyelles.'],
+ ['Complète : le gla…on (de glace)','ç',['c','ss','s'],'Devant o : glaçon.'],
+ {t:'Écris le mot : un animal qui vit dans l’eau, il a des écailles : un poi…on (avec le son [s])',a:['poisson'],e:'Poisson : ss entre deux voyelles.',d:2},
+ {t:'Écris le mot : 3 + 4, c’est une … (un mot en -tion)',a:['addition'],e:'Addition : -tion se lit [sion].',d:3},
+ {tf:'Entre deux voyelles, un seul s se prononce [z] (poison).',v:true,e:'Pour le son [s], on double : poisson.'},
+ {tf:'On écrit ç devant e et i.',v:false,e:'ç s’écrit devant a, o, u. Devant e et i, on écrit c.'},
+ {tf:'Dans « question », le t se prononce [s].',v:false,e:'Après un s, le t de -tion se prononce [t] : question.',d:2},
+ ['Le mot « cirque » commence par…','c devant i : c',['ç','ss','s'],'Devant i : c.',2],
+ ['Quel mot s’écrit avec un ç ?','façade',['facile','facette','face'],'Devant a : façade.',2]]});
+
+E('ce2-fr-homophones-son-on',{w:.7,items:[
+ ['Complète : « Mes sœurs … fatiguées. »','sont',['son','ont','on'],'On peut dire « étaient fatiguées » : sont.'],
+ ['Complète : « Théo a perdu … stylo. »','son',['sont','ont','on'],'On peut dire « mon stylo » : son.'],
+ ['Complète : « Ils … un chat. »','ont',['on','son','sont'],'On peut dire « ils avaient » : ont.'],
+ ['Complète : « … mange à la cantine. »','On',['Ont','Son','Sont'],'On peut dire « il mange » : on.'],
+ ['Complète : « Les enfants … de la chance. »','ont',['on','sont','son'],'Avaient de la chance : ont (avoir).'],
+ ['Complète : « Elles … parties tôt. »','sont',['son','ont','on'],'Étaient parties : sont.'],
+ ['Complète : « Léo prend … goûter. »','son',['sont','ont','on'],'Mon goûter : son.'],
+ {t:'Écris le bon mot : « Ils … faim. » (ont / on)',a:['ont'],e:'Ils avaient faim : ont.'},
+ {t:'Écris le bon mot : « … joue au ballon. » (on / ont)',a:['on'],e:'Il joue au ballon : on.'},
+ {tf:'« Ils son contents » est correct.',v:false,e:'On écrit « Ils sont contents » (étaient contents).'},
+ {tf:'« On peut remplacer ont par avaient. »',v:true,e:'C’est le test pour le verbe avoir.'},
+ {tf:'« On » peut être remplacé par « il ».',v:true,e:'Test de on : « On joue » → « il joue ».'},
+ {tf:'« Sont » est une forme du verbe avoir.',v:false,e:'Sont est une forme du verbe être.',d:2},
+ ['Quel test permet de reconnaître « son » ?','remplacer par mon',['remplacer par avaient','remplacer par il','remplacer par étaient'],'Son vélo → mon vélo.',2],
+ ['Quel test permet de reconnaître « ont » ?','remplacer par avaient',['remplacer par mon','remplacer par il','remplacer par étaient'],'Ils ont → ils avaient.',2]]});
+
+E('ce2-fr-prefixes-suffixes',{w:.7,items:[
+ ['Dans « refaire », le préfixe est…','re-',['fai-','-aire','-faire'],'re- signifie de nouveau.'],
+ ['Dans « danseur », le suffixe est…','-eur',['dan-','-anse','-seur'],'Il désigne celui qui fait.'],
+ ['Dans « impossible », le préfixe im- signifie…','pas, le contraire',['de nouveau','avant','petit'],'Impossible : pas possible.'],
+ ['Que signifie le préfixe « pré- » dans « préhistoire » ?','avant',['après','pas','de nouveau'],'Avant l’histoire.',2],
+ ['Que signifie le suffixe « -ette » dans « fillette » ?','petit',['grand','celui qui fait','l’action'],'Une petite fille.'],
+ ['Quel mot contient le préfixe « dé- » (le contraire) ?','défaire',['dessert','dîner','dentiste'],'Le contraire de faire.',2],
+ ['Quel mot est formé avec le suffixe « -age » (action) ?','lavage',['visage','village','courage'],'Lavage : action de laver.',3],
+ ['Le contraire de « utile » est…','inutile',['imutile','dutile','unutile'],'On ajoute le préfixe in-.'],
+ ['Le contraire de « possible » est…','impossible',['inpossible','dépossible','repossible'],'Devant p, in- devient im-.',2],
+ ['Le radical du mot « lentement » est…','lent',['lentem','lenti','ment'],'On ajoute le suffixe -ment.',3],
+ {t:'Écris le mot : le contraire de « poli » avec le préfixe im- ou in- : … (écris le mot)',a:['impoli'],e:'Impoli : im- devant p.',d:2},
+ {t:'Écris le mot : « celui qui chante » avec le suffixe -eur ou -euse : une … (femme)',a:['chanteuse'],e:'Chanteuse.',d:2},
+ {tf:'Le préfixe se place avant le radical.',v:true,e:'Le suffixe se place après.'},
+ {tf:'Le suffixe se place au début du mot.',v:false,e:'Le suffixe se place à la fin.'},
+ {tf:'« Redire » signifie dire de nouveau.',v:true,e:'re- = de nouveau.'}]});
+
+E('ce2-fr-phrase',{w:.7,items:[
+ ['Quelle phrase est interrogative ?','Viens-tu au parc ?',['Viens au parc.','Je viens au parc.','Viens vite au parc !'],'Elle pose une question.'],
+ ['Quelle phrase est impérative ?','Range ta chambre.',['Tu ranges ta chambre.','Ranges-tu ta chambre ?','Elle range sa chambre.'],'Elle donne un ordre.'],
+ ['Quelle phrase est déclarative ?','Le chat dort sur le canapé.',['Où dort le chat ?','Dors, petit chat !','Le chat dort-il ?'],'Elle donne une information.'],
+ ['Quelle phrase est à la forme négative ?','Il ne pleut pas.',['Il pleut.','Pleut-il ?','Il pleut beaucoup.'],'ne … pas encadre le verbe.'],
+ ['Mets à la forme négative : « Tom aime les épinards. »','Tom n’aime pas les épinards.',['Tom aime pas les épinards.','Tom ne aime pas les épinards.','Tom pas aime les épinards.'],'Devant une voyelle, ne devient n’.',2],
+ ['Quel signe de ponctuation termine une phrase interrogative ?','le point d’interrogation',['le point','le point d’exclamation','la virgule'],'?'],
+ ['Dans un dialogue, le tiret sert à…','montrer qu’une autre personne parle',['terminer la phrase','poser une question','faire une liste'],'Un tiret = un nouveau locuteur.'],
+ ['Dans « « Viens ! » cria Léa. », « cria Léa » est…','l’incise (qui parle)',['la phrase de Léa','une question','un titre'],'On indique qui parle.',3],
+ ['Quel mot ne s’oublie jamais dans une négation écrite ?','ne',['pas','jamais','plus'],'On écrit toujours le ne (ou n’).',2],
+ {tf:'« Ne cours pas ! » est une phrase impérative négative.',v:true,e:'C’est un ordre à la forme négative.'},
+ {tf:'Une phrase impérative se termine toujours par un point d’interrogation.',v:false,e:'Elle se termine par un point ou un point d’exclamation.'},
+ {tf:'« Est-ce que tu viens ? » est une phrase interrogative.',v:true,e:'On pose une question.'},
+ {t:'Écris le mot qui manque : Il ne mange … de pain. (négation : ne … pas)',a:['pas'],e:'Il ne mange pas de pain.'},
+ {t:'Écris le mot qui manque dans la négation : Il … joue plus.',a:['ne'],e:'ne … plus.',d:2}]});
+
+E('ce2-fr-constituants',{w:.7,items:[
+ ['Dans « Léa chante », le sujet est…','Léa',['chante','Léa chante','il'],'Qui est-ce qui chante ? Léa.'],
+ ['Dans « Le chien aboie », le verbe est…','aboie',['chien','le','le chien'],'Le verbe indique l’action.'],
+ ['Dans « Hier, Tom a mangé une pomme. », quel groupe peut être déplacé ?','Hier',['Tom','a mangé','une pomme obligatoirement'],'Le complément de phrase peut être déplacé : Tom a mangé une pomme hier.',2],
+ ['Pour trouver le sujet, je pose la question…','Qui est-ce qui … ?',['Où … ?','Quand … ?','Pourquoi … ?'],'Qui est-ce qui + verbe ?'],
+ ['Le sujet peut être remplacé par…','un pronom (il, elle, ils, elles)',['un adjectif','un adverbe','un nombre'],'Le chat → il.'],
+ ['Le verbe est le mot qui…','change quand on change de temps',['ne change jamais','désigne un objet','est toujours un nom'],'Hier, il mangeait ; demain, il mangera.',2],
+ ['Dans « Les enfants jouent dans le jardin. », « dans le jardin » est…','un complément qu’on peut supprimer',['le sujet','le verbe','obligatoire'],'Les enfants jouent. La phrase reste correcte.',2],
+ {tf:'Le sujet est toujours le premier mot de la phrase.',v:false,e:'Il peut venir après un complément de phrase.',d:2},
+ {tf:'On peut remplacer « les enfants » par « ils ».',v:true,e:'C’est un pronom sujet.'},
+ {tf:'Le verbe se supprime sans changer la phrase.',v:false,e:'Le verbe est indispensable.'},
+ {tf:'« Chaque matin » peut être déplacé dans la phrase.',v:true,e:'Chaque matin, Léo prend le bus / Léo prend le bus chaque matin.',d:2},
+ {t:'Écris le sujet : « Au zoo, les enfants observent les girafes. » (2 mots)',a:['les enfants','Les enfants'],e:'Qui est-ce qui observe ? Les enfants.',d:2},
+ {t:'Écris le verbe : « Mon frère mange une orange. »',a:['mange'],e:'Le verbe est mange.'}]});
+
+E('ce2-fr-pluriels-feminins',{w:.7,items:[
+ ['Pluriel de « un animal »','des animaux',['des animals','des animales','des animeaux'],'-al devient -aux.'],
+ ['Pluriel de « un bateau »','des bateaux',['des bateaus','des batals','des bateau'],'-eau prend un x.'],
+ ['Pluriel de « un neveu »','des neveux',['des neveus','des nevaux','des neveuxs'],'-eu prend généralement un x.',2],
+ ['Pluriel de « un bijou »','des bijoux',['des bijous','des bijoues','des bijoos'],'Un des sept mots en -ou qui prennent x.',2],
+ ['Pluriel de « un clou »','des clous',['des cloux','des clouxs','des cloues'],'Clou prend un s.',2],
+ ['Pluriel de « un pneu »','des pneus',['des pneux','des pneuxs','des pneaux'],'Exception : pneu prend un s.',3],
+ ['Féminin de « un danseur »','une danseuse',['une danseure','une danseuxe','une danseur'],'-eur → -euse.'],
+ ['Féminin de « un acteur »','une actrice',['une acteuse','une acteure','une actère'],'-teur → -trice.',2],
+ ['Féminin de « un boulanger »','une boulangère',['une boulangeuse','une boulanger','une boulangerie'],'-er → -ère.',2],
+ ['Féminin de « joyeux »','joyeuse',['joyeuxe','joyeure','joyeuze'],'-eux → -euse.'],
+ ['Féminin de « sportif »','sportive',['sportife','sportiveuse','sportif'],'-f → -ve.',2],
+ {t:'Écris le pluriel : un cheval → des …',a:['chevaux'],e:'-al → -aux.',d:2},
+ {t:'Écris le pluriel : un gâteau → des …',a:['gâteaux','gateaux'],e:'-eau → -eaux.'},
+ {tf:'Le pluriel de « un festival » est « des festivals ».',v:true,e:'Exception : festival, bal, carnaval prennent un s.',d:3},
+ {tf:'Le pluriel de « un cheval » est « des chevals ».',v:false,e:'Des chevaux.'}]});
 })();

@@ -580,4 +580,142 @@ E('cm2-emc-symboles',{w:.7,items:[
  {tf:'Marianne est un personnage réel qui a vécu au XVIIIe siècle.',v:false,e:'C’est une figure symbolique de la République.',d:3},
  {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'},
  {n:'En quelle année Rouget de Lisle écrit-il la Marseillaise ?',a:1792,e:'En 1792.',d:3}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de français en CM2 ---------- */
+{
+E('cm2-fr-sens',{w:.7,items:[
+ ['« Il a un caractère de cochon. » Le mot « cochon » est employé au sens…','figuré',['propre','littéral','premier'],'On ne parle pas de l’animal : c’est une image.'],
+ ['« Le cochon mange dans l’auge. » Le mot « cochon » est employé au sens…','propre',['figuré','imagé','symbolique'],'On parle de l’animal.'],
+ ['« Il pleut des cordes » signifie…','il pleut très fort',['il tombe des cordes','il pleut sur des cordes','il ne pleut pas'],'Expression imagée (sens figuré).'],
+ ['Les mots « mer », « mère » et « maire » sont…','des homonymes',['des synonymes','des contraires','des paronymes'],'Ils se prononcent pareil.'],
+ ['Les mots « conjecture » et « conjoncture » sont…','des paronymes',['des homonymes','des synonymes','des contraires'],'Ils se ressemblent sans être identiques.',3],
+ ['Complète : « Mon pull est de couleur … »','vert',['verre','ver','vers'],'La couleur : vert.'],
+ ['Complète : « J’ai bu un … d’eau. »','verre',['vert','ver','vers'],'Le récipient : verre.'],
+ ['Complète : « Il marche … la porte. » (direction)','vers',['vert','verre','ver'],'Vers = direction.'],
+ ['Complète : « Un … de terre vit sous la terre. »','ver',['vert','verre','vers'],'L’animal : ver.'],
+ {tf:'Le sens figuré est le sens concret et premier d’un mot.',v:false,e:'C’est le sens propre. Le sens figuré est une image.'},
+ {tf:'Deux homonymes se prononcent de la même façon.',v:true,e:'Ils s’écrivent parfois différemment : cent, sans, sang.'},
+ {tf:'Éruption et irruption sont des paronymes.',v:true,e:'Ils se ressemblent mais n’ont pas le même sens.',d:2},
+ {t:'Écris le mot : pour boire, je prends un … (récipient)',a:['verre'],e:'Verre.',d:2}]});
+
+E('cm2-fr-sujet',{w:.7,items:[
+ ['Sujet de « Dans la forêt vivent des loups. »','des loups',['la forêt','vivent','dans'],'Qu’est-ce qui vit ? des loups.'],
+ ['Sujet de « Quand arrivent les vacances ? »','les vacances',['quand','arrivent','arriver'],'Qu’est-ce qui arrive ? les vacances.'],
+ ['Sujet de « Courir est excellent pour la santé. »','courir',['la santé','excellent','pour'],'Sujet à l’infinitif.'],
+ ['Dans « Les enfants que tu vois jouent », le sujet de « jouent » est…','les enfants',['que','tu','vois'],'Qui est-ce qui joue ? les enfants.',2],
+ ['Dans « Le chien qui aboie est mon voisin », le sujet de « aboie » est…','qui',['le chien','mon voisin','est'],'Le pronom relatif « qui » est sujet de aboie.',3],
+ ['Dans « Au loin brillaient les lumières du port », le verbe s’accorde avec…','les lumières du port',['au loin','le port seul','brillaient'],'Sujet inversé au pluriel.',2],
+ ['Quelle question permet de trouver un sujet non animé ?','Qu’est-ce qui … ?',['Où … ?','Quand … ?','Comment … ?'],'Pour une chose : qu’est-ce qui.'],
+ ['Quelle question permet de trouver un sujet animé ?','Qui est-ce qui … ?',['Qu’est-ce que … ?','Où … ?','Pourquoi … ?'],'Pour une personne : qui est-ce qui.'],
+ {tf:'Le sujet est toujours placé avant le verbe.',v:false,e:'Il peut être inversé.'},
+ {tf:'Un verbe à l’infinitif peut être sujet.',v:true,e:'Lire est un plaisir.',d:2},
+ {tf:'Un pronom relatif peut être sujet.',v:true,e:'« Le garçon qui chante » : qui est sujet de chante.',d:3},
+ {t:'Écris le sujet de « Sur la table se trouvent trois livres. » (2 mots)',a:['trois livres'],e:'Qu’est-ce qui se trouve ? trois livres.',d:2},
+ {t:'Écris le verbe de « Au loin brillaient les lumières. »',a:['brillaient'],e:'Le verbe conjugué.'}]});
+
+E('cm2-fr-attribut',{w:.7,items:[
+ ['Dans « Mon voisin est pompier », « pompier » est…','attribut du sujet',['COD','COI','CC de lieu'],'Verbe d’état être.'],
+ ['Dans « Il mange une pomme », « une pomme » est…','COD',['attribut du sujet','COI','CC de lieu'],'Verbe d’action : mange quoi ?'],
+ ['Dans « Elle parle à sa voisine », « à sa voisine » est…','COI',['COD','attribut','CC de temps'],'Parle à qui ?'],
+ ['Dans « Le temps devient orageux », « orageux » est…','attribut du sujet',['COD','COI','épithète'],'Devenir est un verbe d’état.'],
+ ['Parmi ces verbes, lequel est un verbe d’état ?','sembler',['manger','courir','chanter'],'Sembler, paraître, devenir, rester…'],
+ ['Parmi ces verbes, lequel est un verbe d’état ?','rester',['regarder','prendre','écrire'],'Rester : verbe d’état.'],
+ ['L’attribut du sujet s’accorde avec…','le sujet',['le COD','le complément de lieu','le verbe seulement'],'Genre et nombre du sujet.'],
+ ['Complète : « Les nuages semblent … » (lourd)','lourds',['lourd','lourde','lourdes'],'Sujet masculin pluriel : lourds.',2],
+ ['Complète : « Ma cousine paraît … » (fatigué)','fatiguée',['fatigué','fatigués','fatiguées'],'Sujet féminin singulier.',2],
+ {tf:'Après un verbe d’état, on trouve en général un attribut.',v:true,e:'Il décrit le sujet.'},
+ {tf:'« Il est dans le jardin » : « dans le jardin » est un attribut.',v:false,e:'C’est un complément de lieu.',d:2},
+ {tf:'L’attribut est un COD.',v:false,e:'L’attribut est lié au sujet, le COD complète l’action.'},
+ {t:'Écris la fonction de « malade » dans « Léo est malade » (deux mots : attribut du …)',a:['attribut du sujet'],e:'Attribut du sujet.',d:3}]});
+
+E('cm2-fr-cc',{w:.7,items:[
+ ['Dans « Hier, nous avons visité le musée », « Hier » est un CC de…','temps',['lieu','manière','cause'],'Quand ?'],
+ ['Dans « Nous dînons dans le jardin », « dans le jardin » est un CC de…','lieu',['temps','manière','cause'],'Où ?'],
+ ['Dans « Elle marche lentement », « lentement » est un CC de…','manière',['temps','lieu','cause'],'Comment ?'],
+ ['Dans « Il n’est pas venu à cause de la grève », le CC exprime…','la cause',['le temps','le lieu','la manière'],'Pourquoi ?'],
+ ['Dans « Quand il pleut, nous restons à la maison », « quand il pleut » est…','une proposition qui exprime le temps',['un COD','un attribut','un sujet'],'Un CC peut être une proposition.',3],
+ ['Quelle question permet de trouver un CC de lieu ?','Où ?',['Quand ?','Comment ?','Pourquoi ?'],'Où ?'],
+ ['Quelle question permet de trouver un CC de cause ?','Pourquoi ?',['Où ?','Quand ?','Comment ?'],'Pourquoi ?'],
+ ['Quelle phrase contient un CC de temps ?','Ce matin, il neige.',['Il neige sur la ville.','Il neige abondamment.','Il neige à cause du froid.'],'Ce matin répond à quand ?',2],
+ {tf:'Un CC peut être supprimé sans rendre la phrase incorrecte.',v:true,e:'En général, oui.'},
+ {tf:'Un CC peut être déplacé dans la phrase.',v:true,e:'Souvent en début de phrase.'},
+ {tf:'Un adverbe peut être un CC.',v:true,e:'Exemple : lentement.',d:2},
+ {t:'Écris le type de CC : « Au bord du lac » répond à la question « où ? » : CC de … (un mot)',a:['lieu'],e:'Lieu.',d:2}]});
+
+E('cm2-fr-classes',{w:.7,items:[
+ ['Quelle est la classe de « sur » ?','préposition',['conjonction','adverbe','verbe'],'Sur la table.'],
+ ['Quelle est la classe de « mais » ?','conjonction de coordination',['préposition','adverbe','pronom'],'Mais, ou, et, or, ni, car.'],
+ ['Quelle est la classe de « très » ?','adverbe',['préposition','conjonction','nom'],'Très gentil : il modifie un adjectif.'],
+ ['Quelle est la classe de « souvent » ?','adverbe',['préposition','conjonction','nom'],'Il court souvent : modifie le verbe.'],
+ ['Quelle est la classe de « avec » ?','préposition',['adverbe','conjonction','déterminant'],'Avec sa sœur.'],
+ ['Quelle est la classe de « car » ?','conjonction de coordination',['préposition','adverbe','pronom'],'Car relie deux propositions.'],
+ ['Quel mot est une préposition ?','sans',['mais','très','souvent'],'Sans sucre.'],
+ ['Quel mot est une conjonction de coordination ?','ou',['dans','très','vite'],'Thé ou café.'],
+ ['Quel mot est un adverbe ?','vite',['chez','mais','sur'],'Il court vite.'],
+ ['Ces mots ont la particularité d’être…','invariables',['conjugués','accordés','au pluriel'],'Ils ne changent pas de forme.'],
+ {tf:'« Ni » est une conjonction de coordination.',v:true,e:'Mais, ou, et, or, ni, car.',d:2},
+ {tf:'Une préposition peut se conjuguer.',v:false,e:'Elle est invariable.'},
+ {tf:'« Où » (le lieu) est une conjonction de coordination.',v:false,e:'Il n’appartient pas aux six conjonctions de coordination.',d:3},
+ {t:'Écris la classe de « mais » (deux premiers mots : conjonction de …)',a:['conjonction de coordination'],e:'Conjonction de coordination.',d:3}]});
+
+E('cm2-fr-expansions',{w:.7,items:[
+ ['Dans « un chat de gouttière », « de gouttière » est…','un complément du nom',['une épithète','une proposition relative','un COD'],'Préposition + nom.'],
+ ['Dans « un chat noir », « noir » est…','une épithète',['un complément du nom','une relative','un COD'],'Adjectif collé au nom.'],
+ ['Dans « un chat qui ronronne », « qui ronronne » est…','une proposition relative',['une épithète','un complément du nom','un attribut'],'Pronom relatif + verbe.'],
+ ['Dans « une tasse à café », « à café » est…','un complément du nom',['une épithète','une relative','un attribut'],'Introduit par à.'],
+ ['Dans « un pull en laine », « en laine » est…','un complément du nom',['une épithète','une relative','un attribut'],'Introduit par en.'],
+ ['Quel mot est un pronom relatif ?','dont',['mais','avec','très'],'Qui, que, dont, où.',2],
+ ['Une proposition relative contient toujours…','un verbe conjugué',['un adjectif','un adverbe','un point'],'Elle a un verbe conjugué.',2],
+ ['Le noyau du groupe « le livre que j’ai lu » est…','livre',['que','lu','j’'],'Le nom noyau.'],
+ {tf:'Un complément du nom est introduit par une préposition.',v:true,e:'De, à, en, sans, avec…'},
+ {tf:'Une épithète est introduite par une préposition.',v:false,e:'Elle est collée au nom sans préposition.'},
+ {tf:'On peut supprimer une expansion sans changer la fonction du nom.',v:true,e:'Les expansions apportent des précisions.',d:2},
+ {t:'Écris le pronom relatif : « La maison … j’ai grandi est vieille. » (lieu)',a:['où','ou'],e:'Où.',d:3}]});
+
+E('cm2-fr-participe-passe',{w:.7,items:[
+ ['« Les fleurs que j’ai (cueillir) sont belles. »','cueillies',['cueilli','cueillis','cueillie'],'COD « que » = fleurs, placé avant : accord au féminin pluriel.',2],
+ ['« Nous sommes (rentrer) tard. » (nous = des filles)','rentrées',['rentré','rentrés','rentrée'],'Être : accord avec le sujet.',2],
+ ['« Ils ont (finir) leur travail. »','fini',['finis','finie','finies'],'Avoir, COD après le verbe : pas d’accord.'],
+ ['« Ces robes, je les ai (acheter). »','achetées',['acheté','achetés','achetée'],'COD « les » placé avant : accord.',2],
+ ['« Elle est (arriver) hier. »','arrivée',['arrivé','arrivés','arrivées'],'Être : accord avec elle.'],
+ ['« Mes sœurs ont (téléphoner) à Léa. »','téléphoné',['téléphonées','téléphonés','téléphonée'],'Avoir, pas de COD avant : pas d’accord.',2],
+ ['« La pomme qu’il a (manger) était rouge. »','mangée',['mangé','mangés','mangées'],'COD « que » = pomme, placé avant.',3],
+ ['Avec l’auxiliaire avoir, le participe passé s’accorde…','avec le COD seulement s’il est placé avant le verbe',['avec le sujet','avec l’auxiliaire','toujours avec le COD, où qu’il soit'],'Jamais avec le sujet.',2],
+ ['Avec l’auxiliaire être, le participe passé s’accorde avec…','le sujet',['le COD','le verbe seulement','rien'],'Accord avec le sujet.'],
+ {tf:'« Elles ont mangées » est correct.',v:false,e:'Avoir, COD après : « Elles ont mangé ».'},
+ {tf:'« Les enfants sont partis » est correct.',v:true,e:'Être : accord avec le sujet masculin pluriel.'},
+ {tf:'« Les lettres que j’ai écrites » est correct.',v:true,e:'COD « que » (les lettres) placé avant.',d:2},
+ {t:'Écris le participe passé accordé : « Elles sont (sortir) ... »',a:['sorties'],e:'Être : accord avec elles (féminin pluriel).',d:2}]});
+
+E('cm2-fr-homophones',{w:.7,items:[
+ ['Complète : « … la rentrée. »','C’est',['S’est','Ces','Ses'],'Cela est : c’est.'],
+ ['Complète : « Elle … trompée de route. »','s’est',['c’est','ces','ses'],'Devant un participe passé : s’est.'],
+ ['Complète : « Je … ai écrit. » (à eux)','leur',['leurs'],'Devant un verbe : invariable.'],
+ ['Complète : « Ils rangent … chambre. »','leur',['leurs'],'Une chambre pour eux : leur (singulier).',2],
+ ['Complète : « Ils rangent … jouets. »','leurs',['leur'],'Plusieurs jouets : leurs.'],
+ ['Complète : « Je … regarde. » (pronom : elle)','la',['l’a','là'],'La, pronom placé devant le verbe.',3],
+ ['Complète : « Elle … vu hier. » (l’avait)','l’a',['la','là'],'Elle l’avait vu.',2],
+ ['Complète : « Il est … depuis midi. » (ici)','là',['la','l’a'],'Là = ici.'],
+ ['Complète : « … heure est-il ? »','Quelle',['Qu’elle'],'Quelle = quel + e (adjectif interrogatif).',2],
+ ['Complète : « Je pense … viendra. » (qu’il)','qu’elle',['quelle'],'On peut dire qu’il.',2],
+ ['Complète : « Il part … dire au revoir. »','sans',['s’en'],'Sans = préposition.',3],
+ {t:'Écris le mot : « Il … va. » (s’en / sans)',a:['s’en'],e:'S’en va : devant un verbe.',d:3},
+ {tf:'« Elle c’est levée » est correct.',v:false,e:'On écrit « Elle s’est levée ».'},
+ {tf:'« Leur » devant un verbe ne prend jamais de s.',v:true,e:'C’est un pronom invariable.',d:2},
+ {tf:'« Là » signifie « à cet endroit ».',v:true,e:'On peut dire ici.'}]});
+
+E('cm2-fr-ecrire',{w:.7,items:[
+ ['Quel connecteur indique une chronologie ?','ensuite',['pourtant','car','donc'],'Connecteur de temps.'],
+ ['Quel connecteur indique une cause ?','car',['ensuite','puis','enfin'],'Il explique pourquoi.'],
+ ['Quel connecteur marque une opposition ?','pourtant',['d’abord','puis','enfin'],'Il oppose deux idées.',2],
+ ['Quel connecteur marque la conséquence ?','c’est pourquoi',['d’abord','mais','ou'],'Il introduit le résultat.',2],
+ ['Pour éviter de répéter « Léa », je peux la reprendre par…','elle',['Léa Léa','mais','car'],'Un pronom de reprise.'],
+ ['Pour éviter de répéter « le chat », je peux écrire…','l’animal',['chat chat','mais','car'],'Un synonyme ou terme générique.',2],
+ ['Dans un dialogue, on change de ligne et on met un tiret quand…','un autre personnage prend la parole',['il y a un point','on change de page','on mange'],'Un tiret par changement de locuteur.'],
+ ['Quel verbe de parole exprime un cri ?','s’écria',['murmura','chuchota','souffla'],'S’écrier : parler très fort.',2],
+ ['Quel verbe de parole exprime un petit bruit à peine audible ?','murmura',['hurla','s’exclama','aboya'],'Parler doucement.',2],
+ {tf:'Il faut éviter de commencer toutes les phrases par « et puis ».',v:true,e:'On varie les connecteurs.'},
+ {tf:'Dans un dialogue, les guillemets ouvrent et ferment les paroles.',v:true,e:'« … »'},
+ {tf:'On peut remplacer un nom répété par un pronom.',v:true,e:'C’est une reprise.'}]});
+}
 })();
