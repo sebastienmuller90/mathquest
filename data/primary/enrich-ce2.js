@@ -374,4 +374,112 @@ E('ce2-ma-solides',{w:.85,items:[
  {tf:'Un cylindre a deux faces planes en forme de disques.',v:true,e:'Et une surface courbe.'},
  {tf:'Un pavé droit a 6 faces carrées obligatoirement.',v:false,e:'Ses faces sont des rectangles, pas forcément des carrés.',d:2},
  {tf:'Un patron de cube est formé de 6 carrés identiques correctement assemblés.',v:true,e:'La disposition compte.',d:2}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : variété des exercices de Questionner le monde au CE2 ---------- */
+E('ce2-qm-classer-vivant',{w:.6,items:[
+ ['Un vertébré est un animal qui a…','une colonne vertébrale',['six pattes','une coquille seulement','huit pattes'],'Squelette interne.'],
+ ['Un invertébré est un animal qui…','n’a pas de colonne vertébrale',['a des plumes','a des poils','a des écailles'],'Insectes, araignées, escargots…'],
+ ['Le chien est…','un mammifère',['un oiseau','un poisson','un insecte'],'Poils et mamelles.'],
+ ['L’aigle est…','un oiseau',['un mammifère','un reptile','un insecte'],'Plumes et bec.'],
+ ['Le saumon est…','un poisson',['un mammifère','un oiseau','un reptile'],'Écailles et nageoires.'],
+ ['Le serpent est…','un reptile',['un amphibien','un mammifère','un oiseau'],'Peau couverte d’écailles.',2],
+ ['La grenouille est…','un amphibien',['un reptile','un poisson','un mammifère'],'Peau nue, métamorphose.',2],
+ ['Le papillon est…','un insecte',['un oiseau','une araignée','un mammifère'],'Six pattes.'],
+ ['Le dauphin est…','un mammifère',['un poisson','un reptile','un oiseau'],'Il respire de l’air et allaite ses petits.',2],
+ {tf:'Une araignée est un insecte.',v:false,e:'Elle a 8 pattes.'},
+ {tf:'La chauve-souris est un mammifère.',v:true,e:'Poils et allaitement.',d:2},
+ {tf:'Un animal qui vole est forcément un oiseau.',v:false,e:'Une chauve-souris et un insecte volent aussi.',d:2},
+ {n:'Combien de pattes a un insecte ?',a:6,e:'Six.'}]});
+
+E('ce2-qm-reproduction',{w:.6,items:[
+ ['Les abeilles transportent…','le pollen',['les fruits','les racines','les feuilles'],'Pollinisation.'],
+ ['La fleur se transforme en…','fruit',['racine','feuille','tige'],'Le fruit contient les graines.'],
+ ['Les graines peuvent être dispersées par…','le vent, l’eau ou les animaux',['la Lune','les nuages','les pierres'],'Dispersion.'],
+ ['Le fraisier peut se reproduire grâce à…','un stolon',['un œuf','un cône','une feuille morte'],'Sans graines.',3],
+ ['La tulipe se reproduit aussi grâce à…','un bulbe',['un œuf','un stolon','une tige creuse'],'Sans graines.',3],
+ ['Un animal ovipare…','pond des œufs',['met au monde des petits vivants','ne se reproduit pas','vit toujours dans l’eau'],'Ovipare.'],
+ ['Un animal vivipare…','met au monde des petits vivants',['pond des œufs','ne se reproduit pas','vit dans un nid'],'Vivipare.'],
+ ['Pour se reproduire, les animaux ont besoin…','d’un mâle et d’une femelle',['d’une graine','d’un pot','de pollen'],'Reproduction sexuée.'],
+ {o:['la graine','la plante','la fleur','le fruit'],q:'Remets le cycle d’une plante à fleurs dans l’ordre :',e:'Graine, plante, fleur, fruit.'},
+ {tf:'Le fruit contient les graines.',v:true,e:'Souvent.'},
+ {tf:'Le chat pond des œufs.',v:false,e:'Le chat est vivipare.'},
+ {tf:'Les poules sont ovipares.',v:true,e:'Elles pondent des œufs.'}]});
+
+E('ce2-qm-chaines',{w:.6,items:[
+ ['Les végétaux sont des producteurs car ils…','fabriquent leur nourriture avec la lumière',['mangent des animaux','chassent','dorment'],'Ils sont à la base de la chaîne.'],
+ ['Les animaux sont des…','consommateurs',['producteurs','décorations','pierres'],'Ils mangent d’autres êtres vivants.'],
+ ['Une chaîne alimentaire commence par…','un végétal',['un carnivore','un champignon seulement','un humain'],'Toujours un végétal.'],
+ ['Dans « algue → têtard → libellule », la libellule…','mange le têtard',['est mangée par le têtard','mange l’algue','ne mange rien'],'La flèche veut dire « est mangé par ».',2],
+ ['Si on supprime les herbivores d’un milieu, les carnivores…','manquent de nourriture',['mangent plus','grossissent','disparaissent de la photo'],'Le maillon manque.',2],
+ ['Un milieu de vie est…','l’endroit où vit un être vivant',['un jouet','un vêtement','un repas'],'Forêt, mare, prairie.'],
+ ['Qui vit dans une mare ?','la grenouille',['le chameau','le lion','le renne'],'Milieu aquatique.'],
+ ['Qui vit dans la forêt ?','le sanglier',['le dauphin','le requin','le pingouin'],'Il vit dans les bois.',2],
+ {tf:'La flèche d’une chaîne alimentaire signifie « mange ».',v:false,e:'Elle signifie « est mangé par ».'},
+ {tf:'Si un maillon disparaît, la chaîne est perturbée.',v:true,e:'Tous les maillons dépendent les uns des autres.'},
+ {o:['l’herbe','le lapin','le renard'],q:'Remets la chaîne alimentaire dans l’ordre :',e:'L’herbe est mangée par le lapin, puis par le renard.'}]});
+
+E('ce2-qm-corps-mouvement',{w:.6,items:[
+ ['Pour bouger, le corps utilise…','les os, les muscles et les articulations',['seulement les cheveux','seulement la peau','seulement le sang'],'Trois éléments.'],
+ ['Les muscles…','se contractent pour tirer sur les os',['poussent les os','sont des os','sont des nerfs'],'Ils tirent, ils ne poussent pas.'],
+ ['Le crâne protège…','le cerveau',['le cœur','les poumons','l’estomac'],'Dans la tête.'],
+ ['Les côtes protègent…','le cœur et les poumons',['le cerveau','les genoux','les mains'],'Dans le thorax.'],
+ ['Quand je plie le bras, le biceps…','se contracte',['se relâche toujours','disparaît','devient un os'],'Le muscle devant gonfle.',2],
+ ['Le coude est…','une articulation',['un muscle','un os long','un nerf'],'Il plie le bras.'],
+ ['Le squelette sert à…','tenir le corps et protéger des organes',['digérer','respirer','voir'],'Les os.'],
+ {tf:'Les muscles poussent sur les os.',v:false,e:'Ils tirent.'},
+ {tf:'Une articulation permet de plier ou de tourner un os.',v:true,e:'Coude, genou, épaule…'},
+ {tf:'Sans muscles, les os bougent seuls.',v:false,e:'Ils ont besoin des muscles pour bouger.',d:2}]});
+
+E('ce2-qm-matiere',{w:.6,items:[
+ ['L’air est de la matière car il…','occupe de la place et a une masse',['est invisible','est froid','est bleu'],'On peut le montrer.'],
+ ['Un ballon gonflé est plus lourd qu’un ballon dégonflé car…','l’air a une masse',['le ballon change de couleur','il est plus beau','l’air est léger comme le vide'],'L’air pèse un peu.',2],
+ ['Le vent est…','de l’air en mouvement',['de l’eau','de la lumière','de la poussière seulement'],'L’air peut pousser.'],
+ ['Le sucre dans l’eau…','se dissout',['reste en morceaux','devient une pierre','flotte toujours'],'On ne le voit plus.'],
+ ['Le sable dans l’eau…','ne se dissout pas',['se dissout','disparaît','devient liquide'],'Il se dépose.'],
+ ['L’huile dans l’eau…','ne se mélange pas',['se dissout','disparaît','devient du sel'],'Elle flotte.'],
+ ['Pour séparer du sable et de l’eau, on peut…','filtrer',['chauffer l’air','secouer le sable','refroidir le sable'],'Filtre.'],
+ ['Un verre retourné dans l’eau ne se remplit pas car…','il contient de l’air',['l’eau est trop lourde','le verre est interdit','le verre est vide'],'L’air prend la place.',2],
+ {tf:'Le sel se dissout dans l’eau.',v:true,e:'On ne le voit plus.'},
+ {tf:'L’air n’existe pas parce qu’on ne le voit pas.',v:false,e:'L’air est invisible mais bien réel.'},
+ {tf:'L’air pousse les voiles d’un bateau.',v:true,e:'Le vent est de l’air en mouvement.'}]});
+
+E('ce2-qm-periodes',{w:.6,items:[
+ ['La Préhistoire va des premiers humains jusqu’à…','l’invention de l’écriture',['la Révolution','Napoléon','la voiture'],'Vers 3 000 av. J.-C.'],
+ ['L’Antiquité se termine en…','476',['1492','1789','1914'],'Fin de l’Empire romain d’Occident.'],
+ ['Le Moyen Âge commence en…','476',['1492','1789','3000 av. J.-C.'],'476.'],
+ ['Les Temps modernes vont de…','1492 à 1789',['476 à 1492','1789 à aujourd’hui','3000 av. J.-C. à 476'],'Colomb à la Révolution.'],
+ ['L’époque contemporaine commence en…','1789',['476','1492','1914'],'Révolution française.'],
+ ['L’an 1515 est au…','XVIe siècle',['XVe siècle','XIVe siècle','XVIIe siècle'],'1501 à 1600.',2],
+ ['Le Ier siècle va de…','l’an 1 à l’an 100',['l’an 100 à l’an 200','l’an 0 à l’an 10','1000 à 1100'],'Premier siècle.',2],
+ ['Un château fort avec des chevaliers appartient à…','le Moyen Âge',['la Préhistoire','l’Antiquité','l’époque contemporaine'],'Moyen Âge.'],
+ ['Les pyramides d’Égypte appartiennent à…','l’Antiquité',['la Préhistoire','le Moyen Âge','l’époque contemporaine'],'Antiquité.',2],
+ {tf:'La Révolution française est un événement de 1789.',v:true,e:'1789.'},
+ {tf:'Les dinosaures vivaient pendant la Préhistoire.',v:false,e:'Ils ont disparu bien avant l’apparition de l’humain.',d:3},
+ {o:['La Préhistoire','L’Antiquité','Le Moyen Âge','Les Temps modernes'],q:'Remets les périodes dans l’ordre :',e:'Préhistoire, Antiquité, Moyen Âge, Temps modernes.'}]});
+
+E('ce2-qm-modes-vie',{w:.6,items:[
+ ['Avant la voiture, on se déplaçait en…','diligence ou à cheval',['avion','fusée','tram électrique'],'Autrefois.'],
+ ['Pour s’éclairer autrefois, on utilisait…','une bougie ou une lampe à pétrole',['une ampoule LED','un smartphone','un lampadaire électrique'],'Avant l’électricité.'],
+ ['L’ordre de la communication à distance est…','lettre, télégraphe, téléphone, Internet',['Internet, téléphone, télégraphe, lettre','téléphone, lettre, Internet, télégraphe','télégraphe, Internet, lettre, téléphone'],'Du plus ancien au plus récent.',2],
+ ['À l’école d’autrefois, on écrivait avec…','une plume et de l’encre',['un ordinateur','une tablette','un clavier'],'Plume et encrier.'],
+ ['Aujourd’hui, on peut communiquer rapidement grâce à…','Internet',['la plume','la diligence','la lampe à pétrole'],'Messages instantanés.'],
+ ['Le train à vapeur est apparu…','avant l’avion',['après l’avion','en même temps que la voiture électrique','avant la roue'],'XIXe siècle.',2],
+ {tf:'Autrefois, tout le monde avait un téléphone portable.',v:false,e:'Les portables sont récents.'},
+ {tf:'Les modes de vie changent avec le temps.',v:true,e:'Logement, transport, communication.'},
+ {tf:'Autrefois n’était pas forcément moins bien en tout.',v:true,e:'Il y avait d’autres avantages et d’autres difficultés.',d:3},
+ {o:['bougie','lampe à pétrole','ampoule électrique'],q:'Remets ces moyens d’éclairage dans l’ordre du plus ancien au plus récent :',e:'Bougie, lampe à pétrole, ampoule électrique.'}]});
+
+E('ce2-qm-france-europe',{w:.6,items:[
+ ['Quel pays est voisin de la France ?','l’Espagne',['le Japon','le Brésil','l’Australie'],'Au sud-ouest.'],
+ ['Quel pays est voisin de la France ?','la Belgique',['la Pologne','la Grèce','la Norvège'],'Au nord.'],
+ ['Quel pays est voisin de la France ?','l’Italie',['la Suède','le Portugal','l’Autriche'],'Au sud-est.',2],
+ ['Quel fleuve passe à Nantes ?','la Loire',['la Seine','le Rhône','la Garonne'],'Loire.'],
+ ['Quel fleuve passe à Bordeaux ?','la Garonne',['la Loire','la Seine','le Rhône'],'Garonne.',2],
+ ['Quel fleuve passe à Lyon ?','le Rhône',['la Loire','la Seine','la Garonne'],'Rhône (et la Saône).',2],
+ ['Quel fleuve passe à Strasbourg ?','le Rhin',['la Seine','la Loire','la Garonne'],'Rhin.',3],
+ ['Quelle mer sépare la France du Royaume-Uni ?','la Manche',['la Méditerranée','l’océan Indien','la mer Rouge'],'La Manche.'],
+ ['Le tunnel sous la Manche relie la France…','au Royaume-Uni',['à l’Espagne','à l’Italie','à l’Allemagne'],'Il passe sous la Manche.'],
+ {tf:'La France fait partie de l’Europe.',v:true,e:'Continent européen.'},
+ {tf:'Paris est en Italie.',v:false,e:'Paris est la capitale de la France.'},
+ {tf:'La Suisse est voisine de la France.',v:true,e:'Elle est à l’est.',d:2}]});
 })();

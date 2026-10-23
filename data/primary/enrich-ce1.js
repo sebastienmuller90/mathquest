@@ -288,4 +288,309 @@ E('ce1-emc-republique',{w:.85,items:[
  {tf:'Le drapeau est bleu, blanc, rouge.',v:true,e:'Les trois couleurs.'},
  {o:['Liberté','Égalité','Fraternité'],q:'Remets les mots de la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'},
  ['La liberté s’arrête…','là où commence celle des autres',['jamais','à la maison','au portail'],'On respecte les autres.',2]]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : variété des exercices au CE1 (français, maths, QLM, EMC) ---------- */
+E('ce1-fr-alphabet',{w:.6,items:[
+ ['Combien de lettres y a-t-il dans l’alphabet ?','26',['24','20','30'],'De a à z.'],
+ ['Quelle lettre vient juste après « m » ?','n',['l','o','k'],'…, l, m, n, o…'],
+ ['Quelle lettre vient juste avant « r » ?','q',['s','p','t'],'…, p, q, r, s…'],
+ ['Quel mot vient en premier dans le dictionnaire ?','arbre',['lune','table','zèbre'],'a est la première lettre.'],
+ ['Quel mot vient en dernier dans le dictionnaire ?','zèbre',['arbre','lune','table'],'z est la dernière lettre.'],
+ ['Entre « bateau » et « bonbon », quel mot vient en premier ?','bateau',['bonbon'],'Même première lettre b ; on compare la deuxième : a avant o.'],
+ ['Dans un dictionnaire, « v. » veut dire…','verbe',['village','vite','voiture'],'v. = verbe.'],
+ ['Dans un dictionnaire, « n. » veut dire…','nom',['nombre','nuit','non'],'n. = nom.',2],
+ ['Dans un dictionnaire, « adj. » veut dire…','adjectif',['adverbe','article','adresse'],'adj. = adjectif.',2],
+ {o:['chat','lapin','souris'],q:'Range ces mots dans l’ordre alphabétique :',e:'c, l, s.'},
+ {o:['pomme','poire','prune'],q:'Range ces mots dans l’ordre alphabétique (compare la 2e et la 3e lettre) :',e:'poire (poi), pomme (pom), prune (pr).',d:2},
+ {tf:'On range les mots selon leur longueur dans un dictionnaire.',v:false,e:'On suit l’ordre alphabétique.'},
+ {t:'Écris la lettre qui vient juste après « c » :',a:['d'],e:'a, b, c, d.'}]});
+
+E('ce1-fr-familles',{w:.6,items:[
+ ['Quel mot est de la même famille que « jardin » ?','jardinier',['jaune','jambe','jeu'],'Le radical jardin.'],
+ ['Quel mot est de la même famille que « dent » ?','dentiste',['dindon','danse','dans'],'Le radical dent.'],
+ ['Quel mot est de la même famille que « terre » ?','terrain',['terrible','tarte','tente'],'Le radical terr.',2],
+ ['Quel mot est de la même famille que « chant » ?','chanteur',['champ','chat','chaud'],'Il chante.',2],
+ ['Quel mot est de la même famille que « fleur » ?','fleuriste',['fleuve','flou','flotte'],'Le radical fleur.',2],
+ ['Quel mot est l’intrus dans la famille de « lait » ?','laid',['laitier','laitage','allaiter'],'Laid n’a pas de lien de sens avec lait.',2],
+ ['Que veut dire « re- » dans « refaire » ?','de nouveau',['contre','avant','sans'],'Refaire : faire de nouveau.'],
+ ['Que veut dire « -ette » dans « maisonnette » ?','petite',['grande','vieille','nouvelle'],'Une petite maison.',2],
+ ['Le contraire de « faire » avec le préfixe « dé- » est…','défaire',['refaire','préfaire','surfaire'],'Défaire.'],
+ {tf:'« Pomme » et « pompier » sont de la même famille.',v:false,e:'Ils commencent pareil mais le sens n’est pas lié.'},
+ {tf:'« Chanter » et « chanteur » sont de la même famille.',v:true,e:'Même radical chant.'}]});
+
+E('ce1-fr-types-phrases',{w:.6,items:[
+ ['Quelle phrase est déclarative ?','Le soleil brille.',['Le soleil brille-t-il ?','Brille, soleil !','Quel beau soleil !'],'Elle raconte un fait.'],
+ ['Quelle phrase est interrogative ?','Où vas-tu ?',['Va vite !','Je vais au parc.','Quel beau parc !'],'Elle pose une question.'],
+ ['Quelle phrase est impérative ?','Range ta chambre.',['Tu ranges ta chambre.','Ranges-tu ta chambre ?','Elle range sa chambre.'],'Elle donne un ordre.'],
+ ['Quelle phrase est négative ?','Il ne pleut pas.',['Il pleut.','Pleut-il ?','Quelle pluie !'],'ne … pas encadre le verbe.'],
+ ['Quel signe termine une phrase interrogative ?','le point d’interrogation',['le point','la virgule','les deux-points'],'?'],
+ ['Mets à la forme négative : « Tom dort. »','Tom ne dort pas.',['Tom dort pas.','Tom ne dort.','Tom pas dort.'],'On encadre le verbe.'],
+ ['Mets à la forme négative : « Elle chante. »','Elle ne chante pas.',['Elle chante pas.','Elle ne chante.','Elle pas chante.'],'ne … pas.'],
+ ['Transforme en question avec « Est-ce que » : « Tu viens. »','Est-ce que tu viens ?',['Tu viens est-ce que ?','Est-ce tu viens.','Viens est-ce que tu ?'],'Est-ce que + phrase.',2],
+ {tf:'Une phrase impérative sert à donner un ordre.',v:true,e:'Range ! Viens !'},
+ {tf:'Une phrase exclamative se termine par un point d’exclamation.',v:true,e:'Quel beau chien !'},
+ {tf:'Dans « Il ne mange pas », le verbe est encadré par ne … pas.',v:true,e:'ne mange pas.'},
+ {t:'Écris le mot qui manque : Il ne joue … (négation)',a:['pas'],e:'ne … pas.'}]});
+
+E('ce1-fr-sujet-verbe',{w:.6,items:[
+ ['Dans « Le chat dort. », le verbe est…','dort',['chat','le','Le chat'],'Il dit ce que fait le chat.'],
+ ['Dans « Léa chante. », le sujet est…','Léa',['chante','Léa chante','la chanson'],'Qui est-ce qui chante ? Léa.'],
+ ['Pour trouver le sujet, je pose la question…','Qui est-ce qui … ?',['Où … ?','Quand … ?','Combien … ?'],'Qui est-ce qui + verbe.'],
+ ['Dans « Les oiseaux chantent. », le sujet est…','les oiseaux',['chantent','oiseaux chantent','le matin'],'Qui est-ce qui chante ?'],
+ ['Dans « Mon frère mange une pomme. », le verbe est…','mange',['frère','pomme','mon'],'Il dit l’action.'],
+ ['Dans « Nous jouons. », le sujet est…','nous',['jouons','jouer','joues'],'Un pronom sujet.'],
+ ['Pour trouver le verbe, je change…','le temps (hier, demain)',['la couleur','la taille','le nom'],'Le verbe change avec le temps.'],
+ ['Quelle phrase a le mot « je » comme sujet ?','Je lis un livre.',['Lis ce livre.','Le livre est beau.','Un livre ici.'],'Je est le sujet.'],
+ {tf:'Le verbe peut être encadré par ne … pas.',v:true,e:'Il ne dort pas.'},
+ {tf:'Le sujet est toujours un nom propre.',v:false,e:'Ce peut être un nom, un groupe nominal ou un pronom.',d:2},
+ {t:'Écris le verbe : « Le chien aboie. »',a:['aboie'],e:'Aboie.'},
+ {t:'Écris le sujet : « Maman cuisine. »',a:['maman','Maman'],e:'Maman.'}]});
+
+E('ce1-fr-pronoms',{w:.6,items:[
+ ['Remplace le sujet : « Marie mange. »','Elle mange.',['Il mange.','Ils mangent.','Elles mangent.'],'Marie : féminin singulier.'],
+ ['Remplace le sujet : « Paul court. »','Il court.',['Elle court.','Ils courent.','Elles courent.'],'Paul : masculin singulier.'],
+ ['Remplace le sujet : « Les garçons jouent. »','Ils jouent.',['Elles jouent.','Il joue.','Elle joue.'],'Masculin pluriel.'],
+ ['Remplace le sujet : « Les filles chantent. »','Elles chantent.',['Ils chantent.','Il chante.','Elle chante.'],'Féminin pluriel.'],
+ ['Remplace le sujet : « Paul et Léa dansent. »','Ils dansent.',['Elles dansent.','Elle danse.','Il danse.'],'Un garçon au moins : ils.',2],
+ ['Remplace le sujet : « Moi et toi » :','nous',['vous','ils','elles'],'Toi et moi : nous.',2],
+ ['Le pronom de la 2e personne du singulier est…','tu',['vous','il','nous'],'Je, tu, il…'],
+ ['Un pronom remplace…','un nom',['un verbe','une lettre','un point'],'Pour éviter les répétitions.'],
+ {tf:'« Elles » remplace un groupe de filles.',v:true,e:'Féminin pluriel.'},
+ {tf:'« Il » peut remplacer « la maîtresse ».',v:false,e:'On dit « elle ».'},
+ {t:'Écris le pronom : « Mes sœurs rient. » → … rient.',a:['elles','Elles'],e:'Elles.',d:2}]});
+
+E('ce1-ma-fractions',{w:.6,items:[
+ ['Une pizza est partagée en 2 parts égales. Chaque part est…','un demi (1/2)',['un quart','un tiers','un huitième'],'Deux parts égales : un demi.'],
+ ['Une pizza est partagée en 4 parts égales. Chaque part est…','un quart (1/4)',['un demi','un tiers','un huitième'],'Quatre parts égales : un quart.'],
+ ['Une pizza est partagée en 3 parts égales. Chaque part est…','un tiers (1/3)',['un demi','un quart','un cinquième'],'Trois parts égales : un tiers.'],
+ ['Dans la fraction 3/8, le nombre 8 est…','le nombre de parts égales du tout',['le nombre de parts coloriées','le résultat','le numérateur'],'8 est le dénominateur.',2],
+ ['Dans la fraction 3/8, le nombre 3 est…','le nombre de parts coloriées',['le nombre de parts du tout','le dénominateur','un nombre au hasard'],'3 est le numérateur.',2],
+ ['Quelle fraction est la plus grande : 1/2 ou 1/4 ?','1/2',['1/4','elles sont égales'],'Un demi est plus grand qu’un quart.',2],
+ ['Pour parler de fraction, les parts doivent être…','égales',['de couleurs différentes','de tailles différentes','numérotées'],'Parts égales.'],
+ ['Une tablette de 10 carrés : Lina en mange 3. Elle mange…','3/10',['10/3','3 dixièmes de moins','7/10'],'3 parts sur 10.',2],
+ {n:'Le demi de 10 est…',a:5,e:'10 ÷ 2 = 5.',d:2},
+ {n:'Le quart de 8 est…',a:2,e:'8 ÷ 4 = 2.',d:2},
+ {n:'Le tiers de 9 est…',a:3,e:'9 ÷ 3 = 3.',d:2},
+ {tf:'1/2 s’écrit « un demi ».',v:true,e:'1/2 = un demi.'},
+ {tf:'Si les parts ne sont pas égales, c’est une fraction.',v:false,e:'Les parts doivent être égales.'}]});
+
+E('ce1-ma-masses',{w:.6,items:[
+ ['1 kg est égal à…','1 000 g',['100 g','10 g','10 000 g'],'1 kg = 1 000 g.'],
+ ['2 kg est égal à…','2 000 g',['200 g','20 g','2 g'],'2 × 1 000.'],
+ ['Pour peser une plume, on utilise plutôt…','le gramme',['le kilogramme','le litre','le mètre'],'Une plume est légère.'],
+ ['Pour peser un enfant, on utilise plutôt…','le kilogramme',['le gramme','le centimètre','le litre'],'Un enfant est plus lourd.'],
+ ['Quel objet pèse environ 1 kg ?','un paquet de sucre',['un trombone','une plume','une feuille'],'Un paquet de sucre.'],
+ ['Quel objet pèse environ 1 g ?','un trombone',['un paquet de sucre','une baguette','un enfant'],'Un trombone est léger.'],
+ ['Qui est le plus lourd ?','1 kg de plomb et 1 kg de plumes pèsent pareil',['le plomb est plus lourd','les plumes sont plus lourdes','on ne sait pas'],'Même masse : 1 kg.',3],
+ ['Un demi-kilogramme est égal à…','500 g',['50 g','5 g','5 000 g'],'1 000 ÷ 2.',2],
+ {n:'3 kg = … g',a:3000,u:'g',e:'3 × 1 000.',d:2},
+ {n:'4 000 g = … kg',a:4,u:'kg',e:'4 000 ÷ 1 000.',d:2},
+ {tf:'On mesure les masses avec une balance.',v:true,e:'Balance.'},
+ {tf:'1 g est plus grand que 1 kg.',v:false,e:'1 kg = 1 000 g.'}]});
+
+E('ce1-ma-heure',{w:.6,items:[
+ ['La grande aiguille sur le 6 : c’est…','la demie',['le quart','l’heure pile','moins le quart'],'30 minutes.'],
+ ['La grande aiguille sur le 3 : c’est…','et quart',['et demie','moins le quart','heure pile'],'15 minutes.'],
+ ['La grande aiguille sur le 9 : c’est…','moins le quart',['et quart','et demie','heure pile'],'45 minutes.'],
+ ['Il est 3 h 30. On dit aussi…','trois heures et demie',['trois heures et quart','quatre heures moins le quart','trois heures pile'],'30 minutes après 3 h.'],
+ ['Il est 3 h 45. On dit aussi…','quatre heures moins le quart',['trois heures et quart','trois heures et demie','quatre heures et quart'],'Il manque un quart d’heure pour 4 h.',2],
+ ['Une heure dure…','60 minutes',['10 minutes','100 minutes','24 minutes'],'1 h = 60 min.'],
+ ['Il est 13 h. On dit aussi…','une heure de l’après-midi',['une heure du matin','treize minutes','midi'],'13 h = 1 h de l’après-midi.',2],
+ ['Combien de temps entre 8 h et 10 h ?','2 heures',['1 heure','3 heures','10 heures'],'10 − 8 = 2.'],
+ ['Combien de temps entre 9 h 30 et 10 h 30 ?','1 heure',['30 minutes','2 heures','10 minutes'],'Une heure pile.',2],
+ {tf:'À midi, la petite aiguille est sur le 12.',v:true,e:'12 heures.'},
+ {n:'Une demi-heure dure combien de minutes ?',a:30,u:'min',e:'60 ÷ 2 = 30.'}]});
+
+E('ce1-ma-figures',{w:.6,items:[
+ ['Un angle droit ressemble à…','un coin de feuille',['une pointe très pointue','un trait droit','un cercle'],'Le coin de la feuille est droit.'],
+ ['Pour vérifier un angle droit, on utilise…','une équerre',['une règle seule','un compas','un rapporteur'],'L’équerre.'],
+ ['Pour tracer un cercle, on utilise…','un compas',['une équerre','une règle graduée','une gomme'],'Le compas trace des cercles.'],
+ ['Un carré a…','4 côtés égaux et 4 angles droits',['3 côtés','4 côtés différents','aucun angle droit'],'Définition du carré.'],
+ ['Un rectangle a…','4 angles droits et des côtés opposés égaux',['3 angles droits','5 côtés','des côtés tous inégaux'],'Rectangle.'],
+ ['Un triangle rectangle a…','3 côtés et un angle droit',['4 côtés','2 angles droits','aucun angle'],'Il a un angle droit.'],
+ ['Combien d’angles droits a un carré ?','4',['2','3','1'],'Quatre.'],
+ ['Un losange a 4 côtés égaux mais pas d’angle droit. Est-ce un carré ?','non',['oui'],'Il faut 4 angles droits.',3],
+ {tf:'La règle permet de tracer un angle droit.',v:false,e:'C’est l’équerre qui trace ou vérifie un angle droit.'},
+ {tf:'Tous les points d’un cercle sont à la même distance du centre.',v:true,e:'Définition du cercle.',d:2},
+ {n:'Combien de côtés a un triangle ?',a:3,e:'Trois.'},
+ {n:'Combien d’angles droits a un rectangle ?',a:4,e:'Quatre.'}]});
+
+E('ce1-ma-solides',{w:.6,items:[
+ ['Les faces d’un cube sont…','des carrés',['des triangles','des cercles','des losanges'],'6 faces carrées.'],
+ ['Les faces d’un pavé droit sont…','des rectangles',['des triangles','des cercles','des pentagones'],'6 rectangles.'],
+ ['Une pyramide à base carrée a…','1 carré et 4 triangles',['6 carrés','4 carrés','2 triangles'],'5 faces.',2],
+ ['Une arête est…','le bord où deux faces se rejoignent',['une face','un angle plat','un trou'],'Le bord.'],
+ ['Un sommet est…','une pointe où plusieurs arêtes se rejoignent',['une face','un bord','un trou'],'Un coin.'],
+ ['Une boule a…','aucune arête et aucun sommet',['12 arêtes','8 sommets','6 faces'],'Elle est toute ronde.',2],
+ ['Un cylindre a…','2 faces planes en forme de disque',['6 faces carrées','4 sommets','12 arêtes'],'Et une surface courbe.',2],
+ {n:'Combien d’arêtes a un cube ?',a:12,e:'12 arêtes.'},
+ {n:'Combien de sommets a un pavé droit ?',a:8,e:'8 sommets.'},
+ {n:'Combien de faces a une pyramide à base carrée ?',a:5,e:'1 carré + 4 triangles.',d:2},
+ {tf:'Un cube et un pavé droit ont 6 faces.',v:true,e:'Les faces du cube sont toutes des carrés.'},
+ {tf:'Une pyramide à base carrée a 4 sommets.',v:false,e:'Elle a 5 sommets : 4 à la base et 1 au sommet.',d:2}]});
+
+E('ce1-qm-cycle-vie',{w:.6,items:[
+ ['Un animal qui pond des œufs est…','ovipare',['vivipare','herbivore','carnivore'],'Ovipare.'],
+ ['Un animal dont les petits se développent dans le ventre de la mère est…','vivipare',['ovipare','herbivore','omnivore'],'Vivipare.'],
+ ['Le chat est…','vivipare',['ovipare','insecte','poisson'],'Il met au monde des chatons.'],
+ ['La poule est…','ovipare',['vivipare','mammifère','insecte'],'Elle pond des œufs.'],
+ ['Un têtard devient…','une grenouille',['un poisson','un serpent','un crabe'],'Métamorphose.'],
+ ['Une chenille devient…','un papillon',['une araignée','un escargot','un ver'],'Elle passe par la chrysalide.'],
+ ['Un poussin sort de…','l’œuf',['la graine','le nid vide','la mare'],'Il éclot.'],
+ ['Qu’est-ce qui vient en premier dans la vie d’une grenouille ?','l’œuf',['la grenouille adulte','le têtard avec des pattes','le saut'],'Œuf, têtard, grenouille.'],
+ {o:['l’œuf','le poussin','la poule'],q:'Remets les étapes dans l’ordre :',e:'Œuf, poussin, poule.'},
+ {o:['l’œuf','la chenille','la chrysalide','le papillon'],q:'Remets les étapes de la vie du papillon dans l’ordre :',e:'Œuf, chenille, chrysalide, papillon.',d:2},
+ {tf:'Le chiot boit le lait de sa mère.',v:true,e:'Les mammifères allaitent leurs petits.'},
+ {tf:'Tous les animaux pondent des œufs.',v:false,e:'Les mammifères sont vivipares.',d:2}]});
+
+E('ce1-qm-regimes',{w:.6,items:[
+ ['Le lapin mange des végétaux. Il est…','herbivore',['carnivore','omnivore','insecte'],'Herbivore.'],
+ ['Le lion mange d’autres animaux. Il est…','carnivore',['herbivore','omnivore','végétarien'],'Carnivore.'],
+ ['L’ours mange des fruits et des poissons. Il est…','omnivore',['herbivore','carnivore','insecte'],'Les deux.'],
+ ['La vache est…','herbivore',['carnivore','omnivore','insecte'],'Elle mange de l’herbe.'],
+ ['Le loup est…','carnivore',['herbivore','omnivore','végétarien'],'Il mange d’autres animaux.'],
+ ['Au début d’une chaîne alimentaire, il y a toujours…','un végétal',['un animal carnivore','un humain','un caillou'],'Une plante.'],
+ ['Dans « herbe → lapin → renard », la flèche signifie…','est mangé par',['mange','devient','pousse'],'L’herbe est mangée par le lapin.',2],
+ ['Dans « herbe → lapin → renard », qui est le dernier maillon ?','le renard',['l’herbe','le lapin','la terre'],'Il mange le lapin.'],
+ {tf:'Un carnivore mange seulement des végétaux.',v:false,e:'Il mange d’autres animaux.'},
+ {tf:'L’être humain est omnivore.',v:true,e:'Il mange des végétaux et des animaux.'},
+ {o:['l’herbe','la sauterelle','la grenouille','le héron'],q:'Remets dans l’ordre cette chaîne alimentaire :',e:'L’herbe est mangée par la sauterelle, puis la grenouille, puis le héron.',d:3}]});
+
+E('ce1-qm-plantes',{w:.6,items:[
+ ['Une plante a besoin de…','eau, lumière, air',['bruit','sucre','bonbons'],'Besoins des plantes.'],
+ ['Les racines servent à…','puiser l’eau dans la terre',['faire des fleurs','capter la lumière','voler'],'Les racines boivent.'],
+ ['Les feuilles servent à…','capter la lumière',['puiser l’eau','tenir la plante','faire des racines'],'Les feuilles reçoivent la lumière.'],
+ ['La fleur donne…','le fruit qui contient les graines',['la racine','la tige','la terre'],'Après la fleur, le fruit.',2],
+ ['Une graine plantée et arrosée…','germe',['fond','brûle','disparaît'],'Une petite plante sort.'],
+ ['Une plante laissée sans eau…','se dessèche',['grandit mieux','devient un animal','devient une pierre'],'Elle a besoin d’eau.'],
+ ['Une plante laissée sans lumière…','jaunit',['verdit','fleurit toujours','grossit'],'Elle manque de lumière.'],
+ ['La tige…','transporte l’eau',['mange les insectes','produit les graines','sert de racine'],'Elle relie les racines et les feuilles.',2],
+ {tf:'Une plante est un être vivant.',v:true,e:'Elle naît, grandit et se reproduit.'},
+ {tf:'Une graine a besoin de beaucoup de lumière pour germer.',v:false,e:'Elle germe avec de l’eau ; la jeune plante a ensuite besoin de lumière.',d:3}]});
+
+E('ce1-qm-sante',{w:.6,items:[
+ ['Les dents de lait tombent vers…','6 ans',['2 ans','20 ans','50 ans'],'Elles sont remplacées par les définitives.'],
+ ['Pour protéger ses dents, on se brosse les dents…','matin et soir',['jamais','une fois par mois','seulement le dimanche'],'Deux fois par jour.'],
+ ['Trop de sucre favorise…','les caries',['la croissance des cheveux','les muscles','le sommeil'],'Le sucre abîme les dents.'],
+ ['Un repas équilibré contient…','un peu de chaque famille d’aliments',['seulement des frites','seulement des bonbons','seulement du pain'],'Équilibre.'],
+ ['Pour grandir en bonne santé, il faut aussi…','dormir et bouger',['rester tout le temps devant la télé','ne jamais jouer dehors','sauter les repas'],'Sommeil et sport.'],
+ ['Pour s’hydrater, la meilleure boisson est…','l’eau',['le soda','le sirop très sucré','le jus de fruit uniquement'],'L’eau.'],
+ ['Le dentiste est un médecin pour…','les dents',['les yeux','les oreilles','les pieds'],'Il soigne les dents.'],
+ {tf:'Les dents définitives repoussent si elles tombent.',v:false,e:'Il faut en prendre soin.',d:2},
+ {tf:'Il est bon de grignoter des bonbons toute la journée.',v:false,e:'Le sucre abîme les dents.'},
+ {tf:'On peut manger varié pour être en bonne santé.',v:true,e:'Fruits, légumes, féculents…'}]});
+
+E('ce1-qm-eau',{w:.6,items:[
+ ['La glace qui devient de l’eau liquide : c’est…','la fusion',['la condensation','la solidification','l’évaporation'],'La glace fond.'],
+ ['L’eau qui devient de la glace : c’est…','la solidification',['la fusion','l’évaporation','la condensation'],'L’eau gèle.'],
+ ['L’eau qui devient de la vapeur : c’est…','l’évaporation',['la fusion','la solidification','la condensation'],'Le linge sèche.'],
+ ['De la buée sur une vitre froide : c’est…','la condensation',['la fusion','l’évaporation','la solidification'],'La vapeur devient gouttes.',2],
+ ['L’eau gèle à…','0 °C',['10 °C','100 °C','−100 °C'],'À 0 °C.'],
+ ['La glace fond à…','0 °C',['10 °C','100 °C','−10 °C'],'À 0 °C.'],
+ ['La vapeur d’eau est…','un gaz invisible',['une glace','un liquide coloré','une pierre'],'On ne la voit pas.',2],
+ ['L’eau qui bout à 100 °C se transforme en…','vapeur',['glace','neige','sable'],'Ébullition.',2],
+ {tf:'Le linge mouillé sèche parce que l’eau s’évapore.',v:true,e:'Elle part dans l’air.'},
+ {tf:'L’eau de la mer gèle à 100 °C.',v:false,e:'L’eau gèle vers 0 °C.',d:2},
+ {tf:'L’eau existe sous trois états : solide, liquide, gaz.',v:true,e:'Glace, eau, vapeur.'}]});
+
+E('ce1-qm-electricite',{w:.6,items:[
+ ['Pour allumer une ampoule avec une pile, il faut un circuit…','fermé',['ouvert','cassé','vide'],'Une boucle sans coupure.'],
+ ['Un interrupteur ouvert…','coupe le courant',['allume l’ampoule','charge la pile','fait un court-circuit'],'Le courant ne passe plus.'],
+ ['La pile a deux bornes : on les appelle…','plus et moins (+ et −)',['haut et bas','rouge et bleu','gauche et droite'],'+ et −.'],
+ ['Il est dangereux de…','mettre ses doigts dans une prise',['allumer une lampe','changer une ampoule éteinte avec un adulte','utiliser une pile'],'Le courant de la prise est très dangereux.'],
+ ['On ne touche pas un appareil électrique avec…','les mains mouillées',['les mains sèches','un gant','du papier'],'L’eau conduit le courant.'],
+ ['Un fil détaché dans le circuit fait que l’ampoule…','reste éteinte',['brille plus fort','chauffe','change de couleur'],'Le circuit est ouvert.'],
+ ['Quel objet permet de relier une pile et une ampoule ?','un fil électrique',['un morceau de bois','un caillou','un bout de laine'],'Un fil conducteur.',2],
+ {tf:'Le courant fait le tour du circuit.',v:true,e:'Pile, fil, ampoule, fil, pile.'},
+ {tf:'On peut jouer avec les prises.',v:false,e:'Jamais : c’est dangereux.'},
+ {tf:'Une pile sert à produire du courant.',v:true,e:'Elle fournit l’énergie électrique.',d:2}]});
+
+E('ce1-qm-temps',{w:.6,items:[
+ ['Une décennie, c’est…','10 ans',['100 ans','1 000 ans','1 an'],'Dix ans.'],
+ ['Un siècle, c’est…','100 ans',['10 ans','1 000 ans','12 ans'],'Cent ans.'],
+ ['Un millénaire, c’est…','1 000 ans',['100 ans','10 ans','10 000 ans'],'Mille ans.'],
+ ['Nous sommes au…','XXIe siècle',['XIXe siècle','XVe siècle','Xe siècle'],'Il a commencé en 2001.'],
+ ['Il y a 100 ans, il n’y avait pas…','de télévision à la maison',['de pain','de rivières','de maisons'],'La télévision s’est répandue plus tard.'],
+ ['Pour savoir comment vivaient les gens autrefois, on peut interroger…','les grands-parents',['les nuages','un caillou','une plante'],'Les témoins.'],
+ ['Une photo ancienne est une…','trace du passé',['invention du futur','météo','recette'],'Elle garde un souvenir.'],
+ ['Autrefois, on écrivait avec…','une plume et de l’encre',['un ordinateur','un téléphone','une tablette'],'Autrefois.'],
+ {n:'Combien de décennies dans un siècle ?',a:10,e:'100 ÷ 10 = 10.',d:2},
+ {n:'Combien d’années dans 2 décennies ?',a:20,u:'ans',e:'2 × 10 = 20.',d:2},
+ {tf:'Un siècle est plus long qu’une décennie.',v:true,e:'100 ans contre 10 ans.'},
+ {o:['une décennie','un siècle','un millénaire'],q:'Range ces durées de la plus courte à la plus longue :',e:'10 ans, 100 ans, 1 000 ans.'}]});
+
+E('ce1-qm-paysages',{w:.6,items:[
+ ['Un paysage avec la mer, une plage et un port est un…','paysage du littoral',['paysage de montagne','paysage de ville','paysage de désert'],'Le littoral, c’est le bord de mer.'],
+ ['Un paysage avec des sommets et de la neige est un…','paysage de montagne',['paysage de littoral','paysage de ville','paysage de campagne'],'Montagne.'],
+ ['Un paysage avec beaucoup d’immeubles et de rues est un…','paysage de ville',['paysage de campagne','paysage de montagne','paysage de littoral'],'Ville.'],
+ ['Un paysage avec des champs et une ferme est un…','paysage de campagne',['paysage de ville','paysage de montagne','paysage de littoral'],'Campagne.'],
+ ['Un plan représente…','un petit espace, comme le quartier',['la Terre entière','une planète','tout un continent'],'Le plan est détaillé.'],
+ ['Une carte représente…','un grand espace, comme la France',['une chambre','le plan de la classe','un cahier'],'La carte montre de grands espaces.'],
+ ['La légende d’une carte sert à…','expliquer les couleurs et les signes',['dessiner la carte','écrire une histoire','colorier'],'Elle donne le sens des symboles.'],
+ {tf:'Un village est plus petit qu’une ville.',v:true,e:'Moins d’habitants.'},
+ {tf:'Dans un paysage de montagne, on voit des pentes et des sommets.',v:true,e:'Parfois de la neige.'},
+ {tf:'Un paysage de littoral est loin de la mer.',v:false,e:'Le littoral est au bord de la mer.'}]});
+
+E('ce1-qm-france',{w:.6,items:[
+ ['La capitale de la France est…','Paris',['Lyon','Marseille','Lille'],'Paris.'],
+ ['Quel fleuve traverse Paris ?','la Seine',['la Loire','le Rhône','la Garonne'],'La Seine.'],
+ ['La France hexagonale a la forme d’un…','hexagone',['carré','cercle','triangle'],'Six côtés.'],
+ ['Quelle mer est au sud de la France ?','la Méditerranée',['la Manche','la mer du Nord','l’océan Indien'],'Au sud.',2],
+ ['Quel océan borde l’ouest de la France ?','l’océan Atlantique',['l’océan Pacifique','l’océan Indien','la mer Rouge'],'À l’ouest.'],
+ ['Quelle montagne se trouve entre la France et l’Espagne ?','les Pyrénées',['les Alpes','les Vosges','le Jura'],'Au sud-ouest.',2],
+ ['Le mont Blanc se trouve dans…','les Alpes',['les Pyrénées','le Massif central','les Vosges'],'Plus haut sommet d’Europe de l’Ouest.',2],
+ ['La Guadeloupe est…','un territoire français d’outre-mer',['un pays voisin','une ville de Bretagne','un fleuve'],'Dans les Antilles.',2],
+ {tf:'La France est un pays d’Europe.',v:true,e:'En Europe.'},
+ {tf:'La Loire est une montagne.',v:false,e:'La Loire est un fleuve.'},
+ {tf:'La Garonne est un fleuve français.',v:true,e:'Elle traverse Toulouse et Bordeaux.',d:2}]});
+
+E('ce1-emc-alerter',{w:.5,items:[
+ ['Il y a un blessé. Je dois d’abord…','me protéger et protéger les autres',['partir en courant','jouer','crier sans rien faire'],'Protéger, alerter, secourir.'],
+ ['Pour appeler les secours, je dis…','mon nom, où je suis et ce qui se passe',['mon plat préféré','mon âge uniquement','rien'],'Un message clair.'],
+ ['Les numéros d’urgence sont…','gratuits',['payants','réservés aux adultes','interdits aux enfants'],'Appel gratuit.'],
+ ['Pour une personne sourde ou malentendante, on peut utiliser le…','114 par SMS',['17','18','112 par téléphone fixe'],'Le 114.',3],
+ ['Appeler le 18 pour s’amuser est…','interdit : ça empêche d’aider de vraies personnes',['drôle','permis','utile'],'Les secours doivent être libres.'],
+ {tf:'Je raccroche avant qu’on me le dise.',v:false,e:'On attend les consignes.'},
+ {tf:'Je donne mon adresse quand j’appelle les secours.',v:true,e:'Ils doivent savoir où aller.'},
+ {tf:'Le 112 fonctionne dans toute l’Europe.',v:true,e:'Numéro européen.'}]});
+
+E('ce1-emc-civilite',{w:.5,items:[
+ ['En quittant quelqu’un, je dis…','au revoir',['non','rien','va-t’en'],'Poli.'],
+ ['Quand j’ai besoin d’aide, je demande…','s’il vous plaît',['donne-moi','vite','tout de suite'],'Politesse.'],
+ ['Quand quelqu’un m’aide, je dis…','merci',['rien','non','bof'],'Remercier.'],
+ ['Pour passer devant quelqu’un, je dis…','pardon, excusez-moi',['pousse-toi','dégage','rien'],'Poli.'],
+ ['À la cantine, je…','attends mon tour',['double les autres','crie','jette la nourriture'],'Respect des autres.'],
+ {tf:'Il faut respecter le matériel de la classe.',v:true,e:'Il sert à tous.'},
+ {tf:'Je peux crier dans les couloirs de l’école.',v:false,e:'On parle calmement.'},
+ {tf:'Je tiens la porte à la personne qui arrive derrière moi.',v:true,e:'C’est un geste de civilité.'}]});
+
+E('ce1-emc-differences',{w:.5,items:[
+ ['Nous sommes tous différents : c’est…','normal',['interdit','une erreur','un problème'],'Chacun est différent.'],
+ ['Un camarade parle mal le français. Je…','l’aide gentiment',['me moque','l’ignore','le critique'],'On respecte.'],
+ ['Un camarade porte des lunettes. Je…','le traite comme les autres',['me moque','l’exclus','le critique'],'Chacun est respecté.'],
+ ['Se moquer de l’apparence de quelqu’un, c’est…','blessant',['drôle','une bonne blague','utile'],'Cela fait mal.'],
+ ['Les garçons et les filles ont…','les mêmes droits',['des droits différents','aucun droit','tous les droits'],'Égalité.'],
+ {tf:'Se moquer de la différence de quelqu’un est une discrimination possible.',v:true,e:'Cela peut devenir de la discrimination.',d:2},
+ {tf:'Tout le monde doit être comme moi.',v:false,e:'On est tous différents.'},
+ {tf:'Chacun mérite le respect.',v:true,e:'La dignité.'}]});
+
+E('ce1-emc-harcelement',{w:.5,items:[
+ ['Le harcèlement, c’est quand…','on fait du mal à quelqu’un plusieurs fois',['on joue ensemble','on se dispute une seule fois','on gagne un jeu'],'Répété.'],
+ ['Si je suis harcelé, je…','le dis à un adulte de confiance',['me tais','me bats','reste seul'],'On demande de l’aide.'],
+ ['Si je vois un camarade harcelé, je…','prévient un adulte',['ris avec les autres','filme','m’en vais sans rien dire'],'Je ne laisse pas faire.'],
+ ['Le numéro national contre le harcèlement est le…','3018 (cyber) ou 3020 (école)',['18','17','15'],'Numéros d’aide.',3],
+ ['Parmi ces mots, lequel désigne celui qui est attaqué ?','la victime (la cible)',['le témoin','le gentil','le chef'],'La cible.',2],
+ {tf:'Se moquer tous les jours du même élève peut être du harcèlement.',v:true,e:'Répété contre la même personne.'},
+ {tf:'On peut rire avec ceux qui se moquent.',v:false,e:'Cela encourage le harcèlement.'},
+ {tf:'On peut en parler à un adulte de confiance.',v:true,e:'Parents, maîtresse…'}]});
+
+E('ce1-emc-republique',{w:.5,items:[
+ ['Quel mot est dans la devise de la République ?','Liberté',['Pouvoir','Argent','Victoire'],'Liberté, Égalité, Fraternité.'],
+ ['Qui accueille l’école publique ?','tous les enfants',['seulement les garçons','seulement ceux d’une religion','seulement les riches'],'L’école est laïque.'],
+ ['Les symboles de la République sont…','le drapeau, la Marseillaise, Marianne',['le sapin, le gâteau, les cadeaux','la pluie, le vent, le soleil','le foot, le tennis, le judo'],'Symboles.'],
+ ['La fête nationale est le…','14 juillet',['25 décembre','1er janvier','1er mai'],'Fête nationale.'],
+ ['La laïcité permet à chacun de…','croire ou ne pas croire',['obéir à une seule religion','ne jamais parler','se cacher'],'Liberté de conscience.'],
+ {tf:'La Marseillaise est l’hymne national.',v:true,e:'On la chante lors des cérémonies.'},
+ {tf:'Il y a une religion obligatoire à l’école publique.',v:false,e:'L’école publique est laïque.'},
+ {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'}]});
 })();
