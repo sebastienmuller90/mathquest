@@ -283,4 +283,138 @@ E('cp-evar-famille',{items:[
  ['Dans une famille, on peut vivre avec…','un parent, deux parents, des grands-parents…',['personne','seulement des animaux','seulement des voisins'],'Il y a plein de façons de vivre en famille.'],
  ['Un camarade parle de sa famille, différente de la mienne. Je…','l’écoute avec respect',['me moque','dis qu’elle n’est pas une vraie famille','pars'],'On respecte toutes les familles.']],
  parts:[HE('🏡','Moment hors écran : mon arbre des personnes importantes',{but:'parler des personnes qui comptent pour soi.',consigne:'Dessine un arbre. Sur chaque branche, dessine une personne importante pour toi (famille, nounou, ami…). Présente ton arbre à un adulte.',duree:'15 minutes',materiel:'feuille, crayons',auto:'J’ai dessiné les personnes qui comptent pour moi et je les ai présentées.'})]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'HG et d'EMC au CP ---------- */
+E('cp-hg-avant-apres',{w:.7,items:[
+ ['Hier, c’est…','le passé',['le futur','le présent','le jour de demain'],'Hier est déjà arrivé.'],
+ ['Demain, c’est…','le futur',['le passé','le présent','il y a longtemps'],'Demain n’est pas encore arrivé.'],
+ ['Aujourd’hui, c’est…','le présent',['le passé','le futur','autrefois'],'Aujourd’hui, c’est maintenant.'],
+ ['Qui est né le plus tôt dans une famille ?','le grand-père',['le bébé','le petit-fils','la petite sœur'],'Les grands-parents sont nés avant les parents et les enfants.'],
+ ['Quel mot parle du futur ?','demain',['hier','avant-hier','autrefois'],'Demain n’est pas encore arrivé.'],
+ ['Quel mot parle du passé ?','autrefois',['demain','après-demain','bientôt'],'Autrefois, c’est avant maintenant.'],
+ ['Sur une frise du temps, où met-on l’événement le plus ancien ?','à gauche',['à droite','au milieu','en haut'],'On lit la frise de gauche à droite.'],
+ {tf:'Le temps passé peut revenir.',v:false,e:'Le temps passé ne revient jamais.'},
+ {tf:'« Avant-hier » est plus ancien qu’« hier ».',v:true,e:'Avant-hier vient avant hier.'},
+ {tf:'Les parents sont nés avant les grands-parents.',v:false,e:'Ce sont les grands-parents qui sont nés les premiers.'},
+ {o:['Je suis bébé','J’apprends à marcher','J’entre au CP'],q:'Remets ces moments de ta vie dans l’ordre :',e:'Bébé, premiers pas, puis CP.'},
+ {o:['avant-hier','hier','aujourd’hui','demain'],q:'Remets ces mots du temps dans l’ordre :',e:'Avant-hier, hier, aujourd’hui, demain.',d:2}]});
+
+E('cp-hg-se-reperer',{w:.7,items:[
+ ['Pour jouer dehors à l’école, on va dans…','la cour',['le réfectoire','la bibliothèque','la classe'],'La cour sert à jouer pendant la récréation.'],
+ ['Pour emprunter un livre, on va à…','la bibliothèque',['la cour','le portail','les sanitaires'],'La bibliothèque prête des livres.'],
+ ['Pour entrer dans l’école, on passe par…','le portail',['le tableau','la cantine','le plan'],'Le portail est l’entrée.'],
+ ['Un plan est dessiné…','vu de dessus',['de côté','de très loin','à l’envers'],'On regarde comme un oiseau qui vole au-dessus.'],
+ ['Si la porte est à ma droite, elle est du côté de…','ma main droite',['ma main gauche','mon dos','mon nez'],'Droite : du côté de la main qui écrit pour la plupart des enfants.',2],
+ ['Le tableau est devant moi. Où est le mur du fond ?','derrière moi',['devant moi','à ma droite uniquement','sous mes pieds'],'Derrière, c’est le côté opposé à devant.'],
+ ['Sur un plan, le petit carré dessiné peut représenter…','une table',['un nuage','un poisson','un arbre du jardin'],'Les objets sont dessinés vus de dessus.'],
+ {tf:'On mange au réfectoire.',v:true,e:'Le réfectoire est la cantine.'},
+ {tf:'Sur un plan, on voit les pieds des tables.',v:false,e:'On voit la classe de dessus.'},
+ {tf:'Les sanitaires servent à se laver les mains.',v:true,e:'Ils servent aussi à aller aux toilettes.'},
+ ['Quel mot est un mot de position ?','à côté',['rouge','joyeux','demain'],'À côté dit où se trouve un objet.'],
+ ['Pour décrire la place d’un cartable, je dis qu’il est…','sous la table',['bleu et rond','lourd hier','joyeux'],'Sous donne la position.',2]]});
+
+E('cp-hg-monde',{w:.7,items:[
+ ['Le globe représente la Terre sous la forme…','d’une boule',['d’un carré','d’un triangle','d’une feuille plate'],'La Terre est ronde.'],
+ ['Le planisphère est…','une carte plate du monde',['une boule','un océan','un continent'],'On aplatit la Terre sur une carte.'],
+ ['Combien y a-t-il de continents ?','6',['2','12','20'],'Europe, Afrique, Asie, Amérique, Océanie, Antarctique.',2],
+ ['Quel continent est couvert de glace ?','l’Antarctique',['l’Europe','l’Asie','l’Afrique'],'Il est tout au sud de la Terre.',2],
+ ['Quel est un océan ?','le Pacifique',['l’Europe','la Marne','le Mont Blanc'],'Océans : Atlantique, Pacifique, Indien.'],
+ ['Sur une carte, le Nord est…','en haut',['en bas','à gauche','à droite'],'Le Nord est en haut, le Sud en bas.'],
+ ['Sur une carte, l’Est est…','à droite',['à gauche','en haut','en bas'],'L’Est est à droite.',2],
+ ['Où y a-t-il plus d’eau sur la Terre ?','dans les océans et les mers',['dans les parcs','dans les jardins','dans les verres'],'Il y a plus d’eau que de terres.',2],
+ {tf:'La Guadeloupe fait partie de la France.',v:true,e:'C’est un territoire français d’outre-mer, dans les Antilles.',d:2},
+ {tf:'La France hexagonale se trouve en Asie.',v:false,e:'Elle est en Europe.'},
+ {tf:'Sur une carte, le bleu montre souvent l’eau.',v:true,e:'Le bleu représente les mers et les océans.'},
+ {n:'Combien y a-t-il de points cardinaux (Nord, Sud, Est, Ouest) ?',a:4,e:'Nord, Sud, Est, Ouest.'}]});
+
+E('cp-hg-jour-saisons',{w:.7,items:[
+ ['Quand notre côté de la Terre est tourné vers le Soleil, il fait…','jour',['nuit','hiver','nuageux'],'Le côté éclairé a le jour.'],
+ ['En combien de temps la Terre fait-elle un tour sur elle-même ?','24 heures',['1 heure','1 mois','1 an'],'Une journée dure 24 heures.',2],
+ ['Combien y a-t-il de saisons ?','4',['2','6','12'],'Printemps, été, automne, hiver.'],
+ ['En quelle saison les feuilles des arbres tombent-elles ?','en automne',['au printemps','en été','en hiver seulement'],'Les arbres perdent leurs feuilles en automne.'],
+ ['En quelle saison les jours sont-ils les plus longs en France ?','en été',['en hiver','en automne','à Noël'],'Il fait jour longtemps.',2],
+ ['Quelle saison est la plus froide en France hexagonale ?','l’hiver',['l’été','le printemps','l’automne'],'C’est la saison du froid.'],
+ ['Quelle saison vient entre l’hiver et l’été ?','le printemps',['l’automne','le matin','la nuit'],'Hiver, printemps, été, automne.'],
+ {tf:'C’est le Soleil qui tourne autour de la Terre en un jour.',v:false,e:'C’est la Terre qui tourne sur elle-même.',d:2},
+ {tf:'La nuit, notre côté de la Terre est dans l’ombre.',v:true,e:'Il est tourné à l’opposé du Soleil.'},
+ {o:['printemps','été','automne','hiver'],q:'Remets les saisons dans l’ordre en commençant par le printemps :',e:'Printemps, été, automne, hiver.'},
+ {o:['le matin','le midi','le soir','la nuit'],q:'Remets les moments de la journée dans l’ordre :',e:'Matin, midi, soir, nuit.'}]});
+
+E('cp-hg-mesurer-temps',{w:.7,items:[
+ ['Pour savoir l’heure, je regarde…','une montre',['un sablier','un calendrier','une carte'],'La montre donne l’heure.'],
+ ['Pour savoir le jour du mois, je regarde…','un calendrier',['une montre','un sablier','un plan'],'Le calendrier donne les dates.'],
+ ['Un sablier sert à mesurer…','une courte durée',['la date de ton anniversaire','la météo','la taille'],'Le sable met un temps limité à couler.'],
+ ['Un réveil sert à…','sonner à une heure choisie',['dire la date','mesurer la distance','montrer le plan'],'On règle l’heure de la sonnerie.'],
+ ['L’emploi du temps de la classe montre…','ce qu’on fait pendant la journée',['la météo','les continents','les saisons'],'Il organise les activités.',2],
+ ['Combien d’heures y a-t-il dans une journée ?','24',['12 seulement','7','60'],'Une journée a 24 heures.',2],
+ {tf:'Le sablier donne l’heure exacte.',v:false,e:'Il mesure une durée, pas l’heure.'},
+ {tf:'Le calendrier permet de repérer les jours et les mois.',v:true,e:'On y voit les dates de l’année.'},
+ {n:'Combien y a-t-il de minutes dans une heure ?',a:60,e:'Une heure dure 60 minutes.',d:2},
+ ['Pour me brosser les dents pendant 3 minutes, j’utilise…','un sablier de 3 minutes',['un calendrier','un plan','un globe'],'Il mesure une courte durée.'],
+ ['Un événement qui a lieu chaque année à la même date est…','un anniversaire',['une récréation','un sablier','un trajet'],'Il revient chaque année.',2]]});
+
+E('cp-emc-emotions',{w:.7,items:[
+ ['Quand on a très peur, on ressent…','de la peur',['de la joie','de la fierté','de l’ennui'],'La peur fait battre le cœur plus vite.'],
+ ['Quand on a une bonne surprise, on est…','content et surpris',['triste','en colère','endormi'],'La surprise peut être joyeuse.'],
+ ['Que faire si une colère est très forte ?','respirer lentement et s’éloigner un peu',['frapper un camarade','casser un objet','crier sur tout le monde'],'On se calme sans faire de mal.'],
+ ['Que dire si on est triste ?','« Je suis triste » à un adulte de confiance',['rien du tout jamais','« Tu es méchant »','« Je m’en fiche »'],'Dire ce qu’on ressent aide.'],
+ ['Quelle émotion ressent-on quand un ami est parti ?','de la tristesse',['de la joie','de la fierté','du dégoût'],'Être séparé d’un ami rend triste.'],
+ ['Un camarade pleure. Que fais-tu ?','je lui demande ce qui se passe et je le console',['je me moque','je pars en courant','je dis qu’il exagère'],'On aide, on est gentil.'],
+ {tf:'Toutes les émotions sont normales.',v:true,e:'Ce qui compte, c’est ce qu’on en fait.'},
+ {tf:'Quand on est en colère, on a le droit de faire mal aux autres.',v:false,e:'On a le droit d’être en colère, pas de faire mal.'},
+ {tf:'Dire ce qu’on ressent avec des mots aide à se sentir mieux.',v:true,e:'Les mots remplacent les coups ou les cris.'},
+ ['Quel visage montre la joie ?','😀',['😢','😡','😨'],'Le visage souriant.'],
+ ['Le dégoût, c’est ce qu’on ressent quand…','on sent quelque chose de très mauvais',['on reçoit un cadeau','on gagne un jeu','on retrouve un ami'],'Le dégoût protège de ce qui est mauvais.',2]]});
+
+E('cp-emc-regles',{w:.7,items:[
+ ['Pourquoi range-t-on son matériel ?','pour garder la classe agréable et ne rien perdre',['pour embêter les autres','pour faire du bruit','pour rien'],'Ranger aide tout le monde.'],
+ ['Quand quelqu’un parle, je…','l’écoute',['crie plus fort','fais du bruit','pars'],'Écouter, c’est respecter.'],
+ ['Si j’abîme le livre d’un camarade, je dois…','m’excuser et réparer ou remplacer',['le cacher','accuser un autre','rire'],'Réparer est une conséquence juste.'],
+ ['Les règles s’appliquent…','à tout le monde',['seulement aux filles','seulement aux plus petits','seulement au maître'],'Tous respectent les règles.',2],
+ ['Pour demander la parole, je…','lève le doigt',['tape du pied','crie','m’en vais'],'Chacun parle à son tour.'],
+ ['Quand on se met en rang calmement, on évite…','les bousculades',['d’avancer','de marcher','de respirer'],'Le rang protège chacun.',2],
+ {tf:'Une règle est faite pour protéger tout le monde.',v:true,e:'Elle permet de vivre ensemble.'},
+ {tf:'Je peux ne pas respecter la règle si le maître ne regarde pas.',v:false,e:'On respecte les règles même sans surveillance.',d:2},
+ {tf:'Il faut respecter le matériel de l’école.',v:true,e:'Il sert à tous les élèves.'},
+ ['Quelle règle aide à bien écouter ?','ne pas parler en même temps',['courir en classe','crier','jeter ses affaires'],'Un à la fois.'],
+ {o:['Je lève le doigt','Le maître me donne la parole','Je parle','J’écoute la suite'],q:'Remets dans l’ordre pour prendre la parole :',e:'Lever le doigt, attendre la parole, parler, écouter.',d:2}]});
+
+E('cp-emc-droits-enfant',{w:.7,items:[
+ ['Le droit d’être soigné, c’est le droit…','à la santé',['au chocolat','à la télévision','de choisir sa maîtresse'],'Un enfant malade doit être soigné.'],
+ ['Aller à l’école est…','un droit de l’enfant',['une punition','un jeu interdit','un caprice'],'Tous les enfants ont droit à l’éducation.'],
+ ['Avoir un nom, c’est le droit à…','une identité',['la télévision','un animal','un vélo'],'Chaque enfant a un nom et une nationalité.',2],
+ ['Un enfant a le droit de…','jouer et se reposer',['travailler à l’usine','conduire','être frappé'],'Jouer est un droit.'],
+ ['Un adulte frappe un enfant. Que doit faire l’enfant ?','en parler à un adulte de confiance',['garder le secret','frapper aussi','se cacher toujours'],'Un enfant a droit à la protection.'],
+ ['Le numéro à appeler si un enfant est en danger est le…','119',['3','50','777'],'Le 119 est gratuit.',2],
+ {tf:'Les enfants ont des droits mais aussi des devoirs.',v:true,e:'Par exemple écouter et respecter les autres.'},
+ {tf:'Seuls les enfants d’un pays ont des droits.',v:false,e:'Tous les enfants du monde ont les mêmes droits.'},
+ {tf:'Avoir des droits veut dire faire ce qu’on veut.',v:false,e:'Il y a aussi des limites : les droits des autres.',d:2},
+ ['Le droit de donner son avis veut dire…','je peux dire ce que je pense, poliment',['je peux crier','je peux insulter','je dois me taire'],'On s’exprime en respectant les autres.'],
+ ['En quelle année la Convention des droits de l’enfant a-t-elle été adoptée ?','1989',['1889','2020','1500'],'Adoptée par l’ONU en 1989.',3]]});
+
+E('cp-emc-intimite',{w:.7,items:[
+ ['Pour être propre, je…','me lave tous les jours',['ne me lave jamais','me lave une fois par an','me lave seulement pour fêter Noël'],'L’hygiène protège la santé.'],
+ ['Après être allé aux toilettes, je…','me lave les mains',['mange tout de suite','reste sale','mets mes mains dans la bouche'],'Les mains sales transportent des microbes.'],
+ ['Qui décide si on peut toucher mon corps ?','moi : mon corps m’appartient',['tout le monde','le plus fort','celui qui a un cadeau'],'Je peux toujours dire non.',2],
+ ['Si quelqu’un me demande de garder un secret qui me fait peur, je…','le dis à un adulte de confiance',['le garde toujours','me tais','le dis à un inconnu'],'Un secret qui fait peur ne se garde pas.'],
+ ['Quel adulte de confiance puis-je choisir ?','un parent ou mon enseignant',['un inconnu','une personne qui me menace','personne'],'Il peut m’aider.'],
+ ['Je ferme la porte des toilettes parce que…','c’est mon intimité',['j’ai froid','je suis puni','je cherche un jeu'],'On respecte l’intimité de chacun.'],
+ {tf:'Je peux dire non si un geste me met mal à l’aise.',v:true,e:'Mon corps m’appartient.'},
+ {tf:'On doit toujours laisser les autres nous toucher pour être poli.',v:false,e:'Je peux dire non, même à quelqu’un que je connais.'},
+ {tf:'Le brossage des dents se fait au moins deux fois par jour.',v:true,e:'Matin et soir.',d:2},
+ ['Pour être poli avec l’intimité des autres, je…','frappe avant d’entrer dans la salle de bain',['entre sans frapper','regarde par la serrure','ouvre sans demander'],'Je respecte l’intimité des autres.',2],
+ {n:'Combien de fois par jour doit-on se brosser les dents (au minimum) ?',a:2,e:'Matin et soir.',d:2}]});
+
+E('cp-emc-republique',{w:.7,items:[
+ ['La première couleur du drapeau français (près du mât) est…','le bleu',['le rouge','le vert','le jaune'],'Bleu, blanc, rouge.'],
+ ['La devise de la République commence par…','Liberté',['Égalité','Fraternité','Laïcité'],'Liberté, Égalité, Fraternité.'],
+ ['Qui est Marianne ?','le visage qui symbolise la République',['une chanteuse actuelle','une écolière de CP','une reine'],'On la voit dans les mairies.'],
+ ['Le 14 juillet, la France fête…','la fête nationale',['Noël','Pâques','la rentrée'],'La fête nationale est le 14 juillet.'],
+ ['La Marseillaise est…','l’hymne national',['une berceuse','un jeu','un menu'],'On la chante lors des cérémonies.'],
+ ['Où voit-on le drapeau français à l’école ?','sur la façade ou à l’entrée',['dans la cuisine','sous la table','dans le ciel seulement'],'Il est sur les bâtiments publics.',2],
+ {tf:'Le drapeau français est bleu, blanc, rouge.',v:true,e:'Trois bandes verticales.'},
+ {tf:'Le drapeau français est vert et jaune.',v:false,e:'Il est bleu, blanc, rouge.'},
+ {tf:'La devise de la République contient le mot « Fraternité ».',v:true,e:'Liberté, Égalité, Fraternité.'},
+ {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'},
+ ['Le mot « République » vient de…','« chose publique », ce qui appartient à tous',['« roi »','« château »','« boulangerie »'],'Latin : res publica.',3]]});
 })();

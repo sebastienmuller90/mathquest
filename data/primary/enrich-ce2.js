@@ -241,4 +241,20 @@ E('ce2-emc-valeurs',{w:.7,items:[
  ['Aider un camarade qui est tombé, c’est un exemple de…','fraternité',['laïcité','égoïsme','discrimination'],'La fraternité, c’est l’entraide.'],
  ['La Charte de la laïcité est affichée…','dans les écoles',['sur la Lune','dans les forêts','dans les stades uniquement'],'Elle explique les règles de la laïcité à l’école.'],
  {o:['Liberté','Égalité','Fraternité'],q:'Remets dans l’ordre les mots de la devise :',e:'Liberté, Égalité, Fraternité.'}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'EMC au CE2 (bien commun) ---------- */
+E('ce2-emc-bien-commun',{w:.7,items:[
+ ['Quel est un bien commun ?','un parc public',['ta trousse','la chambre d’un camarade','ton goûter'],'Un bien commun appartient à tous.'],
+ ['L’intérêt général, c’est…','ce qui est bon pour tout le monde',['ce qui est bon pour moi seul','ce que veut le plus fort','ce qu’on achète'],'Pas seulement pour soi.'],
+ ['Jouer au ballon à tour de rôle dans la cour, c’est penser à…','l’intérêt général',['l’intérêt particulier seulement','la punition','l’ennui'],'Chacun a sa chance.',2],
+ ['Pourquoi ne faut-il pas abîmer les livres de la bibliothèque ?','ils servent à tous',['ils sont à moi','ils ne coûtent rien','ils sont inutiles'],'Un bien commun se respecte.'],
+ ['Prendre soin du bien commun, c’est…','le respecter et l’entretenir',['le casser','le cacher','le vendre'],'Tout le monde en profite.'],
+ ['Ramasser un papier dans la cour est un geste…','pour le bien commun',['inutile','interdit','réservé aux adultes'],'On garde l’espace agréable.'],
+ ['Qui doit respecter le bien commun ?','tout le monde',['seulement les enfants','seulement le maire','personne'],'C’est l’affaire de tous.'],
+ ['L’eau potable de la commune est…','un bien précieux à ne pas gaspiller',['sans limite','sans valeur','réservée aux riches'],'On l’économise.',2],
+ {tf:'Un banc dans un parc appartient à tous.',v:true,e:'C’est un bien commun.'},
+ {tf:'Ce qui est « à tout le monde » n’est « à personne ».',v:false,e:'Chacun doit le respecter.',d:2},
+ {tf:'L’intérêt particulier et l’intérêt général sont toujours identiques.',v:false,e:'Parfois, il faut renoncer à un avantage pour le bien de tous.',d:3},
+ {t:'Complète : un parc, une école, une bibliothèque forment le bien … (un mot)',a:['commun'],e:'Le bien commun.'},
+ {o:['Je vois un banc abîmé','J’en parle à un adulte','La commune le répare','Tout le monde peut s’asseoir'],q:'Remets dans l’ordre :',e:'On constate, on prévient, on répare, tous en profitent.',d:3}]});
 })();

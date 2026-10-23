@@ -465,4 +465,92 @@ E('cm1-hg-internet',{w:.7,items:[
  {tf:'En France, tout le territoire est parfaitement couvert partout.',v:false,e:'Il reste des zones moins bien couvertes.',d:2},
  {t:'Complète : les signaux voyagent dans des fibres de … (un mot)',a:['verre'],e:'Les fibres optiques sont en verre et transportent de la lumière.',d:3},
  {o:['Ma tablette','La box','Le réseau de l’opérateur','Un câble sous-marin'],q:'Remets dans l’ordre le début du trajet d’un message vers un autre continent :',e:'De l’appareil à la box, puis au réseau, puis au câble sous-marin.',d:3}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'histoire-géographie au CM1 ---------- */
+E('cm1-hg-moyen-age',{w:.7,items:[
+ ['Selon le programme, le Moyen Âge va de…','476 à 1492',['1492 à 1789','1000 à 1100','1789 à 1914'],'De la chute de l’Empire romain d’Occident à la découverte de l’Amérique.'],
+ ['Les redevances sont…','une part de la récolte donnée au seigneur',['des cadeaux à l’Église','des impôts du roi','des pièces d’or'],'Les paysans les devaient au seigneur.',2],
+ ['Un château fort servait à…','protéger et loger le seigneur',['stocker des livres','accueillir des touristes','abriter une école'],'C’était aussi un symbole de puissance.'],
+ ['Le travail des paysans suit…','les saisons',['les jours fériés','les vacances','la télévision'],'Labours, semailles, moissons, vendanges.'],
+ ['Que mangent surtout les paysans ?','du pain et de la soupe',['des pizzas','des plats surgelés','des glaces'],'Une alimentation simple.'],
+ ['Une seigneurie est…','un territoire dominé par un seigneur',['un jardin public','une rivière','un marché'],'Le seigneur protège et juge.'],
+ ['Les moissons ont lieu en…','été',['hiver','automne uniquement','printemps'],'On récolte le blé en été.',2],
+ {tf:'La plupart des gens au Moyen Âge sont des paysans.',v:true,e:'Environ 9 personnes sur 10.'},
+ {tf:'Les corvées sont des jours de travail payés.',v:false,e:'Ce sont des jours de travail gratuit pour le seigneur.'},
+ {tf:'Le Moyen Âge dure environ mille ans.',v:true,e:'De 476 à 1492 environ.',d:2},
+ {n:'En quelle année prend fin le Moyen Âge selon le programme ?',a:1492,e:'1492.',d:2},
+ {o:['Labours','Semailles','Moissons','Vendanges'],q:'Remets dans l’ordre quelques travaux de l’année agricole :',e:'Labours, semailles, moissons, vendanges.',d:3}]});
+
+E('cm1-hg-monarchie',{w:.7,items:[
+ ['Quel roi est appelé le Roi-Soleil ?','Louis XIV',['François Ier','Henri IV','Louis XVI'],'Il règne de 1643 à 1715.'],
+ ['Quel roi accueille Léonard de Vinci en France ?','François Ier',['Henri IV','Louis XIV','Charlemagne'],'Léonard arrive vers 1516.',2],
+ ['Quel roi signe l’édit de Nantes en 1598 ?','Henri IV',['Louis XIV','François Ier','Napoléon'],'Il met fin aux guerres de religion.'],
+ ['Où Louis XIV s’installe-t-il avec sa cour ?','à Versailles',['à Chambord','à Lyon','à Marseille'],'Le château de Versailles symbolise son pouvoir.'],
+ ['Un monarque absolu est un roi qui…','concentre presque tous les pouvoirs',['partage le pouvoir avec le peuple','n’a aucun pouvoir','est élu'],'Louis XIV est un roi absolu.',2],
+ ['Les trois ordres de la société sont…','le clergé, la noblesse, le tiers état',['les rois, les reines, les princes','les paysans, les marins, les soldats','les riches, les pauvres, les enfants'],'La société d’ordres.',2],
+ ['Le tiers état comprend…','tous ceux qui travaillent, la majorité de la population',['seulement les nobles','seulement les prêtres','seulement le roi'],'Paysans, artisans, bourgeois.',2],
+ ['Le château de Chambord est lié à…','François Ier',['Henri IV','Louis XIV','Louis XVI'],'Un château de la Renaissance.',3],
+ {tf:'Louis XIV est le premier roi de France.',v:false,e:'Il y a eu des rois bien avant lui.'},
+ {tf:'L’édit de Nantes accorde des droits aux protestants.',v:true,e:'Il ramène la paix religieuse.',d:2},
+ {tf:'La noblesse faisait partie du tiers état.',v:false,e:'La noblesse est le deuxième ordre.',d:2},
+ {n:'En quelle année Henri IV signe-t-il l’édit de Nantes ?',a:1598,e:'1598.',d:3},
+ {o:['François Ier','Henri IV','Louis XIV'],q:'Place ces rois dans l’ordre de leur règne :',e:'François Ier (1515), Henri IV (1589), Louis XIV (1643).',d:2}]});
+
+E('cm1-hg-explorations',{w:.7,items:[
+ ['En 1492, Christophe Colomb atteint…','l’Amérique',['l’Australie','l’Antarctique','l’Inde par l’est'],'Il croyait atteindre l’Asie.'],
+ ['La caravelle est…','un navire rapide et maniable',['un avion','un train','un char'],'Elle permet de naviguer au grand large.'],
+ ['La boussole sert à…','s’orienter',['pêcher','calculer la dette','repérer les orages'],'Son aiguille montre le Nord.'],
+ ['Le premier tour du monde est réalisé grâce à l’expédition de…','Magellan',['Napoléon','Louis XIV','Jules César'],'De 1519 à 1522.',2],
+ ['Quel aliment a été rapporté d’Amérique ?','la pomme de terre',['la pomme','le riz','le raisin'],'Elle est d’abord cultivée en Amérique.',2],
+ ['Le commerce triangulaire relie…','l’Europe, l’Afrique et l’Amérique',['la France, l’Italie et l’Espagne','la Terre, la Lune et le Soleil','Paris, Lyon et Marseille'],'Il est lié à la traite des esclaves.',3],
+ ['La traite des esclaves, c’est…','la déportation d’Africains réduits en esclavage',['un échange de cadeaux','un voyage de vacances','un marché de fruits'],'Un crime contre l’humanité.',2],
+ ['Les populations amérindiennes ont été touchées par…','des guerres et des maladies venues d’Europe',['seulement des fêtes','une grande prospérité','des voyages en avion'],'Elles ont été décimées.',3],
+ {tf:'Christophe Colomb explore l’Amérique pour le compte de la couronne d’Espagne.',v:true,e:'Il part d’Espagne en 1492.',d:2},
+ {tf:'La tomate est un légume venu d’Amérique.',v:true,e:'Elle a été rapportée d’Amérique.'},
+ {tf:'Les explorations ont eu lieu uniquement au XXe siècle.',v:false,e:'Elles commencent au XVe siècle.'},
+ {n:'En quelle année Colomb atteint-il l’Amérique ?',a:1492,e:'1492.'},
+ {o:['1492','1519','1685'],q:'Place dans l’ordre : Colomb, début du tour du monde de Magellan, Code noir :',e:'1492, 1519, 1685.',d:3}]});
+
+E('cm1-hg-1789',{w:.7,items:[
+ ['Le 14 juillet 1789, les Parisiens prennent…','la Bastille',['le Louvre','Versailles','la tour Eiffel'],'La Bastille est une prison-forteresse.'],
+ ['Les cahiers de doléances servent à…','noter les plaintes et les demandes du peuple',['écrire des recettes','compter les soldats','calculer les impôts'],'Rédigés au printemps 1789.',2],
+ ['La nuit du 4 août 1789…','les privilèges sont abolis',['le roi s’enfuit','la guerre commence','Napoléon est couronné'],'Fin des privilèges.',2],
+ ['La Déclaration des droits de l’homme et du citoyen est adoptée le…','26 août 1789',['14 juillet 1789','4 août 1789','5 mai 1789'],'Elle proclame les droits.'],
+ ['Les États généraux réunissent…','les trois ordres',['seulement les nobles','seulement le roi','seulement les villes'],'Clergé, noblesse, tiers état.',2],
+ ['Qui sont les philosophes des Lumières ?','Voltaire, Rousseau, Montesquieu, Diderot',['Louis XIV, Colbert, Vauban','Napoléon, Murat, Ney','Pasteur, Curie, Edison'],'Ils défendent la raison et la liberté.',2],
+ ['Pourquoi le peuple est-il mécontent en 1789 ?','le pain est cher et les impôts pèsent sur le tiers état',['il y a trop de fêtes','les routes sont trop larges','l’école est gratuite'],'Les privilégiés ne paient pas les mêmes impôts.',2],
+ {tf:'Le 14 juillet 1789 correspond à la prise de la Bastille.',v:true,e:'Symbole de la fin de l’arbitraire.'},
+ {tf:'La Révolution de 1789 renforce la monarchie absolue.',v:false,e:'Elle met fin à la monarchie absolue et à la société d’ordres.'},
+ {tf:'Le premier article de la DDHC parle d’égalité en droits.',v:true,e:'« Les hommes naissent et demeurent libres et égaux en droits ».',d:2},
+ {n:'En quelle année éclate la Révolution française ?',a:1789,e:'En 1789.'},
+ {o:['5 mai : États généraux','14 juillet : prise de la Bastille','4 août : abolition des privilèges','26 août : DDHC'],q:'Remets ces événements de 1789 dans l’ordre :',e:'5 mai, 14 juillet, 4 août, 26 août.',d:3}]});
+
+E('cm1-hg-se-nourrir',{w:.7,items:[
+ ['Un produit agricole est…','un produit qui sort directement de la ferme',['un produit de l’usine','un produit chimique','un jouet'],'Lait, blé, pomme.'],
+ ['Un yaourt est…','un produit transformé',['un produit agricole','un fruit','un légume'],'Fabriqué à partir du lait.'],
+ ['La sous-nutrition, c’est…','ne pas manger assez',['manger trop sucré','manger trop de légumes','manger trop vite'],'Manque de nourriture.'],
+ ['La malnutrition, c’est…','une alimentation déséquilibrée',['ne rien boire','manger des légumes','faire du sport'],'Trop ou pas assez de certains aliments.',2],
+ ['Dans quel ordre passe le lait pour devenir du yaourt ?','vache, lait, laiterie, magasin',['magasin, vache, laiterie','laiterie, vache, magasin','lait, magasin, vache'],'Chaîne de production.',2],
+ ['Quel aliment de base est très consommé en Asie ?','le riz',['la pomme de terre uniquement','le fromage','le chocolat'],'Beaucoup de peuples en Asie en consomment tous les jours.',2],
+ ['Pourquoi dit-on que la répartition de la nourriture est inégale ?','certains mangent trop, d’autres pas assez',['tout le monde mange pareil','personne ne mange','tous mangent à la cantine'],'Il y a des inégalités.',2],
+ {tf:'Le biscuit est un produit agricole.',v:false,e:'Il est fabriqué en usine à partir de produits agricoles.'},
+ {tf:'La malnutrition existe aussi dans les pays riches.',v:true,e:'Trop de sucre ou de gras est aussi un déséquilibre.',d:2},
+ {tf:'Le blé est utilisé pour fabriquer la farine.',v:true,e:'Puis le pain.'},
+ {t:'Complète : le blé permet de fabriquer la … (un mot)',a:['farine'],e:'La farine.',d:2},
+ {o:['Le blé est récolté','Il devient farine','La boulangerie fait le pain','Je mange du pain'],q:'Remets dans l’ordre du champ à l’assiette :',e:'Récolte, farine, pain, repas.',d:3}]});
+
+E('cm1-hg-se-deplacer',{w:.7,items:[
+ ['L’avion a besoin d’…','un aéroport',['une gare','un port','une station de métro'],'L’aéroport est l’infrastructure de l’avion.'],
+ ['Le bateau a besoin d’…','un port',['un aéroport','une gare','une station'],'Le port accueille les bateaux.'],
+ ['Le train a besoin d’…','une gare et de voies ferrées',['un port','un stade','une piscine'],'Les rails guident le train.'],
+ ['Pour une très longue distance, vers un autre continent, on choisit souvent…','l’avion',['la marche','le vélo','la trottinette'],'Il est rapide sur de longues distances.'],
+ ['Pour aller à l’école à 300 m, le plus simple est…','la marche',['l’avion','le bateau','le TGV'],'La marche est adaptée aux courtes distances.'],
+ ['Une voie cyclable est faite pour…','les vélos',['les camions','les avions','les trains'],'Elle protège les cyclistes.'],
+ ['Le temps de trajet dépend…','du mode de transport choisi',['seulement de la couleur du véhicule','du poids de ton sac','de ton prénom'],'Même distance, durées différentes.',2],
+ ['Paris-Marseille par la route fait environ…','775 km',['7 km','77 km','7 750 km'],'La distance ne change pas selon le véhicule.',3],
+ {tf:'La distance en kilomètres change selon que l’on va en train ou en avion.',v:false,e:'La distance est la même environ ; c’est la durée qui change.',d:2},
+ {tf:'Le métro est un transport urbain.',v:true,e:'Il circule dans les grandes villes.'},
+ {tf:'Le port est l’infrastructure du train.',v:false,e:'C’est la gare.'},
+ {n:'Combien de kilomètres environ séparent Paris et Marseille par la route ?',a:775,u:'km',e:'775 km environ.',d:3},
+ {o:['Je choisis un mode de transport','Je rejoins la gare ou l’aéroport','Je voyage','J’arrive à destination'],q:'Remets dans l’ordre les étapes d’un voyage :',e:'Choisir, rejoindre, voyager, arriver.',d:2}]});
 })();

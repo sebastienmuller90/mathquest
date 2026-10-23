@@ -504,4 +504,80 @@ E('cm2-hg-internet',{w:.7,items:[
  {t:'Complète : les inégalités d’accès au numérique forment la … numérique (un mot)',a:['fracture'],e:'La fracture numérique.',d:2},
  {n:'En quelle année Tim Berners-Lee imagine-t-il le Web ?',a:1989,e:'En 1989.',d:3},
  {o:['Je lis l’information','Je cherche qui l’a publiée','Je compare avec d’autres sources','Je décide de la partager ou non'],q:'Remets dans l’ordre la démarche de vérification d’une information :',e:'Lire, chercher la source, comparer, décider.',d:3}]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'HG et d'EMC au CM2 ---------- */
+E('cm2-hg-republique',{w:.7,items:[
+ ['La Première République est proclamée en…','1792',['1789','1848','1870'],'Après la chute de la monarchie.'],
+ ['En 1848, la IIe République…','instaure le suffrage universel masculin',['rétablit le roi','donne le vote aux femmes','crée l’Union européenne'],'Et abolit l’esclavage.',2],
+ ['Qui fait abolir l’esclavage en 1848 ?','Victor Schœlcher',['Napoléon','Louis XIV','Jules Ferry'],'Il est sous-secrétaire d’État à la Marine.',3],
+ ['La IIIe République commence en…','1870',['1792','1848','1958'],'Elle s’installe durablement.'],
+ ['La loi de séparation des Églises et de l’État date de…','1905',['1789','1914','1958'],'Elle fonde la laïcité.'],
+ ['Les femmes obtiennent le droit de vote en…','1944',['1789','1848','1905'],'Elles votent pour la première fois en 1945.',2],
+ ['La Marseillaise devient l’hymne national en…','1879',['1789','1792','1905'],'Fête nationale du 14 juillet en 1880.',3],
+ ['La IIIe République instaure…','l’école gratuite, obligatoire et laïque',['la monarchie absolue','l’esclavage','la société d’ordres'],'Lois de Jules Ferry.',2],
+ {tf:'Le suffrage universel masculin de 1848 inclut les femmes.',v:false,e:'Les femmes votent seulement à partir de 1944.'},
+ {tf:'La fête nationale du 14 juillet est instaurée en 1880.',v:true,e:'Par la IIIe République.',d:3},
+ {tf:'La laïcité repose sur la loi de 1905.',v:true,e:'Séparation des Églises et de l’État.',d:2},
+ {n:'En quelle année les femmes obtiennent-elles le droit de vote en France ?',a:1944,e:'1944.',d:2},
+ {o:['1792','1848','1870','1905'],q:'Remets ces dates de la République dans l’ordre :',e:'1792, 1848, 1870, 1905.',d:2}]});
+
+E('cm2-hg-guerre-39',{w:.7,items:[
+ ['La Seconde Guerre mondiale dure de…','1939 à 1945',['1914 à 1918','1789 à 1799','1870 à 1871'],'Elle commence en 1939.'],
+ ['Le 18 juin 1940, de Gaulle…','appelle depuis Londres à continuer le combat',['signe la paix','devient roi','quitte la France pour toujours'],'C’est l’appel du 18 juin.',2],
+ ['Le régime de Vichy est dirigé par…','le maréchal Pétain',['de Gaulle','Jean Moulin','Louis XIV'],'Il collabore avec l’Allemagne nazie.',2],
+ ['La Résistance est un mouvement qui…','lutte contre l’occupant',['aide l’occupant','supprime l’école','ouvre les frontières'],'Jean Moulin en est une figure.',2],
+ ['Le 6 juin 1944, c’est…','le débarquement des Alliés en Normandie',['la prise de la Bastille','l’armistice de 1918','la fête nationale'],'Début de la libération.',2],
+ ['La capitulation de l’Allemagne est signée le…','8 mai 1945',['11 novembre 1918','14 juillet 1789','6 juin 1944'],'Fin de la guerre en Europe.',2],
+ ['La Shoah désigne…','l’extermination de millions de Juifs d’Europe par les nazis',['une bataille','un traité','un régime politique ancien'],'Environ 6 millions de victimes.',3],
+ ['Le devoir de mémoire consiste à…','se souvenir pour ne pas recommencer',['oublier le passé','fêter la guerre','cacher les faits'],'Il aide à construire la paix.',2],
+ {tf:'La France est occupée en partie par l’Allemagne à partir de 1940.',v:true,e:'Après la défaite de juin 1940.'},
+ {tf:'La Seconde Guerre mondiale se termine en 1918.',v:false,e:'Elle se termine en 1945.'},
+ {tf:'Jean Moulin est une grande figure de la Résistance.',v:true,e:'Il unifie les mouvements de résistance.',d:2},
+ {n:'En quelle année commence la Seconde Guerre mondiale ?',a:1939,e:'1939.'},
+ {o:['1939','1940','1944','1945'],q:'Remets ces dates dans l’ordre :',e:'1939 début, 1940 défaite française, 1944 débarquement, 1945 fin.',d:2}]});
+
+E('cm2-hg-europe',{w:.7,items:[
+ ['Le traité de Rome de 1957 crée…','la Communauté économique européenne',['l’ONU','l’OTAN','la Société des Nations'],'Six pays fondateurs.',2],
+ ['Combien de pays signent le traité de Rome ?','6',['2','12','27'],'France, Allemagne de l’Ouest, Italie, Belgique, Pays-Bas, Luxembourg.',2],
+ ['Le traité de Maastricht crée…','l’Union européenne',['l’euro en 1957','le Parlement français','le TGV'],'Signé en 1992.',2],
+ ['Les pièces et billets en euro arrivent en…','2002',['1957','1992','2020'],'Dans les porte-monnaie.',2],
+ ['Où siège le Parlement européen ?','à Strasbourg',['à Marseille','à Paris uniquement','à Madrid'],'Il tient aussi des sessions à Bruxelles.',3],
+ ['Quel est le but premier de la construction européenne ?','garantir la paix',['faire la guerre','supprimer les langues','fermer les frontières'],'Après deux guerres mondiales.'],
+ ['La devise de l’Union européenne est…','Unie dans la diversité',['Liberté, Égalité, Fraternité','Un pour tous','Travail, Famille, Patrie'],'Elle respecte les cultures.',2],
+ ['Le drapeau européen compte…','12 étoiles',['27 étoiles','6 étoiles','50 étoiles'],'Le nombre d’étoiles ne change pas.',2],
+ {tf:'L’Union européenne compte 27 pays membres.',v:true,e:'Depuis le départ du Royaume-Uni.'},
+ {tf:'La France fait partie des six pays fondateurs.',v:true,e:'Elle a signé le traité de Rome.'},
+ {tf:'L’Europe et l’Union européenne désignent exactement la même chose.',v:false,e:'L’Europe est un continent, l’UE une organisation.',d:2},
+ {n:'En quelle année le traité de Rome est-il signé ?',a:1957,e:'En 1957.'},
+ {o:['1957','1992','2002'],q:'Remets dans l’ordre : traité de Rome, traité de Maastricht, arrivée de l’euro :',e:'1957, 1992, 2002.',d:2}]});
+
+E('cm2-emc-institutions',{w:.7,items:[
+ ['Qui vote les lois ?','le Parlement',['le maire','le juge','le préfet'],'Assemblée nationale et Sénat.'],
+ ['Qui fait appliquer les lois ?','le Gouvernement',['les députés seulement','les élèves','les professeurs'],'Avec le Président de la République.',2],
+ ['Qui sanctionne ceux qui ne respectent pas la loi ?','la justice',['le maire','le facteur','le Parlement'],'Les juges.'],
+ ['Combien d’années dure le mandat du Président de la République ?','5 ans',['2 ans','7 ans','10 ans'],'Le quinquennat.',2],
+ ['Combien de députés siègent à l’Assemblée nationale ?','577',['100','348','27'],'Ils sont élus par les citoyens.',3],
+ ['Combien de sénateurs siègent au Sénat ?','348',['577','27','100'],'Le Sénat est l’autre chambre du Parlement.',3],
+ ['Le Président est élu…','par les citoyens (suffrage universel direct)',['par le Sénat','par le tirage au sort','par le conseil municipal'],'Tous les électeurs votent.',2],
+ ['La séparation des pouvoirs protège…','les libertés',['les impôts','les vacances','les loisirs'],'Législatif, exécutif, judiciaire.',3],
+ {tf:'Le Président de la République vote seul les lois.',v:false,e:'Le Parlement vote les lois.'},
+ {tf:'Le maire est élu pour 6 ans.',v:true,e:'Les élections municipales ont lieu tous les 6 ans.',d:2},
+ {tf:'La Constitution de 1958 organise les pouvoirs de la Ve République.',v:true,e:'Elle date de 1958.',d:2},
+ {t:'Complète : le Sénat et l’Assemblée nationale forment le … (un mot)',a:['parlement'],e:'Le Parlement.',d:2},
+ {n:'En quelle année la Constitution de la Ve République est-elle adoptée ?',a:1958,e:'En 1958.',d:3}]});
+
+E('cm2-emc-symboles',{w:.7,items:[
+ ['Qui a écrit la Marseillaise ?','Rouget de Lisle',['Victor Hugo','Molière','Louis XIV'],'Il l’a écrite en 1792.',2],
+ ['Marianne porte…','un bonnet phrygien',['une couronne de roi','un casque de pompier','un chapeau de cow-boy'],'Symbole de liberté.',2],
+ ['Le 14 juillet rappelle…','la prise de la Bastille (1789) et la fête de la Fédération (1790)',['l’armistice de 1918','le débarquement de 1944','la loi de 1905'],'Fête nationale.',2],
+ ['La laïcité garantit…','la liberté de conscience',['une religion d’État','l’interdiction de toute religion','l’obligation de croire'],'Chacun croit ou non.'],
+ ['La loi de 1905 sépare…','les Églises et l’État',['l’école et la mairie','le roi et le peuple','la ville et la campagne'],'Fondement de la laïcité.',2],
+ ['La loi de 2004 concerne…','les signes religieux ostensibles à l’école publique',['la Marseillaise','les impôts','la cantine'],'Ils ne sont pas autorisés à l’école.',3],
+ ['La devise est inscrite sur…','les bâtiments publics',['les arbres','les pièces de monnaie uniquement','le ciel'],'Mairies, écoles.'],
+ ['Le drapeau tricolore est…','bleu, blanc, rouge',['vert, blanc, rouge','bleu, jaune, rouge','noir, rouge, or'],'Le bleu est près du mât.'],
+ {tf:'La laïcité interdit à chacun de croire.',v:false,e:'Elle protège la liberté de croire ou non.'},
+ {tf:'La Marseillaise est l’hymne national de la France.',v:true,e:'Écrite en 1792.'},
+ {tf:'Marianne est un personnage réel qui a vécu au XVIIIe siècle.',v:false,e:'C’est une figure symbolique de la République.',d:3},
+ {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'},
+ {n:'En quelle année Rouget de Lisle écrit-il la Marseillaise ?',a:1792,e:'En 1792.',d:3}]});
 })();
