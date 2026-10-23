@@ -136,6 +136,9 @@ jobs:
       - name: Bilan hebdomadaire parent
         if: matrix.browser == 'chromium'
         run: node tests/weekly-parent-report.test.js
+      - name: Finition parent V2 (programme, bilan et devoirs)
+        if: matrix.browser == 'chromium'
+        run: node tests/premium-parent-v2.test.js
       - name: Diplômes de maîtrise
         if: matrix.browser == 'chromium'
         run: node tests/diplomas.test.js
