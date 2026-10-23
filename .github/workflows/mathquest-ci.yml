@@ -88,6 +88,9 @@ jobs:
       - name: Création de profil premium (questionnaire, parcours, portrait/paysage)
         if: matrix.browser == 'chromium'
         run: node tests/modern-profile-onboarding.test.js
+      - name: Onboarding historique de secours (mobile, paysage, desktop, sombre)
+        if: matrix.browser == 'chromium'
+        run: node tests/legacy-onboarding-fallback.test.js
       - name: Devoirs scolaires parent-validés
         if: matrix.browser == 'chromium'
         run: node tests/homework-parent.test.js
