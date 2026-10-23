@@ -166,6 +166,15 @@ jobs:
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
+      - name: Cours approfondis de langues du collège (anglais, italien)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave1-languages-depth.test.js
+      - name: Dictée pédagogique (nature des écarts, pistes sans réponse)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave1-dictation.test.js
+      - name: Lecture à voix haute (lettres, abréviations, nombres, dates)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave1-audio.test.js
       - name: Mode sombre lisible (contraste réel texte / fond)
         if: matrix.browser == 'chromium'
         run: node tests/dark-mode.test.js
