@@ -263,7 +263,10 @@ function validate(pick){if(!M||M.locked)return;const q=M.q;let v;
  else{v=$('#in0').value;if(!v.trim())return shake();}
  let ok=check(q,v);M.your=yourAnswer(q,v);M.dict=null;
  // V8.13 : dictée analysée mot à mot (score pédagogique) au lieu d'un simple juste/faux.
- if(isDictation(q)){M.dict=MQDictation.best(q.acc,v);ok=MQDictation.outcome(M.dict).ok;}
+ if(isDictation(q)){M.dict=MQDictation.best(q.acc,v);ok=MQDictation.outcome(M.dict).ok;
+  // Second essai (une seule fois, hors défi éclair) : pistes sans la réponse ; la réponse n'est notée qu'une fois (XP /2, mêmes règles ensuite).
+  if(!ok&&!q._dretry&&!M.flash){q._dretry=1;M.firstDict=M.dict;M.dict=null;M.hint=true;return dictRetryBox('#fb',M.firstDict);}
+  if(q._dretry&&M.firstDict&&ok)MQAdaptive.recordMistake(S,M.cid,dictMistake(q,M.firstDict));}
  if(q.type==='choice')document.querySelectorAll('.choice').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('good');else if(i===pick)b.classList.add('bad');});
  else document.querySelectorAll('.ans input').forEach(x=>{x.disabled=true;x.classList.add(ok?'good':'bad');});
  markOrd(ok);result(ok);}
@@ -302,6 +305,8 @@ function coachFor(id,ok){const c=COURS[id]||{},ch=CHMAP[id]||{},mist=(S.mistakes
 function resolveIfConsolidated(id){const r=S.recent[id]||[];if(r.length>=3&&r.slice(-3).every(Boolean))MQAdaptive.resolveMistake(S,id);}
 /* Dictée : question écrite en français avec audio, réponse = phrase (ou q.dictation explicite). */
 function isDictation(q){return !!(window.MQDictation&&q&&q.type==='text'&&(q.dictation||(q.audio&&String(q.audio.l||'').startsWith('fr')&&Array.isArray(q.acc)&&q.acc.some(a=>/\s/.test(String(a).trim())))));}
+/* Second essai de dictée : pistes (position et nature de l'erreur) sans la réponse. Le champ reste modifiable. */
+function dictRetryBox(sel,d){const y=dictYoung(),f=MQDictation.feedback(d,{young:y,progressive:true});const box=$(sel);if(box)box.innerHTML=`<div class="fb tip dict-retry pop" role="status"><img src="${FINOT_IMG.indice}" alt="" aria-hidden="true" class="finot-live" style="float:left;width:36px;height:36px;border-radius:50%;margin:0 8px 4px 0;object-fit:cover;object-position:50% 35%;"><b>Presque ! Essaie encore une fois.</b><ul class="dict-lines">${f.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul><small>Corrige ta phrase puis valide à nouveau. Dernier essai avant la correction.</small></div>`;const i=$('#in0');if(i)i.focus();}
 const dictYoung=()=>!!(window.MQPrimary&&MQPrimary.young(S.grade));
 function dictMistake(q,d){return {q:`Dictée (${d.score} %) : ${d.reference}`,answer:d.reference,expl:d.errors.slice(0,6).map(e=>e.type==='missing'?`mot oublié « ${e.ref} »`:e.type==='extra'?`mot en trop « ${e.got} »`:e.type==='ponctuation'?`ponctuation « ${e.ref||e.got} »`:`${MQDictation.LABEL[e.type]} : ${e.got} → ${e.ref}`).join(' ; ')};}
 const yourAnswer=(q,v)=>q.type==='choice'?plainText(q.choices[v]):Array.isArray(v)?v.join(' ; '):String(v);
