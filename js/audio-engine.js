@@ -74,6 +74,7 @@ function pickVoice(l){const loc=locale(l),la=lang2(l);const vs=st.voices.length?
 function voicesFor(l){const loc=locale(l);return (st.voices.length?st.voices:refresh()).filter(v=>score(v,loc)>=0);}
 
 /* ---------- Préparation du texte (français) ---------- */
+const SHORT={a:'a',i:'i',o:'o',u:'u','é':'é','è':'è',e:'eu',ou:'ou',on:'on',an:'an',en:'an',in:'in',ain:'in',ein:'in',un:'un',oi:'oi',oin:'oin',ch:'che',gn:'gne',ph:'fe',qu:'ke',gu:'gue',ge:'je',gi:'ji',ce:'se',ci:'si',eu:'eu','œu':'eu',au:'o',eau:'o',ai:'è',ei:'è',er:'é',ez:'é',et:'è',ill:'ille',ail:'aille',eil:'eille',euil:'euille',ouille:'ouille',ien:'ien',ion:'ion',x:'kse',y:'i',s:'se',ss:'se',z:'ze',f:'fe',v:'ve',l:'le',m:'me',n:'ne',r:'re',j:'je',p:'pe',t:'te',b:'be',d:'de',k:'ke',c:'ke',g:'gue'};
 const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 const LETTER_NAME={a:'a',b:'bé',c:'cé',d:'dé',e:'eu',f:'effe',g:'gé',h:'ache',i:'i',j:'ji',k:'ka',l:'elle',m:'emme',n:'enne',o:'o',p:'pé',q:'ku',r:'erre',s:'esse',t:'té',u:'u',v:'vé',w:'double vé',x:'ixe',y:'i grec',z:'zède'};
 const ROM=r=>{const v={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<r.length;i++){const x=v[r[i]],y=v[r[i+1]]||0;n+=x<y?-x:x;}return n;};
@@ -100,7 +101,12 @@ function prepareFR(t){t=' '+String(t??'').replace(/[  ]/g,' ').replace(/[’�
   // Dates 12/10/2026 → « 12 octobre 2026 » (la voix lirait « barre »)
   t=t.replace(/\b(0?[1-9]|[12]\d|3[01])\/(0?[1-9]|1[0-2])\/(\d{4})\b/g,(m,d,mo,y)=>`${+d===1?'1er':+d} ${MOIS[+mo-1]} ${y}`);
   // Phonèmes et graphèmes notés [ou], [ch] : lexique de prononciation
-  t=t.replace(/\[([a-zéèêàùôîœ]{1,4})\]/gi,(m,g)=>' '+graphemeSpoken(g)+' ');
+  // Syllabe à lire (« Lis : s + é ») : on prononce les sons (« se, é »), pas les noms de lettres.
+  t=t.replace(/^(\s*Lis\s*:\s*)(\S{1,3}) \+ (\S{1,3})(\s*)$/i,(m,a,x,y,z)=>a+(SHORT[x.toLowerCase()]||x)+' plus '+(SHORT[y.toLowerCase()]||y)+z);
+  // Son noté [ou] : explication complète s'il termine la phrase ; au milieu d'une question, juste le son (sinon la question est coupée en deux).
+  {const whole=t;t=t.replace(/\[([a-zéèêàùôîœ]{1,6})\](\s*\.?\s*$)?/gi,(m,g,end)=>end!==undefined||/^\s*$/.test(whole.replace(m,''))?' '+graphemeSpoken(g)+' ':' '+(SHORT[g.toLowerCase()]||g)+' ');}
+  // Chiffres collés au mot qui précède (« euros5 », « ?5 ») et traits de comptage « | » (non prononçables)
+  t=t.replace(/([a-zéèêàùç]{3,})(\d)/g,'$1, $2').replace(/([?!])(\d)/g,'$1 $2').replace(/\|+/g,' ');
   t=t.replace(/(\d) (?=\d{3}\b)/g,'$1');
   // Monnaie
   t=t.replace(/(\d+),(\d{2})\s?€/g,(m,e,c)=>+e?`${e} euro${+e>1?'s':''} ${+c}`:`${+c} centimes`).replace(/(\d+)\s?€/g,(m,e)=>`${e} euro${+e>1?'s':''}`).replace(/€/g,' euros ');
