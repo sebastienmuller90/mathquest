@@ -3,7 +3,19 @@
 html.mq-dys-on body{font-variant-ligatures:none;text-rendering:optimizeLegibility}
 html.mq-dys-on .qtext,html.mq-dys-on .fiche,html.mq-dys-on .ex,html.mq-dys-on .fb,html.mq-dys-on .lcard,html.mq-dys-on .reading-text,html.mq-dys-on .lesson-reading,html.mq-dys-on .trad,html.mq-dys-on .whybox{line-height:1.75;text-align:left}
 html.mq-dys-on.mq-dys-large .qtext{font-size:clamp(27px,4.5vw,32px)}
+/* Grandes lettres : la carte de cours premium fixe normalement le corps à 18 px. Le mode DYS doit prendre le dessus
+   sur ce niveau racine, sinon seuls quelques sous-éléments grossissent et le texte principal reste inchangé. */
+html.mq-dys-on.mq-dys-large .lcard,html.mq-dys-on.mq-dys-large .fiche{font-size:clamp(20px,3.6vw,24px)}
 html.mq-dys-on.mq-dys-large .fiche li,html.mq-dys-on.mq-dys-large .fiche p,html.mq-dys-on.mq-dys-large .ex,html.mq-dys-on.mq-dys-large .fb,html.mq-dys-on.mq-dys-large .choice,html.mq-dys-on.mq-dys-large input.big,html.mq-dys-on.mq-dys-large .ordline,html.mq-dys-on.mq-dys-large .otok{font-size:clamp(20px,3.6vw,24px)}
+/* Le contenu pédagogique des cours comporte plusieurs composants avec leur propre taille. On les ramène à la taille
+   héritée du cours, puis on impose 16 px minimum aux métadonnées utiles pour éviter les micro-textes en mode DYS. */
+html.mq-dys-on.mq-dys-large .lcard :is(p,li,.tutor-banner,.coach-card,.method-step,.whybox,.checkpoint,.pause,.mq-try,.mq-adult,.mq-culture,.pron-status){font-size:1em}
+html.mq-dys-on.mq-dys-large .lcard :is(.fh,.ltag,small,.small,.muted.small,.pron-heard),
+html.mq-dys-on.mq-dys-large .qcard :is(.qtag,small,.small,.muted.small),
+html.mq-dys-on.mq-dys-large .course-summary :is(small,.small,.muted),
+html.mq-dys-on.mq-dys-large .mq-dys-settings :is(small,.small){font-size:16px;line-height:1.55}
+html.mq-dys-on.mq-dys-large .lcard h2,html.mq-dys-on.mq-dys-large .fiche h2{font-size:clamp(28px,4.4vw,34px);line-height:1.25}
+html.mq-dys-on.mq-dys-large .lcard h3{font-size:clamp(22px,3.8vw,28px);line-height:1.3}
 html.mq-dys-on.mq-dys-spacing .qtext,html.mq-dys-on.mq-dys-spacing .fiche,html.mq-dys-on.mq-dys-spacing .ex,html.mq-dys-on.mq-dys-spacing .fb,html.mq-dys-on.mq-dys-spacing .choice,html.mq-dys-on.mq-dys-spacing .ordline,html.mq-dys-on.mq-dys-spacing .trad{letter-spacing:.025em;word-spacing:.12em}
 html.mq-dys-on.mq-dys-focus .choices{grid-template-columns:1fr}
 html.mq-dys-on.mq-dys-focus .choice{min-height:58px}
