@@ -137,6 +137,9 @@ input.big{
   transition:border-color .15s ease,background-color .15s ease;
 }
 input.big:focus{border-color:var(--accent);background:var(--surface)}
+/* États de validation (la règle input.big ci-dessus ne doit pas les écraser) */
+input.big.good{border-color:var(--good);background:var(--goodbg)}
+input.big.bad{border-color:var(--bad);background:var(--badbg)}
 
 /* Jauges : orange vif décoratif, piste lisible */
 .xpbar,.prog,.mbar{

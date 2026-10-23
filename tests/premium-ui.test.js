@@ -76,6 +76,16 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Réponses : symbole ✓ sur la bonne réponse (et ✕ sur la fausse) en plus de la couleur',!!found&&/✓/.test(found.good||'')&&(!found.clickedWrong||/✕/.test(found.bad||'')),JSON.stringify(found));
   await ctx.close();}
 
+ // 6 bis : champ de réponse validé — le fond vert / rouge de l'état n'est pas écrasé par le style du champ
+ {const {ctx,p}=await open(390,844,'CM2');
+  const ids=await p.evaluate(()=>SCH(S.subj).filter(c=>WMAP[c.id]&&WMAP[c.id].lvl===S.grade).map(c=>c.id));
+  let r=null;
+  for(const id of ids){if(r)break;await p.evaluate(id=>{ACT.start(id);ACT.startlevel(id+'|2');},id);await p.waitForTimeout(60);
+   if(await p.locator('input.big').count()){await p.fill('input.big','99999');await p.click('[data-a="valid"]');await p.waitForTimeout(100);
+    r=await p.evaluate(()=>{const i=document.querySelector('input.big');if(!i)return null;const probe=document.createElement('i');probe.style.background=getComputedStyle(document.documentElement).getPropertyValue('--'+(i.classList.contains('good')?'goodbg':'badbg'));document.body.appendChild(probe);const want=getComputedStyle(probe).backgroundColor;probe.remove();return {cls:i.className,bg:getComputedStyle(i).backgroundColor,want};});}}
+  T('Champ de réponse validé : fond d’état (vert / rouge) conservé',!!r&&/good|bad/.test(r.cls)&&r.bg.match(/\d+/g).every((v,i)=>Math.abs(v-r.want.match(/\d+/g)[i])<=4),JSON.stringify(r));
+  await ctx.close();}
+
  // 7 : jetons par âge
  {const get=async g=>{const {ctx,p}=await open(390,844,g);const r=await p.evaluate(()=>({lg:getComputedStyle(document.body).getPropertyValue('--r-lg').trim(),font:getComputedStyle(document.querySelector('.sec,h1,h2')||document.body).fontFamily}));await ctx.close();return r;};
   const cp=await get('CP'),c4=await get('4e');
