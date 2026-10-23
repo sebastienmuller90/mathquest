@@ -948,4 +948,104 @@ E('cm1-ma-probabilites',{w:.85,items:[
  {tf:'Si on obtient pile trois fois de suite, le prochain lancer a plus de chances de donner face.',v:false,e:'La pièce n’a pas de mémoire : une chance sur deux à chaque lancer.',d:2},
  {tf:'Deux issues possibles signifient toujours une chance sur deux.',v:false,e:'Il faut que les deux issues aient la même chance.',d:3}]});
 }
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CM1 (phrases simples, sans audio) ---------- */
+E('cm1-en-introduce',{w:.6,items:[
+ ['Comment dire « Je m’appelle Léa » ?','My name is Léa.',['I have Léa.','Léa my name.','Me Léa.'],'My name is…'],
+ ['Comment dire « J’ai dix ans » ?','I’m ten.',['I have ten.','I’m ten years.','I am have ten.'],'On utilise I’m + âge.'],
+ ['Comment dire « J’habite à Paris » ?','I live in Paris.',['I live at Paris.','I living in Paris.','I lives in Paris.'],'I live in + ville.'],
+ ['Comment dire « Je viens de France » ?','I come from France.',['I come to France.','I am coming France.','I from France come.'],'I come from…'],
+ ['Comment dire « Je suis français(e) » ?','I’m French.',['I have French.','I’m France.','I French am.'],'I’m + nationalité.'],
+ ['Comment demander l’âge ?','How old are you?',['What’s your name?','Where do you live?','How are you?'],'How old…?'],
+ ['Comment demander où quelqu’un habite ?','Where do you live?',['How old are you?','What’s your name?','Who are you?'],'Where…?'],
+ ['« My birthday is in May. » veut dire…','Mon anniversaire est en mai.',['Je suis né en mai prochain.','J’aime le mois de mai.','Mai est mon prénom.'],'Birthday = anniversaire.',2],
+ {tf:'On dit « I have ten years » pour dire son âge.',v:false,e:'On dit « I’m ten ».'},
+ {tf:'« I’m French » veut dire « Je suis français(e) ».',v:true,e:'French = français.'},
+ {tf:'« Where do you live? » demande où tu habites.',v:true,e:'Where = où.'},
+ {t:'Complète : My ... is Tom. (prénom)',a:['name'],e:'My name is Tom.',d:2}]});
+
+E('cm1-en-family',{w:.6,items:[
+ ['« Aunt » veut dire…','tante',['oncle','cousin','grand-mère'],'Aunt = tante.'],
+ ['« Uncle » veut dire…','oncle',['tante','cousin','grand-père'],'Uncle = oncle.'],
+ ['« Cousin » veut dire…','cousin ou cousine',['neveu','voisin','frère'],'Cousin.'],
+ ['« Grandmother » veut dire…','grand-mère',['mère','tante','sœur'],'Grandmother.'],
+ ['« Grandfather » veut dire…','grand-père',['père','oncle','frère'],'Grandfather.'],
+ ['« Tom’s sister » veut dire…','la sœur de Tom',['Tom est une sœur','Tom et sa sœur','la sœur à Tom ici'],'’s marque la possession.'],
+ ['Comment dire « la voiture de mon père » ?','my father’s car',['my car father','the car of my father’s','my fathers car'],'Possesseur + ’s + objet.',2],
+ ['Comment dire « J’ai un frère et deux sœurs » ?','I have got one brother and two sisters.',['I am one brother and two sisters.','I got one brother two sisters have.','I have one brother and two sister.'],'I have got + nombre.',2],
+ ['Pour « Il a » on dit…','He has got',['He have got','He haves got','He is got'],'Troisième personne : has.'],
+ ['« Funny » veut dire…','drôle',['triste','grand','gentil'],'Funny = drôle.'],
+ ['« Kind » veut dire…','gentil',['drôle','méchant','petit'],'Kind = gentil.'],
+ {tf:'On écrit « He have got glasses ».',v:false,e:'He has got glasses.',d:2},
+ {tf:'« Parents » veut dire « parents » (père et mère).',v:true,e:'Parents = mother and father. Attention : en anglais, parents ne veut pas dire « proches ».',d:2}]});
+
+E('cm1-en-routine',{w:.6,items:[
+ ['« It’s three o’clock » veut dire…','Il est trois heures pile.',['Il est trois heures et demie.','Il est trois heures et quart.','Il est trois heures moins le quart.'],'O’clock = heure pile.'],
+ ['« It’s half past four » veut dire…','Il est quatre heures et demie.',['Il est quatre heures pile.','Il est quatre heures et quart.','Il est cinq heures moins le quart.'],'Half past = et demie.'],
+ ['« It’s quarter past five » veut dire…','Il est cinq heures et quart.',['Il est cinq heures et demie.','Il est cinq heures moins le quart.','Il est six heures et quart.'],'Quarter past = et quart.'],
+ ['« It’s quarter to six » veut dire…','Il est six heures moins le quart.',['Il est six heures et quart.','Il est six heures et demie.','Il est six heures pile.'],'Quarter to = moins le quart.',2],
+ ['Comment dire 7 h 30 ?','It’s half past seven.',['It’s quarter past seven.','It’s seven o’clock.','It’s quarter to eight.'],'Half past seven.'],
+ ['Comment dire 9 h 15 ?','It’s quarter past nine.',['It’s half past nine.','It’s quarter to ten.','It’s nine o’clock.'],'Quarter past nine.'],
+ ['Comment dire 8 h 45 ?','It’s quarter to nine.',['It’s quarter past eight.','It’s half past eight.','It’s eight o’clock.'],'Quarter to nine.',2],
+ ['« I do my homework » veut dire…','je fais mes devoirs',['je regarde la télé','je prends mon petit-déjeuner','je me couche'],'Homework = devoirs.'],
+ ['« I get dressed » veut dire…','je m’habille',['je me lève','je me lave','je me couche'],'Get dressed = s’habiller.',2],
+ {tf:'« Quarter to five » signifie 4 h 45.',v:true,e:'Cinq heures moins le quart.',d:2},
+ {o:['I get up','I get dressed','I have breakfast','I go to school'],q:'Remets ces actions dans l’ordre du matin :',e:'Get up, get dressed, breakfast, school.',d:2},
+ {tf:'« Half past two » signifie 2 h 15.',v:false,e:'Half past two = 2 h 30.'}]});
+
+E('cm1-en-school',{w:.6,items:[
+ ['« Maths » veut dire…','mathématiques',['musique','histoire','sport'],'Maths = mathématiques.'],
+ ['« History » veut dire…','histoire',['géographie','musique','art'],'History = histoire.'],
+ ['« Science » veut dire…','sciences',['arts','sport','français'],'Science = sciences.'],
+ ['« Art » veut dire…','arts plastiques',['musique','sport','histoire'],'Art.'],
+ ['« Music » veut dire…','musique',['maths','art','histoire'],'Music = musique.'],
+ ['« P.E. » veut dire…','éducation physique (sport)',['physique-chimie','poésie','piano'],'Physical Education.',2],
+ ['« Timetable » veut dire…','emploi du temps',['calendrier','horloge','carnet'],'Timetable.',2],
+ ['Comment dire « Ma matière préférée est l’art » ?','My favourite subject is Art.',['My favourite subject Art is.','I favourite Art.','Art is my subject favourite.'],'Favourite subject.'],
+ ['Comment demander « Quelle est ta matière préférée ? » ?','What’s your favourite subject?',['What’s your name?','How old are you?','Where do you live?'],'Favourite = préféré.'],
+ ['Comment dire « Le lundi, j’ai maths » ?','On Monday, I have Maths.',['At Monday, I have Maths.','In Monday, I have Maths.','Monday I am Maths.'],'On + jour.',2],
+ {tf:'Les matières prennent souvent une majuscule en anglais.',v:true,e:'Maths, English, Art…'},
+ {tf:'« French » désigne la matière « français » et aussi la nationalité.',v:true,e:'French = français (langue ou nationalité).',d:2}]});
+
+E('cm1-en-food',{w:.6,items:[
+ ['« Breakfast » veut dire…','petit-déjeuner',['déjeuner','dîner','goûter'],'Breakfast.'],
+ ['« Lunch » veut dire…','déjeuner',['petit-déjeuner','dîner','goûter'],'Lunch.'],
+ ['« Dinner » veut dire…','dîner',['petit-déjeuner','déjeuner','goûter'],'Dinner.'],
+ ['Comment demander poliment un sandwich ?','I’d like a sandwich, please.',['Give me a sandwich.','Sandwich now.','I want sandwich.'],'I’d like… please.'],
+ ['Comment demander le prix ?','How much is it?',['How old is it?','How many is it?','What is it for?'],'How much…?'],
+ ['« Here you are » veut dire…','voilà (en donnant quelque chose)',['où êtes-vous ?','au revoir','j’ai faim'],'Here you are.',2],
+ ['La monnaie du Royaume-Uni est…','la livre sterling (£)',['l’euro','le dollar','le yen'],'Pound.'],
+ ['1 livre sterling vaut…','100 pence',['10 pence','50 pence','1 000 pence'],'1 £ = 100 p.',2],
+ ['« I’d like » est…','plus poli que « I want »',['moins poli','impoli','un mot français'],'Politesse.'],
+ {tf:'« Thank you » se dit après avoir été servi.',v:true,e:'Politesse.'},
+ {tf:'On paie en euros à Londres.',v:false,e:'Au Royaume-Uni, la monnaie est la livre sterling.'},
+ {t:'Complète : How ... is it? (combien)',a:['much'],e:'How much is it?',d:2}]});
+
+E('cm1-en-hobbies',{w:.6,items:[
+ ['« I like swimming » veut dire…','J’aime nager.',['Je sais nager.','Je ne nage pas.','Il nage.'],'Like + -ing.'],
+ ['« I love reading » veut dire…','J’adore lire.',['Je déteste lire.','Je sais lire.','Je lis un livre.'],'Love = adorer.'],
+ ['« Can you swim? » veut dire…','Sais-tu nager ?',['Aimes-tu nager ?','Nages-tu vite ?','Où nages-tu ?'],'Can you…?'],
+ ['Comment répondre « oui » à « Can you swim? » ?','Yes, I can.',['Yes, I do can.','Yes, I swim can.','Yes, I am.'],'Yes, I can.'],
+ ['Comment répondre « non » à « Can you swim? » ?','No, I can’t.',['No, I don’t can.','No, I not.','No, I am not.'],'No, I can’t.'],
+ ['On dit « play » devant…','football',['read','swim','dance'],'Play football.'],
+ ['On dit « play the » devant…','piano',['football','tennis','chess'],'Play the piano.',3],
+ ['« Ride a bike » veut dire…','faire du vélo',['faire du cheval','conduire une voiture','pousser un vélo'],'Ride = monter / rouler.',2],
+ ['« Dance » veut dire…','danser',['dessiner','lire','nager'],'Dance = danser.'],
+ {tf:'Après « like », on met souvent le verbe en -ing.',v:true,e:'I like dancing.'},
+ {tf:'On dit « I like to swimming ».',v:false,e:'On dit « I like swimming ».',d:2},
+ {tf:'« Draw » veut dire « dessiner ».',v:true,e:'Draw = dessiner.'}]});
+
+E('cm1-en-uk',{w:.6,items:[
+ ['La capitale du Royaume-Uni est…','Londres (London)',['Paris','Dublin','Édimbourg'],'London.'],
+ ['La capitale de l’Écosse est…','Édimbourg (Edinburgh)',['Cardiff','Belfast','Londres'],'Edinburgh.'],
+ ['La capitale du Pays de Galles est…','Cardiff',['Édimbourg','Belfast','Dublin'],'Cardiff.',2],
+ ['La capitale de l’Irlande du Nord est…','Belfast',['Cardiff','Édimbourg','Dublin'],'Belfast.',2],
+ ['Combien de nations forment le Royaume-Uni ?','4',['2','3','6'],'Angleterre, Écosse, Pays de Galles, Irlande du Nord.'],
+ ['Big Ben se trouve à…','Londres',['Paris','Rome','Dublin'],'Londres.'],
+ ['Le fleuve qui traverse Londres est…','la Tamise (Thames)',['la Seine','le Rhin','la Loire'],'Thames.'],
+ ['Bonfire Night a lieu le…','5 novembre',['31 octobre','25 décembre','14 juillet'],'Feux d’artifice.',2],
+ ['Halloween a lieu le…','31 octobre',['5 novembre','25 décembre','1er janvier'],'Halloween.'],
+ {tf:'L’Irlande du Nord fait partie du Royaume-Uni.',v:true,e:'Capitale : Belfast.',d:2},
+ {tf:'L’Angleterre est tout le Royaume-Uni.',v:false,e:'Elle n’en est qu’une partie.'},
+ {tf:'Dublin est la capitale du Royaume-Uni.',v:false,e:'Dublin est la capitale de l’Irlande ; celle du Royaume-Uni est Londres.',d:2}]});
 })();

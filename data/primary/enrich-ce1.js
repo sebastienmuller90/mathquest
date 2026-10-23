@@ -593,4 +593,39 @@ E('ce1-emc-republique',{w:.5,items:[
  {tf:'La Marseillaise est l’hymne national.',v:true,e:'On la chante lors des cérémonies.'},
  {tf:'Il y a une religion obligatoire à l’école publique.',v:false,e:'L’école publique est laïque.'},
  {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CE1 (nombres, météo ; sans audio) ---------- */
+E('ce1-en-numbers',{w:.6,items:[
+ ['« Thirteen » veut dire…','treize',['trente','trois','dix-huit'],'13.'],
+ ['« Fifteen » veut dire…','quinze',['cinquante','cinq','seize'],'15.'],
+ ['« Sixteen » veut dire…','seize',['six','soixante','quinze'],'16.',2],
+ ['« Eighteen » veut dire…','dix-huit',['huit','quatre-vingts','dix-neuf'],'18.',2],
+ ['« Twenty » veut dire…','vingt',['douze','deux','trente'],'20.'],
+ ['Comment dit-on « quatorze » en anglais ?','fourteen',['forty','four','fifteen'],'14.',2],
+ ['Comment dit-on « dix-sept » en anglais ?','seventeen',['seventy','seven','sixteen'],'17.',2],
+ ['Comment dit-on « dix-neuf » en anglais ?','nineteen',['ninety','nine','eighteen'],'19.',3],
+ ['Les nombres de 13 à 19 finissent par…','-teen',['-ty','-ten','-ing'],'Thirteen, fourteen…'],
+ ['Pour dire « J’ai neuf ans », je dis…','I’m nine.',['I have nine.','I like nine.','I am nine years.'],'On dit I’m + nombre.'],
+ {n:'Écris le nombre : « twelve ».',a:12,e:'Twelve = 12.'},
+ {n:'Écris le nombre : « eighteen ».',a:18,e:'Eighteen = 18.',d:2},
+ {n:'Écris le nombre : « fifteen ».',a:15,e:'Fifteen = 15.',d:2},
+ {tf:'« Eleven » veut dire « onze ».',v:true,e:'Eleven = 11.'},
+ {tf:'« Fifteen » s’écrit 50.',v:false,e:'Fifteen = 15 ; fifty = 50.',d:3}]});
+
+E('ce1-en-weather',{w:.6,items:[
+ ['« It’s sunny. » veut dire…','Il fait soleil.',['Il pleut.','Il neige.','Il y a du vent.'],'Sunny = ensoleillé.'],
+ ['« It’s rainy. » veut dire…','Il pleut.',['Il neige.','Il fait chaud.','Il fait froid.'],'Rainy = pluvieux.'],
+ ['« It’s cloudy. » veut dire…','Le ciel est nuageux.',['Il y a du soleil.','Il pleut.','Il neige.'],'Cloudy = nuageux.'],
+ ['« It’s windy. » veut dire…','Il y a du vent.',['Il pleut.','Il neige.','Il fait chaud.'],'Windy = venteux.'],
+ ['« It’s snowy. » veut dire…','Il neige.',['Il pleut.','Il y a du soleil.','Il fait chaud.'],'Snowy = neigeux.'],
+ ['« It’s hot. » veut dire…','Il fait chaud.',['Il fait froid.','Il neige.','Il pleut.'],'Hot = chaud.'],
+ ['« It’s cold. » veut dire…','Il fait froid.',['Il fait chaud.','Il y a du soleil.','Il y a du vent.'],'Cold = froid.'],
+ ['Comment dire « Il fait chaud » en anglais ?','It’s hot.',['It’s cold.','It’s rainy.','It’s snowy.'],'Hot.'],
+ ['Comment demander « Quel temps fait-il ? » ?','What’s the weather like?',['How old are you?','Where do you live?','What’s your name?'],'La question sur la météo.',2],
+ ['« Summer » veut dire…','été',['hiver','printemps','automne'],'Summer = été.'],
+ ['« Winter » veut dire…','hiver',['été','printemps','automne'],'Winter = hiver.'],
+ ['« Autumn » veut dire…','automne',['printemps','été','hiver'],'Autumn = automne.',2],
+ ['« Spring » veut dire…','printemps',['automne','été','hiver'],'Spring = printemps.',2],
+ {tf:'En hiver, il fait souvent froid : It’s cold.',v:true,e:'Winter, cold.'},
+ {tf:'« It’s snowy » signifie « Il fait chaud ».',v:false,e:'It’s snowy = il neige.'}]});
 })();

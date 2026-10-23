@@ -482,4 +482,60 @@ E('ce2-qm-france-europe',{w:.6,items:[
  {tf:'La France fait partie de l’Europe.',v:true,e:'Continent européen.'},
  {tf:'Paris est en Italie.',v:false,e:'Paris est la capitale de la France.'},
  {tf:'La Suisse est voisine de la France.',v:true,e:'Elle est à l’est.',d:2}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CE2 (phrases simples, sans audio) ---------- */
+E('ce2-en-alphabet',{w:.6,items:[
+ ['Comment demander d’épeler un mot ?','How do you spell it?',['What’s your name?','How old are you?','Where do you live?'],'How do you spell it?'],
+ ['Épeler « cat » en anglais, c’est dire les lettres…','C-A-T',['K-A-T','S-A-T','C-O-T'],'On dit chaque lettre.'],
+ ['La lettre « A » se prononce comme…','« éï »',['« a » du français','« i »','« aï »'],'A anglais : éï.',2],
+ ['La lettre « E » se prononce comme…','« i »',['« é »','« éï »','« aï »'],'E anglais : i.',2],
+ ['La lettre « I » se prononce comme…','« aï »',['« i »','« é »','« éï »'],'I anglais : aï.',2],
+ ['Quelle lettre est entre « C » et « E » ?','D',['B','F','G'],'A, B, C, D, E.'],
+ ['Combien de lettres y a-t-il dans l’alphabet anglais ?','26',['24','28','30'],'Comme en français.'],
+ ['« How do you spell your name? » veut dire…','Comment épelles-tu ton prénom ?',['Quel âge as-tu ?','Où habites-tu ?','Comment vas-tu ?'],'Spell = épeler.'],
+ {tf:'L’alphabet anglais a 26 lettres.',v:true,e:'De A à Z.'},
+ {tf:'La lettre E se prononce « é » en anglais.',v:false,e:'E se dit « i ».',d:2},
+ {o:['A','B','C','D'],q:'Remets ces lettres dans l’ordre de l’alphabet :',e:'A, B, C, D.'}]});
+
+E('ce2-en-animals-can',{w:.6,items:[
+ ['« A bird can fly. » veut dire…','Un oiseau peut voler.',['Un oiseau ne peut pas voler.','Un oiseau aime voler.','Un oiseau veut voler.'],'Can = pouvoir/savoir.'],
+ ['« A fish can swim. » veut dire…','Un poisson sait nager.',['Un poisson sait voler.','Un poisson ne nage pas.','Un poisson aime l’eau.'],'Swim = nager.'],
+ ['« A monkey can climb. » veut dire…','Un singe sait grimper.',['Un singe sait nager.','Un singe sait voler.','Un singe aime manger.'],'Climb = grimper.'],
+ ['« An elephant can’t jump. » veut dire…','Un éléphant ne sait pas sauter.',['Un éléphant saute très haut.','Un éléphant veut sauter.','Un éléphant aime sauter.'],'Can’t = ne peut pas.',2],
+ ['Comment dire « Je sais nager » ?','I can swim.',['I can’t swim.','I can to swim.','I swim can.'],'I can + verbe.'],
+ ['Comment dire « Je ne sais pas voler » ?','I can’t fly.',['I can fly.','I don’t can fly.','I can to fly.'],'I can’t + verbe.'],
+ ['Complète : « A dog can … » (courir)','run',['running','to run','runs'],'Après can : verbe sans to ni -s.',2],
+ ['Quel verbe veut dire « sauter » ?','jump',['fly','swim','sing'],'Jump.'],
+ ['Quel verbe veut dire « chanter » ?','sing',['swim','run','climb'],'Sing.'],
+ ['Quel verbe veut dire « courir » ?','run',['jump','sing','swim'],'Run.'],
+ {tf:'On dit « I can to swim ».',v:false,e:'On dit « I can swim » : pas de to.',d:2},
+ {tf:'« Can’t » veut dire « ne peut pas ».',v:true,e:'Can’t = cannot.'},
+ {tf:'A snake can fly.',v:false,e:'A snake can’t fly.',d:2}]});
+
+E('ce2-en-daily',{w:.6,items:[
+ ['« I get up » veut dire…','je me lève',['je me couche','je mange','je joue'],'Get up = se lever.'],
+ ['« I go to bed » veut dire…','je me couche',['je me lève','je joue','je déjeune'],'Go to bed = se coucher.'],
+ ['« I have breakfast » veut dire…','je prends mon petit-déjeuner',['je dîne','je déjeune','je joue'],'Breakfast = petit-déjeuner.'],
+ ['« I have lunch » veut dire…','je déjeune',['je prends mon petit-déjeuner','je dîne','je me couche'],'Lunch = déjeuner.'],
+ ['« I go to school » veut dire…','je vais à l’école',['je rentre à la maison','je vais au lit','je joue'],'Go to school.'],
+ ['Comment dire « à sept heures » ?','at seven o’clock',['on seven o’clock','in seven o’clock','to seven o’clock'],'At + heure.',2],
+ ['Pour un jour de la semaine, on utilise…','on (on Monday)',['at (at Monday)','in (in Monday)','to (to Monday)'],'On Monday.',2],
+ ['Comment dire « Le lundi, je vais à l’école » ?','On Monday, I go to school.',['At Monday, I go to school.','In Monday, I go to school.','Monday, I going to school.'],'On + jour.',2],
+ {tf:'« At eight o’clock » veut dire « à huit heures ».',v:true,e:'At + heure.'},
+ {tf:'« I have dinner » veut dire « je prends mon petit-déjeuner ».',v:false,e:'Dinner = dîner.'},
+ {o:['I get up','I have breakfast','I go to school','I go to bed'],q:'Remets ces actions dans l’ordre d’une journée :',e:'Get up, breakfast, school, bed.'}]});
+
+E('ce2-en-describe',{w:.6,items:[
+ ['« Tall » veut dire…','grand',['petit','rapide','gentil'],'Tall = grand.'],
+ ['« Short » (pour une personne) veut dire…','petit',['grand','long','blond'],'Short = petit / court.'],
+ ['« Long hair » veut dire…','cheveux longs',['cheveux courts','cheveux blonds','yeux bleus'],'Long = long.'],
+ ['« Blue eyes » veut dire…','yeux bleus',['cheveux bleus','lunettes bleues','pull bleu'],'Eyes = yeux.'],
+ ['« Glasses » veut dire…','lunettes',['chapeau','pull','chaussures'],'Glasses = lunettes.'],
+ ['Comment dire « Elle a les yeux bleus » ?','She has got blue eyes.',['She is blue eyes.','She has blue eyes got.','She have got blue eyes.'],'She has got + description.'],
+ ['Comment dire « Il est grand » ?','He is tall.',['He has got tall.','He have tall.','He tall is.'],'He is + adjectif.'],
+ ['Comment dire « Il a des lunettes » ?','He has got glasses.',['He is glasses.','He have got glasses.','He glasses has got.'],'Has got.',2],
+ ['L’adjectif se place…','avant le nom (short hair)',['après le nom (hair short)','à la fin de la phrase','n’importe où'],'En anglais, adjectif avant le nom.',2],
+ {tf:'On dit « hairs » pour les cheveux.',v:false,e:'Hair ne prend pas de s dans ce sens.',d:2},
+ {tf:'« He is blond » veut dire « Il est blond ».',v:true,e:'Blond = blond.'},
+ {tf:'On dit « She have got a sister ».',v:false,e:'She has got a sister.',d:2}]});
 })();

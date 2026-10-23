@@ -865,4 +865,65 @@ E('cm2-ma-symetrie',{w:.85,items:[
  {tf:'La diagonale d’un rectangle (non carré) est un axe de symétrie.',v:false,e:'Le pliage ne superpose pas les deux moitiés.',d:2},
  {tf:'Un carré a plus d’axes de symétrie qu’un rectangle non carré.',v:true,e:'4 contre 2.'},
  {tf:'Le symétrique d’un cercle est un cercle de même rayon.',v:true,e:'La symétrie conserve les longueurs.',d:3}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CM2 (phrases simples, sans audio) ---------- */
+E('cm2-en-questions',{w:.6,items:[
+ ['« Where » veut dire…','où',['quand','qui','pourquoi'],'Where = où.'],
+ ['« When » veut dire…','quand',['où','qui','comment'],'When = quand.'],
+ ['« Who » veut dire…','qui',['quoi','où','pourquoi'],'Who = qui.'],
+ ['« Why » veut dire…','pourquoi',['comment','quand','combien'],'Why = pourquoi.'],
+ ['« How many » veut dire…','combien de (dénombrable)',['comment','pourquoi','où'],'How many…?'],
+ ['Quelle question pour la réponse « I live in Nice. » ?','Where do you live?',['When do you live?','Who lives?','How old are you?'],'Where…'],
+ ['Quelle question pour la réponse « It’s in March. » (anniversaire) ?','When is your birthday?',['Where is your birthday?','Who is your birthday?','Why is your birthday?'],'When…'],
+ ['Quelle question pour la réponse « Two brothers. » ?','How many brothers have you got?',['How old are you?','Where are you?','Who are you?'],'How many…'],
+ ['Pour répondre à « Why? », on commence par…','Because',['But','And','Or'],'Because = parce que.'],
+ ['Quelle question pour la réponse « Because I lost my cat. » ?','Why are you sad?',['Where are you?','When are you?','Who are you?'],'Why… Because…',2],
+ {tf:'« Who » demande une personne.',v:true,e:'Who = qui.'},
+ {tf:'« When » demande un lieu.',v:false,e:'When demande le moment (quand).'},
+ {t:'Complète : ... old are you? (comment)',a:['how','How'],e:'How old are you?',d:2}]});
+
+E('cm2-en-comparatives',{w:.6,items:[
+ ['« Taller » veut dire…','plus grand',['plus petit','plus rapide','plus gros'],'Tall → taller.'],
+ ['« Bigger » est le comparatif de…','big',['tall','small','fast'],'On double la consonne : big → bigger.'],
+ ['Comparatif de « happy » :','happier',['more happy','happyer','happiest'],'y devient ier.',2],
+ ['Comparatif de « dangerous » :','more dangerous',['dangerouser','dangerous-er','most dangerous'],'Adjectif long : more… than.',2],
+ ['Comparatif de « good » :','better',['gooder','more good','best'],'Irrégulier.',2],
+ ['Superlatif de « big » :','the biggest',['the more big','the bigger','the bigest'],'The biggest.',2],
+ ['Superlatif de « tall » :','the tallest',['the taller','the most tall','the tall'],'The tallest.'],
+ ['Complète : « An elephant is … than a mouse. » (grand)','bigger',['more big','biggest','big'],'Bigger than.'],
+ ['Complète : « A cheetah is … than a lion. » (rapide)','faster',['more fast','fastest','fast'],'Faster than.'],
+ ['Complète : « A snail is … than a rabbit. » (lent)','slower',['more slow','slowest','slow'],'Slower than.'],
+ ['« Than » veut dire…','que (dans une comparaison)',['puis','alors','donc'],'Plus grand que.'],
+ {tf:'On dit « more big ».',v:false,e:'On dit « bigger ».'},
+ {tf:'« Worse » est le comparatif de « bad ».',v:true,e:'Bad, worse, the worst.',d:3},
+ {tf:'« The best » est le superlatif de « good ».',v:true,e:'Good, better, the best.',d:2}]});
+
+E('cm2-en-body-health',{w:.6,items:[
+ ['« Head » veut dire…','tête',['main','pied','bras'],'Head = tête.'],
+ ['« Hand » veut dire…','main',['pied','bras','dos'],'Hand = main.'],
+ ['« Foot » au pluriel donne…','feet',['foots','footes','feets'],'Pluriel irrégulier.'],
+ ['« Tooth » au pluriel donne…','teeth',['tooths','toothes','teeths'],'Pluriel irrégulier.'],
+ ['« I’ve got a headache. » veut dire…','J’ai mal à la tête.',['J’ai mal au ventre.','J’ai mal aux dents.','J’ai un rhume.'],'Headache.'],
+ ['« I’ve got a stomachache. » veut dire…','J’ai mal au ventre.',['J’ai mal à la tête.','J’ai mal aux dents.','J’ai un rhume.'],'Stomachache.'],
+ ['« I’ve got a cold. » veut dire…','J’ai un rhume.',['J’ai froid.','J’ai mal à la tête.','J’ai faim.'],'Cold = rhume (ici).'],
+ ['Pour demander ce qui ne va pas, on dit…','What’s the matter?',['What’s your name?','How old are you?','Where are you?'],'What’s the matter?'],
+ ['« Go to the doctor » veut dire…','va chez le médecin',['va à l’école','va au lit','va au parc'],'Doctor.'],
+ {tf:'« Leg » veut dire « jambe ».',v:true,e:'Leg = jambe.'},
+ {tf:'« Arm » veut dire « bras ».',v:true,e:'Arm = bras.'},
+ {tf:'Le pluriel de « tooth » est « tooths ».',v:false,e:'C’est « teeth ».',d:2},
+ {t:'Complète : I’ve got a tooth... (mal aux dents)',a:['ache','toothache'],e:'Toothache.',d:3}]});
+
+E('cm2-en-world',{w:.6,items:[
+ ['La capitale des États-Unis est…','Washington D.C.',['New York','Los Angeles','Chicago'],'Washington D.C.'],
+ ['La capitale du Canada est…','Ottawa',['Toronto','Montréal','Vancouver'],'Ottawa.',2],
+ ['La capitale de l’Australie est…','Canberra',['Sydney','Melbourne','Perth'],'Canberra.',2],
+ ['La capitale de l’Irlande est…','Dublin',['Belfast','Londres','Cork'],'Dublin.'],
+ ['La capitale de la Nouvelle-Zélande est…','Wellington',['Auckland','Sydney','Canberra'],'Wellington.',3],
+ ['Independence Day aux États-Unis est le…','4 juillet',['14 juillet','25 décembre','1er janvier'],'Fête nationale.'],
+ ['St Patrick’s Day est célébré en…','Irlande',['Écosse','France','Canada'],'Le 17 mars.',2],
+ ['Au Canada, on parle…','anglais et français',['anglais seulement','espagnol','allemand'],'Deux langues officielles.',2],
+ ['Thanksgiving a lieu le 4e jeudi de…','novembre',['mars','juillet','décembre'],'Fête américaine.',3],
+ {tf:'Sydney est la capitale de l’Australie.',v:false,e:'C’est Canberra.',d:2},
+ {tf:'On parle anglais aux États-Unis.',v:true,e:'Langue principale.'},
+ {tf:'Le Royaume-Uni est un pays anglophone.',v:true,e:'On y parle anglais.'}]});
 })();

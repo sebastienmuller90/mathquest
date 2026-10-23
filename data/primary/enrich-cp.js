@@ -735,4 +735,107 @@ E('cp-emc-republique',{w:.5,items:[
  {tf:'La devise de la République est « Liberté, Égalité, Fraternité ».',v:true,e:'Trois mots.'},
  {tf:'Le drapeau français est rouge et noir.',v:false,e:'Il est bleu, blanc, rouge.'},
  {o:['bleu','blanc','rouge'],q:'Remets les couleurs du drapeau dans l’ordre :',e:'Bleu, blanc, rouge.'}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CP (vocabulaire et phrases simples, sans audio) ---------- */
+E('cp-en-hello',{w:.6,items:[
+ ['Que veut dire « Hello » ?','bonjour',['au revoir','merci','bonne nuit'],'Hello = bonjour.'],
+ ['Que veut dire « Goodbye » ?','au revoir',['bonjour','merci','s’il te plaît'],'Goodbye = au revoir.'],
+ ['Comment dire « bonjour » en anglais ?','Hello',['Goodbye','Sorry','Please'],'Hello.'],
+ ['Comment dire « au revoir » en anglais ?','Goodbye',['Hello','Good morning','Hi'],'Goodbye.'],
+ ['« My name is Tom. » veut dire…','Je m’appelle Tom.',['J’ai Tom ans.','Voici Tom.','Tom est ici.'],'My name is… = Je m’appelle…'],
+ ['« What’s your name? » veut dire…','Comment t’appelles-tu ?',['Quel âge as-tu ?','Où habites-tu ?','Comment vas-tu ?'],'Question sur le prénom.'],
+ ['« How are you? » veut dire…','Comment vas-tu ?',['Comment t’appelles-tu ?','Quel âge as-tu ?','Où es-tu ?'],'How are you?'],
+ ['Que répondre à « How are you? » ?','I’m fine, thank you.',['My name is Léa.','I’m six.','Goodbye.'],'Je vais bien, merci.'],
+ ['« Good morning » se dit…','le matin',['le soir','la nuit','à midi'],'Good morning = bonjour (le matin).',2],
+ {tf:'« Hi » veut dire « salut ».',v:true,e:'Hi = salut.'},
+ {tf:'« Goodbye » veut dire « bonjour ».',v:false,e:'Goodbye = au revoir.'},
+ {tf:'« Thank you » veut dire « merci ».',v:true,e:'Thank you = merci.'}]});
+
+E('cp-en-colours',{w:.6,items:[
+ ['« Red » veut dire…','rouge',['bleu','vert','jaune'],'Red = rouge.'],
+ ['« Blue » veut dire…','bleu',['rouge','vert','jaune'],'Blue = bleu.'],
+ ['« Green » veut dire…','vert',['bleu','rouge','blanc'],'Green = vert.'],
+ ['« Yellow » veut dire…','jaune',['vert','rouge','noir'],'Yellow = jaune.'],
+ ['« Black » veut dire…','noir',['blanc','rose','marron'],'Black = noir.'],
+ ['« White » veut dire…','blanc',['noir','rose','violet'],'White = blanc.'],
+ ['« Pink » veut dire…','rose',['rouge','orange','marron'],'Pink = rose.',2],
+ ['« Brown » veut dire…','marron',['noir','gris','violet'],'Brown = marron.',2],
+ ['Comment dit-on « vert » en anglais ?','green',['red','blue','black'],'Green.'],
+ ['Comment dit-on « jaune » en anglais ?','yellow',['blue','white','brown'],'Yellow.'],
+ ['Une banane est…','yellow',['blue','black','pink'],'A banana is yellow.'],
+ ['Le ciel est souvent…','blue',['red','brown','black'],'The sky is blue.'],
+ {tf:'« It’s red » veut dire « C’est rouge ».',v:true,e:'It’s red = c’est rouge.'},
+ {tf:'« Orange » est une couleur en anglais.',v:true,e:'Orange est aussi une couleur.',d:2}]});
+
+E('cp-en-numbers',{w:.6,items:[
+ ['« Three » veut dire…','trois',['deux','quatre','cinq'],'Three = 3.'],
+ ['« Five » veut dire…','cinq',['quatre','six','sept'],'Five = 5.'],
+ ['« Seven » veut dire…','sept',['six','huit','neuf'],'Seven = 7.'],
+ ['« Ten » veut dire…','dix',['neuf','onze','douze'],'Ten = 10.'],
+ ['Comment dit-on « deux » en anglais ?','two',['one','three','four'],'Two.'],
+ ['Comment dit-on « huit » en anglais ?','eight',['six','seven','nine'],'Eight.'],
+ ['Comment dit-on « douze » en anglais ?','twelve',['eleven','ten','twenty'],'Twelve.',2],
+ ['Quel nombre vient après « four » ?','five',['three','six','two'],'1, 2, 3, 4, 5.'],
+ ['Quel nombre vient avant « nine » ?','eight',['ten','seven','six'],'8, 9.'],
+ ['Comment dire « J’ai six ans » ?','I’m six.',['I’m five.','I like six.','My name is six.'],'I’m + âge.'],
+ {n:'Combien font « two + one » ? (écris le nombre)',a:3,e:'2 + 1 = 3 : three.'},
+ {tf:'« One » veut dire « un ».',v:true,e:'One = 1.'},
+ {tf:'« Eleven » veut dire « onze ».',v:true,e:'Eleven = 11.',d:2}]});
+
+E('cp-en-animals',{w:.6,items:[
+ ['« Dog » veut dire…','chien',['chat','cheval','vache'],'Dog = chien.'],
+ ['« Cat » veut dire…','chat',['chien','oiseau','lapin'],'Cat = chat.'],
+ ['« Bird » veut dire…','oiseau',['poisson','grenouille','cochon'],'Bird = oiseau.'],
+ ['« Fish » veut dire…','poisson',['oiseau','lapin','cheval'],'Fish = poisson.'],
+ ['« Horse » veut dire…','cheval',['vache','cochon','ours'],'Horse = cheval.'],
+ ['« Pig » veut dire…','cochon',['vache','cheval','chat'],'Pig = cochon.',2],
+ ['« Frog » veut dire…','grenouille',['poisson','oiseau','lapin'],'Frog = grenouille.',2],
+ ['Comment dit-on « vache » en anglais ?','cow',['pig','dog','cat'],'Cow.'],
+ ['Comment dit-on « lapin » en anglais ?','rabbit',['bear','bird','horse'],'Rabbit.'],
+ ['Comment dit-on « ours » en anglais ?','bear',['bird','cow','pig'],'Bear.',2],
+ {tf:'Au pluriel, on ajoute souvent un s : two dogs.',v:true,e:'One dog, two dogs.'},
+ {tf:'« Cat » veut dire « chien ».',v:false,e:'Cat = chat.'},
+ ['« It’s a dog. » veut dire…','C’est un chien.',['C’est un chat.','C’est une vache.','C’est un oiseau.'],'It’s a dog.']]});
+
+E('cp-en-family',{w:.6,items:[
+ ['« Mum » veut dire…','maman',['papa','sœur','frère'],'Mum = maman.'],
+ ['« Dad » veut dire…','papa',['maman','sœur','bébé'],'Dad = papa.'],
+ ['« Brother » veut dire…','frère',['sœur','papa','maman'],'Brother = frère.'],
+ ['« Sister » veut dire…','sœur',['frère','maman','mamie'],'Sister = sœur.'],
+ ['« Grandma » veut dire…','mamie',['papi','maman','bébé'],'Grandma = mamie.',2],
+ ['« Grandpa » veut dire…','papi',['mamie','papa','frère'],'Grandpa = papi.',2],
+ ['« Baby » veut dire…','bébé',['frère','mamie','papa'],'Baby = bébé.'],
+ ['Comment dit-on « papa » en anglais ?','dad',['mum','sister','baby'],'Dad.'],
+ ['Comment dire « Voici ma sœur » ?','This is my sister.',['This is my brother.','This is my mum.','This is my dad.'],'This is my sister.'],
+ ['« I have got a brother. » veut dire…','J’ai un frère.',['J’ai une sœur.','Je suis un frère.','J’aime mon frère.'],'I have got = j’ai.',2],
+ {tf:'« This is my mum » veut dire « Voici ma maman ».',v:true,e:'This is my… = Voici mon/ma…'},
+ {tf:'« Sister » veut dire « frère ».',v:false,e:'Sister = sœur.'}]});
+
+E('cp-en-days-food',{w:.6,items:[
+ ['« Monday » veut dire…','lundi',['mardi','dimanche','samedi'],'Monday = lundi.'],
+ ['« Friday » veut dire…','vendredi',['jeudi','samedi','lundi'],'Friday = vendredi.'],
+ ['« Sunday » veut dire…','dimanche',['samedi','lundi','jeudi'],'Sunday = dimanche.'],
+ ['Quel jour vient après « Monday » ?','Tuesday',['Sunday','Wednesday','Friday'],'Monday, Tuesday.'],
+ ['Quel jour vient après « Friday » ?','Saturday',['Thursday','Sunday','Monday'],'Friday, Saturday.',2],
+ ['Les jours en anglais s’écrivent avec…','une majuscule',['un chiffre','un accent','un tiret'],'Monday, Tuesday…'],
+ ['« Apple » veut dire…','pomme',['banane','gâteau','lait'],'Apple = pomme.'],
+ ['« Banana » veut dire…','banane',['pomme','carotte','chocolat'],'Banana = banane.'],
+ ['« Milk » veut dire…','lait',['gâteau','chocolat','carotte'],'Milk = lait.'],
+ ['« I like apples. » veut dire…','J’aime les pommes.',['Je n’aime pas les pommes.','Je mange une pomme.','Je vois des pommes.'],'I like = j’aime.'],
+ ['« I don’t like milk. » veut dire…','Je n’aime pas le lait.',['J’aime le lait.','Je bois du lait.','Je vois du lait.'],'I don’t like = je n’aime pas.'],
+ {tf:'« Carrot » veut dire « chocolat ».',v:false,e:'Carrot = carotte.'},
+ {o:['Monday','Tuesday','Wednesday'],q:'Remets ces jours dans l’ordre :',e:'Monday, Tuesday, Wednesday.'}]});
+
+E('cp-en-classroom',{w:.6,items:[
+ ['« Listen! » veut dire…','Écoute !',['Regarde !','Répète !','Assieds-toi !'],'Listen = écoute.'],
+ ['« Look! » veut dire…','Regarde !',['Écoute !','Répète !','Lève-toi !'],'Look = regarde.'],
+ ['« Repeat! » veut dire…','Répète !',['Écoute !','Regarde !','Silence !'],'Repeat = répète.'],
+ ['« Sit down! » veut dire…','Assieds-toi !',['Lève-toi !','Écoute !','Répète !'],'Sit down = assieds-toi.'],
+ ['« Stand up! » veut dire…','Lève-toi !',['Assieds-toi !','Regarde !','Écoute !'],'Stand up = lève-toi.'],
+ ['« Be quiet! » veut dire…','Silence !',['Répète !','Regarde !','Écoute !'],'Be quiet = silence.'],
+ ['« Open your book! » veut dire…','Ouvre ton livre !',['Ferme ton livre !','Regarde le tableau !','Écoute !'],'Open = ouvre.',2],
+ ['Le maître dit « Sit down! ». Je…','m’assois',['me lève','chante','sors'],'Sit down.'],
+ ['Le maître dit « Stand up! ». Je…','me lève',['m’assois','dors','chante'],'Stand up.'],
+ {tf:'« Sit down » et « Stand up » sont des contraires.',v:true,e:'S’asseoir / se lever.'},
+ {tf:'« Listen! » veut dire « Regarde ! ».',v:false,e:'Listen = écoute.'}]});
 })();
