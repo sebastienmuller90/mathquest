@@ -175,6 +175,9 @@ jobs:
       - name: Lecture à voix haute (lettres, abréviations, nombres, dates)
         if: matrix.browser == 'chromium'
         run: node tests/wave1-audio.test.js
+      - name: Dictée progressive dans l’appli (pistes, second essai, 320 px)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave1-dictation-ui.test.js
       - name: Mode sombre lisible (contraste réel texte / fond)
         if: matrix.browser == 'chromium'
         run: node tests/dark-mode.test.js

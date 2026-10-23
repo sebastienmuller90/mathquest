@@ -3,10 +3,11 @@
    (explications, défi + réponse, conseil adulte, culture), seuil de mots ajoutés, HTML équilibré, typographie. */
 const {serve,launch,seedProfile}=require('./lib');
 const rng=(p,a,b)=>{const out=[];for(let i=a;i<=b;i++)out.push(p+String.fromCharCode(96+i));return out;};
+const L2=(p,a,b,extra)=>[...rng(p,a,b),...extra];
 const LOTS={
- 'Anglais 6e':[...rng('en6',1,26),'en6aa','en6ab','en6ac','en6ad'].map(x=>x.replace(/^en6(.)$/,'en6$1')),
- 'Anglais 5e':rng('en5',1,10),'Anglais 4e':rng('en4',1,10),'Anglais 3e':rng('en3',1,10),
- 'Italien 5e':rng('it5',1,8),'Italien 4e':rng('it4',1,8),'Italien 3e':rng('it3',1,8)};
+ 'Anglais 6e':[...rng('en6',1,26),'en6aa','en6ab','en6ac','en6ad','en6ae','en6af','en6ag','en6ah','en6ai'],
+ 'Anglais 5e':[...rng('en5',1,16)],'Anglais 4e':[...rng('en4',1,14)],'Anglais 3e':[...rng('en3',1,14)],
+ 'Italien 5e':[...rng('it5',1,14)],'Italien 4e':[...rng('it4',1,12)],'Italien 3e':[...rng('it3',1,12)]};
 const MIN=250;
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,700)});
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});

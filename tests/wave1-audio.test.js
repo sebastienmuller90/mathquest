@@ -41,6 +41,12 @@ async function run(){const R=[];const T=(name,ok,detail='')=>R.push({name,ok:!!o
  T('Lexique : « tion » dit « sion » et ne se lit plus lettre à lettre',/sion/.test(A.spokenFor('tion','graphème','fr')));
  T('Lexique : lettres accentuées (à â î ô û ù ï ë) et « œ » ont un texte oral',['à','â','î','ô','û','ù','ï','ë','œ'].every(k=>L.letters[k]&&L.letters[k].say&&L.letters[k].exemple));
  T('Lexique : entrées d’origine inchangées',L.graphemes.ou.say==='OU. Le son ou, comme dans loup.'&&L.letters.a.say==='A. La lettre A. A comme avion.'&&L.syllables.ma.say==='ma. Comme au début de maman.');
+ // CP-CE1 : sons dans une question, syllabes à lire, chiffres collés, traits de comptage
+ T('Son [g] au milieu d’une question : juste le son, la question n’est pas coupée',P('Entends-tu le son [g] dans tortue ?')==='Entends-tu le son gue dans tortue ?'&&P('Quel mot contient le son [ch] comme dans « chat » ?')==='Quel mot contient le son che comme dans « chat » ?');
+ T('Son seul ou en fin de phrase : explication complète conservée',/comme dans loup/.test(P('[ou]'))&&/comme au début de chat/.test(P('Le son [ch].')));
+ T('« Lis : s + é » : on dit les sons (se, é), pas les noms de lettres',P('Lis : s + é')==='Lis : se plus é'&&P('Lis : ch + u')==='Lis : che plus u');
+ T('Chiffres collés aux mots (euros5, ?5) séparés ; décimaux et H2O inchangés',P('Combien d’euros en tout ?5 euros5 euros1 euro')==="Combien d'euros en tout ? 5 euros, 5 euros, 1 euro"&&P('3.5 cm')==='3.5 centimètres'&&P('H2O')==='H2O');
+ T('Traits de comptage « | » non prononcés',P('| | | Combien d’objets ?')==="Combien d'objets ?");
  return R;}
 if(require.main===module)require('./lib').main(run);
 module.exports=run;
