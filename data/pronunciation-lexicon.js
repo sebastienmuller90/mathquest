@@ -63,5 +63,16 @@ const S=[['ma','maman'],['mi','minou'],['mo','moto'],['mu','mur'],['me','melon']
   ['pou','poule'],['tou','toupie'],['mou','mouton'],['lou','loup'],['bon','bonbon'],['ton','tonton'],['mon','montagne'],['lan','lanterne'],['man','manteau'],['pin','pinceau'],['lin','linge'],['moi','moineau'],['toi','toilette']];
 const syllables={};
 for(const [s,ex] of S)syllables[s]={cible:s,type:'syllabe',langue:'fr-FR',graphème:s,exemple:ex,say:`${s}. Comme au début de ${ex}.`};
+// Compléments (23/10/2026) : sons et lettres absents du lexique, qui étaient lus « lettre à lettre » ou sans exemple.
+const MORE=[['am','champ'],['em','temps'],['im','timbre'],['om','pompe'],['um','parfum'],['ui','huit'],['ie','amie'],['oy','royal'],['tion','nation'],['eur','fleur'],['oir','miroir'],['ay','crayon'],['oeu','bœuf'],['œ','cœur'],['h','hibou'],['w','wagon'],['q','cirque']];
+for(const [g,ex] of MORE)if(!graphemes[g])graphemes[g]={cible:g,type:'graphème',langue:'fr-FR',graphème:g,exemple:ex,say:g.toUpperCase()+'. Le son '+g+', comme dans '+ex+'.'};
+Object.assign(graphemes,{
+  'am':{...graphemes.am,say:'AM. Le son an, comme dans champ.'},'em':{...graphemes.em,say:'EM. Le son an, comme dans temps.'},'im':{...graphemes.im,say:'IM. Le son in, comme dans timbre.'},
+  'om':{...graphemes.om,say:'OM. Le son on, comme dans pompe.'},'um':{...graphemes.um,say:'UM. Le son un, comme dans parfum.'},
+  'tion':{...graphemes.tion,say:'TION. Ces lettres font le son sion, comme dans nation.'},
+  'h':{...graphemes.h,say:'H. Le h ne fait pas de bruit, comme dans hibou.'},'q':{...graphemes.q,say:'Q. Le son k, comme dans cirque.'},
+  'w':{...graphemes.w,say:'W. Le son ou ou v, comme dans wagon.'},'œ':{...graphemes['œ'],say:'Œ. Les lettres o et e collées font le son eu, comme dans cœur.'}});
+letters['œ']={cible:'œ',type:'lettre',langue:'fr-FR',graphème:'œ',exemple:'cœur',say:'O E collés, comme dans cœur.'};
+for(const [k,say,ex] of [['à','A, avec un accent grave. Comme dans voilà.','voilà'],['â','A, avec un accent circonflexe. Comme dans château.','château'],['î','I, avec un accent circonflexe. Comme dans île.','île'],['ô','O, avec un accent circonflexe. Comme dans hôtel.','hôtel'],['û','U, avec un accent circonflexe. Comme dans sûr.','sûr'],['ù','U, avec un accent grave. Comme dans où.','où'],['ï','I, avec un tréma. Comme dans maïs.','maïs'],['ë','E, avec un tréma. Comme dans Noël.','Noël']])letters[k]={cible:k,type:'lettre',langue:'fr-FR',graphème:k,exemple:ex,say};
 root.MQ_PRONUNCIATION={version:'8.13',letters,graphemes,syllables};
 })(typeof window!=='undefined'?window:globalThis);
