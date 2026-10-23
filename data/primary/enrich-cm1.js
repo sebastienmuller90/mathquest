@@ -716,4 +716,142 @@ E('cm1-fr-homophones',{w:.7,items:[
  {tf:'On écrit « Il a mal à la tête » avec a puis à.',v:true,e:'Il a (avait) ; à la tête (préposition).',d:2},
  {tf:'« Où » prend un accent quand il indique le lieu.',v:true,e:'Il remplace « à quel endroit ».'}]});
 }
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de sciences en CM1 ---------- */
+E('cm1-sc-lumiere-ombres',{w:.7,items:[
+ ['La lumière se propage…','en ligne droite',['en zigzag','en cercle uniquement','de façon aléatoire'],'C’est pourquoi les ombres ont des bords nets.'],
+ ['Une source de lumière est…','un objet qui produit de la lumière',['un objet qui la reflète seulement','un objet noir','un miroir'],'Le Soleil, une lampe, une bougie.'],
+ ['Quelle est une source de lumière ?','le Soleil',['la Lune','un miroir','un mur blanc'],'La Lune réfléchit la lumière du Soleil.'],
+ ['Quel matériau est transparent ?','le verre',['le bois','le carton','la pierre'],'Il laisse passer la lumière.'],
+ ['Quel matériau est opaque ?','le carton',['le verre','l’eau pure','la vitre'],'Il arrête la lumière.'],
+ ['Le papier calque est…','translucide',['opaque','transparent','lumineux'],'Il laisse passer une partie de la lumière.'],
+ ['À midi, l’ombre d’un arbre est…','courte',['très longue','absente','plus longue que le matin'],'Le Soleil est haut dans le ciel.'],
+ ['Le matin, le Soleil est du côté de l’est ; l’ombre d’un poteau est vers…','l’ouest',['l’est','le haut','le sud toujours'],'L’ombre est à l’opposé de la source.'],
+ ['L’ombre propre d’un objet est…','la partie de l’objet qui n’est pas éclairée',['l’ombre sur le sol','la lumière sur le mur','la couleur de l’objet'],'L’ombre portée est celle projetée sur le sol.',3],
+ ['Si je rapproche une lampe d’un objet, son ombre devient…','plus grande',['plus petite','inexistante','verte'],'Plus la source est proche, plus l’ombre grandit.',3],
+ {tf:'Un objet transparent fait une ombre très marquée.',v:false,e:'Il laisse passer la lumière et fait peu d’ombre.'},
+ {tf:'L’ombre se forme du côté opposé à la source de lumière.',v:true,e:'Derrière l’objet.'},
+ {tf:'La lumière du Soleil met environ 8 minutes pour atteindre la Terre.',v:true,e:'Environ 8 minutes.',d:3},
+ {o:['Source de lumière','Objet opaque','Ombre'],q:'Remets dans l’ordre de la lumière à l’ombre :',e:'La lumière rencontre l’objet opaque, derrière lui il y a l’ombre.',d:2}]});
+
+E('cm1-sc-lune',{w:.7,items:[
+ ['La Lune est…','un satellite naturel de la Terre',['une étoile','une planète','une comète'],'Elle tourne autour de la Terre.'],
+ ['La Lune brille car…','elle reflète la lumière du Soleil',['elle produit de la lumière','elle est chaude','elle est une étoile'],'Elle est éclairée par le Soleil.'],
+ ['Lors d’une pleine lune, nous voyons…','toute la face éclairée de la Lune',['aucune partie','un croissant','la face cachée seulement'],'La face éclairée est tournée vers nous.'],
+ ['La phase où la Lune est invisible s’appelle…','la nouvelle lune',['la pleine lune','le premier quartier','le dernier quartier'],'Sa face éclairée est tournée vers le Soleil.'],
+ ['Un cycle complet des phases dure environ…','29,5 jours',['7 jours','1 jour','365 jours'],'Un mois lunaire.'],
+ ['Pourquoi voit-on toujours la même face de la Lune ?','elle tourne sur elle-même en même temps qu’autour de la Terre',['l’autre face est détruite','l’autre face est éteinte','elle ne bouge pas'],'Sa rotation est synchronisée.',3],
+ ['Une éclipse de Lune se produit quand…','la Terre se place entre le Soleil et la Lune',['la Lune se place entre le Soleil et la Terre','le Soleil s’éteint','la Terre disparaît'],'La Lune passe dans l’ombre de la Terre.',3],
+ ['Une éclipse de Soleil se produit quand…','la Lune se place entre le Soleil et la Terre',['la Terre se place entre le Soleil et la Lune','le Soleil devient plus petit','la Lune s’éteint'],'L’ombre de la Lune tombe sur la Terre.',3],
+ ['Quelle phase vient juste après la nouvelle lune ?','le premier croissant',['la pleine lune','le dernier quartier','le dernier croissant'],'La Lune devient visible.',2],
+ {tf:'Les phases de la Lune sont dues à l’ombre de la Terre.',v:false,e:'Ce sont les éclipses qui sont dues à l’ombre ; les phases dépendent de ce que nous voyons de la face éclairée.',d:2},
+ {tf:'La Lune tourne autour de la Terre.',v:true,e:'C’est son satellite naturel.'},
+ {tf:'La Lune produit sa propre lumière.',v:false,e:'Elle réfléchit celle du Soleil.'},
+ {o:['la nouvelle lune','le premier quartier','la pleine lune','le dernier quartier'],q:'Remets ces phases dans l’ordre du cycle :',e:'Nouvelle lune, premier quartier, pleine lune, dernier quartier.',d:2}]});
+
+E('cm1-sc-classification',{w:.7,items:[
+ ['Les vertébrés sont des animaux qui ont…','un squelette interne avec une colonne vertébrale',['une carapace externe','six pattes','huit pattes'],'Mammifères, oiseaux, poissons, reptiles, amphibiens.'],
+ ['Un insecte a…','six pattes',['quatre pattes','huit pattes','dix pattes'],'Un insecte a six pattes et trois parties au corps.'],
+ ['Une araignée a…','huit pattes',['six pattes','quatre pattes','deux pattes'],'Ce n’est pas un insecte.'],
+ ['Un mammifère se reconnaît à…','ses poils et ses mamelles',['ses plumes','ses écailles et ses nageoires','sa carapace'],'Il allaite ses petits.'],
+ ['Un oiseau se reconnaît à…','ses plumes et son bec',['ses poils','ses écailles','ses mamelles'],'Il pond des œufs.'],
+ ['Dans quel groupe ranges-tu le dauphin ?','les mammifères',['les poissons','les oiseaux','les insectes'],'Il respire de l’air et allaite ses petits.',2],
+ ['Dans quel groupe ranges-tu l’autruche ?','les oiseaux',['les mammifères','les insectes','les poissons'],'Elle a des plumes, même si elle ne vole pas.',2],
+ ['Dans quel groupe ranges-tu le requin ?','les poissons',['les mammifères','les oiseaux','les insectes'],'Il a des branchies et des nageoires.',2],
+ ['Une espèce est un ensemble d’individus qui…','se ressemblent et peuvent se reproduire entre eux',['vivent au même endroit','ont la même couleur','sont tous des adultes'],'Les descendants sont fertiles.',2],
+ ['Une clé de détermination sert à…','identifier un être vivant en répondant à des questions',['soigner un animal','ouvrir une cage','fabriquer une carte'],'Questions successives.'],
+ {tf:'Une chauve-souris est un oiseau.',v:false,e:'C’est un mammifère : elle a des poils et allaite ses petits.',d:2},
+ {tf:'Un papillon est un insecte.',v:true,e:'Six pattes, trois parties.'},
+ {tf:'On classe les êtres vivants d’après ce qu’ils mangent.',v:false,e:'On classe d’après les attributs qu’ils possèdent.',d:2},
+ {o:['Vertébrés','Tétrapodes','Mammifères'],q:'Remets dans l’ordre du groupe le plus large au plus précis :',e:'Vertébrés, tétrapodes, mammifères.',d:3}]});
+
+E('cm1-sc-developpement',{w:.7,items:[
+ ['La fécondation est la rencontre…','d’un spermatozoïde et d’un ovule',['de deux œufs','de deux ovules','d’un œuf et d’un nid'],'Elle donne la première cellule d’un nouvel être.'],
+ ['Un animal ovipare est un animal qui…','pond des œufs',['met au monde des petits vivants','ne se reproduit pas','vit seulement dans l’eau'],'La poule est ovipare.'],
+ ['Un animal vivipare est un animal qui…','met au monde des petits vivants',['pond des œufs','ne se reproduit pas','vit seulement dans l’eau'],'Le chat est vivipare.',2],
+ ['Chez le chat, la fécondation est…','interne',['externe','impossible','sans spermatozoïde'],'Elle a lieu dans le corps de la femelle.'],
+ ['Chez la grenouille, la fécondation est…','externe',['interne','impossible','dans un arbre'],'Elle a lieu dans l’eau.'],
+ ['Un têtard devient…','une grenouille',['un poisson','un crabe','un serpent'],'Métamorphose.'],
+ ['Une chenille devient…','un papillon',['un ver','une araignée','un oiseau'],'Elle passe par la chrysalide.'],
+ ['Chez un animal à développement direct, le jeune…','ressemble à l’adulte',['est très différent de l’adulte','n’existe pas','est une larve'],'Chaton → chat.'],
+ ['Un mammifère se distingue des autres animaux car la femelle…','allaite ses petits',['pond toujours des œufs','pond dans l’eau','abandonne ses petits'],'Elle les nourrit de lait.'],
+ {tf:'Chez les oiseaux, la fécondation est externe.',v:false,e:'Elle est interne, même si l’œuf est pondu ensuite.'},
+ {tf:'Un papillon traverse plusieurs stades avant de devenir adulte.',v:true,e:'Œuf, chenille, chrysalide, papillon.'},
+ {o:['l’œuf','la chenille','la chrysalide','le papillon'],q:'Remets dans l’ordre les stades du papillon :',e:'Œuf, chenille, chrysalide, papillon.'},
+ {o:['l’œuf','le têtard','la grenouille'],q:'Remets dans l’ordre les stades de la grenouille :',e:'Œuf, têtard, grenouille.',d:2}]});
+
+E('cm1-sc-meteo-climat',{w:.7,items:[
+ ['Quel instrument mesure la température ?','le thermomètre',['le pluviomètre','l’anémomètre','le baromètre'],'En degrés Celsius.'],
+ ['Quel instrument mesure la quantité de pluie ?','le pluviomètre',['le thermomètre','la girouette','l’anémomètre'],'En millimètres.'],
+ ['Quel instrument montre la direction du vent ?','la girouette',['l’anémomètre','le baromètre','le thermomètre'],'Elle tourne dans le sens du vent.'],
+ ['Quel instrument mesure la vitesse du vent ?','l’anémomètre',['la girouette','le thermomètre','le pluviomètre'],'En km/h.'],
+ ['Un vent d’ouest vient…','de l’ouest',['de l’est','du nord','du sud'],'On donne la direction d’où il vient.',2],
+ ['Un climat s’observe sur…','au moins 30 ans',['un jour','une semaine','un mois'],'C’est une moyenne.'],
+ ['« Il fait 20 °C cet après-midi à Nantes. » C’est…','la météo',['le climat','un graphique','un relief'],'Un moment précis.'],
+ ['« Les étés sont chauds et secs dans le Sud de la France. » C’est…','le climat',['la météo','un orage','un thermomètre'],'Une caractéristique durable.'],
+ ['Le changement climatique est lié surtout à…','l’augmentation des gaz à effet de serre',['la Lune','le vent','les marées'],'Activités humaines : transports, industrie, chauffage.',2],
+ {tf:'Un hiver froid prouve que le climat ne se réchauffe pas.',v:false,e:'Le climat est une moyenne sur de longues périodes.',d:2},
+ {tf:'Le pluviomètre se mesure en millimètres.',v:true,e:'Un millimètre = 1 litre par mètre carré.',d:3},
+ {tf:'La météo concerne un moment et un lieu précis.',v:true,e:'Contrairement au climat.'},
+ {n:'Au minimum, sur combien d’années calcule-t-on un climat ?',a:30,u:'ans',e:'Au moins 30 ans.',d:3}]});
+
+E('cm1-sc-cerveau',{w:.7,items:[
+ ['Quel organe commande les mouvements ?','le cerveau',['l’estomac','le cœur','les poumons'],'Il envoie des messages aux muscles.'],
+ ['Les messages vers le cerveau circulent grâce aux…','nerfs',['veines','os','poumons'],'Réseau de communication du corps.'],
+ ['Quel organe des sens sert à voir ?','l’œil',['l’oreille','le nez','la langue'],'La vue.'],
+ ['Quel organe des sens permet d’entendre ?','l’oreille',['l’œil','le nez','la peau'],'L’ouïe.'],
+ ['Quel sens utilise la peau ?','le toucher',['la vue','l’odorat','le goût'],'On sent le chaud, le froid, la douleur.'],
+ ['Le nez sert à…','sentir les odeurs',['voir','entendre','toucher'],'L’odorat.'],
+ ['Le cerveau est protégé par…','le crâne',['les côtes','le sternum','le bassin'],'Os de la tête.'],
+ ['Une illusion d’optique montre que…','le cerveau peut interpréter les informations de façon trompeuse',['les yeux sont cassés','la lumière disparaît','l’image est fausse sur le papier'],'Le cerveau interprète.',2],
+ ['Pour protéger son cerveau à vélo, on porte…','un casque',['un bonnet','des lunettes','des gants'],'Pour protéger la tête.'],
+ ['Pour mieux mémoriser une leçon, il faut…','dormir suffisamment',['dormir très peu','regarder un écran jusqu’à tard','ne jamais relire'],'Le sommeil aide la mémoire.'],
+ {tf:'Ce sont les yeux qui « voient » : le cerveau n’intervient pas.',v:false,e:'Le cerveau interprète les messages reçus des yeux.',d:2},
+ {tf:'Il y a cinq sens.',v:true,e:'Vue, ouïe, odorat, goût, toucher.'},
+ {tf:'Trop de distractions rendent l’attention plus difficile.',v:true,e:'Écrans, bruit.'},
+ {o:['Les yeux voient une balle','Un nerf transmet l’information','Le cerveau l’analyse','Les muscles se contractent'],q:'Remets dans l’ordre :',e:'Organe des sens, nerf, cerveau, muscles.',d:3}]});
+
+E('cm1-sc-puberte',{w:.7,items:[
+ ['La puberté, c’est…','la période où le corps se transforme en corps d’adulte',['une maladie','une punition','un jeu'],'C’est une étape normale.'],
+ ['La puberté débute à un âge…','différent selon chacun',['identique pour tous','toujours à 8 ans','toujours à 14 ans'],'Souvent entre 8 et 14 ans.'],
+ ['Pendant la puberté, on observe chez tout le monde…','une forte croissance et une transpiration plus forte',['une perte de la taille','une perte de poids toujours','une disparition du sommeil'],'Poils, transpiration, croissance.'],
+ ['Chez les garçons, la voix…','devient plus grave',['devient plus aiguë','disparaît','reste identique'],'On parle de mue.'],
+ ['Chez les filles, on observe notamment…','l’apparition des règles',['la mue de la voix','la barbe','la perte des cheveux'],'Les règles sont un signe de la puberté.',2],
+ ['Pour se sentir bien pendant la puberté, il est important…','de se laver régulièrement',['de ne jamais se laver','de cacher ses changements','de se moquer des autres'],'La transpiration augmente.'],
+ ['Si j’ai une question sur mon corps, je peux…','demander à un adulte de confiance',['me taire toujours','croire n’importe quelle rumeur','demander à un inconnu en ligne'],'Parents, infirmière, médecin.'],
+ {tf:'On peut se moquer des changements du corps de ses camarades.',v:false,e:'Chacun change à son rythme : on respecte les autres.'},
+ {tf:'La puberté est une maladie.',v:false,e:'C’est une étape normale.'},
+ {tf:'Deux camarades du même âge peuvent être à des étapes différentes de la puberté.',v:true,e:'Chaque corps a son rythme.'},
+ {tf:'L’acné peut apparaître pendant la puberté.',v:true,e:'Elle est fréquente et peut être soignée.',d:2},
+ {t:'Complète : on parle de la … de la voix chez les garçons (un mot)',a:['mue'],e:'La mue.',d:3}]});
+
+E('cm1-sc-objets-techniques',{w:.7,items:[
+ ['Un objet technique est créé pour…','répondre à un besoin',['décorer seulement','être caché','être cassé'],'Il a une utilité.'],
+ ['Dans un stylo à bille, la pièce qui contient l’encre est…','le réservoir',['la bille','le capuchon','le corps'],'Le tube contient l’encre.',2],
+ ['Dans une lampe de poche, quelle pièce commande l’éclairage ?','l’interrupteur',['la pile','l’ampoule','le boîtier'],'Il ferme ou ouvre le circuit.',2],
+ ['La fonction du capuchon d’un stylo est…','protéger la pointe',['écrire','contenir l’encre','éclairer'],'Fonction : protéger.'],
+ ['Un smartphone est apparu après…','le téléphone portable à touches',['le téléphone à manivelle','la lampe à huile','le télégraphe'],'Évolution technique.',2],
+ ['Quel matériau est un bon isolant électrique ?','le plastique',['le cuivre','le fer','l’aluminium'],'Il ne laisse pas passer le courant.',3],
+ ['Quel matériau est un bon conducteur électrique ?','le cuivre',['le plastique','le bois','le verre'],'On l’utilise pour les fils.',3],
+ ['Une fonction technique est…','ce que l’objet doit faire',['une pièce de l’objet','la couleur de l’objet','le prix de l’objet'],'Exemple : éclairer.',2],
+ ['Une solution technique est…','la pièce ou le procédé qui réalise la fonction',['le besoin','la couleur','le marketing'],'Exemple : l’ampoule éclaire.',2],
+ {tf:'« Éclairer » est une pièce de la lampe.',v:false,e:'Éclairer est une fonction.'},
+ {tf:'Les objets techniques évoluent avec les progrès techniques.',v:true,e:'Matériaux, énergie, fonctions.'},
+ {tf:'Un même besoin peut être satisfait par plusieurs objets.',v:true,e:'Pour se déplacer : vélo, voiture, train.',d:2},
+ {o:['Besoin','Fonctions','Solutions techniques'],q:'Remets l’analyse d’un objet dans l’ordre :',e:'On part du besoin, puis des fonctions, puis des solutions.',d:2}]});
+
+E('cm1-sc-programmer-robot',{w:.7,items:[
+ ['Un robot qui exécute les instructions dans l’ordre suit…','un programme',['un jeu','un câble','une recette de cuisine'],'Une suite ordonnée d’instructions.'],
+ ['Un programme : répéter 3 fois [avancer de 2]. Combien de cases parcourt le robot ?','6 cases',['3 cases','2 cases','5 cases'],'3 × 2 = 6.',2],
+ ['Un programme : avancer de 2, reculer de 2. Où est le robot ?','à son point de départ',['2 cases devant','2 cases derrière','4 cases devant'],'Il revient là où il était.',2],
+ ['Pour dessiner un carré avec un robot, on peut utiliser…','répéter 4 fois [avancer, tourner d’un quart de tour]',['avancer une seule fois','tourner sans avancer','reculer seulement'],'Quatre côtés égaux et quatre angles droits.',3],
+ ['À quoi sert une boucle ?','répéter des instructions',['arrêter le robot','éteindre l’écran','changer la pile'],'Elle évite de réécrire.'],
+ ['À quoi sert une condition ?','faire une action seulement si quelque chose se produit',['répéter toujours','effacer le programme','accélérer le robot'],'Si obstacle alors tourner.',2],
+ ['Un capteur permet au robot de…','détecter des informations (distance, lumière)',['avancer','tourner','se recharger'],'Il perçoit l’environnement.',2],
+ ['Déboguer un programme, c’est…','chercher et corriger les erreurs',['supprimer le robot','changer la pile','le copier'],'Tester puis corriger.'],
+ {tf:'L’ordre des instructions n’a pas d’importance.',v:false,e:'Tourner puis avancer ≠ avancer puis tourner.'},
+ {tf:'Une boucle permet de raccourcir un programme.',v:true,e:'Répéter 4 fois au lieu d’écrire 4 fois.'},
+ {n:'Un robot avance de 3 cases, répète cette action 4 fois. Combien de cases parcourt-il en tout ?',a:12,u:'cases',e:'4 × 3 = 12.',d:2},
+ {n:'Répéter 5 fois [avancer de 2]. Combien de cases ?',a:10,u:'cases',e:'5 × 2 = 10.'},
+ {o:['J’observe le trajet','J’écris le programme','Je teste','Je corrige les erreurs'],q:'Remets dans l’ordre la démarche de programmation :',e:'Observer, écrire, tester, corriger.',d:2}]});
 })();

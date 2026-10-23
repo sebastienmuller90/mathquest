@@ -718,4 +718,127 @@ E('cm2-fr-ecrire',{w:.7,items:[
  {tf:'Dans un dialogue, les guillemets ouvrent et ferment les paroles.',v:true,e:'« … »'},
  {tf:'On peut remplacer un nom répété par un pronom.',v:true,e:'C’est une reprise.'}]});
 }
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices de sciences en CM2 ---------- */
+E('cm2-sc-etats',{w:.7,items:[
+ ['Quel est l’état de l’eau à 20 °C ?','liquide',['solide','gazeux','plasma'],'À 20 °C, l’eau est liquide.'],
+ ['À quelle température l’eau pure gèle-t-elle (pression habituelle) ?','0 °C',['10 °C','100 °C','−10 °C'],'La température de solidification est 0 °C.'],
+ ['À quelle température l’eau pure bout-elle (pression habituelle) ?','100 °C',['0 °C','50 °C','1 000 °C'],'Température d’ébullition.'],
+ ['Pendant l’ébullition de l’eau, la température…','reste à 100 °C',['continue de monter','descend','est de 0 °C'],'Elle reste constante pendant le changement d’état.',3],
+ ['La solidification est le passage de l’état…','liquide à solide',['solide à liquide','liquide à gaz','gaz à liquide'],'L’eau qui gèle.'],
+ ['La fusion est le passage de l’état…','solide à liquide',['liquide à solide','liquide à gaz','gaz à liquide'],'La glace qui fond.'],
+ ['La condensation est le passage de l’état…','gazeux à liquide',['liquide à gaz','solide à liquide','liquide à solide'],'La buée sur un verre froid.'],
+ ['Un liquide prend la forme…','du récipient qui le contient',['d’un cube toujours','d’une sphère','de l’air'],'Sa surface libre est horizontale.',2],
+ ['Un solide…','garde sa forme propre',['prend la forme du récipient','occupe tout l’espace','n’a pas de volume'],'Par exemple un glaçon.'],
+ ['Un gaz…','occupe tout l’espace disponible',['garde sa forme','reste en haut du récipient','est toujours coloré'],'Exemple : la vapeur d’eau.',2],
+ ['En se solidifiant, l’eau…','augmente de volume',['diminue de volume','disparaît','change de masse'],'C’est pourquoi une bouteille pleine peut éclater au congélateur.',3],
+ {tf:'Pendant un changement d’état, la masse se conserve.',v:true,e:'La masse reste la même.'},
+ {tf:'La vapeur d’eau est visible.',v:false,e:'La vapeur d’eau est un gaz invisible ; le brouillard au-dessus d’une casserole est fait de gouttelettes.',d:3},
+ {tf:'L’évaporation de l’eau ne peut se produire qu’à 100 °C.',v:false,e:'Elle a lieu aussi à des températures plus basses.',d:3},
+ {n:'À quelle température (en °C) l’eau pure fond-elle (pression habituelle) ?',a:0,u:'°C',e:'À 0 °C.'}]});
+
+E('cm2-sc-biodiversite',{w:.7,items:[
+ ['La biodiversité est…','la diversité des êtres vivants',['le nombre d’arbres','la quantité d’eau','la hauteur des montagnes'],'Espèces, milieux, individus.'],
+ ['Un fossile est…','un reste ou une trace d’être vivant ancien conservé dans une roche',['un animal vivant','une pierre précieuse','un objet fabriqué'],'Dans une roche sédimentaire par exemple.'],
+ ['Les dinosaures non aviens ont disparu il y a environ…','66 millions d’années',['66 ans','6 600 ans','6 milliards d’années'],'Fin du Crétacé.',2],
+ ['Les oiseaux actuels descendent…','de certains dinosaures',['des mammifères','des poissons','des insectes'],'Des dinosaures à plumes.',3],
+ ['Un fossile de coquillage trouvé en montagne montre que…','ce lieu a été sous la mer',['les coquillages volent','la montagne est tombée du ciel','il y a eu une erreur'],'Les paysages ont changé.',2],
+ ['Une espèce menacée est une espèce qui…','risque de disparaître',['est nombreuse','vit longtemps','est dangereuse'],'À cause de la destruction de son milieu notamment.'],
+ ['Qu’est-ce qui menace la biodiversité aujourd’hui ?','la destruction des milieux, la pollution, le réchauffement',['la pluie','la Lune','le vent'],'Principalement des activités humaines.'],
+ ['L’ammonite est…','un mollusque marin disparu',['un dinosaure','un oiseau','un poisson actuel'],'On la trouve souvent sous forme de fossile.',2],
+ ['Pour protéger la biodiversité, on peut…','créer des réserves naturelles et limiter la pollution',['abattre les forêts','jeter les déchets','détruire les haies'],'Protéger les milieux.'],
+ {tf:'Les humains ont vécu en même temps que les dinosaures non aviens.',v:false,e:'Les dinosaures non aviens ont disparu des dizaines de millions d’années avant l’apparition d’Homo sapiens.',d:2},
+ {tf:'Des espèces apparaissent et d’autres disparaissent au cours du temps.',v:true,e:'La biodiversité change.'},
+ {tf:'Un fossile est toujours un animal complet.',v:false,e:'C’est parfois seulement une empreinte ou un fragment.',d:2},
+ {o:['Un être vivant meurt','Il est recouvert de sédiments','Les sédiments deviennent roche','Le fossile est découvert'],q:'Remets dans l’ordre la formation d’un fossile :',e:'Mort, recouvrement, roche, découverte.',d:3}]});
+
+E('cm2-sc-digestion',{w:.7,items:[
+ ['Où commence la digestion ?','dans la bouche',['dans l’intestin','dans l’estomac','dans le gros intestin'],'Dents et salive transforment les aliments.'],
+ ['Quel organe relie la bouche à l’estomac ?','l’œsophage',['l’intestin grêle','la trachée','le gros intestin'],'Tube musculaire.'],
+ ['Où passent les nutriments dans le sang ?','au niveau de l’intestin grêle',['dans la bouche','dans l’estomac','dans le gros intestin'],'Paroi fine et très longue.'],
+ ['Que devient ce qui n’est pas digéré ?','il forme les excréments',['il entre dans le sang','il reste dans l’estomac pour toujours','il disparaît'],'Il est évacué par l’anus.'],
+ ['Qui transporte les nutriments dans tout le corps ?','le sang',['la salive','l’air','les os'],'Il les apporte aux organes.'],
+ ['Pour une alimentation équilibrée, il faut…','varier les familles d’aliments',['manger seulement des sucreries','ne manger que de la viande','ne manger que des féculents'],'Fruits et légumes, féculents, produits laitiers…'],
+ ['Quel aliment appartient à la famille des féculents ?','le riz',['la pomme','le yaourt','le poisson'],'Pâtes, riz, pain, pomme de terre.'],
+ ['Quel aliment appartient à la famille des produits laitiers ?','le fromage',['le pain','le poulet','la carotte'],'Lait, yaourt, fromage.'],
+ ['Pour la santé, quelle boisson privilégier ?','l’eau',['les sodas','les jus très sucrés','les boissons énergisantes'],'Boire de l’eau.'],
+ {tf:'La trachée et l’œsophage sont le même tube.',v:false,e:'Ce sont deux conduits différents.',d:2},
+ {tf:'L’estomac est situé après l’intestin grêle.',v:false,e:'Il est avant : œsophage, estomac, intestin grêle.'},
+ {tf:'Les produits sucrés doivent être limités.',v:true,e:'Pour la santé et les dents.'},
+ {o:['la bouche','l’œsophage','l’estomac','l’intestin grêle','le gros intestin'],q:'Remets les organes dans l’ordre du trajet des aliments :',e:'Bouche, œsophage, estomac, intestin grêle, gros intestin.',d:2}]});
+
+E('cm2-sc-reproduction',{w:.7,items:[
+ ['Les ovules sont produits par…','les ovaires',['les testicules','l’utérus','l’estomac'],'Organe reproducteur féminin.'],
+ ['Les spermatozoïdes sont produits par…','les testicules',['les ovaires','l’utérus','le cœur'],'Organes reproducteurs masculins.'],
+ ['La fécondation donne naissance à…','une cellule-œuf',['un bébé directement','un ovule','un spermatozoïde'],'Première cellule du futur bébé.'],
+ ['Le bébé se développe dans…','l’utérus',['l’estomac','les poumons','le foie'],'Organe de la mère.'],
+ ['Le cordon ombilical relie le fœtus…','au placenta de la mère',['à l’estomac','aux poumons','au cerveau'],'Il apporte nutriments et dioxygène.',2],
+ ['La grossesse dure environ…','9 mois',['9 jours','9 semaines','2 ans'],'Environ 9 mois.'],
+ ['Que reçoit le fœtus par le cordon ombilical ?','nutriments et dioxygène',['des aliments à mâcher','de l’air des poumons de la mère','de la lumière'],'Par le sang.',2],
+ ['L’étape qui suit l’embryon est…','le fœtus',['l’ovule','la naissance','la fécondation'],'Puis la naissance.'],
+ ['À quelle période de la vie les organes reproducteurs deviennent-ils fonctionnels ?','à partir de la puberté',['dès la naissance','à 3 ans','à 60 ans'],'Début de la puberté.'],
+ {tf:'Le bébé grandit dans l’estomac de sa mère.',v:false,e:'Il grandit dans l’utérus.'},
+ {tf:'La fécondation est la rencontre d’un ovule et d’un spermatozoïde.',v:true,e:'Elle donne une cellule-œuf.'},
+ {tf:'Le fœtus respire de l’air comme après la naissance.',v:false,e:'Il reçoit le dioxygène par le cordon ombilical.',d:2},
+ {o:['la fécondation','la cellule-œuf','l’embryon','le fœtus','la naissance'],q:'Remets les étapes dans l’ordre :',e:'Fécondation, cellule-œuf, embryon, fœtus, naissance.',d:2}]});
+
+E('cm2-sc-systeme-solaire',{w:.7,items:[
+ ['Quelle est l’étoile du système solaire ?','le Soleil',['la Lune','Mars','Jupiter'],'Le Soleil est une étoile.'],
+ ['Combien y a-t-il de planètes dans le système solaire ?','8',['9','5','12'],'De Mercure à Neptune.'],
+ ['Quelle est la planète la plus proche du Soleil ?','Mercure',['Vénus','Neptune','Mars'],'Mercure.'],
+ ['Quelle est la plus grosse planète du système solaire ?','Jupiter',['Saturne','la Terre','Mars'],'Planète géante gazeuse.',2],
+ ['Quelle planète est surnommée « la planète rouge » ?','Mars',['Vénus','Jupiter','Mercure'],'Sa surface est rougeâtre.',2],
+ ['La Terre tourne sur elle-même en…','24 heures',['365 jours','1 heure','1 mois'],'Rotation.'],
+ ['La Terre fait le tour du Soleil en…','environ 365 jours',['24 heures','1 mois','10 ans'],'Révolution.'],
+ ['L’alternance des saisons est due à…','l’inclinaison de l’axe de la Terre',['la distance Terre-Soleil','la Lune','le vent'],'L’axe de la Terre est incliné.',2],
+ ['L’alternance du jour et de la nuit est due à…','la rotation de la Terre sur elle-même',['la révolution autour du Soleil','la Lune','l’inclinaison de l’axe'],'Une moitié est éclairée.',2],
+ ['La Lune est…','un satellite de la Terre',['une planète','une étoile','un astéroïde'],'Elle tourne autour de la Terre.'],
+ {tf:'Les saisons viennent de la distance entre la Terre et le Soleil.',v:false,e:'Elles viennent de l’inclinaison de l’axe.',d:2},
+ {tf:'Pluton est considérée aujourd’hui comme l’une des 8 planètes.',v:false,e:'Elle est classée comme planète naine depuis 2006.',d:3},
+ {tf:'Le Soleil est une étoile.',v:true,e:'Il produit de la lumière.'},
+ {o:['Mercure','Vénus','la Terre','Mars'],q:'Remets ces planètes dans l’ordre en s’éloignant du Soleil :',e:'Mercure, Vénus, la Terre, Mars.',d:2}]});
+
+E('cm2-sc-terre-active',{w:.7,items:[
+ ['Le magma est…','de la roche fondue sous terre',['de l’eau chaude','de la boue','du sable'],'Il remonte par la cheminée.'],
+ ['La lave est…','le magma qui coule à la surface',['la fumée du volcan','la roche froide','la cendre'],'Elle sort par le cratère.'],
+ ['Quelle partie d’un volcan voit-on au sommet ?','le cratère',['la racine','la mer','la plaine'],'Ouverture par laquelle sortent lave et gaz.'],
+ ['Un sismographe sert à…','enregistrer les vibrations du sol',['mesurer la température','mesurer la vitesse du vent','mesurer la pluie'],'Il enregistre les séismes.'],
+ ['La magnitude d’un séisme mesure…','sa force (énergie libérée)',['sa durée uniquement','son heure','son prix'],'Échelle de magnitude.',2],
+ ['Que faire pendant un séisme à l’intérieur d’un bâtiment ?','s’abriter sous une table solide',['courir dans l’escalier','utiliser l’ascenseur','se tenir près d’une fenêtre'],'S’éloigner des fenêtres.'],
+ ['Les séismes et les volcans sont liés aux mouvements…','des plaques de la surface de la Terre',['de la Lune','des nuages','des marées'],'Les plaques bougent très lentement.'],
+ ['Quel volcan français est très actif à La Réunion ?','le Piton de la Fournaise',['la Montagne Pelée','le Puy de Dôme','le Vésuve'],'Éruptions fréquentes.',2],
+ ['Une éruption explosive projette surtout…','des cendres et des gaz',['de l’eau','de la neige','des fleurs'],'Par exemple nuées ardentes.',2],
+ {tf:'Un volcan endormi est forcément éteint.',v:false,e:'Il peut se réveiller.',d:2},
+ {tf:'La Terre est découpée en plaques qui bougent.',v:true,e:'Quelques centimètres par an.'},
+ {tf:'En France, il n’y a aucun volcan.',v:false,e:'Il y a la Chaîne des Puys (endormie) et des volcans en outre-mer.',d:2},
+ {o:['Le magma remonte','Il sort par le cratère','La lave s’écoule','Elle refroidit et durcit'],q:'Remets dans l’ordre :',e:'Magma, cratère, lave, refroidissement.',d:3}]});
+
+E('cm2-sc-environnement',{w:.7,items:[
+ ['Quel est un exemple de ressource renouvelable ?','le vent',['le pétrole','le charbon','le gaz'],'Le vent se renouvelle sans cesse.'],
+ ['Quel est un exemple de ressource non renouvelable à l’échelle humaine ?','le pétrole',['le soleil','le vent','l’eau de pluie'],'Il met des millions d’années à se former.',2],
+ ['Les 3 R sont…','réduire, réutiliser, recycler',['rire, rêver, reposer','réparer, remplir, refuser','rouler, ranger, rire'],'Pour limiter les déchets.'],
+ ['Où jette-t-on une bouteille en verre ?','dans le conteneur à verre',['dans la nature','dans les toilettes','dans le compost'],'Le verre se recycle.'],
+ ['Où jette-t-on des épluchures de légumes ?','dans le compost',['dans le conteneur à verre','dans le bac papier','dans la rue'],'Elles redeviennent engrais.'],
+ ['Le développement durable consiste à…','répondre à nos besoins sans compromettre ceux des générations futures',['consommer plus','fermer les écoles','supprimer les routes'],'Penser à demain.'],
+ ['Un geste pour économiser l’eau :','prendre une douche plutôt qu’un bain',['laisser couler le robinet','arroser en plein soleil','remplir la piscine tous les jours'],'Éviter le gaspillage.'],
+ ['Un geste pour économiser l’énergie :','éteindre la lumière en sortant',['laisser tout en veille','ouvrir la fenêtre en hiver chauffage allumé','laisser la télévision allumée'],'Moins d’électricité.'],
+ ['Réduire ses déchets, c’est…','mieux que de seulement les recycler',['inutile','impossible','interdit'],'Le meilleur déchet est celui qu’on ne produit pas.',2],
+ {tf:'Le recyclage permet d’économiser des matières premières.',v:true,e:'Et de l’énergie.'},
+ {tf:'Toutes les ressources naturelles sont illimitées.',v:false,e:'Certaines s’épuisent.'},
+ {tf:'Le verre peut être recyclé très longtemps.',v:true,e:'Il peut être refondu de nombreuses fois.',d:3},
+ {t:'Complète : réduire, réutiliser et … (verbe)',a:['recycler'],e:'Les 3 R.',d:2}]});
+
+E('cm2-sc-electricite',{w:.7,items:[
+ ['Pour qu’une lampe s’allume, le circuit doit être…','fermé',['ouvert','coupé','vide'],'Une boucle sans interruption.'],
+ ['Un interrupteur ouvert…','coupe le circuit',['ferme le circuit','produit de l’électricité','brille'],'Le courant ne circule plus.'],
+ ['Un matériau conducteur est un matériau qui…','laisse passer le courant',['arrête la lumière','est toujours rouge','est toujours en bois'],'Exemple : le cuivre.'],
+ ['Quel matériau est un isolant ?','le plastique',['le cuivre','le fer','l’aluminium'],'Il ne laisse pas passer le courant.'],
+ ['Quel matériau est un conducteur ?','le fer',['le bois sec','le verre','le caoutchouc'],'Les métaux conduisent.'],
+ ['Combien de bornes d’une pile doivent être reliées au circuit pour allumer une lampe ?','les deux (+ et −)',['une seule','aucune','trois'],'Le circuit doit être une boucle.',2],
+ ['Pourquoi les fils électriques sont-ils gainés de plastique ?','le plastique est isolant et protège',['il est décoratif uniquement','il conduit mieux','il chauffe le fil'],'Il évite les contacts dangereux.',2],
+ ['Quel danger représente la prise de courant (230 V) ?','le risque d’électrocution',['aucun','le froid','la lumière'],'On ne joue jamais avec une prise.'],
+ ['Avec les mains mouillées, on ne touche pas…','un appareil électrique branché',['un verre','un livre','un bonbon'],'L’eau conduit l’électricité.',2],
+ {tf:'Le graphite de la mine d’un crayon conduit le courant.',v:true,e:'C’est un conducteur.',d:2},
+ {tf:'Un circuit ouvert permet à la lampe de briller.',v:false,e:'Le circuit doit être fermé.'},
+ {tf:'Les piles de 4,5 V utilisées en classe sont dangereuses comme la prise.',v:false,e:'Elles sont sans danger ; la prise (230 V) est dangereuse.',d:2}]});
 })();
