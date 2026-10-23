@@ -145,6 +145,9 @@ jobs:
       - name: Finot vivant — états et réactions
         if: matrix.browser == 'chromium'
         run: node tests/finot-live-state.test.js
+      - name: Finot flottant — visibilité et absence de recouvrement
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-fab-layout.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js
