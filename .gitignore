@@ -13,6 +13,10 @@
 !/styles.css
 !/pedagogy-upgrade.css
 !/age-adaptive.css
+!/premium-ui.css
+!/premium-pro.css
+!/premium-entry.css
+!/premium-parent.css
 # Outils de test épinglés pour une CI reproductible (pas d’étape de build).
 !/package.json
 !/package-lock.json
@@ -35,6 +39,8 @@
 !/tests/course-depth.test.js
 !/tests/dark-mode.test.js
 !/tests/session-length.test.js
+!/tests/premium-ui.test.js
+!/tests/premium-contrast.test.js
 # Tests des fonctions intégrées depuis les branches chatgpt/* (22/10/2026).
 !/tests/animated-corrections-extended.test.js
 !/tests/animated-corrections.test.js

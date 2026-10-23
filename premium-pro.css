@@ -1,0 +1,312 @@
+/* Finot Académie — écrans premium (8.69).
+   Couche 2 sur 3 : accueil, matières, chapitres, cours, exercices, fin de séance, mise en page par âge et par écran.
+   Les couleurs, rayons et ombres viennent exclusivement des jetons de premium-ui.css. Visuel uniquement. */
+
+/* Largeur de page par âge (les sélecteurs à identifiant de premium-ui.css ne doivent pas écraser age-adaptive.css) */
+body[data-mq-age="young"] #app{max-width:720px}
+body[data-mq-age="bridge"] #app{max-width:800px}
+body[data-mq-age="teen"] #app{max-width:980px}
+/* Colonne de lecture : cours et exercices ne s'étirent jamais sur desktop */
+body[data-mq-age] #app:has(.lcard,.qcard){max-width:760px}
+
+/* ───── En-tête de l'accueil : une grille lisible au lieu d'un empilement ───── */
+.top{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-areas:"av name pills" "av tt tt" "av xp xp";
+  align-items:center;
+  column-gap:12px;row-gap:4px;
+  margin-bottom:16px;padding:0 0 16px;
+  border-bottom:1px solid var(--border);
+}
+.top .who{display:contents}
+.top .av{
+  grid-area:av;
+  width:60px;height:60px;
+  border:2px solid var(--brand);
+  background:var(--surface2);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 14%,transparent);
+}
+.top .profile-btn{grid-area:name;justify-self:start;min-height:44px;border-width:1px;box-shadow:var(--sh-1);font-family:var(--font-display)}
+.top .tt{grid-area:tt;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;font-size:13px;color:var(--muted)}
+.top .tt .lvl{white-space:nowrap}
+.top .xpbar{grid-area:xp;height:8px;margin:4px 0 0}
+.top .pills{grid-area:pills;flex-wrap:nowrap;gap:6px}
+.top .pills .pill{display:inline-flex;align-items:center;gap:4px;min-height:34px;padding:3px 10px;font-size:15px}
+.top .pills button.pill{position:relative}
+.top .pills button.pill::after{content:"";position:absolute;inset:-6px -6px}
+.grade-badge{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 22%,var(--border));color:var(--accent-text);font-size:12.5px;font-weight:800}
+
+/* ───── Cartes d'action (mission, révision, badges…) ───── */
+.reco{
+  gap:16px;padding:16px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--sh-1);
+  transition:border-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.reco::after{content:none}
+.reco:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
+.reco:active{transform:translateY(1px)}
+.reco .ri{
+  display:grid;place-items:center;flex:none;
+  width:56px;height:56px;
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  font-size:30px;filter:none;
+}
+.reco b{font-size:19px;color:var(--text)}
+.reco .go{
+  flex:none;
+  padding:9px 16px;min-height:40px;
+  background:var(--accent);color:var(--on-accent);
+  border-radius:var(--r-md);box-shadow:none;
+  font-size:16px;
+}
+.reco.hero{border-width:1px;border-color:color-mix(in srgb,var(--accent) 35%,var(--border));box-shadow:var(--sh-2);background:linear-gradient(135deg,var(--surface),var(--accent-soft))}
+.finot-card{border:1px solid var(--border);transition:border-color .15s ease,box-shadow .15s ease}
+.finot-card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
+.goal{background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh-1);gap:16px}
+.ring .rf{stroke:var(--brand)}
+
+/* 5 minutes intelligentes et carte de calibrage : plus compacts, jamais de texte écrasé */
+.smart5-card::after{content:none}
+.smart5-item{background:var(--surface2);border-radius:var(--r-md)}
+.smart5-actions{flex-wrap:nowrap}
+.diag-home-card{flex-wrap:wrap}
+.diag-home-card>span:nth-child(2){flex:1 1 180px}
+
+/* ───── Matières ───── */
+.subj{gap:8px}
+.worlds{gap:16px}
+.world{
+  min-height:148px;padding:16px;
+  border:1px solid color-mix(in srgb,var(--wc) 40%,var(--border));
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-2);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--wc) 72%,#000),color-mix(in srgb,var(--wc) 60%,#000));
+  transition:box-shadow .15s ease,transform .1s ease;
+}
+.world:hover{filter:none;box-shadow:var(--sh-3)}
+.world:active{transform:translateY(1px) scale(.995)}
+.world:has(>img) .we{display:none}
+.world:has(>img)::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(0,0,0,0) 15%,rgba(0,0,0,.78));pointer-events:none}
+.world:has(>img) :is(.wl,.wn){text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.we{font-size:44px;filter:none}
+.wl{font-size:28px;font-weight:700;line-height:1.05;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.wn{font-size:15px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.ws{background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:700;padding:3px 10px}
+.world .grade-badge{background:#fff;color:#7a2e04;border-color:#fff;font-size:12px}
+
+/* ───── Chapitres ───── */
+.catgrp{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:4px solid var(--wc);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);
+}
+.cath{padding:14px 16px;min-height:60px}
+.chap,.chap.crow{
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:none;
+}
+.chap{border-left:4px solid var(--wc);border-radius:var(--r-md)}
+.chap.crow{border-left-width:1px;border-radius:var(--r-md);padding:10px 12px}
+.chap:hover{border-color:color-mix(in srgb,var(--wc) 55%,var(--border));box-shadow:var(--sh-1)}
+.crow .cbtn .btn{min-width:44px;min-height:44px}
+.cn{color:var(--text)}
+.crow .cn b{font-family:var(--font-ui);font-weight:800;font-size:15px}
+
+/* ───── Progression : chiffres d'abord ───── */
+.kpis{gap:12px}
+.kpi{border:1px solid var(--border);border-radius:var(--r-md);padding:14px 8px;box-shadow:var(--sh-1)}
+.kpi b{font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{display:block;margin-top:2px;font-weight:700}
+.prog-kpis{margin-top:4px}
+.prog-next{margin:12px 0 6px}
+.prog-next+.xpbar{height:10px;margin:0 0 24px}
+
+/* ───── Outils (onglet Plus) ───── */
+.tools{gap:12px}
+.tool{
+  min-height:88px;justify-content:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);
+  font-weight:700;
+  transition:border-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.tool:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--border));box-shadow:var(--sh-2)}
+.tool:active{transform:translateY(1px)}
+.tool span{filter:none}
+
+/* ───── Cours : manuel numérique ───── */
+.lcard{
+  padding:24px;
+  font-size:18px;line-height:1.7;
+  background:var(--surface);
+  box-shadow:var(--sh-2);
+}
+.lcard h2{font-size:26px;line-height:1.2;margin:.1em 0 .6em}
+.lcard p{margin:.7em 0}
+.lcard :is(ul,ol){padding-left:1.3em}
+.lcard li{margin:.45em 0}
+.ltag{letter-spacing:.02em}
+.fiche{padding:24px}
+.fiche h2{font-size:26px}
+.fh{letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+.ex{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-md)}
+.lesson-banner{border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-2)}
+
+/* ───── Exercices ───── */
+.qcard{
+  padding:20px;
+  border:1px solid var(--border);
+  box-shadow:var(--sh-2);
+}
+.qtop .prog{height:10px}
+.qtext{font-weight:700}
+.qtag{font-weight:700;color:var(--muted)}
+.combo{border:1px solid var(--border)}
+.qbtns .btn{min-height:48px}
+.gains span{border:1px solid var(--border)}
+.end .card,.end.card{box-shadow:var(--sh-2)}
+
+/* ───── Encadrés pédagogiques : bords pleins et fins, plus de pointillés épais ───── */
+.listen{
+  min-height:56px;padding:12px 16px;
+  border:1.5px solid color-mix(in srgb,var(--accent) 45%,var(--border));
+  border-radius:var(--r-md);
+  background:var(--accent-soft);
+  font-size:20px;
+  box-shadow:var(--sh-1);
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.listen:hover{border-color:var(--accent);box-shadow:var(--sh-2)}
+.pause,.checkpoint{
+  border:1px solid color-mix(in srgb,var(--good) 40%,var(--border));
+  background:color-mix(in srgb,var(--good) 8%,var(--surface));
+  border-radius:var(--r-md);
+}
+.ordline,.pnew{border-width:1.5px}
+
+/* ───── Mobile ───── */
+@media (max-width:560px){
+  #app{padding:16px 16px 104px}
+  body[data-mq-age] #app{padding-left:16px;padding-right:16px}
+  .top{column-gap:10px}
+  .top .av{width:52px;height:52px}
+  .top .pills .pill{padding:3px 8px;font-size:14px}
+  .world{min-height:136px;padding:14px}
+  .wl{font-size:25px}
+  .reco{gap:12px;padding:14px}
+  .reco .ri{width:48px;height:48px;font-size:26px}
+  .lcard,.fiche{padding:18px}
+  .qcard{padding:16px}
+}
+@media (max-width:560px){
+  .smart5-head{flex-direction:row;align-items:flex-start}
+  .smart5-head p{display:none}
+  .smart5-plan{margin:10px 0;gap:6px}
+  .smart5-item{padding:8px 10px}
+  .smart5-foot{flex-direction:row;align-items:center;flex-wrap:wrap}
+  .smart5-foot>span{flex:1 0 100%;order:2}
+  .smart5-actions{display:flex;width:100%}
+  .smart5-actions .btn{flex:1;white-space:nowrap;padding:10px 12px}
+  .diag-home-card .go{flex:1 1 100%;text-align:center}
+}
+@media (max-width:360px){
+  .top{column-gap:8px}
+  .top .av{width:46px;height:46px;font-size:26px}
+  .top .profile-btn{min-width:0;max-width:100%;gap:5px;padding:4px 8px}
+  .top .profile-btn .miniav{font-size:18px}
+  #app{padding-left:12px;padding-right:12px}
+  body[data-mq-age] #app{padding-left:12px;padding-right:12px}
+  .top .pills{gap:4px}
+  .top .pills .pill{padding:3px 6px;font-size:13px}
+  .reco .go{padding:8px 12px}
+}
+
+/* ───── Tablette et desktop ───── */
+@media (min-width:1100px){
+  /* Accueil desktop : deux colonnes équilibrées au lieu d'une longue colonne étroite */
+  body[data-mq-age] #app:has(.hometab-body){max-width:1060px}
+  .hometab-body:has(.smart5-card){column-count:2;column-gap:24px}
+  .hometab-body:has(.smart5-card)>*{break-inside:avoid;margin-top:0;margin-bottom:16px}
+  .hometab-body:has(.smart5-card)>.daily-h{break-after:avoid;margin-bottom:8px}
+}
+@media (min-width:900px){
+  #app{padding-top:32px}
+  .qcard{min-height:min(520px,calc(100vh - 220px))}
+  body[data-mq-age="teen"] .worlds{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ───── Paysage téléphone : peu de hauteur ───── */
+@media (max-height:480px) and (orientation:landscape){
+  #app{padding-top:12px;padding-bottom:84px}
+  .top{margin-bottom:12px;padding-bottom:12px}
+  .qcard{min-height:0}
+  .hometabs .htab{min-height:44px;flex-direction:row;justify-content:center;gap:8px}
+}
+
+/* Bouton Finot flottant : finot-live-state.css le remettait en position relative, ce qui le décalait hors de l'écran. */
+.finot-fab{position:fixed;width:54px;height:54px;box-shadow:var(--sh-2)}
+
+/* ───── Espace parents intégré : identité adulte ─────
+   Accent indigo, Nunito partout, rayons sobres, onglets soulignés. Seul le contenu de #app change : l'espace enfant garde son thème. */
+#app:has(>.tabs){
+  --accent:#4f46e5;
+  --accent-d:#4338ca;
+  --accent-text:#4338ca;
+  --on-accent:#ffffff;
+  --accent-soft:color-mix(in srgb,#4f46e5 9%,var(--surface));
+  --brand:#4f46e5;
+  --r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;
+  --font-display:var(--font-ui);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) #app:has(>.tabs){--accent:#a5b4fc;--accent-d:#c7d2fe;--accent-text:#c7d2fe;--on-accent:#1e1b4b;--accent-soft:color-mix(in srgb,#a5b4fc 12%,var(--surface));--brand:#a5b4fc}
+}
+:root[data-theme="dark"] #app:has(>.tabs){--accent:#a5b4fc;--accent-d:#c7d2fe;--accent-text:#c7d2fe;--on-accent:#1e1b4b;--accent-soft:color-mix(in srgb,#a5b4fc 12%,var(--surface));--brand:#a5b4fc}
+#app:has(>.tabs) :is(h1,h2,.sec,.nm,.btn,.tab,.pill){font-weight:700;letter-spacing:-.01em}
+#app:has(>.tabs) .tabs{gap:4px;margin:0 0 20px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+#app:has(>.tabs) .tab{
+  flex:0 0 auto;min-height:44px;padding:10px 16px;
+  border:0;border-bottom:2px solid transparent;border-radius:var(--r-sm) var(--r-sm) 0 0;
+  background:transparent;color:var(--muted);font-family:var(--font-ui);
+  transition:color .15s ease,background-color .15s ease,border-color .15s ease;
+}
+#app:has(>.tabs) .tab:hover{background:var(--surface2);color:var(--text)}
+#app:has(>.tabs) .tab.on{background:transparent;color:var(--accent-text);border-bottom-color:var(--accent)}
+#app:has(>.tabs) .profile-strip{margin-bottom:12px}
+#app:has(>.tabs) .profile-chip{min-height:36px;border:1px solid var(--border);border-radius:99px}
+#app:has(>.tabs) .profile-chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-text)}
+#app:has(>.tabs) .sec{font-size:17px;margin:28px 0 12px}
+#app:has(>.tabs) .kpi{border-radius:var(--r-lg)}
+@media (min-width:900px){body[data-mq-age] #app:has(>.tabs){max-width:960px}}
+@media (max-width:440px){
+  /* Téléphone étroit : les quatre onglets parents tiennent sans défilement horizontal caché */
+  #app:has(>.tabs) .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-bottom:0;overflow:visible}
+  #app:has(>.tabs) .tab{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);text-align:center;padding:10px 8px}
+  #app:has(>.tabs) .tab.on{background:var(--accent-soft);border-color:var(--accent)}
+}
+
+/* ───── Contrastes : textes qui restaient sous 4,5:1 (audit 23/10/2026) ───── */
+.badge.off{opacity:1;filter:none}
+.badge.off :is(.ie,img){opacity:.45;filter:grayscale(1)}
+.badge.off :is(b,small){color:var(--muted)}
+.item.lock{opacity:1}
+.item.lock :is(.ie,.sw){opacity:.5}
+.item.lock :is(b,small){color:var(--muted)}
+.listen{color:var(--accent-text)}
+.listen.slow{opacity:1}
+.reread>summary{color:var(--accent-text)}
+.lvlup{background:var(--accent);color:var(--on-accent)}
+.combo.hot,.hot{background:linear-gradient(90deg,#c2410c,#b91c1c);color:#fff}
+.ctag.tE{background:#a8266f}
+.ctag.tM{background:#0369a1}
+.scp-row em{color:var(--good)}
+.er-status.progress{background:var(--warnbg);color:var(--warn)}

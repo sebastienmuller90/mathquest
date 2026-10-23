@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#7c3aed"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0e1116" media="(prefers-color-scheme: dark)"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Finot Académie · Parents"><link rel="apple-touch-icon" href="icon.png">
 <title>Finot Académie · Parents</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
@@ -220,7 +220,7 @@ tr.reading td,tr.reading th{background:color-mix(in srgb,var(--gold) 30%,var(--s
 .subj{grid-template-columns:repeat(4,1fr)}
 @media (max-width:560px){.sbtn{font-size:13px;padding:10px 4px}}
 .frise .sep{display:none}
-</style></head><body><main id="app"></main>
+</style><link href="premium-parent.css" rel="stylesheet"><!-- surcouche visuelle adulte (hors ligne) --></head><body class="pp"><main id="app"></main>
 <script src="js/primary-engine.js"></script>
 <script src="js/college-engine.js"></script>
 <script src="data/remaining-2026-2027.js"></script>
@@ -1277,6 +1277,8 @@ const lvl=xp=>Math.floor(Math.sqrt((xp||0)/150))+1,title=L=>TITLES[Math.min(TITL
 const $=s=>document.querySelector(s),app=$('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=x=>Number.isFinite(+x)?+x:0;
+/* Icônes SVG en ligne (remplacent les emoji décoratifs de la navigation et des chiffres clés) */
+const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${{chart:'<path d="M5 21V11M12 21V5M19 21v-8"/>',gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9M7.5 8a2.5 2.5 0 1 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 1 1 0 5"/>',sliders:'<path d="M3 6h9M18 6h3M3 12h3M12 12h9M3 18h11M20 18h1"/><circle cx="15" cy="6" r="3"/><circle cx="9" cy="12" r="3"/><circle cx="17" cy="18" r="3"/>',refresh:'<path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.9 1 6.7 2.7L21 8"/><path d="M21 3v5h-5"/>',award:'<circle cx="12" cy="8" r="6"/><path d="M15.5 12.9 17 22l-5-3-5 3 1.5-9.1"/>',flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',book:'<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',key:'<circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/>',trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/>'}[n]||''}</svg>`;
 const starStr=n=>`<span class="st">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
 const ago=t=>{if(!t)return 'jamais';const s=Math.round((Date.now()-t)/1000);return s<60?'à l’instant':s<3600?`il y a ${Math.round(s/60)} min`:s<86400?`il y a ${Math.round(s/3600)} h`:`il y a ${Math.round(s/86400)} j`;};
 function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t);}t.innerHTML=m;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);}
@@ -1290,20 +1292,20 @@ async function refresh(force){if(!PK)return noKey();
  try{const r=await rpc('mq_get',{p_parent:PK});if(!r){ERR='Lien de suivi inconnu. Réactive le suivi dans l’appli de ton enfant.';D=null;}else{D=r;ERR='';}}
  catch(e){ERR='Connexion impossible. Nouvelle tentative dans quelques secondes.';}
  render();}
-function noKey(){app.innerHTML=`<div class="card center pop"><div class="logo">🔑</div><h1>Suivi parent</h1><p class="muted">Ouvre le lien de suivi affiché dans l’appli de ton enfant (Espace parents, onglet Réglages, Suivi à distance), ou colle-le ici.</p><input id="lk" class="fld wide2" placeholder="https://…/parent.html#…"><button class="btn primary big" data-a="setkey">Valider</button></div>`;}
+function noKey(){app.innerHTML=`<div class="card center pop"><div class="logo">${IC('key')}</div><h1>Suivi parent</h1><p class="muted">Ouvre le lien de suivi affiché dans l’appli de ton enfant (Espace parents, onglet Réglages, Suivi à distance), ou colle-le ici.</p><input id="lk" class="fld wide2" placeholder="https://…/parent.html#…"><button class="btn primary big" data-a="setkey">Valider</button></div>`;}
 
 function render(){
  if(ERR&&!D){app.innerHTML=`<div class="card center"><p class="lead">⚠️ ${esc(ERR)}</p><button class="btn primary big" data-a="reload">Réessayer</button></div>`;return;}
  if(!D)return;
  const S=D.data||{},m=S.merit||{pts:0,req:[],rewards:[],hist:[],rules:{}},seen=S.lastSeen||Date.parse(D.updated_at),online=Date.now()-seen<120000;
  const L=lvl(S.xp),pend=(D.pending||[]),reqN=(m.req||[]).length;
- app.innerHTML=`<header class="top"><div class="av">${esc(S.avatar||'🦊')}</div><div class="who"><div class="nm">${esc(S.name||'Finot Académie')}</div><div class="tt">Niveau ${L} : ${title(L)}</div>
-  <div class="small live ${online?'':'off'}"><i></i>${online?'En train de jouer':'Vue '+ago(seen)}</div></div><div class="pills"><span class="pill">🎖️ ${num(m.pts)}</span><button class="pill" data-a="reload" aria-label="Actualiser">🔄</button></div></header>
+ app.innerHTML=`<header class="top"><div class="av">${esc(S.avatar||'🦊')}</div><div class="who"><h1 class="nm">${esc(S.name||'Finot Académie')}</h1><div class="tt">Niveau ${L} : ${title(L)}</div>
+  <div class="small live ${online?'':'off'}"><i></i>${online?'En train de jouer':'Vue '+ago(seen)}</div></div><div class="pills"><span class="pill" title="Bons points">${IC('award')}${num(m.pts)}</span><button class="pill" data-a="reload" aria-label="Actualiser" title="Actualiser">${IC('refresh')}</button></div></header>
  ${ERR?`<div class="note">⚠️ ${esc(ERR)}</div>`:''}
  ${pend.length?`<div class="note">⏳ ${pend.length} action${pend.length>1?'s':''} en attente : appliquée${pend.length>1?'s':''} dès que l’appli de ${esc(S.name||'ton enfant')} sera ouverte.</div>`:''}
- <div class="tabs">${[['suivi','📊 Suivi'],['recomp','🎁 Récompenses'],['reglages','⚙️ Règles']].map(([k,l])=>`<button class="tab ${k===TAB?'on':''}" data-a="tab:${k}">${l}${k==='recomp'&&reqN?` <span class="dotn">${reqN}</span>`:''}</button>`).join('')}</div>
+ <div class="tabs">${[['suivi','chart','Suivi'],['recomp','gift','Récompenses'],['reglages','sliders','Règles']].map(([k,i,l])=>`<button class="tab ${k===TAB?'on':''}" data-a="tab:${k}"${k===TAB?' aria-current="page"':''}>${IC(i)}<span>${l}</span>${k==='recomp'&&reqN?` <span class="dotn">${reqN}</span>`:''}</button>`).join('')}</div>
  ${TAB==='suivi'?suivi(S,m):TAB==='recomp'?recomp(S,m,pend):regles(m,pend)}
- <p class="muted small center">Actualisation automatique toutes les 15 secondes.</p>`;
+ <p class="pp-foot muted small center">Actualisation automatique toutes les 15 secondes.</p>`;
  DIRTY=false;if(window.MQHooks)MQHooks.emit('parent:remote-rendered',{tab:TAB});}
 
 function suivi(S,m){const tq=num(S.totalQ),acc=tq?Math.round(num(S.totalOk)/tq*100):0,mins=Math.round(num(S.time)/60),chap=S.chap||{},d=S.daily||{};
@@ -1311,13 +1313,13 @@ function suivi(S,m){const tq=num(S.totalQ),acc=tq?Math.round(num(S.totalOk)/tq*1
  const shown=WALL.filter(w=>w.lvl===G||stat(w).tot>0),mineCh=WALL.filter(w=>w.lvl===G).flatMap(w=>WCH[w.id]);
  const today=(()=>{const x=new Date();return x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();})(),dok=d.date===today?num(d.ok):0;
  const weak=ALLCH.map(c=>({c,s:chap[c.id]})).filter(x=>x.s&&x.s.tot>=4).map(x=>({...x,a:x.s.ok/x.s.tot})).filter(x=>x.a<.8).sort((a,b)=>a.a-b.a).slice(0,5);
- return `<div class="kpis"><div class="kpi"><b>${dok}/${Math.max(5,Math.min(100,parseInt(S&&S.dailyGoal)||20))}</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>🔥 ${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>📖 ${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
- <h2 class="sec">À retravailler en priorité</h2>${weak.length?weak.map(x=>`<div class="row"><span>${x.c.icon} ${x.c.name} <small class="muted">${sOf(WMAP[x.c.id].id).emoji} ${WMAP[x.c.id].lvl}</small></span><b class="${x.a<.5?'lo':'mid'}">${Math.round(x.a*100)} %</b></div>`).join(''):'<p class="muted">Rien à signaler (analyse à partir de 4 questions par chapitre).</p>'}
- <h2 class="sec">Détail par matière${G?' ('+esc(G)+' et niveaux déjà travaillés)':''}</h2>${(shown.length?shown:WALL).map(w=>{const {ok,tot}=stat(w);const a=tot?Math.round(ok/tot*100):0;
-  return `<details class="card det"><summary><span>${sOf(w.id).emoji} ${esc(sOf(w.id).name)} ${w.lvl}</span><span class="mbar"><i style="width:${a}%;background:${w.col}"></i></span><b>${tot?a+' %':'–'}</b></summary>${WCH[w.id].map(c=>{const s=chap[c.id];return `<div class="drow"><span>${c.icon} ${c.name}</span>${starStr(Math.min(3,num(s?.stars)))}<span class="muted">${s?`${num(s.ok)}/${num(s.tot)}`:'–'}</span></div>`;}).join('')}</details>`;}).join('')}
- ${typeof pathParentBody==='function'?pathParentBody(S):''}
- ${lecture(S)}
- <h2 class="sec">Derniers bons points</h2>${(m.hist||[]).length?m.hist.slice(0,15).map(h=>`<div class="drow2"><span class="muted">${new Date(h.t).toLocaleDateString('fr-FR')}</span><span>${esc(h.w)}</span><b class="${h.d<0?'lo':'okc'}">${h.d>0?'+':''}${num(h.d)}</b></div>`).join(''):'<p class="muted">Rien pour le moment.</p>'}`;}
+ return `<div class="kpis"><div class="kpi"><b>${dok}/${Math.max(5,Math.min(100,parseInt(S&&S.dailyGoal)||20))}</b><span>bonnes réponses aujourd’hui</span></div><div class="kpi"><b>${acc} %</b><span>de réussite (${tq} questions)</span></div><div class="kpi"><b>${Math.floor(mins/60)} h ${String(mins%60).padStart(2,'0')}</b><span>de travail au total</span></div><div class="kpi"><b>${IC('flame')}${num(S.streak?.n)}</b><span>jours de suite (record ${num(S.streak?.best)})</span></div><div class="kpi"><b>${IC('book')}${(mineCh.length?mineCh:ALLCH).filter(c=>(S.lessons||{})[c.id]).length}/${(mineCh.length?mineCh:ALLCH).length}</b><span>cours terminés${G?' ('+esc(G)+')':''}</span></div></div>
+ <div class="pp-grid"><section class="pp-sec pp-priority"><h2 class="sec">À retravailler en priorité</h2>${weak.length?'<div class="pp-list">'+weak.map(x=>`<div class="row"><span>${x.c.icon} ${x.c.name} <small class="muted">${sOf(WMAP[x.c.id].id).emoji} ${WMAP[x.c.id].lvl}</small></span><b class="${x.a<.5?'lo':'mid'}">${Math.round(x.a*100)} %</b></div>`).join('')+'</div>':'<p class="muted">Rien à signaler (analyse à partir de 4 questions par chapitre).</p>'}</section>
+  <section class="pp-sec pp-path">${typeof pathParentBody==='function'?pathParentBody(S):''}</section>
+ <section class="pp-sec pp-points"><h2 class="sec">Derniers bons points</h2>${(m.hist||[]).length?m.hist.slice(0,15).map(h=>`<div class="drow2"><span class="muted">${new Date(h.t).toLocaleDateString('fr-FR')}</span><span>${esc(h.w)}</span><b class="${h.d<0?'lo':'okc'}">${h.d>0?'+':''}${num(h.d)}</b></div>`).join(''):'<p class="muted">Rien pour le moment.</p>'}</section>
+ <section class="pp-sec pp-read">${lecture(S)}</section>
+ <section class="pp-sec pp-subjects pp-wide"><h2 class="sec">Détail par matière${G?' ('+esc(G)+' et niveaux déjà travaillés)':''}</h2><div class="pp-detlist">${(shown.length?shown:WALL).map(w=>{const {ok,tot}=stat(w);const a=tot?Math.round(ok/tot*100):0;
+  return `<details class="card det"><summary><span>${sOf(w.id).emoji} ${esc(sOf(w.id).name)} ${w.lvl}</span><span class="mbar"><i style="width:${a}%"></i></span><b>${tot?a+' %':'–'}</b></summary>${WCH[w.id].map(c=>{const s=chap[c.id];return `<div class="drow"><span>${c.icon} ${c.name}</span>${starStr(Math.min(3,num(s?.stars)))}<span class="muted">${s?`${num(s.ok)}/${num(s.tot)}`:'–'}</span></div>`;}).join('')}</details>`;}).join('')}</div></section></div>`;}
 
 // Lecture et compréhension : même rubrique que l’espace parents de l’appli (js/app-actions.js, readingParentBody).
 function lecture(S){if(!window.MQReading)return '';
@@ -1331,16 +1333,16 @@ function lecture(S){if(!window.MQReading)return '';
  ${texts.length?`<div class="card">${texts.slice(0,8).map(x=>{const b=Math.max(0,Math.min(100,Math.round(num(x.p.bestScore))));return `<div class="drow rdtx"><span>${esc(x.r.title)} <small class="muted">${esc(x.r.level)}</small></span><b class="${cls(b)}">${b} % <small class="muted">(${num(x.p.attempts)||1} fois)</small></b></div>`;}).join('')}</div>`:''}`;}
 
 function recomp(S,m,pend){const waiting=id=>pend.some(a=>(a.kind==='accept'||a.kind==='refuse')&&a.payload&&a.payload.req===id);const rwPend=pend.some(a=>a.kind==='rewards');
- return `<div class="card mbal"><span class="muted">Solde de ${esc(S.name)}</span><b>🎖️ ${num(m.pts)}</b><small class="muted">${num(m.total)} gagnés au total</small></div>
- <h2 class="sec">Demandes de ${esc(S.name)}</h2>${(m.req||[]).length?m.req.map(r=>{const w=(m.rewards||[]).find(x=>x.id===r.rid);if(!w)return '';return `<div class="card rq"><span class="re">${esc(w.e)}</span><div class="grow"><b>${esc(w.n)}</b><div class="muted small">${num(w.c)} 🎖️, demandé le ${new Date(r.t).toLocaleDateString('fr-FR')}</div></div>${waiting(r.id)?'<span class="pill">⏳ Envoyé</span>':`<button class="btn primary sm2" data-a="acc:${esc(r.id)}">Accorder</button><button class="btn ghost sm2" data-a="ref:${esc(r.id)}">Refuser</button>`}</div>`;}).join(''):'<p class="muted">Aucune demande.</p>'}
- <h2 class="sec">Donner ou retirer des bons points</h2><div class="card"><div class="frow"><input id="bn" class="fld num" type="number" min="1" value="10" aria-label="Nombre de points"><input id="br" class="fld grow" maxlength="60" placeholder="Raison (ex : bonne note au contrôle)"></div><div class="frow"><button class="btn primary grow" data-a="bonus:1">+ Donner</button><button class="btn grow" data-a="bonus:-1">− Retirer</button></div></div>
- <h2 class="sec">Liste des récompenses</h2>${rwPend?'<div class="note">⏳ Une nouvelle liste est en attente d’envoi.</div>':''}<p class="muted small">Emoji, récompense, bons points nécessaires. Pense à enregistrer.</p>
+ return `<div class="pp-grid pp-grid--recomp"><div class="pp-col"><div class="card mbal"><span class="muted">Solde de ${esc(S.name)}</span><b>${IC('award')}${num(m.pts)}</b><small class="muted">${num(m.total)} gagnés au total</small></div>
+ <section class="pp-panel"><h2 class="sec">Demandes de ${esc(S.name)}</h2>${(m.req||[]).length?m.req.map(r=>{const w=(m.rewards||[]).find(x=>x.id===r.rid);if(!w)return '';return `<div class="card rq"><span class="re">${esc(w.e)}</span><div class="grow"><b>${esc(w.n)}</b><div class="muted small">${num(w.c)} 🎖️, demandé le ${new Date(r.t).toLocaleDateString('fr-FR')}</div></div>${waiting(r.id)?'<span class="pill">⏳ Envoyé</span>':`<button class="btn primary sm2" data-a="acc:${esc(r.id)}">Accorder</button><button class="btn ghost sm2" data-a="ref:${esc(r.id)}">Refuser</button>`}</div>`;}).join(''):'<p class="muted">Aucune demande.</p>'}</section>
+ <section class="pp-panel"><h2 class="sec">Donner ou retirer des bons points</h2><div class="frow"><input id="bn" class="fld num" type="number" min="1" value="10" aria-label="Nombre de points"><input id="br" class="fld grow" maxlength="60" placeholder="Raison (ex : bonne note au contrôle)"></div><div class="frow"><button class="btn primary grow" data-a="bonus:1">+ Donner</button><button class="btn grow" data-a="bonus:-1">− Retirer</button></div></section></div>
+ <section class="pp-panel"><h2 class="sec">Liste des récompenses</h2>${rwPend?'<div class="note">⏳ Une nouvelle liste est en attente d’envoi.</div>':''}<p class="muted small">Emoji, récompense, bons points nécessaires. Pense à enregistrer.</p>
  <div id="rwl">${(m.rewards||[]).map(w=>rwRow(w)).join('')}</div>
- <div class="frow"><button class="btn grow" data-a="rwadd">+ Ajouter</button><button class="btn primary grow" data-a="rwsave">💾 Enregistrer</button></div>`;}
-const rwRow=w=>`<div class="frow rw" data-id="${esc(w.id)}"><input class="fld em" value="${esc(w.e)}" maxlength="8" aria-label="Emoji"><input class="fld grow" value="${esc(w.n)}" maxlength="50" aria-label="Récompense"><input class="fld num" type="number" min="1" value="${num(w.c)}" aria-label="Bons points"><button class="btn ghost sm2" data-a="rwdel" aria-label="Supprimer">🗑️</button></div>`;
+ <div class="frow"><button class="btn grow" data-a="rwadd">+ Ajouter</button><button class="btn primary grow" data-a="rwsave">💾 Enregistrer</button></div></section></div>`;}
+const rwRow=w=>`<div class="frow rw" data-id="${esc(w.id)}"><input class="fld em" value="${esc(w.e)}" maxlength="8" aria-label="Emoji"><input class="fld grow" value="${esc(w.n)}" maxlength="50" aria-label="Récompense"><input class="fld num" type="number" min="1" value="${num(w.c)}" aria-label="Bons points"><button class="btn ghost sm2" data-a="rwdel" aria-label="Supprimer" title="Supprimer">${IC('trash')}</button></div>`;
 
-function regles(m,pend){const r=m.rules||{};return `${pend.some(a=>a.kind==='rules')?'<div class="note">⏳ De nouvelles règles sont en attente d’envoi.</div>':''}<div class="card">${RULES.map(([k,l])=>`<label class="frow"><span class="grow">${l}</span><input class="fld num" type="number" min="0" id="ru_${k}" value="${num(r[k])}"></label>`).join('')}<button class="btn primary wide" data-a="rulesave">💾 Enregistrer</button></div>
- <p class="muted small">Le code parent de l’appli et la réinitialisation restent accessibles uniquement sur le téléphone de ${esc(D.data?.name||'ton enfant')}.</p>`;}
+function regles(m,pend){const r=m.rules||{};return `${pend.some(a=>a.kind==='rules')?'<div class="note">⏳ De nouvelles règles sont en attente d’envoi.</div>':''}<div class="card pp-rules">${RULES.map(([k,l])=>`<label class="frow"><span class="grow">${l}</span><input class="fld num" type="number" min="0" id="ru_${k}" value="${num(r[k])}"></label>`).join('')}<button class="btn primary wide" data-a="rulesave">💾 Enregistrer</button></div>
+ <p class="pp-hint muted small">Le code parent de l’appli et la réinitialisation restent accessibles uniquement sur le téléphone de ${esc(D.data?.name||'ton enfant')}.</p>`;}
 
 async function act(kind,payload,msg){try{await rpc('mq_act',{p_parent:PK,p_kind:kind,p_payload:payload});toast(msg||'✅ Envoyé');DIRTY=false;await refresh(true);}catch(e){toast('⚠️ Envoi impossible, vérifie ta connexion');}}
 const ACT={

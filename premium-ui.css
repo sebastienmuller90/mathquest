@@ -1,0 +1,254 @@
+/* Finot Académie — système de design premium (8.69).
+   Couche 1 sur 3 : jetons (couleurs, rayons, ombres, polices) et composants de base.
+   Couche 2 : premium-pro.css (écrans et adaptation par âge). Couche 3 : premium-entry.css (splash, onboarding).
+   Surcouche visuelle uniquement : aucune logique, donnée ou fonctionnalité n'est modifiée.
+
+   Règles d'usage
+   - Une seule source de couleurs : les rôles ci-dessous. --accent et --on-accent (et --accent-text) sont posés en ligne par applyTheme()
+     selon le thème choisi dans la boutique, avec un contraste texte/fond garanti ; ne jamais coder une couleur de texte en dur
+     sur un fond --accent. --brand = --accent (jauges, anneaux), --focus = anneau de focus.
+   - Rayons : --r-sm (puces), --r-md (contrôles), --r-lg (cartes), --r-xl (grands blocs). Ombres : --sh-1 / --sh-2 / --sh-3.
+   - Espacements : échelle 4 · 8 · 12 · 16 · 24 · 32 · 48. */
+
+:root{
+  --bg:#faf7f2;
+  --surface:#ffffff;
+  --surface2:#f4eee6;
+  --text:#2b2420;
+  --muted:#6b6159;
+  --border:#e5dccf;
+  --edge:rgba(43,36,32,.10);
+  --accent:#ff8a3d;
+  --accent-d:color-mix(in srgb,var(--accent) 84%,#000);
+  --accent-text:#a8490c;
+  --on-accent:#1a1008;
+  --accent-soft:color-mix(in srgb,var(--accent) 12%,var(--surface));
+  --brand:var(--accent);
+  --gold:#f2b32b;
+  --good:#177a3f;
+  --goodbg:#e6f6ec;
+  --bad:#c42b2b;
+  --badbg:#fdeaea;
+  --warn:#8a5a00;
+  --warnbg:#fff4d6;
+  --focus:#2563eb;
+  --on-good:#ffffff;
+  --on-bad:#ffffff;
+  --sh-1:0 1px 2px rgba(43,36,32,.06),0 1px 1px rgba(43,36,32,.04);
+  --sh-2:0 4px 14px rgba(43,36,32,.08),0 1px 3px rgba(43,36,32,.06);
+  --sh-3:0 18px 44px rgba(43,36,32,.16),0 2px 8px rgba(43,36,32,.08);
+  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;
+  --font-display:'Fredoka','Nunito',system-ui,sans-serif;
+  --font-ui:'Nunito',system-ui,sans-serif;
+  --decor:radial-gradient(circle at 6% -6%,color-mix(in srgb,var(--brand) 9%,transparent),transparent 36%),radial-gradient(circle at 98% 0,color-mix(in srgb,var(--gold) 8%,transparent),transparent 30%);
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#16110e;--surface:#211a15;--surface2:#2b221b;--text:#f7f0e8;--muted:#bfb2a5;--border:#3d3128;--edge:rgba(0,0,0,.4);
+    --accent:#ff9a52;--accent-d:color-mix(in srgb,var(--accent) 84%,#fff);--accent-text:#ff9a52;--on-accent:#1a1008;--gold:#f0bd4a;
+    --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;--on-good:#1a1008;--on-bad:#1a1008;
+    --sh-1:0 1px 2px rgba(0,0,0,.3);--sh-2:0 6px 18px rgba(0,0,0,.32),0 1px 3px rgba(0,0,0,.24);--sh-3:0 20px 48px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16110e;--surface:#211a15;--surface2:#2b221b;--text:#f7f0e8;--muted:#bfb2a5;--border:#3d3128;--edge:rgba(0,0,0,.4);
+  --accent:#ff9a52;--accent-d:color-mix(in srgb,var(--accent) 84%,#fff);--accent-text:#ff9a52;--on-accent:#1a1008;--gold:#f0bd4a;
+  --good:#5fd68c;--goodbg:#143525;--bad:#ff8f8f;--badbg:#431a1e;--warn:#f0c15a;--warnbg:#3a2e12;--focus:#8ab4ff;--on-good:#1a1008;--on-bad:#1a1008;
+  --sh-1:0 1px 2px rgba(0,0,0,.3);--sh-2:0 6px 18px rgba(0,0,0,.32),0 1px 3px rgba(0,0,0,.24);--sh-3:0 20px 48px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3);
+}
+
+/* Âge : le langage graphique change par jetons, pas composant par composant. */
+body[data-mq-age="young"]{--r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:30px}
+body[data-mq-age="bridge"]{--r-sm:10px;--r-md:16px;--r-lg:22px;--r-xl:28px}
+body[data-mq-age="teen"]{--r-sm:8px;--r-md:10px;--r-lg:14px;--r-xl:18px;--font-display:'Nunito',system-ui,sans-serif}
+
+/* Fond et typographie */
+body,:root[data-theme] body,:root:not([data-theme="light"]) body{
+  background-color:var(--bg);
+  background-image:var(--decor);
+  background-attachment:scroll;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,.btn,.pill,.qtext,.nm,.world,.tool,.choice,.kpi b,.bigstars,.end h1,.lvlup,.combo,.ring text,input.big,.sbtn,.reco b,.reco .go,.cn{font-family:var(--font-display)}
+h1,h2,.nm,.sec,.qtext,.cn{color:var(--text);letter-spacing:-.015em}
+body[data-mq-age="teen"] :is(h1,h2,.nm,.sec,.qtext,.cn,.reco b,.wl){font-weight:800;letter-spacing:-.02em}
+body[data-mq-age="teen"] :is(.btn,.sbtn,.tool,.choice,.pill,.combo,.reco .go){font-weight:700}
+.sec{font-size:20px;font-weight:800;margin:28px 0 12px}
+.muted{color:var(--muted)}
+#app{max-width:880px;padding:20px 16px 112px}
+
+/* Focus visible unique, lisible sur toute surface */
+:is(.btn,.choice,.world,.tool,.sbtn,.chap,.reco,.pcard,.av,.profile-btn,.htab,summary,[data-a],[data-pob]):focus-visible{
+  outline:3px solid var(--focus);outline-offset:2px;
+}
+/* Champs : un seul anneau (bordure + halo), pas de double contour */
+:is(input,select,textarea):focus-visible{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 30%,transparent)}
+
+/* Cartes */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);
+}
+
+/* Boutons : à plat, un seul niveau d'ombre, états complets */
+.btn{
+  min-height:44px;
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--surface);
+  color:var(--text);
+  font-weight:600;
+  box-shadow:var(--sh-1);
+  transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.btn:hover:not(:disabled){border-color:color-mix(in srgb,var(--text) 28%,var(--border));box-shadow:var(--sh-2)}
+.btn:active:not(:disabled){transform:translateY(1px);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.btn.primary{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:var(--on-accent);
+  box-shadow:0 1px 2px color-mix(in srgb,var(--accent) 40%,transparent),0 4px 12px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.btn.primary:hover:not(:disabled){background:var(--accent-d);border-color:var(--accent-d)}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn.ghost:hover:not(:disabled){background:var(--surface2);box-shadow:none}
+
+/* Pastilles de statut */
+.pill{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  font-weight:700;
+  box-shadow:none;
+}
+
+/* Champs */
+input.big{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  color:var(--text);
+  box-shadow:none;
+  transition:border-color .15s ease,background-color .15s ease;
+}
+input.big:focus{border-color:var(--accent);background:var(--surface)}
+/* États de validation (la règle input.big ci-dessus ne doit pas les écraser) */
+input.big.good{border-color:var(--good);background:var(--goodbg)}
+input.big.bad{border-color:var(--bad);background:var(--badbg)}
+
+/* Jauges : orange vif décoratif, piste lisible */
+.xpbar,.prog,.mbar{
+  background:color-mix(in srgb,var(--text) 9%,var(--surface));
+  box-shadow:none;
+}
+.xpbar i,.prog i,.mbar i{background:linear-gradient(90deg,var(--brand),var(--gold));box-shadow:none}
+
+/* Réponses : sobres, tactiles, état porté par bordure + texte + symbole (jamais la couleur seule) */
+.choice{
+  min-height:56px;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-md);
+  box-shadow:var(--sh-1);
+  font-weight:600;
+  transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease,transform .1s ease;
+}
+.choice:hover:not(:disabled){filter:none;border-color:var(--accent);background:var(--accent-soft);box-shadow:var(--sh-2)}
+.choice:active:not(:disabled){transform:translateY(1px);box-shadow:none}
+.choice.good,.choice.bad{position:relative;padding-right:46px}
+.choice.good{border-color:var(--good);background:var(--goodbg);box-shadow:none}
+.choice.bad{border-color:var(--bad);background:var(--badbg);box-shadow:none}
+.choice.good::after,.choice.bad::after{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  font:800 15px/1 var(--font-ui);
+}
+.choice.good::after{content:"✓";background:var(--good);color:var(--on-good)}
+.choice.bad::after{content:"✕";background:var(--bad);color:var(--on-bad)}
+
+/* Retours de correction */
+.fb{border:1px solid var(--border);border-radius:var(--r-md)}
+.fb.good{border-color:color-mix(in srgb,var(--good) 45%,var(--border))}
+.fb.bad{border-color:color-mix(in srgb,var(--bad) 40%,var(--border))}
+.fb.tip{border-color:color-mix(in srgb,var(--gold) 45%,var(--border))}
+
+/* Puces matières */
+.sbtn{
+  min-height:44px;
+  border:1px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--surface);
+  box-shadow:var(--sh-1);
+  font-weight:700;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+.sbtn:hover{border-color:color-mix(in srgb,var(--text) 28%,var(--border))}
+.sbtn.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:var(--sh-1)}
+
+/* Navigation principale */
+.hometabs{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  box-shadow:0 -6px 20px color-mix(in srgb,var(--edge) 60%,transparent);
+  gap:4px;
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+}
+.htab{
+  min-height:52px;
+  justify-content:center;
+  gap:3px;
+  border-radius:var(--r-md);
+  color:var(--muted);
+  font-family:var(--font-ui);
+  transition:background-color .15s ease,color .15s ease;
+}
+.htab:hover{background:var(--surface2)}
+.htab .hti{display:grid;place-items:center;width:28px;height:28px;font-size:22px;line-height:1}
+.htab .hti svg{width:24px;height:24px;display:block;vertical-align:baseline}
+
+.htab .htl{font-size:12px;font-weight:700;letter-spacing:.005em}
+.htab.on{color:var(--accent-text);background:var(--accent-soft)}
+.htab.on .hti svg{stroke-width:2.2}
+
+@media (min-width:900px){
+  .hometabs{
+    left:50%;right:auto;bottom:16px;
+    width:min(560px,calc(100% - 32px));
+    transform:translateX(-50%);
+    border:1px solid var(--border);
+    border-radius:var(--r-xl);
+    box-shadow:var(--sh-3);
+    padding:6px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .btn,.choice,.sbtn,.htab,input.big{transition:none}
+  .btn:active,.choice:active{transform:none}
+}
+
+/* Icônes d'interface (SVG locaux) */
+.ico{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ico .fill{fill:currentColor;stroke:none}
+.btn .ico{margin-right:.3em}
+
+/* Champs : texte indicatif lisible (le gris par défaut du navigateur reste sous 4,5:1) */
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+
+/* Cibles tactiles : au moins 44 px sur les contrôles d'usage courant */
+.btn.sm{min-width:44px}
+.spk,.ttsb,.pmini{min-width:44px;min-height:44px}
+details>summary{padding-block:10px}
+.mq-corr-next{min-height:44px}
+
+/* Mode DYS : les feuilles premium ne doivent jamais annuler l'espacement, l'interligne ou la police choisis */
+html.mq-dys-on :is(h1,h2,h3,.nm,.sec,.qtext,.cn,.cmeta){letter-spacing:normal}
+html.mq-dys-on .lcard h2{line-height:1.75}
+html.mq-dys-on .fh{text-transform:none;font-size:inherit;letter-spacing:normal}
+html.mq-dys-on.mq-dys-simplefont :is(.cn b,.sec,.nm,h1,h2,h3,.reco b,.reco .go,.pill,.wl,.go,.sbtn,.tool,.htab){font-family:Arial,Verdana,system-ui,sans-serif!important}
