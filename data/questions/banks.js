@@ -35,3 +35,39 @@ const bySubject={
 };
 window.MQQuestionBanks={version:'1.0',common,bySubject};
 })();
+
+/* Errata Wave 2 — revue humaine du 24/10/2026.
+   Les IDs restent inchangés ; seules une consigne CE1 et trois références/formulations de lecture sont corrigées. */
+(function(){
+'use strict';
+if(window.MQPrimary&&window.MQPrimary._reg&&window.MQPrimary._reg.byId){
+  const chapter=window.MQPrimary._reg.byId['ce1-fr-s-z'];
+  if(chapter&&typeof chapter.g==='function'&&!chapter.__wave2ContentErrata){
+    const originalGenerator=chapter.g;
+    chapter.g=function(d){
+      const q=originalGenerator(d);
+      if(q&&typeof q.q==='string')q.q=q.q.replace('une fra…e','une frai…e');
+      return q;
+    };
+    chapter.__wave2ContentErrata=true;
+  }
+}
+if(window.MQ_READING&&window.MQ_READING.resources){
+  const res=window.MQ_READING.resources;
+  const breme=res.fr_6e_musiciens_breme_01;
+  if(breme){
+    breme.work='Contes de l’enfance et du foyer — 2e édition (1819)';
+    breme.sourceReference='Adaptation libre et abrégée pour la 6e, d’après le conte des frères Grimm, publié pour la première fois dans la 2e édition des Contes de l’enfance et du foyer en 1819. Les frères Grimm (morts en 1859 et 1863) sont dans le domaine public — aucune traduction existante reprise.';
+  }
+  const sneffels=res.fr_5e_verne_sneffels_01;
+  if(sneffels&&Array.isArray(sneffels.paragraphs)&&sneffels.paragraphs[0]){
+    sneffels.paragraphs[0]=sneffels.paragraphs[0].replace('un volcan d’Islande éteint depuis des siècles','un volcan d’Islande que les personnages considèrent comme éteint depuis des siècles');
+    sneffels.sourceReference='Adaptation libre et abrégée pour la 5e, d’après Jules Verne (mort en 1905), dans le domaine public. La qualification du volcan comme « éteint » est présentée comme le point de vue des personnages du roman ; le Snæfellsjökull est aujourd’hui classé comme volcan actif au sens géologique.';
+  }
+  const seguin=res.fr_4e_chevre_seguin_01;
+  if(seguin){
+    seguin.work='Lettres de mon moulin (recueil 1869 ; première publication du conte en 1866)';
+    seguin.sourceReference='Adaptation libre et abrégée pour la 4e, d’après Alphonse Daudet (mort en 1897), dans le domaine public. « La Chèvre de monsieur Seguin » paraît d’abord dans L’Événement le 14 septembre 1866, puis est intégrée au recueil Lettres de mon moulin en 1869.';
+  }
+}
+})();

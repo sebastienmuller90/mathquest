@@ -166,6 +166,18 @@ jobs:
       - name: Cours approfondis (rien de retiré, contenu complet)
         if: matrix.browser == 'chromium'
         run: node tests/course-depth.test.js
+      - name: "Lecture : nouveaux supports du primaire (intégrité, parcours réel)"
+        if: matrix.browser == 'chromium'
+        run: node tests/wave2-reading-primary.test.js
+      - name: "Lecture : nouveaux supports du collège (intégrité, droits, parcours réel)"
+        if: matrix.browser == 'chromium'
+        run: node tests/wave2-reading-college.test.js
+      - name: Espace parent (devoirs, bilan, profils, accessibilité)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave2-parent.test.js
+      - name: Pools d’exercices CP/CE1 (variété, générateurs, audio)
+        if: matrix.browser == 'chromium'
+        run: node tests/wave2-pools-cp-ce1.test.js
       - name: Cours approfondis de langues du collège (anglais, italien)
         if: matrix.browser == 'chromium'
         run: node tests/wave1-languages-depth.test.js
