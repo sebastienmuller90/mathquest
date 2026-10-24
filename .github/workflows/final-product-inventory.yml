@@ -1,0 +1,49 @@
+name: Final product inventory
+
+on:
+  push:
+    branches:
+      - chatgpt/final-hardening-audit
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'js/**'
+      - 'index.html'
+      - 'parent.html'
+      - 'manifest.webmanifest'
+      - 'sw.js'
+      - 'styles.css'
+      - 'tests/final-product-inventory.mjs'
+      - 'tests/release-readiness.mjs'
+      - '.github/workflows/final-product-inventory.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: final-product-inventory-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Générer l’inventaire CP → 3e
+        run: node tests/final-product-inventory.mjs
+      - name: Vérifier la préparation release
+        run: node tests/release-readiness.mjs
+      - name: Publier les rapports d’audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finot-final-product-inventory
+          path: |
+            tests/final-product-inventory-report.json
+            tests/final-product-inventory-report.md
+            tests/release-readiness-report.json
+            tests/release-readiness-report.md
+          if-no-files-found: error
