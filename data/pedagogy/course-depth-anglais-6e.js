@@ -1,7 +1,7 @@
-/* Finot Académie — cours approfondis, vague 1 pédagogie finale (23/10/2026) : anglais 6e (cycle 3, niveau A1 en LVA).
+/* Finot Académie — cours approfondis, vague 1 pédagogie finale (23/10/2026) : anglais 6e (cycle 3, niveau A1+ en LVA).
    Même format que course-depth-maths-cm1.js (deep / try / adult / culture), affiché par js/course-depth.js.
    Rien n'est retiré des cours existants. Explications en français, exemples en anglais, pièges propres aux francophones.
-   Programme de référence : langues vivantes étrangères, cycle 3 (BO n°31 du 30 juillet 2020). Faits culturels vérifiables uniquement. */
+   Programme de référence : langues vivantes étrangères, cycle 3 (BO n°22 du 29 mai 2025, applicable en 6e depuis 2025-2026). Faits culturels vérifiables uniquement. */
 (function(root){
 'use strict';
 const D=root.MQCourseDepth=root.MQCourseDepth||{version:'1',chapters:{},add(map,meta){for(const id of Object.keys(map))this.chapters[id]=Object.assign({},meta,map[id]);}};

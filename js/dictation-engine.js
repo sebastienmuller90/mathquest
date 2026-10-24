@@ -101,13 +101,13 @@ function analyze(reference,answer,opts={}){const o={evalCase:false,punctuation:t
   const rt=tokenize(reference),at=tokenize(answer);const rw=rt.filter(x=>!x.p).map(x=>x.t),aw=at.filter(x=>!x.p).map(x=>x.t);
   const rp=rt.filter(x=>x.p).map(x=>x.t),ap=at.filter(x=>x.p).map(x=>x.t);
   const al=align(rw,aw);const errors=[];const tokens=[];let gi=0;
-  for(const x of al){
-    if(x.r!=null&&x.a!=null){gi++;const type=classify(x.r,x.a,{sentenceStart:x.ri===0,evalCase:o.evalCase});if(type)errors.push({type,ref:x.r,got:x.a,kind:kindOf(x.r,x.a,type),pos:x.ri+1,apos:gi});tokens.push({status:type?'bad':'ok',ref:x.r,got:x.a,type});}
-    else if(x.r!=null){errors.push({type:'missing',ref:x.r,got:'',kind:'mot manquant',pos:x.ri+1,apos:gi});tokens.push({status:'missing',ref:x.r,got:''});}
-    else{gi++;errors.push({type:'extra',ref:'',got:x.a,kind:'mot en trop',pos:x.ri,apos:gi});tokens.push({status:'extra',ref:'',got:x.a});}}
+  for(let alignIndex=0;alignIndex<al.length;alignIndex++){const x=al[alignIndex];
+    if(x.r!=null&&x.a!=null){gi++;const type=classify(x.r,x.a,{sentenceStart:x.ri===0,evalCase:o.evalCase});if(type)errors.push({type,ref:x.r,got:x.a,kind:kindOf(x.r,x.a,type),pos:x.ri+1,apos:gi,alignIndex});tokens.push({status:type?'bad':'ok',ref:x.r,got:x.a,type});}
+    else if(x.r!=null){errors.push({type:'missing',ref:x.r,got:'',kind:'mot manquant',pos:x.ri+1,apos:gi,alignIndex});tokens.push({status:'missing',ref:x.r,got:''});}
+    else{gi++;errors.push({type:'extra',ref:'',got:x.a,kind:'mot en trop',pos:x.ri,apos:gi,alignIndex});tokens.push({status:'extra',ref:'',got:x.a});}}
   // Un mot oublié juste à côté d'un mot en trop = un mot remplacé par un autre (« mot incorrect »). Le barème ne change pas.
   for(let i=0;i<errors.length-1;i++){const a=errors[i],b=errors[i+1];
-    if(((a.type==='missing'&&b.type==='extra')||(a.type==='extra'&&b.type==='missing'))&&!a.pair&&!b.pair){a.pair=1;b.pair=2;a.kind=b.kind='mot incorrect';const ex=a.type==='extra'?a:b,mi=a.type==='missing'?a:b;ex.replaces=mi.ref;mi.replacedBy=ex.got;i++;}}
+    if(((a.type==='missing'&&b.type==='extra')||(a.type==='extra'&&b.type==='missing'))&&!a.pair&&!b.pair&&Math.abs((a.alignIndex??-99)-(b.alignIndex??-99))===1){a.pair=1;b.pair=2;a.kind=b.kind='mot incorrect';const ex=a.type==='extra'?a:b,mi=a.type==='missing'?a:b;ex.replaces=mi.ref;mi.replacedBy=ex.got;i++;}}
   if(o.punctuation){const cnt=a=>a.reduce((m,p)=>(m[p]=(m[p]||0)+1,m),{});const cr=cnt(rp),ca=cnt(ap);
     for(const p of new Set([...rp,...ap])){const d=(cr[p]||0)-(ca[p]||0);for(let k=0;k<Math.abs(d);k++)errors.push({type:'ponctuation',ref:d>0?p:'',got:d<0?p:'',kind:d>0?'ponctuation manquante':'ponctuation en trop'});}}
   // Ponctuation déplacée (même signe, mais pas après le même mot) : comptée comme une erreur de ponctuation.
