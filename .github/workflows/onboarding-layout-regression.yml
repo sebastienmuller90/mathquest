@@ -1,0 +1,44 @@
+name: Onboarding layout regression
+
+on:
+  push:
+    branches:
+      - chatgpt/final-release-hardening
+      - main
+    paths:
+      - 'js/modern-profile-onboarding.css'
+      - 'js/modern-profile-onboarding.js'
+      - 'tests/onboarding-intermediate-layout.test.js'
+      - '.github/workflows/onboarding-layout-regression.yml'
+  pull_request:
+    paths:
+      - 'js/modern-profile-onboarding.css'
+      - 'js/modern-profile-onboarding.js'
+      - 'tests/onboarding-intermediate-layout.test.js'
+      - '.github/workflows/onboarding-layout-regression.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: onboarding-layout-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  onboarding-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Installer les dépendances
+        run: npm ci
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Vérifier l’onboarding aux largeurs intermédiaires
+        env:
+          MQ_BROWSER: chromium
+          MQ_ENGINES: chromium
+        run: node tests/onboarding-intermediate-layout.test.js
