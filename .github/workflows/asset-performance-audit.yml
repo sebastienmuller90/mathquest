@@ -1,0 +1,30 @@
+name: Asset performance audit
+
+on:
+  push:
+    branches: [chatgpt/performance-asset-audit]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Mesurer le poids runtime, médias et précache
+        run: node tests/asset-performance-audit.mjs
+      - name: Publier le rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-performance-report
+          path: |
+            tests/asset-performance-report.json
+            docs/asset-performance-report.md
+          if-no-files-found: warn
