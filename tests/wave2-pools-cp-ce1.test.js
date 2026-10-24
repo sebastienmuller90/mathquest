@@ -52,6 +52,25 @@ async function run(){
     return out;
   },{TARGET,DICTEES});
 
+  const errata=await p.evaluate(()=>{
+    const out={fraise:false,oldFraise:false,breme:null,sneffels:null,seguin:null};
+    const chapter=window.MQPrimary&&window.MQPrimary._reg&&window.MQPrimary._reg.byId&&window.MQPrimary._reg.byId['ce1-fr-s-z'];
+    if(chapter&&typeof chapter.g==='function'){
+      for(let i=0;i<6000;i++){
+        const q=chapter.g(1+i%3),s=String(q&&q.q||'');
+        if(s.includes('une frai…e'))out.fraise=true;
+        if(s.includes('une fra…e'))out.oldFraise=true;
+        if(out.fraise&&out.oldFraise)break;
+      }
+    }
+    const r=window.MQ_READING&&window.MQ_READING.resources||{};
+    const b=r.fr_6e_musiciens_breme_01,v=r.fr_5e_verne_sneffels_01,s=r.fr_4e_chevre_seguin_01;
+    if(b)out.breme={work:b.work,sourceReference:b.sourceReference};
+    if(v)out.sneffels={paragraph:v.paragraphs&&v.paragraphs[0],sourceReference:v.sourceReference};
+    if(s)out.seguin={work:s.work,sourceReference:s.sourceReference};
+    return out;
+  });
+
   const by=Object.fromEntries(res.chapters.map(c=>[c.id,c]));
   const cp=res.chapters.filter(c=>c.id.startsWith('cp-')).length,ce1=res.chapters.filter(c=>c.id.startsWith('ce1-')).length;
   T('Tous les chapitres CP et CE1 sont mesurés (au moins 70 chacun)',cp>=70&&ce1>=70,cp+' CP / '+ce1+' CE1, '+res.totalDraws+' tirages');
@@ -85,6 +104,12 @@ async function run(){
 
   const st=res.chapters.filter(c=>TARGET.includes(c.id)&&c.style.length);
   T('Pas d’élision manquante ni d’espacement fautif dans les chapitres élargis',!st.length,st.slice(0,4).map(c=>c.id+' : '+c.style[0]).join(' ; '));
+
+  // Errata issus de la revue humaine : ils doivent être visibles dans l'application finale, pas seulement dans le diff.
+  T('Errata CE1 : la consigne produit bien « frai…e » et jamais « fra…e »',errata.fraise&&!errata.oldFraise,JSON.stringify({fraise:errata.fraise,oldFraise:errata.oldFraise}));
+  T('Errata lecture : Les Musiciens de Brême est daté de 1819',!!errata.breme&&/1819/.test(errata.breme.work||'')&&!/1812/.test(errata.breme.work||''),errata.breme&&errata.breme.work);
+  T('Errata lecture : Sneffels est présenté comme le point de vue des personnages, pas comme un fait volcanologique actuel',!!errata.sneffels&&/personnages considèrent comme éteint/i.test(errata.sneffels.paragraph||'')&&/classé comme volcan actif/i.test(errata.sneffels.sourceReference||''),errata.sneffels&&errata.sneffels.paragraph);
+  T('Errata lecture : La Chèvre de monsieur Seguin distingue 1866 de la reprise en recueil en 1869',!!errata.seguin&&/1866/.test(errata.seguin.work||'')&&/1869/.test(errata.seguin.work||'')&&/14 septembre 1866/.test(errata.seguin.sourceReference||''),errata.seguin&&errata.seguin.work);
 
   T('Aucune erreur JavaScript pendant les tirages',!errs.length,errs.slice(0,3).join(' | '));
   await b.close();srv.close();
