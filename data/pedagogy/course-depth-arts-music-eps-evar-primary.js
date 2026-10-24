@@ -23,14 +23,16 @@ function profile(sid,domain,name){const d=String(domain||'').toLowerCase(),n=Str
   return 'music-listen';
  }
  if(sid==='p-eps'){
-  if(/courir|course|saut|lancer|natation|performance|endurance|vitesse|distance/.test(x))return 'eps-performance';
+  // Les termes spécifiques d'orientation doivent passer avant le mot générique « course ».
   if(/orientation|déplacement|deplacement|gym|équilibre|equilibre|roulade|danse|expression|acro|enchaînement|enchainement/.test(x))return 'eps-movement';
+  if(/courir|course|saut|lancer|natation|performance|endurance|vitesse|distance/.test(x))return 'eps-performance';
   if(/opposition|lutte|jeu|collectif|ballon|coopér|cooper|équipe|equipe|affrontement/.test(x))return 'eps-cooperate';
   return 'eps-safety';
  }
  if(/corps|intimité|intimite|consent|accord|sécur|secur|danger|alerte|protection/.test(x))return 'evar-body';
- if(/émotion|emotion|sentiment|amitié|amitie|relation|conflit|famille|empathie/.test(x))return 'evar-relations';
+ // Les thèmes d'égalité et de stéréotypes sont plus spécifiques que le mot générique « relation ».
  if(/égalité|egalite|stéréotype|stereotype|discrimination|différence|difference|respect/.test(x))return 'evar-equality';
+ if(/émotion|emotion|sentiment|amitié|amitie|relation|conflit|famille|empathie/.test(x))return 'evar-relations';
  return 'evar-rights';
 }
 
