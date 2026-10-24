@@ -26,7 +26,7 @@ jobs:
         run: |
           if grep -q 'niveau A1+ en LVA' data/pedagogy/course-depth-anglais-6e.js \
             && grep -q 'BO n°22 du 29 mai 2025' data/pedagogy/course-depth-anglais-5e.js \
-            && grep -q 'o:\["poire","pomme","prune"\]' data/primary/enrich-ce1.js \
+            && grep -Eq "o:\s*\[\s*['\"]poire['\"]\s*,\s*['\"]pomme['\"]\s*,\s*['\"]prune['\"]\s*\]" data/primary/enrich-ce1.js \
             && grep -q 'alignIndex' js/dictation-engine.js; then
             echo 'Correctifs déjà appliqués.'
           else
