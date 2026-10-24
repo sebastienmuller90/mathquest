@@ -9,18 +9,17 @@ const files = fs.readdirSync(primaryDir)
   .filter(name => /^enrich-(cp|ce1|ce2|cm1|cm2)\.js$/.test(name))
   .sort();
 
-// Pour comparer une réponse QCM, il faut préserver accents et ponctuation :
-// "a" != "à", "ou" != "où", "?" != ".".
+// Pour comparer une réponse QCM, préserver casse, accents et ponctuation :
+// "Le" != "le", "a" != "à", "ou" != "où", "?" != ".".
 const exact = value => String(value ?? '')
   .normalize('NFC')
   .replace(/[’‘`]/g, "'")
   .replace(/<[^>]*>/g, ' ')
   .replace(/\s+/g, ' ')
-  .trim()
-  .toLowerCase();
+  .trim();
 
 // Pour retrouver les mots d'un exercice d'ordre dans son explication,
-// une comparaison accent-insensible est utile et sans ambiguïté pédagogique.
+// une comparaison accent-insensible et sans casse est utile.
 const semantic = value => String(value ?? '')
   .normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
@@ -98,8 +97,6 @@ function checkOrder(entry, item, itemIndex) {
   const expl = semantic(item.e || '');
   if (expl) {
     const positions = normOrder.map(token => token ? expl.indexOf(token) : -1);
-    // N'affirmer une contradiction que si chaque élément attendu apparaît
-    // explicitement dans l'explication.
     if (positions.every(pos => pos >= 0)) {
       const increasing = positions.every((pos, i) => i === 0 || pos > positions[i - 1]);
       if (!increasing) {
