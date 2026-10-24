@@ -40,7 +40,8 @@ function finish(){if(W.step!==6)return;const c=COMPANIONS[W.companion]||COMPANIO
 const original=onboarding;
 onboarding=function(isNew=false){W=fresh(isNew);render(isNew);};
 document.addEventListener('click',e=>{const el=e.target.closest('[data-pob]');if(!el)return;e.preventDefault();action(el.dataset.pob,el.dataset.value||'');});
-document.addEventListener('input',e=>{if(!W)return;if(e.target.id==='pob-name'){W.name=e.target.value;updateButton();}else if(e.target.id==='pob-birth'){W.birthdate=e.target.value;render();}});
+document.addEventListener('input',e=>{if(!W)return;if(e.target.id==='pob-name'){W.name=e.target.value;updateButton();}else if(e.target.id==='pob-birth'){W.birthdate=e.target.value;updateButton();}});
+document.addEventListener('change',e=>{if(!W||e.target.id!=='pob-birth')return;W.birthdate=e.target.value;updateButton();});
 MQHooks.on('profile:changed',()=>{W=null;app.classList.remove('pob-app-wide');},{id:'modern-profile-reset',order:1});
-root.MQProfileOnboarding={version:'1.3',companions:COMPANIONS,goals:GOALS,render,plan,subjectsForGrade,get state(){return W?JSON.parse(JSON.stringify(W)):null;},legacy:original};
+root.MQProfileOnboarding={version:'1.4',companions:COMPANIONS,goals:GOALS,render,plan,subjectsForGrade,get state(){return W?JSON.parse(JSON.stringify(W)):null;},legacy:original};
 })(typeof window!=='undefined'?window:globalThis);
