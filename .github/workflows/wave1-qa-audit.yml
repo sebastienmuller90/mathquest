@@ -21,11 +21,24 @@ jobs:
         with:
           node-version: 22
       - name: Audit cohérence des banques Wave 1
+        id: banks
+        continue-on-error: true
         run: node tests/wave1-data-consistency.mjs
-      - name: Publier le rapport
+      - name: Vérifier les blocages programme et dictée
+        id: blockers
+        continue-on-error: true
+        run: node tests/wave1-blockers.mjs
+      - name: Publier le rapport banques
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: wave1-data-consistency-report
           path: tests/wave1-data-consistency-report.json
           if-no-files-found: warn
+      - name: Statut QA
+        if: always()
+        run: |
+          echo "banques=${{ steps.banks.outcome }}"
+          echo "blocages=${{ steps.blockers.outcome }}"
+          test "${{ steps.banks.outcome }}" = "success"
+          test "${{ steps.blockers.outcome }}" = "success"
