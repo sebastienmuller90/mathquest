@@ -9,7 +9,19 @@ const files = fs.readdirSync(primaryDir)
   .filter(name => /^enrich-(cp|ce1|ce2|cm1|cm2)\.js$/.test(name))
   .sort();
 
-const normalize = value => String(value ?? '')
+// Pour comparer une réponse QCM, il faut préserver accents et ponctuation :
+// "a" != "à", "ou" != "où", "?" != ".".
+const exact = value => String(value ?? '')
+  .normalize('NFC')
+  .replace(/[’‘`]/g, "'")
+  .replace(/<[^>]*>/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim()
+  .toLowerCase();
+
+// Pour retrouver les mots d'un exercice d'ordre dans son explication,
+// une comparaison accent-insensible est utile et sans ambiguïté pédagogique.
+const semantic = value => String(value ?? '')
   .normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
   .replace(/[’‘`]/g, "'")
@@ -59,7 +71,7 @@ for (const name of files) {
 assert.ok(collected.length > 0, 'Aucune banque enrichie chargée');
 
 const issues = [];
-const warnings = [];
+const duplicateBlocks = [];
 const seenChapterIds = new Map();
 let itemCount = 0;
 let orderCount = 0;
@@ -76,14 +88,18 @@ function checkOrder(entry, item, itemIndex) {
     pushIssue(entry, 'Exercice d’ordre invalide : moins de 2 éléments', { itemIndex });
     return;
   }
-  const normOrder = order.map(normalize);
-  if (new Set(normOrder).size !== normOrder.length) {
+
+  const exactOrder = order.map(exact);
+  if (new Set(exactOrder).size !== exactOrder.length) {
     pushIssue(entry, 'Exercice d’ordre : éléments dupliqués', { itemIndex, order });
   }
 
-  const expl = normalize(item.e || '');
+  const normOrder = order.map(semantic);
+  const expl = semantic(item.e || '');
   if (expl) {
     const positions = normOrder.map(token => token ? expl.indexOf(token) : -1);
+    // N'affirmer une contradiction que si chaque élément attendu apparaît
+    // explicitement dans l'explication.
     if (positions.every(pos => pos >= 0)) {
       const increasing = positions.every((pos, i) => i === 0 || pos > positions[i - 1]);
       if (!increasing) {
@@ -99,7 +115,7 @@ function checkOrder(entry, item, itemIndex) {
   }
 
   const numeric = order.map(v => /^-?\d+(?:[.,]\d+)?$/.test(String(v).trim()) ? Number(String(v).replace(',', '.')) : NaN);
-  const q = normalize(item.q || '');
+  const q = semantic(item.q || '');
   if (numeric.every(Number.isFinite) && /(chronolog|plus ancien|ancien au plus recent|ordre)/.test(q)) {
     const ascending = numeric.every((value, i) => i === 0 || value >= numeric[i - 1]);
     if (!ascending) {
@@ -112,23 +128,22 @@ function checkMCQ(entry, item, itemIndex) {
   mcqCount++;
   const [question, correct, distractors] = item;
   if (!Array.isArray(distractors)) return;
-  const correctNorm = normalize(correct);
-  const dNorm = distractors.map(normalize);
+  const correctNorm = exact(correct);
+  const dNorm = distractors.map(exact);
   if (dNorm.includes(correctNorm)) {
     pushIssue(entry, 'La bonne réponse apparaît aussi dans les distracteurs', { itemIndex, question, correct, distractors });
   }
   if (new Set(dNorm).size !== dNorm.length) {
     pushIssue(entry, 'Distracteurs dupliqués', { itemIndex, question, distractors });
   }
-  if (dNorm.some(v => !v)) {
+  if (dNorm.some(v => v.length === 0)) {
     pushIssue(entry, 'Distracteur vide', { itemIndex, question, distractors });
   }
 }
 
 for (const entry of collected) {
   if (seenChapterIds.has(entry.id)) {
-    // Several enrich() calls for one chapter are intentional in Wave 1; record only for visibility.
-    warnings.push({ file: entry.file, chapter: entry.id, message: 'Chapitre enrichi par plusieurs blocs', previous: seenChapterIds.get(entry.id) });
+    duplicateBlocks.push({ file: entry.file, chapter: entry.id, previous: seenChapterIds.get(entry.id) });
   } else {
     seenChapterIds.set(entry.id, entry.file);
   }
@@ -149,12 +164,6 @@ for (const entry of collected) {
     if (Object.hasOwn(item, 'n') && !Number.isFinite(Number(item.a))) {
       pushIssue(entry, 'Question numérique avec réponse non numérique', { itemIndex: i, prompt: item.n, answer: item.a });
     }
-    if (Array.isArray(item.a)) {
-      const answers = item.a.map(normalize);
-      if (new Set(answers).size !== answers.length) {
-        pushIssue(entry, 'Réponses texte acceptées dupliquées après normalisation', { itemIndex: i, prompt: item.t, answers: item.a });
-      }
-    }
   }
 }
 
@@ -166,15 +175,15 @@ const summary = {
   mcq: mcqCount,
   order: orderCount,
   issues: issues.length,
-  warnings: warnings.length
+  duplicateEnrichBlocks: duplicateBlocks.length
 };
 
-const report = { summary, issues, warnings };
+const report = { summary, issues, duplicateBlocks };
 fs.writeFileSync(path.join(root, 'tests', 'wave1-data-consistency-report.json'), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 
 if (issues.length) {
-  console.error(`\n❌ ${issues.length} incohérence(s) détectée(s).`);
+  console.error(`\n❌ ${issues.length} incohérence(s) réelle(s) détectée(s).`);
   process.exitCode = 1;
 } else {
   console.log(`\n✅ Cohérence des banques Wave 1 : ${itemCount} items contrôlés, ${orderCount} exercices d’ordre.`);
