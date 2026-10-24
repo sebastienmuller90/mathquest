@@ -1,0 +1,33 @@
+name: Reading coverage audit
+
+on:
+  push:
+    branches:
+      - chatgpt/reading-comprehension-audit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reading-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Auditer la couverture lecture / compréhension
+        run: node tests/reading-coverage-audit.mjs
+      - name: Publier les rapports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reading-coverage-report
+          path: |
+            tests/reading-coverage-report.json
+            tests/reading-coverage-report.md
+          if-no-files-found: warn
