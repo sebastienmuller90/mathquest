@@ -1,4 +1,4 @@
-/* Régression : cartes de l'étape « Ton ressenti » lisibles aux largeurs intermédiaires. */
+/* Régression : onboarding lisible aux largeurs intermédiaires et saisie date stable au clavier. */
 const {serve,launch}=require('./lib');
 
 async function run(){
@@ -13,6 +13,25 @@ async function run(){
   await p.waitForSelector('.pob-shell',{timeout:6000});
   await p.fill('#pob-name','Will');
   await p.click('[data-pob="gender"][data-value="boy"]');await p.click('[data-pob="next"]');
+
+  /* Le champ date ne doit jamais être recréé pendant un événement input : sur PC cela faisait perdre
+     le focus / segment courant à chaque frappe. Le marqueur DOM prouve que le même nœud survit. */
+  await p.waitForSelector('[data-pob-step="1"] #pob-birth');
+  await p.evaluate(()=>{const el=document.getElementById('pob-birth');el.dataset.keyboardStable='1';el.focus();});
+  await p.fill('#pob-birth','2014-10-05');
+  const birth=await p.evaluate(()=>{
+    const el=document.getElementById('pob-birth');
+    return {
+      value:el?.value||'',
+      sameNode:el?.dataset.keyboardStable==='1',
+      focused:document.activeElement===el,
+      state:window.MQProfileOnboarding?.state?.birthdate||'',
+      nextDisabled:document.querySelector('[data-pob="next"]')?.disabled
+    };
+  });
+  T('Date de naissance PC : la saisie ne recrée pas le champ et garde le focus',birth.sameNode&&birth.focused&&birth.value==='2014-10-05',JSON.stringify(birth));
+  T('Date de naissance PC : la valeur est synchronisée et permet de continuer',birth.state==='2014-10-05'&&birth.nextDisabled===false,JSON.stringify(birth));
+
   await p.click('[data-pob="next"]');
   await p.click('[data-pob="stage"][data-value="college"]');await p.click('[data-pob="grade"][data-value="5e"]');await p.click('[data-pob="next"]');
   await p.click('[data-pob="companion"][data-value="momo"]');await p.click('[data-pob="next"]');
