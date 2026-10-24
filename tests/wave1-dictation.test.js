@@ -20,6 +20,7 @@ async function run(){const R=[];const T=(name,ok,detail='')=>R.push({name,ok:!!o
   ['Ils jouent.','Ils joue.','terminaison','terminaison du verbe'],['Il a faim.','Il à faim.','homophone','homophone'],['L’école est là.','Lécole est là.','apostrophe','apostrophe oubliée']];
  for(const [r,a,t,k] of K){const x=A(r,a);const e=x.errors[0]||{};T(`Écart « ${a} » : type ${t}, nature « ${k} »`,e.type===t&&e.kind===k&&x.score<100,`${e.type}/${e.kind} ${x.score}`);}
  {const x=A('Le chat dort.','Le chien dort.');T('Mot remplacé par un mot sans rapport : « mot incorrect » (une seule piste), barème inchangé (manquant + en trop)',x.errors.length===2&&x.errors.every(e=>e.kind==='mot incorrect')&&x.missing===1&&x.extra===1&&D.hints(x).length===1,kinds(x)+' '+x.score);}
+ {const x=A('Le chat dort dans la maison.','Le dort dans la maison rouge.');const hs=D.hints(x),txt=hs.map(h=>h.text).join(' | ');const miss=x.errors.find(e=>e.type==='missing'&&e.ref==='chat'),extra=x.errors.find(e=>e.type==='extra'&&e.got==='rouge');T('Missing + extra séparés par des mots corrects ne sont jamais fusionnés en remplacement',miss?.kind==='mot manquant'&&extra?.kind==='mot en trop'&&!x.errors.some(e=>e.kind==='mot incorrect')&&/Il manque un mot après le mot n° 1/.test(txt)&&/Mot n° 6 : ce mot est en trop/.test(txt)&&!/Mot n° 1 : ce n’est pas le bon mot/.test(txt),txt+' | '+kinds(x));}
  {const x=A('Nous mangeons des cerises.','Nous mangeons cerises.');T('Mot manquant avec sa position',x.errors[0].kind==='mot manquant'&&D.hints(x)[0].text==='Il manque un mot après le mot n° 2.',D.hints(x)[0].text);}
  {const x=A('Le chat dort.','Le gros chat dort.');T('Mot en trop avec sa position (n° dans la phrase de l’élève)',x.errors[0].kind==='mot en trop'&&/Mot n° 2 : ce mot est en trop/.test(D.hints(x)[0].text),D.hints(x)[0].text);}
  {const x=A('Où vas-tu ?','Où vas-tu');T('Ponctuation oubliée : piste sans la phrase',/point d’interrogation/.test(D.hints(x)[0].text),D.hints(x)[0].text);}
@@ -40,6 +41,8 @@ async function run(){const R=[];const T=(name,ok,detail='')=>R.push({name,ok:!!o
  T('Barème inchangé : un accent oublié reste une faute légère (≥ 90 % sur 5 mots)',A('La fête est très jolie.','La fete est très jolie.').score>=90);
  T('API existante conservée (analyze, best, outcome, feedback, feedbackHTML, diffHTML, typo, tokenize, classify, align, phon, levelOf)',['analyze','best','outcome','feedback','feedbackHTML','diffHTML','typo','tokenize','classify','align','phon','levelOf','LABEL','WEIGHTS','LEVELS'].every(k=>D[k]));
  T('Espaces invisibles : zéro largeur et trait d’union conditionnel ignorés',A('Le chat dort.','Le​ chat­ dort.').score===100);
+ // 6. Garde-fou de régression du P2 CE1 relevé en revue croisée.
+ {const s=fs.readFileSync(path.join(ROOT,'data/primary/enrich-ce1.js'),'utf8');T('CE1 : ordre alphabétique poire → pomme → prune',s.includes("{o:['poire','pomme','prune']")&&!s.includes("{o:['pomme','poire','prune']"));}
  return R;}
 if(require.main===module)require('./lib').main(run);
 module.exports=run;

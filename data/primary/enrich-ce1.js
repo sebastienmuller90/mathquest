@@ -301,7 +301,7 @@ E('ce1-fr-alphabet',{w:.6,items:[
  ['Dans un dictionnaire, « n. » veut dire…','nom',['nombre','nuit','non'],'n. = nom.',2],
  ['Dans un dictionnaire, « adj. » veut dire…','adjectif',['adverbe','article','adresse'],'adj. = adjectif.',2],
  {o:['chat','lapin','souris'],q:'Range ces mots dans l’ordre alphabétique :',e:'c, l, s.'},
- {o:['pomme','poire','prune'],q:'Range ces mots dans l’ordre alphabétique (compare la 2e et la 3e lettre) :',e:'poire (poi), pomme (pom), prune (pr).',d:2},
+ {o:['poire','pomme','prune'],q:'Range ces mots dans l’ordre alphabétique (compare la 2e et la 3e lettre) :',e:'poire (poi), pomme (pom), prune (pr).',d:2},
  {tf:'On range les mots selon leur longueur dans un dictionnaire.',v:false,e:'On suit l’ordre alphabétique.'},
  {t:'Écris la lettre qui vient juste après « c » :',a:['d'],e:'a, b, c, d.'}]});
 

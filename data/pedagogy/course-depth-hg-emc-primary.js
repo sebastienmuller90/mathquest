@@ -1,6 +1,10 @@
 /* Finot Académie — cours approfondis, vague 1 pédagogie finale (23/10/2026) : histoire-géographie et EMC du primaire.
    Même format que course-depth-maths-cm1.js (deep / try / adult / culture), affiché par js/course-depth.js.
-   Rien n'est retiré des cours existants. Programmes de référence : cycles 2 et 3, programmes 2025 (HG et EMC).
+   Rien n'est retiré des cours existants. Références applicables en 2026-2027 :
+   - CE2, Questionner l’espace et le temps : programme antérieur du cycle 2 ; le nouveau programme du BO n°22 du 28 mai 2026 s’appliquera en CE2 à partir de 2027-2028 ;
+   - CM1, histoire-géographie : nouveau programme du BO n°22 du 28 mai 2026, applicable dès 2026-2027 ;
+   - CM2, histoire-géographie : programme antérieur du cycle 3 ; le nouveau programme 2026 s’appliquera en CM2 à partir de 2027-2028 ;
+   - EMC : programme du BO n°24 du 13 juin 2024.
    Faits vérifiables uniquement ; en cas de doute, formulation sobre. Aucun faux document historique n'est cité. */
 (function(root){
 'use strict';
