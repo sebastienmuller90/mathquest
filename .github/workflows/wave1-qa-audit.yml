@@ -1,0 +1,31 @@
+name: Wave 1 data consistency
+
+on:
+  push:
+    branches:
+      - chatgpt/wave1-qa-audit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  data-consistency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit cohérence des banques Wave 1
+        run: node tests/wave1-data-consistency.mjs
+      - name: Publier le rapport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wave1-data-consistency-report
+          path: tests/wave1-data-consistency-report.json
+          if-no-files-found: warn
