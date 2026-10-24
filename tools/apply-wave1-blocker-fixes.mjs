@@ -25,7 +25,7 @@ patch('data/pedagogy/course-depth-anglais-5e.js',[
 ]);
 
 patch('data/primary/enrich-ce1.js',[
-  {label:'ordre alphabétique CE1',from:'o:["pomme","poire","prune"]',to:'o:["poire","pomme","prune"]',count:1}
+  {label:'ordre alphabétique CE1',from:/o:\s*\[\s*['"]pomme['"]\s*,\s*['"]poire['"]\s*,\s*['"]prune['"]\s*\]/,to:"o:['poire','pomme','prune']",count:1}
 ]);
 
 patch('js/dictation-engine.js',[
