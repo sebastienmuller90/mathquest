@@ -3,7 +3,7 @@ name: Final product inventory
 on:
   push:
     branches:
-      - chatgpt/final-hardening-audit
+      - main
   pull_request:
     paths:
       - 'data/**'
@@ -28,8 +28,8 @@ jobs:
   inventory:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
       - name: Générer l’inventaire CP → 3e
@@ -38,7 +38,7 @@ jobs:
         run: node tests/release-readiness.mjs
       - name: Publier les rapports d’audit
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: finot-final-product-inventory
           path: |
