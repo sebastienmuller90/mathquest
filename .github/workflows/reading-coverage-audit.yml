@@ -24,6 +24,8 @@ jobs:
         run: node tests/reading-coverage-audit.mjs
       - name: Cartographier les chapitres français sans lecture
         run: node tests/reading-gap-audit.mjs
+      - name: Prioriser les vrais trous de lecture
+        run: node tests/reading-priority-audit.mjs
       - name: Publier les rapports
         if: always()
         uses: actions/upload-artifact@v4
@@ -33,4 +35,6 @@ jobs:
             tests/reading-coverage-report.json
             tests/reading-coverage-report.md
             tests/reading-gap-report.json
+            tests/reading-priority-report.json
+            docs/reading-comprehension-backlog.md
           if-no-files-found: warn
