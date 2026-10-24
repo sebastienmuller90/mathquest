@@ -838,4 +838,25 @@ E('cp-en-classroom',{w:.6,items:[
  ['Le maître dit « Stand up! ». Je…','me lève',['m’assois','dors','chante'],'Stand up.'],
  {tf:'« Sit down » et « Stand up » sont des contraires.',v:true,e:'S’asseoir / se lever.'},
  {tf:'« Listen! » veut dire « Regarde ! ».',v:false,e:'Listen = écoute.'}]});
+/* ---------- Vague 2 (24/10/2026) : pools plus larges, français ---------- */
+E('cp-fr-mots-outils',{w:.65,items:[
+ ['Complète : « Papa … maman sont à la maison. »','et',['est','sur','dans'],'« et » relie deux personnes : papa et maman.'],
+ ['Complète : « Le ballon … rond. »','est',['et','mais','dans'],'« est » dit comment est le ballon : il est rond.'],
+ ['Complète : « Je range mes livres … mon sac. »','dans',['mais','est','pour'],'Les livres sont à l’intérieur du sac : « dans ».'],
+ ['Complète : « Le chat est … la chaise. » (il est caché en dessous)','sous',['sur','et','mais'],'« sous » veut dire en dessous.'],
+ ['Complète : « Je mange … ma cuillère. »','avec',['mais','sous','est'],'« avec » dit ce qu’on utilise : j’utilise ma cuillère.'],
+ ['Complète : « Ce cadeau est … ma sœur. »','pour',['sous','mais','et'],'« pour » dit à qui est le cadeau.'],
+ ['Complète : « Lou est fatiguée, … elle veut jouer. »','mais',['dans','sur','avec'],'« mais » relie deux idées qui s’opposent.'],
+ ['Complète : « … est ma sœur. Elle s’appelle Zoé. »','Elle',['Il','Les','Mon'],'On parle d’une fille : « Elle ».'],
+ ['Complète : « … est mon frère. Il s’appelle Tom. »','Il',['Elle','Les','Ma'],'On parle d’un garçon : « Il ».'],
+ ['Quel petit mot veut dire le contraire de « sur » ?','sous',['dans','avec','pour'],'« sur » et « sous » sont des contraires.'],
+ ['Quel petit mot n’a que 2 lettres ?','et',['sous','dans','avec'],'« et » s’écrit avec 2 lettres : e et t.'],
+ ['Combien de lettres dans le mot « dans » ?','4',['3','5','6'],'d – a – n – s : 4 lettres.'],
+ ['Combien de lettres dans le mot « avec » ?','4',['3','5','6'],'a – v – e – c : 4 lettres.'],
+ ['Combien de lettres dans le mot « mais » ?','4',['3','5','6'],'m – a – i – s : 4 lettres.'],
+ {tf:'« Et » sert à relier deux mots.',v:true,e:'Dans « un chat et un chien », « et » relie deux mots.'},
+ {tf:'Dans « Le chat est sur la table », « sur » dit où est le chat.',v:true,e:'« sur » montre que le chat est au-dessus de la table.'},
+ {tf:'« Elle » parle d’un garçon.',v:false,e:'« Elle » parle d’une fille ; pour un garçon, on dit « il ».'},
+ {t:'Écris le contraire de « sous » : …',a:['sur'],e:'Le contraire de « sous » est « sur ».'}]});
+
 })();
