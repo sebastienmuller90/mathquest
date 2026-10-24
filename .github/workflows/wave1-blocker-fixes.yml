@@ -1,0 +1,53 @@
+name: Wave 1 blocker fixes
+
+on:
+  push:
+    branches:
+      - chatgpt/wave1-blocker-fixes
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Appliquer les correctifs si nécessaire
+        run: |
+          if grep -q 'niveau A1+ en LVA' data/pedagogy/course-depth-anglais-6e.js \
+            && grep -q 'BO n°22 du 29 mai 2025' data/pedagogy/course-depth-anglais-5e.js \
+            && grep -q 'o:\["poire","pomme","prune"\]' data/primary/enrich-ce1.js \
+            && grep -q 'alignIndex' js/dictation-engine.js; then
+            echo 'Correctifs déjà appliqués.'
+          else
+            node tools/apply-wave1-blocker-fixes.mjs
+          fi
+      - name: Tests ciblés
+        run: node tests/wave1-blocker-fixes.test.mjs
+      - name: Syntaxe des fichiers modifiés
+        run: |
+          node --check js/dictation-engine.js
+          node --check data/primary/enrich-ce1.js
+          node --check data/pedagogy/course-depth-anglais-6e.js
+          node --check data/pedagogy/course-depth-anglais-5e.js
+      - name: Committer les correctifs sur la branche de secours
+        run: |
+          if git diff --quiet; then
+            echo 'Aucun changement à pousser.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/dictation-engine.js data/primary/enrich-ce1.js data/pedagogy/course-depth-anglais-6e.js data/pedagogy/course-depth-anglais-5e.js
+          git commit -m 'Fix Wave 1 blockers: programmes, CE1 et dictée'
+          git push
