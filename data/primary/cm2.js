@@ -722,7 +722,7 @@ const en=t=>`<span lang="en">${t}</span>`;const sayEn=t=>({t,l:'en-GB'});
 function vocabEN(list){return d=>{const [w,f]=P(list);const others=list.filter(x=>x[0]!==w);const r=Math.random();
   if(r<.33)return ch('🎧 Écoute et choisis :',f,pickN(others,3).map(x=>x[1]),{audio:sayEn(w),expl:`${en(w)} = « ${f} ».`});
   if(r<.66)return ch(`Comment dit-on « ${f} » en anglais ?`,en(w),pickN(others,3).map(x=>en(x[0])),{expl:`« ${f} » = ${en(w)}.`});
-  if(d>=2&&!/[\s’'?!.]/.test(w)&&w.length<=11)return txt(`Écris en anglais : « ${f} »`,[w],{lang:'en',expl:`« ${f} » = ${en(w)}.`,hint:`Ça commence par « ${w[0]} ».`,audio:sayEn(w)});
+  if(d>=2&&!/[\s’'?!.]/.test(w)&&w.length<=11)return txt(`Écris en anglais : « ${f} »`,[w],{lang:'en',expl:`« ${f} » = ${en(w)}.`,hint:`Ça commence par « ${w[0]} ».`});
   return ch(`Que veut dire ${en('<b>'+w+'</b>')} ?`,f,pickN(others,3).map(x=>x[1]),{audio:sayEn(w),expl:`${en(w)} = « ${f} ».`});};}
 const EN=[
 {id:'cm2-en-present-simple',name:'Present simple : he plays, she likes',icon:'🗣️',domain:'Grammaire en contexte',

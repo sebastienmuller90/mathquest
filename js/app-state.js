@@ -67,8 +67,10 @@ function normalizeState(o){const x={...clone(DEF),...(o||{})};x.merit={...clone(
 function load(){
  let raw=null;try{raw=localStorage.getItem(PROFILES_KEY);PDB=JSON.parse(raw||'null');}catch(e){PDB=null;}
  // Donnée illisible : on la conserve intacte avant toute reconstruction, pour pouvoir la récupérer.
- if(raw&&(!PDB||!PDB.profiles||typeof PDB.profiles!=='object')){try{localStorage.setItem('mathquest_profiles_corrupt_backup_'+Date.now(),raw);}catch(e){}}
- if(!PDB||!PDB.profiles||typeof PDB.profiles!=='object'){let legacy=null;try{legacy=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}const id=pid();PDB={version:2,active:id,profiles:{[id]:normalizeState(legacy)}};try{if(legacy)localStorage.setItem('mathquest_v1_backup',JSON.stringify(legacy));}catch(e){}}
+ // Un conteneur sans AUCUN profil exploitable ({}, tableau, valeurs nulles) est traité comme illisible : la sauvegarde V1 prend le relais.
+ const usable=o=>!!o&&!!o.profiles&&typeof o.profiles==='object'&&!Array.isArray(o.profiles)&&Object.values(o.profiles).some(v=>v&&typeof v==='object'&&!Array.isArray(v));
+ if(raw&&raw!=='null'&&!usable(PDB)){try{localStorage.setItem('mathquest_profiles_corrupt_backup_'+Date.now(),raw);}catch(e){}}
+ if(!usable(PDB)){let legacy=null;try{legacy=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}const id=pid();PDB={version:2,active:id,profiles:{[id]:normalizeState(legacy)}};try{if(legacy)localStorage.setItem('mathquest_v1_backup',JSON.stringify(legacy));}catch(e){}}
  const ids=Object.keys(PDB.profiles);if(!ids.length){const id=pid();PDB.profiles[id]=clone(DEF);PDB.active=id;}
  ACTIVE=PDB.profiles[PDB.active]?PDB.active:Object.keys(PDB.profiles)[0];PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);saveLocal();
 }
