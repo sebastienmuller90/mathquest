@@ -1012,4 +1012,70 @@ E('cp-mu-sons',{w:.65,items:[
  ['Quel instrument fait le son le plus grave ?','la contrebasse',['la flûte','le violon','le triangle'],'La contrebasse est très grande et joue des sons très graves.'],
  ['Quel instrument fait un son plutôt aigu ?','la flûte',['la contrebasse','la grosse caisse','le tuba'],'La flûte joue des sons aigus.']]});
 
+/* ---------- Vague 2 (24/10/2026) : pools plus larges, phrase, mathématiques, géographie ---------- */
+E('cp-fr-phrase',{w:.6,items:[
+ ['Quelle phrase commence par une majuscule ?','Le soleil brille.',['le soleil brille.','la lune est ronde.','mon chat dort.'],'Une phrase commence toujours par une majuscule.'],
+ ['Combien de mots dans « La souris mange du fromage. » ?','5',['3','4','6'],'La / souris / mange / du / fromage : 5 mots.'],
+ ['Combien de mots dans « Papa lit un livre. » ?','4',['3','5','6'],'Papa / lit / un / livre : 4 mots.'],
+ ['Combien de phrases y a-t-il : « Papa lit. Maman chante. » ?','2',['1','3','4'],'Il y a deux points, donc deux phrases.'],
+ ['Quelle phrase est une question ?','Qui est là ?',['Voici mon chat.','Quel beau jour !','Ferme la porte.'],'Une question finit par « ? ».'],
+ ['Quelle phrase montre la joie ou la surprise ?','Quel beau cadeau !',['Où est mon cadeau ?','Le cadeau est sur la table.','Tu me donnes le cadeau.'],'Le point d’exclamation « ! » montre la surprise ou la joie.'],
+ {o:['Mon','papa','conduit','la','voiture.'],q:'Remets les mots dans l’ordre pour faire une phrase :',e:'Mon papa conduit la voiture.'},
+ {o:['Les','oiseaux','chantent','le','matin.'],q:'Remets les mots dans l’ordre pour faire une phrase :',e:'Les oiseaux chantent le matin.'},
+ ['Quel mot doit avoir une majuscule ?','lyon',['table','chien','jouer'],'Le nom d’une ville prend une majuscule : Lyon.'],
+ ['Quel mot doit avoir une majuscule ?','Léo',['mange','petit','rouge'],'Un prénom prend toujours une majuscule : Léo.'],
+ {tf:'Une phrase peut commencer par une petite lettre.',v:false,e:'Une phrase commence par une majuscule.'},
+ {tf:'Un point à la fin d’une phrase dit que la phrase est finie.',v:true,e:'Le point marque la fin de la phrase.'}]});
+E('cp-ma-masses',{w:.6,items:[
+ ['Qu’est-ce qui est le plus lourd ?','une voiture',['un vélo','un ballon','une souris'],'Une voiture pèse beaucoup plus que les autres.'],
+ ['Qu’est-ce qui est le plus léger ?','une feuille d’arbre',['une pierre','un livre','un seau d’eau'],'La feuille pèse très peu.'],
+ ['Quel objet est plus lourd qu’un crayon ?','un dictionnaire',['une plume','un trombone','un bouton'],'Un gros livre pèse bien plus qu’un crayon.'],
+ {tf:'Une balance à plateaux sert à comparer deux masses.',v:true,e:'On pose un objet dans chaque plateau.'},
+ {tf:'Le plateau qui monte porte l’objet le plus lourd.',v:false,e:'Le plateau qui descend porte l’objet le plus lourd.'},
+ {tf:'Une baleine est plus lourde qu’un dauphin.',v:true,e:'Une baleine pèse beaucoup plus qu’un dauphin.'},
+ ['Quel mot veut dire « qui pèse peu » ?','léger',['lourd','long','large'],'Un objet léger pèse peu.'],
+ ['Quel mot veut dire « qui pèse beaucoup » ?','lourd',['léger','court','petit'],'Un objet lourd pèse beaucoup.'],
+ {o:['une fourmi','un chat','un cheval','un camion'],q:'Range du plus léger au plus lourd :',e:'Une fourmi, un chat, un cheval, puis un camion.'},
+ ['Mon cartable est lourd. Je le porte…','sur le dos, avec les deux bretelles',['sur une seule épaule','dans une seule main toute la journée','en le traînant'],'Les deux bretelles répartissent le poids.']]});
+E('cp-ma-heure',{w:.6,items:[
+ {n:'Il est 5 heures. Quelle heure sera-t-il dans 2 heures ? (écris le nombre)',a:7,e:'5 + 2 = 7.'},
+ {n:'Il est 11 heures. Quelle heure était-il il y a 2 heures ? (écris le nombre)',a:9,e:'11 − 2 = 9.'},
+ {n:'Il est 6 heures. Quelle heure sera-t-il dans 3 heures ? (écris le nombre)',a:9,e:'6 + 3 = 9.'},
+ ['À midi, il est…','12 heures',['6 heures','24 heures','1 heure'],'Midi, c’est 12 heures.'],
+ ['La petite aiguille est sur le 7 et la grande sur le 12. Il est…','7 heures',['12 heures','3 heures','11 heures'],'La petite aiguille montre l’heure : 7.'],
+ ['La petite aiguille est sur le 1 et la grande sur le 12. Il est…','1 heure',['12 heures','2 heures','11 heures'],'La petite aiguille est sur le 1 : il est 1 heure.'],
+ ['La petite aiguille est sur le 11 et la grande sur le 12. Il est…','11 heures',['1 heure','12 heures','10 heures'],'La petite aiguille est sur le 11.'],
+ ['Quelle aiguille est la plus courte ?','l’aiguille des heures',['l’aiguille des minutes','le chiffre 12','la pile'],'La petite aiguille montre les heures.'],
+ {tf:'La petite aiguille avance plus lentement que la grande.',v:true,e:'La grande aiguille fait un tour en une heure, la petite beaucoup moins.'},
+ ['L’école commence à 9 heures. La petite aiguille est sur…','le 9',['le 3','le 6','le 12'],'À 9 heures, la petite aiguille est sur le 9 et la grande sur le 12.']]});
+E('cp-ma-longueurs',{w:.6,items:[
+ {n:'Un trait mesure 8 cm. Un autre mesure 5 cm. Combien de centimètres de plus pour le premier ?',a:3,u:'cm',e:'8 − 5 = 3 cm.'},
+ {n:'Une ficelle mesure 6 cm. On y ajoute 4 cm. Combien mesure-t-elle ?',a:10,u:'cm',e:'6 + 4 = 10 cm.'},
+ {n:'Une bande mesure 15 cm. On coupe 5 cm. Combien reste-t-il ?',a:10,u:'cm',e:'15 − 5 = 10 cm.'},
+ ['Quel trait est le plus long ?','le trait de 12 cm',['le trait de 9 cm','le trait de 7 cm','le trait de 3 cm'],'12 est le plus grand nombre.'],
+ ['Un stylo est plus court qu’un balai. Le balai est…','plus long',['plus court','pareil','plus léger'],'Plus court d’un côté, plus long de l’autre.'],
+ {tf:'Un centimètre est plus petit qu’un mètre.',v:true,e:'Un mètre vaut 100 centimètres.'},
+ {o:['3 cm','7 cm','10 cm','15 cm'],q:'Range du plus court au plus long :',e:'3 cm, 7 cm, 10 cm, 15 cm.'},
+ ['La règle de ma trousse mesure souvent…','20 cm',['2 km','2 m','200 m'],'Une règle d’écolier mesure environ 20 cm.']]});
+E('cp-ma-figures',{w:.6,items:[
+ ['Une pièce de monnaie a la forme d’un…','cercle',['carré','triangle','rectangle'],'Une pièce est ronde : c’est un cercle (un disque).'],
+ ['Une feuille de papier a la forme d’un…','rectangle',['cercle','triangle','rond'],'Une feuille a 4 côtés et 4 coins droits.'],
+ ['Un écran de télévision a la forme d’un…','rectangle',['cercle','triangle','hexagone'],'Il a 4 côtés et 4 coins droits.'],
+ ['Quelle figure n’a aucun sommet ?','le cercle',['le carré','le triangle','le rectangle'],'Le cercle est rond : il n’a pas de coin.'],
+ ['Quelle figure a 3 sommets ?','le triangle',['le carré','le cercle','le rectangle'],'Le triangle a 3 côtés et 3 sommets.'],
+ {tf:'Un rectangle a 4 côtés.',v:true,e:'Un rectangle est une figure à 4 côtés.'},
+ {tf:'Un triangle a 4 sommets.',v:false,e:'Un triangle a 3 sommets.'},
+ ['Une assiette plate vue de dessus ressemble à un…','cercle',['carré','triangle','losange'],'Le tour d’une assiette est rond.']]});
+E('cp-hg-quartier',{w:.6,items:[
+ ['Où achète-t-on de la viande ?','à la boucherie',['à la boulangerie','à la pharmacie','à la poste'],'La boucherie vend de la viande.'],
+ ['Où achète-t-on des fruits et des légumes ?','au marché',['à la poste','à la gare','à la mairie'],'Le marché vend fruits, légumes et d’autres produits.'],
+ ['Où travaillent les pompiers ?','à la caserne',['à l’école','à la mairie','à la boulangerie'],'Les pompiers travaillent à la caserne.'],
+ ['Qui conduit le bus ?','le chauffeur',['le maire','le pompier','le boulanger'],'Le chauffeur de bus conduit le bus.'],
+ ['Où peut-on jouer dehors dans la ville ?','dans un parc',['dans un tunnel','sur le périphérique','dans une gare de triage'],'Un parc est un lieu fait pour se promener et jouer.'],
+ ['Un feu rouge pour les piétons veut dire…','je m’arrête et j’attends',['je traverse vite','je cours','je crie'],'Le rouge est le signal d’arrêt.'],
+ ['Avant de traverser, je regarde…','à gauche et à droite',['mes chaussures','le ciel','le sol seulement'],'Il faut s’assurer qu’aucune voiture n’arrive.'],
+ ['Un trajet peut se faire…','à pied, à vélo, en bus ou en voiture',['seulement à pied','seulement en avion','seulement en bateau'],'Il existe plusieurs façons de se déplacer.'],
+ ['Un quartier, c’est…','une partie de la ville',['un pays','un océan','un continent'],'Une ville est faite de plusieurs quartiers.'],
+ {tf:'Je peux traverser quand le feu des piétons est rouge.',v:false,e:'Je traverse seulement quand le feu est vert, après avoir regardé.'}]});
+
 })();

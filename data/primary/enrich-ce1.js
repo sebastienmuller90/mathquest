@@ -639,7 +639,7 @@ E('ce1-fr-graphemes',{w:.65,items:[
  ['Quel mot contient le son « gn » ?','une araignée',['une abeille','une fourmi','une mouche'],'« araignée » contient « gn ». Les autres mots n’en contiennent pas.'],
  ['Quel mot contient le son « gn » ?','un oignon',['un melon','un citron','un poireau'],'« oignon » s’écrit avec « gn ».'],
  ['Quel mot contient le son « gn » ?','une vigne',['une ville','une vague','une voile'],'« vigne » s’écrit avec « gn ».'],
- ['Complète : une monta…e','gn',['ng','nn','mn'],'« montagne » s’écrit avec « gn » avant le e final.'],
+ ['Complète : une monta…e','gn',['ng','nn','mn'],'« montagne » s’écrit avec « gn », puis un e muet à la fin.'],
  ['Complète : une li…e (un trait)','gn',['ng','nn','ll'],'« ligne » s’écrit avec « gn ».'],
  ['Complète : un épouvant…','ail',['aille','eil','euil'],'Un nom masculin : « un épouvantail » finit par « ail ».',2],
  ['Complète : un évent…','ail',['aille','eil','euil'],'« un éventail » est masculin : « ail », comme « travail ».',2],
@@ -652,7 +652,7 @@ E('ce1-fr-graphemes',{w:.65,items:[
  ['Complète : un appar…','eil',['ail','euil','ille'],'« un appareil » est masculin : « eil ».',2],
  ['Complète : un écur…','euil',['eil','ail','ille'],'« un écureuil » est masculin : « euil ».',2],
  ['Complète : un chevr…','euil',['eil','ail','ille'],'« un chevreuil » est masculin : « euil ».',2],
- ['Complète : une boute…','ille',['aille','eil','euil'],'« une bouteille » est féminin : « eille », donc on écrit « ille » après le e.',2],
+ ['Complète : une boute…','ille',['aille','eil','euil'],'« une bouteille » est féminin : « eille », donc on écrit « ille » après la lettre e.',2],
  ['Complète : une corbe…','ille',['aille','eil','euil'],'« une corbeille » est féminin : « eille ».',2],
  ['Complète : une grenou…','ille',['aille','eil','ail'],'« une grenouille » est féminin : « ouille ».',2],
  ['Complète : une fam…','ille',['aille','eil','ail'],'« une famille » est féminin : « ille ».']]});
@@ -860,5 +860,32 @@ E('ce1-mu-oeuvres',{w:.65,items:[
  ['Un orchestre est dirigé par…','un chef d’orchestre',['un clown','un facteur','un maçon'],'Le chef d’orchestre donne les départs et le tempo.'],
  ['Pour mieux écouter une œuvre, je…','fais silence et j’écoute avec attention',['bavarde avec mon voisin','crie','joue à autre chose'],'L’écoute demande de l’attention.'],
  ['Une œuvre pour orchestre est jouée par…','beaucoup d’instruments',['un seul instrument','aucun instrument','un seul chanteur'],'Un orchestre rassemble de nombreux musiciens.']]});
+
+/* ---------- Vague 2 (24/10/2026) : pools plus larges, fractions et anglais ---------- */
+E('ce1-ma-fractions',{w:.6,items:[
+ ['Comment lit-on 3/4 ?','trois quarts',['un quart','trois demis','quatre tiers'],'3/4 se lit « trois quarts » : 3 parts sur 4.'],
+ ['Comment lit-on 2/3 ?','deux tiers',['trois demis','un tiers','deux quarts'],'2/3 se lit « deux tiers » : 2 parts sur 3.'],
+ ['Comment lit-on 1/7 ?','un septième',['un huitième','un sixième','un neuvième'],'Le dénominateur 7 donne « septième ».'],
+ ['Comment lit-on 1/9 ?','un neuvième',['un huitième','un septième','un dixième'],'Le dénominateur 9 donne « neuvième ».'],
+ {n:'Le demi de 16 est…',a:8,e:'16 partagé en 2 parts égales : 8.'},
+ {n:'Le quart de 12 est…',a:3,e:'12 partagé en 4 parts égales : 3.'},
+ {n:'Le tiers de 12 est…',a:4,e:'12 partagé en 3 parts égales : 4.'},
+ {n:'Le cinquième de 10 est…',a:2,e:'10 partagé en 5 parts égales : 2.'},
+ {n:'Le quart de 20 est…',a:5,e:'20 partagé en 4 parts égales : 5.'},
+ {n:'Le dixième de 30 est…',a:3,e:'30 partagé en 10 parts égales : 3.'},
+ ['Quelle fraction est la plus grande : 1/3 ou 1/5 ?','1/3',['1/5','elles sont égales'],'Quand on partage en moins de parts, chaque part est plus grande : 1/3 > 1/5.'],
+ ['Une tablette a 8 carrés. J’en mange 2. J’ai mangé…','2/8',['8/2','2/10','6/8'],'2 carrés mangés sur 8 : 2/8.'],
+ ['Si je mange les 4 quarts d’une pizza, j’ai mangé…','toute la pizza',['la moitié','un quart','rien'],'4 quarts forment un entier.']]});
+E('ce1-en-school',{w:.6,items:[
+ ['Comment dit-on « cahier » en anglais ?','<span lang="en">notebook</span>',['<span lang="en">pencil</span>','<span lang="en">ruler</span>','<span lang="en">scissors</span>'],'« cahier » se dit notebook.'],
+ ['Comment dit-on « trousse » en anglais ?','<span lang="en">pencil case</span>',['<span lang="en">school bag</span>','<span lang="en">book</span>','<span lang="en">rubber</span>'],'« trousse » se dit pencil case.'],
+ ['Comment dit-on « chaise » en anglais ?','<span lang="en">chair</span>',['<span lang="en">desk</span>','<span lang="en">board</span>','<span lang="en">book</span>'],'« chaise » se dit chair.'],
+ ['Comment dit-on « table d’école, bureau » en anglais ?','<span lang="en">desk</span>',['<span lang="en">chair</span>','<span lang="en">pen</span>','<span lang="en">ruler</span>'],'« bureau d’élève » se dit desk.'],
+ ['Comment dit-on « maître / maîtresse » en anglais ?','<span lang="en">teacher</span>',['<span lang="en">book</span>','<span lang="en">desk</span>','<span lang="en">pencil</span>'],'« maître, maîtresse » se dit teacher.'],
+ ['Comment dit-on « tableau » (de la classe) en anglais ?','<span lang="en">board</span>',['<span lang="en">chair</span>','<span lang="en">rubber</span>','<span lang="en">glue stick</span>'],'« tableau » se dit board.'],
+ ['Que veut dire <span lang="en">notebook</span> ?','cahier',['crayon','règle','gomme'],'notebook = cahier.'],
+ ['Que veut dire <span lang="en">pencil case</span> ?','trousse',['cartable','livre','stylo'],'pencil case = trousse.'],
+ ['Que veut dire <span lang="en">chair</span> ?','chaise',['table','tableau','cahier'],'chair = chaise.'],
+ ['Que veut dire <span lang="en">teacher</span> ?','maître ou maîtresse',['élève','directeur','cartable'],'teacher = maître, maîtresse.']]});
 
 })();
