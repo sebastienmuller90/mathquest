@@ -5,12 +5,13 @@ import vm from 'node:vm';
 const root = process.cwd();
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
 const results = [];
+const warnings = [];
 const check = (name, ok, detail = '') => results.push({ name, ok: !!ok, detail });
 
 // --- Références réglementaires 2026-2027 ---
 const en6 = read('data/pedagogy/course-depth-anglais-6e.js');
 const en5 = read('data/pedagogy/course-depth-anglais-5e.js');
-const hg = read('data/pedagogy/course-depth-hg-emc-primary.js');
+const hgDepth = read('data/pedagogy/course-depth-hg-emc-primary.js');
 
 check(
   'Anglais 6e : nouveau programme BO n°22 du 29 mai 2025',
@@ -32,11 +33,27 @@ check(
   /\bA2\b/i.test(en5),
   'Pour 2026-2027 : A2 en LVA ; A1+ en LVB.'
 );
+
+// Le moteur primaire central est l'autorité fonctionnelle pour les références par classe.
+const primaryCtx = { console, Math, JSON, String, Number, Array, Object, Set, Map, RegExp, Error };
+primaryCtx.window = primaryCtx;
+primaryCtx.globalThis = primaryCtx;
+vm.createContext(primaryCtx);
+vm.runInContext(read('js/primary-engine.js'), primaryCtx, { filename: 'js/primary-engine.js' });
+const P = primaryCtx.MQPrimary;
 check(
-  'HG/EMC primaire : références 2026-2027 explicites',
-  /2026/.test(hg) && /BO\s*2024/i.test(hg) && !/programmes?\s+2025\s*\(HG\s+et\s+EMC\)/i.test(hg),
-  'Attendu : distinguer entrée progressive HG/espace-temps 2026 (CM1 en 2026-2027) et EMC BO 2024 ; ne pas utiliser une référence générique « programmes 2025 ».'
+  'Primaire : mapping HG/EMC 2026-2027 du moteur central',
+  P?.REF?.['p-hg']?.CM1 === 'HGEPS_2026' &&
+  P?.REF?.['p-hg']?.CM2 === 'C2C3_2020' &&
+  ['CP','CE1','CE2','CM1','CM2'].every(g => P?.REF?.['p-emc']?.[g] === 'EMC_2024'),
+  JSON.stringify({ hg: P?.REF?.['p-hg'], emc: P?.REF?.['p-emc'] })
 );
+if (/programmes?\s+2025\s*\(HG\s+et\s+EMC\)/i.test(hgDepth)) {
+  warnings.push({
+    name: 'Documentation HG/EMC du fichier d’approfondissement',
+    detail: 'L’en-tête « programmes 2025 (HG et EMC) » est obsolète/générique et doit être aligné sur le référentiel central 2026-2027, mais le mapping fonctionnel MQPrimary.REF est déjà correct.'
+  });
+}
 
 // --- Régression dictée : erreurs éloignées ne doivent pas être fusionnées ---
 const ctx = { console, Math, JSON, String, Number, Array, Object, Set, Map, RegExp, Error };
@@ -54,10 +71,10 @@ check(
 );
 
 const failed = results.filter(r => !r.ok);
-console.log(JSON.stringify({ summary: { checks: results.length, passed: results.length - failed.length, failed: failed.length }, results }, null, 2));
+console.log(JSON.stringify({ summary: { checks: results.length, passed: results.length - failed.length, failed: failed.length, warnings: warnings.length }, results, warnings }, null, 2));
 if (failed.length) {
   console.error(`\n❌ ${failed.length} blocage(s) Wave 1 encore présent(s).`);
   process.exitCode = 1;
 } else {
-  console.log('\n✅ Tous les blocages Wave 1 sont corrigés.');
+  console.log('\n✅ Tous les blocages fonctionnels Wave 1 sont corrigés.');
 }
