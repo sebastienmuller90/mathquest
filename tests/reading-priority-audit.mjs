@@ -5,12 +5,53 @@ const root=process.cwd();
 const report=JSON.parse(fs.readFileSync(path.join(root,'tests/reading-gap-report.json'),'utf8'));
 const normalize=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 
+// A = un support à lire/analyser améliore directement la compétence visée.
+// Les motifs sont volontairement précis : on évite par exemple de classer
+// « Écrire le son [s] » ou « temps du récit » comme compréhension de texte.
 const tierA=[
-  /comprend/,/lecture/,/litterat/,/document/,/recit/,/ecrire/,/oeuvre/,/justif/,/resum/,/argument/,/paragraphe/,/oral/,/debatt/,/presenter/,/discours/,/description/,/media/,/information/,/narrat/,/poes/,/theatre/
+  /comprehend/,
+  /lecture/,
+  /lire une oeuvre/,
+  /litterat/,
+  /ecrire un recit/,
+  /ecrire pour s.*approprier une lecture/,
+  /raconter.*decrire/,
+  /justif/,
+  /resum/,
+  /construire un paragraphe/,
+  /paragraphe argument/,
+  /prendre la parole/,
+  /\boral\b/,
+  /debatt/,
+  /presenter une oeuvre/,
+  /reviser.*ameliorer un texte/,
+  /corriger.*ameliorer un texte/
 ];
+
+// B = un mini-texte ou un contexte authentique est utile, sans nécessiter
+// nécessairement une nouvelle ressource longue de compréhension.
 const tierB=[
-  /vocab/,/lexique/,/sens/,/registre/,/connecteur/,/formation des mots/,/champ lexical/,/synonyme/,/contraire/,/polysem/,/connotation/,/reference/,/dialogue/,/phrase complexe/,/ponctuation/
+  /vocab/,
+  /lexique/,
+  /sens propre/,
+  /sens figure/,
+  /registre/,
+  /connecteur/,
+  /formation des mots/,
+  /champ lexical/,
+  /synonyme/,
+  /contraire/,
+  /polysem/,
+  /connotation/,
+  /dialogue/,
+  /discours direct/,
+  /discours indirect/,
+  /discours rapporte/,
+  /phrase complexe/,
+  /ponctuation/,
+  /temps du recit/
 ];
+
 const levelsOrder=['CP','CE1','CE2','CM1','CM2','6e','5e','4e','3e'];
 const priorities={A:[],B:[],C:[]};
 for(const level of levelsOrder){
