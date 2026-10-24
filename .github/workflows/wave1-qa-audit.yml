@@ -32,12 +32,19 @@ jobs:
         id: mix
         continue-on-error: true
         run: node tests/wave1-enrichment-mix.mjs
-      - name: Publier le rapport banques
+      - name: Vérifier 104 vers 0 sur les 1 129 chapitres
+        id: depth
+        continue-on-error: true
+        run: node tests/wave1-depth-zero.mjs
+      - name: Publier les rapports QA
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: wave1-data-consistency-report
-          path: tests/wave1-data-consistency-report.json
+          name: wave1-qa-reports
+          path: |
+            tests/wave1-data-consistency-report.json
+            tests/final-product-inventory-report.json
+            tests/final-product-inventory-report.md
           if-no-files-found: warn
       - name: Statut QA
         if: always()
@@ -45,6 +52,8 @@ jobs:
           echo "banques=${{ steps.banks.outcome }}"
           echo "blocages=${{ steps.blockers.outcome }}"
           echo "mélange=${{ steps.mix.outcome }}"
+          echo "profondeur=${{ steps.depth.outcome }}"
           test "${{ steps.banks.outcome }}" = "success"
           test "${{ steps.blockers.outcome }}" = "success"
           test "${{ steps.mix.outcome }}" = "success"
+          test "${{ steps.depth.outcome }}" = "success"
