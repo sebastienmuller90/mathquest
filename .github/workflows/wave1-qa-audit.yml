@@ -28,6 +28,10 @@ jobs:
         id: blockers
         continue-on-error: true
         run: node tests/wave1-blockers.mjs
+      - name: Vérifier le mélange enrichi / historique
+        id: mix
+        continue-on-error: true
+        run: node tests/wave1-enrichment-mix.mjs
       - name: Publier le rapport banques
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,5 +44,7 @@ jobs:
         run: |
           echo "banques=${{ steps.banks.outcome }}"
           echo "blocages=${{ steps.blockers.outcome }}"
+          echo "mélange=${{ steps.mix.outcome }}"
           test "${{ steps.banks.outcome }}" = "success"
           test "${{ steps.blockers.outcome }}" = "success"
+          test "${{ steps.mix.outcome }}" = "success"
