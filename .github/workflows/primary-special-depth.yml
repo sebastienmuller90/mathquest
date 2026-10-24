@@ -1,0 +1,25 @@
+name: Primary special depth
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: primary-special-depth-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  primary-special-depth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Vérifier la syntaxe du module
+        run: node --check data/pedagogy/course-depth-arts-music-eps-evar-primary.js
+      - name: Vérifier la couverture CP → CM2
+        run: node tests/primary-special-depth.test.mjs
