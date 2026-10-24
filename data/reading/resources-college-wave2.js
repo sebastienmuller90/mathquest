@@ -178,7 +178,8 @@ R({id:'fr_6e_castors_resume_01',level:'6e',type:'document',documentType:'texte d
   ch('q10','ST',5,'Comment le texte est-il organisé ?',['Il raconte une journée de castor, de l’aube au coucher du soleil','Il oppose le castor à d’autres rongeurs, du plus petit au plus gros','Il présente l’animal, ses constructions, puis leurs effets'],2,0,'On passe de la présentation du castor à ses constructions, aux espèces qui en profitent, puis aux problèmes.'),
   ch('q11','VO',3,'Que signifie « cohabiter » dans la dernière phrase ?',['Se battre pour partager un territoire','Vivre ensemble au même endroit','Se déplacer ensemble sur de longues distances'],1,5,'Le préfixe « co- » indique « avec » : humains et castors doivent partager les mêmes espaces.'),
   ch('q12','AI',5,'Quelle est l’intention de l’auteur ?',['Convaincre les lecteurs de chasser les castors','Amuser les lecteurs avec une histoire drôle','Informer en montrant le pour et le contre'],2,5,'Le ton est neutre : il décrit, explique et présente les deux côtés (« Mais… »), sans prendre parti.'),
-  ch('q13','RF',4,'Dans « Pour les user, il ronge sans cesse du bois », que remplace « les » ?',['Les incisives','Les arbres du bord de l’étang','Les branches du barrage'],0,1,'On use ses dents : « les » reprend « les incisives », qui viennent d’être citées.')
+  ch('q13','RF',4,'Dans « Pour les user, il ronge sans cesse du bois », que remplace « les » ?',['Les incisives','Les arbres du bord de l’étang','Les branches du barrage'],0,1,'On use ses dents : « les » reprend « les incisives », qui viennent d’être citées.'),
+  od('q14','ST,SQ',3,'Remets dans l’ordre les sujets abordés par le texte.',['Le castor et son alimentation','Ses dents et le bois','Le barrage et l’étang','Les difficultés avec les humains'],'Le texte présente d’abord l’animal, puis ses dents, ses constructions, leurs bienfaits et enfin les conflits avec les humains.')
  ]});
 
 R({id:'fr_6e_debat_cantine_01',level:'6e',type:'document',documentType:'transcription de débat (imaginaire)',title:'Débat en classe : peser les restes à la cantine ?',sourceType:'original_mathquest',
@@ -351,7 +352,7 @@ R({id:'fr_5e_registres_trois_01',level:'5e',type:'document',documentType:'texte 
  ]});
 
 R({id:'fr_5e_port_aube_01',level:'5e',documentType:'description',title:'Le port au petit matin',sourceType:'original_mathquest',
- chapterLinks:['fr5h'],difficulty:5,minutes:3,
+ chapterLinks:['fr5h','fr5m'],difficulty:5,minutes:3,
  sourceReference:'Texte original Finot Académie.',
  paragraphs:[
   'À l’aube, le port s’éveille doucement. Les bateaux de pêche, amarrés le long du quai, se balancent sur l’eau grise. Leurs coques, éraflées par les vagues, portent encore l’odeur du sel et du poisson.',
@@ -490,7 +491,8 @@ R({id:'fr_5e_phare_poeme_01',level:'5e',documentType:'poème (vers libres, texte
   tx('q10','ST,EX',4,'Quel mot rime avec « élève » à la fin du vers 3 ? (un mot)',['trêve','sans trêve'],2,'Les vers 1 et 3 riment : « s’élève » et « trêve ».'),
   ch('q11','ST,MI',6,'Comment sont organisées les trois strophes ?',['Résistance ; guide de nuit ; désintéressement','L’aube sur la mer ; le midi au port ; le soir en ville','Le phare ; la plage ; la ville ; les bateaux'],0,4,'Strophe 1 : il résiste. Strophe 2 : il guide les bateaux. Strophe 3 : il ne demande aucune récompense.'),
   ch('q12','AI,EM',7,'Quel sentiment le poète veut-il surtout faire naître ?',['Une admiration reconnaissante','De la peur de la mer et de ses tempêtes','De l’ennui devant le quotidien des marins'],0,8,'La dernière strophe insiste sur le don de soi : il ne demande ni salaire ni gloire, seulement le retour des marins.'),
-  ch('q13','JU,AR',7,'Quelle citation justifie le mieux que le phare est désintéressé ?',['« Il ne demande ni salaire / Ni couronne, ni souvenir »','« Les vagues le frappent sans trêve, / Mais il ne s’est jamais penché »','« Quand la nuit tombe sur la plage, / Il ouvre un grand œil de lumière »'],0,8,'Le phare refuse toute récompense : ces deux vers sont la preuve la plus directe de son désintéressement.')
+  ch('q13','JU,AR',7,'Quelle citation justifie le mieux que le phare est désintéressé ?',['« Il ne demande ni salaire / Ni couronne, ni souvenir »','« Les vagues le frappent sans trêve, / Mais il ne s’est jamais penché »','« Quand la nuit tombe sur la plage, / Il ouvre un grand œil de lumière »'],0,8,'Le phare refuse toute récompense : ces deux vers sont la preuve la plus directe de son désintéressement.'),
+  od('q14','ST,SQ',4,'Remets dans l’ordre les idées développées par les trois strophes.',['Le phare résiste aux vagues','Il guide les bateaux la nuit','Il ne demande aucune récompense'],'Strophe 1 : sa résistance. Strophe 2 : son rôle de guide dans la nuit. Strophe 3 : son désintéressement.')
  ]});
 
 R({id:'fr_5e_don_quichotte_01',level:'5e',documentType:'roman (extrait adapté)',title:'Don Quichotte et les moulins à vent',author:'Miguel de Cervantès',work:'Don Quichotte de la Manche (1605)',sourceType:'public_domain',
@@ -942,7 +944,8 @@ R({id:'fr_3e_lamartine_lac_01',level:'3e',documentType:'poème (extraits)',title
   ch('q9','ST,GE',8,'Dans les deux premières strophes, que remarque-t-on sur le dernier vers ?',['Il est plus court que les trois autres','Il est plus long que les trois autres','Il rime avec le premier vers de la strophe'],0,3,'« Jeter l’ancre un seul jour ? » et « Où tu la vis s’asseoir ! » ont six syllabes, contre douze pour les trois autres vers : ce vers bref ralentit et met en relief la dernière idée.'),
   ch('q10','AI,AR',8,'Que demandent au temps les vers entre guillemets de la dernière strophe ?',['De ralentir pour laisser savourer le bonheur','De s’accélérer pour passer plus vite à la suite','De revenir en arrière pour recommencer la vie'],0,8,'« Suspendez votre cours » est une prière : dans le poème, ces mots sont prononcés par la femme aimée. Elle sait que le temps ne s’arrêtera pas, mais elle voudrait prolonger les « rapides délices ».'),
   ch('q11','VO',7,'Que signifie « propices » dans « heures propices » ?',['Favorables, heureuses','Lointaines et presque oubliées','Pénibles et sans fin'],0,8,'Les « heures propices » sont celles où l’on est heureux : le poète voudrait les prolonger.'),
-  ch('q12','ST,MI',8,'Comment peut-on résumer l’enchaînement de ces trois strophes ?',['Constat, retour solitaire au lac, prière au temps','Description d’un voyage en bateau jusqu’à l’île','Dialogue avec un ami disparu depuis plusieurs années'],0,0,'On passe d’une réflexion générale (strophe 1) à une scène précise (strophe 2) puis à la prière (strophe 3).')
+  ch('q12','ST,MI',8,'Comment peut-on résumer l’enchaînement de ces trois strophes ?',['Constat, retour solitaire au lac, prière au temps','Description d’un voyage en bateau jusqu’à l’île','Dialogue avec un ami disparu depuis plusieurs années'],0,0,'On passe d’une réflexion générale (strophe 1) à une scène précise (strophe 2) puis à la prière (strophe 3).'),
+  od('q13','ST,SQ',6,'Remets dans l’ordre les mouvements du poème.',['La fuite du temps','Le retour solitaire près du lac','La prière adressée au temps'],'Le poème passe d’une réflexion générale sur le temps à une scène précise au bord du lac, puis à une prière pour retenir le bonheur.')
  ]});
 
 R({id:'fr_3e_jaccuse_zola_01',level:'3e',documentType:'lettre ouverte (texte historique adapté)',title:'Zola : « J’accuse…! »',author:'Émile Zola',work:'J’accuse…! (1898)',sourceType:'public_domain',
