@@ -48,5 +48,6 @@ md.push('','## Priorité B','');
 for(const x of priorities.B)md.push(`- **${x.level}** — \`${x.id}\` — ${x.title}`);
 md.push('','## Couverture par niveau','', '| Niveau | A | B | C |','|---|---:|---:|---:|');
 for(const level of levelsOrder){const x=byLevel[level];md.push(`| ${level} | ${x.A} | ${x.B} | ${x.C} |`);}
+fs.mkdirSync(path.join(root,'docs'),{recursive:true});
 fs.writeFileSync(path.join(root,'docs/reading-comprehension-backlog.md'),md.join('\n'));
 console.log(JSON.stringify(out,null,2));
