@@ -81,7 +81,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   const ids=await p.evaluate(()=>SCH(S.subj).filter(c=>WMAP[c.id]&&WMAP[c.id].lvl===S.grade).map(c=>c.id));
   let r=null;
   for(const id of ids){if(r)break;await p.evaluate(id=>{ACT.start(id);ACT.startlevel(id+'|2');},id);await p.waitForTimeout(60);
-   if(await p.locator('input.big').count()){await p.fill('input.big','99999');await p.click('[data-a="valid"]');await p.waitForTimeout(100);
+   if(await p.locator('input.big').count()){await p.fill('input.big','99999');await p.click('[data-a="valid"]');
+    // input.big anime son background pendant 150 ms. Attendre la fin de cette transition évite de mesurer une couleur intermédiaire, notamment sous WebKit.
+    await p.waitForTimeout(250);
     r=await p.evaluate(()=>{const i=document.querySelector('input.big');if(!i)return null;const probe=document.createElement('i');probe.style.background=getComputedStyle(document.documentElement).getPropertyValue('--'+(i.classList.contains('good')?'goodbg':'badbg'));document.body.appendChild(probe);const want=getComputedStyle(probe).backgroundColor;probe.remove();return {cls:i.className,bg:getComputedStyle(i).backgroundColor,want};});}}
   T('Champ de réponse validé : fond d’état (vert / rouge) conservé',!!r&&/good|bad/.test(r.cls)&&r.bg.match(/\d+/g).every((v,i)=>Math.abs(v-r.want.match(/\d+/g)[i])<=4),JSON.stringify(r));
   await ctx.close();}
