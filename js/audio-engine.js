@@ -74,6 +74,9 @@ function pickVoice(l){const loc=locale(l),la=lang2(l);const vs=st.voices.length?
 function voicesFor(l){const loc=locale(l);return (st.voices.length?st.voices:refresh()).filter(v=>score(v,loc)>=0);}
 
 /* ---------- Préparation du texte (français) ---------- */
+const SHORT={a:'a',i:'i',o:'o',u:'u','é':'é','è':'è',e:'eu',ou:'ou',on:'on',an:'an',en:'an',in:'in',ain:'in',ein:'in',un:'un',oi:'oi',oin:'oin',ch:'che',gn:'gne',ph:'fe',qu:'ke',gu:'gue',ge:'je',gi:'ji',ce:'se',ci:'si',eu:'eu','œu':'eu',au:'o',eau:'o',ai:'è',ei:'è',er:'é',ez:'é',et:'è',ill:'ille',ail:'aille',eil:'eille',euil:'euille',ouille:'ouille',ien:'ien',ion:'ion',x:'kse',y:'i',s:'se',ss:'se',z:'ze',f:'fe',v:'ve',l:'le',m:'me',n:'ne',r:'re',j:'je',p:'pe',t:'te',b:'be',d:'de',k:'ke',c:'ke',g:'gue'};
+const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const LETTER_NAME={a:'a',b:'bé',c:'cé',d:'dé',e:'eu',f:'effe',g:'gé',h:'ache',i:'i',j:'ji',k:'ka',l:'elle',m:'emme',n:'enne',o:'o',p:'pé',q:'ku',r:'erre',s:'esse',t:'té',u:'u',v:'vé',w:'double vé',x:'ixe',y:'i grec',z:'zède'};
 const ROM=r=>{const v={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let n=0;for(let i=0;i<r.length;i++){const x=v[r[i]],y=v[r[i+1]]||0;n+=x<y?-x:x;}return n;};
 const DEN={2:['demi','demis'],3:['tiers','tiers'],4:['quart','quarts'],5:['cinquième','cinquièmes'],6:['sixième','sixièmes'],7:['septième','septièmes'],8:['huitième','huitièmes'],9:['neuvième','neuvièmes'],10:['dixième','dixièmes'],12:['douzième','douzièmes'],100:['centième','centièmes'],1000:['millième','millièmes']};
 const CLASSES={CP:'C P',CE1:'C E 1',CE2:'C E 2',CM1:'C M 1',CM2:'C M 2',DNB:'D N B',ULIS:'ULIS',SEGPA:'SEGPA',CDI:'C D I',EPS:'E P S',EMC:'E M C',SVT:'S V T'};
@@ -88,16 +91,32 @@ const UNIT_RE=new RegExp('(\\d)\\s?('+UNITS.map(u=>u[0].replace(/[.*+?^${}()|[\]
 const UNIT_MAP=Object.fromEntries(UNITS);
 function prepareFR(t){t=' '+String(t??'').replace(/[  ]/g,' ').replace(/[’‘`´]/g,"'")+' ';
   t=t.replace(/av\.\s*J\.-C\./g,'avant Jésus-Christ').replace(/apr\.\s*J\.-C\./g,'après Jésus-Christ');
+  // Lettre seule (choix « b », « y », « l »…) : on lui donne son nom, sinon la synthèse la lit comme un mot (« y » → « i »).
+  {const m=t.match(/^\s*[«"(]?\s*([A-Za-z])\s*[»")]?\s*\.?\s*$/);if(m)return LETTER_NAME[m[1].toLowerCase()];}
+  // Blancs « ___ » des exercices (« Il faut que nous ___ (être) à l’heure ») : une pause, jamais « tiret bas ».
+  t=t.replace(/_{2,}/g,' … ');
+  // Abréviations et numéros que les voix lisent mal (« n° 3 » → « n degré 3 », « Mme » → lettres)
+  t=t.replace(/\bMmes\b/g,'mesdames').replace(/\bMme\b/g,'madame').replace(/\bMlle\b/g,'mademoiselle').replace(/\bMM\.\s?(?=[A-ZÉÈ])/g,'messieurs ').replace(/\bM\.\s?(?=[A-ZÉÈ])/g,'monsieur ').replace(/\bDr\.?\s(?=[A-ZÉÈ])/g,'docteur ')
+   .replace(/\bn[°º]\s?(?=\d)/gi,'numéro ').replace(/\bpp\.\s?(?=\d)/g,'pages ').replace(/\bp\.\s?(?=\d)/g,'page ').replace(/\bFig\.\s?(?=\d)/g,'figure ').replace(/\bcf\.\s?/g,'voir ').replace(/\betc\./g,'et cetera.').replace(/\bIer\b/g,'premier');
+  // Dates 12/10/2026 → « 12 octobre 2026 » (la voix lirait « barre »)
+  t=t.replace(/\b(0?[1-9]|[12]\d|3[01])\/(0?[1-9]|1[0-2])\/(\d{4})\b/g,(m,d,mo,y)=>`${+d===1?'1er':+d} ${MOIS[+mo-1]} ${y}`);
   // Phonèmes et graphèmes notés [ou], [ch] : lexique de prononciation
-  t=t.replace(/\[([a-zéèêàùôîœ]{1,4})\]/gi,(m,g)=>' '+graphemeSpoken(g)+' ');
+  // Syllabe à lire (« Lis : s + é ») : on prononce les sons (« se, é »), pas les noms de lettres.
+  t=t.replace(/^(\s*Lis\s*:\s*)(\S{1,3}) \+ (\S{1,3})(\s*)$/i,(m,a,x,y,z)=>a+(SHORT[x.toLowerCase()]||x)+' plus '+(SHORT[y.toLowerCase()]||y)+z);
+  // Son noté [ou] : explication complète s'il termine la phrase ; au milieu d'une question, juste le son (sinon la question est coupée en deux).
+  {const whole=t;t=t.replace(/\[([a-zéèêàùôîœ]{1,6})\](\s*\.?\s*$)?/gi,(m,g,end)=>end!==undefined||/^\s*$/.test(whole.replace(m,''))?' '+graphemeSpoken(g)+' ':' '+(SHORT[g.toLowerCase()]||g)+' ');}
+  // Chiffres collés au mot qui précède (« euros5 », « ?5 ») et traits de comptage « | » (non prononçables)
+  t=t.replace(/([a-zéèêàùç]{3,})(\d)/g,'$1, $2').replace(/([?!])(\d)/g,'$1 $2').replace(/\|+/g,' ');
   t=t.replace(/(\d) (?=\d{3}\b)/g,'$1');
   // Monnaie
   t=t.replace(/(\d+),(\d{2})\s?€/g,(m,e,c)=>+e?`${e} euro${+e>1?'s':''} ${+c}`:`${+c} centimes`).replace(/(\d+)\s?€/g,(m,e)=>`${e} euro${+e>1?'s':''}`).replace(/€/g,' euros ');
   t=t.replace(/£\s?(\d+)[.,](\d{2})/g,(m,e,c)=>`${e} livre${+e>1?'s':''} ${+c}`).replace(/£\s?(\d+)/g,(m,e)=>`${e} livre${+e>1?'s':''}`);
+  // Fractions d'heure : 1/2 h, 1/4 h, 3/4 h (sinon « 2 heures » serait lu après un « un sur »)
+  t=t.replace(/(^|[^\d/])1\/2\s?h\b/g,'$1une demi-heure').replace(/(^|[^\d/])1\/4\s?h\b/g,"$1un quart d'heure").replace(/(^|[^\d/])3\/4\s?h\b/g,"$1trois quarts d'heure");
   // Heures : 8 h 30, 14 h 05, 9 h
   t=t.replace(/\b(\d{1,2})\s?h\s?(\d{2})\b/g,(m,h,mi)=>`${h} heure${+h>1?'s':''} ${mi}`).replace(/\b(\d{1,2})\s?h\b(?!\s?\d)/g,(m,h)=>`${h} heure${+h>1?'s':''}`);
   // Fractions simples : 1/4 → un quart ; 3/5 → 3 cinquièmes ; autres → a sur b
-  t=t.replace(/(^|[^\d/,])(\d{1,3})\s?\/\s?(\d{1,4})(?![\d/])/g,(m,p,a,b)=>{const d=DEN[+b];if(!d)return `${p}${a} sur ${b}`;const n=+a;return `${p}${n===1?(+b===2?'un':'un'):a} ${n>1?d[1]:d[0]}`;});
+  t=t.replace(/(^|[^\d/,])(\d{1,3})\s?\/\s?(\d{1,4})(?![\d/])/g,(m,p,a,b,off,str)=>{const d=DEN[+b];if(!d)return `${p}${a} sur ${b}`;const n=+a;if(n===1&&/\b(un|une)$/i.test(str.slice(0,off)))return `${p}${d[0]}`;return `${p}${n===1?'un':a} ${n>1?d[1]:d[0]}`;});
   // Unités après un nombre
   t=t.replace(UNIT_RE,(m,d,u)=>`${d} ${UNIT_MAP[u]}`);
   // Classes et sigles scolaires
@@ -106,8 +125,10 @@ function prepareFR(t){t=' '+String(t??'').replace(/[  ]/g,' ').replace(/[’�
   t=t.replace(/\b(Louis|Henri|Charles|François|Philippe|Napoléon|Léon|Jean|Guillaume|Pie|Benoît)\s+([IVXL]{1,6})\b/g,(m,n,r)=>`${n} ${ROM(r)}`);
   t=t.replace(/\b([IVXLC]{1,6})(e|ème)\s+(siècle|millénaire|République|arrondissement)/g,(m,r,s,w)=>`${ROM(r)}ème ${w}`);
   t=t.replace(/\b(\d+)e\b/g,'$1ème');
+  // Signe moins : « -5 °C », « 8 - 3 = 5 » (le trait d'union n'est pas lu)
+  t=t.replace(/(^|[\s(=])-(?=\d)/g,'$1 moins ');if(/=/.test(t))t=t.replace(/(\d)\s[-–]\s(?=\d)/g,'$1 moins ');
   // Symboles mathématiques
-  t=t.replace(/(\w)²/g,'$1 au carré').replace(/(\w)³/g,'$1 au cube');
+  t=t.replace(/([\w)])²/g,'$1 au carré').replace(/([\w)])³/g,'$1 au cube');
   t=t.replace(/×/g,' fois ').replace(/÷/g,' divisé par ').replace(/−/g,' moins ').replace(/\+/g,' plus ').replace(/≤/g,' inférieur ou égal à ').replace(/≥/g,' supérieur ou égal à ').replace(/≈/g,' environ ').replace(/≠/g,' différent de ')
    .replace(/</g,' inférieur à ').replace(/>/g,' supérieur à ').replace(/=/g,' égale ').replace(/√/g,' racine de ').replace(/π/g,' pi ').replace(/%/g,' pour cent ').replace(/→/g,', donc ').replace(/…/g,' … ').replace(/─+/g,' ');
   t=t.replace(/\p{Extended_Pictographic}|️|‍/gu,'');

@@ -283,4 +283,559 @@ E('cp-evar-famille',{items:[
  ['Dans une famille, on peut vivre avec…','un parent, deux parents, des grands-parents…',['personne','seulement des animaux','seulement des voisins'],'Il y a plein de façons de vivre en famille.'],
  ['Un camarade parle de sa famille, différente de la mienne. Je…','l’écoute avec respect',['me moque','dis qu’elle n’est pas une vraie famille','pars'],'On respecte toutes les familles.']],
  parts:[HE('🏡','Moment hors écran : mon arbre des personnes importantes',{but:'parler des personnes qui comptent pour soi.',consigne:'Dessine un arbre. Sur chaque branche, dessine une personne importante pour toi (famille, nounou, ami…). Présente ton arbre à un adulte.',duree:'15 minutes',materiel:'feuille, crayons',auto:'J’ai dessiné les personnes qui comptent pour moi et je les ai présentées.'})]});
+
+/* ---------- Lot 2 vague 1 pédagogie (23/10/2026) : variété des exercices d'HG et d'EMC au CP ---------- */
+E('cp-hg-avant-apres',{w:.85,items:[
+ ['Hier, c’est…','le passé',['le futur','le présent','le jour de demain'],'Hier est déjà arrivé.'],
+ ['Demain, c’est…','le futur',['le passé','le présent','il y a longtemps'],'Demain n’est pas encore arrivé.'],
+ ['Aujourd’hui, c’est…','le présent',['le passé','le futur','autrefois'],'Aujourd’hui, c’est maintenant.'],
+ ['Qui est né le plus tôt dans une famille ?','le grand-père',['le bébé','le petit-fils','la petite sœur'],'Les grands-parents sont nés avant les parents et les enfants.'],
+ ['Quel mot parle du futur ?','demain',['hier','avant-hier','autrefois'],'Demain n’est pas encore arrivé.'],
+ ['Quel mot parle du passé ?','autrefois',['demain','après-demain','bientôt'],'Autrefois, c’est avant maintenant.'],
+ ['Sur une frise du temps, où met-on l’événement le plus ancien ?','à gauche',['à droite','au milieu','en haut'],'On lit la frise de gauche à droite.'],
+ {tf:'Le temps passé peut revenir.',v:false,e:'Le temps passé ne revient jamais.'},
+ {tf:'« Avant-hier » est plus ancien qu’« hier ».',v:true,e:'Avant-hier vient avant hier.'},
+ {tf:'Les parents sont nés avant les grands-parents.',v:false,e:'Ce sont les grands-parents qui sont nés les premiers.'},
+ {o:['Je suis bébé','J’apprends à marcher','J’entre au CP'],q:'Remets ces moments de ta vie dans l’ordre :',e:'Bébé, premiers pas, puis CP.'},
+ {o:['avant-hier','hier','aujourd’hui','demain'],q:'Remets ces mots du temps dans l’ordre :',e:'Avant-hier, hier, aujourd’hui, demain.',d:2}]});
+
+E('cp-hg-se-reperer',{w:.85,items:[
+ ['Pour jouer dehors à l’école, on va dans…','la cour',['le réfectoire','la bibliothèque','la classe'],'La cour sert à jouer pendant la récréation.'],
+ ['Pour emprunter un livre, on va à…','la bibliothèque',['la cour','le portail','les sanitaires'],'La bibliothèque prête des livres.'],
+ ['Pour entrer dans l’école, on passe par…','le portail',['le tableau','la cantine','le plan'],'Le portail est l’entrée.'],
+ ['Un plan est dessiné…','vu de dessus',['de côté','de très loin','à l’envers'],'On regarde comme un oiseau qui vole au-dessus.'],
+ ['Si la porte est à ma droite, elle est du côté de…','ma main droite',['ma main gauche','mon dos','mon nez'],'Droite : du côté de la main qui écrit pour la plupart des enfants.',2],
+ ['Le tableau est devant moi. Où est le mur du fond ?','derrière moi',['devant moi','à ma droite uniquement','sous mes pieds'],'Derrière, c’est le côté opposé à devant.'],
+ ['Sur un plan, le petit carré dessiné peut représenter…','une table',['un nuage','un poisson','un arbre du jardin'],'Les objets sont dessinés vus de dessus.'],
+ {tf:'On mange au réfectoire.',v:true,e:'Le réfectoire est la cantine.'},
+ {tf:'Sur un plan, on voit les pieds des tables.',v:false,e:'On voit la classe de dessus.'},
+ {tf:'Les sanitaires servent à se laver les mains.',v:true,e:'Ils servent aussi à aller aux toilettes.'},
+ ['Quel mot est un mot de position ?','à côté',['rouge','joyeux','demain'],'À côté dit où se trouve un objet.'],
+ ['Pour décrire la place d’un cartable, je dis qu’il est…','sous la table',['bleu et rond','lourd hier','joyeux'],'Sous donne la position.',2]]});
+
+E('cp-hg-monde',{w:.85,items:[
+ ['Le globe représente la Terre sous la forme…','d’une boule',['d’un carré','d’un triangle','d’une feuille plate'],'La Terre est ronde.'],
+ ['Le planisphère est…','une carte plate du monde',['une boule','un océan','un continent'],'On aplatit la Terre sur une carte.'],
+ ['Combien y a-t-il de continents ?','6',['2','12','20'],'Europe, Afrique, Asie, Amérique, Océanie, Antarctique.',2],
+ ['Quel continent est couvert de glace ?','l’Antarctique',['l’Europe','l’Asie','l’Afrique'],'Il est tout au sud de la Terre.',2],
+ ['Quel est un océan ?','le Pacifique',['l’Europe','la Marne','le Mont Blanc'],'Océans : Atlantique, Pacifique, Indien.'],
+ ['Sur une carte, le Nord est…','en haut',['en bas','à gauche','à droite'],'Le Nord est en haut, le Sud en bas.'],
+ ['Sur une carte, l’Est est…','à droite',['à gauche','en haut','en bas'],'L’Est est à droite.',2],
+ ['Où y a-t-il plus d’eau sur la Terre ?','dans les océans et les mers',['dans les parcs','dans les jardins','dans les verres'],'Il y a plus d’eau que de terres.',2],
+ {tf:'La Guadeloupe fait partie de la France.',v:true,e:'C’est un territoire français d’outre-mer, dans les Antilles.',d:2},
+ {tf:'La France hexagonale se trouve en Asie.',v:false,e:'Elle est en Europe.'},
+ {tf:'Sur une carte, le bleu montre souvent l’eau.',v:true,e:'Le bleu représente les mers et les océans.'},
+ {n:'Combien y a-t-il de points cardinaux (Nord, Sud, Est, Ouest) ?',a:4,e:'Nord, Sud, Est, Ouest.'}]});
+
+E('cp-hg-jour-saisons',{w:.85,items:[
+ ['Quand notre côté de la Terre est tourné vers le Soleil, il fait…','jour',['nuit','hiver','nuageux'],'Le côté éclairé a le jour.'],
+ ['En combien de temps la Terre fait-elle un tour sur elle-même ?','24 heures',['1 heure','1 mois','1 an'],'Une journée dure 24 heures.',2],
+ ['Combien y a-t-il de saisons ?','4',['2','6','12'],'Printemps, été, automne, hiver.'],
+ ['En quelle saison les feuilles des arbres tombent-elles ?','en automne',['au printemps','en été','en hiver seulement'],'Les arbres perdent leurs feuilles en automne.'],
+ ['En quelle saison les jours sont-ils les plus longs en France ?','en été',['en hiver','en automne','à Noël'],'Il fait jour longtemps.',2],
+ ['Quelle saison est la plus froide en France hexagonale ?','l’hiver',['l’été','le printemps','l’automne'],'C’est la saison du froid.'],
+ ['Quelle saison vient entre l’hiver et l’été ?','le printemps',['l’automne','le matin','la nuit'],'Hiver, printemps, été, automne.'],
+ {tf:'C’est le Soleil qui tourne autour de la Terre en un jour.',v:false,e:'C’est la Terre qui tourne sur elle-même.',d:2},
+ {tf:'La nuit, notre côté de la Terre est dans l’ombre.',v:true,e:'Il est tourné à l’opposé du Soleil.'},
+ {o:['printemps','été','automne','hiver'],q:'Remets les saisons dans l’ordre en commençant par le printemps :',e:'Printemps, été, automne, hiver.'},
+ {o:['le matin','le midi','le soir','la nuit'],q:'Remets les moments de la journée dans l’ordre :',e:'Matin, midi, soir, nuit.'}]});
+
+E('cp-hg-mesurer-temps',{w:.85,items:[
+ ['Pour savoir l’heure, je regarde…','une montre',['un sablier','un calendrier','une carte'],'La montre donne l’heure.'],
+ ['Pour savoir le jour du mois, je regarde…','un calendrier',['une montre','un sablier','un plan'],'Le calendrier donne les dates.'],
+ ['Un sablier sert à mesurer…','une courte durée',['la date de ton anniversaire','la météo','la taille'],'Le sable met un temps limité à couler.'],
+ ['Un réveil sert à…','sonner à une heure choisie',['dire la date','mesurer la distance','montrer le plan'],'On règle l’heure de la sonnerie.'],
+ ['L’emploi du temps de la classe montre…','ce qu’on fait pendant la journée',['la météo','les continents','les saisons'],'Il organise les activités.',2],
+ ['Combien d’heures y a-t-il dans une journée ?','24',['12 seulement','7','60'],'Une journée a 24 heures.',2],
+ {tf:'Le sablier donne l’heure exacte.',v:false,e:'Il mesure une durée, pas l’heure.'},
+ {tf:'Le calendrier permet de repérer les jours et les mois.',v:true,e:'On y voit les dates de l’année.'},
+ {n:'Combien y a-t-il de minutes dans une heure ?',a:60,e:'Une heure dure 60 minutes.',d:2},
+ ['Pour me brosser les dents pendant 3 minutes, j’utilise…','un sablier de 3 minutes',['un calendrier','un plan','un globe'],'Il mesure une courte durée.'],
+ ['Un événement qui a lieu chaque année à la même date est…','un anniversaire',['une récréation','un sablier','un trajet'],'Il revient chaque année.',2]]});
+
+E('cp-emc-emotions',{w:.85,items:[
+ ['Quand on a très peur, on ressent…','de la peur',['de la joie','de la fierté','de l’ennui'],'La peur fait battre le cœur plus vite.'],
+ ['Quand on a une bonne surprise, on est…','content et surpris',['triste','en colère','endormi'],'La surprise peut être joyeuse.'],
+ ['Que faire si une colère est très forte ?','respirer lentement et s’éloigner un peu',['frapper un camarade','casser un objet','crier sur tout le monde'],'On se calme sans faire de mal.'],
+ ['Que dire si on est triste ?','« Je suis triste » à un adulte de confiance',['rien du tout jamais','« Tu es méchant »','« Je m’en fiche »'],'Dire ce qu’on ressent aide.'],
+ ['Quelle émotion ressent-on quand un ami est parti ?','de la tristesse',['de la joie','de la fierté','du dégoût'],'Être séparé d’un ami rend triste.'],
+ ['Un camarade pleure. Que fais-tu ?','je lui demande ce qui se passe et je le console',['je me moque','je pars en courant','je dis qu’il exagère'],'On aide, on est gentil.'],
+ {tf:'Toutes les émotions sont normales.',v:true,e:'Ce qui compte, c’est ce qu’on en fait.'},
+ {tf:'Quand on est en colère, on a le droit de faire mal aux autres.',v:false,e:'On a le droit d’être en colère, pas de faire mal.'},
+ {tf:'Dire ce qu’on ressent avec des mots aide à se sentir mieux.',v:true,e:'Les mots remplacent les coups ou les cris.'},
+ ['Quel visage montre la joie ?','😀',['😢','😡','😨'],'Le visage souriant.'],
+ ['Le dégoût, c’est ce qu’on ressent quand…','on sent quelque chose de très mauvais',['on reçoit un cadeau','on gagne un jeu','on retrouve un ami'],'Le dégoût protège de ce qui est mauvais.',2]]});
+
+E('cp-emc-regles',{w:.85,items:[
+ ['Pourquoi range-t-on son matériel ?','pour garder la classe agréable et ne rien perdre',['pour embêter les autres','pour faire du bruit','pour rien'],'Ranger aide tout le monde.'],
+ ['Quand quelqu’un parle, je…','l’écoute',['crie plus fort','fais du bruit','pars'],'Écouter, c’est respecter.'],
+ ['Si j’abîme le livre d’un camarade, je dois…','m’excuser et réparer ou remplacer',['le cacher','accuser un autre','rire'],'Réparer est une conséquence juste.'],
+ ['Les règles s’appliquent…','à tout le monde',['seulement aux filles','seulement aux plus petits','seulement au maître'],'Tous respectent les règles.',2],
+ ['Pour demander la parole, je…','lève le doigt',['tape du pied','crie','m’en vais'],'Chacun parle à son tour.'],
+ ['Quand on se met en rang calmement, on évite…','les bousculades',['d’avancer','de marcher','de respirer'],'Le rang protège chacun.',2],
+ {tf:'Une règle est faite pour protéger tout le monde.',v:true,e:'Elle permet de vivre ensemble.'},
+ {tf:'Je peux ne pas respecter la règle si le maître ne regarde pas.',v:false,e:'On respecte les règles même sans surveillance.',d:2},
+ {tf:'Il faut respecter le matériel de l’école.',v:true,e:'Il sert à tous les élèves.'},
+ ['Quelle règle aide à bien écouter ?','ne pas parler en même temps',['courir en classe','crier','jeter ses affaires'],'Un à la fois.'],
+ {o:['Je lève le doigt','Le maître me donne la parole','Je parle','J’écoute la suite'],q:'Remets dans l’ordre pour prendre la parole :',e:'Lever le doigt, attendre la parole, parler, écouter.',d:2}]});
+
+E('cp-emc-droits-enfant',{w:.85,items:[
+ ['Le droit d’être soigné, c’est le droit…','à la santé',['au chocolat','à la télévision','de choisir sa maîtresse'],'Un enfant malade doit être soigné.'],
+ ['Aller à l’école est…','un droit de l’enfant',['une punition','un jeu interdit','un caprice'],'Tous les enfants ont droit à l’éducation.'],
+ ['Avoir un nom, c’est le droit à…','une identité',['la télévision','un animal','un vélo'],'Chaque enfant a un nom et une nationalité.',2],
+ ['Un enfant a le droit de…','jouer et se reposer',['travailler à l’usine','conduire','être frappé'],'Jouer est un droit.'],
+ ['Un adulte frappe un enfant. Que doit faire l’enfant ?','en parler à un adulte de confiance',['garder le secret','frapper aussi','se cacher toujours'],'Un enfant a droit à la protection.'],
+ ['Le numéro à appeler si un enfant est en danger est le…','119',['3','50','777'],'Le 119 est gratuit.',2],
+ {tf:'Les enfants ont des droits mais aussi des devoirs.',v:true,e:'Par exemple écouter et respecter les autres.'},
+ {tf:'Seuls les enfants d’un pays ont des droits.',v:false,e:'Tous les enfants du monde ont les mêmes droits.'},
+ {tf:'Avoir des droits veut dire faire ce qu’on veut.',v:false,e:'Il y a aussi des limites : les droits des autres.',d:2},
+ ['Le droit de donner son avis veut dire…','je peux dire ce que je pense, poliment',['je peux crier','je peux insulter','je dois me taire'],'On s’exprime en respectant les autres.'],
+ ['En quelle année la Convention des droits de l’enfant a-t-elle été adoptée ?','1989',['1889','2020','1500'],'Adoptée par l’ONU en 1989.',3]]});
+
+E('cp-emc-intimite',{w:.85,items:[
+ ['Pour être propre, je…','me lave tous les jours',['ne me lave jamais','me lave une fois par an','me lave seulement pour fêter Noël'],'L’hygiène protège la santé.'],
+ ['Après être allé aux toilettes, je…','me lave les mains',['mange tout de suite','reste sale','mets mes mains dans la bouche'],'Les mains sales transportent des microbes.'],
+ ['Qui décide si on peut toucher mon corps ?','moi : mon corps m’appartient',['tout le monde','le plus fort','celui qui a un cadeau'],'Je peux toujours dire non.',2],
+ ['Si quelqu’un me demande de garder un secret qui me fait peur, je…','le dis à un adulte de confiance',['le garde toujours','me tais','le dis à un inconnu'],'Un secret qui fait peur ne se garde pas.'],
+ ['Quel adulte de confiance puis-je choisir ?','un parent ou mon enseignant',['un inconnu','une personne qui me menace','personne'],'Il peut m’aider.'],
+ ['Je ferme la porte des toilettes parce que…','c’est mon intimité',['j’ai froid','je suis puni','je cherche un jeu'],'On respecte l’intimité de chacun.'],
+ {tf:'Je peux dire non si un geste me met mal à l’aise.',v:true,e:'Mon corps m’appartient.'},
+ {tf:'On doit toujours laisser les autres nous toucher pour être poli.',v:false,e:'Je peux dire non, même à quelqu’un que je connais.'},
+ {tf:'Le brossage des dents se fait au moins deux fois par jour.',v:true,e:'Matin et soir.',d:2},
+ ['Pour être poli avec l’intimité des autres, je…','frappe avant d’entrer dans la salle de bain',['entre sans frapper','regarde par la serrure','ouvre sans demander'],'Je respecte l’intimité des autres.',2],
+ {n:'Combien de fois par jour doit-on se brosser les dents (au minimum) ?',a:2,e:'Matin et soir.',d:2}]});
+
+E('cp-emc-republique',{w:.85,items:[
+ ['La première couleur du drapeau français (près du mât) est…','le bleu',['le rouge','le vert','le jaune'],'Bleu, blanc, rouge.'],
+ ['La devise de la République commence par…','Liberté',['Égalité','Fraternité','Laïcité'],'Liberté, Égalité, Fraternité.'],
+ ['Qui est Marianne ?','le visage qui symbolise la République',['une chanteuse actuelle','une écolière de CP','une reine'],'On la voit dans les mairies.'],
+ ['Le 14 juillet, la France fête…','la fête nationale',['Noël','Pâques','la rentrée'],'La fête nationale est le 14 juillet.'],
+ ['La Marseillaise est…','l’hymne national',['une berceuse','un jeu','un menu'],'On la chante lors des cérémonies.'],
+ ['Où voit-on le drapeau français à l’école ?','sur la façade ou à l’entrée',['dans la cuisine','sous la table','dans le ciel seulement'],'Il est sur les bâtiments publics.',2],
+ {tf:'Le drapeau français est bleu, blanc, rouge.',v:true,e:'Trois bandes verticales.'},
+ {tf:'Le drapeau français est vert et jaune.',v:false,e:'Il est bleu, blanc, rouge.'},
+ {tf:'La devise de la République contient le mot « Fraternité ».',v:true,e:'Liberté, Égalité, Fraternité.'},
+ {o:['Liberté','Égalité','Fraternité'],q:'Remets la devise dans l’ordre :',e:'Liberté, Égalité, Fraternité.'},
+ ['Le mot « République » vient de…','« chose publique », ce qui appartient à tous',['« roi »','« château »','« boulangerie »'],'Latin : res publica.',3]]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : variété des exercices au CP (français, maths, sciences, HG, EMC) ---------- */
+E('cp-fr-phrase',{w:.6,items:[
+ ['Une phrase commence par…','une majuscule',['un point','un chiffre','une virgule'],'Le premier mot commence par une grande lettre.'],
+ ['Une phrase finit par…','un point',['une majuscule','un tiret','une lettre'],'Le point termine la phrase.'],
+ ['Quelle phrase est bien écrite ?','Le chien court.',['le chien court','Le chien court','chien le court.'],'Majuscule au début, point à la fin.'],
+ ['Quel signe pose une question ?','?',['.','!',','],'Le point d’interrogation.'],
+ ['Quel signe montre la surprise ou la joie ?','!',['.','?',','],'Le point d’exclamation.'],
+ ['Quelle phrase pose une question ?','Où est mon chat ?',['Mon chat dort.','Quel beau chat !','Viens, mon chat.'],'Elle finit par un point d’interrogation.'],
+ ['Quel groupe de mots est une phrase ?','Léa mange une pomme.',['pomme Léa une','mange mange','Léa le'],'Les mots sont dans l’ordre et ça veut dire quelque chose.'],
+ ['Dans « Le chat dort. », qui dort ?','le chat',['la maison','le lit','la nuit'],'Le chat fait l’action.'],
+ {tf:'Une phrase finit toujours par une majuscule.',v:false,e:'Elle commence par une majuscule et finit par un point.'},
+ {tf:'Dans une phrase, les mots ne sont pas dans n’importe quel ordre.',v:true,e:'« Le chat dort. » mais pas « Dort chat le. »'},
+ {o:['Le','chat','dort.'],q:'Remets les mots dans l’ordre pour faire une phrase :',e:'Le chat dort.'},
+ {o:['Mon','frère','joue.'],q:'Remets les mots dans l’ordre :',e:'Mon frère joue.'},
+ {o:['La','maîtresse','lit','une','histoire.'],q:'Remets les mots dans l’ordre :',e:'La maîtresse lit une histoire.',d:2}]});
+
+E('cp-fr-nombre',{w:.6,items:[
+ ['Un seul chat : on dit…','un chat',['des chats','les chats','trois chats'],'Un seul : singulier.'],
+ ['Plusieurs chats : on écrit…','des chats',['un chat','le chats','une chats'],'Pluriel : on ajoute un s.'],
+ ['Complète : « deux … » (lapin)','lapins',['lapin','lapine','lapinss'],'Deux : plusieurs, donc un s.'],
+ ['Complète : « un … » (ballon)','ballon',['ballons','ballonss','ballonne'],'Un seul : pas de s.'],
+ ['Quel petit mot annonce un pluriel ?','les',['un','le','la'],'Les chats.'],
+ ['Quel petit mot annonce un singulier ?','une',['les','des','mes'],'Une seule.'],
+ ['Quel mot est au pluriel ?','des fleurs',['une fleur','la fleur','ma fleur'],'Des : plusieurs.'],
+ ['Quel mot est au singulier ?','mon sac',['mes sacs','les sacs','des sacs'],'Mon : un seul.'],
+ {tf:'On entend toujours le s du pluriel.',v:false,e:'Le s du pluriel ne s’entend pas : il faut l’écrire.'},
+ {tf:'« Trois voitures » est au pluriel.',v:true,e:'Trois veut dire plusieurs.'},
+ {tf:'« Des pomme » est bien écrit.',v:false,e:'On écrit « des pommes ».'},
+ {t:'Écris au pluriel : une fleur → des …',a:['fleurs'],e:'Des fleurs.',d:2}]});
+
+E('cp-fr-mots-outils',{w:.6,items:[
+ ['Complète : « Le chat … sur le lit. » (verbe être)','est',['et','es','ai'],'Si je peux dire « était », j’écris est.'],
+ ['Complète : « Un chat … un chien. » (relie deux mots)','et',['est','es','e'],'Et relie deux mots.'],
+ ['Complète : « Le chat dort … la maison. »','dans',['sur','sous','avec'],'Le chat est à l’intérieur.'],
+ ['Complète : « La balle est … la table. » (en dessous)','sous',['sur','dans','et'],'Sous : en dessous.'],
+ ['Complète : « Le livre est … la table. » (dessus)','sur',['sous','dans','et'],'Sur : dessus.'],
+ ['Complète : « Je joue … mon frère. » (ensemble)','avec',['sans','sur','sous'],'Avec : ensemble.'],
+ ['Complète : « … est grand. » (un garçon)','Il',['Elle','Une','La'],'Il pour un garçon ou un animal masculin.'],
+ ['Complète : « … est petite. » (une fille)','Elle',['Il','Un','Le'],'Elle pour une fille.'],
+ ['Complète : « Je veux jouer, … il pleut. »','mais',['et','est','sur'],'Mais montre une difficulté.',2],
+ ['Complète : « Un cadeau … toi. »','pour',['sur','sous','mais'],'Pour : à destination de.',2],
+ {tf:'« Et » peut se remplacer par « était ».',v:false,e:'C’est « est » qu’on peut remplacer par « était ».'},
+ {t:'Écris le mot : « Le chat … sous le lit. » (verbe être : est / et)',a:['est'],e:'Le chat est sous le lit.'},
+ {t:'Écris le mot : « Pierre … Marie » (relie deux prénoms : et / est)',a:['et'],e:'Pierre et Marie.'}]});
+
+E('cp-ma-longueurs',{w:.6,items:[
+ ['Un crayon est plus long qu’une gomme. La gomme est…','plus courte',['plus longue','aussi longue','plus lourde'],'Court est le contraire de long.'],
+ ['Pour mesurer un trait, on utilise…','une règle',['une balance','un thermomètre','une horloge'],'On mesure avec une règle.'],
+ ['On place le début du trait sur…','le 0 de la règle',['le 1 de la règle','le 10 de la règle','le bord de la table'],'Le 0 est le départ.'],
+ ['La longueur se mesure en…','centimètres (cm)',['kilogrammes','heures','litres'],'cm.'],
+ ['Pour comparer deux bandes, je les place…','côte à côte, en partant du même point',['l’une sur l’autre au hasard','loin l’une de l’autre','sans les regarder'],'On compare en alignant le début.'],
+ ['Quel objet est le plus long ?','un train',['un crayon','une gomme','un bouton'],'Le train est très long.'],
+ ['Quel objet est le plus court ?','un bouton',['un train','une table','un lit'],'Un bouton est tout petit.'],
+ {n:'Un trait commence à 0 et finit à 8 sur la règle. Combien de cm ?',a:8,u:'cm',e:'Il mesure 8 cm.'},
+ {n:'Un trait mesure 5 cm. Un autre trait mesure 3 cm de plus. Combien mesure le deuxième trait ?',a:8,u:'cm',e:'5 + 3 = 8.',d:2},
+ {tf:'On commence à mesurer au 1 de la règle.',v:false,e:'On commence au 0.'},
+ {tf:'Un trait de 9 cm est plus long qu’un trait de 6 cm.',v:true,e:'9 est plus grand que 6.'},
+ {tf:'Un crayon de 12 cm est plus court qu’un crayon de 15 cm.',v:true,e:'12 est plus petit que 15.'}]});
+
+E('cp-ma-masses',{w:.6,items:[
+ ['Une plume est…','légère',['lourde','très lourde','en métal'],'Une plume pèse très peu.'],
+ ['Un éléphant est plus lourd qu’une souris. La souris est…','plus légère',['plus lourde','aussi lourde','plus grosse'],'Elle est légère.'],
+ ['Sur une balance à plateaux, le plateau qui descend porte…','l’objet le plus lourd',['l’objet le plus léger','l’objet le plus long','l’objet le plus rouge'],'Le plus lourd fait descendre le plateau.'],
+ ['Si les deux plateaux sont à la même hauteur, les objets ont…','la même masse',['des masses très différentes','des tailles différentes','des couleurs différentes'],'Ils s’équilibrent.'],
+ ['Un ballon de baudruche est gros mais…','léger',['lourd','en pierre','très dur'],'Gros ne veut pas dire lourd.'],
+ ['Quel objet est le plus lourd ?','une pierre',['une plume','une feuille','un ballon de baudruche'],'La pierre est lourde.'],
+ ['Quel objet est le plus léger ?','une plume',['une pierre','un livre','un seau plein d’eau'],'La plume est légère.'],
+ ['Pour savoir lequel est le plus lourd, je peux…','les soupeser ou utiliser une balance',['les regarder de loin','compter les lettres','les ranger par couleur'],'On compare les masses.'],
+ {tf:'Un objet gros est toujours lourd.',v:false,e:'Un gros ballon de baudruche est léger.'},
+ {tf:'Le plateau le plus haut porte l’objet le plus léger.',v:true,e:'Le plateau qui monte est le plus léger.'},
+ {tf:'Une balance sert à comparer des masses.',v:true,e:'Elle dit lequel est plus lourd.'}]});
+
+E('cp-ma-heure',{w:.6,items:[
+ ['La petite aiguille montre…','les heures',['les minutes','les jours','les mois'],'La petite : les heures.'],
+ ['La grande aiguille sur le 12 : c’est une heure…','pile',['demie','passée','moins le quart'],'12 = heure pile.'],
+ ['La petite aiguille est sur 6, la grande sur 12. Il est…','6 heures',['12 heures','1 heure','3 heures'],'La petite montre 6.'],
+ ['La petite aiguille est sur 2, la grande sur 12. Il est…','2 heures',['12 heures','1 heure','4 heures'],'La petite montre 2.'],
+ ['La petite aiguille est sur 10, la grande sur 12. Il est…','10 heures',['12 heures','2 heures','1 heure'],'La petite montre 10.'],
+ ['À midi, les deux aiguilles sont sur…','le 12',['le 6','le 3','le 9'],'Il est 12 heures.',2],
+ ['Combien d’heures y a-t-il dans une journée ?','24 heures',['12 jours','7 heures','60 heures'],'Une journée dure 24 heures.',2],
+ ['Il est 4 heures. Dans 1 heure, il sera…','5 heures',['3 heures','4 heures','6 heures'],'On avance d’une heure.',2],
+ ['Il est 7 heures. Il y a 1 heure, il était…','6 heures',['8 heures','7 heures','5 heures'],'On recule d’une heure.',2],
+ {tf:'La grande aiguille montre les heures.',v:false,e:'C’est la petite aiguille.'},
+ {tf:'Un réveil peut sonner à une heure choisie.',v:true,e:'On règle l’heure de la sonnerie.'},
+ {n:'Il est 3 heures. Quelle heure sera-t-il dans 2 heures ?',a:5,u:'heures',e:'3 + 2 = 5.',d:2}]});
+
+E('cp-ma-figures',{w:.6,items:[
+ ['Une assiette a la forme d’un…','cercle',['carré','triangle','rectangle'],'Elle est toute ronde.'],
+ ['Une fenêtre a souvent la forme d’un…','rectangle',['cercle','triangle','rond'],'Quatre côtés et quatre coins.'],
+ ['Le toit d’une maison dessinée est souvent un…','triangle',['cercle','carré','rectangle'],'Trois côtés.',2],
+ ['Un carré a…','4 côtés de même longueur',['3 côtés','2 côtés','5 côtés'],'Quatre côtés égaux.'],
+ ['Un triangle a…','3 côtés',['4 côtés','2 côtés','5 côtés'],'Trois côtés et trois sommets.'],
+ ['Un cercle a…','aucun côté droit',['4 côtés','3 côtés','2 côtés'],'Il est tout rond.'],
+ ['Un rectangle a…','4 côtés et 4 coins droits',['3 côtés','aucun coin','5 côtés'],'Ses côtés en face sont égaux.'],
+ ['Combien de sommets a un triangle ?','3',['2','4','5'],'Trois pointes.'],
+ ['Quelle figure a 4 côtés égaux ?','le carré',['le triangle','le cercle','le rond'],'C’est le carré.'],
+ {tf:'Un carré est un cercle.',v:false,e:'Le carré a des côtés droits, le cercle est rond.'},
+ {tf:'Un triangle a 3 côtés.',v:true,e:'Trois côtés.'},
+ {n:'Combien de côtés a un rectangle ?',a:4,e:'Quatre côtés.'},
+ {n:'Combien de côtés a un triangle ?',a:3,e:'Trois côtés.'}]});
+
+E('cp-ma-solides',{w:.6,items:[
+ ['Un ballon a la forme d’une…','boule',['pyramide','boîte','pierre carrée'],'Il roule partout.'],
+ ['Un dé a la forme d’un…','cube',['cône','cylindre','pavé long'],'Six faces carrées.'],
+ ['Une boîte de conserve a la forme d’un…','cylindre',['cube','cône','pyramide'],'Il roule d’un seul côté.'],
+ ['Un cornet de glace a la forme d’un…','cône',['cube','cylindre','pavé'],'Une pointe et un disque.'],
+ ['Une boîte à chaussures a la forme d’un…','pavé',['cube','cône','boule'],'Six faces rectangulaires.'],
+ ['Quel solide roule dans toutes les directions ?','la boule',['le cube','le pavé','la pyramide'],'Elle est toute ronde.'],
+ ['Quel solide a des faces triangulaires qui se rejoignent en pointe ?','la pyramide',['le cube','la boule','le cylindre'],'La pyramide.'],
+ ['Un cube a combien de faces ?','6',['4','8','2'],'Six faces carrées.'],
+ {tf:'Un cylindre peut rouler.',v:true,e:'Sur sa face courbe.'},
+ {tf:'Un cube roule comme une boule.',v:false,e:'Un cube a des faces plates : il ne roule pas.'},
+ {n:'Combien de faces a un dé ?',a:6,e:'Un dé est un cube : 6 faces.'}]});
+
+E('cp-sc-vivant',{w:.6,items:[
+ ['Qui est vivant ?','un chat',['une pierre','un ballon','une chaise'],'Il naît, grandit et mange.'],
+ ['Qui n’est pas vivant ?','une pierre',['une plante','un oiseau','un poisson'],'Elle ne grandit pas.'],
+ ['Un être vivant a besoin de…','se nourrir',['rester immobile','ne jamais grandir','rien'],'Il mange ou boit.'],
+ ['Un nid est fabriqué par…','un oiseau',['la pluie','le vent','une pierre'],'Le nid n’est pas vivant mais il est fabriqué par un être vivant.',2],
+ ['Le lait vient…','de la vache (ou d’un autre animal)',['d’un arbre','d’une pierre','d’un nuage'],'Le lait est produit par les animaux.'],
+ ['Une graine plantée et arrosée…','peut grandir et devenir une plante',['reste toujours pareille','devient une pierre','se transforme en animal'],'La graine est vivante.'],
+ ['Un être vivant peut…','avoir des petits',['rester pareil pour toujours','voler sans respirer','devenir un jouet'],'Se reproduire.'],
+ {tf:'Une plante est vivante.',v:true,e:'Elle pousse et a besoin d’eau.'},
+ {tf:'Une voiture est vivante parce qu’elle bouge.',v:false,e:'Elle n’est pas vivante : elle ne naît pas et ne grandit pas.'},
+ {tf:'Tous les êtres vivants meurent un jour.',v:true,e:'Ils naissent, grandissent et meurent.',d:2}]});
+
+E('cp-sc-environnement',{w:.6,items:[
+ ['Un insecte a…','6 pattes',['4 pattes','8 pattes','2 pattes'],'Six pattes.'],
+ ['Une araignée a…','8 pattes',['6 pattes','4 pattes','2 pattes'],'Huit pattes.'],
+ ['Qui vit dans la mare ?','la grenouille',['l’écureuil','la fourmi','le moineau'],'La grenouille aime l’eau.'],
+ ['Qui vit dans un arbre ?','l’écureuil',['le poisson','le ver de terre','le têtard'],'Il grimpe aux arbres.'],
+ ['Qui vit dans le sol ?','le ver de terre',['l’abeille','le papillon','le moineau'],'Il creuse la terre.'],
+ ['Les oiseaux ont…','des plumes',['des poils','des écailles','une carapace'],'Des plumes et un bec.'],
+ ['Les abeilles se posent sur…','les fleurs',['les poissons','les pierres','les vers'],'Elles butinent.'],
+ ['Un papillon est un…','insecte',['mammifère','oiseau','poisson'],'Il a 6 pattes.',2],
+ {tf:'Une araignée est un insecte.',v:false,e:'Elle a 8 pattes ; les insectes en ont 6.'},
+ {tf:'Une fourmi a six pattes.',v:true,e:'C’est un insecte.'},
+ {n:'Combien de pattes a un insecte ?',a:6,e:'Six.'}]});
+
+E('cp-sc-proteger',{w:.6,items:[
+ ['Quel geste économise l’eau ?','fermer le robinet pendant le brossage des dents',['laisser couler l’eau','remplir la baignoire sans raison','laver la voiture tous les jours'],'On ne gaspille pas l’eau.'],
+ ['Quel geste économise l’électricité ?','éteindre la lumière en sortant',['laisser toutes les lampes allumées','laisser la télé allumée','ouvrir le frigo longtemps'],'On éteint ce qu’on n’utilise pas.'],
+ ['Où jette-t-on un papier ?','dans une poubelle',['par terre','dans la mare','dans un arbre'],'On garde la nature propre.'],
+ ['Que faire d’un journal usagé ?','le mettre dans la poubelle de tri',['le brûler dans la cour','le jeter dans la rivière','le laisser dans la rue'],'Le papier se recycle.',2],
+ ['Les piles usagées…','vont dans un bac spécial au magasin',['vont dans la poubelle normale','vont dans la rivière','vont dans le jardin'],'Elles sont dangereuses pour la nature.',2],
+ ['Pour protéger les plantes, je ne dois pas…','les arracher',['les arroser','les regarder','les respecter'],'Les plantes sont vivantes.'],
+ {tf:'Jeter un papier par terre protège la nature.',v:false,e:'Cela salit la nature.'},
+ {tf:'Trier ses déchets aide à protéger l’environnement.',v:true,e:'On peut les recycler.'},
+ {tf:'On peut laisser couler l’eau quand on se brosse les dents.',v:false,e:'On ferme le robinet.'},
+ ['Je ramasse un papier tombé dans la cour. C’est un geste…','pour la nature',['dangereux','inutile','interdit'],'Chaque petit geste compte.']]});
+
+E('cp-sc-eau-etats',{w:.6,items:[
+ ['La pluie est de l’eau…','liquide',['solide','en pierre','en sable'],'Elle coule.'],
+ ['Un glaçon est de l’eau…','solide',['liquide','en gaz','en sable'],'Il garde sa forme.'],
+ ['La neige est de l’eau…','solide',['liquide','dorée','sèche'],'Elle garde sa forme.'],
+ ['Quand un glaçon fond, il devient…','de l’eau liquide',['de la neige','de la pierre','du sable'],'Il redevient liquide.'],
+ ['Quand il fait très froid, l’eau liquide devient…','de la glace',['du sable','du lait','du jus'],'L’eau gèle.'],
+ ['L’eau du robinet est…','liquide',['solide','en cube','en poudre'],'Elle coule.'],
+ ['La mer est faite d’eau…','liquide',['solide','de glace tous les jours','en poudre'],'L’eau de mer coule.'],
+ {tf:'La glace est de l’eau solide.',v:true,e:'Quand il gèle.'},
+ {tf:'L’eau liquide garde sa forme dans la main.',v:false,e:'Elle coule entre les doigts.'},
+ {tf:'Un glaçon fond quand il fait chaud.',v:true,e:'Il redevient liquide.'}]});
+
+E('cp-sc-masse-temperature',{w:.6,items:[
+ ['Un thermomètre sert à mesurer…','la température',['la longueur','la masse','le temps'],'Il dit s’il fait chaud ou froid.'],
+ ['La température se dit en…','degrés Celsius (°C)',['centimètres','kilogrammes','litres'],'°C.'],
+ ['Quand il fait chaud, le liquide du thermomètre…','monte',['descend','disparaît','change de couleur'],'Plus il fait chaud, plus il monte.'],
+ ['Quand il fait froid, le liquide du thermomètre…','descend',['monte','disparaît','reste pareil'],'Il descend.'],
+ ['Quelle température correspond à une journée très chaude ?','35 °C',['5 °C','0 °C','−5 °C'],'35 °C : très chaud.'],
+ ['Quelle température correspond à un jour de neige ?','−2 °C',['25 °C','35 °C','40 °C'],'Sous 0 °C, il gèle.',2],
+ ['Pour lire le thermomètre, je regarde…','le haut du liquide',['le bas du tube','la couleur du mur','la forme du thermomètre'],'On lit le nombre en face du haut du liquide.'],
+ {tf:'Plus le liquide est haut, plus il fait chaud.',v:true,e:'Le liquide monte avec la chaleur.'},
+ {tf:'Le plateau qui descend porte l’objet le plus léger.',v:false,e:'Le plateau qui descend porte l’objet le plus lourd.'},
+ {n:'Le thermomètre montre 25. Quelle température (en °C) ?',a:25,u:'°C',e:'25 °C.'}]});
+
+E('cp-sc-aliments',{w:.6,items:[
+ ['Le yaourt est un…','produit laitier',['féculent','fruit','légume'],'Il est fait avec du lait.'],
+ ['Les pâtes sont des…','féculents',['fruits','produits laitiers','légumes'],'Féculents et céréales.'],
+ ['La carotte est un…','légume',['fruit','produit laitier','féculent'],'Un légume.'],
+ ['La pomme est un…','fruit',['légume','produit laitier','féculent'],'Un fruit.'],
+ ['L’œuf fait partie de la famille…','viandes, poissons, œufs',['fruits et légumes','produits laitiers','boissons'],'Une protéine.'],
+ ['Le pain est fait avec de la…','farine',['viande','confiture','glace'],'Farine de blé.',2],
+ ['La seule boisson indispensable est…','l’eau',['le soda','le sirop','le jus sucré'],'On boit de l’eau.'],
+ ['Le lait vient d’un animal. C’est un aliment d’origine…','animale',['végétale','minérale','mécanique'],'Animal.',2],
+ ['Le riz est un aliment d’origine…','végétale',['animale','minérale','magique'],'Il vient d’une plante.',2],
+ {tf:'Il faut manger un peu de chaque famille d’aliments.',v:true,e:'Pour être en bonne santé.'},
+ {tf:'Les bonbons sont à manger en grande quantité.',v:false,e:'Ils sont très sucrés.'}]});
+
+E('cp-sc-corps',{w:.6,items:[
+ ['Le coude est une…','articulation du bras',['partie de la jambe','partie du pied','partie de la tête'],'Il plie le bras.'],
+ ['Le genou est une…','articulation de la jambe',['partie du bras','partie de la tête','partie de la main'],'Il plie la jambe.'],
+ ['Les os forment…','le squelette',['la peau','les muscles','les cheveux'],'Le squelette tient le corps debout.'],
+ ['Le crâne protège…','le cerveau',['le cœur','l’estomac','les poumons'],'Dans la tête.',2],
+ ['Que permet une articulation ?','bouger les os',['faire grandir les cheveux','manger','dormir'],'Plier ou tourner.'],
+ ['Qui a deux bras et deux jambes ?','le corps humain',['la voiture','le poisson','la chaise'],'Notre corps.'],
+ ['Le poignet est entre…','la main et l’avant-bras',['le genou et le pied','la tête et le cou','le ventre et la jambe'],'Il fait tourner la main.',2],
+ ['La cheville est entre…','le pied et la jambe',['la main et le bras','la tête et le cou','le coude et l’épaule'],'Elle permet de tourner le pied.',2],
+ {tf:'On a un squelette à l’intérieur du corps.',v:true,e:'Les os le tiennent debout.'},
+ {tf:'Le genou est dans le bras.',v:false,e:'Le genou est dans la jambe.'},
+ {n:'Combien de bras avons-nous ?',a:2,e:'Deux bras.'}]});
+
+E('cp-sc-hygiene',{w:.6,items:[
+ ['Quand faut-il se laver les mains ?','avant de manger',['jamais','seulement le dimanche','quand on a envie'],'Pour enlever les microbes.'],
+ ['Combien de fois par jour se brosse-t-on les dents ?','2 fois (matin et soir)',['0 fois','1 fois par semaine','10 fois'],'Matin et soir.'],
+ ['Pour être en forme, je dors…','beaucoup la nuit',['très peu','pas du tout','seulement le jour'],'Environ 10 à 11 heures à ton âge.'],
+ ['Pour être en forme, je…','bouge tous les jours',['reste toujours assis','ne joue jamais','regarde un écran toute la journée'],'Le sport est bon pour la santé.'],
+ ['Avant de dormir, il vaut mieux…','éviter les écrans',['regarder la télé','jouer sur la tablette','regarder un téléphone'],'Les écrans gênent le sommeil.'],
+ ['On se lave les mains aussi…','après les toilettes',['jamais','avant d’aller au lit seulement','une fois par an'],'Pour éviter les microbes.'],
+ ['Un repas équilibré, c’est…','un peu de tout',['seulement des bonbons','seulement des frites','rien du tout'],'Manger varié.'],
+ {tf:'Les microbes sont invisibles à l’œil nu.',v:true,e:'On ne les voit pas, mais ils existent.'},
+ {tf:'Se brosser les dents protège les dents.',v:true,e:'Cela évite les caries.'},
+ {tf:'On peut regarder la télévision tard le soir sans problème.',v:false,e:'Le sommeil est important.'}]});
+
+E('cp-hg-jour-saisons',{w:.5,items:[
+ ['Quand il fait nuit, la Lune et les étoiles se voient…','dans le ciel',['sous la terre','dans la mer','dans la maison'],'On les voit la nuit.'],
+ ['En été, il fait en général…','chaud',['froid','très froid','de la neige'],'Les jours sont longs.'],
+ ['En hiver, il fait en général…','froid',['chaud','très chaud','sec'],'Les jours sont courts.'],
+ ['Au printemps, les fleurs…','commencent à pousser',['tombent','gèlent','disparaissent'],'Il fait plus doux.'],
+ ['En automne, les feuilles…','tombent des arbres',['poussent','gèlent','brillent'],'Les feuilles changent de couleur.'],
+ {tf:'Le Soleil se couche parce que la Terre tourne.',v:true,e:'C’est la Terre qui tourne.',d:2},
+ {tf:'Il y a 4 saisons dans une année.',v:true,e:'Printemps, été, automne, hiver.'},
+ {tf:'On voit le Soleil la nuit.',v:false,e:'La nuit, notre côté de la Terre est dans l’ombre.'},
+ ['Quelle saison commence l’année en France ?','l’hiver',['l’été','le printemps','l’automne'],'L’année commence en hiver.',2]]});
+
+E('cp-hg-mesurer-temps',{w:.5,items:[
+ ['Pour savoir l’heure, je regarde…','une horloge ou une montre',['un sablier','un calendrier','un globe'],'Elle donne l’heure.'],
+ ['Pour savoir quel jour on est, je regarde…','le calendrier',['la montre','le sablier','la règle'],'Il donne les dates.'],
+ ['Pour mesurer 1 minute, je peux utiliser…','un sablier ou un chronomètre',['un calendrier','une carte','un livre'],'Courte durée.'],
+ ['Un réveil sonne…','à l’heure qu’on a choisie',['quand il veut','jamais','tous les jours à midi'],'On le règle.'],
+ {tf:'Le sablier donne la date.',v:false,e:'Il mesure une durée.'},
+ {tf:'Le calendrier permet de savoir quel jour on est.',v:true,e:'Jours, mois, année.'},
+ {tf:'L’emploi du temps montre ce qu’on fait pendant la journée à l’école.',v:true,e:'Les activités du jour.'},
+ ['Combien de jours dans une semaine ?','7',['5','10','12'],'Lundi à dimanche.'],
+ {n:'Combien de mois dans une année ?',a:12,e:'De janvier à décembre.'}]});
+
+E('cp-hg-avant-apres',{w:.5,items:[
+ ['Quand je suis né, c’était…','dans le passé',['dans le futur','dans le présent','demain'],'C’est déjà arrivé.'],
+ ['L’année prochaine, c’est…','dans le futur',['dans le passé','hier','avant-hier'],'Ce n’est pas encore arrivé.'],
+ ['Hier, j’ai mangé. C’est…','le passé',['le futur','le présent','demain'],'Hier est passé.'],
+ ['Demain, j’irai à l’école. C’est…','le futur',['le passé','le présent','hier'],'Demain n’est pas arrivé.'],
+ ['Sur une frise, ce qui est arrivé le plus récemment est…','à droite',['à gauche','en haut','en bas'],'On lit de gauche à droite.'],
+ ['Le bébé a grandi. Qu’est-ce qui vient d’abord ?','il est bébé',['il est adulte','il est grand-père','il est un enfant de 10 ans'],'On est bébé avant d’être grand.'],
+ {tf:'Aujourd’hui, c’est le présent.',v:true,e:'Maintenant.'},
+ {tf:'Mon grand-père est plus jeune que moi.',v:false,e:'Il est né avant moi.'},
+ {o:['bébé','enfant','adulte','grand-parent'],q:'Remets dans l’ordre d’une vie :',e:'Bébé, enfant, adulte, grand-parent.',d:2}]});
+
+E('cp-hg-se-reperer',{w:.5,items:[
+ ['Pour aller aux toilettes, je me rends…','aux sanitaires',['dans la bibliothèque','dans la cour de récréation','au portail'],'Les sanitaires.'],
+ ['À droite de moi veut dire…','du côté de ma main droite',['du côté de ma main gauche','derrière moi','au plafond'],'Ma main droite.'],
+ ['Derrière moi, c’est…','dans mon dos',['devant moi','à ma gauche','au plafond'],'À l’opposé de devant.'],
+ ['Sur le plan de la classe, la porte est…','une ouverture dans le mur',['une table','un livre','un élève'],'On la voit sur le plan.',2],
+ {tf:'Le plan est dessiné vu de côté.',v:false,e:'Il est vu de dessus.'},
+ {tf:'La cantine sert à manger.',v:true,e:'On y mange à midi.'},
+ ['Je veux jouer. Je vais dans…','la cour de récréation',['la classe pendant la leçon','le couloir seul','les sanitaires'],'Pour jouer.'],
+ ['Quel mot dit où est le tableau ?','devant',['demain','vite','content'],'Mot de position.']]});
+
+E('cp-hg-monde',{w:.5,items:[
+ ['La planète où nous vivons s’appelle…','la Terre',['la Lune','le Soleil','Mars'],'La Terre.'],
+ ['Sur la Terre, il y a plus…','d’eau que de terre',['de terre que d’eau','de glace','de sable'],'Les océans couvrent beaucoup de place.'],
+ ['Quel est un océan ?','l’Atlantique',['l’Europe','l’Asie','la Seine'],'Atlantique, Pacifique, Indien.'],
+ ['Quel est un continent ?','l’Afrique',['le Pacifique','l’Atlantique','la Loire'],'Six continents.'],
+ ['La France est en…','Europe',['Afrique','Asie','Océanie'],'En Europe.'],
+ ['Sur une carte, le Sud est…','en bas',['en haut','à droite','à gauche'],'Nord en haut, Sud en bas.'],
+ ['Sur une carte, l’Ouest est…','à gauche',['à droite','en haut','en bas'],'Ouest à gauche.',2],
+ {tf:'Il y a 6 continents.',v:true,e:'Europe, Afrique, Asie, Amérique, Océanie, Antarctique.'},
+ {tf:'Le globe est plat.',v:false,e:'Le globe est une boule ; le planisphère est plat.'}]});
+
+E('cp-emc-emotions',{w:.5,items:[
+ ['Quand je suis content, je ressens…','de la joie',['de la peur','de la colère','de la tristesse'],'Je souris.'],
+ ['Quand j’ai peur du noir, je peux…','le dire à un adulte',['crier seul','me cacher sans rien dire','frapper quelqu’un'],'On en parle.'],
+ ['Quand je suis en colère, je peux…','respirer et dire ce que je ressens',['taper un camarade','crier très fort','casser un jouet'],'Je me calme avec des mots.'],
+ ['Mon ami est triste. Je peux…','lui parler gentiment',['me moquer','l’ignorer','partir en courant'],'Je suis gentil.'],
+ ['Quelle émotion montre ce visage : 😮 ?','la surprise',['la tristesse','la colère','la joie'],'La bouche ouverte.'],
+ ['Quelle émotion montre ce visage : 😢 ?','la tristesse',['la joie','la colère','la surprise'],'Des larmes.'],
+ {tf:'On peut dire « je suis en colère » avec des mots.',v:true,e:'Les mots aident.'},
+ {tf:'Être triste est interdit.',v:false,e:'Toutes les émotions sont normales.'},
+ {tf:'Quand j’ai peur, j’en parle à un adulte de confiance.',v:true,e:'Il peut m’aider.'}]});
+
+E('cp-emc-regles',{w:.5,items:[
+ ['Quand le maître parle, je…','l’écoute',['crie','cours','joue avec mes voisins'],'J’écoute pour apprendre.'],
+ ['Pour sortir de la classe en rang, je…','reste calme',['pousse mes camarades','crie','cours'],'En rang, calmement.'],
+ ['Dans la cour, je ne dois pas…','faire mal aux autres',['jouer','courir','rire'],'On respecte les autres.'],
+ ['Dans la classe, je range mes affaires pour…','que tout soit en ordre',['faire du bruit','perdre mes affaires','embêter mes voisins'],'Ranger aide tout le monde.'],
+ ['Pour jouer avec les autres, je…','respecte les règles du jeu',['triche','pousse','change les règles tout seul'],'Un jeu a des règles.'],
+ {tf:'Les règles sont les mêmes pour tout le monde.',v:true,e:'Tous les respectent.'},
+ {tf:'Je peux crier en classe si j’en ai envie.',v:false,e:'On respecte les autres.'},
+ {tf:'Si je casse un objet, je dois en parler.',v:true,e:'Je m’excuse et j’aide à réparer.'}]});
+
+E('cp-emc-droits-enfant',{w:.5,items:[
+ ['Tous les enfants ont le droit d’être…','soignés quand ils sont malades',['punis sans raison','laissés seuls','privés d’école'],'Le droit à la santé.'],
+ ['Tous les enfants ont le droit d’avoir…','un nom',['un téléphone','un vélo','un chien'],'Le droit à l’identité.'],
+ ['Tous les enfants ont le droit de…','jouer et se reposer',['travailler à l’usine','conduire','rester seuls dehors la nuit'],'Le jeu est un droit.'],
+ ['Tous les enfants ont le droit de…','donner leur avis',['frapper','mentir','voler'],'On les écoute.'],
+ ['Si un adulte me fait du mal, je dois…','en parler à un adulte de confiance',['me taire','faire pareil','partir seul'],'On a le droit d’être protégé.'],
+ {tf:'Les filles et les garçons ont les mêmes droits.',v:true,e:'Tous les enfants sont égaux.'},
+ {tf:'Les enfants n’ont pas le droit d’aller à l’école.',v:false,e:'Tous les enfants ont droit à l’éducation.'},
+ {tf:'Les droits de l’enfant sont écrits dans un texte de l’ONU.',v:true,e:'La Convention de 1989.',d:2}]});
+
+E('cp-emc-intimite',{w:.5,items:[
+ ['Mon corps…','m’appartient',['appartient aux autres','est à celui qui veut','appartient à la classe'],'Je décide de mon corps.'],
+ ['Si on me demande de garder un secret qui me fait peur, je…','le dis à un adulte de confiance',['le garde','le crie dans la rue','le garde pour toujours'],'Un secret qui fait peur ne se garde pas.'],
+ ['Pour être propre, je me lave…','avec de l’eau et du savon',['avec du sable','avec du jus','avec de la boue'],'Le savon enlève les microbes.'],
+ ['Les toilettes, c’est un lieu…','privé',['public','pour jouer','pour manger'],'On ferme la porte.'],
+ ['Quand je suis mal à l’aise, je peux…','dire non et partir',['sourire','rester','obéir'],'Je peux dire non.'],
+ {tf:'Je peux dire non si un geste me gêne.',v:true,e:'Mon corps m’appartient.'},
+ {tf:'On doit montrer son corps à tout le monde.',v:false,e:'Mon intimité est protégée.'},
+ {tf:'Un adulte de confiance peut m’aider.',v:true,e:'Parents, enseignant, infirmière…'}]});
+
+E('cp-emc-republique',{w:.5,items:[
+ ['Le drapeau français a…','trois couleurs',['une couleur','deux couleurs','cinq couleurs'],'Bleu, blanc, rouge.'],
+ ['La Marseillaise est…','un chant national',['un menu','un jeu','un dessin animé'],'On la chante dans les cérémonies.'],
+ ['Où voit-on souvent le drapeau ?','sur la mairie',['dans le frigo','sous le lit','dans le sable'],'Sur les bâtiments publics.'],
+ ['Le 14 juillet, c’est…','la fête nationale',['Noël','Pâques','la rentrée'],'On fait des défilés et des feux d’artifice.'],
+ ['Marianne est un symbole de…','la République',['la météo','la cuisine','le sport'],'Son buste est dans les mairies.'],
+ {tf:'La devise de la République est « Liberté, Égalité, Fraternité ».',v:true,e:'Trois mots.'},
+ {tf:'Le drapeau français est rouge et noir.',v:false,e:'Il est bleu, blanc, rouge.'},
+ {o:['bleu','blanc','rouge'],q:'Remets les couleurs du drapeau dans l’ordre :',e:'Bleu, blanc, rouge.'}]});
+
+/* ---------- Lot 3 vague 1 pédagogie (23/10/2026) : anglais CP (vocabulaire et phrases simples, sans audio) ---------- */
+E('cp-en-hello',{w:.6,items:[
+ ['Que veut dire « Hello » ?','bonjour',['au revoir','merci','bonne nuit'],'Hello = bonjour.'],
+ ['Que veut dire « Goodbye » ?','au revoir',['bonjour','merci','s’il te plaît'],'Goodbye = au revoir.'],
+ ['Comment dire « bonjour » en anglais ?','Hello',['Goodbye','Sorry','Please'],'Hello.'],
+ ['Comment dire « au revoir » en anglais ?','Goodbye',['Hello','Good morning','Hi'],'Goodbye.'],
+ ['« My name is Tom. » veut dire…','Je m’appelle Tom.',['J’ai Tom ans.','Voici Tom.','Tom est ici.'],'My name is… = Je m’appelle…'],
+ ['« What’s your name? » veut dire…','Comment t’appelles-tu ?',['Quel âge as-tu ?','Où habites-tu ?','Comment vas-tu ?'],'Question sur le prénom.'],
+ ['« How are you? » veut dire…','Comment vas-tu ?',['Comment t’appelles-tu ?','Quel âge as-tu ?','Où es-tu ?'],'How are you?'],
+ ['Que répondre à « How are you? » ?','I’m fine, thank you.',['My name is Léa.','I’m six.','Goodbye.'],'Je vais bien, merci.'],
+ ['« Good morning » se dit…','le matin',['le soir','la nuit','à midi'],'Good morning = bonjour (le matin).',2],
+ {tf:'« Hi » veut dire « salut ».',v:true,e:'Hi = salut.'},
+ {tf:'« Goodbye » veut dire « bonjour ».',v:false,e:'Goodbye = au revoir.'},
+ {tf:'« Thank you » veut dire « merci ».',v:true,e:'Thank you = merci.'}]});
+
+E('cp-en-colours',{w:.6,items:[
+ ['« Red » veut dire…','rouge',['bleu','vert','jaune'],'Red = rouge.'],
+ ['« Blue » veut dire…','bleu',['rouge','vert','jaune'],'Blue = bleu.'],
+ ['« Green » veut dire…','vert',['bleu','rouge','blanc'],'Green = vert.'],
+ ['« Yellow » veut dire…','jaune',['vert','rouge','noir'],'Yellow = jaune.'],
+ ['« Black » veut dire…','noir',['blanc','rose','marron'],'Black = noir.'],
+ ['« White » veut dire…','blanc',['noir','rose','violet'],'White = blanc.'],
+ ['« Pink » veut dire…','rose',['rouge','orange','marron'],'Pink = rose.',2],
+ ['« Brown » veut dire…','marron',['noir','gris','violet'],'Brown = marron.',2],
+ ['Comment dit-on « vert » en anglais ?','green',['red','blue','black'],'Green.'],
+ ['Comment dit-on « jaune » en anglais ?','yellow',['blue','white','brown'],'Yellow.'],
+ ['Une banane est…','yellow',['blue','black','pink'],'A banana is yellow.'],
+ ['Le ciel est souvent…','blue',['red','brown','black'],'The sky is blue.'],
+ {tf:'« It’s red » veut dire « C’est rouge ».',v:true,e:'It’s red = c’est rouge.'},
+ {tf:'« Orange » est une couleur en anglais.',v:true,e:'Orange est aussi une couleur.',d:2}]});
+
+E('cp-en-numbers',{w:.6,items:[
+ ['« Three » veut dire…','trois',['deux','quatre','cinq'],'Three = 3.'],
+ ['« Five » veut dire…','cinq',['quatre','six','sept'],'Five = 5.'],
+ ['« Seven » veut dire…','sept',['six','huit','neuf'],'Seven = 7.'],
+ ['« Ten » veut dire…','dix',['neuf','onze','douze'],'Ten = 10.'],
+ ['Comment dit-on « deux » en anglais ?','two',['one','three','four'],'Two.'],
+ ['Comment dit-on « huit » en anglais ?','eight',['six','seven','nine'],'Eight.'],
+ ['Comment dit-on « douze » en anglais ?','twelve',['eleven','ten','twenty'],'Twelve.',2],
+ ['Quel nombre vient après « four » ?','five',['three','six','two'],'1, 2, 3, 4, 5.'],
+ ['Quel nombre vient avant « nine » ?','eight',['ten','seven','six'],'8, 9.'],
+ ['Comment dire « J’ai six ans » ?','I’m six.',['I’m five.','I like six.','My name is six.'],'I’m + âge.'],
+ {n:'Combien font « two + one » ? (écris le nombre)',a:3,e:'2 + 1 = 3 : three.'},
+ {tf:'« One » veut dire « un ».',v:true,e:'One = 1.'},
+ {tf:'« Eleven » veut dire « onze ».',v:true,e:'Eleven = 11.',d:2}]});
+
+E('cp-en-animals',{w:.6,items:[
+ ['« Dog » veut dire…','chien',['chat','cheval','vache'],'Dog = chien.'],
+ ['« Cat » veut dire…','chat',['chien','oiseau','lapin'],'Cat = chat.'],
+ ['« Bird » veut dire…','oiseau',['poisson','grenouille','cochon'],'Bird = oiseau.'],
+ ['« Fish » veut dire…','poisson',['oiseau','lapin','cheval'],'Fish = poisson.'],
+ ['« Horse » veut dire…','cheval',['vache','cochon','ours'],'Horse = cheval.'],
+ ['« Pig » veut dire…','cochon',['vache','cheval','chat'],'Pig = cochon.',2],
+ ['« Frog » veut dire…','grenouille',['poisson','oiseau','lapin'],'Frog = grenouille.',2],
+ ['Comment dit-on « vache » en anglais ?','cow',['pig','dog','cat'],'Cow.'],
+ ['Comment dit-on « lapin » en anglais ?','rabbit',['bear','bird','horse'],'Rabbit.'],
+ ['Comment dit-on « ours » en anglais ?','bear',['bird','cow','pig'],'Bear.',2],
+ {tf:'Au pluriel, on ajoute souvent un s : two dogs.',v:true,e:'One dog, two dogs.'},
+ {tf:'« Cat » veut dire « chien ».',v:false,e:'Cat = chat.'},
+ ['« It’s a dog. » veut dire…','C’est un chien.',['C’est un chat.','C’est une vache.','C’est un oiseau.'],'It’s a dog.']]});
+
+E('cp-en-family',{w:.6,items:[
+ ['« Mum » veut dire…','maman',['papa','sœur','frère'],'Mum = maman.'],
+ ['« Dad » veut dire…','papa',['maman','sœur','bébé'],'Dad = papa.'],
+ ['« Brother » veut dire…','frère',['sœur','papa','maman'],'Brother = frère.'],
+ ['« Sister » veut dire…','sœur',['frère','maman','mamie'],'Sister = sœur.'],
+ ['« Grandma » veut dire…','mamie',['papi','maman','bébé'],'Grandma = mamie.',2],
+ ['« Grandpa » veut dire…','papi',['mamie','papa','frère'],'Grandpa = papi.',2],
+ ['« Baby » veut dire…','bébé',['frère','mamie','papa'],'Baby = bébé.'],
+ ['Comment dit-on « papa » en anglais ?','dad',['mum','sister','baby'],'Dad.'],
+ ['Comment dire « Voici ma sœur » ?','This is my sister.',['This is my brother.','This is my mum.','This is my dad.'],'This is my sister.'],
+ ['« I have got a brother. » veut dire…','J’ai un frère.',['J’ai une sœur.','Je suis un frère.','J’aime mon frère.'],'I have got = j’ai.',2],
+ {tf:'« This is my mum » veut dire « Voici ma maman ».',v:true,e:'This is my… = Voici mon/ma…'},
+ {tf:'« Sister » veut dire « frère ».',v:false,e:'Sister = sœur.'}]});
+
+E('cp-en-days-food',{w:.6,items:[
+ ['« Monday » veut dire…','lundi',['mardi','dimanche','samedi'],'Monday = lundi.'],
+ ['« Friday » veut dire…','vendredi',['jeudi','samedi','lundi'],'Friday = vendredi.'],
+ ['« Sunday » veut dire…','dimanche',['samedi','lundi','jeudi'],'Sunday = dimanche.'],
+ ['Quel jour vient après « Monday » ?','Tuesday',['Sunday','Wednesday','Friday'],'Monday, Tuesday.'],
+ ['Quel jour vient après « Friday » ?','Saturday',['Thursday','Sunday','Monday'],'Friday, Saturday.',2],
+ ['Les jours en anglais s’écrivent avec…','une majuscule',['un chiffre','un accent','un tiret'],'Monday, Tuesday…'],
+ ['« Apple » veut dire…','pomme',['banane','gâteau','lait'],'Apple = pomme.'],
+ ['« Banana » veut dire…','banane',['pomme','carotte','chocolat'],'Banana = banane.'],
+ ['« Milk » veut dire…','lait',['gâteau','chocolat','carotte'],'Milk = lait.'],
+ ['« I like apples. » veut dire…','J’aime les pommes.',['Je n’aime pas les pommes.','Je mange une pomme.','Je vois des pommes.'],'I like = j’aime.'],
+ ['« I don’t like milk. » veut dire…','Je n’aime pas le lait.',['J’aime le lait.','Je bois du lait.','Je vois du lait.'],'I don’t like = je n’aime pas.'],
+ {tf:'« Carrot » veut dire « chocolat ».',v:false,e:'Carrot = carotte.'},
+ {o:['Monday','Tuesday','Wednesday'],q:'Remets ces jours dans l’ordre :',e:'Monday, Tuesday, Wednesday.'}]});
+
+E('cp-en-classroom',{w:.6,items:[
+ ['« Listen! » veut dire…','Écoute !',['Regarde !','Répète !','Assieds-toi !'],'Listen = écoute.'],
+ ['« Look! » veut dire…','Regarde !',['Écoute !','Répète !','Lève-toi !'],'Look = regarde.'],
+ ['« Repeat! » veut dire…','Répète !',['Écoute !','Regarde !','Silence !'],'Repeat = répète.'],
+ ['« Sit down! » veut dire…','Assieds-toi !',['Lève-toi !','Écoute !','Répète !'],'Sit down = assieds-toi.'],
+ ['« Stand up! » veut dire…','Lève-toi !',['Assieds-toi !','Regarde !','Écoute !'],'Stand up = lève-toi.'],
+ ['« Be quiet! » veut dire…','Silence !',['Répète !','Regarde !','Écoute !'],'Be quiet = silence.'],
+ ['« Open your book! » veut dire…','Ouvre ton livre !',['Ferme ton livre !','Regarde le tableau !','Écoute !'],'Open = ouvre.',2],
+ ['Le maître dit « Sit down! ». Je…','m’assois',['me lève','chante','sors'],'Sit down.'],
+ ['Le maître dit « Stand up! ». Je…','me lève',['m’assois','dors','chante'],'Stand up.'],
+ {tf:'« Sit down » et « Stand up » sont des contraires.',v:true,e:'S’asseoir / se lever.'},
+ {tf:'« Listen! » veut dire « Regarde ! ».',v:false,e:'Listen = écoute.'}]});
 })();

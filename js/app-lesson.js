@@ -142,7 +142,10 @@ function lvalidate(pick,mode){if(!L)return;const isP=mode==='practice'||L.steps[
  if(q.type==='choice')v=pick;else if(q.type==='order'){if(q._sel.length<q.tokens.length)return shake();v=q._sel.map(i=>q.tokens[i]).join(' ');}else if(q.type==='multi'){v=q.labels.map((_,i)=>$('#in'+i).value);if(v.some(x=>!x.trim()))return shake();}else{v=$('#in0').value;if(!v.trim())return shake();}
  let ok=check(q,v);let dict=null;
  // Dictée : 90 % suffisent à l'entraînement ; le quiz de validation (maîtrise finale) exige 100 %.
- if(isDictation(q)){dict=MQDictation.best(q.acc,v);ok=MQDictation.outcome(dict,{final:!isP}).ok;}
+ if(isDictation(q)){dict=MQDictation.best(q.acc,v);ok=MQDictation.outcome(dict,{final:!isP}).ok;
+  // Second essai (entraînement seulement : la maîtrise finale reste à 100 % du premier coup) : pistes sans la réponse.
+  if(!ok&&isP&&!q._dretry){q._dretry=1;L.firstDict=dict;return dictRetryBox('#fb',dict);}
+  if(q._dretry&&L.firstDict&&ok&&isP)MQAdaptive.recordMistake(S,L.id,dictMistake(q,L.firstDict));}
  L.locked=true;const cid=L.id,cs=S.chap[cid]||(S.chap[cid]={stars:0,ok:0,tot:0}),rh=S.recent[cid]||(S.recent[cid]=[]);S.totalQ++;cs.tot++;rh.push(ok?1:0);if(rh.length>20)rh.shift();if(ok){S.totalOk++;cs.ok++;L.quizStreak++;resolveIfConsolidated(cid);}else{L.quizStreak=0;L.wrong++;MQAdaptive.recordMistake(S,cid,{q:plainText(q.q),answer:plainText(answerText(q)),expl:plainText(q.expl||'')});}if(ok&&dict&&!dict.perfect)MQAdaptive.recordMistake(S,cid,dictMistake(q,dict));MQAdaptive.recordAnswer(S,cid,ok,{source:'lesson'});const oldD=L.quizDifficulty;L.quizDifficulty=MQAdaptive.nextDifficulty(L.quizDifficulty,ok,L.quizStreak);
  // Niveau choisi (Facile/Moyen/Difficile) : il reste fixe pendant tout l'entraînement et le quiz.
  if(L.lessonLevel){L.quizDifficulty=L.lessonLevel;L.quizStreak=0;}if(oldD!==L.quizDifficulty)S.adaptive.adaptations=(S.adaptive.adaptations||0)+1;

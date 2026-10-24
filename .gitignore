@@ -37,6 +37,10 @@
 !/tests/keyboard-a11y.test.js
 !/tests/finot-voice.test.js
 !/tests/course-depth.test.js
+!/tests/wave1-languages-depth.test.js
+!/tests/wave1-dictation.test.js
+!/tests/wave1-audio.test.js
+!/tests/wave1-dictation-ui.test.js
 !/tests/dark-mode.test.js
 !/tests/session-length.test.js
 !/tests/premium-ui.test.js
