@@ -22,6 +22,8 @@ jobs:
           node-version: 22
       - name: Auditer la couverture lecture / compréhension
         run: node tests/reading-coverage-audit.mjs
+      - name: Cartographier les chapitres français sans lecture
+        run: node tests/reading-gap-audit.mjs
       - name: Publier les rapports
         if: always()
         uses: actions/upload-artifact@v4
@@ -30,4 +32,5 @@ jobs:
           path: |
             tests/reading-coverage-report.json
             tests/reading-coverage-report.md
+            tests/reading-gap-report.json
           if-no-files-found: warn
