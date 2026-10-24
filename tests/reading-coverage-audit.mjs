@@ -16,16 +16,13 @@ for(const s of scripts){
   if(s.startsWith('js/vendor/'))continue;
   const file=path.join(root,s);
   if(!fs.existsSync(file))continue;
-  try{vm.runInContext(read(s),c,{filename:s,timeout:30000});}catch(e){
-    // Modules UI after the pedagogical registry may need a real browser. The audit only needs
-    // the content registry, so stop once app-content has been loaded.
-    if(s==='js/app-content.js') throw e;
-  }
+  vm.runInContext(read(s),c,{filename:s,timeout:30000});
   if(s==='js/app-content.js')break;
 }
 
 const R=c.MQ_READING?.resources||{};
-const CH=c.CHMAP||{};
+// CHMAP est déclaré lexicalement dans le runtime (const), donc il faut le lire DANS le contexte VM.
+const CH=vm.runInContext(`typeof CHMAP==='object' ? CHMAP : {}`,c);
 const resources=Object.values(R);
 const levels=['CP','CE1','CE2','CM1','CM2','6e','5e','4e','3e'];
 const byLevel=Object.fromEntries(levels.map(l=>[l,{resources:0,linkedChapters:new Set(),questions:0,types:new Set(),documentTypes:new Set(),competencies:new Set(),sources:new Set()}]));
