@@ -15,8 +15,8 @@ assert.match(en5,/BO n°22 du 29 mai 2025/i,'5e : référence BO 2025 absente');
 assert.match(en5,/A2 en LVA/i,'5e : cible A2 LVA absente');
 
 const ce1=read('data/primary/enrich-ce1.js');
-assert.match(ce1,/o:\["poire","pomme","prune"\]/,'CE1 : ordre poire → pomme → prune absent');
-assert.doesNotMatch(ce1,/o:\["pomme","poire","prune"\]/,'CE1 : ancien ordre alphabétique faux encore présent');
+assert.match(ce1,/o:\s*\[\s*['"]poire['"]\s*,\s*['"]pomme['"]\s*,\s*['"]prune['"]\s*\]/,'CE1 : ordre poire → pomme → prune absent');
+assert.doesNotMatch(ce1,/o:\s*\[\s*['"]pomme['"]\s*,\s*['"]poire['"]\s*,\s*['"]prune['"]\s*\]/,'CE1 : ancien ordre alphabétique faux encore présent');
 
 const ctx={console,Math,JSON,String,Number,Array,Object,Set,Map,RegExp,Error};
 ctx.window=ctx;ctx.globalThis=ctx;vm.createContext(ctx);
