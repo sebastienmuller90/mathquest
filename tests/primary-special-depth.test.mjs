@@ -54,6 +54,20 @@ const expectedProfiles={
 };
 for(const sid of Object.keys(expectedProfiles))assert.equal(C[`cp-${sid.slice(2)}-probe`].specialProfile,expectedProfiles[sid],`${sid} : mauvais routage de profil`);
 
+// Cas de régression issus du vrai registre primaire : les termes spécifiques
+// doivent l’emporter sur des mots génériques présents dans le même titre.
+{
+ const routingReg={CP:{
+  'p-eps':[{id:'eps-orientation-probe',name:'La course d’orientation',domain:'S’orienter : courses et plans'}],
+  'p-evar':[{id:'evar-egalite-probe',name:'Relations égalitaires et lutte contre les stéréotypes',domain:'Égalité et respect'}]
+ }};
+ const routingContext={console,MQPrimary:{_reg:{grades:routingReg}}};
+ vm.createContext(routingContext);
+ vm.runInContext(src,routingContext,{filename:modulePath});
+ assert.equal(routingContext.MQCourseDepth.chapters['eps-orientation-probe'].specialProfile,'eps-movement','course d’orientation : profil mouvement/orientation attendu');
+ assert.equal(routingContext.MQCourseDepth.chapters['evar-egalite-probe'].specialProfile,'evar-equality','relations égalitaires/stéréotypes : profil égalité attendu');
+}
+
 for(const marker of ['arts-observe','arts-project','music-perform','music-listen','eps-movement','eps-cooperate','eps-safety','evar-relations','evar-equality','evar-rights'])assert.ok(src.includes(`'${marker}'`),`profil manquant dans le module : ${marker}`);
 assert.ok(!/\bTODO\b|\bFIXME\b|\bHACK\b/.test(src),'le module ne doit contenir aucun TODO/FIXME/HACK');
 
