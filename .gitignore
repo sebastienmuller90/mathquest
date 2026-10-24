@@ -37,6 +37,8 @@
 !/tests/keyboard-a11y.test.js
 !/tests/finot-voice.test.js
 !/tests/course-depth.test.js
+!/tests/wave2-reading-primary.test.js
+!/tests/wave2-reading-college.test.js
 !/tests/wave1-languages-depth.test.js
 !/tests/wave1-dictation.test.js
 !/tests/wave1-audio.test.js
