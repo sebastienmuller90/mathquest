@@ -53,6 +53,7 @@
 !/tests/release-homework-toast.test.js
 !/tests/release-profile-isolation.test.js
 !/tests/release-pwa-audit.test.js
+!/tests/release-physical-fixes.test.js
 !/tests/wave1-languages-depth.test.js
 !/tests/wave1-dictation.test.js
 !/tests/wave1-audio.test.js
