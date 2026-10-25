@@ -115,6 +115,16 @@ Avec le volume de l’iPhone audible :
 - [ ] Vérifier les champs du code parent et les formulaires de devoirs.
 - [ ] Vérifier qu’aucun contrôle principal n’est annoncé uniquement comme « bouton » sans contexte.
 
+### TalkBack (Android)
+
+À faire sur un téléphone Android réel avec Chrome.
+
+- [ ] Activer TalkBack.
+- [ ] Naviguer dans l’accueil et identifier une matière.
+- [ ] Ouvrir un cours puis une question et ses réponses.
+- [ ] Vérifier les champs du code parent et le formulaire de devoir.
+- [ ] Vérifier que chaque bouton principal annonce une action compréhensible.
+
 ## 9. Mode DYS / lecture facilitée
 
 - [ ] Activer le mode DYS / lecture facilitée.
