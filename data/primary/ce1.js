@@ -610,7 +610,7 @@ const en=t=>`<span lang="en">${t}</span>`;const sayEn=t=>({t,l:'en-GB'});
 function vocabEN(list){return d=>{const [w,f,e]=P(list);const others=list.filter(x=>x[0]!==w);const r=Math.random();
   if(r<.35)return ch('🎧 Écoute et choisis :',e?`${e} ${f}`:f,pickN(others,3).map(x=>x[2]?`${x[2]} ${x[1]}`:x[1]),{audio:sayEn(w),expl:`${en(w)} = « ${f} ».`});
   if(r<.7)return ch(`Comment dit-on « ${f} » ${e||''} en anglais ?`,en(w),pickN(others,3).map(x=>en(x[0])),{expl:`« ${f} » = ${en(w)}.`});
-  if(d>=3&&w.split(' ').length===1&&w.length<=9)return txt(`Écris en anglais : « ${f} » ${e||''}`,[w],{lang:'en',expl:`« ${f} » = ${en(w)}.`,hint:`Ça commence par « ${w[0]} ».`,audio:sayEn(w)});
+  if(d>=3&&w.split(' ').length===1&&w.length<=9)return txt(`Écris en anglais : « ${f} » ${e||''}`,[w],{lang:'en',expl:`« ${f} » = ${en(w)}.`,hint:`Ça commence par « ${w[0]} ».`});
   return ch(`Que veut dire ${en('<b>'+w+'</b>')} ?`,f,pickN(others,3).map(x=>x[1]),{audio:sayEn(w),expl:`${en(w)} = « ${f} ».`});};}
 const ENC=(d,u,ex,m,a,r)=>C(d,u,ex,m,a,r);
 const EN=[

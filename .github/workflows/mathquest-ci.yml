@@ -180,6 +180,39 @@ jobs:
       - name: Pools d’exercices CP/CE1 (variété, générateurs, audio)
         if: matrix.browser == 'chromium'
         run: node tests/wave2-pools-cp-ce1.test.js
+      - name: "Release : profils élèves de bout en bout"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-profiles-e2e.test.js
+      - name: "Release : migrations et stockage abîmé"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-migrations.test.js
+      - name: "Release : espace parent de bout en bout"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-parent-e2e.test.js
+      - name: "Release : parcours pédagogique complet"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-learning-journey.test.js
+      - name: "Release : responsive géométrique"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-responsive.test.js
+      - name: "Release : clavier, focus et accessibilité"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-keyboard-a11y.test.js
+      - name: "Release : audio et dictée"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-audio-audit.test.js
+      - name: "Release : audit technique et performance"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-perf-audit.test.js
+      - name: "Release : toast de validation des devoirs"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-homework-toast.test.js
+      - name: "Release : isolation entre profils"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-profile-isolation.test.js
+      - name: "Release : PWA, cache et mise à jour"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-pwa-audit.test.js
       - name: Cours approfondis de langues du collège (anglais, italien)
         if: matrix.browser == 'chromium'
         run: node tests/wave1-languages-depth.test.js

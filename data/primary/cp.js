@@ -763,7 +763,7 @@ const en=t=>`<span lang="en">${t}</span>`;
 const sayEn=t=>({t,l:'en-GB'});
 function vocabEN(list,o={}){return d=>{const [w,f,e]=P(list);const others=list.filter(x=>x[0]!==w);const r=Math.random();
   if(r<.4)return ch(`🎧 Écoute et choisis : ${e?`<span style="font-size:40px">?</span>`:''}`,e?`${e} ${f}`:f,pickN(others,3).map(x=>x[2]?`${x[2]} ${x[1]}`:x[1]),{audio:sayEn(w),expl:`${en(w)} veut dire « ${f} ».`,hint:'Écoute bien le mot anglais.'});
-  if(r<.75)return ch(`Comment dit-on « ${f} » ${e||''} en anglais ?`,en(w),pickN(others,3).map(x=>en(x[0])),{expl:`« ${f} » se dit ${en(w)}.`,audio:d===1?sayEn(w):undefined});
+  if(r<.75)return ch(`Comment dit-on « ${f} » ${e||''} en anglais ?`,en(w),pickN(others,3).map(x=>en(x[0])),{expl:`« ${f} » se dit ${en(w)}.`});
   return ch(`Que veut dire ${en('<b>'+w+'</b>')} ?`,f,pickN(others,3).map(x=>x[1]),{audio:sayEn(w),expl:`${en(w)} = « ${f} ».`});};}
 const EN=[
 {id:'cp-en-hello',name:'Hello! Dire bonjour et se présenter',icon:'👋',domain:'Communiquer',
@@ -789,7 +789,7 @@ const EN=[
   [`${en('one, two, three, four, five')}…`,`${en('I’m six.')} = J’ai six ans.`]),
  g:d=>{const N=['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];const k=R(1,d===1?5:d===2?10:12);const w=N[k-1];const r=Math.random();
   if(r<.5)return ch('🎧 Écoute le nombre et choisis :',String(k),pickN([1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==k),3).map(String),{audio:sayEn(w),expl:`${en(w)} = ${k}.`});
-  return ch(`Comment dit-on <b>${k}</b> en anglais ?`,en(w),pickN(N.filter(x=>x!==w),3).map(en),{expl:`${k} se dit ${en(w)}.`,audio:d===1?sayEn(w):undefined});}},
+  return ch(`Comment dit-on <b>${k}</b> en anglais ?`,en(w),pickN(N.filter(x=>x!==w),3).map(en),{expl:`${k} se dit ${en(w)}.`});}},
 {id:'cp-en-animals',name:'Animals : les animaux',icon:'🐶',domain:'Lexique',
  c:C(`Les animaux en anglais : ${en('a dog')} (un chien), ${en('a cat')} (un chat)… Pour en parler au pluriel, on ajoute souvent un <b>s</b> : ${en('two cats')}.`,
   [{t:'Les animaux',h:`<p>🐶 ${en('dog')} · 🐱 ${en('cat')} · 🐦 ${en('bird')} · 🐟 ${en('fish')} · 🐰 ${en('rabbit')} · 🐴 ${en('horse')} · 🐮 ${en('cow')} · 🐷 ${en('pig')} · 🐻 ${en('bear')} · 🐸 ${en('frog')}</p><p>Dans l’album ${en('Brown Bear, Brown Bear, What Do You See?')}, chaque animal voit le suivant.</p>`}],
