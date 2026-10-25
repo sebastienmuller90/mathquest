@@ -31,8 +31,10 @@ function createOrUpdate(){const title=clean(document.getElementById('hw-title')?
  else ensure().push({id:uid(),title,subject:subj,due,note,status:'todo',createdAt:Date.now(),claimedAt:0,validatedAt:0,rewardedAt:0,rewardDay:'',reward:null});
  EDIT='';saveNow();refreshParent();try{toast('📚 Devoir enregistré.');}catch(e){}return true;}
 function claim(id){const x=find(id);if(!x||x.status!=='todo')return false;x.status='claimed';x.claimedAt=Date.now();saveNow();refreshChild();try{toast('✅ Terminé signalé. Un parent doit maintenant le valider.');}catch(e){}return true;}
-function validate(id){const x=find(id);if(!x||x.status!=='claimed')return false;x.status='validated';x.validatedAt=Date.now();const r=grant(x);saveNow();refreshParent();
- try{toast(r.granted?`✅ Devoir validé · +${CFG.xp} XP · +${CFG.coins} 🪙 · +${CFG.merit} 🎖️`:'✅ Devoir validé · plafond de récompenses devoirs atteint aujourd’hui');}catch(e){}return true;}
+function validate(id){const x=find(id);if(!x||x.status!=='claimed')return false;x.status='validated';x.validatedAt=Date.now();
+ // Le toast annonce les gains RÉELS (différence avant/après) : le 1er devoir du jour qualifie aussi la journée d’étude (+bons points).
+ const b0={xp:+S.xp||0,coins:+S.coins||0,pts:+S.merit?.pts||0};const r=grant(x);const dXp=(+S.xp||0)-b0.xp,dCo=(+S.coins||0)-b0.coins,dPts=(+S.merit?.pts||0)-b0.pts;const dDay=Math.max(0,dPts-(+x.reward?.merit||0));saveNow();refreshParent();
+ try{toast(r.granted?`✅ Devoir validé · +${dXp} XP · +${dCo} 🪙 · +${dPts} 🎖️${dDay>0?` (dont ${dDay} pour la journée d’étude réussie)`:''}`:'✅ Devoir validé · plafond de récompenses devoirs atteint aujourd’hui');}catch(e){}return true;}
 function returnTodo(id){const x=find(id);if(!x||x.status==='validated')return false;x.status='todo';x.claimedAt=0;saveNow();refreshParent();return true;}
 function remove(id){const i=ensure().findIndex(x=>x.id===id);if(i<0)return false;const x=S.homework[i];if(x.status==='validated')return toast('Un devoir validé reste dans l’historique.');S.homework.splice(i,1);if(EDIT===id)EDIT='';saveNow();refreshParent();return true;}
 function edit(id){const x=find(id);if(!x||x.status==='validated')return false;EDIT=id;refreshParent();setTimeout(()=>document.getElementById('hw-title')?.focus(),0);return true;}

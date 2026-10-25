@@ -176,6 +176,35 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   await p.waitForTimeout(300);
   const iv1=(await counts(p)).intervals;
   T(`Mode éclair et leçon ouverts puis quittés 5 fois : aucune minuterie ne s’accumule (${iv0} → ${iv1})`,iv1<=iv0,'');
+  // 25/10/2026 : écrans secondaires (boutique, badges, récompenses, lexique, atlas, bibliothèque, diplômes, évaluation nationale, dictée, correction, Finot, parent)
+  // ouverts puis quittés 8 fois — écouteurs et minuteries stables, et aucune lecture vocale ne sort d'un écran déjà quitté.
+  await p.evaluate(()=>{window.__spoken=[];window.SpeechSynthesisUtterance=function(t){this.text=t;this.lang='';this.voice=null;this.rate=1;this.pitch=1;};
+   const vs=[{name:'Voix FR',lang:'fr-FR',voiceURI:'fr',localService:true,default:true}];try{Object.defineProperty(window,'speechSynthesis',{value:{speaking:false,pending:false,getVoices:()=>vs,speak(u){window.__spoken.push(u.text);setTimeout(()=>{try{u.onend&&u.onend();}catch(e){}},5);},cancel(){},pause(){},resume(){},addEventListener(){},removeEventListener(){}},configurable:true});}catch(e){}});
+  const e2=errs.length;
+  const cycle2=async()=>{
+   await p.evaluate(()=>{PARENT=false;L=null;const lang=WALL.find(w=>w.lvl===S.grade&&/anglais|italien/.test(sOf(w.id).id));
+    const steps=[()=>ACT.shop(),()=>ACT.badges(),()=>rewardsScreen(),()=>lang&&ACT.lexicon(lang.id),()=>atlasScreen(),()=>libraryScreen(),()=>ACT.diplomas(),()=>ACT.nationalscreen(),()=>flashMenu(),
+     ()=>{finotOpen();finotClose();},()=>{PARENT=true;parentScreen('suivi');parentScreen('programme');parentScreen('recomp');parentScreen('reglages');PARENT=false;}];
+    for(const f of steps){try{f();}catch(e){window.__cycErr=(window.__cycErr||'')+e.message+'|';}}
+    ACT.home();});
+   await p.evaluate(()=>{window.__spoken.length=0;let hit=null;for(const c of ALLCH){if(hit)break;const w=WMAP[c.id];if(!w||w.lvl!==S.grade||sOf(w.id).id.indexOf('francais')<0)continue;
+     for(let i=0;i<30&&!hit;i++){let q;try{q=c.g(2);}catch(e){continue;}if(q&&q.audio&&q.type==='text'&&/[ÉE]coute|dictée/i.test(q.q))hit={c,q};}}
+    if(hit){startMission([hit.c.id]);M.q=hit.q;renderQ();}});
+   await p.evaluate(()=>ACT.quit());await p.waitForFunction(()=>CUR==='home'&&!M,null,{timeout:3000}).catch(()=>{});};
+  for(let i=0;i<2;i++)await cycle2();
+  const d0=await counts(p);
+  for(let i=0;i<8;i++)await cycle2();
+  const d1=await counts(p);
+  const grown2=Object.keys(d1).filter(k=>(d1[k]||0)>(d0[k]||0)).map(k=>k+' '+(d0[k]||0)+'→'+d1[k]);
+  T('Écrans secondaires ouverts puis quittés 8 fois : aucun écouteur document / window ni minuterie ne s’accumule'+(grown2.length?'':' ('+d1.intervals+' minuteries)'),!grown2.length,grown2.join(' | '));
+  const cycErr=await p.evaluate(()=>window.__cycErr||'');
+  T('Écrans secondaires : aucune exception à l’ouverture (boutique, badges, récompenses, lexique, atlas, bibliothèque, diplômes, évaluation nationale, défi éclair, Finot, parent ×4)',!cycErr&&errs.length===e2,cycErr+errs.slice(e2).slice(0,3).join(' | '));
+  await p.evaluate(()=>{window.__spoken.length=0;});await p.waitForTimeout(1200);
+  const late=await p.evaluate(()=>window.__spoken.slice());
+  T('Dictée quittée tout de suite : aucune lecture vocale tardive après le retour à l’accueil (minuterie de lecture automatique nettoyée)',!late.length,late.join(' | '));
+  // écritures localStorage au repos : l'accueil inactif n'écrit pas en boucle
+  const idle=await p.evaluate(()=>new Promise(res=>{let n=0;const o=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){n++;return o.apply(this,arguments);};ACT.home();setTimeout(()=>{Storage.prototype.setItem=o;res(n);},4000);}));
+  T('Accueil inactif pendant 4 s : au plus 4 écritures localStorage (pas de sauvegarde en boucle)',idle<=4,idle+' écritures');
   T('Allers-retours et écrans : aucune erreur JavaScript',errs.length===e1&&!errs.slice(e1).length,errs.slice(e1).slice(0,4).join(' | '));
   await ctx.close();
  }finally{await b.close();srv.close();}return R;}

@@ -42,6 +42,32 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   await scenario('Entrées de profil nulles / de mauvais type parmi de bons profils : bons profils intacts, pas de plantage',
    ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'good',profiles:{good:base({name:'Bon',xp:321}),nul:null,txt:'abc',arr:[1,2],num:7,good2:base({name:'Bon2',xp:654})}})}),
    (a,c)=>({ok:c.name==='Bon'&&c.xp===321&&c.profiles.good2.xp===654,d:JSON.stringify(c.profiles)}));
+  // --- Régression 25/10/2026 : le profil de repli doit être le premier profil EXPLOITABLE (objet non tableau), jamais une entrée nulle.
+  const same=(a,c,n,x,extra={})=>({ok:a.name===n&&c.name===n&&a.xp===x&&c.xp===x&&c.ver===3&&Object.entries(extra).every(([k,v])=>c.profiles[k]&&c.profiles[k].xp===v),d:JSON.stringify({a:[a.name,a.xp],c:[c.name,c.xp],p:c.profiles})});
+  await scenario('Actif invalide (null) puis profil valide : le profil valide est activé (Bon, 123 XP), rien n’est perdu',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'bad',profiles:{bad:null,good:{name:'Bon',xp:123}}})}),
+   (a,c)=>{const r=same(a,c,'Bon',123);r.ok=r.ok&&('bad' in c.profiles);return r;});
+  await scenario('Clé active absente + premier profil nul : premier profil exploitable activé',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,profiles:{n:null,g:base({name:'G',xp:77})}})}),
+   (a,c)=>same(a,c,'G',77));
+  await scenario('Clé active null + premier profil de type texte : premier profil exploitable activé',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:null,profiles:{t:'abc',g:base({name:'G2',xp:78})}})}),
+   (a,c)=>same(a,c,'G2',78));
+  await scenario('Actif inexistant + premier profil tableau : profil exploitable activé',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'fantome',profiles:{arr:[1,2],g:base({name:'G3',xp:79})}})}),
+   (a,c)=>same(a,c,'G3',79));
+  await scenario('Plusieurs profils invalides (null, nombre, tableau, texte) puis un valide : le valide est activé',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'n1',profiles:{n1:null,n2:7,n3:[],n4:'x',ok:base({name:'Seul',xp:55})}})}),
+   (a,c)=>same(a,c,'Seul',55));
+  await scenario('Plusieurs profils valides, actif = le deuxième : il reste actif, aucun mélange',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'b',profiles:{a:base({name:'A',xp:1}),b:base({name:'B',xp:2}),c:base({name:'C',xp:3})}})}),
+   (a,c)=>same(a,c,'B',2,{a:1,c:3}));
+  await scenario('V2 sans aucun profil exploitable + V1 valide : V1 reprise une seule fois, copie brute de la V2 conservée',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'bad',profiles:{bad:null,txt:'x'}}),'mathquest_v1':JSON.stringify({name:'V1ok',xp:900})}),
+   (a,c)=>({ok:a.name==='V1ok'&&c.name==='V1ok'&&c.xp===900&&c.n===1&&c.keys.some(k=>k.startsWith('mathquest_profiles_corrupt_backup_')),d:JSON.stringify({a:a.xp,c:c.xp,n:c.n,k:c.keys})}));
+  await scenario('V1 valide ET V2 partiellement corrompue (un bon profil) : la V2 gagne, la V1 n’est pas fusionnée (pas de double gain)',
+   ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'bad',profiles:{bad:null,good:base({name:'V2bon',xp:300})}}),'mathquest_v1':JSON.stringify({name:'V1vieux',xp:9000})}),
+   (a,c)=>same(a,c,'V2bon',300));
   await scenario('Profil actif désigné inexistant : bascule sur un profil existant, aucune donnée supprimée',
    ()=>({'mathquest_profiles_v2':JSON.stringify({version:3,active:'fantome',profiles:{a:base({name:'A',xp:5}),b:base({name:'B',xp:6})}})}),
    (a,c)=>({ok:c.n===2&&c.profiles.a.xp===5&&c.profiles.b.xp===6&&['A','B'].includes(c.name),d:JSON.stringify(c.profiles)}));

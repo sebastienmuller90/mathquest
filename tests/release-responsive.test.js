@@ -6,14 +6,20 @@
    contrôle recouvert (elementFromPoint), champ de saisie minuscule, fenêtre modale hors écran. */
 const {serve,launchEngine,seedProfile}=require('./lib');
 const {answerQuestion}=require('./release-lib');
-const VPS=[[320,568],[375,667],[390,844],[430,932],[768,1024],[900,700],[1024,768],[1366,768],[1440,900],[1920,1080]];
+const VPS=[[320,568],[360,640],[375,667],[390,844],[430,932],[768,1024],[900,700],[1024,768],[1280,720],[1366,768],[1440,900],[1920,1080]];
 const LAND=[[844,390],[667,375],[568,320]];
 const PROFS=['CP','CM2','3e'];
-const SCREENS=['home:accueil','home:matieres','home:progres','home:plus','world','chap','lesson','picker','exo','correction','mistakes','devoirs','parent:suivi','parent:programme','parent:recomp','parent:reglages','rewards','shop','badges','profiles'];
-const LITE=['home:accueil','home:matieres','home:progres','home:plus','world','exo','correction','parent:suivi','rewards'];
+const SCREENS=['home:accueil','home:matieres','home:progres','home:plus','world','chap','lesson','picker','exo','correction','mistakes','devoirs','parent:suivi','parent:programme','parent:recomp','parent:reglages','rewards','shop','badges','profiles','dictee','dictee-retry'];
+// Écrans secondaires (lexique, atlas, bibliothèque, diplômes, évaluation nationale, défi éclair, panneau Finot, dictée corrigée) : un profil par viewport, tous les viewports échantillonnés
+const EXTRA=['dictee-correction','lexicon','lexcat','atlas','library','diplomas','national','flashmenu','finot'];
+const LITE=['home:accueil','home:matieres','home:progres','home:plus','world','exo','correction','parent:suivi','rewards','dictee'];
 const FULLVP=new Set(['320×568','390×844','768×1024']);
-const BUDGET_MS=Number(process.env.MQ_BUDGET_MS||300000);
+const BUDGET_MS=Number(process.env.MQ_BUDGET_MS||420000);
 
+// Voix simulées (fr/en/it) : les boutons « Écouter / Lentement » s'affichent comme sur un appareil équipé (sinon le texte de la dictée serait montré à leur place).
+const VOICES=()=>{const vs=[{name:'Voix FR',lang:'fr-FR',voiceURI:'fr',localService:true,default:true},{name:'Voice EN',lang:'en-GB',voiceURI:'en',localService:true,default:false},{name:'Voce IT',lang:'it-IT',voiceURI:'it',localService:true,default:false}];
+  window.SpeechSynthesisUtterance=function(t){this.text=t;this.lang='';this.voice=null;this.rate=1;this.pitch=1;};
+  Object.defineProperty(window,'speechSynthesis',{value:{speaking:false,pending:false,getVoices:()=>vs,speak(u){setTimeout(()=>{try{u.onend&&u.onend();}catch(e){}},5);},cancel(){},pause(){},resume(){},addEventListener(){},removeEventListener(){}},configurable:true});};
 /* Contrôle exécuté DANS la page : renvoie la liste des anomalies géométriques de l'écran courant. */
 function CHECK(opts){
   try{document.getAnimations().forEach(a=>{try{a.finish();}catch(e){}});}catch(e){}
@@ -34,7 +40,9 @@ function CHECK(opts){
       if(hasText&&!e.matches('.sr-only,.visually-hidden,[aria-hidden="true"]')){nClip++;out.push('texte-coupé '+name(e)+' '+e.scrollWidth+'>'+e.clientWidth);}}}
   // contrôles interactifs
   const sel='button,a[href],input:not([type=hidden]),select,textarea,[data-a],[role=button],[tabindex="0"]';
-  const ctr=[...root.querySelectorAll(sel)].filter(e=>vis(e)&&!e.closest('.sr-only,[hidden],[aria-hidden="true"]'));
+  let ctr=[...root.querySelectorAll(sel)].filter(e=>vis(e)&&!e.closest('.sr-only,[hidden],[aria-hidden="true"]'));
+  // panneau Finot ouvert : il se superpose volontairement à la page, seuls ses propres contrôles comptent
+  {const fc=document.getElementById('finotchat');if(fc&&fc.classList.contains('open'))ctr=ctr.filter(e=>fc.contains(e));}
   let nOff=0,nCov=0,nIn=0;
   for(const e of ctr){const r=e.getBoundingClientRect();
     if(nOff<4&&(r.left<-1||r.right>W+1)&&!hScroller(e)){nOff++;out.push('hors-écran '+name(e)+' '+Math.round(r.left)+'→'+Math.round(r.right)+' / '+W);}
@@ -63,6 +71,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  async function open(w,h,grade,o={}){
   const ctx=await b.newContext({viewport:{width:w,height:h},colorScheme:o.scheme||'light',hasTouch:w<1000});
   await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
+  await ctx.addInitScript(VOICES);
   const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
   await seedProfile(p,'Lou',grade);
@@ -75,7 +84,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  // Atteint un écran donné ; renvoie false si indisponible
  async function go(p,sc){
   const [k,arg]=sc.split(':');
-  await p.evaluate(()=>{try{if(PARENT){PARENT=false;}padClose&&padClose();}catch(e){}});
+  await p.evaluate(()=>{try{if(PARENT){PARENT=false;}padClose&&padClose();}catch(e){}try{if(typeof finotClose==='function')finotClose();}catch(e){}});
   if(k==='home'){await p.evaluate(a=>ACT.hometab(a),arg);}
   else if(k==='world'){await p.evaluate(()=>{const id=WALL.find(w=>w.lvl===S.grade&&sOf(w.id).id===S.subj)?.id||WALL.find(w=>w.lvl===S.grade).id;ACT.world(id);});}
   else if(k==='chap'||k==='lesson'||k==='picker'||k==='exo'||k==='correction'){
@@ -85,6 +94,21 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
     else if(k==='picker')await p.evaluate(id=>ACT.start(id),cid);
     else{await p.evaluate(id=>{ACT.start(id);ACT.startlevel(id+'|2');},cid);
       if(k==='correction'){await p.waitForTimeout(60);const ok=await p.evaluate(()=>!!(M&&M.q));if(!ok)return false;await answerQuestion(p,false).catch(()=>{});}}}
+  else if(k==='dictee'||k==='dictee-retry'||k==='dictee-correction'){
+    const ok=await p.evaluate(()=>{let hit=null;for(const c of ALLCH){if(hit)break;const w=WMAP[c.id];if(!w||w.lvl!==S.grade||sOf(w.id).id.indexOf('francais')<0)continue;
+      for(let i=0;i<30&&!hit;i++){let q;try{q=c.g(2);}catch(e){continue;}if(q&&q.audio&&q.type==='text'&&/[ÉE]coute|dictée/i.test(q.q))hit={c,q};}}
+      if(!hit)return false;startMission([hit.c.id]);M.q=hit.q;renderQ();return true;});
+    if(!ok)return false;
+    if(k!=='dictee'){await p.waitForTimeout(40);await p.evaluate(()=>{const i=$('#in0');i.value='zzz';validate();});
+      if(k==='dictee-correction'){await p.waitForTimeout(40);await p.evaluate(()=>{const i=$('#in0');if(i&&!i.disabled){i.value='yyy';validate();}});}}}
+  else if(k==='lexicon'||k==='lexcat'){const ok=await p.evaluate(k=>{const w=WALL.find(w=>w.lvl===S.grade&&/anglais|italien/.test(sOf(w.id).id));if(!w)return false;
+      if(k==='lexicon'){ACT.lexicon(w.id);return true;}const lc=LEX[lexLang(w.id)];const cat=Object.keys(lc.cats)[0];ACT.lexcat(w.id+'|'+cat);return true;},k);if(!ok)return false;}
+  else if(k==='atlas')await p.evaluate(()=>atlasScreen());
+  else if(k==='library')await p.evaluate(()=>libraryScreen());
+  else if(k==='diplomas')await p.evaluate(()=>ACT.diplomas());
+  else if(k==='national')await p.evaluate(()=>ACT.nationalscreen());
+  else if(k==='flashmenu')await p.evaluate(()=>flashMenu());
+  else if(k==='finot'){await p.evaluate(()=>{ACT.hometab('accueil');finotOpen();});}
   else if(k==='mistakes')await p.evaluate(()=>ACT.mistakes());
   else if(k==='devoirs')await p.evaluate(()=>{ACT.hometab('accueil');});
   else if(k==='parent')await p.evaluate(a=>{PARENT=true;parentScreen(a);},arg);
@@ -127,16 +151,37 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  VPS.forEach(([w,h],i)=>{const full=FULLVP.has(w+'×'+h);(full?PROFS:[PROFS[i%3]]).forEach(g=>jobs.push(['clair',w,h,g,{},full?SCREENS:LITE]));});
  [[320,568],[390,844],[1024,768]].forEach(([w,h],i)=>['CP','3e'].forEach((g,j)=>{if((i+j)%2===0||w===320)jobs.push(['sombre',w,h,g,{scheme:'dark'},LITE.concat(['mistakes','chap','parent:reglages'])]);}));
  [[320,568,PROFS],[768,1024,['CM2']]].forEach(([w,h,gs])=>gs.forEach(g=>jobs.push(['texte130',w,h,g,{big:true},LITE.concat(['mistakes','chap','parent:reglages'])])));
+ VPS.concat(LAND).forEach(([w,h],i)=>jobs.push(['extra',w,h,['CP','CM2','3e'][i%3],{},EXTRA]));
  LAND.forEach(([w,h],i)=>jobs.push(['paysage',w,h,['CM2','3e','CP'][i],{},LITE.concat(['mistakes','chap'])]));
  const POOL=Number(process.env.MQ_POOL||8);
  await Promise.all(Array.from({length:POOL},async()=>{while(jobs.length)await sweep(...jobs.shift());}));
  T('Onboarding : 7 étapes de l’assistant sans débordement, texte coupé, contrôle hors écran ni recouvert (13 viewports)',!obBad.length,obBad.slice(0,6).join(' | '));
- T('Écrans (accueil + 4 onglets, monde, chapitre, cours, exercice, correction, erreurs, devoirs, parent ×4, récompenses, boutique, badges, profils) — 10 viewports (3 profils aux 3 viewports de référence, 1 profil tournant ailleurs), mode clair : aucune anomalie géométrique',!BAD.clair,(BAD.clair||[]).slice(0,10).join(' | '));
+ T('Écrans (accueil + 4 onglets, monde, chapitre, cours, exercice, correction, erreurs, devoirs, parent ×4, récompenses, boutique, badges, profils) + dictée (écoute, essai raté) — 12 viewports (3 profils aux 3 viewports de référence, 1 profil tournant ailleurs), mode clair : aucune anomalie géométrique',!BAD.clair,(BAD.clair||[]).slice(0,10).join(' | '));
+ T('Écrans secondaires (dictée corrigée, lexique + catégorie, atlas, bibliothèque, diplômes, évaluation nationale, défi éclair, panneau Finot) — 15 viewports : aucune anomalie géométrique',!BAD.extra,(BAD.extra||[]).slice(0,8).join(' | '));
  T('Mode sombre (320, 390, 1024 × CP/3e) : aucune anomalie géométrique',!BAD.sombre,(BAD.sombre||[]).slice(0,8).join(' | '));
  T('Texte agrandi (html 130 %) à 320 px (CP/CM2/3e) et 768 px (CM2) : aucune anomalie géométrique',!BAD.texte130,(BAD.texte130||[]).slice(0,8).join(' | '));
  T('Paysage téléphone (844×390, 667×375, 568×320) (CM2, 3e, CP) : aucune anomalie géométrique',!BAD.paysage,(BAD.paysage||[]).slice(0,8).join(' | '));
 
- T('Couverture : tous les balayages exécutés (aucun sauté faute de temps), au moins 450 contrôles d’écran',skipped===0&&checks>=450,`${checks} contrôles, ${skipped} balayages sautés, ${Math.round((Date.now()-t0)/1000)} s`);
+ // 6. Formulaire de dictée : champ et bouton « Valider » atteignables, focus conservé après une puce d'accent (320×568, 568×320, 844×390, 390×844)
+ const fBad=[];
+ for(const [w,h] of [[320,568],[568,320],[844,390],[390,844]]){const {ctx,p}=await open(w,h,'CM2');
+  try{const ok=await go(p,'dictee');if(ok===false){fBad.push(w+'×'+h+' dictée indisponible');continue;}
+   await p.click('#in0');await p.keyboard.type('Les ');
+   const r1=await p.evaluate(()=>{const i=document.getElementById('in0'),b=i.getBoundingClientRect();const t=document.elementFromPoint(Math.min(Math.max(b.left+b.width/2,1),innerWidth-1),Math.min(Math.max(b.top+b.height/2,1),innerHeight-1));
+    return {focus:document.activeElement===i,val:i.value,vis:b.top>=-1&&b.bottom<=innerHeight+1&&b.left>=-1&&b.right<=innerWidth+1,free:t===i};});
+   if(!r1.focus||r1.val!=='Les ')fBad.push(w+'×'+h+' saisie perdue '+JSON.stringify(r1));
+   if(!r1.vis||!r1.free)fBad.push(w+'×'+h+' champ hors de vue ou recouvert '+JSON.stringify(r1));
+   const chip=p.locator('[data-a^="chip:"]').first();
+   if(await chip.count()){await chip.click();const r2=await p.evaluate(()=>({focus:document.activeElement&&document.activeElement.id,len:document.getElementById('in0').value.length}));if(r2.focus!=='in0'||r2.len<=4)fBad.push(w+'×'+h+' focus perdu après une puce d’accent '+JSON.stringify(r2));}
+   const v=p.locator('[data-a="valid"]');await v.scrollIntoViewIfNeeded();
+   const r3=await p.evaluate(()=>{const e=document.querySelector('[data-a="valid"]'),b=e.getBoundingClientRect(),t=document.elementFromPoint(b.left+b.width/2,Math.min(b.top+b.height/2,innerHeight-1));return {vis:b.top>=-1&&b.bottom<=innerHeight+1,free:t===e||e.contains(t),w:Math.round(b.width),h:Math.round(b.height)};});
+   if(!r3.vis||!r3.free)fBad.push(w+'×'+h+' bouton Valider inaccessible '+JSON.stringify(r3));
+   await p.keyboard.press('Enter');await p.waitForTimeout(80);
+   const fb=await p.evaluate(()=>document.getElementById('fb')&&document.getElementById('fb').innerText.trim().length>0);
+   if(!fb)fBad.push(w+'×'+h+' Entrée dans le champ ne valide pas');
+  }catch(e){fBad.push(w+'×'+h+' exception '+e.message.slice(0,100));}finally{await ctx.close();}}
+ T('Dictée : champ visible et non recouvert, saisie et focus conservés après une puce d’accent, bouton Valider atteignable, Entrée valide (320×568, 568×320, 844×390, 390×844)',!fBad.length,fBad.join(' | '));
+ T('Couverture : tous les balayages exécutés (aucun sauté faute de temps), au moins 650 contrôles d’écran',skipped===0&&checks>=650,`${checks} contrôles, ${skipped} balayages sautés, ${Math.round((Date.now()-t0)/1000)} s`);
  T('Aucune erreur JavaScript pendant tous les parcours',!errs.length,errs.slice(0,3).join(' | '));
  await b.close();srv.close();return R;}
 require('./lib').main(run);

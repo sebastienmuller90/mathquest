@@ -88,7 +88,7 @@ button.pill{cursor:pointer}.pill.fire{border-color:var(--gold);background:color-
 input.big{width:100%;font-size:28px;font-weight:600;padding:12px 16px;border-radius:16px;border:3px solid var(--border);background:var(--surface2);color:var(--text);outline:none;min-width:0}
 input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);background:var(--goodbg)}input.bad{border-color:var(--bad);background:var(--badbg)}
 .ml{display:flex;align-items:center;gap:10px;margin:8px 0}.ml span{min-width:92px;font-weight:700;font-size:18px}
-.chips{display:flex;gap:8px;margin-top:10px}.chip{min-width:48px;padding:6px 12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:20px;font-weight:700;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{min-width:48px;padding:6px 12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:20px;font-weight:700;cursor:pointer}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .choice{display:flex;align-items:center;gap:10px;text-align:left;padding:14px;border-radius:18px;border:3px solid color-mix(in srgb,var(--accent) 38%,var(--border));background:var(--surface2);font-size:20px;font-weight:600;cursor:pointer;box-shadow:0 4px 0 var(--edge);transition:transform .1s}
 .choice:hover:not(:disabled){filter:brightness(1.04);border-color:var(--accent)}.choice:active:not(:disabled){transform:scale(.97)}

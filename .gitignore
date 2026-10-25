@@ -50,6 +50,9 @@
 !/tests/release-keyboard-a11y.test.js
 !/tests/release-audio-audit.test.js
 !/tests/release-perf-audit.test.js
+!/tests/release-homework-toast.test.js
+!/tests/release-profile-isolation.test.js
+!/tests/release-pwa-audit.test.js
 !/tests/wave1-languages-depth.test.js
 !/tests/wave1-dictation.test.js
 !/tests/wave1-audio.test.js

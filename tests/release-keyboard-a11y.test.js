@@ -231,6 +231,22 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    'import':`(()=>{PARENT=true;parentScreen('reglages');ACT.impshow();})()`,
    'bibliothèque':`(()=>{PARENT=false;L=null;home();ACT.library();})()`,
    'atlas':`(()=>{PARENT=false;L=null;home();ACT.atlas();})()`,
+   // 25/10/2026 : écrans ajoutés à l'audit (dictée avec boutons Écouter, essai raté, correction, boutique, badges, récompenses, profils, lexique, défi éclair, diplômes, évaluation nationale, monde, chapitre)
+   'dictée (Écouter / Lentement)':`(()=>{PARENT=false;L=null;home();(()=>{const vs=[{name:'Voix FR',lang:'fr-FR',voiceURI:'fr',localService:true,default:true},{name:'Voice EN',lang:'en-GB',voiceURI:'en',localService:true,default:false},{name:'Voce IT',lang:'it-IT',voiceURI:'it',localService:true,default:false}];try{Object.defineProperty(window,'speechSynthesis',{value:{speaking:false,pending:false,getVoices:()=>vs,speak(u){setTimeout(()=>{try{u.onend&&u.onend();}catch(e){}},5);},cancel(){},pause(){},resume(){},addEventListener(){},removeEventListener(){}},configurable:true});}catch(e){}try{MQAudio.pickVoice&&MQAudio.setPrefs&&MQAudio.setPrefs({});}catch(e){}})();const id='${plan.dictee}';startMission([id]);for(let k=0;k<300&&!(M.q.type==='text'&&M.q.audio);k++)M.q=CHMAP[id].g([M.d,1,2,3][k%4]);renderQ();})()`,
+   'dictée (essai raté)':`(()=>{const i=document.getElementById('in0');i.value='zzz';validate();})()`,
+   'dictée (correction)':`(()=>{const i=document.getElementById('in0');if(i&&!i.disabled){i.value='yyy';validate();}})()`,
+   'correction (réponse fausse)':`(()=>{PARENT=false;L=null;home();const c=SCH(S.subj).find(c=>WMAP[c.id]).id;startMission([c]);for(let k=0;k<40&&M.q.type!=='choice';k++)M.q=CHMAP[c].g(M.d);renderQ();document.querySelectorAll('.choice')[(M.q.ans+1)%M.q.choices.length].click();})()`,
+   'monde':`(()=>{PARENT=false;L=null;home();const w=WALL.find(w=>w.lvl===S.grade)||WALL[0];ACT.world(w.id);})()`,
+   'chapitre':`(()=>{PARENT=false;L=null;home();ACT.chap(SCH(S.subj).find(c=>WMAP[c.id]).id);})()`,
+   'boutique':`(()=>{PARENT=false;L=null;home();ACT.shop();})()`,
+   'badges':`(()=>{PARENT=false;L=null;home();ACT.badges();})()`,
+   'récompenses (enfant)':`(()=>{PARENT=false;L=null;home();rewardsScreen();})()`,
+   'profils':`(()=>{PARENT=false;L=null;home();profilesScreen();})()`,
+   'lexique':`(()=>{PARENT=false;L=null;home();const w=WALL.find(w=>w.lvl===S.grade&&/anglais|italien/.test(sOf(w.id).id));ACT.lexicon(w.id);})()`,
+   'lexique (catégorie)':`(()=>{PARENT=false;L=null;home();const w=WALL.find(w=>w.lvl===S.grade&&/anglais|italien/.test(sOf(w.id).id));ACT.lexcat(w.id+'|'+Object.keys(LEX[lexLang(w.id)].cats)[0]);})()`,
+   'défi éclair (menu)':`(()=>{PARENT=false;L=null;home();flashMenu();})()`,
+   'diplômes':`(()=>{PARENT=false;L=null;home();ACT.diplomas();})()`,
+   'évaluation nationale':`(()=>{PARENT=false;L=null;home();ACT.nationalscreen();})()`,
    'Finot ouvert':`(()=>{PARENT=false;L=null;home();finotOpen();})()`};
   const walkRes={};const nameRes={};const nfRes={};const stRes={};const posTab=[];
   const clean=`(()=>{try{if(M){clearInterval(M.tick);clearTimeout(M.tid);}}catch(e){}})()`;

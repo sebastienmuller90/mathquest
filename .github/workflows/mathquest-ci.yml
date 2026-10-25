@@ -204,6 +204,15 @@ jobs:
       - name: "Release : audit technique et performance"
         if: matrix.browser == 'chromium'
         run: node tests/release-perf-audit.test.js
+      - name: "Release : toast de validation des devoirs"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-homework-toast.test.js
+      - name: "Release : isolation entre profils"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-profile-isolation.test.js
+      - name: "Release : PWA, cache et mise à jour"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-pwa-audit.test.js
       - name: Cours approfondis de langues du collège (anglais, italien)
         if: matrix.browser == 'chromium'
         run: node tests/wave1-languages-depth.test.js

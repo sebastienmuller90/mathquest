@@ -240,10 +240,10 @@ function inputHTML(q,pa='pick'){if(q.type==='order'){q._sel=q._sel||[];return `<
  if(q.type==='choice')return `<div class="choices">${q.choices.map((c,i)=>`<button class="choice" data-a="${pa}:${i}"><kbd>${i+1}</kbd>${c}</button>`).join('')}</div>`;
  const chips=Array.isArray(q.chips)?q.chips:q.type==='text'&&q.lang==='fr'?[]:q.type==='text'&&q.lang==='it'?['à','è','é','ì','ò','ù',"'"]:q.type==='text'&&q.lang==='en'?["'"]:{num:['−',','],frac:['/','−'],text:['x','+','−'],multi:['−',',']}[q.type];
  const ins=q.type==='multi'?q.labels.map((l,i)=>`<label class="ml"><span>${l}</span><input id="in${i}" class="big" autocomplete="off" inputmode="decimal"></label>`).join(''):
-  `<div class="inrow"><input id="in0" class="big" autocomplete="off" inputmode="${q.type==='num'?'decimal':'text'}" ${q.lang?'autocapitalize="off" spellcheck="false"':''} placeholder="${(q.lang&&q.type==='text'?'Écris ta réponse':{num:'Ta réponse',frac:'ex : 3/4',text:'ex : 5x+2'}[q.type])}">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div>`;
+  `<div class="inrow"><input id="in0" class="big" autocomplete="off" aria-label="Ta réponse" inputmode="${q.type==='num'?'decimal':'text'}" ${q.lang?'autocapitalize="off" spellcheck="false"':''} placeholder="${(q.lang&&q.type==='text'?'Écris ta réponse':{num:'Ta réponse',frac:'ex : 3/4',text:'ex : 5x+2'}[q.type])}">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div>`;
  return `<div class="ans">${ins}<div class="chips">${chips.map(c=>`<button class="chip" data-a="chip:${c}" tabindex="-1"${CHIP_LABEL[c]?` aria-label="${CHIP_LABEL[c]}"`:''}>${c}</button>`).join('')}</div></div>`;}
 // Nom accessible des puces de saisie (un lecteur d'écran n'annonce rien pour « − » ou « / » seuls).
-const CHIP_LABEL={'−':'Insérer le signe moins',',':'Insérer une virgule','/':'Insérer une barre de fraction','+':'Insérer le signe plus','x':'Insérer la lettre x',"'":'Insérer une apostrophe'};
+const CHIP_LABEL={'−':'Insérer le signe moins',',':'Insérer une virgule','/':'Insérer une barre de fraction','+':'Insérer le signe plus','x':'Insérer la lettre x',"'":'Insérer une apostrophe','’':'Insérer une apostrophe'};
 // Écran d'exercice : CUR n'est plus 'home' (sinon la barre d'onglets de l'accueil restait affichée par-dessus les réponses).
 const FINOT_QBTN='<button class="btn ghost" data-a="finotopen" aria-label="Demander de l’aide à Finot">🦊 Finot</button>';
 function renderQ(){const q=M.q,c=byId(M.cid);CUR=M.flash?'flash':'mission';

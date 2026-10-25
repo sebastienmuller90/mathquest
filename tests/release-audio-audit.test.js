@@ -36,8 +36,17 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    const norm=s=>strip(s).toLowerCase().replace(/[.,!?;:«»"“”'’]/g,'').replace(/\s+/g,' ').trim();
    const LISTEN=/🎧|(^|[.!?:]\s)[ÉE]coute(z)?\b|\bentends-tu\b|(^|[.!?:]\s)Tu entends (le|la|les|l’|un|une|ce|cette|bien) (son|mot|nombre|phrase|lettre|bruit)\b/i;
    const TRANSCRIBE=/[ÉE]coute.*(écris|recopie|tape)|dictée|ce que tu entends/i;
-   const o={chapters:ALLCH.length,questions:0,audios:0,empty:[],locale:[],lang:[],listenNoAudio:[],dirty:[],leak:[],errors:[],bySub:{},cats:{},ids:{}};
+   const o={chapters:ALLCH.length,questions:0,audios:0,empty:[],locale:[],lang:[],listenNoAudio:[],dirty:[],leak:[],leak2:[],errors:[],bySub:{},cats:{},ids:{}};
    const OKLOC=['fr-FR','en-GB','it-IT'];
+   // contrôle strict : renvoie une description si une consigne de TRAVAIL a un audio qui prononce la réponse attendue
+   const leakStrict=(q,stem,a,ans)=>{const nf=s=>strip(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[.,!?;:«»"“”'’-]/g,' ').replace(/s+/g,' ').trim();
+      const WORK=/(comment (dit|écrit|s’écrit|s'écrit)|écris en|traduis|complète|trouve|devine|quel est le mot|comment dire|en (anglais|italien) ?:)/i;
+      const LISTENING=/🎧|[ÉE]coute|dictée|Lis|entends|Que veut dire|Que reprend|se prononce/i;
+      if(!WORK.test(stem)||LISTENING.test(stem))return '';const an=ans.map(nf).filter(x=>x&&x.length>=2),at=' '+nf(a.t)+' ';
+      return an.some(x=>at.includes(' '+x+' '))?'« '+stem.slice(0,60)+' » lit « '+a.t.slice(0,40)+' »':'';};
+   // détecteur éprouvé sur une vraie question « Comment dit-on … » dont l'audio est forcé sur la réponse (doit alerter), puis avec un audio sans rapport (doit rester muet)
+   {let hit=null;for(const c of ALLCH){if(hit)break;for(let k=0;k<20&&!hit;k++){let q;try{q=c.g(2)}catch(e){continue}if(q&&q.type==='choice'&&/Comment dit-on/.test(strip(q.q)))hit=q;}}
+    if(hit){const ans=[strip(hit.choices[hit.ans])];o.selfAlert=!!leakStrict(hit,strip(hit.q),{t:ans[0]},ans);o.selfQuiet=!leakStrict(hit,strip(hit.q),{t:'xyz'},ans);}}
    for(const c of ALLCH){const sub=sOf(WMAP[c.id].id).id;
     for(const d of [1,2,3])for(let k=0;k<8;k++){let q;try{q=c.g(d);}catch(e){o.errors.push(c.id+' : '+e.message);continue;}
      if(!q){o.errors.push(c.id+' : question nulle');continue;}o.questions++;
@@ -53,11 +62,14 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
      // la réponse attendue n'est pas lue à voix haute quand la question demande de la trouver
      let ans=[];if(q.type==='choice')ans=[strip(q.choices[q.ans])];else if(q.type==='text')ans=(q.acc||[]).map(strip);else if(q.type==='num')ans=[String(q.ans)];
      if(ans.some(x=>x&&norm(x)===norm(a.t))&&!TRANSCRIBE.test(stem)&&!/🎧|[ÉE]coute/.test(stem)&&!norm(stem).includes(norm(a.t)))o.leak.push(c.id+' : « '+stem.slice(0,60)+' » lit « '+a.t.slice(0,30)+' »');
+     // 25/10/2026 (PR #32) — contrôle strict, sans les exceptions ci-dessus : consigne de TRAVAIL (traduire / écrire / compléter / trouver / dire) dont l'audio
+     // contient la réponse attendue, au mot près et sans accents. Les consignes d'écoute, de dictée et de lecture-compréhension sont des activités d'écoute voulues.
+     {const r=leakStrict(q,stem,a,ans);if(r)o.leak2.push(c.id+' ('+sub+') : '+r);}
      // catégories (lettres isolées, sons, syllabes, mots, phrases, nombres)
      const w=norm(a.t).split(' ').filter(Boolean).length;
      const cat=a.k==='lettre'||(norm(a.t).length===1)?'lettre':a.k==='phonème'||a.k==='graphème'?'phonème':a.k==='syllabe'?'syllabe':/\d|^(one|two|three|four|five|six|seven|eight|nine|ten|uno|due|tre|quattro|cinque)\b/.test(norm(a.t))?'nombre':w===1?'mot':'phrase';
      o.cats[cat]=(o.cats[cat]||0)+1;}}
-   for(const k of ['empty','locale','lang','listenNoAudio','dirty','leak','errors'])o[k]=[...new Set(o[k])];
+   for(const k of ['empty','locale','lang','listenNoAudio','dirty','leak','leak2','errors'])o[k]=[...new Set(o[k])];
    return o;});
   T(`Balayage : ${scan.chapters} chapitres × 3 niveaux × 8 tirages, ${scan.questions} questions, aucune exception de générateur`,scan.chapters>=1000&&scan.questions>=20000&&!scan.errors.length,scan.errors.slice(0,5).join(' | '));
   T(`${scan.audios} questions audio : trois langues présentes (fr-FR, en-GB, it-IT) et plusieurs matières`,scan.audios>=500&&scan.bySub['anglais']>0&&scan.bySub['italien']>0&&scan.bySub['p-anglais']>0&&scan.bySub['p-francais']>0&&scan.bySub['francais']>0,JSON.stringify(scan.bySub));
@@ -66,6 +78,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Aucune consigne « écoute / entends-tu / 🎧 » sans contenu audio, sur tous les chapitres',!scan.listenNoAudio.length,scan.listenNoAudio.slice(0,8).join(' | '));
   T('Texte réellement prononcé : jamais vide, sans balise HTML, sans « undefined », « [object », « NaN » ni entité',!scan.dirty.length,scan.dirty.slice(0,6).join(' | '));
   T('Aucune réponse attendue lue à voix haute dans une question qui demande de la trouver (hors dictée, écoute-et-choisis, ou mot déjà écrit dans la question)',!scan.leak.length,scan.leak.length+' cas — '+scan.leak.slice(0,6).join(' | '));
+  T('Consignes de travail (« Comment dit-on… », « Écris en anglais », « Complète », « Trouve »…) : l’audio ne prononce jamais la réponse attendue (anglais, italien, français, CP→3e), contrôle strict mot à mot sans accents',!scan.leak2.length,scan.leak2.length+' cas — '+scan.leak2.slice(0,6).join(' | '));
+  T('Détecteur de fuite éprouvé : alerte quand l’audio d’un « Comment dit-on… » prononce la réponse, silencieux sinon',scan.selfAlert===true&&scan.selfQuiet===true,JSON.stringify({a:scan.selfAlert,q:scan.selfQuiet}));
   T('Catégories audio présentes : sons / lettres / syllabes / mots / phrases / nombres',['mot','phrase','nombre'].every(k=>scan.cats[k]>0)&&Object.keys(scan.cats).length>=3,JSON.stringify(scan.cats));
 
   if(process.env.MQ_DEBUG)console.error('étape 2');
