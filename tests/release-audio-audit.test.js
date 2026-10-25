@@ -157,9 +157,13 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
     await p.evaluate(()=>{window.__spoken.length=0;});
     if(!moved||!await p.evaluate(()=>!!(M&&M.q)))break;}
    return out;};
-  const group=async(label,list,minAudio,extra)=>{const res=[];for(const ch of list){const t0=Date.now();try{res.push(await play(ch));if(process.env.MQ_DEBUG)console.error('  chapitre',ch.id,Date.now()-t0,'ms');}catch(e){res.push({id:ch.id,nq:0,n:0,texts:[],issues:['exception : '+String(e.message).slice(0,160)]});}}
-   const issues=res.flatMap(r=>r.issues.map(i=>r.id+' : '+i));const n=res.reduce((a,r)=>a+r.n,0),nq=res.reduce((a,r)=>a+r.nq,0);
-   T(`${label} : ${n} énoncés audio sur ${nq} questions (${res.length} chapitres), texte et langue envoyés à la synthèse corrects`,res.length>0&&n>=minAudio&&!issues.length,(res.length?'':'aucun chapitre — ')+issues.slice(0,5).join(' | '));
+  // Le tirage des questions dépend de la fenêtre de rotation de 12 h (question-rotation.js) : une passe de 5 questions peut,
+  // selon l'heure, ne contenir aucun énoncé audio. On rejoue alors les mêmes chapitres (nouveau tirage), 3 passes au plus ;
+  // chaque énoncé audio rencontré est vérifié en entier et le minimum exigé reste le même.
+  const group=async(label,list,minAudio,extra)=>{const res=[];let n=0,passes=0;
+   for(;passes<3&&(passes===0||n<minAudio);passes++){for(const ch of list){const t0=Date.now();try{res.push(await play(ch));if(process.env.MQ_DEBUG)console.error('  chapitre',ch.id,Date.now()-t0,'ms');}catch(e){res.push({id:ch.id,nq:0,n:0,texts:[],issues:['exception : '+String(e.message).slice(0,160)]});}}n=res.reduce((a,r)=>a+r.n,0);}
+   const issues=res.flatMap(r=>r.issues.map(i=>r.id+' : '+i));const nq=res.reduce((a,r)=>a+r.nq,0),nch=new Set(res.map(r=>r.id)).size;
+   T(`${label} : ${n} énoncés audio sur ${nq} questions (${nch} chapitres${passes>1?`, ${passes} passes`:''}), texte et langue envoyés à la synthèse corrects`,res.length>0&&n>=minAudio&&!issues.length,(res.length?'':'aucun chapitre — ')+issues.slice(0,5).join(' | '));
    if(extra)extra(res);return res;};
   await group('Dictée CP (mots)',pick.cpDict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CP : un mot (ou une courte phrase) par question, jamais la consigne ni une réponse inversée',t.length>0&&t.every(x=>x.split(/\s+/).length<=4&&!/[ÉE]coute|écris/i.test(x)),t.join(' / '));});
   await group('Dictée CE1 (mots et phrases)',pick.ce1Dict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CE1 : le texte lu ne contient ni la consigne ni « undefined »',t.length>0&&t.every(x=>!/[ÉE]coute|écris|undefined/i.test(x)),t.join(' / '));});
