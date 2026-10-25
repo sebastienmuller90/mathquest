@@ -213,6 +213,9 @@ jobs:
       - name: "Release : PWA, cache et mise à jour"
         if: matrix.browser == 'chromium'
         run: node tests/release-pwa-audit.test.js
+      - name: "Release : correctifs de l’audit physique PC (audio, accords, mini-parcours, diagnostic, défilement)"
+        if: matrix.browser == 'chromium'
+        run: node tests/release-physical-fixes.test.js
       - name: Cours approfondis de langues du collège (anglais, italien)
         if: matrix.browser == 'chromium'
         run: node tests/wave1-languages-depth.test.js

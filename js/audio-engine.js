@@ -87,7 +87,8 @@ const UNITS=[['km/h','kilomètres heure'],['m/s','mètres par seconde'],['g/cm³
   ['kg','kilogrammes'],['mg','milligrammes'],['hL','hectolitres'],['cL','centilitres'],['mL','millilitres'],['dL','décilitres'],['min','minutes'],['°C','degrés Celsius'],['kΩ','kilohms'],['Ω','ohms'],
   ['mA','milliampères'],['kW','kilowatts'],['Hz','hertz'],['Go','gigaoctets'],['Mo','mégaoctets'],['Ko','kilooctets'],['To','téraoctets'],['m','mètres'],['g','grammes'],['L','litres'],['l','litres'],['t','tonnes'],['s','secondes'],
   ['V','volts'],['A','ampères'],['W','watts'],['J','joules'],['N','newtons'],['°','degrés']];
-const UNIT_RE=new RegExp('(\\d)\\s?('+UNITS.map(u=>u[0].replace(/[.*+?^${}()|[\]\\/]/g,'\\$&')).join('|')+')(?![\\p{L}\\d²³])','gu');
+// Une apostrophe juste après la lettre est une élision (« 10 000 s’écrivent », « 3 s’il », « 8 l’enfant »), jamais une unité.
+const UNIT_RE=new RegExp('(\\d)\\s?('+UNITS.map(u=>u[0].replace(/[.*+?^${}()|[\]\\/]/g,'\\$&')).join('|')+')(?![\\p{L}\\d²³\'’])','gu');
 const UNIT_MAP=Object.fromEntries(UNITS);
 function prepareFR(t){t=' '+String(t??'').replace(/[  ]/g,' ').replace(/[’‘`´]/g,"'")+' ';
   t=t.replace(/av\.\s*J\.-C\./g,'avant Jésus-Christ').replace(/apr\.\s*J\.-C\./g,'après Jésus-Christ');

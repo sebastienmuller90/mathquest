@@ -8,6 +8,8 @@
 const MQ=window.MQPrimary;if(!MQ)return;
 const H=MQ.H;const {R,P,ch,num,txt,frac,order,tf,bank,pairs,sort,seq,mix,pickN,shuffle,SVG,nf,enLettres,conjGen}=H;
 const C=(d,u,ex,m,a,r)=>({d,u,ex,m,a,r});const T=(t,h)=>({t,h});const say=w=>({t:w,l:'fr-FR'});
+// Accord du nom de rang : « 0 dizaine », « 1 millier », « 2 centaines » (pluriel à partir de 2).
+const rang=(n,s,p)=>`${n} ${n>=2?p:s}`;
 const IRR3=['faire','aller','dire','venir','pouvoir','voir','vouloir','prendre'];
 const ER1=H.ER.filter(v=>v!=='nager');
 
@@ -216,9 +218,9 @@ const MA=[
   ['4 chiffres : milliers, centaines, dizaines, unités.','1 000 = 10 centaines.']),
  tip:'Écris 0 dans les rangs vides.',
  g:d=>{const n=R(1000,d===1?5000:9999),m=Math.floor(n/1000),c=Math.floor(n/100)%10,t=Math.floor(n/10)%10,u=n%10;const r=Math.random();
-  if(r<.3)return num(`Écris en chiffres : <b>${m} milliers, ${c} centaines, ${t} dizaines et ${u} unités</b>.`,n,{expl:`${m*1000} + ${c*100} + ${t*10} + ${u} = <b>${nf(n)}</b>.`});
+  if(r<.3)return num(`Écris en chiffres : <b>${rang(m,'millier','milliers')}, ${rang(c,'centaine','centaines')}, ${rang(t,'dizaine','dizaines')} et ${rang(u,'unité','unités')}</b>.`,n,{expl:`${m*1000} + ${c*100} + ${t*10} + ${u} = <b>${nf(n)}</b>.`});
   if(r<.55)return num(`Écris en chiffres : <b>${enLettres(n)}</b>`,n,{expl:`« ${enLettres(n)} » = <b>${nf(n)}</b>.`});
-  if(r<.8){const k=P(['milliers','centaines','dizaines','unités']);const a={milliers:m,centaines:c,dizaines:t,unités:u}[k];return num(`Dans <b>${nf(n)}</b>, quel est le chiffre des <b>${k}</b> ?`,a,{expl:`${nf(n)} : ${m} milliers, ${c} centaines, ${t} dizaines, ${u} unités.`});}
+  if(r<.8){const k=P(['milliers','centaines','dizaines','unités']);const a={milliers:m,centaines:c,dizaines:t,unités:u}[k];return num(`Dans <b>${nf(n)}</b>, quel est le chiffre des <b>${k}</b> ?`,a,{expl:`${nf(n)} : ${rang(m,'millier','milliers')}, ${rang(c,'centaine','centaines')}, ${rang(t,'dizaine','dizaines')}, ${rang(u,'unité','unités')}.`});}
   const k=P(['centaines','dizaines']);const a=k==='centaines'?Math.floor(n/100):Math.floor(n/10);return num(`Combien y a-t-il de <b>${k}</b> en tout dans ${nf(n)} ?`,a,{expl:`${nf(n)} contient <b>${a}</b> ${k} (on lit le nombre jusqu’au rang des ${k}).`,hint:`1 millier = ${k==='centaines'?'10 centaines':'100 dizaines'}.`});}},
 {id:'ce2-ma-comparer',name:'Comparer, ranger, encadrer jusqu’à 10 000',icon:'⚖️',domain:'Nombres',
  c:C(`Pour comparer deux grands nombres : celui qui a le <b>plus de chiffres</b> est le plus grand. S’ils ont autant de chiffres, je compare de <b>gauche à droite</b>.`,

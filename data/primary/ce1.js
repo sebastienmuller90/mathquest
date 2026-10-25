@@ -8,6 +8,8 @@
 const MQ=window.MQPrimary;if(!MQ)return;
 const H=MQ.H;const {R,P,ch,num,txt,frac,order,tf,bank,pairs,sort,seq,mix,pickN,shuffle,SVG,nf,enLettres,enLettresTrad,conjGen}=H;
 const C=(d,u,ex,m,a,r)=>({d,u,ex,m,a,r});
+// Accord du nom de rang : « 0 dizaine », « 1 centaine », « 2 unités » (pluriel à partir de 2).
+const rang=(n,s,p)=>`${n} ${n>=2?p:s}`;
 const say=w=>({t:w,l:'fr-FR'});
 const T=(t,h)=>({t,h});
 
@@ -235,9 +237,9 @@ const MA=[
  tip:'Écris 0 quand un rang est vide.',
  g:d=>{const n=d===1?R(100,399):R(100,999),c=Math.floor(n/100),t=Math.floor(n/10)%10,u=n%10;const r=Math.random();
   if(r<.3&&d<3)return num(`Combien de cubes en tout ?${SVG.blocks(t,u,c)}`,n,{expl:`${c} centaine${c>1?'s':''} = ${c*100}, ${t} dizaine${t>1?'s':''} = ${t*10}, ${u} unité${u>1?'s':''} : <b>${n}</b>.`});
-  if(r<.55){const z=d>=2&&Math.random()<.5;const m=z?c*100+u:n;return num(`Écris le nombre : <b>${c} centaines, ${z?0:t} dizaine${!z&&t>1?'s':''} et ${u} unités</b>.`,m,{expl:`${c*100} + ${z?0:t*10} + ${u} = <b>${m}</b>.${z?' Il y a un 0 au rang des dizaines.':''}`});}
-  if(r<.8){const k=P(['centaines','dizaines','unités']);const a=k==='centaines'?c:k==='dizaines'?t:u;return num(`Dans <b>${n}</b>, quel est le chiffre des <b>${k}</b> ?`,a,{expl:`${n} : ${c} centaines, ${t} dizaines, ${u} unités. Chiffre des ${k} : <b>${a}</b>.`});}
-  if(d===3){const tot=Math.floor(n/10);return num(`Combien y a-t-il de <b>dizaines en tout</b> dans ${n} ?`,tot,{expl:`${n} = ${tot} dizaines et ${u} unités (les ${c} centaines valent ${c*10} dizaines).`,hint:'Une centaine = 10 dizaines.'});}
+  if(r<.55){const z=d>=2&&Math.random()<.5;const m=z?c*100+u:n;return num(`Écris le nombre : <b>${rang(c,'centaine','centaines')}, ${rang(z?0:t,'dizaine','dizaines')} et ${rang(u,'unité','unités')}</b>.`,m,{expl:`${c*100} + ${z?0:t*10} + ${u} = <b>${m}</b>.${z?' Il y a un 0 au rang des dizaines.':''}`});}
+  if(r<.8){const k=P(['centaines','dizaines','unités']);const a=k==='centaines'?c:k==='dizaines'?t:u;return num(`Dans <b>${n}</b>, quel est le chiffre des <b>${k}</b> ?`,a,{expl:`${n} : ${rang(c,'centaine','centaines')}, ${rang(t,'dizaine','dizaines')}, ${rang(u,'unité','unités')}. Chiffre des ${k} : <b>${a}</b>.`});}
+  if(d===3){const tot=Math.floor(n/10);return num(`Combien y a-t-il de <b>dizaines en tout</b> dans ${n} ?`,tot,{expl:`${n} = ${tot} dizaines et ${rang(u,'unité','unités')} (${c>=2?`les ${c} centaines valent`:'1 centaine vaut'} ${c*10} dizaines).`,hint:'Une centaine = 10 dizaines.'});}
   return num(`Complète : <b>${n} = ${c*100} + ${t*10} + …</b>`,u,{expl:`${n} = ${c*100} + ${t*10} + <b>${u}</b>.`});}},
 {id:'ce1-ma-lire-ecrire',name:'Lire et écrire les nombres jusqu’à 1 000',icon:'✍️',domain:'Nombres',
  c:C(`Pour lire un nombre à 3 chiffres, je lis d’abord les <b>centaines</b>, puis le reste comme un nombre à 2 chiffres : 347 → trois-cent-quarante-sept.`,
