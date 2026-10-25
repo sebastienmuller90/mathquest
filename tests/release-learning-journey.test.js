@@ -7,6 +7,10 @@ const {serve,launchEngine,freshContext,wizard}=require('./release-lib');
 const KIDS=[
  {name:'Capucine',grade:'CE2',stage:'primaire',birth:'2017-03-14',companion:'finot',gender:'girl'},
  {name:'Arthur',grade:'5e',stage:'college',birth:'2013-05-21',companion:'leo',gender:'boy'}];
+// Espaces typographiques équivalentes : nf() sépare les milliers par une espace fine insécable (U+202F), alors que le carnet
+// affiche la question passée par plainText() (espaces normales). On neutralise UNIQUEMENT les variantes d'espace (U+00A0, U+202F,
+// suites d'espaces) : lettres, chiffres et ponctuation restent comparés à l'identique.
+const normalizeText=s=>String(s??'').replace(/[\u00a0\u202f]/g,' ').replace(/[ \t\r\n]+/g,' ').trim();
 
 // Réponse par VRAIS clics / saisies, pour la mission (M.q), le cours (L.q / L.pq) ou le diagnostic (D, via data-a="diag*").
 async function answerCur(p,correct,mode){
@@ -139,7 +143,7 @@ async function journey(b,url,k,R){
   await p.evaluate(()=>ACT.home());await p.waitForFunction(()=>CUR==='home');
   await p.evaluate(()=>ACT.mistakes());await p.waitForFunction(()=>CUR==='mistakes');
   const mscr=await p.evaluate(()=>({cards:document.querySelectorAll('.error-card,.er-card').length,txt:document.getElementById('app').innerText}));
-  T('Carnet d’erreurs (écran) : l’erreur récente est listée avec sa bonne réponse',mscr.cards>=1&&mscr.txt.includes(wq.q.slice(0,20).trim()),JSON.stringify({cards:mscr.cards,q:wq.q}));
+  T('Carnet d’erreurs (écran) : l’erreur récente est listée avec sa bonne réponse',mscr.cards>=1&&normalizeText(mscr.txt).includes(normalizeText(wq.q).slice(0,20).trim()),JSON.stringify({cards:mscr.cards,q:wq.q}));
 
   // 5. MAÎTRISE
   const mEnd=await p.evaluate(id=>({m:MQAdaptive.mastery(S,id),rec:S.mastery[id]}),cid);
@@ -197,7 +201,21 @@ async function journey(b,url,k,R){
  }finally{await ctx.close();}
 }
 
-async function run(){const R=[];
+// Garde-fou de la comparaison : les espaces équivalentes se confondent, tout autre écart reste détecté.
+function normalizeTextChecks(R){
+ const T=(n,ok,d='')=>R.push({name:`Comparaison de texte : ${n}`,ok:!!ok,detail:String(d).slice(0,300)});
+ const eq=(a,b)=>normalizeText(a)===normalizeText(b);
+ T('« Dans 4\u202f219… » (U+202F) ≡ « Dans 4 219… » (U+0020)',eq('Dans 4\u202f219, quel est le chiffre des milliers ?','Dans 4 219, quel est le chiffre des milliers ?'));
+ T('« Dans 4\u00a0219… » (U+00A0) ≡ « Dans 4 219… » (U+0020)',eq('Dans 4\u00a0219, quel est le chiffre des milliers ?','Dans 4 219, quel est le chiffre des milliers ?'));
+ T('Nombre à 5 chiffres : « 65\u202f218 » ≡ « 65 218 » ≡ « 65\u00a0218 »',eq('Le nombre 65\u202f218 est-il divisible par 9 ?','Le nombre 65 218 est-il divisible par 9 ?')&&eq('Le nombre 65\u00a0218 est-il divisible par 9 ?','Le nombre 65 218 est-il divisible par 9 ?'));
+ const card='📒 Carnet d’erreurs\nCompter jusqu’à 10 000\nDans 4 219, quel est le chiffre des milliers ?\nRéponse attendue : 4';
+ T('Carnet affiché : la question à U+202F est retrouvée dans le texte à espaces normales',normalizeText(card).includes(normalizeText('Dans 4\u202f219, quel est le chiffre des mill').slice(0,20).trim()));
+ T('Toujours détecté : mauvais nombre (4 219 ≠ 4 291, 65 218 ≠ 65 281)',!eq('Dans 4\u202f219','Dans 4 291')&&!eq('Le nombre 65\u202f218','Le nombre 65 281'));
+ T('Toujours détecté : chiffres fusionnés (4 219 ≠ 4219) et texte différent',!eq('Dans 4\u202f219','Dans 4219')&&!eq('Dans 4 219, quel est le chiffre des milliers ?','Dans 4 219, quel est le chiffre des centaines ?'));
+ T('Toujours détecté : une autre question est absente du carnet',!normalizeText(card).includes(normalizeText('Dans 5\u202f219, quel est le chiffre des mill').slice(0,20).trim())&&!normalizeText(card).includes(normalizeText('Le nombre 65\u202f218 est-il divisible').slice(0,20).trim()));
+}
+
+async function run(){const R=[];normalizeTextChecks(R);
  const eng=(process.env.MQ_ENGINES||'chromium').split(',')[0].trim();const {srv,url}=await serve();const b=await launchEngine(eng);
  try{for(const k of KIDS){try{await journey(b,url,k,R);}catch(e){R.push({name:`[${k.grade}] Parcours interrompu`,ok:false,detail:String(e&&e.stack||e).slice(0,900)});}}}
  finally{await b.close();srv.close();}
