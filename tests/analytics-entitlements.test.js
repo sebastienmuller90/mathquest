@@ -1,8 +1,8 @@
 /* Interfaces abstraites (31/10/2026) : statistiques d'usage (MQAnalytics) et droits d'accès (MQEntitlements).
    Statistiques : désactivées par défaut, aucun fournisseur, aucun identifiant (ni publicitaire, ni appareil, ni installation),
    aucune empreinte, aucune donnée nominative ; seuls des noms d'évènements connus et des propriétés simples passent.
-   Droits : aucun achat branché ; l'expérience gratuite actuelle reste intégralement accessible ; tout achat passe par le
-   mode parent ; état séparé et versionné, jamais synchronisé. */
+   Droits : aucun achat branché ; l'expérience gratuite actuelle reste intégralement accessible ; achat ET restauration passent
+   par le mode parent ; état séparé et versionné, jamais synchronisé. */
 const {serve,launchEngine}=require('./lib');
 const {freshContext,wizard}=require('./release-lib');
 
@@ -38,16 +38,16 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Ni l’accord ni les droits ne partent dans le snapshot de synchronisation',!/analytics|entitlement|premium/i.test(synced),'');
 
   // ===== Droits d'accès
-  const ent=await p.evaluate(async()=>({prem:MQEntitlements.hasPremium(),prov:MQEntitlements.providerId(),restore:await MQEntitlements.restorePurchases()}));
-  T('Droits : aucun fournisseur d’achat branché, premium faux, restauration sans effet',ent.prem===false&&ent.prov==='none'&&ent.restore&&ent.restore.restored===0,JSON.stringify(ent));
+  const ent=await p.evaluate(async()=>{parentScreen('reglages');const r={prem:MQEntitlements.hasPremium(),prov:MQEntitlements.providerId(),restore:await MQEntitlements.restorePurchases()};ACT.home();return r;});
+  T('Droits : aucun fournisseur d’achat branché, premium faux, restauration parent sans effet',ent.prem===false&&ent.prov==='none'&&ent.restore&&ent.restore.restored===0,JSON.stringify(ent));
   const gate=await p.evaluate(async()=>{PARENT=false;try{await MQEntitlements.purchase('finot.premium');return 'achat';}catch(e){return e.code||e.message;}});
   T('Achat impossible hors de l’espace parents (aucun paywall face à l’enfant)',gate==='parent-gate',gate);
   const noProv=await p.evaluate(async()=>{parentScreen('reglages');try{await MQEntitlements.purchase('finot.premium');return 'achat';}catch(e){return e.code||e.message;}finally{ACT.home();}});
   T('En espace parents sans fournisseur : refus explicite « indisponible », rien n’est débité',noProv==='unavailable',noProv);
   const prov=await p.evaluate(async()=>{const calls=[];MQEntitlements.setProvider({id:'fake',available:async()=>true,purchase:async id=>{calls.push(id);return {products:[id]};},restore:async()=>({products:['finot.premium']})});
-   parentScreen('reglages');const r=await MQEntitlements.purchase('finot.premium');ACT.home();const st=JSON.parse(localStorage.getItem('finot_entitlements_v1')||'null');
-   const rs=await MQEntitlements.restorePurchases();return {calls,prem:MQEntitlements.hasPremium(),st,rs};});
-  T('Avec un fournisseur (simulé) : achat en espace parents, droit enregistré dans finot_entitlements_v1 (schéma versionné), restauration',prov.calls.join()==='finot.premium'&&prov.prem===true&&prov.st&&prov.st.schema===1&&prov.st.products.includes('finot.premium')&&prov.rs.restored===1,JSON.stringify(prov));
+   parentScreen('reglages');const r=await MQEntitlements.purchase('finot.premium');const st=JSON.parse(localStorage.getItem('finot_entitlements_v1')||'null');
+   const rs=await MQEntitlements.restorePurchases();ACT.home();return {calls,prem:MQEntitlements.hasPremium(),st,rs};});
+  T('Avec un fournisseur (simulé) : achat et restauration en espace parents, droit enregistré dans finot_entitlements_v1',prov.calls.join()==='finot.premium'&&prov.prem===true&&prov.st&&prov.st.schema===1&&prov.st.products.includes('finot.premium')&&prov.rs.restored===1,JSON.stringify(prov));
   const profiles=await p.evaluate(()=>{const db=JSON.parse(localStorage.getItem('mathquest_profiles_v2'));return JSON.stringify(db);});
   T('Les droits sont séparés des profils (aucune donnée ajoutée dans mathquest_profiles_v2)',!/premium|entitlement/i.test(profiles),'');
   // Expérience gratuite : rien n'est verrouillé, premium ou non.
