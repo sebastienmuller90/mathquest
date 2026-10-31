@@ -89,7 +89,8 @@ function activateProfile(id,goHome=true){if(!okProfile(PDB?.profiles[id]))return
 function createProfile(){saveLocal();const id=pid(),base=clone(DEF);base.sound=S?.sound??true;base.pin=S?.pin||'';base.rec=S?.rec||'';base.theme=S?.theme||'finot';base.merit.rules=clone(S?.merit?.rules||DEF.merit.rules);base.merit.rewards=clone(S?.merit?.rewards||DEF.merit.rewards);PDB.profiles[id]=base;ACTIVE=id;PDB.active=id;S=normalizeState(base);ONB='🦊';MQHooks.emit('profile:changed',{id,created:true});saveLocal();onboarding(true);}
 function deleteProfile(id){if(!okProfile(PDB?.profiles[id])||Object.keys(PDB.profiles).filter(k=>k!==id&&okProfile(PDB.profiles[k])).length<1)return false;try{localStorage.setItem('mathquest_profile_deleted_backup',JSON.stringify({id,data:PDB.profiles[id],t:Date.now()}));}catch(e){}delete PDB.profiles[id];if(ACTIVE===id){ACTIVE=firstOkProfile();PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);}saveLocal();return true;}
 let syncT=null,syncing=false,SYNC={ok:null,at:0,err:''},CUR='';
-function snapshot(){const o=clone(S);delete o.pin;delete o.rec;delete o.sync;o.lastSeen=Date.now();return o;}
+// Copie MINIMALE envoyée au suivi parent (js/sync-snapshot.js) : jamais l'état complet de l'enfant.
+function snapshot(){return MQSyncSnapshot.build(S,Date.now());}
 function schedSync(ms=2500){if(!S.sync||!S.sync.child)return;clearTimeout(syncT);syncT=setTimeout(syncNow,ms);}
 // Actions parent déjà appliquées pendant cette session : si la sauvegarde locale échoue, elles ne sont pas acquittées et
 // le serveur les renvoie ; elles ne doivent pas être appliquées une seconde fois (bonus compté deux fois).
