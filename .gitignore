@@ -41,6 +41,7 @@
 !/tests/course-depth-lang-markup.test.js
 !/tests/lang-markup-classifier.js
 !/tests/tts-voice-failure.test.js
+!/tests/android-back-context.test.js
 !/tests/wave2-reading-primary.test.js
 !/tests/wave2-reading-college.test.js
 !/tests/wave2-parent.test.js
