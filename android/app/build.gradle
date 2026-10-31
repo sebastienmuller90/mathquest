@@ -1,0 +1,80 @@
+import groovy.json.JsonSlurper
+
+apply plugin: 'com.android.application'
+
+// ===== Finot Académie : identité, version et signature (31/10/2026) =====
+// Version : lue dans le manifeste du paquet web embarqué (scripts/package-www.mjs → www/finot-package.json → cap sync),
+// donc toujours identique à la VERSION de sw.js. Lancer « npm run android:sync » avant tout build Gradle.
+def finotPackageFile = file('src/main/assets/public/finot-package.json')
+if (!finotPackageFile.exists()) {
+    throw new GradleException("Paquet web absent (${finotPackageFile}). Lancer « npm run android:sync » à la racine du dépôt avant Gradle.")
+}
+def finot = new JsonSlurper().parse(finotPackageFile)
+
+// Identifiant d'application : DÉVELOPPEMENT par défaut. L'identifiant de production Google Play est une décision durable,
+// à fournir explicitement : ./gradlew bundleRelease -PfinotAppId=<id>  (ou variable d'environnement FINOT_APP_ID).
+def finotAppId = (project.findProperty('finotAppId') ?: System.getenv('FINOT_APP_ID') ?: 'fr.finot.academie.dev').toString()
+if (!(finotAppId ==~ /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/)) {
+    throw new GradleException("Identifiant d'application invalide : ${finotAppId}")
+}
+
+// Signature de publication : clé d'import (« upload key ») fournie UNIQUEMENT par l'environnement, jamais dans Git.
+// Sans ces variables, bundleRelease / assembleRelease produisent des artefacts NON signés (à signer ensuite).
+def finotKeystore = System.getenv('FINOT_UPLOAD_KEYSTORE')
+
+android {
+    namespace = "fr.finot.academie"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId finotAppId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode finot.versionCode
+        versionName finot.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        release {
+            if (finotKeystore) {
+                storeFile file(finotKeystore)
+                storePassword System.getenv('FINOT_UPLOAD_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('FINOT_UPLOAD_KEY_ALIAS')
+                keyPassword System.getenv('FINOT_UPLOAD_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (finotKeystore) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'

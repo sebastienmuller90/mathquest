@@ -75,6 +75,12 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Un rechargement ne modifie aucune donnée de profil (aucun reset, aucun doublon d’XP/devoir)',JSON.stringify(strip(B))===JSON.stringify(strip(A)),'taille '+before.length+' → '+after.length);
   const hwCount=Object.values(A.profiles).map(x=>(x.homework||[]).length).join(',');
   T('Devoirs : aucun doublon après redémarrages (1 par enfant, 2 pour Zélie)',hwCount==='1,1,2,1,1',hwCount);
+
+  // 7. Privacy : supprimer un profil doit réellement effacer sa copie locale, sans backup caché orphelin.
+  const deleted=await p.evaluate(id=>{const ok=deleteProfile(id);const db=JSON.parse(localStorage.getItem('mathquest_profiles_v2'));return {ok,present:!!db.profiles[id],n:Object.keys(db.profiles).length,names:Object.values(db.profiles).map(x=>x.name).sort(),backup:localStorage.getItem('mathquest_profile_deleted_backup')};},ids['Cléo']);
+  const expectedNames=['Hugo','Inès','Maxime','Zélie'].sort();
+  T('Suppression d’un profil : 4 profils restants intacts, profil supprimé absent et aucune copie cachée complète',deleted.ok&&!deleted.present&&deleted.n===4&&JSON.stringify(deleted.names)===JSON.stringify(expectedNames)&&deleted.backup===null,JSON.stringify({...deleted,backup:deleted.backup?'présent':'absent'}));
+
   T('Aucune erreur JavaScript pendant tout le parcours',!errs.length,errs.slice(0,3).join(' | '));
   await ctx.close();
  }finally{await b.close();srv.close();}return R;}

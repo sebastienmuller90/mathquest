@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fond de l'icône adaptative : violet de l'icône Finot (= theme_color du manifeste web). -->
+    <color name="ic_launcher_background">#7C3AED</color>
+</resources>

@@ -1,0 +1,13 @@
+{
+  "name": "finot-supabase-design",
+  "private": true,
+  "description": "Finot Académie — conception du backend de suivi parent (NON DÉPLOYÉ). Exécute les migrations et les tests de sécurité dans un PostgreSQL local en WebAssembly (PGlite), sans aucun serveur ni secret.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/run.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.13"
+  }
+}
