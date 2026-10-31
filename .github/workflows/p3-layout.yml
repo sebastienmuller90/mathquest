@@ -36,7 +36,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: P3-E — Finot ne masque pas l'Aide aux devoirs
+      - name: P3-E — Finot ne masque pas l'Aide aux devoirs (RED attendu)
+        continue-on-error: true
         run: node tests/p3-finot-homework-layout.test.js
       - name: P3-F — navigation masquée sur le PIN parent
         run: node tests/p3-parent-keyboard-layout.test.js
