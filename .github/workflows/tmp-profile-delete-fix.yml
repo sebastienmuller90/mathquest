@@ -1,0 +1,42 @@
+name: Temporary profile deletion privacy fix
+
+on:
+  push:
+    branches:
+      - chatgpt/runtime-integration
+
+permissions:
+  contents: write
+
+jobs:
+  apply-exact-fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: chatgpt/runtime-integration
+          fetch-depth: 0
+      - name: Apply exact one-site privacy fix
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('js/app-state.js')
+          s = p.read_text(encoding='utf-8')
+          old = "function deleteProfile(id){if(!okProfile(PDB?.profiles[id])||Object.keys(PDB.profiles).filter(k=>k!==id&&okProfile(PDB.profiles[k])).length<1)return false;try{localStorage.setItem('mathquest_profile_deleted_backup',JSON.stringify({id,data:PDB.profiles[id],t:Date.now()}));}catch(e){}delete PDB.profiles[id];if(ACTIVE===id){ACTIVE=firstOkProfile();PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);}saveLocal();return true;}"
+          new = "function deleteProfile(id){if(!okProfile(PDB?.profiles[id])||Object.keys(PDB.profiles).filter(k=>k!==id&&okProfile(PDB.profiles[k])).length<1)return false;try{localStorage.removeItem('mathquest_profile_deleted_backup');}catch(e){}delete PDB.profiles[id];if(ACTIVE===id){ACTIVE=firstOkProfile();PDB.active=ACTIVE;S=normalizeState(PDB.profiles[ACTIVE]);}saveLocal();return true;}"
+          count = s.count(old)
+          if count != 1:
+              raise SystemExit(f'Expected exactly one deleteProfile target, found {count}')
+          p.write_text(s.replace(old, new), encoding='utf-8')
+      - name: Commit product fix and remove temporary workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/tmp-profile-delete-fix.yml
+          git add js/app-state.js
+          git diff --cached --check
+          git commit -m "privacy: fully remove deleted profile data"
+          git push origin HEAD:chatgpt/runtime-integration
