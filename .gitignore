@@ -132,3 +132,4 @@
 !/supabase/
 !/supabase/**
 /supabase/node_modules/
+!/tests/french-elision.test.js
