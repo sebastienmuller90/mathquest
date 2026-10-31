@@ -1,6 +1,6 @@
 # Finot Académie — gates de release multi-store
 
-Référence runtime candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Référence : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 ## 1. Règle de décision
 
@@ -24,7 +24,9 @@ Une CI verte ne remplace pas :
 | P0-05 | Sauvegarde automatique Android enfant | ✅ FERMÉ | `allowBackup=false` + règles de transfert Android 12+ |
 | P0-06 | Liens externes côté enfant | ✅ FERMÉ | garde globale + parent gate + tests |
 | P0-07 | Analytics sans consentement parent | ✅ FERMÉ côté architecture | analytics off par défaut, aucune provider active, garde parent |
-| P0-08 | Achats accessibles depuis enfant | ✅ FERMÉ côté architecture | entitlements gardés par parent gate + allowlist produit |
+| P0-08 | Achats accessibles depuis enfant | ✅ FERMÉ côté architecture | `purchase()` **et** `restorePurchases()` gardés par parent gate + allowlist produit (`entitlements-guard`) |
+| P0-08b | FileProvider exposant le stockage externe | ✅ FERMÉ | `file_paths.xml` = `cache-path` interne uniquement, aucun `external-path` (test statique `android-project`) |
+| P0-08c | Copie cachée d'un profil enfant supprimé | ✅ FERMÉ | effacement complet : `mathquest_profile_deleted_backup` n'est plus créé et l'éventuelle clé legacy est retirée (`release-profiles-e2e`, `release-profile-isolation`) |
 | P0-09 | Privacy policy finale publique | 🔴 OUVERT | texte final + identité/contact + URL publique nécessaires |
 | P0-10 | Data Safety finale | 🔴 OUVERT | finaliser sur package ID/signature/backend réellement retenus |
 | P0-11 | Validation physique Android critique | 🔴 OUVERT | installation/offline/update/TTS/TalkBack/etc. à exécuter |
@@ -52,9 +54,16 @@ Une CI verte ne remplace pas :
 | P1-15 | Windows package réel | 🔴 OUVERT | PWABuilder/Partner Center + tests Windows |
 | P1-16 | Samsung appareil réel | 🔴 OUVERT | installation et comportement Galaxy vérifiés |
 
-## 4. Preuves CI du candidat runtime
+## 4. Preuves CI du runtime (intégré dans `main`)
 
-Sur `69d959e` :
+Après la fusion de #38, sur `main@5de9b03`, tout est vert :
+- MathQuest CI ;
+- Finot Multistore Android ;
+- Primary special depth ;
+- Final product inventory ;
+- Pages build/deployment.
+
+Sur le dernier HEAD runtime `69e93b9`, avant fusion (PR et push), tout était vert également. Historique sur `69d959e` :
 
 - Regression : PASS ;
 - Chromium : PASS ;
@@ -152,9 +161,14 @@ Si le suivi distant est activé, alors avant toute donnée réelle :
 8. exécuter Security Advisors ;
 9. aligner Privacy/Data Safety.
 
-## 7. Gate de fusion #38
+## 7. Gate de fusion #38 — ✅ FRANCHI
 
-Avant fusion de `chatgpt/runtime-integration` vers `main` :
+La PR #38 est **fusionnée** le 31/10/2026 :
+- commit de fusion `main@5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` ;
+- parents `3945e5c` et `69e93b9` ;
+- accord explicite de Sébastien obtenu.
+
+Critères qui étaient exigés avant fusion, tous remplis :
 
 1. HEAD exact confirmé ;
 2. branche 0 commit derrière `main` ;
@@ -164,18 +178,18 @@ Avant fusion de `chatgpt/runtime-integration` vers `main` :
 6. revue diff ;
 7. accord explicite de Sébastien.
 
-Aucune fusion automatique de #38 n'est autorisée par ce document.
-
 ## 8. Gate documentaire #35
 
 La PR #35 reste documentation/orchestration uniquement.
 
-Elle ne doit pas être fusionnée avant :
+| Critère | État |
+|---|---|
+| Stabilisation de #38 | ✅ fusionnée |
+| Resynchronisation avec `main` | ✅ `main@5de9b03` fusionné normalement dans la branche, sans rebase |
+| Informations obsolètes retirées | ✅ références à l'ancien `main` et à « #38 DRAFT » actualisées |
+| Cohérence avec le runtime livré | ✅ |
 
-- stabilisation/choix sur #38 ;
-- resynchronisation propre avec le futur `main` ;
-- suppression des informations devenues obsolètes ;
-- cohérence avec le runtime réellement livré.
+La fusion de #35 reste soumise à l'accord explicite de Sébastien.
 
 ## 9. Definition of Done — Application #001
 

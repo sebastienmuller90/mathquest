@@ -1,6 +1,6 @@
 # Finot Académie — matrice permissions Android V1
 
-Référence runtime candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Référence : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 ## État réel validé
 
@@ -59,7 +59,7 @@ Comportement retenu :
 
 ## Contrôles CI réels
 
-La CI Android candidate vérifie automatiquement :
+La CI Android (sur `main` et sur chaque PR) vérifie automatiquement :
 
 - présence `INTERNET` ;
 - `allowBackup=false` ;
@@ -68,6 +68,18 @@ La CI Android candidate vérifie automatiquement :
 - génération APK ;
 - génération AAB ;
 - intégrité des artefacts.
+
+## FileProvider — durci
+
+`android/app/src/main/res/xml/file_paths.xml` n'expose que le cache interne :
+
+```xml
+<cache-path name="finot_cache" path="." />
+```
+
+- Aucun `external-path` : l'ancien `<external-path path="." />` exposait tout le stockage externe sans besoin fonctionnel.
+- Preuve : le test statique `tests/android-project.test.js` exige l'absence de `external-path` (voir `docs/rc-hardening-evidence.md`).
+- Ne pas réintroduire de chemin externe sans besoin fonctionnel démontré et sans revue.
 
 Build validé :
 

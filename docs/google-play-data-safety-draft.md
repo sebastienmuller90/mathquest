@@ -1,7 +1,7 @@
 # Finot Académie — Google Play Data Safety / Families DRAFT
 
 Date de vérification : 2026-10-31  
-Runtime de référence : `chatgpt/runtime-integration` — candidat Android V1, suivi distant désactivé par défaut.
+Runtime de référence : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`) — Android V1 Release Candidate, suivi distant désactivé par défaut.
 
 > **DRAFT de préparation Play Console.** Ne pas soumettre tel quel sans vérifier le binaire de production signé, le package ID final, les SDK réellement présents et la décision finale concernant le backend parent.
 
@@ -160,9 +160,21 @@ Donc, tant qu'aucun véritable compte serveur n'est créé :
 - l'obligation Google d'un lien Web externe de suppression de compte ne devrait pas être déclenchée par les seuls profils locaux ;
 - la suppression locale doit néanmoins être honnête et conforme à la politique de confidentialité.
 
-### P1 connu
+### Suppression locale d'un profil — ✅ résolu (`main@5de9b03`)
 
-`mathquest_profile_deleted_backup` conserve actuellement une copie locale du dernier profil supprimé. Ce point est suivi séparément avant publication et doit être résolu/clarifié pour éviter qu'une action « supprimer » soit trompeuse.
+La suppression d'un profil (avec le code parent) l'efface **complètement** :
+- les autres profils restent intacts ;
+- aucune copie cachée n'est conservée ;
+- `mathquest_profile_deleted_backup` n'est plus créé, et une éventuelle ancienne clé est retirée.
+
+Aucune fonctionnalité de restauration n'en dépendait.
+
+Preuves :
+- `tests/release-profiles-e2e.test.js` ;
+- `tests/release-profile-isolation.test.js` ;
+- `docs/rc-hardening-evidence.md`.
+
+L'action « supprimer » n'est donc pas trompeuse.
 
 ## 8. Si le suivi parent Supabase est activé avant la V1
 

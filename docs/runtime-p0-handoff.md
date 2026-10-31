@@ -3,7 +3,7 @@
 Ancien rôle de ce document : handoff des P0 runtime à Claude Code.  
 Nouveau rôle : consigner ce qui a réellement été livré et validé pour éviter de refaire le même travail.
 
-Référence candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Référence : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 ## 1. Payload cloud allowlisté — FERMÉ côté client
 
@@ -201,7 +201,7 @@ Hardening Claude :
 - `0 SKIP`
 - 96 suites.
 
-CI candidate `69d959e` :
+CI historique sur `69d959e` (depuis : CI verte sur `69e93b9` puis post-merge sur `main@5de9b03`) :
 
 - Regression : PASS ;
 - Chromium : PASS ;
@@ -247,4 +247,4 @@ Seulement si Supabase est activé :
 
 Ne pas réouvrir les P0 déjà fermés ci-dessus sans preuve de régression.
 
-Toute évolution future doit partir de la branche candidate ou de son merge dans `main`, jamais de l'ancien état `8.73.x`.
+Toute évolution future doit partir de `main` (qui contient le runtime depuis la fusion de #38), jamais de l'ancien état `8.73.x`.

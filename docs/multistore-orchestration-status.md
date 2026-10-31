@@ -4,57 +4,52 @@ Date : 2026-10-31
 
 ## Source de vérité actuelle
 
-### `main`
+### `main` — production candidate (Release Candidate)
 
-- SHA : `3945e5c18bf82058d92e9ee7238e1afcbca85d13`.
-- La correction CI Ubuntu 24.04 de la PR #37 est fusionnée.
-- La CI post-merge de `main` est verte.
+- SHA : `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb`.
+- Commit de fusion de la PR #38 (« Android / Store hardening + validated multistore runtime »), dont les parents sont :
+  - `3945e5c` : ancien `main`, avec le correctif CI Ubuntu 24.04 de la PR #37 ;
+  - `69e93b9` : runtime intégré.
+- Le runtime multistore Android/Store est **intégré dans `main`**.
+- La CI post-merge sur `main@5de9b03` est verte :
 
-### Runtime candidat
+  | Workflow | Résultat |
+  |---|---|
+  | MathQuest CI (regression, Chromium, Firefox, WebKit) | ✅ |
+  | Finot Multistore Android (multistore-tests, android-build) | ✅ |
+  | Primary special depth | ✅ |
+  | Final product inventory | ✅ |
+  | Pages build/deployment | ✅ |
 
-Branche : `chatgpt/runtime-integration`  
-HEAD : `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Le runtime intégré contient :
 
-Cette branche intègre :
-
-- `main@3945e5c` ;
-- `claude/android-store-hardening@8edfb1a` ;
-- Capacitor/Android ;
-- hardening enfants/privacy/parent gate ;
-- design Supabase non déployé ;
-- CI Android réelle ;
-- deux adaptations de tests historiques pour le nouveau comportement sécurisé « remote sync désactivé par défaut ».
+- `claude/multistore-runtime` et `claude/android-store-hardening@8edfb1a` ;
+- Capacitor 8.6 / Android ;
+- le hardening enfants, privacy et parent gate ;
+- un design Supabase non déployé ;
+- la CI Android réelle ;
+- les correctifs RC finaux (`docs/rc-hardening-evidence.md`) :
+  - FileProvider limité au cache interne ;
+  - `restorePurchases()` réservé à l'espace parents ;
+  - suppression complète d'un profil local, sans copie cachée.
 
 Aucun rebase ni force-push n'a été utilisé.
 
 ## PR
 
-### #38 — runtime Android / Store
+### #38 — runtime Android / Store : **FUSIONNÉE ✅**
 
-- DRAFT ;
-- source : `chatgpt/runtime-integration` ;
-- cible : `main` ;
-- HEAD : `69d959e` ;
-- ne pas fusionner sans validation explicite.
-
-Validation déjà obtenue sur le HEAD candidat :
-
-- Regression : PASS ;
-- Chromium : PASS ;
-- Firefox : PASS ;
-- WebKit : PASS ;
-- Primary special depth : PASS ;
-- Final product inventory : PASS ;
-- Finot Multistore Android / multistore-tests : PASS ;
-- Finot Multistore Android / android-build : PASS.
+- Source : `chatgpt/runtime-integration` @ `69e93b94988d2379de21aeb17df0ac8e1e913298`.
+- Fusionnée dans `main` le 31/10/2026 (commit de fusion `5de9b03`).
+- CI verte avant fusion (PR et push sur `69e93b9`) et après fusion (`main@5de9b03`).
 
 ### #35 — orchestration
 
 - DRAFT ;
 - documentation/orchestration uniquement ;
-- branche historique plus ancienne que le runtime candidat ;
-- à garder séparée jusqu'à décision sur #38 ;
-- documents en cours d'actualisation à partir des preuves réelles du runtime.
+- `main@5de9b03` y a été fusionné normalement : pas de rebase, pas de réécriture.
+- Le diff contre `main` ne contient que des documents de `docs/`.
+- Ne pas fusionner sans accord explicite du propriétaire.
 
 ## Build Android réel
 
@@ -130,7 +125,7 @@ Contrôles du manifeste :
 
 État réel : aucun projet Supabase Finot n'est provisionné.
 
-Le runtime candidat :
+Le runtime intégré dans `main` :
 
 - retire l'ancien endpoint Supabase mort ;
 - désactive le suivi distant par défaut ;
@@ -143,16 +138,28 @@ Le provisioning réel reste une décision ultérieure nécessitant accord explic
 
 ## Gates P0 actualisés
 
-### Fermés côté code/runtime candidat
+### Fermés côté code et CI (dans `main@5de9b03`)
 
-- payload distant trop large : fermé côté client ;
-- date de naissance complète dans le cloud : fermée côté client ;
-- micro Android non caractérisé : fermé par désactivation de la reconnaissance vocale Android ;
-- permissions Android excessives : fermé ;
-- liens externes enfant : fermé ;
-- analytics sans consentement : fermé ;
-- achats hors parent gate : fermé ;
-- backup Android enfant : fermé.
+- **Packaging et build Android** :
+  - packaging `www/` reproductible ;
+  - runtime Capacitor ;
+  - Android SDK 36 ;
+  - JDK 21 en CI ;
+  - APK et AAB techniques générés.
+- **Permissions Android minimales** : `INTERNET` seule, `RECORD_AUDIO` absent, `AD_ID` absent.
+- **Sauvegarde Android** désactivée (`allowBackup=false` et `dataExtractionRules`).
+- **FileProvider durci** : `cache-path` interne uniquement, aucun `external-path`.
+- **Micro Android** : fermé par la désactivation de la reconnaissance vocale Android, avec l'alternative « écoute et répète ».
+- **Liens externes** bloqués dans l'espace enfant, avec une garde globale.
+- **Parent gate réel** (`MQParentGate`).
+- **Analytics** : désactivées par défaut, consentement parent, valeurs sur liste fermée (`analytics-guard`).
+- **Achats et restauration** réservés à l'espace parents, liste de produits fermée (`entitlements-guard`).
+- **Synchronisation** :
+  - payload distant minimal (liste blanche) ;
+  - date de naissance hors cloud ;
+  - suivi distant désactivé par défaut.
+- **Suppression complète d'un profil local**, sans aucune copie cachée (`mathquest_profile_deleted_backup` n'est plus créée).
+- **CI web** (Chromium, Firefox, WebKit) et **CI Android** vertes.
 
 ### Restent ouverts avant publication réelle
 
@@ -217,10 +224,10 @@ Toujours NO-GO V1 prioritaire. Test Fire HD réel uniquement après stabilisatio
 
 ## Ordre d'exécution recommandé
 
-1. terminer la revue de #38 ;
-2. ne fusionner #38 qu'après accord explicite ;
-3. resynchroniser ensuite #35 sur le nouveau `main` ;
-4. exécuter protocole Android physique, un test à la fois ;
+1. ~~terminer la revue de #38~~ — fait ;
+2. ~~fusionner #38 après accord explicite~~ — fait (`main@5de9b03`) ;
+3. ~~resynchroniser #35 sur le nouveau `main`~~ — fait (merge normal) ;
+4. exécuter protocole Android physique, un test à la fois (`android-physical-validation-protocol.md`) ;
 5. figer package ID production ;
 6. préparer signature release sans secret dans Git ;
 7. produire AAB signé de release ;
@@ -248,7 +255,7 @@ Supabase design     █████████░ 92 %
 CI infra            ██████████ 100 %
 Runtime Android     ██████████ 100 % code/CI
 Build APK/AAB       ██████████ 100 % validation non signée
-Tests appareil réel ██░░░░░░░░ 20 %
+Tests appareil réel ██░░░░░░░░ 20 %  protocole prêt ; 0 test physique exécuté
 ```
 
 Les pourcentages représentent le travail effectivement vérifié. Ils ne signifient pas que Finot est déjà publiable : les derniers points sont principalement physiques, administratifs, juridiques et Store.

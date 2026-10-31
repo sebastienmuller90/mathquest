@@ -2,9 +2,17 @@
 
 Date : 2026-10-31
 
+## Statut : FREEZE DÉCLARÉ ✅ (31/10/2026)
+
+`main@5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` est la **Release Candidate V1**. Il s'agit de la fusion de la PR #38, qui intègre le runtime multistore. Tous les critères ci-dessous sont remplis :
+- sur le HEAD runtime `69e93b9` avant fusion ;
+- puis sur `main@5de9b03` après fusion (CI post-merge verte).
+
+Les seuls P0 restants sont physiques, administratifs ou juridiques (voir `multistore-release-gates.md`).
+
 ## Déclenchement
 
-Le freeze peut être déclaré lorsque la PR runtime candidate satisfait simultanément :
+Le freeze pouvait être déclaré lorsque la PR runtime candidate satisfaisait simultanément :
 
 - CI regression verte ;
 - Chromium / Firefox / WebKit verts ;

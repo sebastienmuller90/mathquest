@@ -1,6 +1,6 @@
 # Finot Académie — cartographie confidentialité / données enfant
 
-Référence runtime candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Référence : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 Objectif : documenter ce que Finot collecte, conserve, traite localement et transmet éventuellement afin de sécuriser Google Play / Microsoft Store / Samsung / PWA.
 
@@ -241,6 +241,21 @@ Le runtime candidat contient un dossier `supabase/` de design local :
 - tests PostgreSQL locaux PGlite.
 
 Aucun de ces éléments n'est déployé en production aujourd'hui.
+
+## 14 bis. Suppression locale d'un profil — ✅ effacement complet
+
+Décision intégrée dans `main@5de9b03` (minimisation des données enfant) :
+
+- la suppression d'un profil, avec le code parent, retire ce profil de `mathquest_profiles_v2` ;
+- les autres profils restent strictement intacts ;
+- le profil actif ne change pas si le profil supprimé n'était pas actif ;
+- **aucune copie cachée** n'est conservée : `mathquest_profile_deleted_backup` n'est plus créé, et une éventuelle ancienne clé est retirée lors d'une suppression autorisée ;
+- aucune fonction de restauration n'en dépendait.
+
+Preuves :
+- `tests/release-profiles-e2e.test.js` ;
+- `tests/release-profile-isolation.test.js` ;
+- `docs/rc-hardening-evidence.md`.
 
 ## 15. Suppression et rétention cloud
 

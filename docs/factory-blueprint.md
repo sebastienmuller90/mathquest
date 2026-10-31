@@ -1,6 +1,6 @@
 # Finot Académie — Factory Blueprint v0.1
 
-Référence : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`  
+Référence : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda` (audit initial) ; socle actuel `main` @ `5de9b03` (PR #38 fusionnée)  
 Objectif : extraire de Finot les briques réutilisables pour l’APP FACTORY sans recopier sa dette technique.
 
 ## 1. Règle générale

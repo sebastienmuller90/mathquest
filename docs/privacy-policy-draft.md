@@ -3,7 +3,7 @@
 > **Statut : DRAFT non publiable tel quel.** Les coordonnées légales, l'URL publique finale, la durée de conservation définitive et la décision backend V1 doivent encore être validées.
 
 Dernière mise à jour technique : 2026-10-31  
-Référence runtime : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Référence runtime : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 ## 1. Objet
 
@@ -184,7 +184,12 @@ Si un backend est activé ultérieurement, il devra notamment utiliser :
 
 ### Données locales
 
-Les données locales peuvent être supprimées selon les fonctions de gestion de profil/application disponibles.
+Depuis l’espace de gestion des profils, un adulte peut supprimer un profil enfant avec le code parent.
+
+- La suppression est **complète** : Finot ne conserve aucune copie cachée du profil supprimé sur l’appareil.
+- Les autres profils ne sont pas modifiés.
+- Désinstaller l’application supprime ses données locales. Sur Android, elles ne sont pas restaurées automatiquement lors d’une réinstallation, puisque la sauvegarde automatique Android est désactivée.
+- L’export/import réalisé volontairement par le parent reste la seule voie de transfert vers un autre appareil.
 
 ### Données cloud
 

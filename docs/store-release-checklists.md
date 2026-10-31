@@ -1,7 +1,7 @@
 # Finot Académie — checklists exécutables de publication V1
 
 Référence : 2026-10-31  
-Runtime candidat : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+Runtime : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb` (PR #38 fusionnée, runtime multistore intégré ; ancien HEAD runtime `69e93b9`)
 
 Ces checklists ne constituent pas une autorisation de publication. Toute création définitive d'identifiant Store, dépense, activation commerciale ou publication nécessite l'accord explicite de Sébastien.
 
@@ -26,6 +26,13 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [ ] clé de signature / Play App Signing décidé ;
 - [x] aucun secret de signature commité dans Git.
 
+## Scénarios V1 (à choisir avant les déclarations Store)
+
+| Scénario | Description | Conséquence Store |
+|---|---|---|
+| **V1 local-only** (par défaut, état de `main@5de9b03`) | Suivi distant **non activé** : aucune donnée enfant n'est envoyée à un serveur Finot. | Data Safety : aucune donnée « collectée » au sens Google pour le suivi. La suppression de compte serveur ne s'applique pas. |
+| **V1 avec cloud** (plus tard, optionnel) | Suivi parent distant activé. | Seulement après provisioning sécurisé (UE), migration appliquée, audit (Security Advisors, tests A/B, suppression, rétention) et accord explicite. Il faut alors recalculer Data Safety, la privacy policy et les fiches. |
+
 ## A3 — Android technique
 
 - [x] même base PWA conservée ;
@@ -40,8 +47,10 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [x] `AD_ID` absent ;
 - [x] `RECORD_AUDIO` absent ;
 - [x] backup Android désactivé ;
+- [x] FileProvider durci : `cache-path` interne uniquement, aucun `external-path` ;
 - [x] suivi distant désactivé par défaut ;
 - [x] aucune logique de self-update native ajoutée ;
+- [x] CI Android verte sur `main@5de9b03` après la fusion de #38 ;
 - [ ] AAB production signé ;
 - [ ] installation propre sur au moins un téléphone Android réel ;
 - [ ] cold start offline réel ;
@@ -67,7 +76,8 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [x] analytics off par défaut ;
 - [x] consentement parent exigé par l'architecture analytics ;
 - [x] liens externes bloqués côté enfant ;
-- [x] achats futurs gardés par espace parent ;
+- [x] achats futurs **et restauration des achats** gardés par l'espace parents ;
+- [x] suppression d'un profil local = effacement complet (aucune copie cachée `mathquest_profile_deleted_backup`) ;
 - [x] snapshot distant réduit/allowlisté côté client ;
 - [x] date de naissance complète hors snapshot cloud ;
 - [x] reconnaissance vocale Android désactivée V1 ;

@@ -1,6 +1,6 @@
 # Finot Académie — métadonnées Store V1 (draft)
 
-Référence auditée : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`  
+Référence auditée : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda` (audit initial) ; socle actuel `main` @ `5de9b03` (PR #38 fusionnée)  
 Statut : DRAFT — aucun Store ID/package ID n’est créé par ce document.
 
 ## 1. Identité produit commune
@@ -57,7 +57,9 @@ L’application propose notamment :
 
 Finot Académie utilise une progression ludique avec XP, badges et récompenses virtuelles pour encourager la régularité. Ces éléments pédagogiques ne sont pas liés à des achats.
 
-Les fonctions de suivi à distance sont facultatives et doivent être activées volontairement. La confidentialité des données enfant est traitée comme une priorité ; aucune publicité ciblée enfant n’est prévue.
+La progression reste sur l’appareil. La confidentialité des données enfant est traitée comme une priorité : aucune publicité, aucun tracker publicitaire, aucun achat intégré actif.
+
+> Note interne : en V1 local-only (état de `main@5de9b03`), le suivi à distance n’est **pas disponible** et ne doit donc pas être annoncé dans la fiche. Une phrase du type « suivi à distance facultatif, activé volontairement par le parent » ne pourra être ajoutée qu’après provisioning et audit du backend (scénario « V1 avec cloud »).
 
 ### Captures Google recommandées
 
@@ -105,7 +107,7 @@ Finot Académie est une application éducative du CP à la 3e conçue pour accom
 
 Elle regroupe des parcours par matière, des cours détaillés, des exercices interactifs, un diagnostic de départ, des révisions intelligentes, des outils de lecture et dictée, ainsi qu’un espace parent.
 
-L’application fonctionne comme une PWA installable et conserve la progression localement. Certaines fonctions de suivi à distance peuvent être activées volontairement par le parent.
+L’application fonctionne comme une PWA installable et conserve la progression localement sur l’appareil.
 
 ### Fonctionnalités Microsoft proposées
 

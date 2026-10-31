@@ -6,7 +6,7 @@ Date de vérification : 2026-10-31
 
 Finot n'aura **aucune deuxième codebase Android** pour Samsung. Galaxy Store doit partir du même projet Capacitor/Android que Google Play.
 
-Le runtime candidat déjà construit cible Android API 36, minSdk 24, sans AD_ID, sans microphone Android V1, sans backup Android et avec trafic HTTP en clair interdit.
+Le runtime intégré dans `main@5de9b03`, déjà construit en CI, cible Android API 36, minSdk 24, sans AD_ID, sans microphone Android V1, sans backup Android et avec trafic HTTP en clair interdit.
 
 ## Exigences Samsung vérifiées
 

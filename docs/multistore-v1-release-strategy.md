@@ -1,9 +1,8 @@
 # Finot Académie — stratégie multi-store V1
 
-Référence produit stable : `main` @ `3945e5c18bf82058d92e9ee7238e1afcbca85d13`  
-Runtime candidat : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`  
-PR runtime : `#38` (DRAFT, non fusionnée)  
-PR orchestration : `#35` (DRAFT, documentation)
+Référence produit (Release Candidate) : `main` @ `5de9b03bcc6f9db820a0ff12598cb7ec0833eaeb`  
+PR runtime : `#38` — **fusionnée ✅** (ancien HEAD `chatgpt/runtime-integration` @ `69e93b9`)  
+PR orchestration : `#35` (DRAFT, documentation, synchronisée sur `main@5de9b03`)
 
 ## Principes
 
@@ -25,7 +24,7 @@ PR orchestration : `#35` (DRAFT, documentation)
 
 ## État runtime désormais prouvé
 
-La branche `chatgpt/runtime-integration` intègre le hardening Android/Store et a été validée par CI réelle.
+Le hardening Android/Store est **intégré dans `main`**. Il a été fusionné via #38 (`main@5de9b03`) et validé par la CI réelle, avant fusion comme après (CI post-merge de `main` verte).
 
 Preuves :
 
@@ -224,11 +223,11 @@ Aucune décision irréversible n'est prise ici.
 
 ### #38
 
-PR runtime candidate. Ne pas fusionner sans accord explicite.
+PR runtime : **fusionnée ✅** dans `main` (`5de9b03`, parents `3945e5c` et `69e93b9`), avec accord explicite. La CI post-merge est verte.
 
 ### #35
 
-PR documentation/orchestration. Elle reste volontairement séparée et sera resynchronisée sur le futur `main` après décision sur #38.
+PR documentation/orchestration, toujours DRAFT. `main@5de9b03` y a été fusionné normalement : pas de rebase, et le diff contre `main` ne contient que de la documentation. Ne pas la fusionner sans accord explicite.
 
 ## Factory Blueprint
 

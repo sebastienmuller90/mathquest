@@ -281,9 +281,14 @@ Avant soumission :
 
 ### Déjà fermés
 
-- [x] PWA existante ;
-- [x] CI multi-browser ;
-- [x] offline/update automatisés ;
+- [x] PWA existante, avec une seule base de code (`main@5de9b03` : la même base sert au web, à Android et au futur package Windows) ;
+- [x] manifest PWA présent (`manifest.webmanifest`) ; l'enrichissement Store reste listé dans « À fermer » ;
+- [x] service worker avec cache hors ligne versionné (`sw.js`) ;
+- [x] installabilité PWA (manifest + service worker + HTTPS GitHub Pages), contrôlée par les tests automatisés de mise à jour PWA ;
+- [x] CI multi-navigateurs (Chromium, Firefox, WebKit) ;
+- [x] offline et mise à jour automatisés ;
+- [x] navigation au clavier testée en automatique (`keyboard-a11y`) ;
+- [x] responsive testé en automatique (`mobile-layout`, `release-responsive`) ; le bureau grand écran reste à vérifier physiquement (§ 13) ;
 - [x] architecture local-first ;
 - [x] pas de fork Windows ;
 - [x] coût d'inscription individuel actuel = 0 via nouveau flux.
