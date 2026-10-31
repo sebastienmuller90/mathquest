@@ -132,8 +132,8 @@ function finotAsk(text){const t=String(text||'').trim();if(!t)return;let echoed=
  if(MQHooks.first('finot:intent',ask))return;ask.echo();const m=finotMatch(t);finotPush('finot',m?m.a:FINOT_FALLBACK);finotChipsRender();}
 // Sur un exercice ou un cours, le bouton flottant pourrait masquer une réponse ou « Suivant » : il laisse la place au
 // bouton « 🦊 Finot » de la barre d'actions (exercice, questions du cours) ou au bouton 🦊 de la navigation du cours. La discussion ouverte n'est fermée qu'en quittant l'enfant.
-function finotQuestionScreen(){return /^(mission|flash|lesson|interrogation|diagnostic)$/.test(CUR||'');}
-function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)return;const allowed=!!S.name&&!PARENT,show=allowed&&!finotQuestionScreen();fab.classList.toggle('show',show);fab.classList.toggle('raised',CUR==='home');const img=fab.querySelector('img');if(img)img.src=finotEtat(S).img;if(!allowed)finotClose();}
+function finotQuestionScreen(){return /^(mission|flash|lesson|interrogation|diagnostic|homework-help)$/.test(CUR||'');}
+function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)return;const allowed=!!S.name&&!PARENT,show=allowed&&!finotQuestionScreen();fab.classList.toggle('show',show);fab.classList.toggle('raised',CUR==='home');fab.setAttribute('aria-hidden',show?'false':'true');const img=fab.querySelector('img');if(img)img.src=finotEtat(S).img;if(!allowed)finotClose();}
 /* V8.27 — barre d'onglets de l'accueil : élément persistant hors de #app (comme .finot-fab), jamais recréé à
    chaque écran. Nécessaire : #app.view-pop a une animation avec transform, ce qui en ferait le référentiel
    de positionnement de tout élément fixed placé DANS #app pendant l'animation (~320ms) — un élément fixed
@@ -142,7 +142,7 @@ function hometabsDOM(){if(document.getElementById('hometabs'))return;
  const nav=document.createElement('nav');nav.id='hometabs';nav.className='hometabs';nav.setAttribute('aria-label','Navigation principale');
  document.body.appendChild(nav);}
 // Pas de barre d'onglets pendant la création du profil (home() affiche alors l'écran d'accueil sans enfant).
-function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home'&&!!S.name;nav.classList.toggle('show',show);if(!show)return;
+function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const parentGate=!!document.querySelector('#app #pin,#app #pin2,#app #rk,#app #np2,#app .reckey'),show=CUR==='home'&&!!S.name&&!parentGate;nav.classList.toggle('show',show);if(!show)return;
  nav.innerHTML=HOMETABS.map(([k,emoji,label])=>`<button class="htab ${HOMETAB===k?'on':''}" data-a="hometab:${k}" aria-current="${HOMETAB===k?'page':'false'}"><span class="hti" aria-hidden="true">${emoji}</span><span class="htl">${label}</span></button>`).join('');}
 // Résumé chiffré de l'onglet Progrès : les données utiles d'abord (niveau, étoiles, série, réussite), les accès ensuite.
 function progressKpis(L,pct,xpLeft){const ch=Object.values(S.chap||{}),stars=ch.reduce((a,c)=>a+(c.stars||0),0),ok=ch.reduce((a,c)=>a+(c.ok||0),0),tot=ch.reduce((a,c)=>a+(c.tot||0),0),rate=tot?Math.round(ok/tot*100)+' %':'—',streak=S.streak&&S.streak.n||0;
