@@ -13,8 +13,7 @@ const HOSTS={
  'www.education.gouv.fr':'parent-source','eduscol.education.gouv.fr':'parent-source',
  // Éducation aux médias : fausses adresses d'hameçonnage et vrais sites cités comme exemples, en TEXTE uniquement.
  'laposte.fr.suivi-colis.top':'pedagogic-text','impots-gouv.remboursement-fr.com':'pedagogic-text','education-gouv.bourse-aide.net':'pedagogic-text','colis-livraison-fr.top':'pedagogic-text','ameli-securite.info':'pedagogic-text','www.laposte.fr':'pedagogic-text','www.impots.gouv.fr':'pedagogic-text','www.ameli.fr':'pedagogic-text',
- 'sebastienmuller90.github.io':'parent-remote-link','www.w3.org':'xml-namespace','localhost':'internal',
- 'nctmxxixugoxairmtjsa.supabase.co':'removed'};
+ 'sebastienmuller90.github.io':'parent-remote-link','www.w3.org':'xml-namespace','localhost':'internal'};
 function sources(){const out=[];const walk=d=>{for(const e of fs.readdirSync(path.join(ROOT,d),{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else if(/\.(js|html|css)$/.test(e.name))out.push(p);}};
  walk('js');walk('data');for(const f of ['index.html','parent.html'])out.push(f);for(const f of fs.readdirSync(ROOT))if(/\.css$/.test(f))out.push(f);return out.map(f=>f.split(path.sep).join('/'));}
 
