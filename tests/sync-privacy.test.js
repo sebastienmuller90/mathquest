@@ -13,7 +13,8 @@ const FORBIDDEN=['birthdate','lastBirthdayYear','gender','companion','learnerPro
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  const {srv,url}=await serve();const b=await launchEngine('chromium');
  try{
-  const {ctx,p,errs}=await freshContext(b,url);
+  // Suivi distant activé par une configuration de TEST (js/remote-sync-config.js) ; toutes les requêtes sont interceptées.
+  const {ctx,p,errs}=await freshContext(b,url,{});await ctx.addInitScript(()=>{window.FINOT_REMOTE_SYNC={enabled:true,url:'https://finottest.supabase.co',key:'sb_publishable_TESTKEY123',schema:'api'};});await p.reload({waitUntil:'load'});
   const sent=[];
   await ctx.route(SUPA,async route=>{const fn=route.request().url().match(SUPA)[1];let body=null;try{body=JSON.parse(route.request().postData()||'null');}catch(e){}
    sent.push({fn,body,headers:route.request().headers()});
@@ -58,7 +59,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Profil local intact : date de naissance, erreurs, DYS, interrogations complètes conservés sur l’appareil',local1.birthdate==='2016-04-12'&&local1.dys&&local1.dys.enabled===true&&local1.interrogations.history[0].answers.length===1&&Object.keys(local1.mistakes||{}).length===Object.keys(local0.mistakes||{}).length,'');
 
   // Page parent : même affichage avec le snapshot réduit qu'avec l'ancien snapshot complet.
-  const render=async snap=>{const pc=await b.newContext({viewport:{width:1100,height:900}});const pp=await pc.newPage();const e=[];pp.on('pageerror',x=>e.push(x.message));
+  const render=async snap=>{const pc=await b.newContext({viewport:{width:1100,height:900}});await pc.addInitScript(()=>{window.FINOT_REMOTE_SYNC={enabled:true,url:'https://finottest.supabase.co',key:'sb_publishable_TESTKEY123',schema:'api'};});const pp=await pc.newPage();const e=[];pp.on('pageerror',x=>e.push(x.message));
    await pc.route(SUPA,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data:snap,pending:[],updated_at:'2026-10-31T10:00:00Z'})}));
    await pp.goto(url+'parent.html#'+'K'.repeat(32));await pp.waitForFunction(()=>document.querySelector('.tabs'),null,{timeout:8000});
    const out={};for(const t of ['suivi','recomp','reglages']){await pp.evaluate(t=>ACT.tab(t),t);await pp.waitForTimeout(250);out[t]=(await pp.evaluate(()=>document.getElementById('app').innerText)).replace(/En train de jouer|Vue il y a[^\n]*/g,'');}

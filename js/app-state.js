@@ -1,6 +1,8 @@
-/* ===== Synchronisation Supabase ===== */
-const CONFIG={url:'https://nctmxxixugoxairmtjsa.supabase.co',key:'sb_publishable_ngN_Y9VsRuThBwS_pazV-A_0_hfbFWd'};
-async function rpc(fn,args){const r=await fetch(`${CONFIG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:CONFIG.key,'Content-Type':'application/json'},body:JSON.stringify(args)});const t=await r.text();if(!r.ok)throw new Error(t||('HTTP '+r.status));return t?JSON.parse(t):null;}
+/* ===== Synchronisation (suivi parent à distance) =====
+   Backend : js/remote-sync-config.js. Désactivé tant qu'aucun backend validé n'est configuré : aucune requête n'est faite
+   et les codes déjà enregistrés (S.sync) sont conservés tels quels. Contrat serveur : supabase/migrations. */
+const remoteSyncOn=()=>!!(window.MQRemoteSync&&MQRemoteSync.configured());
+async function rpc(fn,args){const C=window.MQRemoteSync&&MQRemoteSync.config();if(!C)throw new Error('Suivi à distance non activé');const r=await fetch(`${C.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json','Content-Profile':C.schema},body:JSON.stringify(args)});const t=await r.text();if(!r.ok)throw new Error(t||('HTTP '+r.status));return t?JSON.parse(t):null;}
 function rndCode(n=28){const A='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789',b=new Uint32Array(n);crypto.getRandomValues(b);return [...b].map(x=>A[x%A.length]).join('');}
 
 /* ===== Données du jeu ===== */
@@ -91,11 +93,11 @@ function deleteProfile(id){if(!okProfile(PDB?.profiles[id])||Object.keys(PDB.pro
 let syncT=null,syncing=false,SYNC={ok:null,at:0,err:''},CUR='';
 // Copie MINIMALE envoyée au suivi parent (js/sync-snapshot.js) : jamais l'état complet de l'enfant.
 function snapshot(){return MQSyncSnapshot.build(S,Date.now());}
-function schedSync(ms=2500){if(!S.sync||!S.sync.child)return;clearTimeout(syncT);syncT=setTimeout(syncNow,ms);}
+function schedSync(ms=2500){if(!S.sync||!S.sync.child||!remoteSyncOn())return;clearTimeout(syncT);syncT=setTimeout(syncNow,ms);}
 // Actions parent déjà appliquées pendant cette session : si la sauvegarde locale échoue, elles ne sont pas acquittées et
 // le serveur les renvoie ; elles ne doivent pas être appliquées une seconde fois (bonus compté deux fois).
 const SYNC_APPLIED=new Set();
-async function syncNow(){if(!S.sync||!S.sync.child||syncing)return;syncing=true;
+async function syncNow(){if(!S.sync||!S.sync.child||syncing||!remoteSyncOn())return;syncing=true;
  try{const acts=await rpc('mq_push',{p_child:S.sync.child,p_data:snapshot()});
   // ACK distant uniquement des actions réellement appliquées ET sauvegardées localement : sinon le parent les renverra.
   if(acts&&acts.length){const applied=[];for(const a of acts){try{if(!SYNC_APPLIED.has(a.id)){applyAction(a);SYNC_APPLIED.add(a.id);}applied.push(a.id);}catch(e){console.error('Action parent non appliquée',a&&a.id,e);}}
