@@ -53,5 +53,14 @@ if(typeof window.addEventListener==='function'){
  window.addEventListener('online',()=>emit('platform:network',{online:true}));
  window.addEventListener('offline',()=>emit('platform:network',{online:false}));}
 
+// P3-B : lors de la création du code parent, Entrée sur le premier champ doit demander la confirmation,
+// pas soumettre prématurément un second champ encore vide. Le listener capture précède le handler global de l'app.
+if(typeof document!=='undefined'&&typeof document.addEventListener==='function')document.addEventListener('keydown',e=>{
+ if(e.key!=='Enter'||e.defaultPrevented||!e.target||e.target.id!=='pin')return;
+ const confirmation=document.getElementById('pin2');
+ if(!confirmation||String(confirmation.value||'').trim())return;
+ e.preventDefault();e.stopImmediatePropagation();confirmation.focus();
+},true);
+
 window.MQPlatform=Object.freeze({kind,isNative,PUBLIC_BASE,plugin,publicURL,shouldRegisterServiceWorker,isOnline,back});
 })();
