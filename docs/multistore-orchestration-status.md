@@ -2,135 +2,253 @@
 
 Date : 2026-10-31
 
-## Branches
+## Source de vérité actuelle
 
-- `main` : base produit stable connue avant correctif CI.
-- `chatgpt/multistore-release-orchestration` : documentation/orchestration uniquement.
-- `chatgpt/fix-ci-ubuntu24` : correctif CI isolé, PR #37, validé vert, non fusionné à ce stade.
-- `claude/multistore-runtime` : non visible sur GitHub au dernier contrôle.
+### `main`
+
+- SHA : `3945e5c18bf82058d92e9ee7238e1afcbca85d13`.
+- La correction CI Ubuntu 24.04 de la PR #37 est fusionnée.
+- La CI post-merge de `main` est verte.
+
+### Runtime candidat
+
+Branche : `chatgpt/runtime-integration`  
+HEAD : `69d959e2f1a57f15d6c543a3f3b654d81639c164`
+
+Cette branche intègre :
+
+- `main@3945e5c` ;
+- `claude/android-store-hardening@8edfb1a` ;
+- Capacitor/Android ;
+- hardening enfants/privacy/parent gate ;
+- design Supabase non déployé ;
+- CI Android réelle ;
+- deux adaptations de tests historiques pour le nouveau comportement sécurisé « remote sync désactivé par défaut ».
+
+Aucun rebase ni force-push n'a été utilisé.
 
 ## PR
 
-### #35 — orchestration
+### #38 — runtime Android / Store
 
 - DRAFT ;
-- aucune modification produit/runtime ;
-- ne pas fusionner avant comparaison avec Claude et revue finale.
+- source : `chatgpt/runtime-integration` ;
+- cible : `main` ;
+- HEAD : `69d959e` ;
+- ne pas fusionner sans validation explicite.
 
-### #37 — CI Ubuntu
+Validation déjà obtenue sur le HEAD candidat :
 
-- un seul fichier ;
-- `browser.runs-on: ubuntu-latest` → `ubuntu-24.04` ;
-- regression : PASS ;
+- Regression : PASS ;
 - Chromium : PASS ;
 - Firefox : PASS ;
 - WebKit : PASS ;
 - Primary special depth : PASS ;
-- prête à fusionner mais consigne explicite de ne pas auto-fusionner.
+- Final product inventory : PASS ;
+- Finot Multistore Android / multistore-tests : PASS ;
+- Finot Multistore Android / android-build : PASS.
+
+### #35 — orchestration
+
+- DRAFT ;
+- documentation/orchestration uniquement ;
+- branche historique plus ancienne que le runtime candidat ;
+- à garder séparée jusqu'à décision sur #38 ;
+- documents en cours d'actualisation à partir des preuves réelles du runtime.
+
+## Build Android réel
+
+La chaîne GitHub Actions a réellement exécuté :
+
+- Ubuntu 24.04 ;
+- Node 24 ;
+- JDK 21 Temurin ;
+- Android SDK platform 36 ;
+- build-tools 36.0.0 ;
+- packaging `www/` ;
+- Capacitor sync ;
+- Gradle `assembleDebug` ;
+- Gradle `bundleRelease` ;
+- audit du manifeste fusionné ;
+- upload des artefacts.
+
+Artefacts validés :
+
+- APK debug : `59 690 683` octets ;
+- AAB release de validation : `58 017 432` octets ;
+- AAB non signé, volontairement ;
+- package technique : `fr.finot.academie.dev` ;
+- aucun package ID production créé.
+
+Contrôles du manifeste :
+
+- `INTERNET` présent ;
+- `allowBackup=false` ;
+- règles de transfert/sauvegarde Android désactivées ;
+- `RECORD_AUDIO` absent ;
+- `AD_ID` absent ;
+- pas de localisation/caméra/contacts/SMS/stockage large.
+
+## Hardening runtime désormais prouvé côté code/CI
+
+### Voix Android
+
+- Pas de reconnaissance vocale Android V1.
+- Aucun faux bouton micro.
+- Aucun `RECORD_AUDIO`.
+- Les étapes de prononciation Android utilisent une alternative pédagogique « écoute et répète ».
+- Le Web/PWA compatible conserve son comportement existant.
+
+### Backup Android
+
+- Backup cloud Android désactivé.
+- Transfert appareil-à-appareil désactivé via règles Android 12+.
+- Export/import parent reste la voie contrôlée de transfert.
+
+### Liens externes
+
+- Les liens externes sont bloqués dans l'espace enfant.
+- Les crédits pédagogiques peuvent rester visibles comme texte.
+- Les ouvertures externes sont réservées à l'espace parents réellement affiché.
+
+### Analytics
+
+- Aucun fournisseur analytics actif.
+- Analytics désactivés par défaut.
+- Consentement parent requis.
+- Valeurs allowlistées ; PII/prénoms filtrés.
+
+### Entitlements / futurs achats
+
+- Aucun fournisseur Store actif.
+- Aucun contenu pédagogique actuellement verrouillé.
+- Achat impossible depuis l'espace enfant.
+- Liste de produits fermée.
+- Seul le produit réellement confirmé peut accorder un entitlement.
 
 ## Supabase
 
-État réel : aucun projet Supabase Finot créé.
+État réel : aucun projet Supabase Finot n'est provisionné.
 
-Donc :
+Le runtime candidat :
 
-- aucune donnée enfant Finot actuellement stockée dans Supabase ;
-- aucune RLS/RPC live Finot à corriger ;
-- code frontend de sync = prototype/interface prévue ;
-- création projet = décision administrative ultérieure avec accord explicite.
+- retire l'ancien endpoint Supabase mort ;
+- désactive le suivi distant par défaut ;
+- ne fait aucune requête lorsqu'aucun backend n'est configuré ;
+- utilise un snapshot cloud minimal/allowlisté lorsqu'un backend fictif est activé en test ;
+- exclut les données sensibles inutiles, notamment date de naissance complète, réponses libres, diagnostic, DYS et secrets ;
+- contient un dossier `supabase/` de design/migrations/tests locaux, mais rien n'est déployé.
 
-Préparé :
+Le provisioning réel reste une décision ultérieure nécessitant accord explicite.
 
-- data map ;
-- backend blueprint ;
-- schéma/RPC spec ;
-- plan tests sécurité ;
-- minimisation ;
-- suppression/rétention à implémenter avant activation.
+## Gates P0 actualisés
 
-## Gates P0
+### Fermés côté code/runtime candidat
 
-### Store
+- payload distant trop large : fermé côté client ;
+- date de naissance complète dans le cloud : fermée côté client ;
+- micro Android non caractérisé : fermé par désactivation de la reconnaissance vocale Android ;
+- permissions Android excessives : fermé ;
+- liens externes enfant : fermé ;
+- analytics sans consentement : fermé ;
+- achats hors parent gate : fermé ;
+- backup Android enfant : fermé.
+
+### Restent ouverts avant publication réelle
 
 - privacy policy finale publique ;
-- Data Safety sur build réel ;
-- comportement microphone Android validé ;
-- validation physique critique finale ;
-- aucun P0 sécurité runtime.
+- Data Safety finalisée sur build de production/signature finale ;
+- tests physiques Android réels ;
+- package ID production définitif ;
+- signature release / Play App Signing ;
+- assets Store finaux ;
+- comptes Store et closed testing si applicable ;
+- politique juridique de rétention ;
+- backend Supabase réel uniquement si le suivi distant est activé en V1.
 
-### Avant cloud Supabase
+## Gates backend, seulement si Supabase est activé
 
-- payload allowlist ;
-- date naissance hors cloud ;
-- migration schéma/RPC/RLS ;
-- tests isolation A/B ;
-- suppression cloud ;
-- rétention/backups ;
-- advisors sécurité/performance.
+- provisionner projet UE après accord ;
+- appliquer migrations versionnées ;
+- exposer uniquement la surface API prévue ;
+- exécuter Security Advisors ;
+- limitation de débit/réseau ;
+- tests famille A/B ;
+- suppression réelle ;
+- rétention/backups réels ;
+- monitoring sans payload enfant sensible.
 
-## P1
+## Tests encore réellement nécessaires
 
-- fusion du correctif CI #37 ;
-- runtime Android/AAB ;
-- manifest PWA enrichi ;
-- assets Store produits ;
-- tests appareils Android/Windows/Samsung ;
-- versioning build final ;
-- protection `main` à décider ;
-- analytics restent désactivés tant que fournisseur non validé.
+### Android physique
 
-## Livrables orchestration disponibles
+- installation APK ;
+- cold start offline ;
+- alternative « écoute et répète » ;
+- Retour Android ;
+- clavier virtuel ;
+- portrait/paysage ;
+- dark mode ;
+- TalkBack ;
+- TTS FR/EN/IT disponible sur appareil ;
+- liens parent vers navigateur ;
+- mise à jour APK sans perte de profils ;
+- réinstallation sans restauration automatique.
 
-- `multistore-v1-release-strategy.md`
-- `privacy-data-map.md`
-- `factory-blueprint.md`
-- `store-metadata-draft.md`
-- `privacy-policy-draft.md`
-- `multistore-release-gates.md`
-- `runtime-p0-handoff.md`
-- `android-permissions-matrix.md`
-- `store-release-checklists.md`
-- `multistore-versioning.md`
-- `store-assets-spec.md`
-- `public-repo-security-audit.md`
-- `supabase-backend-blueprint.md`
-- `supabase-schema-rpc-spec.md`
-- `supabase-security-test-plan.md`
-- `analytics-privacy-first.md`
-- `monetization-parent-safe.md`
+### Windows / Microsoft Store
+
+- package PWA/MSIX réel ;
+- installation Windows ;
+- offline ;
+- update ;
+- clavier/accessibilité ;
+- conservation du stockage.
+
+### Samsung
+
+- même base Android ;
+- test appareil Samsung réel ;
+- listing Galaxy Store ;
+- vérification des règles spécifiques Store.
+
+### Amazon Fire
+
+Toujours NO-GO V1 prioritaire. Test Fire HD réel uniquement après stabilisation Google/Microsoft/Samsung/PWA.
 
 ## Ordre d'exécution recommandé
 
-1. fusionner #37 après autorisation explicite ;
-2. vérifier `main` et CI post-merge ;
-3. synchroniser la branche #35 avec le nouveau `main` sans réécriture d'historique ;
-4. attendre/pousser `claude/multistore-runtime` ;
-5. comparer branches fichier par fichier ;
-6. fermer les P0 runtime ;
-7. construire AAB dev ;
-8. tests Android réels ;
-9. enrichir PWA/manifest de manière coordonnée ;
-10. finaliser privacy/Data Safety ;
-11. produire assets définitifs ;
-12. Microsoft package + tests Windows ;
-13. Samsung variant + tests appareil ;
-14. validation physique finale ;
-15. seulement ensuite décisions administratives/publication.
+1. terminer la revue de #38 ;
+2. ne fusionner #38 qu'après accord explicite ;
+3. resynchroniser ensuite #35 sur le nouveau `main` ;
+4. exécuter protocole Android physique, un test à la fois ;
+5. figer package ID production ;
+6. préparer signature release sans secret dans Git ;
+7. produire AAB signé de release ;
+8. finaliser privacy/Data Safety ;
+9. produire assets Store définitifs ;
+10. Google internal/closed testing ;
+11. Microsoft packaging/tests ;
+12. Samsung validation ;
+13. backend Supabase uniquement si suivi distant retenu V1 ;
+14. décision Fire Tablet plus tard.
 
 ## Progression vérifiée
 
 ```text
-GLOBAL          ███████░░░ 70 %
-Audit réel      ████████░░ 80 %
-Privacy         █████████░ 90 %
-Google Play     ████████░░ 76 %
-Microsoft       ███████░░░ 68 %
-Samsung         ██████░░░░ 62 %
-PWA             ███████░░░ 68 %
-Security        ████████░░ 82 %
-Factory         █████████░ 92 %
-Supabase design █████████░ 90 %
-CI infra        ██████████ 100 % validé sur PR #37, non fusionné
+GLOBAL              █████████░ 90 %
+Audit réel          █████████░ 92 %
+Privacy             █████████░ 94 %
+Google Play         ████████░░ 82 %
+Microsoft           ███████░░░ 70 %
+Samsung             ███████░░░ 68 %
+PWA/Web             ███████░░░ 72 %
+Security            █████████░ 94 %
+Factory             █████████░ 93 %
+Supabase design     █████████░ 92 %
+CI infra            ██████████ 100 %
+Runtime Android     ██████████ 100 % code/CI
+Build APK/AAB       ██████████ 100 % validation non signée
+Tests appareil réel ██░░░░░░░░ 20 %
 ```
 
-Ces pourcentages représentent le travail effectivement vérifié/préparé ; ils ne signifient pas que les stores sont publiables aujourd'hui.
+Les pourcentages représentent le travail effectivement vérifié. Ils ne signifient pas que Finot est déjà publiable : les derniers points sont principalement physiques, administratifs, juridiques et Store.
