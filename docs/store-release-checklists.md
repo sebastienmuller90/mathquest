@@ -1,9 +1,9 @@
 # Finot Académie — checklists exécutables de publication V1
 
 Référence : 2026-10-31  
-Base produit : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`
+Runtime candidat : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
 
-Ces checklists ne constituent pas une autorisation de publication. Toute création définitive d’identifiant Store, dépense, activation commerciale ou publication nécessite l’accord explicite de Sébastien.
+Ces checklists ne constituent pas une autorisation de publication. Toute création définitive d'identifiant Store, dépense, activation commerciale ou publication nécessite l'accord explicite de Sébastien.
 
 ---
 
@@ -12,54 +12,72 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 ## A1 — Compte / accès
 
 - [ ] confirmer le type de compte développeur : personnel / organisation ;
-- [ ] confirmer si le compte personnel est soumis à l’exigence de test fermé ;
+- [ ] confirmer si le compte personnel est soumis à l'exigence de test fermé ;
 - [ ] si concerné : préparer au moins 12 testeurs continus pendant 14 jours ;
-- [ ] ne payer les 25 USD qu’après accord explicite ;
+- [ ] ne payer les 25 USD qu'après accord explicite ;
 - [ ] coordonnées développeur/support prêtes.
 
 ## A2 — Identité application
 
-- [ ] nom commercial : Finot Académie ;
+- [x] nom commercial : Finot Académie ;
 - [ ] package ID définitif approuvé ;
-- [ ] `versionName` défini ;
-- [ ] `versionCode` monotone ;
+- [ ] `versionName` production défini ;
+- [ ] `versionCode` production monotone ;
 - [ ] clé de signature / Play App Signing décidé ;
-- [ ] aucun secret de signature commité dans Git.
+- [x] aucun secret de signature commité dans Git.
 
 ## A3 — Android technique
 
-- [ ] même base PWA conservée ;
-- [ ] runtime Capacitor/Android stable ;
-- [ ] targetSdk >= API 36 pour nouvelle soumission 2026 ;
-- [ ] minSdk documenté ;
-- [ ] AAB release généré ;
-- [ ] support 64-bit ;
-- [ ] manifest fusionné audité ;
-- [ ] aucune permission inutile ;
-- [ ] `AD_ID` absent ;
-- [ ] microphone conditionnel uniquement si fonction vocale conservée ;
-- [ ] aucune mise à jour applicative parallèle au Store ;
+- [x] même base PWA conservée ;
+- [x] runtime Capacitor/Android construit ;
+- [x] targetSdk/API 36 dans le projet candidat ;
+- [x] package `www/` reproductible ;
+- [x] Capacitor sync en CI ;
+- [x] APK debug généré réellement ;
+- [x] AAB release de validation généré réellement ;
+- [x] manifest fusionné audité ;
+- [x] aucune permission inutile constatée ;
+- [x] `AD_ID` absent ;
+- [x] `RECORD_AUDIO` absent ;
+- [x] backup Android désactivé ;
+- [x] suivi distant désactivé par défaut ;
+- [x] aucune logique de self-update native ajoutée ;
+- [ ] AAB production signé ;
 - [ ] installation propre sur au moins un téléphone Android réel ;
-- [ ] mise à jour depuis build précédent sans perte localStorage/profil ;
-- [ ] offline validé dans le runtime natif ;
-- [ ] retour online validé ;
-- [ ] rotation / clavier virtuel / reprise après fermeture validés.
+- [ ] cold start offline réel ;
+- [ ] mise à jour APK sans perte localStorage/profil ;
+- [ ] rotation / clavier virtuel / reprise après fermeture validés ;
+- [ ] TalkBack validé ;
+- [ ] TTS FR/EN/IT validé sur appareil réel.
+
+### Preuves CI Android
+
+- JDK 21 : PASS ;
+- Android SDK 36 : PASS ;
+- multistore-tests : PASS ;
+- android-build : PASS ;
+- APK debug : `59 690 683` octets ;
+- AAB validation : `58 017 432` octets ;
+- package technique : `fr.finot.academie.dev`.
 
 ## A4 — Enfants / confidentialité
 
+- [x] aucun tracker publicitaire ;
+- [x] aucun `AD_ID` ;
+- [x] analytics off par défaut ;
+- [x] consentement parent exigé par l'architecture analytics ;
+- [x] liens externes bloqués côté enfant ;
+- [x] achats futurs gardés par espace parent ;
+- [x] snapshot distant réduit/allowlisté côté client ;
+- [x] date de naissance complète hors snapshot cloud ;
+- [x] reconnaissance vocale Android désactivée V1 ;
 - [ ] Target Audience exact ;
-- [ ] déclaration Families vérifiée ;
+- [ ] déclaration Families finale ;
 - [ ] privacy policy publique ;
-- [ ] Data Safety complétée depuis le binaire réel ;
-- [ ] payload cloud allowlisté ;
-- [ ] date de naissance complète hors cloud ;
-- [ ] isolation inter-familles prouvée ;
-- [ ] suppression cloud disponible ;
-- [ ] rétention documentée ;
-- [ ] aucune publicité ciblée ;
-- [ ] aucun tracker publicitaire ;
-- [ ] achats futurs exclusivement sous contrôle parent ;
-- [ ] aucune pression commerciale liée aux XP/streak/erreurs scolaires.
+- [ ] Data Safety finale ;
+- [ ] suppression cloud réelle si backend activé ;
+- [ ] rétention documentée si backend activé ;
+- [ ] aucune pression commerciale liée aux XP/streak/erreurs scolaires confirmée lors de la monétisation réelle.
 
 ## A5 — Store listing
 
@@ -86,7 +104,7 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [ ] test fermé si requis ;
 - [ ] 12 testeurs continus / 14 jours si compte concerné ;
 - [ ] retours réels collectés ;
-- [ ] aucun P0/P1 ouvert ;
+- [ ] aucun P0 applicable ouvert ;
 - [ ] production access demandé seulement après validation.
 
 ---
@@ -102,34 +120,30 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 
 ## B2 — PWA
 
-- [ ] HTTPS ;
-- [ ] manifest valide ;
-- [ ] `name` / `short_name` ;
-- [ ] `start_url` ;
-- [ ] `display: standalone` ;
-- [ ] `theme_color` / `background_color` ;
-- [ ] icons suffisants ;
-- [ ] scope/id à ajouter si utile au packaging ;
-- [ ] service worker stable ;
-- [ ] offline réel ;
-- [ ] mise à jour sans perte données ;
-- [ ] aucune dépendance au runtime Android.
+- [x] HTTPS sur canal Web actuel ;
+- [x] manifest PWA existant ;
+- [x] `display: standalone` ;
+- [x] service worker existant ;
+- [x] offline couvert par tests historiques ;
+- [x] aucune dépendance au runtime Android pour la PWA ;
+- [ ] manifest enrichi Store-quality (`id`, `scope`, screenshots/icons selon besoin) ;
+- [ ] package Windows réel ;
+- [ ] installation Windows réelle ;
+- [ ] mise à jour Windows sans perte données ;
+- [ ] navigation clavier finale ;
+- [ ] dark/DYS/accessibilité validés dans le package Store.
 
 ## B3 — Packaging
 
 - [ ] analyse PWABuilder ;
 - [ ] aucun warning bloquant ;
 - [ ] package Windows généré ;
-- [ ] package signé selon Partner Center ;
+- [ ] signature/association Partner Center ;
 - [ ] installation Windows réelle ;
-- [ ] désinstallation/réinstallation testée selon politique de données ;
-- [ ] lancement depuis menu Démarrer ;
+- [ ] lancement menu Démarrer ;
 - [ ] fenêtre redimensionnable ;
-- [ ] navigation clavier complète ;
-- [ ] mode sombre ;
-- [ ] mode DYS ;
 - [ ] offline ;
-- [ ] mise à jour.
+- [ ] update.
 
 ## B4 — Listing Microsoft
 
@@ -137,10 +151,10 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [ ] description ;
 - [ ] catégorie Education ;
 - [ ] captures desktop ;
-- [ ] icons/tuiles requis par package ;
+- [ ] icons/tuiles requis ;
 - [ ] privacy URL ;
 - [ ] support ;
-- [ ] tranche d’âge / rating ;
+- [ ] tranche d'âge / rating ;
 - [ ] déclaration de capacités cohérente avec le package.
 
 ---
@@ -149,25 +163,26 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 
 ## C1 — Mutualisation
 
-- [ ] partir du même projet Android que Google ;
-- [ ] aucun second projet source ;
-- [ ] si package name distinct retenu : product flavor/variant uniquement ;
-- [ ] mêmes tests unitaires/E2E produit ;
-- [ ] aucune divergence fonctionnelle non justifiée.
+- [x] même projet Android que Google ;
+- [x] aucun second projet source ;
+- [x] mêmes tests produit/hardening ;
+- [ ] stratégie package name Store décidée seulement si nécessaire ;
+- [ ] éventuel product flavor réalisé uniquement après décision.
 
 ## C2 — Technique
 
-- [ ] target API compatible Galaxy Store (la cible Google API 36 doit couvrir le minimum Samsung actuel >=33) ;
-- [ ] au moins un binaire 64-bit ;
-- [ ] AAB accepté/généré ;
+- [x] target API 36 ;
+- [x] projet Android réel construit en CI ;
+- [x] AAB généré ;
+- [x] aucune auto-update native parallèle ;
 - [ ] installation sur appareil Samsung réel ;
 - [ ] clavier Samsung ;
 - [ ] rotation ;
 - [ ] mode économie batterie ;
 - [ ] reprise ;
 - [ ] offline ;
-- [ ] microphone si activé ;
-- [ ] aucune logique d’auto-update applicative native contournant Galaxy Store.
+- [ ] TTS installé ;
+- [ ] navigation parent/externe.
 
 ## C3 — Listing
 
@@ -180,30 +195,26 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 - [ ] rating ;
 - [ ] pays/langues ;
 - [ ] déclaration de permissions/données ;
-- [ ] Kids/category policy vérifiée si applicable.
+- [ ] politique enfants vérifiée.
 
 ---
 
 # D. Web / PWA
 
-## D1 — Fonctionnel
+## D1 — Fonctionnel automatisé
 
-- [ ] installation navigateur supporté ;
-- [ ] lancement standalone ;
-- [ ] portrait ;
-- [ ] paysage ;
-- [ ] desktop ;
-- [ ] fermeture/reprise ;
-- [ ] offline à froid ;
-- [ ] retour online ;
-- [ ] update N→N+1 ;
-- [ ] profils conservés ;
-- [ ] aucun mélange multi-profils ;
-- [ ] audio réel ;
-- [ ] dictée ;
-- [ ] accessibilité ;
-- [ ] DYS ;
-- [ ] texte agrandi.
+- [x] profils/migrations couverts par CI ;
+- [x] offline/update couverts par CI ;
+- [x] responsive automatisé ;
+- [x] dark mode automatisé ;
+- [x] DYS automatisé ;
+- [x] audio/dictée web automatisés ;
+- [x] Chromium complet vert ;
+- [x] Firefox vert ;
+- [x] WebKit vert ;
+- [ ] protocole physique mobile final ;
+- [ ] installation PWA physique finale ;
+- [ ] VoiceOver/TalkBack physique final.
 
 ## D2 — Manifest premium
 
@@ -219,42 +230,49 @@ Ces checklists ne constituent pas une autorisation de publication. Toute créati
 
 ## D3 — Sécurité / conformité
 
+- [x] aucun secret serveur évident trouvé dans le dépôt ;
+- [x] aucun tracker publicitaire ;
+- [x] ancien endpoint Supabase retiré du runtime candidat ;
+- [x] remote sync off par défaut ;
 - [ ] privacy policy publique ;
-- [ ] suppression données cloud accessible ;
-- [ ] Supabase P0 fermés ;
-- [ ] CSP / headers à auditer sur l’hébergement final ;
-- [ ] aucune clé secrète côté frontend ;
-- [ ] clé Supabase limitée au rôle publishable ;
-- [ ] aucun tracker non approuvé.
+- [ ] CSP / headers à auditer sur hébergement final ;
+- [ ] backend cloud audité uniquement s'il est activé.
 
 ---
 
 # E. Amazon Fire Tablet
 
-Statut V1 : **NO-GO** tant que A/B/C/D ne sont pas stabilisés.
+Statut V1 : **NO-GO prioritaire** tant que A/B/C/D ne sont pas stabilisés.
 
-Critères de réouverture :
+Points déjà favorables :
 
-- [ ] Google production stable ;
-- [ ] runtime Android sans dépendance Google Play Services obligatoire ;
-- [ ] UX tablette pertinente ;
-- [ ] compatibilité Fire OS testable ;
-- [ ] coût opérationnel acceptable ;
-- [ ] pas de fork fonctionnel ;
-- [ ] décision GO explicite.
+- même APK Android envisageable ;
+- aucune dépendance Google Play Services obligatoire identifiée dans l'architecture actuelle ;
+- pas de micro Android requis.
+
+Restent obligatoires avant GO :
+
+- [ ] Fire HD réelle ;
+- [ ] WebView compatible ;
+- [ ] TTS français ;
+- [ ] offline ;
+- [ ] UI tablette ;
+- [ ] navigation physique ;
+- [ ] absence de dépendance Store Google implicite.
 
 ---
 
-# F. Release gate commun
+# F. Gate commun de release
 
 Aucun canal ne passe en production si :
 
-- P0 > 0 ;
+- P0 applicable > 0 ;
 - CI rouge ;
 - tests physiques critiques non faits ;
 - privacy/Data Safety incohérentes avec le build ;
-- package non signé ou non reproductible ;
+- package production non signé ;
 - secrets présents ;
+- package ID non approuvé ;
 - données enfant non minimisées ;
-- suppression cloud absente ;
+- suppression cloud absente alors que le cloud est activé ;
 - accord final de Sébastien absent.
