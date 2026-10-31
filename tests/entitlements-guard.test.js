@@ -1,6 +1,6 @@
 /* Droits d'accès / futurs achats : invariants durcis (31/10/2026).
-   Aucun faux achat, aucune dépendance de paiement, aucun contenu verrouillé, aucun achat depuis l'espace enfant (même si
-   l'indicateur PARENT est resté vrai), produits sur liste fermée, un fournisseur ne peut accorder que ce qui a été demandé,
+   Aucun faux achat, aucune dépendance de paiement, aucun contenu verrouillé, aucun achat ni restauration depuis l'espace enfant
+   (même si l'indicateur PARENT est resté vrai), produits sur liste fermée, un fournisseur ne peut accorder que ce qui a été demandé,
    état local corrompu ou falsifié sans effet sur le contenu gratuit. Compatible avec un futur fournisseur Google Play,
    Samsung ou Amazon (interface PurchaseProvider), sans en charger aucun. */
 const fs=require('fs'),path=require('path');
@@ -18,18 +18,20 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  try{const ctx=await b.newContext({viewport:{width:412,height:915}});await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   const p=await ctx.newPage();const errs=[],out=[];p.on('pageerror',e=>errs.push(e.message));p.on('request',r=>{if(!r.url().startsWith(url))out.push(r.url());});
   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>localStorage.clear());await p.reload({waitUntil:'load'});await seedProfile(p,'Lou','CM2');
-  const fake=()=>{window.__buy=[];MQEntitlements.setProvider({id:'fake',available:async()=>true,purchase:async id=>{window.__buy.push(id);return {products:[id]};},restore:async()=>({products:[]})});};
+  const fake=()=>{window.__buy=[];window.__restore=0;MQEntitlements.setProvider({id:'fake',available:async()=>true,purchase:async id=>{window.__buy.push(id);return {products:[id]};},restore:async()=>{window.__restore++;return {products:['finot.premium']};}});};
   await p.evaluate(fake);
   const stuck=await p.evaluate(async()=>{ACT.home();PARENT=true;try{await MQEntitlements.purchase('finot.premium');return 'achat';}catch(e){return e.code;}finally{PARENT=false;}});
   T('Achat refusé sur un écran enfant même si PARENT est resté vrai (espace parents non affiché)',stuck==='parent-gate'&&await p.evaluate(()=>window.__buy.length===0),stuck);
+  const restoreChild=await p.evaluate(async()=>{ACT.home();PARENT=true;try{await MQEntitlements.restorePurchases();return 'restauration';}catch(e){return e.code;}finally{PARENT=false;}});
+  T('Restauration refusée sur un écran enfant même si PARENT est resté vrai',restoreChild==='parent-gate'&&await p.evaluate(()=>window.__restore===0),restoreChild);
   const unknown=await p.evaluate(async()=>{parentScreen('reglages');try{await MQEntitlements.purchase('finot.vip-illimite');return 'achat';}catch(e){return e.code;}finally{ACT.home();}});
   T('Produit hors liste fermée : refusé avant tout appel au fournisseur',unknown==='unknown-product'&&await p.evaluate(()=>window.__buy.length===0),unknown);
   const greedy=await p.evaluate(async()=>{MQEntitlements.setProvider({id:'greedy',available:async()=>true,purchase:async()=>({products:['finot.premium','finot.autre','<script>']}),restore:async()=>({products:['finot.premium','pirate']})});
-   parentScreen('reglages');await MQEntitlements.purchase('finot.premium');ACT.home();const st=JSON.parse(localStorage.getItem('finot_entitlements_v1'));const rs=await MQEntitlements.restorePurchases();
+   parentScreen('reglages');await MQEntitlements.purchase('finot.premium');const st=JSON.parse(localStorage.getItem('finot_entitlements_v1'));const rs=await MQEntitlements.restorePurchases();ACT.home();
    return {after:st.products,restore:JSON.parse(localStorage.getItem('finot_entitlements_v1')).products,rs};});
   T('Un fournisseur ne peut accorder que le produit acheté, et la restauration que des produits connus',JSON.stringify(greedy.after)==='["finot.premium"]'&&JSON.stringify(greedy.restore)==='["finot.premium"]',JSON.stringify(greedy));
   const failing=await p.evaluate(async()=>{localStorage.removeItem('finot_entitlements_v1');MQEntitlements.setProvider({id:'ko',available:async()=>true,purchase:async()=>{throw new Error('annulé par le parent');},restore:async()=>{throw new Error('réseau');}});
-   parentScreen('reglages');let c='';try{await MQEntitlements.purchase('finot.premium');}catch(e){c=e.message;}ACT.home();let r='';try{await MQEntitlements.restorePurchases();}catch(e){r=e.message;}return {c,r,prem:MQEntitlements.hasPremium()};});
+   parentScreen('reglages');let c='';try{await MQEntitlements.purchase('finot.premium');}catch(e){c=e.message;}let r='';try{await MQEntitlements.restorePurchases();}catch(e){r=e.message;}ACT.home();return {c,r,prem:MQEntitlements.hasPremium()};});
   T('Achat annulé ou restauration en échec : aucun droit accordé, aucun crash',failing.prem===false&&/annulé/.test(failing.c),JSON.stringify(failing));
   const nofake=await p.evaluate(async()=>{MQEntitlements.setProvider({id:'nopurchase'});return MQEntitlements.providerId();});
   T('Fournisseur incomplet (sans purchase) : ignoré, aucun faux achat possible',nofake==='none','');
