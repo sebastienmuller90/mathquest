@@ -37,7 +37,7 @@ function atlasPays(iso){const p=atlData().pays[iso];if(!p)return atlasScreen();C
  ${p.note?`<p class="card atlnote">⚠️ ${esc(p.note)}</p>`:''}
  ${p.bref?`<h2 class="sec">📖 En bref</h2><div class="card atltxt">${p.bref.map(x=>`<p>${esc(x)}</p>`).join('')}</div>`:''}
  ${p.hist?`<h2 class="sec">🏛️ Un peu d’histoire</h2><div class="card atltxt">${p.hist.map(x=>`<p>${esc(x)}</p>`).join('')}</div>`:''}
- <p class="muted small atlcred">${p.src?`Textes : <a href="${esc(p.src)}" target="_blank" rel="noopener noreferrer">Vikidia</a>, l’encyclopédie des 8-13 ans (licence CC BY-SA). `:''}Chiffres : Wikidata.
+ <p class="muted small atlcred">${p.src?`Textes : ${MQLinks.html(p.src,'Vikidia')}, l’encyclopédie des 8-13 ans (licence CC BY-SA). `:''}Chiffres : Wikidata.
   ${p.f?'Drapeau : '+atlCredit('flag-'+k)+'. ':''}${p.m?'Carte : '+atlCredit('map-'+k)+'.':''}</p>
  <button class="btn ghost wide" data-a="atlas">← Tous les pays</button>`;window.scrollTo(0,0);}
 function atlRefresh(){const el=document.getElementById('atllist');if(el)el.innerHTML=atlListHTML();}
