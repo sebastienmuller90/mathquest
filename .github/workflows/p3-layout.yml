@@ -1,0 +1,42 @@
+name: P3 Android layout
+
+on:
+  push:
+    branches:
+      - chatgpt/android-p3-layout
+  pull_request:
+    paths:
+      - 'js/app-actions.js'
+      - 'js/app-screens.js'
+      - 'js/homework-help.js'
+      - 'js/homework-help.css'
+      - 'styles.css'
+      - 'tests/p3-parent-keyboard-layout.test.js'
+      - 'tests/p3-finot-homework-layout.test.js'
+      - '.github/workflows/p3-layout.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p3-layout-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  targeted:
+    runs-on: ubuntu-24.04
+    env:
+      MQ_BROWSER: chromium
+      MQ_ENGINES: chromium
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: P3-E — Finot ne masque pas l'Aide aux devoirs
+        run: node tests/p3-finot-homework-layout.test.js
+      - name: P3-F — navigation masquée sur le PIN parent
+        run: node tests/p3-parent-keyboard-layout.test.js
