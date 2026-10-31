@@ -1,0 +1,45 @@
+name: P3 apply exact layout fix
+
+on:
+  push:
+    branches:
+      - chatgpt/android-p3-layout
+    paths:
+      - '.github/workflows/p3-apply-layout-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: chatgpt/android-p3-layout
+      - name: Apply exact P3-E and P3-F replacements
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('js/app-screens.js')
+          s = p.read_text(encoding='utf-8')
+          old1 = "function finotQuestionScreen(){return !!M||!!L||/^(mission|flash|lesson|interrogation|diagnostic)$/.test(CUR);}"
+          new1 = "function finotQuestionScreen(){return !!M||!!L||/^(mission|flash|lesson|interrogation|diagnostic|homework-help)$/.test(CUR);}"
+          old2 = "function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const show=CUR==='home'&&!!S.name;nav.classList.toggle('show',show);if(!show)return;"
+          new2 = "function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const parentGate=!!document.querySelector('#app #pin,#app #pin2,#app #rk,#app #np2,#app .reckey'),show=CUR==='home'&&!!S.name&&!parentGate;nav.classList.toggle('show',show);if(!show)return;"
+          if s.count(old1) != 1:
+              raise SystemExit(f'finotQuestionScreen pattern count={s.count(old1)}')
+          if s.count(old2) != 1:
+              raise SystemExit(f'hometabsSync pattern count={s.count(old2)}')
+          p.write_text(s.replace(old1, new1).replace(old2, new2), encoding='utf-8')
+      - name: Verify and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          git diff -- js/app-screens.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/app-screens.js
+          git commit -m 'fix(android): prevent homework and PIN overlay collisions'
+          git push origin HEAD:chatgpt/android-p3-layout
