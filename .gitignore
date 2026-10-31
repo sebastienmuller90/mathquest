@@ -101,3 +101,8 @@
 !/tests/phase4-pedagogy-browser-audit.mjs
 !/tests/phase4-ce2-data-browser-audit.mjs
 !/tests/chapter-packs-browser-audit.mjs
+# Distribution multi-store (31/10/2026) : packaging déterministe de www/ (copie propre embarquée par Capacitor),
+# et tests exécutables en CI. www/ lui-même reste ignoré (artefact reproductible).
+!/scripts/
+!/scripts/package-www.mjs
+!/tests/mobile-package.test.js
