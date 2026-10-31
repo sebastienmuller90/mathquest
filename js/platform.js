@@ -18,8 +18,8 @@ const kind=isNative?String((cap.getPlatform&&cap.getPlatform())||'native'):'web'
 const PUBLIC_BASE='https://sebastienmuller90.github.io/mathquest/';
 function plugin(name){try{return isNative&&cap.Plugins&&cap.Plugins[name]||null;}catch(e){return null;}}
 function publicURL(rel){return new URL(rel,isNative?PUBLIC_BASE:location.href).href;}
-function shouldRegisterServiceWorker(){return !isNative&&'serviceWorker' in navigator&&/^https?:$/.test(location.protocol);}
-function isOnline(){return navigator.onLine!==false;}
+function shouldRegisterServiceWorker(){return !isNative&&typeof navigator!=='undefined'&&'serviceWorker' in navigator&&typeof location!=='undefined'&&/^https?:$/.test(location.protocol);}
+function isOnline(){return typeof navigator==='undefined'||navigator.onLine!==false;}
 const emit=(ev,data)=>{try{if(window.MQHooks)MQHooks.emit(ev,data);}catch(e){}};
 const visible=el=>!!(el&&!el.disabled&&el.offsetParent!==null);
 const cur=()=>typeof CUR!=='undefined'?CUR:'';
@@ -48,8 +48,10 @@ if(isNative){const App=plugin('App');
   App.addListener('resume',()=>{emit('platform:resume',{});try{if(cur()==='home'&&typeof home==='function')home();}catch(e){}});
  }
  document.documentElement.classList.add('mq-native','mq-'+kind);}
-window.addEventListener('online',()=>emit('platform:network',{online:true}));
-window.addEventListener('offline',()=>emit('platform:network',{online:false}));
+// Bac à sable des audits (pas de DOM complet) : aucun écouteur, l'API reste disponible.
+if(typeof window.addEventListener==='function'){
+ window.addEventListener('online',()=>emit('platform:network',{online:true}));
+ window.addEventListener('offline',()=>emit('platform:network',{online:false}));}
 
 window.MQPlatform=Object.freeze({kind,isNative,PUBLIC_BASE,plugin,publicURL,shouldRegisterServiceWorker,isOnline,back});
 })();
