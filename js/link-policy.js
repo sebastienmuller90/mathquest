@@ -8,7 +8,7 @@
 (function(){
 'use strict';
 const escH=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const inParent=()=>{try{return typeof PARENT!=='undefined'&&PARENT===true;}catch(e){return false;}};
+const inParent=()=>!!(window.MQParentGate&&MQParentGate.active()); // espace parents réellement affiché (js/parent-gate.js)
 function parse(u){try{return new URL(String(u),location.href);}catch(e){return null;}}
 function isExternal(u){const x=parse(u);return !!(x&&/^https?:$/.test(x.protocol)&&x.origin!==location.origin);}
 function host(u){const x=parse(u);return x?x.hostname.replace(/^www\./,''):'';}
