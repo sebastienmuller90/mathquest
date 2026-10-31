@@ -32,6 +32,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Identifiant publicitaire explicitement retiré (AD_ID, tools:node="remove")',/com\.google\.android\.gms\.permission\.AD_ID"[^>]*tools:node="remove"|tools:node="remove"[^>]*com\.google\.android\.gms\.permission\.AD_ID"/.test(man.replace(/\s+/g,' ')),'');
  const nsc=read(A('app/src/main/res/xml/network_security_config.xml'));
  T('Réseau : trafic en clair interdit (network_security_config, aucun usesCleartextTraffic)',/android:networkSecurityConfig="@xml\/network_security_config"/.test(man)&&/cleartextTrafficPermitted="false"/.test(nsc)&&!/cleartextTrafficPermitted="true"/.test(nsc)&&!/usesCleartextTraffic="true"/.test(man),'');
+ const fp=read(A('app/src/main/res/xml/file_paths.xml'));
+ T('FileProvider : aucun accès global au stockage externe ; cache interne uniquement',!/external-path\b/.test(fp)&&/<cache-path\b[^>]*path="\."/.test(fp),fp.replace(/\s+/g,' ').trim());
  const filters=[...man.matchAll(/<intent-filter[\s\S]*?<\/intent-filter>/g)].map(m=>m[0]);
  T('Aucun lien profond ni intent exporté en dehors du lanceur',filters.length===1&&/MAIN/.test(filters[0])&&/LAUNCHER/.test(filters[0])&&!/android\.intent\.action\.VIEW/.test(man),filters.length+' intent-filter');
  T('Rotation, clavier et thème sombre sans redémarrage de l’activité (configChanges)',['orientation','screenSize','keyboardHidden','uiMode','smallestScreenSize','screenLayout'].every(k=>new RegExp('configChanges="[^"]*\\b'+k+'\\b').test(man)),'');
