@@ -1,7 +1,7 @@
 {
   "name": "mathquest",
   "private": true,
-  "description": "MathQuest — PWA éducative CP → 3e, sans étape de build. Ce fichier sert uniquement à épingler les outils de test (Playwright) pour une CI reproductible.",
+  "description": "Finot Académie — PWA éducative CP → 3e, sans étape de build pour le web. Ce fichier épingle les outils de test (Playwright) et l’enveloppe Android (Capacitor) pour des builds reproductibles.",
   "license": "UNLICENSED",
   "scripts": {
     "test:static": "node tests/mathquest-regression.mjs && node tests/registry-probe.mjs && node tests/full-content-audit-v2.mjs",
@@ -9,9 +9,17 @@
     "test:mobile": "node tests/mobile-layout.test.js",
     "test:pwa": "node tests/pwa-update.test.js",
     "package:www": "node scripts/package-www.mjs",
-    "test:package": "node tests/mobile-package.test.js"
+    "test:package": "node tests/mobile-package.test.js",
+    "android:sync": "node scripts/package-www.mjs && cap sync android",
+    "test:android": "node tests/android-project.test.js",
+    "test:runtime": "node tests/mobile-runtime.test.js"
   },
   "devDependencies": {
+    "@capacitor-community/text-to-speech": "8.0.2",
+    "@capacitor/android": "8.6.0",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/cli": "8.6.0",
+    "@capacitor/core": "8.6.0",
     "playwright": "1.57.0"
   }
 }
