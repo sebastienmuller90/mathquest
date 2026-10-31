@@ -178,7 +178,8 @@ function replay(){if(st.last)return speak(st.last.segs,st.last.opt);return null;
 function speaking(){const s=synth();try{return !!(s&&(s.speaking||s.pending));}catch(e){return false;}}
 
 /* ---------- Reconnaissance vocale ---------- */
-const Rec=()=>root.SpeechRecognition||root.webkitSpeechRecognition||null;
+// Reconnaissance : capacité centralisée (js/speech-capability.js) ; null dans l'app Android V1.
+const Rec=()=>root.MQSpeechCapability?root.MQSpeechCapability.Recognition():(root.SpeechRecognition||root.webkitSpeechRecognition||null);
 function recognitionLocale(l){return locale(l);}
 function createRecognizer(l){const R=Rec();if(!R)return null;const r=new R();r.lang=recognitionLocale(l);r.interimResults=false;r.maxAlternatives=3;r.continuous=false;return r;}
 

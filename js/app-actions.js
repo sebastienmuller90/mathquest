@@ -232,6 +232,8 @@ const ACT={
  rhint:()=>{if(!L||!L.rq)return;const lvl=L.rhints||0;toast('💡 '+MQReading.hintText(L.rq,lvl));L.rhints=lvl+1;renderLesson();},
  glossdef:w=>{const s=L&&L.steps[L.i];const res=s&&s.resourceId?MQReading.get(s.resourceId):null;const word=decodeURIComponent(w);const g=res&&(res.glossary||[]).find(x=>x.word.toLowerCase()===word.toLowerCase());if(g)toast(`📖 <b>${esc(g.word)}</b> : ${esc(g.definition)}`);},
  pronlisten:pronListen,pronsay:pronStart,pronskip:()=>{if(!L||SpeechRec)return;L.pronPassed=true;renderLesson();},
+ // Sans reconnaissance utilisable : écouter puis répéter chaque phrase à voix haute (aucune reconnaissance simulée).
+ pronself:()=>{if(!L||SpeechRec||!L.pronTargets?.length)return;if(L.pronIndex<L.pronTargets.length-1)L.pronIndex++;else{L.pronPassed=true;L.pronSelf=true;}renderLesson();},
  ttsplay:()=>{if(TTS.playing)return ttsStop();ttsSpeak(lessonChunks());},
  ttsq:()=>{if(TTS.playing)return ttsStop();ttsSpeak([$('.qcard .qtext'),...document.querySelectorAll('.qcard .choice')]);},
  ttsauto:()=>{S.tts.auto=!S.tts.auto;saveLocal();const b=$('[data-a="ttsauto"]');if(b){b.classList.toggle('on',S.tts.auto);b.setAttribute('aria-pressed',S.tts.auto);}if(S.tts.auto)ttsSpeak(lessonChunks());else ttsStop();},
