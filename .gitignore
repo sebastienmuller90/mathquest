@@ -118,3 +118,11 @@
 !/android/**
 !/scripts/android-assets.py
 !/tests/android-project.test.js
+!/tests/remote-sync-flag.test.js
+!/tests/supabase-design.test.js
+!/tests/analytics-guard.test.js
+!/tests/entitlements-guard.test.js
+# Backend du suivi parent : CONCEPTION non déployée (migrations SQL + tests PostgreSQL locaux), sans aucun secret.
+!/supabase/
+!/supabase/**
+/supabase/node_modules/
