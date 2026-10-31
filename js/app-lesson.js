@@ -249,6 +249,13 @@ function voiceDiagHTML(){if(!window.MQAudio||!MQAudio.supported())return '<p cla
  <details><summary>${d.count} voix détectée(s) sur l’appareil</summary><table class="ptable"><tr><th>Nom</th><th>Langue</th><th>Moteur</th></tr>${d.voices.map(v=>`<tr><td>${esc(v.name)}${v.default?' ⭐':''}</td><td>${esc(v.locale)}</td><td>${esc(v.engine)}</td></tr>`).join('')}</table></details>
  <p class="muted small">Reconnaissance vocale : ${d.recognition?'disponible (fr-FR, en-GB, it-IT selon l’exercice)':'non disponible dans ce navigateur'}.</p></div>`;}
 if(window.MQAudio)MQAudio.onUnavailable=l=>toast(`🔇 Aucune voix ${({fr:'française',en:'anglaise',it:'italienne'})[l]||l} sur cet appareil : le texte reste affiché.`);
+// La voix existe mais n'a pas pu parler (ex. hors connexion sans voix installée sur l'appareil) : message enfant, et une
+// question uniquement orale (dictée) affiche son texte, comme quand aucune voix n'est installée (audioHTML).
+const VOICE_FAIL_TOAST={};
+if(window.MQAudio)MQAudio.onFail=l=>{const now=Date.now();
+ if(!(now-(VOICE_FAIL_TOAST[l]||0)<60000)){VOICE_FAIL_TOAST[l]=now;toast(`🔇 La voix ${({fr:'française',en:'anglaise',it:'italienne'})[l]||''} n’est pas disponible pour le moment sur cet appareil. Tu peux continuer en lisant le texte.`);}
+ const q=typeof curQ==='function'?curQ():null;const row=document.querySelector('.listenrow');
+ if(q&&q.audio&&row&&String(q.audio.l||'fr').slice(0,2)===l)row.outerHTML=`<div class="qtext" lang="${l}">${esc(q.audio.t)}</div>`;};
 
 /* ===== Brouillon ===== */
 const PAD={open:false,mode:'draw',tool:'pen',color:'#1f2937',strokes:[],cv:null,ctx:null};
