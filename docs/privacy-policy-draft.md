@@ -1,268 +1,250 @@
 # Finot Académie — politique de confidentialité (DRAFT)
 
-**Statut : brouillon de travail — ne pas publier en l’état.**  
-Ce texte doit être finalisé après audit Supabase, définition de la rétention, identité du responsable de traitement, adresse de contact et validation du runtime Android final.
+> **Statut : DRAFT non publiable tel quel.** Les coordonnées légales, l'URL publique finale, la durée de conservation définitive et la décision backend V1 doivent encore être validées.
 
-Dernière base technique auditée : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`.
-
----
+Dernière mise à jour technique : 2026-10-31  
+Référence runtime : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
 
 ## 1. Objet
 
-Finot Académie est une application éducative destinée aux élèves du CP à la 3e. Elle propose des cours, exercices, révisions, activités de lecture, dictée, langues et outils de suivi de progression.
+Finot Académie est une application éducative destinée aux élèves du CP à la 3e. Elle permet de créer des profils locaux, suivre une progression pédagogique, réaliser des cours/exercices et utiliser un espace parents.
 
-La protection des données des enfants est une priorité. Finot Académie vise à collecter et transmettre uniquement les données nécessaires à son fonctionnement.
+La conception V1 suit un principe **local-first** et de minimisation des données, particulièrement parce que l'application est destinée à des mineurs.
 
 ## 2. Responsable du traitement
 
-**À compléter avant publication :**
+À compléter avant publication :
 
-- Nom / entité : `[À COMPLÉTER]`
-- Adresse : `[À COMPLÉTER]`
-- Email confidentialité : `[À COMPLÉTER]`
-- Email support : `[À COMPLÉTER]`
+- nom / entité ;
+- adresse ou informations légales nécessaires ;
+- email confidentialité ;
+- email support ;
+- URL officielle de cette politique.
 
 Aucune publication Store ne doit avoir lieu tant que ces informations ne sont pas exactes.
 
-## 3. Données utilisées localement sur l’appareil
+## 3. Données enregistrées localement
 
-Finot Académie peut conserver localement sur l’appareil :
+Selon les fonctions utilisées, Finot peut stocker sur l'appareil :
 
-- prénom ou pseudonyme de l’élève ;
+- prénom ou pseudonyme ;
 - classe ;
-- genre déclaré ;
 - date de naissance facultative ;
-- choix de compagnon et préférences d’interface ;
-- objectifs et préférences d’apprentissage ;
+- préférences de profil ;
 - progression ;
-- résultats aux exercices ;
-- cours terminés ;
-- niveaux de maîtrise ;
+- scores ;
+- maîtrise ;
+- historique pédagogique ;
 - erreurs et révisions ;
-- statistiques de travail ;
-- progression en lecture ;
-- XP, badges et autres éléments de progression ludique ;
-- paramètres de son, thème et accessibilité ;
-- devoirs et récompenses familiales lorsqu’ils sont utilisés.
+- devoirs/actions parent ;
+- XP, pièces, badges et récompenses ;
+- préférences d'accessibilité et d'affichage ;
+- paramètres nécessaires au fonctionnement de l'application.
 
-Ces données permettent de personnaliser le parcours pédagogique et de reprendre le travail après fermeture de l’application.
+Ces données servent à personnaliser l'apprentissage et à conserver la progression.
 
-## 4. Date de naissance
+## 4. Suivi parent à distance
 
-La date de naissance est facultative.
+### État V1 actuel
 
-Dans la version auditée, elle sert notamment à calculer l’âge localement et à personnaliser certains messages, comme l’anniversaire.
+Aucun backend Supabase Finot n'est actuellement provisionné.
 
-**Décision de release :** la date de naissance complète ne doit pas être transmise au serveur dans la version Store finale si une information moins précise suffit.
+Le suivi parent distant est **désactivé par défaut** dans le runtime candidat. Lorsqu'aucun backend valide n'est configuré, Finot ne tente pas d'envoyer les données enfant à un service Supabase.
 
-## 5. Suivi parent à distance
+### Si le suivi distant est activé ultérieurement
 
-Finot Académie peut proposer un suivi parent à distance facultatif.
+Seules les informations strictement nécessaires à la fonctionnalité parent distante devront être envoyées selon une liste blanche explicite.
 
-Cette fonction n’est activée que volontairement depuis l’espace parent de l’application.
-
-Lorsqu’elle est activée, certaines informations de progression peuvent être synchronisées avec un service distant afin que le parent puisse consulter le suivi et envoyer certaines actions à l’application de l’enfant.
-
-### Données prévues pour la version finale
-
-Le payload distant final doit être limité aux informations nécessaires au suivi parent, par exemple :
-
-- pseudonyme/prénom affiché ;
-- classe ;
-- progression utile ;
-- cours terminés ;
-- scores et maîtrise agrégés ;
-- révisions dues ;
-- temps de travail agrégé ;
-- devoirs et actions parent nécessaires ;
-- éléments de récompense familiale nécessaires ;
-- date/heure de dernière synchronisation.
-
-### Données qui ne doivent pas être transmises inutilement
+Les éléments suivants ne doivent pas être transmis dans le payload distant V1 :
 
 - date de naissance complète ;
-- secrets/PIN ;
-- recovery code ;
-- préférences purement visuelles ;
-- enregistrements audio ;
-- transcription vocale brute ;
+- PIN/code de secours parent ;
+- diagnostic détaillé ;
+- mode DYS ;
+- réponses libres tapées par l'enfant ;
+- données vocales ;
+- transcription vocale ;
+- secrets techniques locaux ;
 - identifiant publicitaire ;
 - localisation ;
 - contacts ;
-- photos ou vidéos personnelles.
+- photos/vidéos.
 
-## 6. Hébergement et Supabase
+L'activation d'un backend réel nécessitera une mise à jour de cette politique avant utilisation réelle.
 
-La version auditée utilise Supabase pour le suivi parent à distance.
+## 5. Microphone et reconnaissance vocale
 
-**À compléter avant publication :**
+### Android V1
 
-- région d’hébergement effective ;
-- sous-traitant juridique exact ;
-- DPA applicable ;
-- transferts éventuels hors UE ;
-- durée de conservation ;
-- politiques RLS/RPC auditées ;
-- mécanisme de suppression définitive ;
-- gestion des sauvegardes et logs.
+L'application Android candidate ne demande pas la permission microphone et n'utilise pas la reconnaissance vocale.
 
-Le frontend utilise une clé Supabase `publishable`. Cette clé n’est pas considérée comme un secret serveur ; la sécurité doit reposer sur les contrôles d’accès côté backend.
+Les activités de prononciation utilisent une alternative pédagogique « écoute et répète » lorsque la reconnaissance vocale n'est pas disponible.
 
-## 7. Microphone et reconnaissance vocale
+Finot Android V1 ne conserve donc aucun enregistrement audio ni transcription vocale.
 
-Certaines activités de langues peuvent proposer une fonction de prononciation utilisant le microphone.
+### Web / PWA
 
-Cette fonction :
+Sur certains navigateurs compatibles, une fonction de reconnaissance vocale peut être proposée par l'API Web Speech de la plateforme.
 
-- démarre uniquement après une action explicite de l’utilisateur ;
-- n’écoute pas en arrière-plan ;
-- utilise la reconnaissance vocale fournie par le navigateur ou le système ;
-- récupère une transcription afin de comparer la prononciation avec une phrase cible ;
-- affiche temporairement la transcription reconnue et un score pédagogique.
+Dans ce cas :
 
-Dans le code audité, Finot Académie ne stocke pas explicitement l’enregistrement audio et ne transmet pas explicitement la transcription à Supabase.
+- elle est déclenchée uniquement par l'utilisateur ;
+- Finot ne doit pas conserver l'audio ;
+- Finot ne doit pas synchroniser la transcription avec un backend ;
+- le traitement exact peut dépendre du navigateur/OS/fournisseur de la plateforme.
 
-Cependant, le moteur de reconnaissance vocale de la plateforme peut traiter la voix via des services du fournisseur du navigateur ou du système. Le comportement exact doit être vérifié pour chaque runtime distribué.
+## 6. Synthèse vocale
 
-Si ce traitement ne peut pas être documenté de façon conforme pour la version Android finale, la fonction de reconnaissance vocale devra être désactivée dans cette version plutôt que de collecter des données enfant de manière incertaine.
+Finot utilise la synthèse vocale de la plateforme pour lire certains contenus pédagogiques.
 
-## 8. Synthèse vocale
+Sur Android, la version native utilise le moteur TTS disponible sur l'appareil. Certaines voix peuvent nécessiter un téléchargement ou un service fourni par le système d'exploitation.
 
-Finot Académie utilise la synthèse vocale du navigateur ou du système pour lire des contenus pédagogiques.
+Finot n'enregistre pas la voix de l'enfant pour cette fonction de lecture.
 
-Selon l’appareil, certaines voix peuvent être locales et d’autres peuvent dépendre d’un service en ligne fourni par la plateforme.
+## 7. Sauvegarde Android
 
-Finot Académie ne crée pas d’enregistrement de la voix de l’enfant pour cette fonction de simple lecture.
+La sauvegarde Android automatique des données de l'application est désactivée dans le runtime candidat.
 
-## 9. Publicité
+Le transfert automatique des données enfant entre appareils est également désactivé pour la V1.
 
-Finot Académie V1 ne prévoit :
+L'export/import contrôlé via l'espace parents reste la méthode privilégiée pour un transfert volontaire lorsque cette fonction est utilisée.
 
-- aucune publicité ciblée enfant ;
-- aucun SDK publicitaire ;
-- aucun identifiant publicitaire ;
-- aucun profilage publicitaire.
+## 8. Liens externes
 
-Toute évolution future sur ce point nécessiterait une nouvelle analyse de conformité avant activation.
+Dans l'espace enfant, Finot bloque les ouvertures de liens externes.
 
-## 10. Analytics
+Les liens externes nécessaires sont réservés à l'espace parents réellement affiché.
 
-La version auditée ne possède pas encore de couche analytics produit validée pour la V1 Store.
+Cette règle vise à éviter qu'un enfant sorte involontairement de l'environnement éducatif contrôlé.
 
-Si des analytics sont ajoutés, ils devront être privacy-first et exclure notamment :
+## 9. Analytics
+
+Aucun fournisseur analytics tiers n'est actif dans la V1 candidate.
+
+L'architecture analytics est désactivée par défaut et nécessite l'accord d'un parent avant toute activation future.
+
+Les analytics futurs ne doivent jamais contenir :
 
 - prénom/nom ;
 - date de naissance ;
 - texte libre enfant ;
-- réponses scolaires brutes ;
-- contenu audio ;
-- transcription vocale ;
+- audio ;
+- transcription ;
 - identifiant publicitaire ;
 - fingerprint ;
-- localisation précise.
+- géolocalisation précise.
 
-Les événements privilégiés seront des événements techniques ou agrégés : version, plateforme, langue, niveau scolaire, identifiant de contenu non personnel, durée/score par tranche, online/offline.
+## 10. Publicité
+
+Finot Académie V1 ne contient pas de publicité ciblée enfant et n'utilise pas d'identifiant publicitaire Android (`AD_ID`).
+
+Aucun tracker publicitaire n'est intégré au runtime candidat.
 
 ## 11. Achats et monétisation
 
-La V1 ne doit pas utiliser les erreurs scolaires, XP, badges, séries ou frustration comme mécanisme de pression à l’achat.
+Aucun achat réel n'est activé dans le runtime candidat.
 
-Tout achat futur devra être contrôlé côté parent.
+L'architecture prévue impose que les futurs achats soient initiés et contrôlés depuis l'espace parents.
 
-La progression pédagogique et la monétisation doivent rester techniquement et fonctionnellement séparées.
+Les mécanismes pédagogiques (XP, badges, progression, erreurs, séries) ne doivent pas être utilisés pour pousser l'enfant à acheter.
 
-## 12. Conservation
+## 12. Permissions Android
 
-**À définir avant publication.**
+Le manifest fusionné de la version candidate a été audité automatiquement.
 
-La politique finale doit préciser séparément :
+État actuel :
 
-- durée de conservation locale ;
-- durée de conservation serveur ;
-- durée des actions parent ;
-- durée des logs techniques ;
-- délai de suppression ;
-- comportement des sauvegardes backend.
+- accès réseau `INTERNET` : présent ;
+- microphone : absent ;
+- `AD_ID` : absent ;
+- localisation : absente ;
+- caméra : absente ;
+- contacts : absents ;
+- SMS/téléphone : absents ;
+- stockage externe large : absent ;
+- backup Android : désactivé.
 
-Principe : aucune donnée enfant ne doit être conservée plus longtemps que nécessaire.
+## 13. Sécurité
 
-## 13. Suppression des données
+Les données pédagogiques restent principalement stockées localement dans la V1 actuelle.
 
-L’utilisateur doit disposer d’un moyen clair de supprimer :
+Le dépôt ne doit contenir aucune clé serveur secrète, clé privée ou `service_role` Supabase.
 
-1. les données locales ;
-2. les données du suivi parent distant lorsqu’il a été activé.
+Si un backend est activé ultérieurement, il devra notamment utiliser :
 
-**P0 actuel :** la suppression distante complète n’est pas encore prouvée dans la base auditée. Une release Store ne doit pas déclarer une suppression cloud tant que le mécanisme backend n’existe pas et n’est pas testé.
+- isolation entre familles ;
+- jetons non stockés en clair ;
+- RLS / surface API minimale ;
+- suppression contrôlée ;
+- rétention définie ;
+- tests d'accès croisés ;
+- limitation des logs sensibles.
 
-La version finale devra permettre au parent de demander la suppression sans devoir contacter manuellement le développeur lorsque cela est techniquement raisonnable.
+## 14. Suppression des données
 
-## 14. Export / transfert
+### Données locales
 
-Finot Académie propose actuellement un mécanisme d’export/import de progression locale.
+Les données locales peuvent être supprimées selon les fonctions de gestion de profil/application disponibles.
 
-Les secrets parent et éléments de synchronisation doivent rester exclus de l’export lorsque cela est prévu par le produit.
+### Données cloud
 
-## 15. Sécurité
+Aucun backend Finot n'est actif aujourd'hui.
 
-Les mesures attendues pour la V1 incluent :
+Si un backend de suivi parent est activé, Finot devra proposer une action parent permettant la suppression des données synchronisées, avec confirmation explicite, et documenter la rétention effective des sauvegardes serveur.
 
-- accès backend par jetons aléatoires suffisamment longs ;
-- isolation stricte entre familles ;
-- contrôles serveur ;
-- validation des payloads ;
-- limitation des données envoyées ;
-- protection contre la lecture/écriture croisée ;
-- absence de secret serveur dans l’application ;
-- mécanisme de suppression ;
-- tests de sécurité automatisés.
+## 15. Conservation
 
-## 16. Droits et demandes
+La majorité des données de la V1 candidate restent sur l'appareil tant que le profil/application les conserve.
 
-**À finaliser selon l’entité responsable et la juridiction de publication.**
+Les durées serveur ne sont pas applicables tant qu'aucun backend Finot n'est provisionné.
 
-La politique finale devra expliquer comment le parent peut demander :
+Une politique de rétention serveur devra être validée avant toute première donnée cloud réelle.
+
+## 16. Enfants
+
+Finot Académie est conçu pour un public comprenant des mineurs.
+
+Principes appliqués :
+
+- minimisation ;
+- pas de publicité ciblée ;
+- pas d'ID publicitaire ;
+- pas de liens externes côté enfant ;
+- achats réservés au parent ;
+- pas de micro Android V1 ;
+- backup Android enfant désactivé ;
+- cloud off par défaut ;
+- données scolaires non utilisées comme levier commercial.
+
+## 17. Droits et demandes
+
+À finaliser selon l'entité responsable et la juridiction de publication.
+
+La version finale devra expliquer comment le parent peut demander :
 
 - accès ;
 - rectification ;
 - suppression ;
 - limitation ;
 - export lorsque applicable ;
-- retrait d’un consentement lorsque applicable.
-
-Contact : `[À COMPLÉTER]`
-
-## 17. Enfants
-
-Finot Académie est conçue spécifiquement pour un usage scolaire par des mineurs.
-
-Les réglages sensibles, synchronisation distante et futurs achats doivent être placés sous contrôle parent lorsque nécessaire.
-
-Aucune donnée enfant ne doit être utilisée à des fins de publicité comportementale.
+- retrait d'un consentement lorsque applicable.
 
 ## 18. Modifications de cette politique
 
-La date de dernière mise à jour sera indiquée dans la version publiée.
+Toute modification substantielle des catégories de données, du backend, des analytics, des achats ou des permissions doit entraîner :
 
-Toute modification importante concernant les données enfant, le backend, les analytics, les achats ou la publicité doit déclencher :
+1. mise à jour de la présente politique ;
+2. revue Data Safety / Store ;
+3. revue enfant/privacy ;
+4. nouveau contrôle des tests et permissions.
 
-- une nouvelle revue privacy ;
-- une mise à jour Data Safety si nécessaire ;
-- une mise à jour de cette politique ;
-- les notifications nécessaires selon les Stores et la réglementation applicable.
+## 19. Éléments encore requis avant publication
 
----
-
-## Blocages avant publication de ce document
-
-- [ ] identité juridique / responsable renseigné ;
-- [ ] email privacy/support ;
-- [ ] région Supabase confirmée ;
-- [ ] backend RLS/RPC audité ;
-- [ ] rétention définie ;
-- [ ] suppression serveur implémentée/testée ;
-- [ ] payload cloud minimisé ;
-- [ ] date de naissance exclue du payload ;
-- [ ] comportement micro Android vérifié ;
-- [ ] Data Safety alignée ;
-- [ ] URL publique définitive créée.
+- [ ] identité légale de l'éditeur ;
+- [ ] email support/privacy ;
+- [ ] URL publique permanente ;
+- [ ] validation juridique adaptée au marché visé ;
+- [ ] décision finale sur backend distant V1 ;
+- [ ] Data Safety finale ;
+- [ ] politique de rétention si cloud activé ;
+- [ ] alignement avec le package production signé.
