@@ -1,69 +1,123 @@
 # Finot Académie — matrice permissions Android V1
 
-Référence produit : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`  
-Branche orchestration : `chatgpt/multistore-release-orchestration`
+Référence runtime candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
 
-Objectif : limiter strictement les permissions Android du runtime natif tout en conservant les fonctions de la PWA.
+## État réel validé
 
-## Principe
+Le manifeste Android fusionné a été audité dans la CI réelle après `android:sync` et build Gradle.
 
-Aucune permission sensible ne doit être demandée au démarrage de l’application. Toute permission sensible doit être demandée uniquement au moment où l’utilisateur déclenche la fonction correspondante, avec possibilité de refuser sans bloquer l’application.
+Résultat V1 actuel :
 
-## Matrice V1
+| Permission / capacité | État réel | Décision V1 |
+|---|---|---|
+| `INTERNET` | PRÉSENTE | REQUISE |
+| `ACCESS_NETWORK_STATE` | NON AJOUTÉE explicitement | ne pas ajouter sans besoin |
+| `RECORD_AUDIO` | ABSENTE | INTERDITE V1 Android |
+| `POST_NOTIFICATIONS` | ABSENTE | NON V1 |
+| `AD_ID` | ABSENTE | INTERDITE |
+| localisation fine/coarse | ABSENTE | INTERDITE V1 |
+| caméra | ABSENTE | INTERDITE V1 |
+| contacts | ABSENTE | INTERDITE |
+| calendrier | ABSENTE | INTERDITE |
+| SMS / téléphone | ABSENTE | INTERDITE |
+| stockage externe large | ABSENTE | INTERDITE |
+| fichiers/médias | ABSENTE | NON V1 |
+| biométrie | ABSENTE | NON V1 |
+| Bluetooth / nearby devices | ABSENTE | NON V1 |
+| foreground service | ABSENTE | NON V1 |
+| exact alarms | ABSENTE | NON V1 |
 
-| Permission / capacité | Statut V1 | Justification | Règle |
-|---|---|---|---|
-| `INTERNET` | REQUISE | chargement réseau, Supabase optionnel, ressources web si nécessaires | permission normale ; pas de demande runtime |
-| `ACCESS_NETWORK_STATE` | OPTIONNELLE | utile uniquement si le runtime natif l’emploie réellement pour état réseau | ne pas ajouter si Capacitor/WebView fonctionne sans |
-| `RECORD_AUDIO` | CONDITIONNELLE | prononciation interactive en langues | demander seulement au clic micro ; permission dangereuse ; refus = fonction désactivée proprement |
-| `POST_NOTIFICATIONS` | NON V1 | aucune notification push native nécessaire actuellement | ne pas déclarer tant qu’un vrai besoin produit n’est pas validé |
-| `AD_ID` | INTERDITE | aucun tracking publicitaire ; application enfant | ne pas inclure ; vérifier les dépendances transitives |
-| localisation fine/coarse | INTERDITE V1 | aucun besoin fonctionnel | ne pas déclarer |
-| caméra | INTERDITE V1 | aucun besoin fonctionnel | ne pas déclarer |
-| contacts | INTERDITE | aucun besoin | ne pas déclarer |
-| calendrier | INTERDITE | aucun besoin | ne pas déclarer |
-| SMS / téléphone | INTERDITE | aucun besoin | ne pas déclarer |
-| stockage externe large | INTERDITE | PWA/localStorage et stockage privé suffisent | éviter `READ/WRITE_EXTERNAL_STORAGE`, `MANAGE_EXTERNAL_STORAGE` |
-| fichiers/médias | NON V1 | aucun besoin de galerie utilisateur | ne pas demander |
-| biométrie | NON V1 | aucun besoin | ne pas demander |
-| Bluetooth / nearby devices | NON V1 | aucun besoin | ne pas demander |
-| foreground service | NON V1 | aucun traitement arrière-plan justifié | ne pas déclarer |
-| exact alarms | NON V1 | aucun besoin | ne pas déclarer |
+## Reconnaissance vocale Android
 
-## Microphone — contrat runtime
+Décision prise et testée : **pas de reconnaissance vocale Android V1**.
 
-La fonctionnalité actuelle utilise `SpeechRecognition` / `webkitSpeechRecognition` pour évaluer la prononciation dans certains cours de langues.
+Raisons :
 
-Si le runtime Android natif conserve cette fonction :
+- la WebView Android ne garantit pas la même disponibilité de Web Speech que le navigateur web ;
+- Finot cible des mineurs ;
+- ajouter une permission micro ou un SDK vocal tiers introduirait une surface privacy supplémentaire ;
+- aucune fonctionnalité pédagogique obligatoire ne doit devenir inutilisable si le micro n'est pas disponible.
 
-1. déclarer `android.permission.RECORD_AUDIO` seulement si réellement nécessaire ;
-2. ne demander la permission qu’après clic sur « Dire la phrase » / bouton micro ;
-3. afficher une explication claire avant ou au moment de la demande ;
-4. si refus : conserver tout le reste de l’application fonctionnel ;
-5. aucune écoute en arrière-plan ;
-6. aucun foreground service microphone ;
-7. aucune conservation audio par Finot ;
-8. aucune persistance de transcription vocale ;
-9. aucun envoi Supabase du contenu vocal/transcrit ;
-10. tester sur appareil réel Android, l’émulateur ne suffisant pas pour valider le flux micro.
+Comportement retenu :
 
-Si Web Speech n’est pas fiable/conforme dans le WebView final, la V1 doit désactiver proprement la prononciation interactive Android plutôt que d’ajouter une pile vocale complexe ou un SDK tiers non audité.
+- aucun bouton micro inopérant dans Android ;
+- aucune permission `RECORD_AUDIO` ;
+- aucune écoute en arrière-plan ;
+- aucune capture audio ;
+- aucune transcription ;
+- l'étape de prononciation bascule sur une alternative « écoute le modèle puis répète à voix haute » ;
+- le Web/PWA peut conserver la reconnaissance lorsque le navigateur la supporte.
 
-## Contrôles de build obligatoires
+## Backup Android
 
-À exécuter sur l’AAB/APK final :
+État : **désactivé**.
 
-- inspecter `AndroidManifest.xml` fusionné ;
-- lister toutes les permissions réellement présentes ;
-- vérifier qu’aucune dépendance n’ajoute `AD_ID` ;
-- vérifier absence de localisation/caméra/contacts/SMS/stockage large ;
-- vérifier que `RECORD_AUDIO`, si présent, correspond exactement à la fonction prononciation ;
-- vérifier le comportement permission refusée ;
-- vérifier le comportement permission révoquée après installation ;
-- vérifier aucun accès micro tant que l’utilisateur n’a pas déclenché la fonction.
+- `android:allowBackup="false"` ;
+- règles Android 12+ configurées pour empêcher sauvegarde cloud et transfert automatique appareil-à-appareil ;
+- les données enfant ne doivent pas être restaurées implicitement sur un autre appareil/compte ;
+- transfert contrôlé éventuel via export/import parent.
 
-## Data Safety / Store
+## Contrôles CI réels
 
-La déclaration Google Play doit être construite à partir du manifeste fusionné et du comportement réel du binaire, pas uniquement du code source PWA.
+La CI Android candidate vérifie automatiquement :
 
-Tout SDK natif ou plugin Capacitor ajouté ultérieurement doit faire l’objet d’un mini-audit avant intégration : permissions, données collectées, données partagées, rétention, identifiants et politique enfants.
+- présence `INTERNET` ;
+- `allowBackup=false` ;
+- absence `RECORD_AUDIO` ;
+- absence `AD_ID` ;
+- génération APK ;
+- génération AAB ;
+- intégrité des artefacts.
+
+Build validé :
+
+- APK debug : `59 690 683` octets ;
+- AAB de validation : `58 017 432` octets ;
+- Android SDK / target 36 ;
+- JDK 21 ;
+- package technique `fr.finot.academie.dev`.
+
+## Tests appareil réel encore nécessaires
+
+Même avec le manifest correct, valider physiquement :
+
+1. aucune demande de permission micro au premier lancement ;
+2. alternative prononciation visible et utilisable ;
+3. aucun écran bloqué par absence de SpeechRecognition ;
+4. cold start offline ;
+5. Retour Android ;
+6. clavier virtuel ;
+7. rotation ;
+8. TalkBack ;
+9. TTS FR/EN/IT réellement installé ;
+10. mise à jour APK sans perte de profil ;
+11. réinstallation sans restauration automatique des données enfant.
+
+## Data Safety
+
+Pour la version Android V1 candidate actuelle :
+
+- Finot ne demande pas l'accès microphone ;
+- Finot n'intègre pas d'identifiant publicitaire ;
+- aucune localisation/caméra/contacts/SMS n'est demandée ;
+- analytics fournisseur tiers absent et analytics internes off par défaut ;
+- le suivi distant est off par défaut tant qu'aucun backend n'est provisionné.
+
+La déclaration Google Play finale devra malgré tout être recalculée sur :
+
+- le binaire de production signé ;
+- le package ID final ;
+- les SDK réellement intégrés au moment de la soumission ;
+- la décision finale concernant le backend parent distant.
+
+## Règle Factory
+
+Tout futur plugin natif ajouté à Finot ou à une app de l'App Factory doit déclencher automatiquement une revue :
+
+- permissions ajoutées ;
+- données collectées ;
+- données partagées ;
+- enfants/âge cible ;
+- consentement ;
+- rétention ;
+- impact Data Safety / Store.
