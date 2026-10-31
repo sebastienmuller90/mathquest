@@ -3,7 +3,9 @@
 Référence auditée : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`  
 Branche : `chatgpt/multistore-release-orchestration`
 
-Objectif : documenter ce que Finot collecte, conserve, traite localement et transmet éventuellement afin de sécuriser Google Play / Microsoft Store / Samsung / PWA.
+> **État Supabase corrigé — 2026-10-31** : aucun projet Supabase Finot n'est actuellement créé. Les éléments Supabase présents dans le frontend constituent un client/prototype de synchronisation prévu, pas un backend actif. Toute formulation ci-dessous sur des données « envoyées à Supabase » doit être lue comme **données qui seraient envoyées si le client actuel était connecté tel quel à un futur backend**. Le document `docs/supabase-backend-blueprint.md` est la référence pour le futur provisioning.
+
+Objectif : documenter ce que Finot collecte, conserve, traite localement et pourrait transmettre ultérieurement afin de sécuriser Google Play / Microsoft Store / Samsung / PWA.
 
 ## 1. Principe de minimisation
 
@@ -63,7 +65,7 @@ L’état élève contient ou peut contenir notamment :
 
 Le stockage principal est `localStorage`, notamment `mathquest_profiles_v2`, avec compatibilité/migrations historiques.
 
-## 4. Données explicitement exclues du snapshot distant actuel
+## 4. Données explicitement exclues du snapshot distant prototype
 
 La fonction `snapshot()` clone actuellement l’état actif puis retire :
 
@@ -73,15 +75,15 @@ La fonction `snapshot()` clone actuellement l’état actif puis retire :
 
 C’est une blacklist, pas une liste blanche.
 
-Conséquence : tout autre champ de `S`, y compris de nouveaux champs ajoutés plus tard, peut être envoyé automatiquement à Supabase lorsque le suivi distant est actif.
+Conséquence : si ce client était relié tel quel à un backend, tout autre champ de `S`, y compris de nouveaux champs ajoutés plus tard, pourrait être envoyé automatiquement.
 
 ### Décision d’architecture P0
 
-Avant publication Store, remplacer conceptuellement cette approche par un **payload distant explicitement allowlisté**, avec test de contrat garantissant qu’un nouveau champ local ne devient jamais automatiquement un champ cloud.
+Avant création/activation d'un backend Store, remplacer conceptuellement cette approche par un **payload distant explicitement allowlisté**, avec test de contrat garantissant qu’un nouveau champ local ne devient jamais automatiquement un champ cloud.
 
-## 5. Données actuellement susceptibles d’être envoyées à Supabase
+## 5. Données potentiellement transmissibles si le prototype actuel était activé
 
-Puisque `snapshot()` clone presque tout le profil, peuvent notamment partir au serveur :
+Puisque `snapshot()` clone presque tout le profil, pourraient notamment partir au serveur :
 
 ### Identité / profil
 
@@ -119,7 +121,7 @@ Puisque `snapshot()` clone presque tout le profil, peuvent notamment partir au s
 ### Technique
 
 - `lastSeen` ajouté au snapshot ;
-- identifiant secret enfant `sync.child` utilisé comme argument RPC mais retiré du payload lui-même.
+- identifiant secret enfant `sync.child` prévu comme argument RPC mais retiré du payload lui-même.
 
 ## 6. Données qui doivent rester locales dans la V1
 
@@ -153,11 +155,11 @@ Le suivi parent distant devrait transmettre uniquement les données nécessaires
 
 À éviter dans le payload : date de naissance complète, texte vocal, identifiants publicitaires, identifiants appareil, localisation, contacts, photos, fichiers, données financières.
 
-## 8. Supabase — flux frontend constaté
+## 8. Supabase — interface frontend prévue
 
-Endpoint : projet Supabase via clé `publishable` exposée côté frontend. Cette clé n’est pas traitée comme un secret serveur.
+Aucun projet Supabase Finot live n'est actuellement provisionné.
 
-RPC frontend constatées :
+Le frontend contient néanmoins une interface prévue utilisant une clé publishable et les RPC suivantes :
 
 - `mq_register(p_child, p_parent)` ;
 - `mq_push(p_child, p_data)` ;
@@ -167,9 +169,9 @@ RPC frontend constatées :
 
 Le frontend génère des clés aléatoires fortes pour le lien enfant/parent.
 
-### P0 non résolu
+### P0 de conception avant provisioning
 
-Les définitions SQL, politiques RLS, rôles `SECURITY DEFINER`, permissions `EXECUTE`, validation de taille/type et isolation des familles n’ont pas encore été auditées.
+Les définitions SQL, politiques RLS, rôles, permissions `EXECUTE`, validation de taille/type et isolation des familles doivent être conçues, revues et testées **avant création du projet réel**.
 
 Conditions minimales à prouver :
 
@@ -186,13 +188,11 @@ Conditions minimales à prouver :
 
 ## 9. Suppression et désactivation du suivi
 
-Comportement frontend observé : désactiver le suivi efface localement `sync.child` et `sync.parent`.
+Le comportement frontend prototype efface localement `sync.child` et `sync.parent`.
 
-Ce comportement **ne démontre pas la suppression serveur**.
+Comme aucun backend Finot n'existe aujourd'hui, aucune suppression serveur n'est actuellement requise en production. En revanche, elle devient une **gate P0 avant activation du futur backend**.
 
-### Gate P0
-
-Avant publication :
+Avant activation :
 
 - RPC ou mécanisme serveur de suppression ;
 - action parent explicite ;
@@ -214,7 +214,7 @@ Flux observé :
 5. la transcription reconnue est affichée temporairement à l’écran ;
 6. le score est utilisé pour décider si la prononciation est réussie.
 
-Dans le chemin de code audité, aucune persistance de la transcription reconnue ni envoi Supabase explicite de cette transcription n’a été trouvé.
+Dans le chemin de code audité, aucune persistance de la transcription reconnue ni envoi cloud explicite de cette transcription n’a été trouvé.
 
 ### Risque à traiter
 
@@ -246,32 +246,19 @@ La politique de confidentialité doit distinguer :
 
 Aucune couche analytics produit dédiée n’est validée dans la V1 auditée.
 
-Règle Factory/Finot : analytics futurs privacy-first, avec événements sans PII :
-
-- `app_open` ;
-- `onboarding_started/completed` ;
-- `profile_created` ;
-- `lesson_started/completed` ;
-- `exercise_started/completed` ;
-- `correction_viewed` ;
-- `session_started/completed` ;
-- `parent_mode_opened` ;
-- `offline_session` ;
-- `app_error` ;
-- événements achat uniquement côté parent si monétisation activée.
-
-Interdit dans analytics : prénom, nom, date de naissance, texte libre enfant, réponse exacte, contenu audio, transcription vocale, identifiant publicitaire, fingerprint, géolocalisation précise.
+Référence détaillée : `docs/analytics-privacy-first.md`.
 
 ## 13. Première traduction Google Data Safety
 
 Cette section reste **DRAFT** tant que le backend et le runtime Android ne sont pas finalisés.
 
-### Collecte probable si suivi distant activé
+### Aujourd'hui
 
-- Identifiants/personnalisation : pseudonyme/prénom et classe — à réduire si possible ;
-- activité dans l’app : progression, leçons, exercices, statistiques ;
-- performances pédagogiques / contenu généré par usage : erreurs et scores ;
-- données techniques minimales de synchronisation.
+Avec aucun backend Supabase Finot créé et aucun analytics dédié activé, les données pédagogiques principales restent locales à la PWA/appareil, sous réserve des services de plateforme utilisés pour synthèse/reconnaissance vocale.
+
+### Si le suivi distant est activé plus tard
+
+La Data Safety devra déclarer exactement le payload réellement déployé, après minimisation et tests.
 
 ### Audio
 
@@ -308,17 +295,20 @@ La privacy policy doit notamment contenir les types de données, finalités, tie
 
 ## 15. Gates privacy avant release
 
-### P0
+### P0 avant activation du cloud
 
-- [ ] SQL/RPC/RLS Supabase audités.
-- [ ] Isolation inter-familles prouvée par tests négatifs.
-- [ ] Payload distant en allowlist.
-- [ ] Date de naissance complète exclue du cloud.
-- [ ] Suppression cloud réelle.
-- [ ] Rétention définie.
-- [ ] Privacy policy publique et accessible dans l’app.
-- [ ] Data Safety cohérente avec runtime final.
-- [ ] Flux microphone Android vérifié et correctement déclaré ou désactivé.
+- [ ] payload distant en allowlist ;
+- [ ] date de naissance complète exclue du cloud ;
+- [ ] SQL/RPC/RLS conçus et audités ;
+- [ ] isolation inter-familles prouvée par tests négatifs ;
+- [ ] suppression cloud réelle ;
+- [ ] rétention définie.
+
+### P0 Store
+
+- [ ] Privacy policy publique et accessible dans l’app ;
+- [ ] Data Safety cohérente avec runtime final ;
+- [ ] flux microphone Android vérifié et correctement déclaré ou désactivé.
 
 ### P1
 
@@ -328,7 +318,7 @@ La privacy policy doit notamment contenir les types de données, finalités, tie
 - [ ] inventaire des permissions Android final ;
 - [ ] aucun SDK analytics/ads non validé.
 
-## 16. Tests de sécurité à exiger du backend
+## 16. Tests de sécurité à exiger du futur backend
 
 - clé parent aléatoire invalide → aucune donnée ;
 - clé enfant aléatoire invalide → aucune écriture ;
