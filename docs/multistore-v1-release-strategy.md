@@ -1,18 +1,19 @@
 # Finot Académie — stratégie multi-store V1
 
-Référence auditée : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`  
-Branche ChatGPT : `chatgpt/multistore-release-orchestration`  
-Version PWA constatée : `8.73.2-physical-fixes-2026-10-25`
+Référence produit stable : `main` @ `3945e5c18bf82058d92e9ee7238e1afcbca85d13`  
+Runtime candidat : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`  
+PR runtime : `#38` (DRAFT, non fusionnée)  
+PR orchestration : `#35` (DRAFT, documentation)
 
 ## Principes
 
-- Conserver l’application PWA HTML/CSS/JavaScript existante.
+- Conserver l'application PWA HTML/CSS/JavaScript existante.
 - Aucun passage automatique à React.
 - Aucun fork fonctionnel Android/Windows/Samsung.
 - Apple App Store exclu de la V1.
 - Budget initial de publication : 25 USD maximum.
 - Aucun paiement, publication, package ID définitif ou décision irréversible sans accord explicite.
-- Confidentialité enfant et isolation inter-familles = gates P0.
+- Confidentialité enfant et isolation des familles restent des gates de release.
 
 ## Ordre V1
 
@@ -22,101 +23,225 @@ Version PWA constatée : `8.73.2-physical-fixes-2026-10-25`
 4. Samsung Galaxy Store
 5. Amazon Fire Tablet : étude secondaire uniquement
 
-## Matrice
+## État runtime désormais prouvé
 
-| Canal | Artefact | Mutualisation | Gate principal | Décision |
+La branche `chatgpt/runtime-integration` intègre le hardening Android/Store et a été validée par CI réelle.
+
+Preuves :
+
+- Regression : PASS ;
+- Chromium : PASS ;
+- Firefox : PASS ;
+- WebKit : PASS ;
+- Primary special depth : PASS ;
+- Final product inventory : PASS ;
+- Multistore tests : PASS ;
+- Android build : PASS.
+
+Build réel :
+
+- APK debug : `59 690 683` octets ;
+- AAB release validation : `58 017 432` octets ;
+- package technique : `fr.finot.academie.dev` ;
+- aucun secret/signature release ;
+- target/API 36 ;
+- JDK 21 ;
+- manifest fusionné audité.
+
+Permissions/privacité Android :
+
+- `INTERNET` présent ;
+- `RECORD_AUDIO` absent ;
+- `AD_ID` absent ;
+- backup Android désactivé ;
+- aucune localisation/caméra/contacts/SMS/stockage large.
+
+## Matrice V1 actualisée
+
+| Canal | Artefact | État technique | Principal reste à faire | Décision |
 |---|---|---|---|---|
-| Google Play | AAB Android | base Capacitor/Android commune | API cible actuelle, tests Android, Families, Data Safety, privacy | GO après P0 |
-| Microsoft Store | PWA packagée/MSIX | PWA existante | manifest enrichi, packaging, offline Windows | GO après P0 |
-| Web / PWA | site installable | base actuelle | offline, update, privacy publique | GO après P0 |
-| Samsung Galaxy Store | AAB dérivé du même projet Android | même codebase | metadata, compatibilité Galaxy, politique Samsung | GO après Google |
-| Amazon Fire Tablet | APK/AAB éventuel | même projet Android | compatibilité Fire OS réelle | NO-GO V1 par défaut |
+| Google Play | AAB Android | AAB validation réel généré | tests appareil, package ID, signature, privacy/Data Safety, closed testing | GO après derniers gates |
+| Microsoft Store | PWA packagée/MSIX | PWA stable et automatisée | packaging Windows + tests installation/offline/update | GO après tests |
+| Web / PWA | site installable | CI multi-browser verte | physique mobile/accessibilité + privacy publique | GO après gates |
+| Samsung Galaxy Store | AAB même base | projet Android mutualisé validé | appareil Samsung + listing | GO après Google stabilisé |
+| Amazon Fire Tablet | APK/AAB éventuel | architecture favorable | vraie Fire HD + validation WebView/TTS | NO-GO V1 prioritaire |
 
-## P0 identifiés
+## Google Play — état
 
-1. **Isolation Supabase non prouvée** : les RPC `mq_register`, `mq_push`, `mq_get`, `mq_act`, `mq_ack` sont utilisées côté frontend, mais les policies/RLS/fonctions SQL n’ont pas encore été auditées.
-2. **Minimisation enfant insuffisante** : `snapshot()` clone le profil et retire uniquement `pin`, `rec` et `sync`; la date de naissance complète peut donc partir vers Supabase quand la synchronisation distante est active.
-3. **Suppression cloud non démontrée** : `syncoff` retire les clés locales mais aucune suppression serveur n’a encore été trouvée côté frontend.
-4. **Politique de confidentialité publique non trouvée** dans la base auditée.
-5. **Data Safety non finalisable** tant que le flux Supabase réel n’est pas fermé et documenté.
+### Fermé techniquement
 
-## P1 identifiés
+- base Android/Capacitor ;
+- target/API 36 ;
+- AAB de validation ;
+- manifest minimal ;
+- aucune permission micro ;
+- aucun `AD_ID` ;
+- backup désactivé ;
+- remote sync off par défaut ;
+- analytics provider off ;
+- parent gate pour achats/liens ;
+- build reproductible via GitHub Actions.
 
-- AAB Android production et tests appareil réel.
-- Manifest PWA enrichi pour Store quality.
-- Assets Store : icons, splash, screenshots, feature graphic.
-- Validation physique finale encore incomplète selon la checklist existante.
-- Versioning multi-canal et changelog final.
-- Analytics privacy-first : rester no-op tant que consentement/collecte serveur ne sont pas validés.
-- Vérifier/activer une protection adaptée de `main` avant industrialisation, sans réécrire l’historique.
+### Encore ouvert
 
-## Google Play
+- package ID production définitif ;
+- versionName/versionCode production ;
+- signature / Play App Signing ;
+- téléphone Android réel ;
+- privacy policy publique ;
+- Data Safety finale ;
+- Target Audience/Families/IARC ;
+- assets Store ;
+- compte développeur ;
+- closed testing si le compte l'exige ;
+- publication finale avec accord.
 
-À préparer :
+## Microsoft Store — stratégie
 
-- package ID final à proposer, sans le réserver avant accord ;
-- `versionName` / `versionCode` ;
-- AAB signé ;
-- icon/splash ;
-- screenshots ;
-- description courte/longue ;
-- catégorie Education ;
-- IARC ;
-- tranche d’âge ;
-- Families ;
-- politique de confidentialité ;
-- Data Safety ;
-- permissions Android minimales ;
-- suppression données cloud ;
-- test fermé si le compte développeur personnel est soumis à l’exigence actuelle Google.
+Voie retenue : conserver la PWA et la packager via l'écosystème Microsoft/PWABuilder sans fork Windows.
 
-## Microsoft Store
+Déjà prouvé côté produit :
 
-Voie retenue : PWA existante → validation → packaging PWABuilder/Partner Center → Store. Aucun fork Windows.
+- PWA existante ;
+- service worker ;
+- offline/update couverts par tests ;
+- Chromium/Firefox/WebKit verts ;
+- desktop et navigation déjà largement testés.
 
-À préparer : manifest enrichi, icons, captures desktop, description Store, privacy URL, package, tests installation/offline/update/stockage/navigation desktop.
+Reste :
+
+- manifest Store-quality ;
+- analyse PWABuilder ;
+- package Windows ;
+- installation Windows réelle ;
+- tests offline/update/stockage ;
+- captures desktop ;
+- listing/privacy.
 
 ## Samsung Galaxy Store
 
-Même base Android que Google. Aucun second projet Android.
+Même base Android que Google.
 
-Si un package name distinct est nécessaire pour éviter les mises à jour croisées entre stores, utiliser une variante/product flavor dans le même projet après accord, jamais une duplication de codebase.
+Déjà fermé :
+
+- pas de second projet source ;
+- target/API 36 ;
+- AAB réel ;
+- aucune auto-update native ;
+- privacy/minimisation Android hardened.
+
+Reste :
+
+- appareil Samsung réel ;
+- décision éventuelle sur package distinct/product flavor ;
+- listing/captures ;
+- politique enfants/privacy finale.
 
 ## Web / PWA
 
-Doit rester installable, offline, responsive, desktop/mobile, sécurisée et rapide. Le service worker existant et les migrations de stockage ne doivent pas régresser pour permettre Android.
+Doit rester installable, offline, responsive, desktop/mobile, sécurisée et rapide.
+
+Automatisation candidate verte :
+
+- PWA update ;
+- offline ;
+- responsive ;
+- stockage/migrations ;
+- dark mode ;
+- DYS ;
+- audio/dictée web ;
+- Chromium/Firefox/WebKit.
+
+Reste surtout la validation physique et l'enrichissement manifest/store metadata.
 
 ## Amazon
 
-NO-GO V1 par défaut. Reconsidérer uniquement Fire Tablet après stabilisation Google/Microsoft/Samsung/PWA.
+NO-GO V1 prioritaire.
 
-## Coordination Claude Code
+Points favorables :
 
-Claude est propriétaire de `claude/multistore-runtime` : Capacitor, Android, build AAB, runtime natif, permissions, sécurité runtime, tests Android.
+- pas de dépendance Google Services obligatoire identifiée ;
+- pas de micro Android requis ;
+- même APK envisageable.
 
-ChatGPT est propriétaire de `chatgpt/multistore-release-orchestration` : conformité, privacy/Data Safety, QA/release gates, metadata Store, Factory Blueprint, coordination.
+Mais aucune validation Fire ne doit être revendiquée sans tablette Fire HD réelle.
 
-Tant que la branche Claude n’est pas visible/comparée, ChatGPT évite de modifier `js/app-state.js`, `js/app-actions.js`, `sw.js`, `manifest.webmanifest` et tout fichier Android/Capacitor.
+## Supabase
 
-## Gate avant fusion future
+Aucun projet Finot n'est provisionné.
 
-1. pousser/rendre visible la branche Claude ;
-2. comparer les deux branches à `main` ;
-3. identifier les fichiers communs ;
-4. vérifier les P0 ;
-5. exécuter la suite complète ;
-6. revue privacy/security ;
-7. intégrer uniquement après validation explicite.
+Le runtime candidat :
 
-## Factory Blueprint — extraction cible
+- retire l'ancien endpoint mort ;
+- remote sync off par défaut ;
+- snapshot client minimisé ;
+- dossier `supabase/` de design/migrations/tests locaux.
+
+Deux stratégies V1 restent possibles :
+
+### Option A — V1 sans cloud parent
+
+- remote sync reste désactivé ;
+- backend Supabase non bloquant pour publication ;
+- privacy/Data Safety plus simples.
+
+### Option B — V1 avec suivi parent distant
+
+Avant activation :
+
+- provisionner Supabase après accord ;
+- migrations/RLS/RPC ;
+- rate limiting ;
+- tests A/B ;
+- suppression réelle ;
+- rétention/backups ;
+- Security Advisors ;
+- privacy/Data Safety mises à jour.
+
+Aucune décision irréversible n'est prise ici.
+
+## P0/P1 restants
+
+### P0 publication
+
+- privacy policy finale publique ;
+- Data Safety finale ;
+- tests physiques Android critiques ;
+- confirmation de non-régression physique enfant/parent.
+
+### P1
+
+- package ID production ;
+- signature/AAB signé ;
+- assets Store ;
+- Google closed testing si requis ;
+- Microsoft package/tests ;
+- Samsung appareil réel ;
+- support/contact publics ;
+- versioning RC final.
+
+## Coordination Git
+
+### #38
+
+PR runtime candidate. Ne pas fusionner sans accord explicite.
+
+### #35
+
+PR documentation/orchestration. Elle reste volontairement séparée et sera resynchronisée sur le futur `main` après décision sur #38.
+
+## Factory Blueprint
 
 ### Factory Core
-App shell, navigation, onboarding, settings, stockage/migrations, offline, thème, dark mode, accessibilité, analytics privacy-first, privacy, erreurs, parental gate, entitlements/IAP, notifications, review, CI, tests, packaging, publication, versioning, store metadata, release checklist.
+
+App shell, navigation, onboarding, settings, stockage/migrations, offline, thème, dark mode, accessibilité, analytics consent, privacy, erreurs, parental gate, entitlements, notifications éventuelles, CI, tests, packaging Android, publication, versioning, store metadata, release checklist.
 
 ### Factory Patterns optionnels
+
 Profils, XP, niveaux, badges, streak, objectifs, progression, statistiques, dashboard, historique, parcours, recommandations, challenges, récompenses.
 
 ### Finot uniquement
+
 CP→3e, matières, programmes scolaires, cours, exercices, compétences, dictées, lecture, diagnostics, devoirs, évaluations, pédagogie et moteur adaptatif scolaire.
 
-La future Factory doit réutiliser les patterns, pas l’architecture actuelle à nombreux scripts globaux dépendants de leur ordre de chargement.
+La Factory doit réutiliser les patterns, pas copier l'architecture historique à nombreux scripts globaux dépendants de leur ordre de chargement.
