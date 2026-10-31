@@ -1,243 +1,250 @@
-# Finot Académie — handoff P0 runtime / Claude Code
+# Finot Académie — rapport de fermeture P0 runtime
 
-Branche cible Claude : `claude/multistore-runtime`  
-Base commune attendue : `main` @ `05b4c0ce21bd78a9027367d1219e660ec86f7bda`
+Ancien rôle de ce document : handoff des P0 runtime à Claude Code.  
+Nouveau rôle : consigner ce qui a réellement été livré et validé pour éviter de refaire le même travail.
 
-Ce document définit les corrections runtime/backend nécessaires à la publication multi-store. Il ne donne aucune autorisation de merge vers `main`.
+Référence candidate : `chatgpt/runtime-integration` @ `69d959e2f1a57f15d6c543a3f3b654d81639c164`
 
-## 1. P0-01 — payload cloud en allowlist
+## 1. Payload cloud allowlisté — FERMÉ côté client
 
-### Problème
+État : ✅
 
-`snapshot()` clone actuellement l’état complet `S` puis retire seulement `pin`, `rec` et `sync`.
+Le runtime n'envoie plus un clone large de l'état enfant.
 
-### Attendu
+Le snapshot distant est réduit aux données réellement nécessaires à l'espace parent.
 
-Créer un constructeur de payload distant explicite, par exemple `remoteSnapshot()` ou équivalent, qui ne contient que les champs nécessaires au suivi parent.
+Tests dédiés vérifient notamment l'absence des champs sensibles/non nécessaires.
 
-Aucun nouveau champ local ne doit devenir automatiquement un champ cloud.
+## 2. Date de naissance complète hors cloud — FERMÉ côté client
 
-### TDD obligatoire
+État : ✅
 
-RED : ajouter un champ sentinelle local `secretFutureField` et démontrer que l’ancien comportement l’envoie.
+La date de naissance complète reste locale pour les besoins pédagogiques/UI mais n'appartient pas au snapshot distant V1.
 
-GREEN : prouver que l’allowlist ne l’envoie pas.
+Les tests privacy valident son absence côté synchronisation.
 
-Tests minimum :
-- absence `birthdate` ;
-- absence `pin` ;
-- absence `rec` ;
-- absence `sync` ;
-- absence préférences TTS/UI non nécessaires ;
-- absence champ inconnu ;
-- présence des métriques réellement utilisées par `parent.html`.
+## 3. Suppression cloud — FERMÉ côté UI/contrat, CONDITIONNEL côté backend réel
 
-## 2. P0-02 — date de naissance complète locale uniquement
+État : 🟠
 
-### Attendu
+Le runtime contient une action de suppression des données distantes depuis l'espace parents avec confirmation renforcée.
 
-La date de naissance complète reste dans le profil local pour le calcul d’âge/anniversaire, mais ne part pas dans le suivi distant.
+Mais aucun backend Finot n'est aujourd'hui provisionné.
 
-Si le parent distant a besoin d’une tranche d’âge, utiliser une valeur dérivée minimale uniquement si réellement nécessaire et validée.
+La fermeture complète du flux serveur exige, seulement si le cloud est activé :
 
-### TDD
+- backend réel ;
+- migration appliquée ;
+- tests de suppression ;
+- ancien token invalidé ;
+- rétention/backups réels documentés.
 
-- profil avec date complète ;
-- sync active ;
-- inspecter payload RPC ;
-- `birthdate` absent.
+## 4. Schéma/RPC/RLS Supabase — DESIGN LIVRÉ, PAS DÉPLOYÉ
 
-## 3. P0-03 — suppression cloud
+État : 🟠 conditionnel
 
-### Attendu backend
+Un dossier `supabase/` existe dans le runtime candidat avec :
 
-Créer une opération de suppression autorisée uniquement par le secret parent/enfant approprié, par exemple RPC dédiée à définir proprement.
+- migration SQL ;
+- schéma privé ;
+- RLS ;
+- fonctions/RPC prévues ;
+- jetons hachés ;
+- anti-énumération ;
+- suppression/rotation ;
+- tests locaux PostgreSQL via PGlite.
 
-La suppression doit retirer :
-- association famille ;
-- snapshot enfant ;
-- actions parent en attente ;
-- données auxiliaires liées.
+59 tests PostgreSQL locaux ont été rapportés verts dans le chantier hardening.
 
-Après suppression :
-- ancien lien parent invalide ;
-- ancien child token ne peut plus pousser ;
-- aucune donnée restituée.
+Aucun projet Supabase Finot n'est créé. Il n'existe donc aucune RLS de production à valider aujourd'hui.
 
-### UI
+## 5. Rétention backend — RESTE JURIDIQUE/PRODUCTION
 
-Le parent doit disposer d’une action explicite distincte de la simple désactivation locale.
+État : 🔴 si cloud activé
 
-Prévoir confirmation forte et texte clair.
+Le design technique existe mais la durée finale doit encore être validée avant production.
 
-### TDD/backend
+À décider :
 
-- register → push → get = données présentes ;
-- delete ;
-- get = aucune donnée ;
-- push ancien token = rejet ;
-- act ancien token parent = rejet ;
-- second delete = comportement idempotent ou erreur contrôlée.
+- durée snapshots ;
+- durée actions consommées ;
+- délai de purge ;
+- logs ;
+- backups ;
+- délai post-suppression.
 
-## 4. P0-04 — audit RPC/RLS Supabase
+## 6. Microphone Android — FERMÉ V1
 
-Fournir dans la PR ou dans un dossier de migration auditable :
+État : ✅
 
-- schéma des tables ;
-- SQL des fonctions `mq_register`, `mq_push`, `mq_get`, `mq_act`, `mq_ack` ;
-- nouvelle fonction de suppression ;
-- grants/revokes ;
-- RLS policies ;
-- rôles d’exécution ;
-- usage éventuel `SECURITY DEFINER` avec `search_path` fixé ;
-- contraintes de taille/type ;
-- rétention.
+Décision V1 : aucune reconnaissance vocale Android.
 
-### Tests sécurité obligatoires
+Preuves :
 
-Famille A / famille B :
-- parent A ne lit jamais B ;
-- parent A n’agit jamais sur B ;
-- enfant A ne pousse jamais sur B ;
-- enfant A n’ack jamais B ;
-- token aléatoire invalide = aucun accès ;
-- impossible d’énumérer les familles.
+- `RECORD_AUDIO` absent du manifest fusionné ;
+- alternative pédagogique « écoute et répète » ;
+- aucun bouton micro Android inopérant ;
+- aucune permission micro demandée ;
+- aucun SDK vocal tiers introduit.
 
-### Défense payload
+Le Web/PWA peut continuer à utiliser Web Speech lorsque le navigateur le permet.
 
-- rejet payload trop volumineux ;
-- rejet type inattendu ;
-- action inconnue rejetée ;
-- replay action idempotent ;
-- aucun secret service-role frontend.
+## 7. Permissions Android — FERMÉ côté build
 
-## 5. P0-05 — rétention
+État : ✅
 
-Proposer une politique technique minimale, sans la figer juridiquement sans validation produit :
+Manifest CI validé :
 
-- snapshot courant : tant que suivi actif + période de grâce courte définie ;
-- actions consommées : suppression rapide ;
-- actions expirées : purge ;
-- logs : pas de payload enfant en clair si non nécessaire ;
-- suppression parent : purge logique immédiate, backups selon politique documentée.
+- `INTERNET` présent ;
+- `RECORD_AUDIO` absent ;
+- `AD_ID` absent ;
+- backup désactivé ;
+- pas de permissions larges inutiles.
 
-Documenter ce qui est réellement possible dans Supabase et fournir la mécanique de purge.
+## 8. Backup Android — FERMÉ
 
-## 6. P0-06 — microphone Android
+État : ✅
 
-### Constat Web
+- `allowBackup=false` ;
+- transfert appareil/appareil automatique désactivé ;
+- données enfant non restaurées implicitement ;
+- export/import parent reste la stratégie contrôlée.
 
-La prononciation interactive utilise `SpeechRecognition` / `webkitSpeechRecognition` sur action explicite.
+## 9. Liens externes enfant — FERMÉ
 
-### Attendu runtime Android
+État : ✅
 
-Vérifier :
-- permission Android réellement demandée ;
-- moteur utilisé dans WebView/Capacitor ;
-- comportement sur appareil physique ;
-- traitement local ou distant ;
-- comportement offline ;
-- aucune écoute arrière-plan ;
-- aucune persistance audio ;
-- aucune persistance transcription ;
-- aucune sync Supabase de transcript.
+- liens externes interdits dans espace enfant ;
+- garde globale ;
+- crédits externes convertibles en texte ;
+- navigation externe réservée à l'espace parents réellement affiché.
 
-### Décision
+## 10. Analytics — FERMÉ côté architecture V1
 
-Si le traitement ne peut pas être caractérisé proprement pour une app enfant, désactiver cette fonction sur le wrapper Android V1 via feature flag/platform capability, sans casser le Web/PWA.
+État : ✅
 
-### Tests
+- aucune provider active ;
+- analytics off par défaut ;
+- consentement parent requis ;
+- PII/prénoms filtrés ;
+- allowlists de valeurs ;
+- retrait du consentement prévu.
 
-- refus permission → app reste utilisable ;
-- permission accordée → seulement après clic utilisateur ;
-- fin activité → micro arrêté ;
-- changement écran → micro arrêté ;
-- background/sleep → micro arrêté ;
-- aucune permission demandée au lancement.
+## 11. Entitlements / achats futurs — FERMÉ côté architecture V1
 
-## 7. Permissions Android — principe
+État : ✅
 
-Manifest final : permissions minimales uniquement.
+- aucune intégration de paiement réelle ;
+- espace enfant ne peut pas acheter ;
+- parent gate réel ;
+- allowlist de produits ;
+- seul le produit confirmé peut créer un entitlement ;
+- aucun contenu pédagogique actuellement verrouillé.
 
-Attendu probable :
-- INTERNET ;
-- RECORD_AUDIO seulement si prononciation Android conservée et justifiée.
+## 12. Android / Google Play runtime — VALIDÉ TECHNIQUEMENT
 
-Ne pas ajouter sans besoin prouvé :
-- AD_ID ;
-- localisation ;
-- contacts ;
-- caméra ;
-- stockage large ;
-- SMS ;
-- téléphone.
+État : ✅ pour build technique
 
-Fournir l’inventaire exact du manifest final.
+Réellement validé en CI :
 
-## 8. Android / Google Play runtime
+- Capacitor Android ;
+- JDK 21 ;
+- Android SDK / target 36 ;
+- package `www/` reproductible ;
+- `android:sync` ;
+- Gradle `assembleDebug` ;
+- Gradle `bundleRelease` ;
+- APK debug ;
+- AAB de validation ;
+- manifest audit.
 
-- Capacitor ou wrapper retenu sans réécriture du produit ;
-- target API conforme à l’exigence Play actuelle ;
-- 64-bit ;
-- AAB release ;
-- signature configurée sans secret commité ;
-- versionCode monotone ;
-- versionName produit ;
-- deep links uniquement si nécessaires ;
-- aucune logique de self-update native qui contourne le Store.
+Artefacts :
 
-## 9. Samsung
+- APK : `59 690 683` octets ;
+- AAB : `58 017 432` octets.
 
-Même projet Android.
+Reste volontairement hors scope :
 
-Si package distinct recommandé/retenu : product flavor/variant, pas seconde app.
+- package ID production ;
+- signature release ;
+- Play App Signing ;
+- publication.
 
-Aucune divergence fonctionnelle sauf contraintes Store nécessaires et documentées.
+## 13. Samsung — ARCHITECTURE MUTUALISÉE
 
-## 10. Service worker dans wrapper natif
+État : ✅ côté architecture, 🔴 côté appareil/Store
 
-Ne pas casser la PWA Web.
+Même projet Android que Google.
 
-Décider explicitement si le wrapper natif charge :
-- assets empaquetés localement ; ou
-- URL distante.
+Aucun fork fonctionnel nécessaire.
 
-Le comportement update natif doit rester compatible avec politiques Store. Le SW Web peut continuer à gérer la PWA Web, mais ne doit pas créer un mécanisme de mise à jour native hors Store.
+Reste :
 
-## 11. Analytics
+- test appareil Samsung ;
+- listing Galaxy Store ;
+- éventuelle variante de package seulement si décision Store l'exige.
 
-Ne pas intégrer de SDK analytics/ads dans cette branche sans validation.
+## 14. Service worker / wrapper natif — VALIDÉ ARCHITECTURALEMENT
 
-Si instrumentation technique nécessaire pour tests, elle doit être local-only ou supprimée avant release.
+La PWA Web conserve son service worker.
 
-## 12. Critère de livraison Claude
+Le wrapper Android embarque une copie `www/` locale issue de la même base source.
 
-La branche peut être proposée à la comparaison lorsque :
+Le runtime natif n'introduit pas de mécanisme d'auto-update contournant les Stores.
 
-- P0 runtime ci-dessus couverts par tests ;
-- SQL/backend auditable fourni ;
-- suite Finot complète verte ;
-- build Android debug/installable vert ;
-- build AAB release reproductible ;
-- liste des fichiers modifiés fournie ;
-- aucune fusion `main` ;
-- aucun package ID définitif créé sans accord ;
-- aucun achat/publication effectué.
+## 15. Tests de référence
 
-## 13. Rapport attendu
+Hardening Claude :
 
-- SHA base ;
-- SHA head ;
-- branche ;
-- fichiers modifiés ;
-- migrations SQL ;
-- tests ajoutés ;
-- tests PASS/FAIL/SKIP ;
-- permissions Android ;
-- target/compile/min SDK ;
-- package ID temporaire ou candidat, clairement signalé ;
-- AAB généré ou non ;
-- taille AAB ;
-- état micro ;
-- état P0-01 à P0-06 ;
-- points restant bloquants.
+- `1605 PASS`
+- `0 FAIL`
+- `0 SKIP`
+- 96 suites.
+
+CI candidate `69d959e` :
+
+- Regression : PASS ;
+- Chromium : PASS ;
+- Firefox : PASS ;
+- WebKit : PASS ;
+- Primary special depth : PASS ;
+- Final product inventory : PASS ;
+- Multistore tests : PASS ;
+- Android build : PASS.
+
+## 16. P0/P1 encore réellement ouverts
+
+### P0 publication
+
+- privacy policy finale publique ;
+- Data Safety finale ;
+- tests physiques Android critiques ;
+- aucune régression physique enfant/parent.
+
+### P0 conditionnels cloud
+
+Seulement si Supabase est activé :
+
+- provisioning ;
+- tests A/B réels ;
+- suppression réelle ;
+- rate limiting ;
+- rétention/backups ;
+- advisors sécurité.
+
+### P1
+
+- package ID production ;
+- signature release ;
+- AAB signé ;
+- assets finaux ;
+- Google closed testing si requis ;
+- Microsoft package/tests ;
+- Samsung appareil réel ;
+- TalkBack/TTS/rotation/update sur vrai Android.
+
+## 17. Règle pour les futurs agents
+
+Ne pas réouvrir les P0 déjà fermés ci-dessus sans preuve de régression.
+
+Toute évolution future doit partir de la branche candidate ou de son merge dans `main`, jamais de l'ancien état `8.73.x`.
