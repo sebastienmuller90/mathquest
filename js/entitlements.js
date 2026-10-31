@@ -4,8 +4,8 @@
      gratuite actuelle reste intégralement accessible.
    - PurchaseProvider (à brancher plus tard, ex. Google Play Billing) : {id, available():Promise<bool>,
      purchase(productId):Promise<{products:[]}>, restore():Promise<{products:[]}>} via MQEntitlements.setProvider().
-   - Achat : uniquement depuis l'espace parents (jamais d'écran d'achat face à l'enfant) ; sans fournisseur, refus
-     explicite « unavailable » sans aucun effet. restorePurchases() ne fait rien sans fournisseur. */
+   - Achat ET restauration : uniquement depuis l'espace parents réellement affiché ; sans fournisseur, achat refusé
+     explicitement « unavailable » et restauration sans effet. */
 (function(){
 'use strict';
 const KEY='finot_entitlements_v1';
@@ -31,6 +31,7 @@ async function purchase(productId){
  const granted=known((r&&r.products)||[]).includes(String(productId));
  const s=granted?write(state().products.concat(String(productId))):state();return {products:s.products,granted};}
 async function restorePurchases(){
+ if(!inParent())throw fail('parent-gate','Restauration possible uniquement depuis l’espace parents');
  if(!provider||typeof provider.restore!=='function')return {restored:0,products:state().products};
  const r=await provider.restore();const list=known((r&&r.products)||[]);const s=write(list);return {restored:list.length,products:s.products};}
 window.MQEntitlements=Object.freeze({PRODUCTS,has,hasPremium,providerId,setProvider,purchase,restorePurchases});
