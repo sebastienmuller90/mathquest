@@ -111,6 +111,7 @@
 !/tests/analytics-entitlements.test.js
 !/tests/speech-capability.test.js
 !/tests/android-backup.test.js
+!/tests/external-links.test.js
 # Enveloppe Android (Capacitor) : projet natif versionné ; android/.gitignore exclut builds, assets copiés et clés.
 !/capacitor.config.json
 !/android/
