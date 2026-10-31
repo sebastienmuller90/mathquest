@@ -1,0 +1,42 @@
+name: P3 stabilization
+
+on:
+  push:
+    branches:
+      - chatgpt/android-p3-stabilization
+  pull_request:
+    paths:
+      - 'js/app-actions.js'
+      - 'js/app-state.js'
+      - 'js/parent-gate.js'
+      - 'js/platform.js'
+      - 'tests/p3-*.test.js'
+      - '.github/workflows/p3-stabilization.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p3-stabilization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  targeted:
+    runs-on: ubuntu-24.04
+    env:
+      MQ_BROWSER: chromium
+      MQ_ENGINES: chromium
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: P3-A — SystemBars suit le thème Android
+        run: node tests/p3-system-bars.test.js
+      - name: P3-B — code parent au clavier
+        run: node tests/p3-parent-pin.test.js
+      - name: P3-C — toast aria-live vidé après disparition
+        run: node tests/p3-toast-cleanup.test.js

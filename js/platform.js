@@ -8,8 +8,9 @@
      on utilise l'adresse du site public.
    - Android : bouton Retour (ferme la couche du dessus, puis revient à l'écran précédent, puis met l'app en arrière-plan sur
      l'accueil, sans jamais la tuer), sauvegarde immédiate au passage en arrière-plan, évènement de reprise.
+   - Android 8+ / Capacitor 8 : les SystemBars suivent à chaud prefers-color-scheme afin de garder les icônes système lisibles.
    Les plugins natifs sont lus via Capacitor.Plugins (pas de bundler : architecture zéro build conservée).
-   Évènements émis (MQHooks) : platform:pause, platform:resume, platform:network ; filtre platform:back (MQHooks.first). */
+   Évènements émis (MQHooks) : platform:pause, platform:resume, platform:network, platform:systembars ; filtre platform:back (MQHooks.first). */
 (function(){
 'use strict';
 const cap=window.Capacitor||null;
@@ -26,6 +27,21 @@ const cur=()=>typeof CUR!=='undefined'?CUR:'';
 
 function flush(reason){try{if(typeof saveLocal==='function')saveLocal();}catch(e){}emit('platform:pause',{reason});}
 function minimize(){const App=plugin('App');if(App&&App.minimizeApp)return Promise.resolve(App.minimizeApp()).catch(()=>{});return Promise.resolve();}
+
+function darkAppearance(){try{return typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches;}catch(e){return false;}}
+function syncSystemBars(){
+ const bars=plugin('SystemBars');if(!bars||typeof bars.setStyle!=='function')return Promise.resolve(false);
+ const style=darkAppearance()?'DARK':'LIGHT';
+ return Promise.resolve(bars.setStyle({style})).then(()=>{emit('platform:systembars',{style});return true;}).catch(()=>false);
+}
+function watchSystemBars(){
+ if(!isNative||typeof matchMedia!=='function')return;
+ let mq;try{mq=matchMedia('(prefers-color-scheme: dark)');}catch(e){return;}
+ syncSystemBars();
+ const changed=()=>{syncSystemBars();};
+ if(mq&&typeof mq.addEventListener==='function')mq.addEventListener('change',changed);
+ else if(mq&&typeof mq.addListener==='function')mq.addListener(changed);
+}
 
 // Bouton Retour : même effet que ce que l'enfant ferait à l'écran. Renvoie l'action réalisée (utile aux tests).
 function back(){
@@ -45,13 +61,13 @@ if(isNative){const App=plugin('App');
   App.addListener('pause',()=>flush('pause'));
   App.addListener('appStateChange',s=>{if(s&&s.isActive===false)flush('background');});
   // Reprise : nouvelle journée possible (objectif du jour, série) → l'accueil est redessiné s'il est affiché.
-  App.addListener('resume',()=>{emit('platform:resume',{});try{if(cur()==='home'&&typeof home==='function')home();}catch(e){}});
+  App.addListener('resume',()=>{syncSystemBars();emit('platform:resume',{});try{if(cur()==='home'&&typeof home==='function')home();}catch(e){}});
  }
- document.documentElement.classList.add('mq-native','mq-'+kind);}
+ document.documentElement.classList.add('mq-native','mq-'+kind);watchSystemBars();}
 // Bac à sable des audits (pas de DOM complet) : aucun écouteur, l'API reste disponible.
 if(typeof window.addEventListener==='function'){
  window.addEventListener('online',()=>emit('platform:network',{online:true}));
  window.addEventListener('offline',()=>emit('platform:network',{online:false}));}
 
-window.MQPlatform=Object.freeze({kind,isNative,PUBLIC_BASE,plugin,publicURL,shouldRegisterServiceWorker,isOnline,back});
+window.MQPlatform=Object.freeze({kind,isNative,PUBLIC_BASE,plugin,publicURL,shouldRegisterServiceWorker,isOnline,back,syncSystemBars});
 })();
