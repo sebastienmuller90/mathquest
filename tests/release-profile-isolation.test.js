@@ -58,7 +58,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Suppression avec un MAUVAIS code parent : refusée, profil toujours présent',await p.evaluate(()=>!!PDB.profiles.k2));
   await p.fill('#pdelpin','1234');await p.click('[data-a="pdelok:k2"]');await p.waitForFunction(()=>!PDB.profiles.k2);
   const st=await p.evaluate(()=>{const o=JSON.parse(localStorage.getItem('mathquest_profiles_v2'));const bk=JSON.parse(localStorage.getItem('mathquest_profile_deleted_backup')||'null');return {ids:Object.keys(o.profiles),active:o.active,bk:bk&&bk.data&&bk.data.name};});
-  T('Suppression d’un profil non actif (code parent correct) : les deux autres intacts, sauvegarde de secours du supprimé conservée',st.ids.join()==='k1,k3'&&st.active==='k1'&&st.bk==='Zélie'&&(await fp('k1'))===snap3.k1&&(await fp('k3'))===snap3.k3,JSON.stringify(st));
+  T('Suppression d’un profil non actif (code parent correct) : les deux autres intacts, aucune copie cachée du supprimé',st.ids.join()==='k1,k3'&&st.active==='k1'&&st.bk===null&&(await fp('k1'))===snap3.k1&&(await fp('k3'))===snap3.k3,JSON.stringify(st));
   // 3. Suppression du profil ACTIF
   await p.evaluate(()=>{activateProfile('k3',false);});await p.evaluate(()=>profilesScreen());await p.waitForSelector('[data-a="pdel:k3"]');
   const k1b=await fp('k1');await p.click('[data-a="pdel:k3"]');await p.waitForSelector('#pdelpin');await p.fill('#pdelpin','1234');await p.click('[data-a="pdelok:k3"]');

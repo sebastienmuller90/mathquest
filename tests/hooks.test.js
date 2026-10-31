@@ -13,7 +13,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const hoverMove=['styles.css','pedagogy-upgrade.css','age-adaptive.css'].flatMap(f=>(fs.readFileSync(path.join(ROOT,f),'utf8').match(/[^{}]*:hover[^{}]*{[^}]*transform[^}]*}/g)||[]).map(r=>f+' '+r.trim().slice(0,80)));
  T('Aucun survol ne déplace un élément cliquable (pas de transform dans :hover)',!hoverMove.length,hoverMove.join(' | '));
 
- const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];
+ const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});
+ // Suivi distant désactivé par défaut (js/remote-sync-config.js) : backend de TEST pour exercer la logique de synchronisation.
+ await ctx.addInitScript(()=>{window.FINOT_REMOTE_SYNC={enabled:true,url:'https://finottest.supabase.co',key:'sb_publishable_TESTKEY123',schema:'api'};});const p=await ctx.newPage();const errs=[];
  p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/\[MQHooks\] t:x/.test(m.text()))errs.push('console: '+m.text());});
  await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
  const api=await p.evaluate(()=>{const H=MQHooks,out=[];H.on('t:x',()=>out.push('a1'),{id:'a'});H.on('t:x',()=>out.push('a2'),{id:'a'});H.on('t:x',()=>{throw new Error('boom');},{id:'err',order:1});H.on('t:x',()=>out.push('b'),{id:'b',order:200});

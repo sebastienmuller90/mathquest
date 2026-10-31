@@ -20,7 +20,11 @@ function banner(){if(shown||document.querySelector('.mq-update'))return;shown=tr
 function check(force){if(!REG)return;const now=Date.now();if(!force&&now-LAST_CHECK<3600e3)return;LAST_CHECK=now;REG.update().catch(()=>{});}
 Object.assign(ACT,{appupdate:()=>{try{saveLocal();}catch(e){}location.reload();},appupdatelater:()=>{const b=document.querySelector('.mq-update');if(b)b.remove();}});
 MQHooks.on('home:rendered',paint,{id:'app-version'});MQHooks.on('parent:rendered',paint,{id:'app-version'});
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+// App native (Capacitor) : pas de service worker (fichiers embarqués dans l'APK, mises à jour par le store) ; la version
+// affichée vient du manifeste du paquet www/ (scripts/package-www.mjs).
+if(window.MQPlatform&&MQPlatform.isNative){
+ fetch('finot-package.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(m=>{if(m&&m.version)window.MQ_APP_VERSION=m.version;paint();}).catch(()=>paint());
+}else if((window.MQPlatform?MQPlatform.shouldRegisterServiceWorker():'serviceWorker' in navigator&&/^https?:$/.test(location.protocol))){
  let hadController=!!navigator.serviceWorker.controller;
  // Première prise de contrôle (toute première visite) : rien à signaler. Changement suivant, même sans avoir rechargé
  // l'onglet : une nouvelle version vient d'être activée → bandeau.

@@ -1,0 +1,130 @@
+name: Finot Multistore Android
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: finot-multistore-android-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  multistore-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Installer les dépendances racine
+        run: npm ci
+
+      - name: Installer PGlite pour les tests Supabase locaux
+        run: npm ci --prefix supabase
+
+      - name: Installer Chromium pour les tests runtime qui en ont besoin
+        run: npx playwright install --with-deps chromium
+
+      - name: Générer le paquet web mobile reproductible
+        run: npm run package:www
+
+      - name: Phase 1 — packaging et runtime mobile
+        run: |
+          node tests/mobile-package.test.js
+          node tests/mobile-runtime.test.js
+          node tests/android-project.test.js
+          node tests/sync-privacy.test.js
+          node tests/analytics-entitlements.test.js
+
+      - name: Phase 2 — hardening Android / Stores
+        run: |
+          node tests/speech-capability.test.js
+          node tests/android-backup.test.js
+          node tests/external-links.test.js
+          node tests/remote-sync-flag.test.js
+          node tests/supabase-design.test.js
+          node tests/analytics-guard.test.js
+          node tests/entitlements-guard.test.js
+
+  android-build:
+    needs: multistore-tests
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Installer JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Installer Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+      - name: Vérifier l'environnement Android
+        run: |
+          java -version
+          node --version
+          sdkmanager --list_installed
+
+      - name: Installer les dépendances JavaScript
+        run: npm ci
+
+      - name: Construire et synchroniser www/ vers Android
+        run: npm run android:sync
+
+      - name: Autoriser le wrapper Gradle
+        run: chmod +x android/gradlew
+
+      - name: Construire APK debug et AAB release de validation
+        working-directory: android
+        run: ./gradlew --no-daemon clean assembleDebug bundleRelease -PfinotAppId=fr.finot.academie.dev
+
+      - name: Vérifier les artefacts Android
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK='android/app/build/outputs/apk/debug/app-debug.apk'
+          AAB='android/app/build/outputs/bundle/release/app-release.aab'
+          test -s "$APK"
+          test -s "$AAB"
+          unzip -t "$APK" >/dev/null
+          unzip -t "$AAB" >/dev/null
+          echo "APK_BYTES=$(stat -c%s "$APK")"
+          echo "AAB_BYTES=$(stat -c%s "$AAB")"
+
+      - name: Auditer le manifeste Android fusionné
+        shell: bash
+        run: |
+          set -euo pipefail
+          MANIFEST="$(find android/app/build/intermediates -type f -name AndroidManifest.xml | grep -E '/merged_|/packaged_' | head -n1)"
+          test -n "$MANIFEST"
+          echo "Manifest audité: $MANIFEST"
+          grep -q 'android.permission.INTERNET' "$MANIFEST"
+          grep -q 'android:allowBackup="false"' "$MANIFEST"
+          ! grep -q 'android.permission.RECORD_AUDIO' "$MANIFEST"
+          ! grep -q 'com.google.android.gms.permission.AD_ID' "$MANIFEST"
+
+      - name: Publier APK debug et AAB de validation
+        uses: actions/upload-artifact@v7
+        with:
+          name: finot-android-validation-${{ github.sha }}
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 7

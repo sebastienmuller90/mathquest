@@ -221,6 +221,7 @@ tr.reading td,tr.reading th{background:color-mix(in srgb,var(--gold) 30%,var(--s
 @media (max-width:560px){.sbtn{font-size:13px;padding:10px 4px}}
 .frise .sep{display:none}
 </style><link href="premium-parent.css" rel="stylesheet"><!-- surcouche visuelle adulte (hors ligne) --></head><body class="pp"><main id="app"></main>
+<script src="js/remote-sync-config.js"></script>
 <script src="js/primary-engine.js"></script>
 <script src="js/college-engine.js"></script>
 <script src="data/remaining-2026-2027.js"></script>
@@ -1269,8 +1270,8 @@ WALL.forEach(w=>WCH[w.id].forEach(c=>WMAP[c.id]=w));
 const sOf=wid=>SUBJECTS.find(s=>s.worlds.some(w=>w.id===wid))||SUBJECTS[0];
 
 /* ===== Finot Académie – Page parent (suivi à distance) ===== */
-const CONFIG={url:'https://nctmxxixugoxairmtjsa.supabase.co',key:'sb_publishable_ngN_Y9VsRuThBwS_pazV-A_0_hfbFWd'};
-async function rpc(fn,args){const r=await fetch(`${CONFIG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:CONFIG.key,'Content-Type':'application/json'},body:JSON.stringify(args)});const t=await r.text();if(!r.ok)throw new Error(t||('HTTP '+r.status));return t?JSON.parse(t):null;}
+// Backend du suivi : js/remote-sync-config.js (désactivé tant qu'aucun backend validé n'est configuré).
+async function rpc(fn,args){const C=window.MQRemoteSync&&MQRemoteSync.config();if(!C)throw new Error('suivi à distance non activé');const r=await fetch(`${C.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:C.key,'Content-Type':'application/json','Content-Profile':C.schema},body:JSON.stringify(args)});const t=await r.text();if(!r.ok)throw new Error(t||('HTTP '+r.status));return t?JSON.parse(t):null;}
 const RULES=[['ok','Par bonne réponse'],['mission','Mission réussie (2 étoiles ou plus)'],['perfect','Bonus mission sans faute'],['path','Parcours du jour terminé'],['streak','Chaque jour de série (dès le 2e jour)'],['lesson','Cours terminé (1re fois)']];
 const TITLES=['Novice','As du calcul','Stratège','Prodige','Virtuose','Génie','Légende','Mythe'];
 const lvl=xp=>Math.floor(Math.sqrt((xp||0)/150))+1,title=L=>TITLES[Math.min(TITLES.length-1,Math.floor((L-1)/2))];
@@ -1287,11 +1288,12 @@ let PK=(location.hash||'').slice(1).trim();
 try{if(PK)localStorage.setItem('mq_parent_key',PK);else PK=localStorage.getItem('mq_parent_key')||'';}catch(e){}
 let D=null,TAB='suivi',DIRTY=false,ERR='';
 
-async function refresh(force){if(!PK)return noKey();
+async function refresh(force){if(!(window.MQRemoteSync&&MQRemoteSync.configured()))return remoteOff();if(!PK)return noKey();
  if(!force&&(DIRTY||(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))))return;
  try{const r=await rpc('mq_get',{p_parent:PK});if(!r){ERR='Lien de suivi inconnu. Réactive le suivi dans l’appli de ton enfant.';D=null;}else{D=r;ERR='';}}
  catch(e){ERR='Connexion impossible. Nouvelle tentative dans quelques secondes.';}
  render();}
+function remoteOff(){app.innerHTML=`<div class="card center pop"><div class="logo">${IC('key')}</div><h1>Suivi parent</h1><p class="muted">Le suivi à distance n’est pas activé pour le moment. La progression de ton enfant reste sur son appareil : ouvre l’espace parents directement dans l’appli pour la consulter.</p></div>`;}
 function noKey(){app.innerHTML=`<div class="card center pop"><div class="logo">${IC('key')}</div><h1>Suivi parent</h1><p class="muted">Ouvre le lien de suivi affiché dans l’appli de ton enfant (Espace parents, onglet Réglages, Suivi à distance), ou colle-le ici.</p><input id="lk" class="fld wide2" placeholder="https://…/parent.html#…"><button class="btn primary big" data-a="setkey">Valider</button></div>`;}
 
 function render(){
