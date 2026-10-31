@@ -99,7 +99,7 @@ Build Android : **JDK 21** (Capacitor 8) et **Android SDK** (platform 36, build-
 - **Supprimés** : Firebase/google-services, logo Capacitor du modèle, tests d'exemple du modèle (mauvais package).
 - **Wrapper Gradle** : JAR vérifié identique au binaire officiel 8.14.3 et empreinte de la distribution épinglée.
 - **`npm audit`** : 4 alertes modérées (glob/minimatch via `@capacitor/cli`). Elles concernent l'outil en ligne de commande, rien n'est embarqué dans l'app. Pas de `--force` (rétrograderait la CLI en v4).
-- **Sauvegarde Android** : `allowBackup=true`. La progression suit le compte Google du parent en cas de changement de téléphone. **Décision P1** : conserver, ou restreindre (`dataExtractionRules`).
+- **Sauvegarde Android** : **désactivée** depuis `claude/android-store-hardening` : `allowBackup=false`, `fullBackupContent=false`, `dataExtractionRules` excluant tout (cloud et transfert d'appareil). Le parent garde l'export / import manuel. Preuve : `tests/android-backup.test.js`.
 
 ### À vérifier sur appareil réel (non faisable ici : pas de JDK/SDK, pas d'appareil)
 
@@ -117,7 +117,7 @@ Build Android : **JDK 21** (Capacitor 8) et **Android SDK** (platform 36, build-
 12. Espace parent.
 13. Version de la WebView.
 
-La reconnaissance vocale (exercices de prononciation) n'existe pas dans la WebView Android. L'app doit dégrader proprement ; **à vérifier sur appareil (P1)**. Ajouter la reconnaissance native imposerait la permission micro et une déclaration « voix d'enfant » : à éviter en V1.
+La reconnaissance vocale est **indisponible par conception** dans l'app Android V1 (`js/speech-capability.js`) : alternative « écoute et répète », aucune permission micro, aucune reconnaissance simulée (`tests/speech-capability.test.js`). L'affichage sur un vrai appareil reste à constater (§4).
 
 ## 5. Confidentialité enfant (P0 traité côté client)
 
@@ -179,9 +179,9 @@ dépôt ni dans son historique. **Aucune règle RLS n'a été lue ; aucune affir
 9. Procédure de suppression sur demande d'un parent.
 10. SQL versionné dans le dépôt, avec tests (sinon l'audit reste impossible).
 
-**Décision P0 à prendre :**
-- soit recréer le backend avec ces garanties ;
-- soit masquer le suivi à distance dans les builds store V1.
+**Mise à jour (`claude/android-store-hardening`)** : le suivi à distance est désactivé tant qu'aucun backend validé n'est configuré (`js/remote-sync-config.js`). Une conception complète et testée dans PostgreSQL 18 local est proposée dans `supabase/` (59 tests), sans aucun déploiement.
+
+**Décision P0 restante :** provisionner ce backend après revue, ou garder le suivi désactivé en V1.
 
 Dans le second cas, `INTERNET` reste utile uniquement si une autre fonction réseau existe ; aujourd'hui aucune.
 
