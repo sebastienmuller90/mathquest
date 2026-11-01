@@ -159,6 +159,9 @@ jobs:
       - name: WebView Android anciennes — aucune API absente de Chrome 83
         if: matrix.browser == 'chromium'
         run: node tests/old-webview-compat.test.js
+      - name: Police système agrandie — barre d’onglets entière et touchable
+        if: matrix.browser == 'chromium'
+        run: node tests/large-font-tabs.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js

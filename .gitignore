@@ -135,3 +135,4 @@
 !/tests/french-elision.test.js
 !/tests/finot-chat-keyboard.test.js
 !/tests/old-webview-compat.test.js
+!/tests/large-font-tabs.test.js

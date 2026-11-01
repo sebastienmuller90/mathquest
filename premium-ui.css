@@ -213,6 +213,13 @@ input.big.bad{border-color:var(--bad);background:var(--badbg)}
 .htab .hti svg{width:24px;height:24px;display:block;vertical-align:baseline}
 
 .htab .htl{font-size:12px;font-weight:700;letter-spacing:.005em}
+/* Police système agrandie (Android) : si les onglets débordent (« Plus » hors de l'écran), hometabsDOM() pose
+   .htabs-tight — les onglets rétrécissent, les libellés passent à la ligne — et --htabs-h (hauteur réelle de la
+   barre), qui remonte Finot, le toast et la fin de page au-dessus de la barre agrandie. */
+.hometabs.htabs-tight .htab{min-width:0}
+.hometabs.htabs-tight .htl{max-width:100%;text-align:center;overflow-wrap:anywhere;hyphens:auto}
+.htabs-tight-on .finot-fab.raised,.htabs-tight-on #toast.raised{bottom:calc(var(--htabs-h,0px) + 8px)}
+.htabs-tight-on #app{margin-bottom:calc(var(--htabs-h,0px) - 74px)}
 .htab.on{color:var(--accent-text);background:var(--accent-soft)}
 .htab.on .hti svg{stroke-width:2.2}
 
