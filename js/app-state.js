@@ -164,6 +164,8 @@ function confetti(n=24){if(matchMedia('(prefers-reduced-motion: reduce)').matche
 // bouton Valider ; il ne capte jamais les clics (pointer-events:none). Replacé à chaque changement d'écran.
 const IMMERSIVE=/^(mission|flash|lesson|interrogation|diagnostic)$/;
 function toastPlace(t){t=t||document.getElementById('toast');if(!t)return;t.classList.toggle('raised',CUR==='home');t.classList.toggle('top',IMMERSIVE.test(CUR||''));}
+// « de » ou « d’ » devant un mot (voyelle ou h muet) : « Leçon d’anglais », « Voir le cours de Maths ».
+function deMot(w){w=String(w||'');return (/^[aeiouyàâäéèêëîïôöùûüœh]/i.test(w)?'d’':'de ')+w;}
 function toast(m){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('aria-live','polite');t.setAttribute('role','status');document.body.appendChild(t);}t.innerHTML=m;toastPlace(t);t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);}
 function shake(){const c=$('.qcard');if(c){c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');}}
 /* V8.17 — vraie célébration (overlay + confettis) au lieu d'un simple toast, pour les deux temps forts

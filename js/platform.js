@@ -48,9 +48,15 @@ function back(){
  try{if(window.MQHooks&&MQHooks.first&&MQHooks.first('platform:back',{screen:cur()}))return 'hook';}catch(e){}
  try{if(typeof closeTopOverlay==='function'&&closeTopOverlay())return 'overlay';}catch(e){}
  const app=document.getElementById('app');
- const barBack=app&&app.querySelector('.bar > button[data-a]');if(visible(barBack)){barBack.click();return 'bar';}
  const wiz=app&&app.querySelector('[data-pob="back"]');if(visible(wiz)){wiz.click();return 'wizard';}
  if(cur()==='diagnostic'){const pause=app&&app.querySelector('[data-a="diagpause"]');if(visible(pause)){pause.click();return 'diagnostic-pause';}}
+ // Retour contextuel déclaré par l'écran (« ← Retour au chapitre », « Retour au monde », cours → chapitre) :
+ // un bouton [data-back][data-a] est cliqué ; un conteneur data-back="action:arg" déclenche cette action.
+ const ctx=app&&app.querySelector('[data-back]');
+ if(ctx&&ctx.offsetParent!==null&&!ctx.disabled){if(ctx.dataset.a){ctx.click();return 'contextual';}
+  const v=ctx.dataset.back||'',i=v.indexOf(':'),a=i<0?v:v.slice(0,i),arg=i<0?undefined:v.slice(i+1);
+  if(a&&typeof ACT==='object'&&typeof ACT[a]==='function'){ACT[a](arg);return 'contextual';}}
+ const barBack=app&&app.querySelector('.bar > button[data-a]');if(visible(barBack)){barBack.click();return 'bar';}
  if(cur()&&cur()!=='home'&&cur()!=='onboarding'){const h=app&&app.querySelector('[data-a="home"]');if(visible(h)){h.click();return 'home-button';}
   if(typeof ACT==='object'&&typeof ACT.home==='function'){ACT.home();return 'home';}}
  minimize();return 'minimize';}

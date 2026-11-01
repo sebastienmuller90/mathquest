@@ -19,8 +19,10 @@ function todayIds(){ensure();const start=dayStart(),ids=new Set();
  for(const x of (Array.isArray(S.answerLog)?S.answerLog:[]))if(x&&x.t>=start&&CHMAP[x.cid])ids.add(x.cid);
  // Cours validés aujourd'hui.
  for(const [cid,t] of Object.entries(S.lessons||{}))if(+t>=start&&CHMAP[cid])ids.add(cid);
- // Parcours du jour : leçons et exercices rencontrés aujourd'hui.
- const p=S.path;if(p&&Array.isArray(p.steps)&&typeof dstr==='function'&&p.date===dstr(Date.now()))for(const step of p.steps){if(step.kind==='lesson'&&step.cid&&step.status!=='locked')ids.add(step.cid);if(step.kind==='exo')for(const cid of (step.ids||[]))if(CHMAP[cid]&&step.status!=='locked')ids.add(cid);}
+ // Parcours du jour : seulement les étapes réellement faites aujourd'hui (une étape simplement déverrouillée,
+ // status 'next', n'est pas « étudiée » ; P2-4, 01/11/2026).
+ const done=st=>st&&(st.status==='done'||st.status==='review');
+ const p=S.path;if(p&&Array.isArray(p.steps)&&typeof dstr==='function'&&p.date===dstr(Date.now()))for(const step of p.steps){if(step.kind==='lesson'&&step.cid&&done(step))ids.add(step.cid);if(step.kind==='exo'&&done(step))for(const cid of (step.ids||[]))if(CHMAP[cid])ids.add(cid);}
  return [...ids].filter(id=>WMAP[id]&&WMAP[id].lvl===S.grade&&typeof CHMAP[id].g==='function');}
 function todaySummary(){const ids=todayIds(),subjects={};for(const id of ids){const s=subjOf(id),k=s?.id||'autre';(subjects[k]=subjects[k]||{id:k,name:s?.name||k,chapters:[]}).chapters.push(id);}return {ids,subjects:Object.values(subjects)};}
 function candidates(){return todayIds().map(id=>CHMAP[id]).filter(Boolean);}

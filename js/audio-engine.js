@@ -19,7 +19,7 @@ const LOCALES={fr:'fr-FR',en:'en-GB',it:'it-IT'};
 const LANG_NAMES={fr:'française',en:'anglaise',it:'italienne'};
 const RATES={normal:{fr:.95,en:.92,it:.92},slow:{fr:.75,en:.75,it:.75},young:.88};
 const TYPES=['phrase','mot','syllabe','lettre','graphème','phonème','consigne','langue'];
-const st={voices:[],loaded:false,listeners:[],prefs:{},last:null,gen:0,unavailable:{},onUnavailable:null};
+const st={voices:[],loaded:false,listeners:[],prefs:{},last:null,gen:0,unavailable:{},onUnavailable:null,onFail:null};
 const synth=()=>root.speechSynthesis||null;
 const Utt=()=>root.SpeechSynthesisUtterance||null;
 const lang2=l=>String(l||'fr').toLowerCase().slice(0,2);
@@ -155,6 +155,9 @@ function rateFor(l,{slow=false,young=false,type='phrase'}={}){const la=lang2(l);
 /* speak([{t,l,type}], {slow, young, onend, onstart, onsegment, onunavailable}) → rapport {spoken:[…], skipped:[…]}.
    Tous les énoncés sont confiés d'un coup à la file du moteur : pas de silence ni de remise à zéro de l'intonation entre
    deux morceaux (les lectures paraissaient hachées, surtout sur iPhone). onsegment(i) : début du morceau i de segs. */
+// Erreurs de synthèse qui signifient « cette voix ne peut pas parler maintenant » (et non un arrêt volontaire ou une
+// lecture refusée faute de geste de l'utilisateur) : interrupted, canceled et not-allowed n'en font pas partie.
+const FAIL_CODES=/^(synthesis-failed|synthesis-unavailable|language-unavailable|voice-unavailable|network|audio-hardware)$/;
 function speak(segs,opt={}){const rep={spoken:[],skipped:[]};const s=synth(),U=Utt();if(!s||!U){rep.skipped=segs.map(x=>({...x,why:'synthèse indisponible'}));if(opt.onend)opt.onend(rep);return rep;}
   stop();const g=++st.gen;st.last={segs,opt};const utts=[];
   const finot=opt.character==='finot';
@@ -165,10 +168,13 @@ function speak(segs,opt={}){const rep={spoken:[],skipped:[]};const s=synth(),U=U
     u.lang=pv.locale;if(pv.voice)u.voice=pv.voice;u.rate=sg.rate||(finot?pv.rate:rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type}));u.pitch=finot?pv.pitch:1;
     rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate,pitch:u.pitch});utts.push([u,idx]);});
   if(!utts.length){if(opt.onend)opt.onend(rep);return rep;}
-  let started=false,finished=false;const finish=()=>{if(finished||g!==st.gen)return;finished=true;if(opt.onend)opt.onend(rep);};
+  let started=false,finished=false;const failedHere={};const finish=()=>{if(finished||g!==st.gen)return;finished=true;if(opt.onend)opt.onend(rep);};
   utts.forEach(([u,idx],j)=>{const last=j===utts.length-1;
     u.onstart=()=>{if(g!==st.gen)return;if(!started){started=true;if(opt.onstart)try{opt.onstart();}catch(e){}}if(opt.onsegment)try{opt.onsegment(idx);}catch(e){}};
-    u.onend=()=>{if(last)finish();};u.onerror=()=>{if(last)finish();};
+    u.onend=()=>{if(last)finish();};
+    // Échec réel de la voix (pas un arrêt volontaire) : on prévient une fois par lecture et par langue, sans bloquer la suite.
+    u.onerror=ev=>{const code=ev&&ev.error;if(g===st.gen&&FAIL_CODES.test(String(code||''))){const la=lang2(segs[idx].l);
+      if(!failedHere[la]){failedHere[la]=1;const cb=opt.onfail||st.onFail;if(cb)try{cb(la,code);}catch(e){}}}if(last)finish();};
     try{s.speak(u);}catch(e){if(last)finish();}});
   // Filet : certains moteurs n'émettent pas toujours onend ; la lecture est finie quand la file est vide.
   const watch=()=>{if(finished||g!==st.gen)return;let busy=true;try{busy=!!(s.speaking||s.pending);}catch(e){}if(!busy)return finish();setTimeout(watch,1000);};setTimeout(watch,2500);
@@ -191,5 +197,6 @@ function diagnostics(){const vs=st.voices.length?st.voices:refresh();
 
 init();
 root.MQAudio={version:'8.13',LOCALES,TYPES,RATES,FINOT,locale,lang2,supported,init,refresh,ready,setPrefs,pickVoice,finotVoice,voicesFor,prepare,prepareFR,prepareForeign,spokenFor,graphemeSpoken,rateFor,speak,stop,replay,speaking,recognitionLocale,createRecognizer,diagnostics,
-  set onUnavailable(f){st.onUnavailable=f;},get onUnavailable(){return st.onUnavailable;},_state:st};
+  set onUnavailable(f){st.onUnavailable=f;},get onUnavailable(){return st.onUnavailable;},
+  set onFail(f){st.onFail=f;},get onFail(){return st.onFail;},_state:st};
 })(typeof window!=='undefined'?window:globalThis);

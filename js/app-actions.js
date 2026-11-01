@@ -294,6 +294,9 @@ const ACT={
  const h=finotLessonHelp(cid);finotPush('finot',h?`<b>${esc(h.name)}</b><br>${h.html}`:FINOT_FALLBACK);},
  celebclose:()=>{const d=document.getElementById('celeb');if(d){d.classList.remove('show');clearTimeout(CELEB_T);}}
 };
+// Retour Android depuis un cours (data-back de la carte du cours) : quitte le cours proprement (comme ACT.home) puis
+// affiche l'écran d'origine : « chap:<id> », « path » ou « library ».
+ACT.leavelesson=t=>{ttsStop();stopPron();L=null;padClose();CUR='';const s=String(t||''),i=s.indexOf(':'),a=i<0?s:s.slice(0,i),arg=i<0?undefined:s.slice(i+1);if(a&&ACT[a])ACT[a](arg);else ACT.home();};
 document.addEventListener('click',e=>{const sp=e.target.closest('.lcard [lang],.qcard .qtext [lang],.fiche [lang]');if(sp&&!e.target.closest('button,[data-a]')&&TTS.ok){ttsSpeak([{segs:[{l:sp.getAttribute('lang').slice(0,2),t:spokenFor(sp.textContent)}]}]);return;}const el=e.target.closest('[data-a]');if(!el||el.disabled)return;const s=el.dataset.a,i=s.indexOf(':'),a=i<0?s:s.slice(0,i),arg=i<0?undefined:s.slice(i+1);if(!/^(tts|pad|chip|otok|oundo|qlisten)/.test(a))ttsStop();if(ACT[a])ACT[a](arg,el);});
 /* V8.15 — Finot réagit quand on le touche. */
 document.addEventListener('click',e=>{let f=e.target.closest('.finot-live');if(!f){const host=e.target.closest('button,a,[data-a]');f=host?host.querySelector('.finot-live'):null;}if(!f)return;f.classList.remove('finot-boing');void f.offsetWidth;f.classList.add('finot-boing');setTimeout(()=>f.classList.remove('finot-boing'),650);});

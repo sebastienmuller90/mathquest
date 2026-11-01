@@ -38,7 +38,7 @@ function ensurePath(){const d=dstr(Date.now());
  return MQHooks.filter('path:ensure',S.path,{date:d});}
 /* ----- Écran du circuit, carte d'accueil, explication par Finot ----- */
 function pathSubjIcon(s){const x=SUBMAP[s];return (x&&x.emoji)||'📘';}
-function pathStepLabel(s){if(s.kind==='lesson'){const x=SUBMAP[s.subj];return 'Leçon de '+(x?x.name.toLowerCase():'cours');}
+function pathStepLabel(s){if(s.kind==='lesson'){const x=SUBMAP[s.subj];return 'Leçon '+deMot(x?x.name.toLowerCase():'cours');}
  return 'Exercices ('+PATH_EXO_N+' questions)';}
 /* 19/10/2026 : le parcours devient une carte d'aventure — une prairie dessinée en SVG (aucune image externe), un sentier
    qui serpente du départ (en bas) jusqu'au château et son coffre (en haut), un lieu par étape et Finot posté à l'étape
