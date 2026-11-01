@@ -28,7 +28,7 @@ function todaySummary(){const ids=todayIds(),subjects={};for(const id of ids){co
 function candidates(){return todayIds().map(id=>CHMAP[id]).filter(Boolean);}
 function todayActivityCount(cid){const start=dayStart();let n=0;for(const x of (S.studyLog||[]))if(x&&x.cid===cid&&x.t>=start)n++;for(const x of (S.answerLog||[]))if(x&&x.cid===cid&&x.t>=start)n++;return n;}
 function weight(c){const id=c.id,m=MQAdaptive.mastery(S,id),mist=(S.mistakes[id]||[]).filter(x=>!x.seen).length,due=MQAdaptive.isDue(S,id);let w=2+Math.min(4,todayActivityCount(id));if(m<45)w+=5;else if(m<65)w+=3;else if(m<80)w+=1;if(mist)w+=Math.min(4,mist);if(due)w+=2;return w;}
-function weightedPick(list){if(!list.length)return null;const ws=list.map(weight),sum=ws.reduce((a,b)=>a+b,0);let r=Math.random()*sum;for(let i=0;i<list.length;i++){r-=ws[i];if(r<=0)return list[i];}return list.at(-1);}
+function weightedPick(list){if(!list.length)return null;const ws=list.map(weight),sum=ws.reduce((a,b)=>a+b,0);let r=Math.random()*sum;for(let i=0;i<list.length;i++){r-=ws[i];if(r<=0)return list[i];}return list[list.length-1];}
 function difficulty(cid){const m=MQAdaptive.mastery(S,cid);return m<45?1:m<75?2:3;}
 function buildPlan(n){n=Math.max(5,Math.min(40,parseInt(n)||DEFAULT_N));const pool=candidates();if(!pool.length)return [];const groups={};for(const c of pool){const s=subjOf(c.id)?.id||'autre';(groups[s]=groups[s]||[]).push(c);}const chosen=[],used=new Set();
  // Chaque matière étudiée aujourd'hui apparaît au moins une fois.

@@ -148,7 +148,7 @@ function multiplicationModel(x){
   steps.push({partials:[p1,p2],text:`Deuxième ligne : ${Math.floor(x.b/10)} dizaine${Math.floor(x.b/10)>1?'s':''}, donc <b>${grouped(x.a)} × ${tens} = ${grouped(p2)}</b>. Cette ligne est décalée d’un rang.`});
   steps.push({partials:[p1,p2],sum:x.answer,text:`J’additionne les deux lignes : ${grouped(p1)} + ${grouped(p2)} = <b>${grouped(x.answer)}</b>.`});
  }
- steps.push({partials:x.b<10?[]:steps.at(-1)?.partials,work:x.b<10?String(x.answer).split(''):undefined,sum:x.answer,done:true,text:`Vérification : <b>${grouped(x.a)} × ${x.b} = ${grouped(x.answer)}</b>.`});
+ steps.push({partials:x.b<10?[]:steps[steps.length-1]?.partials,work:x.b<10?String(x.answer).split(''):undefined,sum:x.answer,done:true,text:`Vérification : <b>${grouped(x.a)} × ${x.b} = ${grouped(x.answer)}</b>.`});
  return {...x,kind:'multiplication',title:'Multiplication posée',steps};
 }
 
