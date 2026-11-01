@@ -22,7 +22,7 @@ function pinConfirmationHandoff(e){
 if(typeof document!=='undefined'&&document.addEventListener)document.addEventListener('keydown',pinConfirmationHandoff);
 
 function clearHiddenToast(t){
- if(t&&t.id==='toast'&&t.classList&&!t.classList.contains('show')&&(t.textContent||''))t.replaceChildren();
+ if(t&&t.id==='toast'&&t.classList&&!t.classList.contains('show')&&(t.textContent||''))t.textContent='';// replaceChildren absent des WebView Android < 86
 }
 if(typeof MutationObserver==='function'&&typeof document!=='undefined'&&document.body){
  const observer=new MutationObserver(records=>{

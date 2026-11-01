@@ -156,6 +156,9 @@ jobs:
       - name: Chat Finot — saisie visible au-dessus du clavier virtuel
         if: matrix.browser == 'chromium'
         run: node tests/finot-chat-keyboard.test.js
+      - name: WebView Android anciennes — aucune API absente de Chrome 83
+        if: matrix.browser == 'chromium'
+        run: node tests/old-webview-compat.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js
