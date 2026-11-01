@@ -10,7 +10,7 @@ Statuts : **READY** (vérifié, rien à faire), **TODO** (faisable par le code/l
 | 1 | App ID (`fr.finot.academie`) | **READY** (dans la PR) / **HUMAN ACTION** pour confirmer | défaut des builds release ; debug `.dev` ; définitif une fois créé dans Play Console — `release-audit.md` §2 |
 | 2 | Version (`8.75.6` / `8075006`) | **READY** | convention existante conservée ; registre `version-ledger.json` + refus de réutilisation — §3 |
 | 3 | `targetSdk` ≥ 36 | **READY** | 36 vérifié dans le manifeste fusionné |
-| 4 | AAB release | **READY** (non signé) | construit, 56,7 Mo, 0 erreur lint |
+| 4 | AAB release | **READY** (non signé) | construit, 58,0 Mo, 0 erreur lint |
 | 5 | Permissions minimales | **READY** | `INTERNET` seule ; pas de micro, pas d'`AD_ID` |
 | 6 | Backup désactivé, trafic en clair interdit | **READY** | manifeste + `network_security_config` |
 | 7 | Release non débogable, sans secret | **READY** | contrôlé par le script à chaque build |

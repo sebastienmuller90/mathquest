@@ -25,7 +25,7 @@ sur la documentation. Les chiffres cités proviennent du manifeste fusionné rel
 | Liens profonds | **aucun** (un seul `intent-filter` : MAIN/LAUNCHER) | manifeste |
 | Nom / icône | « Finot Académie », icône adaptative + ronde, splash portrait/paysage | ressources |
 | WebView | contenu local `https://localhost`, pas de contenu mixte, `webContentsDebuggingEnabled:false` | `capacitor.config.json` |
-| Taille de l'AAB | 56,7 Mo (non signé) | `app-release.aab` |
+| Taille de l'AAB | 58,0 Mo (non signé) | `app-release.aab` |
 
 ## 2. Identifiant de production : analyse d'impact et migration
 
