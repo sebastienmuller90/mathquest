@@ -11,7 +11,7 @@ const read=p=>fs.existsSync(p)?fs.readFileSync(p,'utf8'):'';
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,900)});
  // 1. capacitor.config.json
  let cfg={};try{cfg=JSON.parse(read(path.join(ROOT,'capacitor.config.json')));}catch(e){}
- T('capacitor.config.json : identifiant de DÉVELOPPEMENT par défaut (fr.finot.academie.dev), nom « Finot Académie », webDir www',cfg.appId==='fr.finot.academie.dev'&&cfg.appName==='Finot Académie'&&cfg.webDir==='www',JSON.stringify({appId:cfg.appId,appName:cfg.appName,webDir:cfg.webDir}));
+ T('capacitor.config.json : identifiant de PRODUCTION candidat (fr.finot.academie), nom « Finot Académie », webDir www',cfg.appId==='fr.finot.academie'&&cfg.appName==='Finot Académie'&&cfg.webDir==='www',JSON.stringify({appId:cfg.appId,appName:cfg.appName,webDir:cfg.webDir}));
  T('Origine figée https://localhost (changer schéma ou hôte effacerait localStorage, donc tous les profils)',cfg.server&&cfg.server.androidScheme==='https'&&cfg.server.hostname==='localhost'&&!cfg.server.url&&!cfg.server.cleartext,JSON.stringify(cfg.server));
  T('WebView durcie : pas de contenu mixte, pas de débogage distant en production',cfg.android&&cfg.android.allowMixedContent===false&&cfg.android.webContentsDebuggingEnabled===false,JSON.stringify(cfg.android));
  T('Zones sûres : SystemBars insetsHandling « native » (les env(safe-area-inset-*) existants suffisent)',cfg.plugins&&cfg.plugins.SystemBars&&cfg.plugins.SystemBars.insetsHandling==='native',JSON.stringify(cfg.plugins));
@@ -20,7 +20,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const g=read(A('app/build.gradle')),v=read(A('variables.gradle')),root=read(A('build.gradle'));
  const num=k=>+((v.match(new RegExp(k+'\\s*=\\s*(\\d+)'))||[])[1]||0);
  T('SDK : minSdk 24, compileSdk ≥ 36, targetSdk ≥ 36 (exigence Google Play depuis le 31/08/2026)',num('minSdkVersion')===24&&num('compileSdkVersion')>=36&&num('targetSdkVersion')>=36,JSON.stringify({min:num('minSdkVersion'),compile:num('compileSdkVersion'),target:num('targetSdkVersion')}));
- T('Namespace de code stable « fr.finot.academie » ; applicationId configurable (finotAppId / FINOT_APP_ID), « .dev » par défaut, format validé',/namespace\s*=?\s*"fr\.finot\.academie"/.test(g)&&/findProperty\('finotAppId'\)/.test(g)&&/FINOT_APP_ID/.test(g)&&/'fr\.finot\.academie\.dev'/.test(g)&&/applicationId\s+finotAppId/.test(g)&&/GradleException/.test(g),'');
+ T('Namespace de code stable « fr.finot.academie » ; applicationId configurable (finotAppId / FINOT_APP_ID), format validé',/namespace\s*=?\s*"fr\.finot\.academie"/.test(g)&&/findProperty\('finotAppId'\)/.test(g)&&/FINOT_APP_ID/.test(g)&&/applicationId\s+finotAppId/.test(g)&&/GradleException/.test(g),'');
+ T('Identifiants : release = fr.finot.academie par défaut ; debug = fr.finot.academie.dev (suffixe .dev), installable à côté de la production ; un id explicite (finotAppId) reste prioritaire',/\?:\s*'fr\.finot\.academie'\)\.toString\(\)/.test(g)&&/finotAppIdExplicit/.test(g)&&/debug\s*\{[^}]*applicationIdSuffix\s+'\.dev'/.test(g),'');
+ T('Release : explicitement non débogable ; aucun mode débogable dans le fichier',/release\s*\{[\s\S]*?debuggable\s+false/.test(g)&&!/debuggable\s+true/.test(g),'');
  T('versionCode / versionName lus dans finot-package.json embarqué (jamais codés en dur)',/finot-package\.json/.test(g)&&/versionCode\s+finot\.versionCode/.test(g)&&/versionName\s+finot\.versionName/.test(g)&&!/versionCode\s+\d/.test(g),'');
  T('Signature : uniquement par variables d’environnement (FINOT_UPLOAD_*), aucun mot de passe ni chemin de clé dans Git',/System\.getenv\('FINOT_UPLOAD_KEYSTORE'\)/.test(g)&&!/storePassword\s+["']/.test(g)&&!/keyPassword\s+["']/.test(g),'');
  T('Aucun service Google (Firebase, google-services) : pas de SDK de suivi',!/google-services|gms/.test(g+root),'');

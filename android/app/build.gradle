@@ -13,7 +13,11 @@ def finot = new JsonSlurper().parse(finotPackageFile)
 
 // Identifiant d'application : DÉVELOPPEMENT par défaut. L'identifiant de production Google Play est une décision durable,
 // à fournir explicitement : ./gradlew bundleRelease -PfinotAppId=<id>  (ou variable d'environnement FINOT_APP_ID).
-def finotAppId = (project.findProperty('finotAppId') ?: System.getenv('FINOT_APP_ID') ?: 'fr.finot.academie.dev').toString()
+// Production : fr.finot.academie (candidat Google Play). Le build DEBUG ajoute le suffixe « .dev » (fr.finot.academie.dev) :
+// il s'installe à côté de la version de production sans jamais la remplacer. Un identifiant explicite (-PfinotAppId ou
+// FINOT_APP_ID, ex. la CI qui valide un AAB avec fr.finot.academie.dev) est appliqué tel quel, sans suffixe.
+def finotAppIdExplicit = project.findProperty('finotAppId') ?: System.getenv('FINOT_APP_ID')
+def finotAppId = (finotAppIdExplicit ?: 'fr.finot.academie').toString()
 if (!(finotAppId ==~ /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/)) {
     throw new GradleException("Identifiant d'application invalide : ${finotAppId}")
 }
@@ -49,7 +53,13 @@ android {
         }
     }
     buildTypes {
+        debug {
+            if (!finotAppIdExplicit) {
+                applicationIdSuffix '.dev'
+            }
+        }
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             if (finotKeystore) {

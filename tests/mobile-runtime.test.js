@@ -18,7 +18,7 @@ const FAKE_CAP=()=>{
  window.__capFire=(plugin,ev,data)=>{(L[plugin+':'+ev]||[]).slice().forEach(f=>f(data));};
  window.Capacitor={isNativePlatform:()=>true,getPlatform:()=>'android',isPluginAvailable:n=>!!window.Capacitor.Plugins[n],Plugins:{
   App:{addListener:listener('App'),minimizeApp(){calls.push(['App.minimizeApp']);return Promise.resolve();},exitApp(){calls.push(['App.exitApp']);return Promise.resolve();},
-   getInfo(){return Promise.resolve({name:'Finot Académie',id:'fr.finot.academie.dev',version:'8.73.2',build:'8073002'});}},
+   getInfo(){return Promise.resolve({name:'Finot Académie',id:'fr.finot.academie',version:'8.73.2',build:'8073002'});}},
   TextToSpeech:{speak(o){calls.push(['TTS.speak',o]);return new Promise(r=>setTimeout(r,40));},stop(){calls.push(['TTS.stop']);return Promise.resolve();},
    getSupportedVoices(){return Promise.resolve({voices});},getSupportedLanguages(){return Promise.resolve({languages:voices.map(v=>v.lang)});},isLanguageSupported(o){return Promise.resolve({supported:voices.some(v=>v.lang===o.lang)});}}}};
  // La WebView Android n'expose pas la synthèse vocale du web.
