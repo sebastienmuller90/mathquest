@@ -153,6 +153,9 @@ jobs:
       - name: Finot flottant — visibilité et absence de recouvrement
         if: matrix.browser == 'chromium'
         run: node tests/finot-fab-layout.test.js
+      - name: Chat Finot — saisie visible au-dessus du clavier virtuel
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-chat-keyboard.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js

@@ -133,3 +133,4 @@
 !/supabase/**
 /supabase/node_modules/
 !/tests/french-elision.test.js
+!/tests/finot-chat-keyboard.test.js

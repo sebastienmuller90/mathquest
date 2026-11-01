@@ -152,18 +152,18 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .finot-fab.raised{bottom:calc(80px + env(safe-area-inset-bottom,0px))}
 .finot-fab img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 35%}
 .finot-fab.show{display:block}
-#finotchat{position:fixed;left:0;right:0;bottom:0;height:72vh;z-index:71;display:none;flex-direction:column;background:var(--surface);border-top:3px solid var(--accent);border-radius:24px 24px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+#finotchat{position:fixed;left:0;right:0;bottom:0;height:max(72vh,min(100%,22rem));overflow-y:auto;scroll-padding-bottom:4.5rem;z-index:71;display:none;flex-direction:column;background:var(--surface);border-top:3px solid var(--accent);border-radius:24px 24px 0 0;box-shadow:0 -12px 32px rgba(0,0,0,.25);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
 #finotchat.open{display:flex;animation:padup .25s both}
 .fch-head{display:flex;align-items:center;gap:10px}
 .fch-head img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 35%}
 .fch-head b{font-family:'Fredoka',sans-serif;font-size:20px;flex:1}
-.fch-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px 2px;margin:6px 0}
+.fch-body{flex:1;min-height:min(6rem,30vh);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px 2px;margin:6px 0}
 .fch-msg{max-width:85%;padding:10px 14px;border-radius:16px;line-height:1.4;font-size:15px}
 .fch-msg.finot{align-self:flex-start;background:var(--surface2);border-bottom-left-radius:4px}
 .fch-msg.you{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px}
-.fch-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.fch-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;min-height:2.6rem;overflow-y:auto}
 .fch-chip{padding:6px 12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--text)}
-.fch-row{display:flex;gap:8px}
+.fch-row{display:flex;gap:8px;position:sticky;bottom:0;z-index:1;background:var(--surface)}
 .fch-row input{flex:1}
 @media (prefers-reduced-motion: reduce){#finotchat.open{animation:none!important}}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 100px));background:var(--text);color:var(--bg);padding:12px 20px;border-radius:16px;font-weight:600;z-index:100;transition:transform .3s;width:max-content;max-width:92vw;text-align:center}
