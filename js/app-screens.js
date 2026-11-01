@@ -140,10 +140,20 @@ function finotFabSync(){const fab=document.querySelector('.finot-fab');if(!fab)r
    hors de #app n'a pas ce problème, exactement comme .finot-fab. */
 function hometabsDOM(){if(document.getElementById('hometabs'))return;
  const nav=document.createElement('nav');nav.id='hometabs';nav.className='hometabs';nav.setAttribute('aria-label','Navigation principale');
- document.body.appendChild(nav);}
+ document.body.appendChild(nav);
+ // Police système agrandie (Android) : remesure quand la barre change de taille, et quand les polices finissent de
+ // charger (Nunito élargit les libellés sans changer la hauteur de la barre). Différée d'une image : modifier la
+ // taille observée dans le rappel déclencherait une boucle ResizeObserver.
+ if(window.ResizeObserver)new ResizeObserver(()=>requestAnimationFrame(hometabsFit)).observe(nav);
+ if(document.fonts&&document.fonts.addEventListener)document.fonts.addEventListener('loadingdone',()=>requestAnimationFrame(hometabsFit));}
+// Onglets trop larges (police système agrandie) → .htabs-tight + hauteur réelle de la barre (voir premium-ui.css).
+function hometabsFit(){const nav=document.getElementById('hometabs');if(!nav)return;const root=document.documentElement;nav.classList.remove('htabs-tight');
+ const tight=nav.classList.contains('show')&&nav.scrollWidth>nav.clientWidth+1;
+ nav.classList.toggle('htabs-tight',tight);root.classList.toggle('htabs-tight-on',tight);root.style.setProperty('--htabs-h',(tight?nav.offsetHeight:0)+'px');}
 // Pas de barre d'onglets pendant la création du profil (home() affiche alors l'écran d'accueil sans enfant).
 function hometabsSync(){const nav=document.getElementById('hometabs');if(!nav)return;const parentGate=!!document.querySelector('#app #pin,#app #pin2,#app #rk,#app #np2,#app .reckey'),show=CUR==='home'&&!!S.name&&!parentGate;nav.classList.toggle('show',show);if(!show)return;
- nav.innerHTML=HOMETABS.map(([k,emoji,label])=>`<button class="htab ${HOMETAB===k?'on':''}" data-a="hometab:${k}" aria-current="${HOMETAB===k?'page':'false'}"><span class="hti" aria-hidden="true">${emoji}</span><span class="htl">${label}</span></button>`).join('');}
+ nav.innerHTML=HOMETABS.map(([k,emoji,label])=>`<button class="htab ${HOMETAB===k?'on':''}" data-a="hometab:${k}" aria-current="${HOMETAB===k?'page':'false'}"><span class="hti" aria-hidden="true">${emoji}</span><span class="htl">${label}</span></button>`).join('');
+ requestAnimationFrame(hometabsFit);}
 // Résumé chiffré de l'onglet Progrès : les données utiles d'abord (niveau, étoiles, série, réussite), les accès ensuite.
 function progressKpis(L,pct,xpLeft){const ch=Object.values(S.chap||{}),stars=ch.reduce((a,c)=>a+(c.stars||0),0),ok=ch.reduce((a,c)=>a+(c.ok||0),0),tot=ch.reduce((a,c)=>a+(c.tot||0),0),rate=tot?Math.round(ok/tot*100)+' %':'—',streak=S.streak&&S.streak.n||0;
  return `<div class="kpis prog-kpis" role="list" aria-label="Résumé de ma progression"><div class="kpi" role="listitem"><b>${L}</b><span>Niveau</span></div><div class="kpi" role="listitem"><b>${stars}</b><span>Étoiles</span></div><div class="kpi" role="listitem"><b>${streak}</b><span>${streak>1?'Jours d’affilée':'Jour d’affilée'}</span></div><div class="kpi" role="listitem"><b>${rate}</b><span>Réussite</span></div></div><div class="prog-next muted small">Prochain niveau : encore ${xpLeft} XP</div><div class="xpbar" role="progressbar" aria-label="Progression vers le niveau suivant" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>`;}
