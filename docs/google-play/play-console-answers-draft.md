@@ -1,71 +1,90 @@
 # Finot Académie — Réponses probables Play Console (BROUILLON)
 
-À reporter dans Play Console par l'éditeur. Les réponses vérifiées dans le code sont données ; toute réponse qui dépend d'une décision
-commerciale, juridique ou de public reste marquée **À DÉCIDER AVANT PUBLICATION**. Rien n'est soumis par ce document.
+À reporter dans Play Console par l'éditeur. État vérifié le **02/11/2026** contre `main@ecc99323915bfe17ff4267e8ea0d2bfbf0f88b78` et les exigences Google Play publiques disponibles ce jour-là.
+
+Toute réponse dépendant d'une décision commerciale, juridique, de public ou d'identité reste marquée **À DÉCIDER AVANT PUBLICATION**. Rien n'est soumis par ce document.
 
 ## 1. Application
 
 | Question | Réponse |
 |---|---|
-| Nom | Finot Académie |
+| Nom | **Finot Académie** |
 | Application ou jeu | **Application** |
-| Gratuite ou payante | **Gratuite** — ⚠ choix **définitif** : une application gratuite ne peut plus devenir payante. À DÉCIDER AVANT PUBLICATION |
-| Identifiant | `fr.finot.academie` — définitif une fois publié. À DÉCIDER AVANT PUBLICATION (confirmer) |
-| Catégorie | Éducation |
-| Coordonnées | `[À COMPLÉTER : e-mail public]` |
-| Politique de confidentialité | `[À COMPLÉTER : URL HTTPS]` — voir `privacy-policy-draft.md` |
+| Gratuite ou payante | proposition V1 : **gratuite** — À DÉCIDER AVANT PUBLICATION |
+| Identifiant | `fr.finot.academie` — conserver cet identifiant lors de la création dans Play Console |
+| Catégorie | **Éducation** |
+| Coordonnées | `[À COMPLÉTER : E-MAIL PUBLIC ÉDITEUR]` |
+| Politique de confidentialité | `[À COMPLÉTER : URL HTTPS PUBLIQUE]` |
 
 ## 2. Public cible et contenu
 
 | Question | Réponse proposée |
 |---|---|
-| Tranches d'âge cibles | CP → 3e ≈ 6 à 15 ans. Cocher les tranches **6-8, 9-12, 13-15** ; ajouter « 5 ans et moins » seulement si le contenu est réellement conçu pour eux (non). À DÉCIDER AVANT PUBLICATION |
-| L'appli est-elle destinée aux enfants ? | **Oui** (audience incluant des enfants de moins de 13 ans) → Politique Familles applicable : voir `families-compliance.md` |
-| Programme « Designed for Families » | Candidature facultative. À DÉCIDER AVANT PUBLICATION |
-| Attire-t-elle involontairement les enfants ? | Sans objet (ciblée) |
-| Contenu publicitaire destiné aux enfants | **Aucun** |
-| Détails du contenu (public) | Contenu éducatif ; aucune violence, sexualité, jeu d'argent, drogue, langage cru |
+| Tranches d'âge cibles | CP → 3e ≈ 6 à 15 ans ; sélectionner dans Play Console les tranches correspondant réellement à cette audience |
+| Destinée aux enfants ? | **Oui** : l'audience inclut des enfants ; la Politique Familles est donc à traiter explicitement |
+| Programme Designed for Families | candidature distincte/facultative selon les options proposées au compte — À DÉCIDER AVANT PUBLICATION |
+| Publicité destinée aux enfants | **Aucune publicité** |
+| Contenu | éducatif ; pas de violence explicite, sexualité, jeu d'argent, drogue ou contenu social partagé |
 
-## 3. Questionnaire de classification du contenu (IARC)
+## 3. Classification du contenu (IARC)
 
-Catégorie : « Référence, actualités ou éducation ». Réponses attendues : **Non** à violence, sexe, langage grossier, substances,
-jeux d'argent, contenu généré par les utilisateurs partagé, partage de localisation, achats numériques. Classification attendue :
-tous publics (PEGI 3 / ESRB Everyone). À confirmer en remplissant le questionnaire officiel au moment du dépôt.
+Catégorie attendue : éducation/référence selon le questionnaire affiché.
+
+Le binaire V1 ne contient pas de violence explicite, sexualité, langage grossier, drogues, jeu d'argent, achats numériques, partage public de contenu utilisateur, réseau social ni partage de localisation.
+
+La classification finale doit être obtenue en répondant au questionnaire officiel ; ne pas pré-déclarer une classification comme acquise avant validation de Play Console.
 
 ## 4. Déclarations de l'application
 
 | Rubrique | Réponse | Preuve |
 |---|---|---|
-| Accès à l'application (App access) | **Toutes les fonctions sont accessibles sans identifiant** ni compte ; pas d'instructions de connexion | aucune connexion dans le code |
-| Publicités | **Non, l'application ne contient pas de publicités** | aucun SDK ; `AD_ID` retiré |
-| Achats intégrés / abonnements | **Aucun** (V1). Si une monétisation est décidée plus tard : À DÉCIDER AVANT PUBLICATION | `js/entitlements.js` sans fournisseur |
-| Identifiant publicitaire (Advertising ID) | **Non utilisé** (permission absente) ; déclarer « non » | manifeste |
-| Applications d'actualités / santé / finance / gouvernement | **Non** | — |
-| Fonctionnalités de réseau social / chat entre utilisateurs | **Aucune** | pas de communication entre utilisateurs |
-| Contenu généré par l'utilisateur | **Aucun** partagé (les saisies restent locales) | pas de partage |
-| Accès à Internet | Permission `INTERNET` déclarée (fonctionnalité de suivi parent distant désactivée) ; l'appli est utilisable hors ligne | manifeste |
-| Sécurité des données (Data Safety) | voir `data-safety-draft.md` : **aucune donnée collectée ni partagée** | audit du code |
-| Autorisations sensibles / SMS / appels / accessibilité / VPN / exact alarms | **Aucune** | manifeste |
-| Services de premier plan (foreground service) | **Aucun** | manifeste |
-| Applications de santé, COVID, pharmacie | **Non** | — |
-| Appareils cibles | téléphones et tablettes ; `minSdk` 24 (Android 7.0) ; orientation libre | manifeste |
-| Pays / régions | À DÉCIDER AVANT PUBLICATION (France seule ou plus large ; le contenu est en français) |
-| Prix | gratuit (voir §1) |
-| Distribution (Google Play Pass, programmes) | Non applicable en V1. À DÉCIDER AVANT PUBLICATION |
-| Conformité export / lois américaines | cocher selon réalité (aucun chiffrement propriétaire : HTTPS standard uniquement) |
-| Code de conduite Familles (cases à cocher) | **À cocher** après relecture de `families-compliance.md` |
-| Conformité « Child Safety Standards / CSAE » (si demandée par Play Console) | pas de contenu généré par les utilisateurs ni de communication ; à confirmer selon l'écran affiché. À DÉCIDER AVANT PUBLICATION |
+| App access | **Toutes les fonctions sont accessibles sans compte utilisateur** | aucun système de connexion V1 |
+| Publicités | **Non** | aucun SDK publicitaire ; `AD_ID` absent |
+| Achats intégrés / abonnements | **Aucun en V1** | aucun fournisseur de paiement actif |
+| Advertising ID | **Non utilisé** | permission absente |
+| Réseau social / chat entre utilisateurs | **Aucun** | le chat Finot est un assistant local, pas une communication entre utilisateurs |
+| Contenu généré par l'utilisateur partagé | **Aucun** | les saisies/progrès restent locaux |
+| Accès Internet | permission `INTERNET` présente ; application utilisable hors connexion | manifeste + recettes Android |
+| Data Safety | V1 actuelle : **aucune donnée collectée ni partagée par l'éditeur** | `data-safety-draft.md` + audit code |
+| Permissions sensibles | **Aucune** pour micro, caméra, localisation, contacts, SMS/appels | manifeste |
+| Foreground service | **Aucun** | manifeste |
+| Appareils cibles | téléphones et tablettes Android ; `minSdk` 24 ; `targetSdk` 36 | configuration Android |
+| Target API Google Play | **API 36 — conforme à l'exigence applicable depuis le 31/08/2026** | configuration + build release |
+| Pays / régions | `[À DÉCIDER AVANT PUBLICATION]` |
+| Prix | proposition V1 : gratuit — `[À DÉCIDER AVANT PUBLICATION]` |
+| Familles | relire et appliquer `families-compliance.md` lors de la saisie réelle |
 
-## 5. Pistes de test et prérequis de production
+## 5. Tests et accès production
 
-| Sujet | Information |
+| Sujet | Information vérifiée le 02/11/2026 |
 |---|---|
-| Compte développeur | **HUMAN ACTION** : inscription (frais unique), vérification d'identité, nom de développeur public |
-| Tests obligatoires avant production | Les **comptes développeur personnels créés après le 13/11/2023** doivent mener un **test fermé** (12 testeurs minimum pendant 14 jours consécutifs) avant de demander l'accès à la production ; les comptes **organisation** en sont dispensés. À confirmer dans Play Console au moment de l'inscription (règle susceptible d'évoluer). |
-| Piste conseillée | Test interne → test fermé → production |
+| Test interne | disponible sans exigence de testeurs minimum ; recommandé pour vérifier le premier AAB signé |
+| Nouveau compte développeur **personnel** créé après le 13/11/2023 | avant accès production, Google exige un **test fermé avec au moins 12 testeurs inscrits en continu pendant au moins 14 jours** |
+| Continuité | un testeur qui se désinscrit avant la fin ne compte pas ; une réinscription redémarre sa période continue |
+| Demande d'accès production | après satisfaction des critères applicables, répondre dans Play Console aux questions sur le test, l'application et sa préparation |
+| Compte non concerné par cette règle précise | vérifier l'écran réel du compte ; ne pas appliquer mécaniquement la règle 12/14 si Play Console indique un autre parcours |
 
-## 6. Ce qui NE doit PAS être déclaré (il n'existe pas)
+Plan recommandé : **test interne → test fermé si applicable → demande d'accès production → production**.
 
-Publicité, achats, abonnements, suivi distant, comptes, reconnaissance vocale / micro, localisation, caméra, notifications.
-Toute évolution vers l'une de ces fonctions déclenche : mise à jour Data Safety, politique de confidentialité, déclarations ci-dessus
-et, pour les enfants, revue Politique Familles.
+## 6. Assets Store nécessaires
+
+- icône Store : **512×512, PNG 32 bits, sRGB, ≤ 1 024 Ko**, carré plein ; Google Play applique son masque/ombre ;
+- feature graphic : **1 024×500**, JPEG ou PNG 24 bits sans alpha ;
+- captures téléphone et tablette reflétant le vrai produit avec profil fictif ;
+- aucune capture ne doit contenir de donnée réelle d'enfant.
+
+Voir `store-assets-checklist.md`.
+
+## 7. Ce qui NE doit PAS être déclaré en V1
+
+Publicité, achats, abonnements, compte cloud, suivi parent distant actif, synchronisation cloud active, reconnaissance vocale/micro, localisation, caméra, notifications push ou fonctions sociales.
+
+Toute évolution vers l'une de ces fonctions impose une nouvelle revue des déclarations Play Console, Data Safety, politique de confidentialité et, puisque l'application vise des enfants, conformité Familles **avant** mise en production.
+
+## 8. Références externes à revalider au dépôt
+
+- Google Play Console Help — exigences de test des nouveaux comptes développeur personnels.
+- Android Developers — exigence du niveau d'API cible Google Play.
+- Google Play Console Help / Android Developers — spécifications des assets Store.
+
+Les politiques Google peuvent évoluer : la Play Console affichée au compte de l'éditeur reste l'autorité finale au moment de la soumission.
