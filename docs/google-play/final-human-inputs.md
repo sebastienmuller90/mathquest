@@ -4,42 +4,49 @@ Ce fichier regroupe uniquement les informations qui ne peuvent pas être déduit
 
 ## 1. Identité publique de l'éditeur
 
-À renseigner avant publication de la politique de confidentialité :
+Informations publiques désormais **confirmées** :
 
-- nom complet ou raison sociale officielle ;
-- adresse postale publique de l'éditeur ;
-- e-mail public de support / confidentialité ;
+- nom public développeur / marque : **UpFactory Apps** ;
+- e-mail public de support / confidentialité : **upfactory.apps@gmail.com**.
+
+Informations juridiques qui restent à renseigner :
+
+- identité légale du titulaire du compte développeur personnel ;
+- adresse légale correspondante **dans Google Payments / Play Console** ;
 - pays de l'éditeur si demandé par Play Console.
 
-Ces données doivent remplacer les placeholders de :
+Ne jamais remplacer ces éléments par « UpFactory Apps » si un champ demande explicitement un **nom légal**, une **raison sociale** ou une **adresse légale**.
+
+L'adresse légale est nécessaire à la vérification du compte Google Play personnel mais n'est pas ajoutée à la politique de confidentialité publique uniquement pour cette raison. La privacy publique conserve un point de contact dédié : `upfactory.apps@gmail.com`.
+
+Les informations confirmées sont reportées dans :
 
 - `docs/google-play/privacy-policy-public.html` ;
 - `docs/google-play/privacy-policy-draft.md` ;
 - `docs/google-play/store-listing-fr.md` ;
-- `docs/google-play/play-console-answers-draft.md` si nécessaire.
+- `docs/google-play/play-console-answers-draft.md`.
 
 ## 2. Politique de confidentialité
 
-GitHub Pages est **déjà actif** pour le dépôt. Le déploiement du commit `be3fb622ba2328a797529917ba9e79445aee06e2` a confirmé l'URL publique de base :
+GitHub Pages est **déjà actif** pour le dépôt. URL publique de base :
 
 `https://sebastienmuller90.github.io/mathquest/`
 
-Le fichier actuel `docs/google-play/privacy-policy-public.html` peut donc être publié sans infrastructure supplémentaire. Tant que ses placeholders éditeur ne sont pas remplacés, il ne doit toutefois **pas** être déclaré comme politique définitive dans Play Console.
-
-URL technique correspondant au fichier actuel une fois finalisé :
+URL technique prévue pour la politique finale :
 
 `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
 
-Avant utilisation dans Play Console :
+Il reste avant utilisation dans Play Console :
 
-- remplacer tous les placeholders ;
+- renseigner l'identité légale du responsable dans la privacy ;
+- fixer la date de publication au jour de la mise en ligne définitive ;
 - laisser GitHub Pages redéployer `main` ;
 - ouvrir l'URL sans authentification ;
 - vérifier le rendu sur mobile ;
 - reporter exactement cette URL dans Play Console ;
 - ajouter la même URL dans l'espace Parents de l'application.
 
-Ne jamais publier la page comme politique finale avec des éléments entre crochets.
+Ne jamais déclarer la page comme politique finale avec des éléments entre crochets.
 
 ## 3. Distribution
 
@@ -78,7 +85,7 @@ La procédure détaillée CMD/ADB est dans `physical-device-validation.md`.
 ## 6. Assets Store restant à valider
 
 - icône Google Play finale 512×512 : **techniquement prête** ;
-- Feature Graphic 1024×500 : brief prêt, visuel final à produire ;
+- Feature Graphic 1024×500 : candidat technique prêt, validation visuelle finale à faire ;
 - sélection finale des captures téléphone ;
 - sélection finale des captures tablette.
 

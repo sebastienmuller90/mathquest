@@ -13,8 +13,9 @@ Toute réponse dépendant d'une décision commerciale, juridique, de public ou d
 | Gratuite ou payante | proposition V1 : **gratuite** — À DÉCIDER AVANT PUBLICATION |
 | Identifiant | `fr.finot.academie` — conserver cet identifiant lors de la création dans Play Console |
 | Catégorie | **Éducation** |
-| Coordonnées | `[À COMPLÉTER : E-MAIL PUBLIC ÉDITEUR]` |
-| Politique de confidentialité | `[À COMPLÉTER : URL HTTPS PUBLIQUE]` |
+| Nom public éditeur | **UpFactory Apps** |
+| Coordonnées | **upfactory.apps@gmail.com** |
+| Politique de confidentialité | URL technique prévue `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — à déclarer seulement après finalisation juridique de la page |
 
 ## 2. Public cible et contenu
 
