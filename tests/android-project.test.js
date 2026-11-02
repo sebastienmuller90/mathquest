@@ -51,7 +51,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Icône adaptative : fond (couleur ic_launcher_background) + premier plan Finot',/<background android:drawable="@color\/ic_launcher_background"\/>/.test(adapt)&&/<foreground android:drawable="@mipmap\/ic_launcher_foreground"\/>/.test(adapt)&&/<color name="ic_launcher_background">#[0-9A-Fa-f]{6}<\/color>/.test(read(A('app/src/main/res/values/ic_launcher_background.xml'))),'');
  T('Logo Capacitor du modèle supprimé (drawable vectoriel inutilisé)',!fs.existsSync(A('app/src/main/res/drawable-v24/ic_launcher_foreground.xml'))&&!fs.existsSync(A('app/src/main/res/drawable/ic_launcher_background.xml')),'');
  const st=read(A('app/src/main/res/values/styles.xml'));
- T('Écran de démarrage Android 12+ : fond #F4F1FF, icône Finot, puis thème de l’app',/windowSplashScreenBackground">@color\/finot_splash_background/.test(st)&&/postSplashScreenTheme">@style\/AppTheme\.NoActionBar/.test(st)&&/#F4F1FF/i.test(read(A('app/src/main/res/values/colors.xml'))),'');
+ T('Écran de démarrage Android 12+ : fond #FFF6E8, icône Finot, puis thème de l’app',/windowSplashScreenBackground">@color\/finot_splash_background/.test(st)&&/postSplashScreenTheme">@style\/AppTheme\.NoActionBar/.test(st)&&/#FFF6E8/i.test(read(A('app/src/main/res/values/colors.xml'))),'');
  const b=await launchEngine('chromium');const pg=await b.newPage();
  const px=async(file,points)=>pg.evaluate(async({uri,points})=>{const im=new Image();im.src=uri;await im.decode();const c=document.createElement('canvas');c.width=im.width;c.height=im.height;const x=c.getContext('2d');x.drawImage(im,0,0);
   return {w:im.width,h:im.height,p:points.map(([fx,fy])=>Array.from(x.getImageData(Math.min(im.width-1,Math.round(fx*im.width)),Math.min(im.height-1,Math.round(fy*im.height)),1,1).data))};},{uri:'data:image/png;base64,'+fs.readFileSync(file).toString('base64'),points});
@@ -61,9 +61,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   if(fg.w!==Math.round(108*k)||fg.p[0][3]!==255||fg.p[1][3]!==0)bad.push(d+' foreground '+JSON.stringify(fg));
   for(const n of ['ic_launcher','ic_launcher_round']){const ic=await px(A(`app/src/main/res/mipmap-${d}/${n}.png`),[[.5,.5]]);if(ic.w!==Math.round(48*k)||ic.p[0][3]!==255)bad.push(d+' '+n+' '+JSON.stringify(ic));}
   const sp=await px(A(`app/src/main/res/drawable-port-${d}/splash.png`),[[.02,.02],[.5,.5]]);
-  if(String(sp.p[0].slice(0,3))!=='244,241,255')bad.push(d+' splash '+JSON.stringify(sp));}
+  if(String(sp.p[0].slice(0,3))!=='255,246,232')bad.push(d+' splash '+JSON.stringify(sp));}
  // Le fox de Finot est au centre : pixel central blanc/clair du disque, jamais le fond du modèle Capacitor.
- T('Icônes (5 densités, tailles exactes, opaques au centre, premier plan transparent en bordure) et splash Finot (#F4F1FF)',!bad.length,bad.slice(0,4).join(' | '));
+ T('Icônes (5 densités, tailles exactes, opaques au centre, premier plan transparent en bordure) et splash Finot (#FFF6E8)',!bad.length,bad.slice(0,4).join(' | '));
  // Icône (02/11/2026) : fond blanc, Finot orange. Grille 10 × 10 sur le premier plan xxxhdpi : une part franchement orange parmi les pixels opaques.
  const N=30,grid=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++)grid.push([(i+.5)/N,(j+.5)/N]);
  const fgx=await px(A('app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png'),grid);

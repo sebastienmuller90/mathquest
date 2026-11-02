@@ -1,0 +1,24 @@
+name: Android splash identity
+
+on:
+  push:
+    branches: ['chatgpt/android-splash-finot-identity']
+  pull_request:
+    paths:
+      - 'android/app/src/main/res/**'
+      - 'tests/android-splash-identity.test.js'
+      - '.github/workflows/android-splash-identity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  splash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Vérifier le splash Finot
+        run: node tests/android-splash-identity.test.js
