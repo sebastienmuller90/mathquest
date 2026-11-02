@@ -1,8 +1,9 @@
 # Finot Académie — Politique de confidentialité (BROUILLON, non publié)
 
 > **Statut : brouillon à compléter par l'éditeur avant publication.**
-> Vérifié le **02/11/2026** contre `main@ecc99323915bfe17ff4267e8ea0d2bfbf0f88b78`.
-> Le nom public éditeur et l'e-mail de contact sont maintenant confirmés ; l'identité légale, l'adresse postale et la date de publication restent à renseigner.
+> Vérifié le **02/11/2026** contre la V1 Android actuelle.
+> Le nom public éditeur et l'e-mail de contact sont confirmés ; l'identité légale du titulaire et la date de publication restent à renseigner.
+> L'adresse légale demandée par Google pour le compte développeur personnel reste renseignée directement dans Google Payments / Play Console et n'est pas publiée dans cette politique.
 
 Une version HTML statique prête à héberger après remplacement des derniers placeholders est disponible dans `privacy-policy-public.html`.
 
@@ -17,8 +18,7 @@ Dernière mise à jour : `[À COMPLÉTER : DATE DE PUBLICATION]`
 Finot Académie est une application éducative du CP à la 3e publiée sous le nom public **UpFactory Apps**.
 
 - **Nom public éditeur** : UpFactory Apps
-- **Responsable / identité légale** : `[À COMPLÉTER : IDENTITÉ LÉGALE OU RAISON SOCIALE]`
-- **Adresse** : `[À COMPLÉTER : ADRESSE POSTALE]`
+- **Responsable / identité légale** : `[À COMPLÉTER : IDENTITÉ LÉGALE DU TITULAIRE]`
 - **Contact confidentialité / support** : `upfactory.apps@gmail.com`
 
 ### 2. L'essentiel
@@ -68,9 +68,9 @@ Les données restent dans l'espace privé de l'application géré par Android. L
 
 Dans la version décrite ici, l'éditeur ne reçoit pas de copie des données de progression de l'enfant. Les données locales peuvent être corrigées ou supprimées depuis l'application, ou supprimées en désinstallant l'application / en effaçant ses données.
 
-Pour toute question : `upfactory.apps@gmail.com`.
+Pour toute question relative à la confidentialité ou à l'exercice de vos droits : `upfactory.apps@gmail.com`.
 
-En France, vous pouvez également consulter la Commission nationale de l'informatique et des libertés (CNIL).
+En France, vous pouvez également introduire une réclamation auprès de la Commission nationale de l'informatique et des libertés (CNIL).
 
 ### 9. Évolutions futures
 
@@ -84,7 +84,7 @@ Toute modification sera publiée à la même adresse avec une nouvelle date de m
 
 ## Mise en ligne — reste à faire par l'éditeur
 
-1. Compléter l'identité légale, l'adresse postale et la date dans `privacy-policy-public.html`.
+1. Compléter l'identité légale du titulaire et la date dans `privacy-policy-public.html`.
 2. Vérifier l'URL HTTPS publique GitHub Pages : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`.
 3. Renseigner cette URL dans Play Console seulement après vérification publique.
 4. Ajouter ensuite cette même URL dans l'espace parents de l'application.
