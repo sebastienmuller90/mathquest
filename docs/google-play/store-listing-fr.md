@@ -1,6 +1,6 @@
 # Finot Académie — Fiche Google Play (français)
 
-Textes de fiche Store prêts à copier dans Play Console, **non soumis**. Vérifiés le **02/11/2026** contre la V1 Android après fusion des PR #48 et #49. Les correctifs techniques ultérieurs qui ne changent pas les promesses produit n'imposent pas de réécriture de cette fiche.
+Textes de fiche Store prêts à copier dans Play Console, **non soumis**. Vérifiés le **02/11/2026** contre la V1 Android sur `main@03b2f1cb4b8c235c374c5be249472d310ca96525`. Les correctifs techniques ultérieurs qui ne changent pas les promesses produit n'imposent pas de réécriture de cette fiche.
 
 Limites Google Play utilisées : nom 30 caractères, description courte 80, description longue 4 000.
 
@@ -97,7 +97,7 @@ Le titre reste **Finot Académie** : ne pas ajouter de suite de mots-clés au no
 ## 8. Catégorie et coordonnées
 
 - Catégorie : **Éducation**.
-- Public : enfants scolarisés du CP à la 3e et leurs parents ; sélection exacte des tranches à confirmer dans Play Console.
+- Public cible Play Console recommandé pour le produit CP → 3e : **6–8 ans, 9–12 ans et 13–15 ans**. Ne pas cocher des tranches plus jeunes ou plus âgées uniquement pour élargir artificiellement la diffusion.
 - Nom public éditeur : **UpFactory Apps**.
 - E-mail public éditeur / support : **upfactory.apps@gmail.com**.
 - Politique de confidentialité : URL technique prévue `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — à déclarer dans Play Console seulement après remplacement des derniers placeholders juridiques et vérification publique.
