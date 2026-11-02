@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: sebastienmuller90/upfactory-publisher
+          ref: 193597252494f529b454e0a0bb03c31c18fad1ec
           token: ${{ secrets.UPFACTORY_PUBLISHER_TOKEN }}
           path: .upfactory/publisher
           persist-credentials: false
