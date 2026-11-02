@@ -38,7 +38,12 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
     T(`${lab} : vue parents crédible (réussite ≥ 70 %, programme ≥ 10 %, temps de travail non nul)`,kp.rate>=70&&kp.prog>=10&&kp.time,JSON.stringify(kp));}
    if(s.after)await p.evaluate(s.after).catch(()=>{});}
   T(`${lab} : aucune erreur JavaScript, aucune requête externe`,!errs.length&&!external.length,errs.concat(external).join(' | '));
-  await ctx.close();}}
+  await ctx.close();}
+ // Contexte de CI : Chromium sans synthèse vocale (aucun bouton audio). La dictée doit rester obtenue par la question elle-même.
+ try{const ctx=await b.newContext({viewport:{width:412,height:840}});await ctx.addInitScript(()=>{try{delete window.speechSynthesis;delete window.SpeechSynthesisUtterance;}catch(e){}});
+  const p=await ctx.newPage();await p.goto(url+'index.html',{waitUntil:'load'});await p.waitForFunction(()=>typeof S!=='undefined'&&!!document.querySelector('#pob-name'),null,{timeout:8000});
+  await p.evaluate(mod.ONBOARDING_JS);await p.evaluate(mod.SEED_JS);const s=mod.SCREENS.find(x=>x.id==='dictee');await p.evaluate(s.js);await p.waitForTimeout(400);
+  T('Sans synthèse vocale (comme la CI) : la dictée est obtenue (champ de réponse, consigne, question de dictée)',(await p.evaluate(`!!(${s.expect})`))===true&&(await p.evaluate(()=>typeof speechSynthesis))==='undefined','');await ctx.close();}catch(e){T('Sans synthèse vocale (comme la CI) : la dictée est obtenue',false,e.message);}}
  finally{await b.close();srv.close();}
  return R;}
 if(require.main===module)main(run);
