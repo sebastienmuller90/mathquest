@@ -64,4 +64,4 @@
 
 - [x] Compare branch against `main`; changes are documentation only.
 - [x] Re-read changed files for contradictions and placeholders.
-- [ ] Open a Draft PR to `main`; do not merge.
+- [x] Open Draft PR #48 to `main`; do not merge.
