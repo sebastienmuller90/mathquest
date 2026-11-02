@@ -165,6 +165,9 @@ jobs:
       - name: Suppression d’un profil — purge des copies locales
         if: matrix.browser == 'chromium'
         run: node tests/profile-delete-purge.test.js
+      - name: Captures Google Play — navigation réelle des écrans (sans émulateur)
+        if: matrix.browser == 'chromium'
+        run: node tests/store-screenshots.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js
