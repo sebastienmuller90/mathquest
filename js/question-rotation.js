@@ -31,6 +31,8 @@ function generate(cid,d,m=mode){const [ch,orig]=original(cid),b=bucket(cid,d,m),
 for(const ch of Object.values(CHMAP))if(ch&&typeof ch.g==='function'&&!ch.__mqRotationWrapped){ch.__mqOriginalGenerator=ch.g;ch.g=function(d){return generate(ch.id,d,mode);};ch.__mqRotationWrapped=true;}
 function withMode(next,fn){const prev=mode;mode=next||'practice';try{return fn();}finally{mode=prev;}}
 function resetForTests(){mem={v:1,b:{}};dirty=1;persist();}
+// Suppression d'un profil : oublie ses mémoires de tirage (clés « <profil>|… »), en mémoire et sur disque.
+function forgetProfile(id){const M=loadMem();for(const k of Object.keys(M.b))if(k.startsWith(id+'|'))delete M.b[k];dirty=1;persist();}
 window.addEventListener('pagehide',persist);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persist();});
-window.MQQuestionRotation={version:'1.2',windowHours:12,recentMax:RECENT_MAX,generate,generateSeeded,withMode,signature,resetForTests,flush:persist,get mode(){return mode;}};
+window.MQQuestionRotation={version:'1.2',windowHours:12,recentMax:RECENT_MAX,generate,generateSeeded,withMode,signature,resetForTests,forgetProfile,flush:persist,get mode(){return mode;}};
 })();

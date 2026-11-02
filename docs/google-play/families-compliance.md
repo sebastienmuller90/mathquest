@@ -44,9 +44,9 @@ Conséquence : fonctionnement **hors ligne par défaut**, contenu pédagogique e
    (`hsh()` dans `js/app-actions.js`). C'est une barrière d'usage pour enfants, pas un mécanisme d'authentification. Sans transmission
    ni sauvegarde, le risque est limité à un accès physique à l'appareil. Ne pas le présenter comme « chiffré ». Renforcement possible
    dans un chantier ultérieur (hors périmètre de la préparation Google Play).
-2. **ATTENTION 2 — Copies internes après suppression d'un profil.** `mathquest_import_backup` (après un import manuel) et
-   `mathquest_v1_backup` (migration depuis l'ancienne structure) peuvent conserver une copie d'un profil supprimé. Locales, effacées
-   à la désinstallation. Non bloquant pour Google Play ; à purger dans un correctif dédié si l'éditeur le souhaite.
+2. **Suppression d'un profil (corrigé dans la PR #46).** Supprimer un profil purge aussi ses copies locales
+   (`mathquest_import_backup`, `mathquest_v1_backup`, copies brutes `mathquest_profiles_corrupt_backup_*`, mémoire de rotation des
+   questions) ; test `tests/profile-delete-purge.test.js`. Les copies d'un autre profil restent intactes.
 3. **ATTENTION 3 — Synthèse vocale.** Voix du système Android ; une voix « réseau » choisie par l'utilisateur peut contacter un
    service tiers, hors contrôle de Finot. À mentionner dans la politique de confidentialité.
 4. **Suivi parent distant (futur).** S'il est activé un jour, il transmettra des données d'enfants à un serveur : la Politique Familles,

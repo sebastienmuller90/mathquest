@@ -54,7 +54,11 @@ function versionFromSw() {
   if (!p) fail('VERSION de sw.js illisible : ' + m);
   const [maj, min, pat] = p.slice(1).map(Number);
   if (min > 999 || pat > 999) fail('versionCode : mineur et correctif doivent rester < 1000');
-  return { swVersion: m, versionName: `${maj}.${min}.${pat}`, versionCode: maj * 1e6 + min * 1e3 + pat };   // même règle que scripts/package-www.mjs
+  // versionName = version COMMERCIALE (android/store-version.json, source unique) ; versionCode = compteur interne dérivé de VERSION (même règle que scripts/package-www.mjs)
+  let versionName;
+  try { versionName = JSON.parse(readFileSync(join(ROOT, 'android', 'store-version.json'), 'utf8')).versionName; } catch (e) { fail('android/store-version.json illisible : ' + e.message); }
+  if (typeof versionName !== 'string' || !/^\d+\.\d+\.\d+$/.test(versionName)) fail('android/store-version.json : versionName attendu au format X.Y.Z (reçu ' + JSON.stringify(versionName) + ')');
+  return { swVersion: m, versionName, versionCode: maj * 1e6 + min * 1e3 + pat };
 }
 
 // ---------- Mode --record : à lancer APRÈS avoir téléversé l'AAB dans Play Console ----------
@@ -108,6 +112,10 @@ ok(dirty ? 'arbre modifié toléré (--allow-dirty : NE PAS téléverser cet AAB
 step('3. Version');
 const ver = versionFromSw();
 const ledger = readLedger();
+const cmp = (a, b) => { const x = a.split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
+const lastName = ledger.uploaded.map(u => u.versionName).filter(Boolean).sort(cmp).pop();
+if (ledger.uploaded.some(u => u.versionName === ver.versionName)) fail(`versionName ${ver.versionName} déjà téléversé : modifier android/store-version.json`);
+if (lastName && cmp(ver.versionName, lastName) <= 0) fail(`versionName ${ver.versionName} <= dernier téléversé (${lastName}) : la version commerciale doit augmenter`);
 const max = Math.max(0, ...ledger.uploaded.map(u => u.versionCode));
 if (ledger.uploaded.some(u => u.versionCode === ver.versionCode)) fail(`versionCode ${ver.versionCode} déjà téléversé : incrémenter VERSION dans sw.js`);
 if (ver.versionCode <= max) fail(`versionCode ${ver.versionCode} <= dernier téléversé (${max}) : un versionCode ne doit jamais redescendre`);
@@ -171,6 +179,9 @@ if (target < 36) fail('targetSdkVersion ' + target + ' < 36');
 ok('targetSdkVersion ' + target);
 const mv = (man.match(/android:versionCode="(\d+)"/) || [])[1];
 if (+mv !== ver.versionCode) fail(`versionCode du manifeste (${mv}) différent de sw.js (${ver.versionCode})`);
+const mn = (man.match(/android:versionName="([^"]+)"/) || [])[1];
+if (mn !== ver.versionName) fail(`versionName du manifeste (${mn}) différent de android/store-version.json (${ver.versionName})`);
+ok(`versionName ${mn}, versionCode ${mv} dans le manifeste fusionné`);
 const perms = [...man.matchAll(/<uses-permission[^>]*android:name="([^"]+)"/g)].map(m => m[1]);
 const bad = perms.filter(p => !ALLOWED_PERMS.has(p));
 if (bad.length) fail('permission(s) non prévue(s) : ' + bad.join(', '));

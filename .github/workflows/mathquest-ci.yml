@@ -162,6 +162,9 @@ jobs:
       - name: Police système agrandie — barre d’onglets entière et touchable
         if: matrix.browser == 'chromium'
         run: node tests/large-font-tabs.test.js
+      - name: Suppression d’un profil — purge des copies locales
+        if: matrix.browser == 'chromium'
+        run: node tests/profile-delete-purge.test.js
       - name: Défis en famille
         if: matrix.browser == 'chromium'
         run: node tests/family-challenge.test.js

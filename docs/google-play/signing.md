@@ -83,7 +83,7 @@ permissions). Le dossier `artifacts\` n'est pas versionné.
 ## 5. Vérifier une signature à la main (facultatif)
 
 ```
-"%JAVA_HOME%\bin\jarsigner" -verify artifacts\google-play\finot-academie-8.75.6-8075006.aab
+"%JAVA_HOME%\bin\jarsigner" -verify artifacts\google-play\finot-academie-1.0.0-8075006.aab
 ```
 
 ## 6. Ce qu'il ne faut jamais faire

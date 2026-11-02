@@ -59,14 +59,12 @@ Nous recommandons aux parents de choisir un surnom plutôt qu'un nom complet.
 ### 6. Conservation et suppression
 
 - Les données sont conservées **uniquement sur l'appareil**, tant que l'application est installée.
-- **Supprimer un profil** : espace de choix des profils → supprimer (confirmation et code parent demandés).
+- **Supprimer un profil** : espace de choix des profils → supprimer (confirmation et code parent demandés). Cela supprime le profil
+  **et les copies locales qui lui sont associées** (progression, copies de sécurité créées lors d'un import ou d'une migration,
+  mémoire des questions déjà proposées). Les autres profils ne sont pas touchés.
 - **Tout effacer** : désinstaller l'application, ou Réglages Android → Applications → Finot Académie → Stockage → Effacer les données.
 - Finot Académie n'effectue **aucune sauvegarde cloud** et n'autorise pas le transfert automatique vers un autre appareil ;
   une réinstallation repart de zéro. Le parent peut exporter / importer volontairement une progression depuis l'espace parents.
-
-> Note pour l'éditeur : après un import manuel ou une migration depuis une ancienne version, une copie de sécurité locale peut subsister
-> après la suppression d'un profil ; elle disparaît à la désinstallation. Cette phrase ne doit pas figurer dans la version publique
-> si un correctif de purge est livré avant la publication.
 
 ### 7. Sécurité
 

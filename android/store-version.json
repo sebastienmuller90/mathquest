@@ -1,0 +1,4 @@
+{
+  "_commentaire": "Source unique de la version COMMERCIALE Android (versionName visible dans Google Play). Le versionCode reste un compteur interne dérivé de VERSION dans sw.js (major*1e6 + minor*1e3 + patch) : il ne doit jamais redescendre. Pour publier 1.0.1, 1.1.0, 2.0.0… modifier seulement versionName ici ET incrémenter VERSION dans sw.js (déjà obligatoire à chaque changement).",
+  "versionName": "1.0.0"
+}

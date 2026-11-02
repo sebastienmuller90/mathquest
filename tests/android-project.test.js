@@ -24,6 +24,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Identifiants : release = fr.finot.academie par défaut ; debug = fr.finot.academie.dev (suffixe .dev), installable à côté de la production ; un id explicite (finotAppId) reste prioritaire',/\?:\s*'fr\.finot\.academie'\)\.toString\(\)/.test(g)&&/finotAppIdExplicit/.test(g)&&/debug\s*\{[^}]*applicationIdSuffix\s+'\.dev'/.test(g),'');
  T('Release : explicitement non débogable ; aucun mode débogable dans le fichier',/release\s*\{[\s\S]*?debuggable\s+false/.test(g)&&!/debuggable\s+true/.test(g),'');
  T('versionCode / versionName lus dans finot-package.json embarqué (jamais codés en dur)',/finot-package\.json/.test(g)&&/versionCode\s+finot\.versionCode/.test(g)&&/versionName\s+finot\.versionName/.test(g)&&!/versionCode\s+\d/.test(g),'');
+ const sv=(()=>{try{return JSON.parse(read(path.join(ROOT,'android','store-version.json'))).versionName;}catch(e){return null;}})();
+ T('Version commerciale : source unique android/store-version.json (versionName X.Y.Z) ; le versionCode reste dérivé de VERSION (sw.js), jamais du versionName',/^\d+\.\d+\.\d+$/.test(String(sv))&&/store-version\.json/.test(read(path.join(ROOT,'scripts','package-www.mjs')))&&/maj\*1e6\+min\*1e3\+pat/.test(read(path.join(ROOT,'scripts','package-www.mjs'))),String(sv));
  T('Signature : uniquement par variables d’environnement (FINOT_UPLOAD_*), aucun mot de passe ni chemin de clé dans Git',/System\.getenv\('FINOT_UPLOAD_KEYSTORE'\)/.test(g)&&!/storePassword\s+["']/.test(g)&&!/keyPassword\s+["']/.test(g),'');
  T('Aucun service Google (Firebase, google-services) : pas de SDK de suivi',!/google-services|gms/.test(g+root),'');
 

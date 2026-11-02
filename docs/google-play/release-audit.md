@@ -17,7 +17,7 @@ sur la documentation. Les chiffres cités proviennent du manifeste fusionné rel
 | Plugins natifs | `@capacitor/app` 8.1.2, `@capacitor-community/text-to-speech` 8.0.2 | `android/app/capacitor.build.gradle` |
 | Android Gradle Plugin / Gradle | 8.13.0 / 8.14.3 | `android/build.gradle`, `gradle-wrapper.properties` |
 | JDK de build | 21 (Temurin) ; JBR 25 fait échouer Gradle | essais de build |
-| `versionName` / `versionCode` | `8.75.6` / `8075006` | manifeste fusionné (voir §3) |
+| `versionName` / `versionCode` | `1.0.0` / `8075006` | manifeste fusionné (voir §3) |
 | Débogable | **non** (release) ; oui en debug (normal) | pas de `android:debuggable` dans le manifeste release + `debuggable false` explicite |
 | Sauvegarde | `allowBackup="false"`, `fullBackupContent="false"`, `dataExtractionRules` excluant cloud **et** transfert d'appareil | manifeste |
 | Trafic en clair | interdit (`cleartextTrafficPermitted="false"`) ; aucun `usesCleartextTraffic` | `network_security_config.xml` |
@@ -46,33 +46,40 @@ Décision préparée dans cette branche : **`fr.finot.academie`** devient l'iden
 | Documentation | `docs/multistore-*.md`, `docs/store-release-checklist*.md`, `docs/android-permissions-matrix.md` citent encore `.dev` comme « package technique » : historiques, laissés intacts ; le présent dossier fait foi pour Google Play | noté |
 | Irréversibilité | **un identifiant publié sur Google Play est définitif** : à confirmer avant la première création de l'application dans Play Console | HUMAN ACTION |
 
-## 3. Version de première release
+## 3. Version de première release (versionName commercial découplé)
 
-Convention **déjà établie et testée** dans le dépôt, conservée :
+Deux nombres, deux sources, qui ne dépendent plus l'un de l'autre :
 
-- `versionName` = les trois premiers nombres de `VERSION` dans `sw.js` (aujourd'hui `8.75.6-…` → `8.75.6`) ;
-- `versionCode` = `major × 1 000 000 + minor × 1 000 + patch` (aujourd'hui **8 075 006**) ;
-- calculé par `scripts/package-www.mjs` → `www/finot-package.json` → lu par Gradle ; jamais codé en dur (test `tests/android-project.test.js`).
+| Nombre | Rôle | Source de vérité | Valeur actuelle |
+|---|---|---|---|
+| `versionName` | version **commerciale**, visible dans Google Play | `android/store-version.json` (champ `versionName`, format `X.Y.Z`) | **1.0.0** |
+| `versionCode` | compteur **interne**, strictement croissant, jamais affiché | dérivé de `VERSION` dans `sw.js` : `major × 1 000 000 + minor × 1 000 + patch` (règle inchangée) | **8 075 006** |
 
-Pourquoi ne pas passer à `1.0.0 / 1` : la version Android est liée au paquet web embarqué et au cache du service worker ; la
-découpler créerait un second compteur à tenir à la main et un risque de régression du `versionCode`. La règle actuelle est
-strictement croissante tant que `VERSION` augmente (obligation déjà inscrite dans `CLAUDE.md`), sans compteur manuel.
-La limite Google Play (2 100 000 000) est loin : 8 075 006 → jusqu'à la version majeure 2099.
+Chaîne : `scripts/package-www.mjs` lit les deux sources → `www/finot-package.json` → `app/build.gradle` (lecture seule, rien en dur) →
+manifeste Android. Tests : `tests/mobile-package.test.js`, `tests/android-project.test.js`, `tests/google-play-release.test.js`.
 
-| `VERSION` (sw.js) | versionName | versionCode |
-|---|---|---|
-| `8.75.6-…` (état actuel) | 8.75.6 | 8075006 |
-| `8.75.7-…` | 8.75.7 | 8075007 |
-| `8.76.0-…` | 8.76.0 | 8076000 |
-| `9.0.0-…` | 9.0.0 | 9000000 |
+Pourquoi le `versionCode` n'est pas remis à 1 : il reste dérivé de `VERSION`, qui doit déjà augmenter à chaque changement de fichier mis
+en cache (règle de `CLAUDE.md`). Il ne peut donc pas régresser, sans compteur manuel supplémentaire. Limite Google Play :
+2 100 000 000, soit la version interne majeure 2099. Le `versionName` peut changer librement (1.0.1, 1.1.0, 2.0.0…) sans toucher au compteur.
 
-Mécanisme anti-réutilisation (ajouté) : `docs/google-play/version-ledger.json` liste les `versionCode` réellement téléversés ; le
-script de release **refuse** un code déjà présent ou inférieur au dernier ; après un téléversement manuel,
-`tools\build-google-play-release.cmd --record <piste>` l'enregistre.
+**Procédure pour une nouvelle release Google Play** (les deux gestes sont obligatoires) :
+1. incrémenter le **numéro** de `VERSION` dans `sw.js` (ex. `8.75.6-…` → `8.75.7-…`) : le `versionCode` augmente ;
+2. modifier `versionName` dans `android/store-version.json` (ex. `1.0.0` → `1.0.1`).
 
-> À DÉCIDER AVANT PUBLICATION : le nom de version visible dans Play Store sera « 8.75.6 ». Si l'éditeur préfère un nom public « 1.0.0 »,
-> c'est un chantier distinct (découpler `versionName` de `sw.js`, tout en gardant un `versionCode` croissant ≥ 8 075 006 ; on ne peut
-> pas repartir à 1 une fois un code supérieur téléversé).
+| Release | versionName (store-version.json) | VERSION (sw.js) | versionCode |
+|---|---|---|---|
+| première (état actuel) | 1.0.0 | `8.75.6-…` | 8075006 |
+| correctif | 1.0.1 | `8.75.7-…` | 8075007 |
+| nouvelle fonctionnalité | 1.1.0 | `8.76.0-…` | 8076000 |
+| version majeure | 2.0.0 | `9.0.0-…` | 9000000 |
+
+Mécanisme anti-réutilisation : `docs/google-play/version-ledger.json` liste les versions réellement téléversées. Le script de
+release **refuse** un `versionCode` déjà présent ou inférieur au dernier, et un `versionName` déjà publié ou non supérieur au
+dernier ; après un téléversement manuel, `tools\build-google-play-release.cmd --record <piste>` l'enregistre.
+
+Note : le suffixe de `VERSION` (description, date) change le cache du service worker sans changer le `versionCode` ; c'est ce qui permet de
+corriger du code avant le premier téléversement en gardant 8 075 006. Après un téléversement, tout nouveau téléversement exige un
+nouveau numéro.
 
 ## 4. Manifeste fusionné release — contrôle
 
@@ -109,13 +116,13 @@ Aucune. Pas de Google Play services, Firebase, AdMob, Billing, RevenueCat, Sentr
 
 | Action | Effet vérifié dans le code |
 |---|---|
-| Supprimer un profil (confirmation + code parent) | `deleteProfile()` (`js/app-state.js`) retire le profil de `PDB`, enregistre ; impossible de supprimer le dernier profil |
+| Supprimer un profil (confirmation + code parent) | `deleteProfile()` (`js/app-state.js`) retire le profil de `PDB`, enregistre, puis appelle `purgeProfileCopies()` ; impossible de supprimer le dernier profil |
 | Désinstaller l'application | le stockage privé de l'app (WebView `localStorage`) est supprimé par Android |
 | Effacer les données (Réglages Android → Stockage) | idem |
 | Réinstallation | repart à zéro : **aucune restauration automatique** (`allowBackup=false`, transfert désactivé) |
 | Suivi distant | désactivé ; s'il l'était un jour, `syncdelete` supprime côté serveur (à retester avant activation) |
 
-Écart connu (non bloquant, local) : `mathquest_import_backup` et `mathquest_v1_backup` ne sont pas purgées avec un profil supprimé.
+Les copies locales du profil sont purgées avec lui (corrigé dans cette PR, test `tests/profile-delete-purge.test.js`) : `mathquest_import_backup`, `mathquest_v1_backup`, copies brutes `mathquest_profiles_corrupt_backup_*` et mémoire de rotation des questions (`mathquest_question_rotation_v1`). Les copies d'un autre profil sont conservées ; une copie illisible est supprimée par prudence. `mathquest_v1` (miroir du profil actif) est réécrit avec le profil actif restant.
 
 Architecture : **local-first, sans compte serveur**. Aucun système de compte cloud n'est créé pour Google Play ; l'exigence
 « suppression de compte » ne s'applique pas (pas de compte).

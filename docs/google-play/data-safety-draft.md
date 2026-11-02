@@ -93,8 +93,10 @@ La liste est confirmée par le fichier généré `android/app/capacitor.build.gr
 3. **Code parent** : stocké localement sous forme d'empreinte non cryptographique (32 bits, `hsh()` dans `js/app-actions.js`). C'est
    une barrière d'usage pour enfants, pas une authentification. Aucune transmission ; la sauvegarde Android est désactivée. Ne pas
    décrire ce code comme « chiffré » dans la fiche ou la politique.
-4. **Copies de sécurité internes** : `mathquest_import_backup` (après un import manuel) et `mathquest_v1_backup` (migration depuis
-   l'ancienne structure) ne sont pas purgées par la suppression d'un profil. Elles restent locales et disparaissent à la désinstallation.
+4. **Suppression d'un profil = suppression des copies locales** (vérifié par `tests/profile-delete-purge.test.js`) : en plus du profil,
+   `deleteProfile()` purge les copies de sécurité qui le contiennent (`mathquest_import_backup`, `mathquest_v1_backup`, copies brutes
+   `mathquest_profiles_corrupt_backup_*`) et sa mémoire de rotation des questions. Les copies d'un autre profil sont conservées. En
+   cas de doute (copie illisible), elle est supprimée. Le miroir `mathquest_v1` du profil actif est réécrit avec le nouveau profil actif.
 
 ## 6. Conditions qui invalident ce brouillon
 

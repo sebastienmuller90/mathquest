@@ -16,6 +16,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const sw=(read('sw.js').match(/const VERSION='([^']+)'/)||[])[1]||'';const p=(sw.match(/^(\d+)\.(\d+)\.(\d+)/)||[]).slice(1).map(Number);
  const code=p.length?p[0]*1e6+p[1]*1e3+p[2]:0;
  T('Registre des versionCode : JSON valide, sans doublon, strictement croissant, inférieur ou égal au versionCode courant de sw.js',Array.isArray(ledger.uploaded)&&new Set(codes).size===codes.length&&codes.every((c,i)=>i===0||c>codes[i-1])&&codes.every(c=>c<=code),JSON.stringify({code,codes}));
+ const sv=(()=>{try{return JSON.parse(read('android/store-version.json')).versionName;}catch(e){return null;}})();
+ const lastName=((ledger.uploaded||[]).map(u=>u.versionName).filter(Boolean).pop())||null;
+ T('Version commerciale : android/store-version.json au format X.Y.Z, cité par le script de release, strictement supérieure aux versions déjà téléversées',/^\d+\.\d+\.\d+$/.test(String(sv))&&/store-version\.json/.test(read('tools/google-play-release.mjs'))&&(!lastName||sv.split('.').map(Number).join('.')!==lastName),JSON.stringify({sv,lastName}));
  T('versionCode courant : calculé comme scripts/package-www.mjs (major·1e6 + minor·1e3 + patch), < 2 100 000 000 (limite Google Play)',code>0&&code<2100000000&&/maj\*1e6\+min\*1e3\+pat/.test(read('scripts/package-www.mjs')),String(code));
  // script de release
  const s=read('tools/google-play-release.mjs'),cmd=read('tools/build-google-play-release.cmd'),key=read('tools/create-upload-key.cmd');

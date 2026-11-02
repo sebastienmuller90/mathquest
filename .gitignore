@@ -145,6 +145,7 @@
 !/tools/build-google-play-release.cmd
 !/tools/create-upload-key.cmd
 !/tests/google-play-release.test.js
+!/tests/profile-delete-purge.test.js
 # Garde-fou : clés de signature JAMAIS versionnées, même si un fichier est déposé dans un dossier autorisé ci-dessus.
 *.jks
 *.keystore

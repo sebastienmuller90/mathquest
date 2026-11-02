@@ -8,7 +8,7 @@ Statuts : **READY** (vérifié, rien à faire), **TODO** (faisable par le code/l
 | # | Élément | Statut | Détail |
 |---|---|---|---|
 | 1 | App ID (`fr.finot.academie`) | **READY** (dans la PR) / **HUMAN ACTION** pour confirmer | défaut des builds release ; debug `.dev` ; définitif une fois créé dans Play Console — `release-audit.md` §2 |
-| 2 | Version (`8.75.6` / `8075006`) | **READY** | convention existante conservée ; registre `version-ledger.json` + refus de réutilisation — §3 |
+| 2 | Version (`1.0.0` / `8075006`) | **READY** | `versionName` commercial dans `android/store-version.json` ; `versionCode` interne dérivé de `sw.js` ; registre `version-ledger.json` — `release-audit.md` §3 |
 | 3 | `targetSdk` ≥ 36 | **READY** | 36 vérifié dans le manifeste fusionné |
 | 4 | AAB release | **READY** (non signé) | construit, 58,0 Mo, 0 erreur lint |
 | 5 | Permissions minimales | **READY** | `INTERNET` seule ; pas de micro, pas d'`AD_ID` |
@@ -25,7 +25,7 @@ Statuts : **READY** (vérifié, rien à faire), **TODO** (faisable par le code/l
 | 16 | Icône 512 px avec alpha | **TODO** | `icon.png` est en RVB sans alpha |
 | 17 | Feature graphic 1 024 × 500 | **TODO** / **HUMAN ACTION** (validation créative) | `store-assets-checklist.md` |
 | 18 | Captures téléphone (≥ 2) et tablette | **TODO** / **HUMAN ACTION** | profil fictif, écrans listés |
-| 19 | Purge des copies internes après suppression de profil | **TODO** (facultatif) | écart local connu, non bloquant |
+| 19 | Purge des copies locales après suppression de profil | **READY** | corrigé : `tests/profile-delete-purge.test.js` |
 | 20 | Icône monochrome (Android 13+) | **TODO** (facultatif) | avertissement lint |
 
 ## B. Compte et Play Console (humain)
@@ -39,7 +39,7 @@ Statuts : **READY** (vérifié, rien à faire), **TODO** (faisable par le code/l
 | 25 | Play App Signing | **HUMAN ACTION** | accepter lors du premier téléversement (obligatoire pour une nouvelle application) |
 | 26 | Hébergement de la politique de confidentialité (URL HTTPS publique) | **HUMAN ACTION** | `privacy-policy-draft.md` §« Mise en ligne » |
 | 27 | Déclarations : Data Safety, Public cible, Contenu, Publicités, App access | **HUMAN ACTION** | à copier depuis `data-safety-draft.md` et `play-console-answers-draft.md` |
-| 28 | Décisions « À DÉCIDER AVANT PUBLICATION » | **HUMAN ACTION** | gratuité, pays, public, Designed for Families, nom de version |
+| 28 | Décisions « À DÉCIDER AVANT PUBLICATION » | **HUMAN ACTION** | gratuité, pays, public, Designed for Families |
 | 29 | Classification du contenu (IARC) | **HUMAN ACTION** | questionnaire dans Play Console |
 
 ## C. Validation sur appareils et pistes

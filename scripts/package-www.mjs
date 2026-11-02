@@ -7,7 +7,7 @@
    puis vérifiée : chaque ressource chargée par index.html / parent.html et chaque url() des feuilles de style doit exister,
    sinon le script échoue (code 1). Le service worker n'est pas embarqué : dans l'app native, les fichiers sont déjà dans
    l'APK et js/app-pwa.js ne l'enregistre pas (couche plateforme js/platform.js).
-   Sortie reproductible : mêmes sources → mêmes octets, et un manifeste www/finot-package.json (version, versionCode,
+   Sortie reproductible : mêmes sources → mêmes octets, et un manifeste www/finot-package.json (version, versionName, versionCode,
    taille et SHA-256 de chaque fichier, empreinte globale) sans date ni chemin machine.
 
    Usage : node scripts/package-www.mjs [--out www] [--root .] [--no-git]                                                  */
@@ -48,7 +48,12 @@ function versionOf(root){const f=path.join(root,'sw.js');if(!fs.existsSync(f))fa
  const v=(fs.readFileSync(f,'utf8').match(/const VERSION='([^']+)'/)||[])[1];if(!v)fail('VERSION introuvable dans sw.js');
  const m=v.match(/^(\d+)\.(\d+)\.(\d+)-/);if(!m)fail('VERSION de sw.js hors format X.Y.Z-description-AAAA-MM-JJ : '+v);
  const [maj,min,pat]=m.slice(1).map(Number);if(min>999||pat>999)fail('versionCode : mineur et correctif doivent rester < 1000 ('+v+')');
- return {version:v,versionName:`${maj}.${min}.${pat}`,versionCode:maj*1e6+min*1e3+pat};}
+ // versionName = version COMMERCIALE (visible dans les stores), source unique : android/store-version.json.
+ // versionCode = compteur interne, strictement croissant, dérivé de VERSION (sw.js) : il ne dépend jamais du versionName.
+ const sf=path.join(root,'android','store-version.json');if(!fs.existsSync(sf))fail('fichier essentiel manquant : android/store-version.json (version commerciale Android)');
+ let sv;try{sv=JSON.parse(fs.readFileSync(sf,'utf8')).versionName;}catch(e){fail('android/store-version.json illisible : '+e.message);}
+ if(typeof sv!=='string'||!/^\d+\.\d+\.\d+$/.test(sv))fail('android/store-version.json : versionName attendu au format X.Y.Z (reçu '+JSON.stringify(sv)+')');
+ return {version:v,versionName:sv,versionCode:maj*1e6+min*1e3+pat};}
 
 function prepareOut(out,root){
  const r=path.resolve(root),o=path.resolve(out);
