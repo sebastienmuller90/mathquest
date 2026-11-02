@@ -1,0 +1,30 @@
+name: Store chat framing
+
+on:
+  push:
+    branches: ['chatgpt/store-chat-framing']
+  pull_request:
+    paths:
+      - 'tools/store-screenshots.mjs'
+      - 'tests/store-chat-framing.test.js'
+      - '.github/workflows/store-chat-framing.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  chat:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Vérifier le cadrage du chat Finot
+        env:
+          MQ_BROWSER: chromium
+          MQ_ENGINES: chromium
+        run: node tests/store-chat-framing.test.js
