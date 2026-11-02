@@ -6,8 +6,9 @@
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques.
    8.75.7 : nouveau cache pour livrer le repli TTS quand une voix native est refusée par le navigateur.
-   8.75.8 : identité PWA Finot (manifeste orange/crème, icônes Finot « any » 192/512 et « maskable » 512) à livrer aux appareils installés. */
-const VERSION='8.75.8-pwa-finot-identity-2026-11-02';
+   8.75.8 : identité PWA Finot (manifeste orange/crème, icônes Finot « any » 192/512 et « maskable » 512) à livrer aux appareils installés.
+   8.75.9 : espace Parents aligné sur la palette orange/crème Finot Académie. */
+const VERSION='8.75.9-parent-finot-identity-2026-11-02';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).

@@ -1,0 +1,24 @@
+name: Parent identity
+
+on:
+  push:
+    branches: ['chatgpt/parent-finot-identity']
+  pull_request:
+    paths:
+      - 'parent.html'
+      - 'sw.js'
+      - 'tests/parent-identity.test.js'
+      - '.github/workflows/parent-identity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: node tests/parent-identity.test.js
