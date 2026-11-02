@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Génère uniquement les splash Android de Finot Académie.
 
-Source : premiers plans Android déjà validés (PR #47+), jamais l'ancienne iconographie.
+Source canonique : premiers plans Android déjà validés (PR #47+), jamais l'ancienne iconographie.
 Ne touche à aucune icône launcher. Requiert Pillow.
 """
 from pathlib import Path
