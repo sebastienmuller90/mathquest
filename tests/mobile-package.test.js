@@ -30,8 +30,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const untrackedIn=files.filter(f=>!tracked.has(f));
  T('Uniquement des fichiers suivis par Git (aucun brouillon local embarqué)',!untrackedIn.length,untrackedIn.slice(0,10).join(' | '));
  const tops=[...new Set(files.map(f=>f.split('/')[0]))].sort();
- const allowedTop=new Set(['index.html','parent.html','manifest.webmanifest','icon.png','data','js','fonts','styles.css','pedagogy-upgrade.css','age-adaptive.css','premium-ui.css','premium-pro.css','premium-entry.css','premium-parent.css','premium-v2.css']);
- T('Racine de www/ limitée à la liste blanche (pages, manifeste, icône, styles, data, js, fonts)',tops.every(t=>allowedTop.has(t)),tops.filter(t=>!allowedTop.has(t)).join(', '));
+ const allowedTop=new Set(['index.html','parent.html','manifest.webmanifest','icon.png','icon-192.png','icon-maskable-512.png','data','js','fonts','styles.css','pedagogy-upgrade.css','age-adaptive.css','premium-ui.css','premium-pro.css','premium-entry.css','premium-parent.css','premium-v2.css']);
+ T('Racine de www/ limitée à la liste blanche (pages, manifeste, icônes, styles, data, js, fonts)',tops.every(t=>allowedTop.has(t)),tops.filter(t=>!allowedTop.has(t)).join(', '));
  T('Le service worker n’est pas embarqué dans l’app native (hors ligne natif : les fichiers sont déjà dans l’APK)',!files.includes('sw.js'));
  const appTracked=[...tracked].filter(f=>/^(data|js|fonts)\//.test(f)&&!/\.md$/i.test(f));
  const missingTracked=appTracked.filter(f=>!files.includes(f));

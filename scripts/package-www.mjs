@@ -19,7 +19,7 @@ import {fileURLToPath} from 'node:url';
 
 const GENERATOR='finot-package-www';
 // Fichiers racine de l'application publiée (miroir de la liste blanche du .gitignore, sans sw.js).
-export const ROOT_FILES=['index.html','parent.html','manifest.webmanifest','icon.png','styles.css','pedagogy-upgrade.css','age-adaptive.css',
+export const ROOT_FILES=['index.html','parent.html','manifest.webmanifest','icon.png','icon-192.png','icon-maskable-512.png','styles.css','pedagogy-upgrade.css','age-adaptive.css',
  'premium-ui.css','premium-pro.css','premium-entry.css','premium-parent.css','premium-v2.css'];
 export const DIRS=['data','js','fonts'];
 // Jamais embarqué, même suivi par Git : notes, fichiers cachés, brouillons, sources de cartes, journaux.

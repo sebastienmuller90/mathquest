@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Finot Académie — icônes et écran de démarrage Android générés depuis icon.png (31/10/2026).
 
+ATTENTION (02/11/2026) : OBSOLÈTE pour les icônes. L'identité Android actuelle (Finot sur fond blanc, couche monochrome) est versionnée
+dans android/app/src/main/res (PR #47 et suivantes) et icon.png est désormais l'icône PWA Finot (voir tools/make-pwa-icons.ps1).
+NE PAS relancer ce script : il écraserait l'identité Android validée par l'ancien violet.
+
 Reproductible : mêmes sources → mêmes fichiers. Requiert Pillow (pip install pillow). À relancer seulement si icon.png change ;
 les fichiers produits sont versionnés dans android/app/src/main/res (la CI n'a pas besoin de Python).
 
