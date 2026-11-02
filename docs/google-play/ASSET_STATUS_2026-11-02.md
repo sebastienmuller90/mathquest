@@ -18,16 +18,19 @@ Ce fichier distingue les éléments intégrés au dépôt, les binaires prépar�
 
 ## Icône Google Play
 
-- **READY hors dépôt** : `finot_academie_google_play_icon_512.png`.
-- Contrôlée : 512×512, PNG RGBA/32 bits, 340 971 octets, fond blanc, sans coins pré-arrondis.
-- Ce binaire n'est pas versionné dans Git ; conserver l'original validé pour le téléversement Play Console.
+- **READY hors dépôt** : `finot_google_play_assets/finot_academie_google_play_icon_512.png`.
+- Contrôlée : 512×512, PNG RGBA/32 bits, 340 971 octets, fond blanc opaque, sans coins pré-arrondis.
+- SHA-256 : `0bd18a668a71dabefd079cf47db78fa6008effa994c587b41f7e2eb0f2288be2`.
+- Ce binaire n'est pas versionné dans Git ; conserver exactement cet original validé pour le téléversement Play Console.
 
 ## Feature graphic
 
 - Brief final : `docs/google-play/feature-graphic-brief.md`.
-- Format attendu : 1 024×500, JPEG ou PNG 24 bits sans alpha.
-- Une éventuelle candidate préparée hors dépôt n'est pas auditable depuis Git : **ne pas la considérer comme asset final tant que le fichier exact n'a pas été contrôlé visuellement et techniquement**.
-- Action restante : choisir/valider le fichier final, contrôler dimensions/mode couleur/absence d'alpha, puis l'archiver avec les autres assets de publication.
+- Candidate réelle contrôlée hors dépôt : `finot_academie_feature_graphic_1024x500.png`.
+- Contrôle technique PASS : 1 024×500, PNG RGB 24 bits sans alpha, 226 297 octets.
+- SHA-256 : `38d9e4f4547b100d0b3aafd90436fb8db334da1668f1660d440f1e5ef8401f7a`.
+- Contrôle visuel : identité Finot cohérente, aucun élément trompeur ; **bloc du nom trop proche du bord gauche pour le considérer comme composition finale optimale**, car Google peut recadrer la feature graphic selon le contexte d'affichage.
+- État : **candidate techniquement conforme, optimisation/validation safe-zone encore requise avant téléversement final**.
 
 ## Captures Google Play
 
@@ -75,7 +78,7 @@ Restent avant de déclarer la privacy comme définitive :
 3. attendre une CI complète verte sur le `main` consolidé ;
 4. régénérer les captures téléphone/tablette ;
 5. sélectionner les 8 visuels Store ;
-6. valider la Feature Graphic finale ;
+6. optimiser/valider la Feature Graphic finale ;
 7. finaliser/publier la privacy ;
 8. effectuer la recette sur vrai appareil ;
 9. créer la clé d'upload et l'AAB production signé ;
