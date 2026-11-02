@@ -1,6 +1,7 @@
 const fs=require('fs'),path=require('path');
 
 const ALWAYS_SKIP=new Set(['node_modules','.git']);
+// `artifacts/` et les worktrees `_wt-*` sont des sorties locales racine, jamais des fichiers produit à auditer.
 const isGeneratedRootDir=(dir,name)=>dir===''&&(name==='artifacts'||/^_wt-/.test(name));
 
 function walkRepoFiles(root,dir='',out=[]){
