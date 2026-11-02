@@ -79,7 +79,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  fs.writeFileSync(victim,keep);({srv,url}=await serve(PORT,site,{cacheControl:'max-age=600'}));
  await p.goto(url+'index.html',{waitUntil:'load'});await p.waitForTimeout(500);
  await p.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();await r.update();});
- await p.evaluate(async v=>{const t0=Date.now();while(Date.now()-t0<30000){const ks=await caches.keys();if(ks.some(k=>k.includes(v))&&ks.filter(k=>k.startsWith('mathquest-')).length===1)return;await new Promise(r=>setTimeout(r,250));}},V3);
+ // Le cache V3 peut exister avant la fin de l'activation et de clients.claim(). On attend donc
+ // explicitement que le contrôleur de CETTE page réponde V3, sans délai fixe arbitraire.
+ await p.evaluate(async v=>{const versionOfController=()=>new Promise(res=>{const ctl=navigator.serviceWorker.controller;if(!ctl)return res(null);const ch=new MessageChannel();let done=false;const finish=x=>{if(done)return;done=true;res(x);};ch.port1.onmessage=e=>finish(e.data&&e.data.version);ctl.postMessage({type:'version'},[ch.port2]);setTimeout(()=>finish(null),1000);});const t0=Date.now();while(Date.now()-t0<30000){const ks=await caches.keys(),r=await navigator.serviceWorker.getRegistration(),current=await versionOfController();if(ks.some(k=>k.includes(v))&&ks.filter(k=>k.startsWith('mathquest-')).length===1&&r.active&&!r.installing&&!r.waiting&&current===v)return;await new Promise(r=>setTimeout(r,250));}},V3);
  const ks3=await p.evaluate(async()=>(await caches.keys()).sort());const vFix=await verOf();
  T('Mise à jour réparée : la version suivante s’installe, un seul cache « mathquest- » (le reste, y compris le cache partiel de la tentative cassée, est supprimé)',ks3.filter(k=>k.startsWith('mathquest-')).length===1&&ks3.some(k=>k.includes(V3))&&vFix===V3&&ks3.includes('mqimg-lecons-v1'),ks3.join(', ')+' / '+vFix);
  // aucune boucle de rechargement après activation (la page reste stable)
