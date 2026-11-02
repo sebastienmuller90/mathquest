@@ -1,0 +1,37 @@
+name: TEMP fix store chat framing
+
+on:
+  push:
+    branches: ['chatgpt/store-chat-framing']
+    paths:
+      - '.github/workflows/_tmp-fix-store-chat-framing.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: chatgpt/store-chat-framing
+      - name: Corriger le positionnement du chat Store
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('tools/store-screenshots.mjs')
+          s=p.read_text(encoding='utf-8')
+          old="const c=document.getElementById('fchBody');const u=c&&c.querySelector('.fch-msg.you');if(c&&u)c.scrollTop=Math.max(0,u.offsetTop-c.offsetTop-10);return !!b})()"
+          new="const c=document.getElementById('fchBody');const u=c&&c.querySelector('.fch-msg.you');if(c&&u){const br=c.getBoundingClientRect(),ur=u.getBoundingClientRect(),target=c.scrollTop+(ur.top-br.top),max=Math.max(0,c.scrollHeight-c.clientHeight);c.scrollTop=max>=target?target:0;}return !!b})()"
+          if old not in s:
+              raise SystemExit('snippet attendu introuvable')
+          p.write_text(s.replace(old,new),encoding='utf-8')
+          Path('.github/workflows/_tmp-fix-store-chat-framing.yml').unlink()
+      - name: Committer le correctif
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/store-screenshots.mjs .github/workflows/_tmp-fix-store-chat-framing.yml
+          git commit -m "fix: cadrer le chat Finot sans bulle coupée"
+          git push origin HEAD:chatgpt/store-chat-framing
