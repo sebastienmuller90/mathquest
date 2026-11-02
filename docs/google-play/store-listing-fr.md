@@ -1,6 +1,6 @@
 # Finot Académie — Fiche Google Play (français)
 
-Brouillon de textes, **non soumis**. Vérifié le **02/11/2026** contre la version Android V1 `main@ecc99323915bfe17ff4267e8ea0d2bfbf0f88b78`.
+Textes de fiche Store prêts à copier dans Play Console, **non soumis**. Vérifiés le **02/11/2026** contre la V1 Android après fusion des PR #48 et #49. Les correctifs techniques ultérieurs qui ne changent pas les promesses produit n'imposent pas de réécriture de cette fiche.
 
 Limites Google Play utilisées : nom 30 caractères, description courte 80, description longue 4 000.
 
@@ -8,13 +8,15 @@ Limites Google Play utilisées : nom 30 caractères, description courte 80, desc
 
 `Finot Académie`
 
+14 caractères.
+
 ## 2. Description courte
 
 ```text
 Cours, exercices et révisions du CP à la 3e, sans pub, même hors connexion.
 ```
 
-74 caractères.
+75 caractères.
 
 ## 3. Description longue
 
@@ -44,6 +46,8 @@ VOTRE VIE PRIVÉE
 
 Finot Académie s'appuie sur les programmes de l'école et du collège en France. Application indépendante : elle n'est ni éditée ni cautionnée par le ministère de l'Éducation nationale.
 ```
+
+1 564 caractères, donc sous la limite de 4 000.
 
 ## 4. Proposition de valeur pour les visuels
 
@@ -97,3 +101,5 @@ Le titre reste **Finot Académie** : ne pas ajouter de suite de mots-clés au no
 - Coordonnées : `[À COMPLÉTER : E-MAIL PUBLIC ÉDITEUR]`.
 - Politique de confidentialité : `[À COMPLÉTER : URL HTTPS PUBLIQUE]`.
 - Pays/régions : `[À DÉCIDER AVANT PUBLICATION]`.
+
+Les trois éléments ci-dessus restent des décisions éditeur et sont regroupés dans `docs/google-play/final-human-inputs.md`.
