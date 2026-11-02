@@ -144,6 +144,7 @@
 !/tools/google-play-release.mjs
 !/tools/build-google-play-release.cmd
 !/tools/create-upload-key.cmd
+!/tools/make-monochrome-icon.ps1
 !/tests/google-play-release.test.js
 !/tests/profile-delete-purge.test.js
 # Garde-fou : clés de signature JAMAIS versionnées, même si un fichier est déposé dans un dossier autorisé ci-dessus.
