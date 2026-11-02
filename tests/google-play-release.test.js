@@ -44,9 +44,9 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const pa=read('docs/google-play/play-console-answers-draft.md');
  T('Réponses Play Console : chaque décision commerciale ou juridique ouverte est marquée « À DÉCIDER AVANT PUBLICATION »',(pa.match(/À DÉCIDER AVANT PUBLICATION/g)||[]).length>=4,String((pa.match(/À DÉCIDER AVANT PUBLICATION/g)||[]).length));
  const pp=read('docs/google-play/privacy-policy-draft.md'),pub=read('docs/google-play/privacy-policy-public.html'),sl=read('docs/google-play/store-listing-fr.md');
- T('Google Play : l’identité publique confirmée est figée et les données juridiques restantes gardent leurs placeholders',
-  /UpFactory Apps/.test(pp)&&/upfactory\.apps@gmail\.com/i.test(pp)&&/\[À COMPLÉTER[^\]]*ADRESSE POSTALE[^\]]*\]/i.test(pp)&&/\[À COMPLÉTER[^\]]*DATE DE PUBLICATION[^\]]*\]/i.test(pp)&&
-  /UpFactory Apps/.test(pub)&&/upfactory\.apps@gmail\.com/i.test(pub)&&/\[ADRESSE POSTALE\]/.test(pub)&&/\[DATE DE PUBLICATION\]/.test(pub)&&
+ T('Google Play : identité publique/contact figés ; seuls identité légale et date restent à compléter dans la privacy publique',
+  /UpFactory Apps/.test(pp)&&/upfactory\.apps@gmail\.com/i.test(pp)&&/IDENTITÉ LÉGALE DU TITULAIRE/i.test(pp)&&/DATE DE PUBLICATION/i.test(pp)&&!/\[À COMPLÉTER[^\]]*ADRESSE POSTALE/i.test(pp)&&
+  /UpFactory Apps/.test(pub)&&/upfactory\.apps@gmail\.com/i.test(pub)&&/IDENTITÉ LÉGALE DU TITULAIRE/i.test(pub)&&/\[DATE DE PUBLICATION\]/.test(pub)&&!/\[À COMPLÉTER[^\]]*ADRESSE POSTALE/i.test(pub)&&
   /upfactory\.apps@gmail\.com/i.test(sl)&&/\[À COMPLÉTER : URL HTTPS PUBLIQUE\]/.test(sl),'');
  T('Identifiant : le candidat de production fr.finot.academie est documenté (audit, checklist) et le suffixe .dev du debug aussi',/fr\.finot\.academie/.test(read('docs/google-play/release-audit.md'))&&/\.dev/.test(read('docs/google-play/release-audit.md'))&&/App ID/i.test(read('docs/google-play/release-checklist.md')),'');
  return R;}
