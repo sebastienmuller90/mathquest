@@ -1,4 +1,4 @@
-/* Finot Académie — Moteur audio centralisé (synthèse vocale + reconnaissance), V8.13.
+/* Finot Académie — Moteur audio centralisé (synthèse vocale + reconnaissance), V8.14.
    Toutes les lectures passent par window.MQAudio.
    Principes :
    - chaque segment a une langue (fr, en, it) → locale BCP-47 (fr-FR, en-GB, it-IT) ;
@@ -165,7 +165,7 @@ function speak(segs,opt={}){const rep={spoken:[],skipped:[]};const s=synth(),U=U
     if(pv.status==='unavailable'){rep.skipped.push({...sg,why:'aucune voix '+(LANG_NAMES[la]||la)});if(!st.unavailable[la]){st.unavailable[la]=1;const cb=opt.onunavailable||st.onUnavailable;if(cb)try{cb(la);}catch(e){}}return;}
     const text=spokenFor(sg.t,sg.type||'phrase',la);if(!text)return;
     let u;try{u=new U(text);}catch(e){rep.skipped.push({...sg,why:'erreur'});return;}
-    u.lang=pv.locale;if(pv.voice)u.voice=pv.voice;u.rate=sg.rate||(finot?pv.rate:rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type}));u.pitch=finot?pv.pitch:1;
+    u.lang=pv.locale;if(pv.voice)try{u.voice=pv.voice;}catch(e){}u.rate=sg.rate||(finot?pv.rate:rateFor(la,{slow:opt.slow,young:opt.young,type:sg.type}));u.pitch=finot?pv.pitch:1;
     rep.spoken.push({t:text,l:la,locale:pv.locale,voice:pv.voice?pv.voice.name:'(moteur du navigateur)',status:pv.status,rate:u.rate,pitch:u.pitch});utts.push([u,idx]);});
   if(!utts.length){if(opt.onend)opt.onend(rep);return rep;}
   let started=false,finished=false;const failedHere={};const finish=()=>{if(finished||g!==st.gen)return;finished=true;if(opt.onend)opt.onend(rep);};
@@ -196,7 +196,7 @@ function diagnostics(){const vs=st.voices.length?st.voices:refresh();
     chosen:Object.fromEntries(Object.keys(LOCALES).map(l=>{const p=pickVoice(l);return [l,{locale:p.locale,status:p.status,voice:p.voice?p.voice.name:null,voiceLang:p.voice?p.voice.lang:null}];}))};}
 
 init();
-root.MQAudio={version:'8.13',LOCALES,TYPES,RATES,FINOT,locale,lang2,supported,init,refresh,ready,setPrefs,pickVoice,finotVoice,voicesFor,prepare,prepareFR,prepareForeign,spokenFor,graphemeSpoken,rateFor,speak,stop,replay,speaking,recognitionLocale,createRecognizer,diagnostics,
+root.MQAudio={version:'8.14',LOCALES,TYPES,RATES,FINOT,locale,lang2,supported,init,refresh,ready,setPrefs,pickVoice,finotVoice,voicesFor,prepare,prepareFR,prepareForeign,spokenFor,graphemeSpoken,rateFor,speak,stop,replay,speaking,recognitionLocale,createRecognizer,diagnostics,
   set onUnavailable(f){st.onUnavailable=f;},get onUnavailable(){return st.onUnavailable;},
   set onFail(f){st.onFail=f;},get onFail(){return st.onFail;},_state:st};
 })(typeof window!=='undefined'?window:globalThis);
