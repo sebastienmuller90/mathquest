@@ -1,0 +1,26 @@
+name: Release scan exclusions
+
+on:
+  push:
+    branches: ['chatgpt/release-scan-generated-dirs']
+  pull_request:
+    paths:
+      - 'tests/repo-walk.js'
+      - 'tests/repo-walk.test.js'
+      - 'tests/release-perf-audit.test.js'
+      - 'tests/release-pwa-audit.test.js'
+      - '.github/workflows/repo-scan-exclusions.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Vérifier les exclusions des dossiers générés
+        run: node tests/repo-walk.test.js

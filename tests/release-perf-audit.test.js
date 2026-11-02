@@ -9,12 +9,12 @@
 const fs=require('fs'),path=require('path');
 const {serve,launchEngine,freshContext,wizard,playMission}=require('./release-lib');
 const {ROOT,swPrecache,seedProfile}=require('./lib');
+const {walkRepoFiles}=require('./repo-walk');
 
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const exists=rel=>{try{return fs.statSync(path.join(ROOT,decodeURIComponent(rel))).isFile();}catch(e){return false;}};
 const clean=u=>String(u).split('#')[0].split('?')[0].replace(/^\.\//,'');
 const external=u=>/^(https?:|data:|mailto:|tel:|blob:|\/\/)/i.test(u);
-function walk(dir,out=[]){for(const e of fs.readdirSync(path.join(ROOT,dir),{withFileTypes:true})){const rel=dir?dir+'/'+e.name:e.name;if(e.isDirectory()){if(e.name==='node_modules'||e.name==='.git')continue;walk(rel,out);}else out.push(rel);}return out;}
 
 // Compteurs d'écouteurs (uniques : fonction + capture, comme le navigateur) et de minuteries actives, installés avant tout script.
 const PATCH=()=>{
@@ -61,7 +61,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T(`Images de leçons déclarées dans data/lesson-images.js (${liN}) : aucune absente`,!liMiss.length,liMiss.slice(0,6).join(' | '));
 
  // Poids des images
- const imgFiles=walk('').filter(f=>/\.(png|jpe?g|webp|gif|svg)$/i.test(f)&&!/^(tests|docs|reports|node_modules)\//.test(f));
+ const imgFiles=walkRepoFiles(ROOT).filter(f=>/\.(png|jpe?g|webp|gif|svg)$/i.test(f)&&!/^(tests|docs|reports|node_modules)\//.test(f));
  const sizes=imgFiles.map(f=>({f,kb:Math.round(fs.statSync(path.join(ROOT,f)).size/1024)})).sort((a,b)=>b.kb-a.kb);
  const big=sizes.filter(x=>x.kb>400),huge=sizes.filter(x=>x.kb>1536);
  const total=Math.round(sizes.reduce((a,x)=>a+x.kb,0)/1024);
