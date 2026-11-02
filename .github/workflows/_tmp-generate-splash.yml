@@ -1,0 +1,43 @@
+name: TEMP generate Android splash
+
+on:
+  push:
+    branches: ['chatgpt/android-splash-finot-identity']
+    paths:
+      - 'tools/make-android-splash.py'
+      - '.github/workflows/_tmp-generate-splash.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: chatgpt/android-splash-finot-identity
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check pillow
+      - name: Générer les assets et aligner les tests existants
+        shell: python
+        run: |
+          import subprocess
+          from pathlib import Path
+          subprocess.check_call(['python','tools/make-android-splash.py'])
+          p=Path('android/app/src/main/res/values/colors.xml')
+          s=p.read_text(encoding='utf-8').replace('#F4F1FF','#FFF6E8')
+          p.write_text(s,encoding='utf-8')
+          p=Path('tests/android-project.test.js')
+          s=p.read_text(encoding='utf-8').replace('#F4F1FF','#FFF6E8').replace('244,241,255','255,246,232')
+          p.write_text(s,encoding='utf-8')
+          Path('.github/workflows/_tmp-generate-splash.yml').unlink()
+      - name: Committer le résultat reproductible
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add android/app/src/main/res tools/make-android-splash.py tests/android-project.test.js .github/workflows/_tmp-generate-splash.yml
+          git commit -m "fix: harmoniser le splash Android avec Finot"
+          git push origin HEAD:chatgpt/android-splash-finot-identity
