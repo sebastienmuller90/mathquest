@@ -1,6 +1,6 @@
 # Finot Académie — ordre de saisie Play Console
 
-Vérifié le **02/11/2026** contre l'aide officielle Google Play Console relative à **Cible et contenu** et aux **Règles pour les contenus familiaux**.
+Vérifié le **02/11/2026** contre l'aide officielle Google Play Console relative à **Cible et contenu**, aux **Règles pour les contenus familiaux** et aux exigences de test des nouveaux comptes personnels.
 
 Objectif : éviter de remplir les écrans Play Console dans le mauvais ordre ou de déclarer une audience incompatible avec le produit réel.
 
@@ -12,20 +12,27 @@ Conserver :
 
 - nom : **Finot Académie** ;
 - identifiant Android : `fr.finot.academie` ;
-- catégorie : **Éducation**.
+- catégorie : **Éducation** ;
+- nom public développeur : **UpFactory Apps** ;
+- e-mail public support/confidentialité : **upfactory.apps@gmail.com**.
 
 Ne téléverser l'AAB signé final qu'après validation du `main` final et archivage de son SHA-256.
 
-### 2. Renseigner les coordonnées éditeur et la politique de confidentialité
+### 2. Finaliser la politique de confidentialité
 
-Avant la section **Cible et contenu**, Google demande notamment que les déclarations préalables nécessaires soient renseignées, dont la politique de confidentialité.
+URL technique prévue :
 
-Bloqué tant que les valeurs publiques suivantes ne sont pas confirmées :
+`https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
 
-- nom/raison sociale ;
-- adresse postale publique ;
-- e-mail public de support/confidentialité ;
-- URL HTTPS publique de la politique de confidentialité.
+Avant de la déclarer comme politique définitive dans Play Console :
+
+- renseigner l'identité légale exacte du titulaire ;
+- fixer la date de publication ;
+- laisser GitHub Pages publier le `main` final ;
+- ouvrir l'URL sans authentification et vérifier son rendu mobile ;
+- ajouter ensuite la même URL dans l'espace Parents.
+
+L'adresse légale du compte personnel doit être renseignée dans Google Payments / Play Console lorsque Google la demande, mais elle n'est pas publiée dans la privacy uniquement pour cette raison.
 
 Voir `final-human-inputs.md`.
 
@@ -45,15 +52,19 @@ Le code Parents local ne constitue pas un compte distant et n'empêche pas l'éq
 
 ### 5. Cible et contenu
 
-Finot Académie est conçue pour des élèves du **CP à la 3e**, donc l'audience réelle inclut des enfants.
+Finot Académie est conçue pour des élèves du **CP à la 3e**.
 
-Règle Google : ne sélectionner plusieurs tranches d'âge que si l'application a réellement été conçue et rendue appropriée pour chacune d'elles. Ne pas sélectionner des tranches adultes uniquement pour élargir artificiellement la disponibilité.
+Sélection recommandée dans Play Console :
 
-La sélection exacte doit être faite dans l'interface réelle de Play Console en fonction des tranches proposées au moment de la soumission.
+- **6–8 ans** ;
+- **9–12 ans** ;
+- **13–15 ans**.
+
+Ne pas sélectionner de tranche adulte ou plus jeune uniquement pour élargir artificiellement la disponibilité.
 
 ### 6. Règles Familles
 
-Dès qu'au moins une tranche d'âge cible inclut des enfants, les **Règles pour les contenus familiaux Google Play** s'appliquent.
+Puisque les tranches cibles incluent des enfants, les **Règles pour les contenus familiaux Google Play** s'appliquent.
 
 Pour la V1 Finot :
 
@@ -90,6 +101,8 @@ Importer :
 - captures tablette retenues ;
 - notes de version : `release-notes-fr.md`.
 
+Le set commercial recommandé des captures est défini dans `store-screenshot-selection.md`.
+
 ### 10. Test interne
 
 Téléverser d'abord l'AAB signé sur la piste interne et vérifier :
@@ -102,7 +115,9 @@ Téléverser d'abord l'AAB signé sur la piste interne et vérifier :
 
 ### 11. Test fermé si le compte l'exige
 
-Si Play Console impose au compte développeur personnel le parcours de test fermé, suivre exactement les critères affichés au compte. La documentation de préparation actuelle prévoit le cas **12 testeurs inscrits en continu pendant 14 jours**, mais l'écran Play Console au moment de la soumission reste l'autorité finale.
+Pour un compte développeur **personnel créé après le 13/11/2023**, Google exige actuellement un test fermé avec au moins **12 testeurs inscrits en continu pendant au moins 14 jours** avant de pouvoir demander l'accès production.
+
+Suivre `closed-test-plan.md` et garder idéalement 15 à 18 testeurs fiables invités pour absorber les désistements. L'écran Play Console du compte au moment de la soumission reste l'autorité finale.
 
 ### 12. Demande production / production
 
@@ -119,5 +134,6 @@ Ne demander l'accès production qu'après :
 
 - Google Play Console Help — **Gérer les paramètres concernant l'audience cible et le contenu de l'application**.
 - Google Play Console Help — **Règles Google Play pour les contenus familiaux**.
+- Google Play Console Help — **App testing requirements for new personal developer accounts**.
 
 Les écrans et politiques Google peuvent évoluer ; l'interface Play Console du compte éditeur au moment du dépôt reste l'autorité finale.
