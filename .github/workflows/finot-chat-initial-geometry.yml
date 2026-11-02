@@ -1,0 +1,27 @@
+name: Finot chat initial geometry
+
+on:
+  pull_request:
+    paths:
+      - 'tests/finot-chat-initial-geometry.test.js'
+      - 'js/**'
+      - 'styles.css'
+      - 'index.html'
+      - '.github/workflows/finot-chat-initial-geometry.yml'
+  workflow_dispatch:
+
+jobs:
+  geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Installer les dépendances épinglées
+        run: npm ci
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Vérifier la géométrie initiale du chat Finot
+        run: node tests/finot-chat-initial-geometry.test.js
