@@ -5,9 +5,9 @@
    Finot, silence si le son est coupé ou si le parent a coupé la voix, choix conservé après rechargement, défi éclair
    (record), prénom absent, aucune erreur. */
 const vm=require('vm'),fs=require('fs'),path=require('path');const {ROOT,serve,launch,seedProfile}=require('./lib');
-function mk(voices){const spoken=[];const synth={getVoices:()=>voices,speak(u){spoken.push(u);setTimeout(()=>u.onend&&u.onend(),0);},cancel(){},addEventListener(){},speaking:false,pending:false};
+function mk(voices,opt={}){const spoken=[];const synth={getVoices:()=>voices,speak(u){spoken.push(u);setTimeout(()=>u.onend&&u.onend(),0);},cancel(){},addEventListener(){},speaking:false,pending:false};
   const ctx={console,Math,Date,JSON,String,Number,Array,Object,Set,Map,Error,RegExp,Promise,setTimeout,clearTimeout,parseInt,parseFloat,isFinite,isNaN,Intl};ctx.window=ctx;ctx.globalThis=ctx;
-  ctx.speechSynthesis=synth;ctx.SpeechSynthesisUtterance=function(t){this.text=t;this.lang='';this.voice=null;this.rate=1;this.pitch=1;};
+  ctx.speechSynthesis=synth;ctx.SpeechSynthesisUtterance=function(t){this.text=t;this.lang='';this.rate=1;this.pitch=1;if(opt.rejectVoice){let chosen=null;Object.defineProperty(this,'voice',{configurable:true,get(){return chosen;},set(x){if(x)throw new TypeError("Failed to set the 'voice' property on 'SpeechSynthesisUtterance': Failed to convert value to 'SpeechSynthesisVoice'.");chosen=x;}});}else this.voice=null;};
   vm.createContext(ctx);for(const f of ['data/pronunciation-lexicon.js','js/audio-engine.js'])vm.runInContext(fs.readFileSync(path.join(ROOT,f),'utf8'),ctx,{filename:f});return {A:ctx.MQAudio,spoken};}
 const v=(name,lang,o={})=>({name,lang,voiceURI:o.uri||name,localService:o.local!==false,default:!!o.def});
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,600)});
@@ -24,6 +24,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   T('Edge : voix naturelle masculine (Henri) choisie pour Finot',f.voice&&/Henri/.test(f.voice.name)&&f.male,f.voice&&f.voice.name);}
  {const {A}=mk([v('Microsoft Paul - French (France)','fr-FR')]);const f=A.finotVoice('fr');T('Seule voix disponible (même robotique) : Finot parle quand même',f.voice&&f.status==='exact',f.status);}
  {const {A}=mk([]);const f=A.finotVoice('fr');T('Aucune voix listée : moteur du navigateur, ton de Finot appliqué',!f.voice&&f.status==='engine-default'&&f.pitch>1,JSON.stringify(f));}
+ {const {A,spoken}=mk([v('Thomas','fr-FR')],{rejectVoice:true});let err=null,rep=null;try{rep=A.speak([{t:'Bonjour',l:'fr'}],{character:'finot'});}catch(e){err=e;}await new Promise(r=>setTimeout(r,20));
+  T('Voix native refusée par SpeechSynthesisUtterance : repli sur la voix moteur sans exception ni perte de lecture',!err&&spoken.length===1&&spoken[0].voice===null&&rep&&rep.spoken.length===1,JSON.stringify({err:err&&err.message,spoken:spoken.length,voice:spoken[0]&&spoken[0].voice}));}
 
  const {srv,url}=await serve();const b=await launch();const ctx=await b.newContext({viewport:{width:390,height:844}});
  await ctx.addInitScript(()=>{window.__said=[];const V=[{name:'Audrey (Premium)',lang:'fr-FR',voiceURI:'audrey',localService:true},{name:'Thomas',lang:'fr-FR',voiceURI:'thomas',localService:true}];
