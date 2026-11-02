@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "id": "fr.finot.academie",
+  "name": "Finot Académie",
+  "node": {
+    "minMajor": 22
+  },
+  "tools": [
+    {
+      "name": "node",
+      "check": "node --version"
+    },
+    {
+      "name": "git",
+      "check": "git --version"
+    },
+    {
+      "name": "java",
+      "check": "java -version"
+    }
+  ],
+  "env": [
+    {
+      "name": "UPFACTORY_ANDROID_KEYSTORE",
+      "stages": ["package"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "UPFACTORY_ANDROID_KEYSTORE_PASSWORD",
+      "stages": ["package"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "UPFACTORY_ANDROID_KEY_ALIAS",
+      "stages": ["package"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "UPFACTORY_ANDROID_KEY_PASSWORD",
+      "stages": ["package"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+      "stages": ["publish"],
+      "platforms": ["android"]
+    }
+  ],
+  "stages": {
+    "prepare": [
+      {
+        "name": "Install dependencies",
+        "command": "npm ci"
+      }
+    ],
+    "test": [
+      {
+        "name": "Google Play release audit",
+        "command": "node tests/google-play-release.test.js"
+      },
+      {
+        "name": "Android project audit",
+        "command": "node tests/android-project.test.js"
+      },
+      {
+        "name": "UpFactory integration audit",
+        "command": "node tests/upfactory-integration.test.js"
+      }
+    ],
+    "build": [
+      {
+        "name": "Package web + Capacitor",
+        "command": "npm run android:sync",
+        "platforms": ["android"]
+      }
+    ],
+    "package": [
+      {
+        "name": "Build signed AAB",
+        "command": "FINOT_UPLOAD_KEYSTORE=\"$UPFACTORY_ANDROID_KEYSTORE\" FINOT_UPLOAD_KEYSTORE_PASSWORD=\"$UPFACTORY_ANDROID_KEYSTORE_PASSWORD\" FINOT_UPLOAD_KEY_ALIAS=\"$UPFACTORY_ANDROID_KEY_ALIAS\" FINOT_UPLOAD_KEY_PASSWORD=\"$UPFACTORY_ANDROID_KEY_PASSWORD\" node tools/google-play-release.mjs --sign",
+        "platforms": ["android"],
+        "commandWindows": "set \"FINOT_UPLOAD_KEYSTORE=%UPFACTORY_ANDROID_KEYSTORE%\"&& set \"FINOT_UPLOAD_KEYSTORE_PASSWORD=%UPFACTORY_ANDROID_KEYSTORE_PASSWORD%\"&& set \"FINOT_UPLOAD_KEY_ALIAS=%UPFACTORY_ANDROID_KEY_ALIAS%\"&& set \"FINOT_UPLOAD_KEY_PASSWORD=%UPFACTORY_ANDROID_KEY_PASSWORD%\"&& node tools/google-play-release.mjs --sign"
+      }
+    ],
+    "metadata": [],
+    "screenshots": [
+      {
+        "name": "Store screenshots",
+        "command": "node tools/store-screenshots.mjs",
+        "platforms": ["android"],
+        "required": false
+      }
+    ],
+    "publish": [
+      {
+        "name": "Google Play upload",
+        "command": "bundle exec fastlane android deploy",
+        "platforms": ["android"]
+      }
+    ]
+  },
+  "artifacts": ["artifacts/google-play/*.aab"],
+  "store": {
+    "android": {
+      "packageName": "fr.finot.academie",
+      "artifact": "artifacts/google-play/*.aab",
+      "track": "internal",
+      "releaseStatus": "draft"
+    }
+  }
+}
