@@ -1,0 +1,10 @@
+const fs=require('fs'),path=require('path');
+const ROOT=path.join(__dirname,'..');
+const html=fs.readFileSync(path.join(ROOT,'parent.html'),'utf8');
+let fail=0;const T=(n,ok)=>{console.log((ok?'PASS':'FAIL')+' '+n);if(!ok)fail++;};
+T('palette claire Parents alignée Finot',/--bg:#fff6e8;--surface:#ffffff;--surface2:#ffe7d3;--text:#4a3426;--muted:#7a5f4a;--border:#f0e3d1;/.test(html));
+T('accent Parents = orange Finot',/--accent:#ff8a3d;/.test(html));
+T('palette sombre Parents alignée Finot',/--bg:#241a12;--surface:#332416;--surface2:#44301c;--text:#fff3e0;--muted:#c9ad91;--border:#5a4428;/.test(html));
+T('theme-color navigateur cohérent Finot',/name="theme-color" content="#ff8a3d"[^>]*prefers-color-scheme: light/.test(html)&&/name="theme-color" content="#241a12"[^>]*prefers-color-scheme: dark/.test(html));
+T('anciennes couleurs d’identité violettes absentes',!/#f4f1ff|#7c3aed|#ece7ff|#130f29|#1f1a3f|#2b2554/i.test(html));
+if(fail)process.exit(1);
