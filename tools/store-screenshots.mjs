@@ -42,6 +42,9 @@ export const SEED_JS = `(async()=>{${W}
   BADGES.forEach(b=>{try{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=today;}}catch(e){}});}catch(e){}   // badges déjà mérités : aucun popup « Nouveau badge » pendant les captures
  try{const log=[];const now=Date.now();for(let i=0;i<16;i++){const cid=seeded[(i*3)%seeded.length],day=Math.floor(i/3),t1=now-day*86400000-((i%3)*5400000)-3600000,ms=(5+((i*7)%9))*60000,lesson=i%4===1,total=lesson?5:10,ok=Math.max(5,total-((i*5)%4));
   log.push({id:'a'+t1.toString(36)+i,t0:t1-ms,t1,ms,kind:lesson?'lesson':'exercise',ids:[cid],grade:S.grade,subj:(WMAP[cid]&&sOf(WMAP[cid].id).id)||'p-maths',reason:lesson?'lesson-end':'exercise-end',cid,ok,total});}S.activityLog=log;}catch(e){}
+ // journal de réponses (taux de réussite du tableau de bord parent) : 140 réponses sur 7 jours, ~80 % justes ; leçons validées (programme)
+ try{const al=[],now2=Date.now();for(let i=0;i<140;i++){const cid=seeded[i%seeded.length];al.push({t:now2-Math.floor(i/20)*86400000-(i%20)*180000-120000,cid,ok:(i%5)!==3,ms:9000+((i*37)%11000),source:'ex'});}S.answerLog=al.sort((a,b)=>a.t-b.t);
+  S.lessons=S.lessons||{};seeded.slice(0,14).forEach((id,k)=>{S.lessons[id]=now2-k*43200000;});}catch(e){}
  save();ACT.home();await w(500);return {seeded:seeded.length,xp:S.xp,badges:(S.badges||[]).length,chap:Object.keys(S.chap).length}})()`;
 
 /* Tire une question d'exercice jusqu'à ce que le prédicat soit vrai (sans y répondre). */

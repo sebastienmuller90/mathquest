@@ -34,6 +34,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   for(const s of mod.SCREENS){let res=null,ok=false,err='';
    for(let t=0;t<3&&!ok;t++){try{res=await p.evaluate(s.js);await p.waitForTimeout(400);ok=(await p.evaluate(`!!(${s.expect})`))===true;}catch(e){err=e.message.slice(0,120);}if(!ok){await p.evaluate('ACT.home()').catch(()=>{});await p.waitForTimeout(400);}}
    T(`${lab} : écran « ${s.id} » obtenu par les vraies actions de l’application`,ok,err||JSON.stringify(res));
+   if(s.id==='espace-parents'){const kp=await p.evaluate(()=>{const t=document.querySelector('#app').innerText.replace(/\s+/g,' ');return {rate:+((t.match(/Réussite (\d+) ?%/)||[])[1]||-1),prog:+((t.match(/Programme (\d+) ?%/)||[])[1]||-1),time:/Temps \d/.test(t)};});
+    T(`${lab} : vue parents crédible (réussite ≥ 70 %, programme ≥ 10 %, temps de travail non nul)`,kp.rate>=70&&kp.prog>=10&&kp.time,JSON.stringify(kp));}
    if(s.after)await p.evaluate(s.after).catch(()=>{});}
   T(`${lab} : aucune erreur JavaScript, aucune requête externe`,!errs.length&&!external.length,errs.concat(external).join(' | '));
   await ctx.close();}}
