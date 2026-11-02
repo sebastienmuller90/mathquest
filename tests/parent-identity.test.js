@@ -1,3 +1,4 @@
+// Garde-fou d’identité : l’espace Parents suit la palette officielle orange/crème de Finot Académie.
 const fs=require('fs'),path=require('path');
 const ROOT=path.join(__dirname,'..');
 const html=fs.readFileSync(path.join(ROOT,'parent.html'),'utf8');
