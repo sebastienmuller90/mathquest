@@ -98,8 +98,9 @@ Le titre reste **Finot Académie** : ne pas ajouter de suite de mots-clés au no
 
 - Catégorie : **Éducation**.
 - Public : enfants scolarisés du CP à la 3e et leurs parents ; sélection exacte des tranches à confirmer dans Play Console.
-- Coordonnées : `[À COMPLÉTER : E-MAIL PUBLIC ÉDITEUR]`.
-- Politique de confidentialité : `[À COMPLÉTER : URL HTTPS PUBLIQUE]`.
+- Nom public éditeur : **UpFactory Apps**.
+- E-mail public éditeur / support : **upfactory.apps@gmail.com**.
+- Politique de confidentialité : URL technique prévue `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — à déclarer dans Play Console seulement après remplacement des derniers placeholders juridiques et vérification publique.
 - Pays/régions : `[À DÉCIDER AVANT PUBLICATION]`.
 
-Les trois éléments ci-dessus restent des décisions éditeur et sont regroupés dans `docs/google-play/final-human-inputs.md`.
+Les éléments restant à fournir sont regroupés dans `docs/google-play/final-human-inputs.md`.
