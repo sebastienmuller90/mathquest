@@ -29,7 +29,7 @@ const isWin = process.platform === 'win32';
 
 // Tests exécutés avant le build : configuration Android, paquet web, exécution native, vie privée, liens, permissions.
 const TESTS = ['android-project', 'mobile-package', 'mobile-runtime', 'android-backup', 'speech-capability', 'external-links',
-  'remote-sync-flag', 'analytics-guard', 'entitlements-guard', 'sync-privacy', 'google-play-release'];
+  'remote-sync-flag', 'analytics-guard', 'entitlements-guard', 'sync-privacy', 'profile-delete-purge', 'google-play-release'];
 // Permissions autorisées : INTERNET (suivi parent facultatif, désactivé) et la permission de signature propre à l'application
 // que AndroidX ajoute pour ses récepteurs dynamiques non exportés. Toute autre permission est refusée.
 const ALLOWED_PERMS = new Set(['android.permission.INTERNET', `${PROD_ID}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`]);
