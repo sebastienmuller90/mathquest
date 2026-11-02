@@ -4,6 +4,7 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 const read = rel => fs.readFileSync(path.join(root, rel), 'utf8');
+const PUBLISHER_SHA = '193597252494f529b454e0a0bb03c31c18fad1ec';
 
 const config = JSON.parse(read('upfactory.app.json'));
 assert.strictEqual(config.schemaVersion, 1);
@@ -39,6 +40,7 @@ assert.match(workflow, /java-version:\s*['"]21['"]/);
 assert.match(workflow, /platforms;android-36/);
 assert.match(workflow, /build-tools;36\.0\.0/);
 assert.match(workflow, /repository:\s*sebastienmuller90\/upfactory-publisher/);
+assert.ok(workflow.includes(`ref: ${PUBLISHER_SHA}`), 'UpFactory Publisher doit être épinglé sur le commit validé');
 assert.match(workflow, /default:\s*false/);
 assert.match(workflow, /if \[ "\$\{\{ inputs\.publish \}\}" = "true" \]; then CONFIRM="--confirm-publish"; fi/);
 
