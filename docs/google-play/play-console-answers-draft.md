@@ -1,8 +1,8 @@
 # Finot Académie — Réponses probables Play Console (BROUILLON)
 
-À reporter dans Play Console par l'éditeur. État vérifié le **02/11/2026** contre `main@ecc99323915bfe17ff4267e8ea0d2bfbf0f88b78` et les exigences Google Play publiques disponibles ce jour-là.
+À reporter dans Play Console par l'éditeur. État vérifié le **02/11/2026** contre `main@03b2f1cb4b8c235c374c5be249472d310ca96525` et les exigences Google Play publiques disponibles ce jour-là.
 
-Toute réponse dépendant d'une décision commerciale, juridique, de public ou d'identité reste marquée **À DÉCIDER AVANT PUBLICATION**. Rien n'est soumis par ce document.
+Toute réponse dépendant encore d'une décision commerciale, juridique ou d'identité reste marquée **À DÉCIDER AVANT PUBLICATION**. Rien n'est soumis par ce document.
 
 ## 1. Application
 
@@ -21,7 +21,7 @@ Toute réponse dépendant d'une décision commerciale, juridique, de public ou d
 
 | Question | Réponse proposée |
 |---|---|
-| Tranches d'âge cibles | CP → 3e ≈ 6 à 15 ans ; sélectionner dans Play Console les tranches correspondant réellement à cette audience |
+| Tranches d'âge cibles | **6–8 ans, 9–12 ans et 13–15 ans**, correspondant réellement au produit CP → 3e |
 | Destinée aux enfants ? | **Oui** : l'audience inclut des enfants ; la Politique Familles est donc à traiter explicitement |
 | Programme Designed for Families | candidature distincte/facultative selon les options proposées au compte — À DÉCIDER AVANT PUBLICATION |
 | Publicité destinée aux enfants | **Aucune publicité** |
@@ -72,9 +72,10 @@ Plan recommandé : **test interne → test fermé si applicable → demande d'ac
 - icône Store : **512×512, PNG 32 bits, sRGB, ≤ 1 024 Ko**, carré plein ; Google Play applique son masque/ombre ;
 - feature graphic : **1 024×500**, JPEG ou PNG 24 bits sans alpha ;
 - captures téléphone et tablette reflétant le vrai produit avec profil fictif ;
-- aucune capture ne doit contenir de donnée réelle d'enfant.
+- aucune capture ne doit contenir de donnée réelle d'enfant ;
+- set commercial recommandé : `store-screenshot-selection.md`.
 
-Voir `store-assets-checklist.md`.
+Voir `store-assets-checklist.md` et `ASSET_STATUS_2026-11-02.md`.
 
 ## 7. Ce qui NE doit PAS être déclaré en V1
 
