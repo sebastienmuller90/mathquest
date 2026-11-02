@@ -12,7 +12,7 @@
    Le module exporte aussi SCREENS / SEED_JS / ONBOARDING_JS : tests/store-screenshots.test.js les exécute contre le produit réel dans
    Chromium (même navigation, mêmes attentes) sans émulateur. */
 import { execFileSync } from 'node:child_process';
-import { writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -38,7 +38,8 @@ export const SEED_JS = `(async()=>{${W}
    seeded.push(ch.id);});}
  S.subj='p-maths';S.xp=1840;S.coins=320;S.streak={n:6,best:9,last:today};S.totalOk=412;S.totalQ=506;S.time=7260;S.missions=23;S.goalsDone=5;S.bestCombo=11;
  S.daily={date:today,ok:14,done:false};
- try{const ids=BADGES.map(b=>b[0]).slice(0,7);S.badges=ids;S.badgeDates=Object.fromEntries(ids.map(id=>[id,today]));}catch(e){}
+ try{const ids=BADGES.map(b=>b[0]).slice(0,7);S.badges=ids.slice();S.badgeDates=Object.fromEntries(ids.map(id=>[id,today]));
+  BADGES.forEach(b=>{try{if(!S.badges.includes(b[0])&&b[4](S)){S.badges.push(b[0]);S.badgeDates[b[0]]=today;}}catch(e){}});}catch(e){}   // badges déjà mérités : aucun popup « Nouveau badge » pendant les captures
  try{const log=[];const now=Date.now();for(let i=0;i<16;i++){const cid=seeded[(i*3)%seeded.length],day=Math.floor(i/3),t1=now-day*86400000-((i%3)*5400000)-3600000,ms=(5+((i*7)%9))*60000,lesson=i%4===1,total=lesson?5:10,ok=Math.max(5,total-((i*5)%4));
   log.push({id:'a'+t1.toString(36)+i,t0:t1-ms,t1,ms,kind:lesson?'lesson':'exercise',ids:[cid],grade:S.grade,subj:(WMAP[cid]&&sOf(WMAP[cid].id).id)||'p-maths',reason:lesson?'lesson-end':'exercise-end',cid,ok,total});}S.activityLog=log;}catch(e){}
  save();ACT.home();await w(500);return {seeded:seeded.length,xp:S.xp,badges:(S.badges||[]).length,chap:Object.keys(S.chap).length}})()`;
@@ -72,7 +73,8 @@ export const SCREENS = [
     js: `(async()=>{${W}ACT.home();await w(300);ACT.library();await w(500);const lv=document.querySelector('[data-a="liblvl:CM1"]');if(lv){lv.click();await w(600);}
      const t=document.querySelector('[data-a^="libopen:"]');if(t){t.click();await w(900);}window.scrollTo(0,0);return CUR})()`, expect: `CUR==='library'||CUR==='reading'||!!document.querySelector('[data-a^="libopen:"],#app .reading,#app .lbody')` },
   { id: 'dictee', n: '08', title: 'Dictée', description: 'Dictée : écoute de la phrase et saisie avec accents',
-    js: exerciseJs('p-francais', `typeof isDictation==='function'&&M&&M.q&&isDictation(M.q)`, 40, 'cm1-fr-dictee'), expect: `!!document.querySelector('#in0')&&!!document.querySelector('[data-a="qlisten"]')` },
+    // la phrase est lue automatiquement : on attend la fin de la lecture pour que le bouton audio soit au repos (pas de « stop » orange)
+    js: `(async()=>{const r=await ${exerciseJs('p-francais', `typeof isDictation==='function'&&M&&M.q&&isDictation(M.q)`, 40, 'cm1-fr-dictee')};let n=0;while(n++<80&&typeof TTS!=='undefined'&&TTS.playing)await new Promise(x=>setTimeout(x,250));try{if(typeof TTS!=='undefined'&&TTS.playing)ttsStop();}catch(e){}await new Promise(x=>setTimeout(x,900));return r})()`, expect: `!!document.querySelector('#in0')&&!!document.querySelector('[data-a="qlisten"]')` },
   { id: 'finot-chat', n: '09', title: 'Assistant Finot', description: 'Finot ouvert : question « C’est quoi les XP ? » et sa réponse',
     js: `(async()=>{${W}ACT.home();await w(300);finotOpen();await w(700);const b=document.querySelector('#finotchat [data-a="finotsug:0"]');if(b){b.click();await w(1800);}
      const c=document.getElementById('fchBody');const u=c&&c.querySelector('.fch-msg.you');if(c&&u)c.scrollTop=Math.max(0,u.offsetTop-c.offsetTop-10);return !!b})()`, expect: `!!document.querySelector('#fchBody .fch-msg.you')`,
@@ -118,7 +120,8 @@ async function main() {
   const demo = on => { if (!on) { adb('shell', 'am', 'broadcast', '-a', 'com.android.systemui.demo', '-e', 'command', 'exit'); adb('shell', 'settings', 'put', 'global', 'sysui_demo_allowed', '0'); return; }
     adb('shell', 'settings', 'put', 'global', 'sysui_demo_allowed', '1'); const d = (...a) => adb('shell', 'am', 'broadcast', '-a', 'com.android.systemui.demo', '-e', 'command', ...a);
     d('enter'); d('clock', '-e', 'hhmm', '1010'); d('battery', '-e', 'level', '100', '-e', 'plugged', 'false'); d('network', '-e', 'wifi', 'show', '-e', 'level', '4', '-e', 'fully', 'true'); d('network', '-e', 'mobile', 'hide'); d('notifications', '-e', 'visible', 'false'); };
-  const settle = async () => { await ev(`(()=>{try{const t=document.getElementById('toast');if(t){t.classList.remove('show');t.textContent=''}}catch(e){}document.activeElement&&document.activeElement.blur&&document.activeElement.blur();})()`);
+  const clean = () => ev(`(()=>{try{const t=document.getElementById('toast');if(t){t.classList.remove('show');t.textContent=''}}catch(e){}try{const c=document.getElementById('celeb');if(c)c.classList.remove('show');}catch(e){}document.activeElement&&document.activeElement.blur&&document.activeElement.blur();})()`);
+  const settle = async () => { await clean(); await sleep(2800); await clean();   // laisse passer d'éventuels popups différés (célébrations) puis les retire
     for (let k = 0; k < 20; k++) { const busy = await ev(`!!document.querySelector('.view-pop,.confetti,.pop-in')||document.getAnimations().some(a=>a.playState==='running'&&a.effect&&a.effect.getTiming&&a.effect.getTiming().iterations!==Infinity)`); if (busy !== true) break; await sleep(300); } await sleep(1200); };
 
   if (process.env.SETUP !== '0') {
@@ -130,8 +133,11 @@ async function main() {
   const rot = kind === 'tablet' ? (val('--rotation') || '0') : '0';
   adb('shell', 'settings', 'put', 'system', 'accelerometer_rotation', '0'); adb('shell', 'settings', 'put', 'system', 'user_rotation', rot); adb('shell', 'cmd', 'window', 'user-rotation', 'lock', rot); await sleep(2500);
   const model = adb('shell', 'getprop', 'ro.product.model'), api = +adb('shell', 'getprop', 'ro.build.version.sdk'), release = adb('shell', 'getprop', 'ro.build.version.release');
-  let sha = ''; try { sha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: join(here, '..'), encoding: 'utf8' }).trim(); } catch (e) { }
+  const root = resolve(here, '..').replace(/\\/g, '/');
+  let sha = ''; try { sha = execFileSync('git', ['-c', `safe.directory=${root}`, 'rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(); } catch (e) { }
   const manifest = { generated: new Date().toISOString().slice(0, 10), git: sha, kind, serial, device: model, android: release, api, profil: `${PROFILE.name} (${PROFILE.grade}), données fictives`, captures: [] };
+  // --only : on conserve les captures déjà listées pour les écrans non rejoués (le manifeste reste complet)
+  let previous = []; try { previous = JSON.parse(readFileSync(join(out, 'manifest.json'), 'utf8')).captures || []; } catch (e) { }
   const failures = [];
   try {
     for (const s of SCREENS) {
@@ -151,6 +157,8 @@ async function main() {
       if (s.after) await ev(s.after).catch(() => { });
     }
   } finally { demo(false); }
+  const fresh = new Set(manifest.captures.map(c => c.fichier));
+  manifest.captures = [...previous.filter(c => !fresh.has(c.fichier) && existsSync(join(outRoot, c.fichier))), ...manifest.captures].sort((a, b) => a.fichier.localeCompare(b.fichier));
   writeFileSync(join(out, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   if (failures.length) { console.error('ÉCHECS : ' + failures.join(', ')); process.exit(1); }
   console.log(`OK : ${manifest.captures.length} captures dans ${out}`);
