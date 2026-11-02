@@ -23,6 +23,8 @@
 !/sw.js
 !/manifest.webmanifest
 !/icon.png
+!/icon-192.png
+!/icon-maskable-512.png
 # Intégration continue : workflow et tests qu’elle exécute (exception validée le 21/10/2026).
 # Le reste de tests/ (run-all, suites locales, rapports, captures) reste privé.
 !/.github/
@@ -145,6 +147,8 @@
 !/tools/build-google-play-release.cmd
 !/tools/create-upload-key.cmd
 !/tools/make-monochrome-icon.ps1
+!/tools/make-pwa-icons.ps1
+!/tests/pwa-identity.test.js
 !/tools/store-screenshots.mjs
 !/tools/android-cdp.mjs
 !/tests/store-screenshots.test.js
