@@ -52,6 +52,7 @@ jobs:
           node tests/analytics-guard.test.js
           node tests/entitlements-guard.test.js
           node tests/google-play-release.test.js
+          node tests/upfactory-integration.test.js
 
   android-build:
     needs: multistore-tests
