@@ -5,7 +5,7 @@
    jamais un index.html neuf avec des scripts anciens. Le cache auto-découvert suit les pages, scripts et styles.
    L'installation part des deux pages, suit leurs scripts/styles/assets locaux, puis découvre les images
    référencées dans les fichiers texte. Le lexique est traité spécialement car ses images sont dynamiques. */
-const VERSION='8.75.6-large-font-tabs-2026-11-01';
+const VERSION='8.75.6-profile-purge-store-version-2026-11-02';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).

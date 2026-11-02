@@ -52,7 +52,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  // 3. Manifeste du paquet, version et reproductibilité.
  const swv=(fs.readFileSync(path.join(ROOT,'sw.js'),'utf8').match(/const VERSION='([^']+)'/)||[])[1];
  const [maj,min,pat]=String(swv).split('-')[0].split('.').map(Number);
- T('finot-package.json : version = VERSION de sw.js, versionName = X.Y.Z, versionCode = X×1 000 000 + Y×1 000 + Z',man.version===swv&&man.versionName===`${maj}.${min}.${pat}`&&man.versionCode===maj*1e6+min*1e3+pat,JSON.stringify({version:man.version,versionName:man.versionName,versionCode:man.versionCode,swv}));
+ const storeV=(()=>{try{return JSON.parse(fs.readFileSync(path.join(ROOT,'android','store-version.json'),'utf8')).versionName;}catch(e){return null;}})();
+ T('finot-package.json : version = VERSION de sw.js ; versionName = version commerciale (android/store-version.json, X.Y.Z) ; versionCode = compteur interne X×1 000 000 + Y×1 000 + Z de VERSION, indépendant du versionName',man.version===swv&&/^\d+\.\d+\.\d+$/.test(String(storeV))&&man.versionName===storeV&&man.versionCode===maj*1e6+min*1e3+pat,JSON.stringify({version:man.version,versionName:man.versionName,versionCode:man.versionCode,swv,storeV}));
  const listed=man.files.map(f=>f.path);
  T('finot-package.json liste exactement les fichiers copiés, triés, avec taille et SHA-256 exacts',JSON.stringify(listed)===JSON.stringify(files)&&man.files.every(f=>f.sha256===sha(path.join(A,f.path))&&f.size===fs.statSync(path.join(A,f.path)).size),'');
  T('finot-package.json ne contient ni date ni chemin absolu de la machine (reproductible)',!/\d{4}-\d{2}-\d{2}T|[A-Za-z]:\\\\|\/home\/|\/Users\//.test(JSON.stringify(man))&&!('builtAt' in man),'');

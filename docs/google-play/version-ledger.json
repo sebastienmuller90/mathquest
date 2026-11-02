@@ -1,0 +1,4 @@
+{
+  "_commentaire": "Registre des versionCode réellement téléversés dans Play Console. Un versionCode ne doit jamais être réutilisé ni redescendre. Mis à jour par « tools\\build-google-play-release.cmd --record <piste> » après un téléversement manuel.",
+  "uploaded": []
+}

@@ -136,3 +136,22 @@
 !/tests/finot-chat-keyboard.test.js
 !/tests/old-webview-compat.test.js
 !/tests/large-font-tabs.test.js
+# Préparation Google Play (01/11/2026) : documents de dépôt, scripts de release et test. Aucun secret ici.
+!/docs/
+!/docs/google-play/
+!/docs/google-play/**
+!/tools/
+!/tools/google-play-release.mjs
+!/tools/build-google-play-release.cmd
+!/tools/create-upload-key.cmd
+!/tests/google-play-release.test.js
+!/tests/profile-delete-purge.test.js
+# Garde-fou : clés de signature JAMAIS versionnées, même si un fichier est déposé dans un dossier autorisé ci-dessus.
+*.jks
+*.keystore
+*.p12
+*.pem
+*.pfx
+keystore.properties
+google-services.json
+finot-release.env*
