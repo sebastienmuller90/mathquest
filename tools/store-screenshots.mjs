@@ -4,6 +4,7 @@
    FICTIFS (« Léo », CM1), posés dans l'AVD uniquement ; barre d'état Android en mode démonstration (10:10, batterie pleine,
    Wi-Fi, aucune notification). Ne fabrique aucune fonction : chaque écran est ouvert par les vraies actions de l'application.
    Aucun envoi réseau, aucune publication. Les images vont dans artifacts/google-play/store-screens/ (non versionné).
+   Le cadrage du chat s'aligne sur une bulle complète afin qu'aucun message ne soit coupé sur les visuels Store.
 
    Usage :  node tools/store-screenshots.mjs --serial emulator-5554 --kind phone  [--apk <chemin>] [--only 01-accueil,04-exercice] [--out <dossier>]
             node tools/store-screenshots.mjs --serial emulator-5554 --kind tablet [--rotation 0]
@@ -148,23 +149,3 @@ async function main() {
       let ok = false, info = null;
       for (let t = 0; t < 3 && !ok; t++) {   // jusqu'à 3 essais : un écran n'est accepté que si l'attente produit est vraie
         try { info = await ev(s.js, 90000); await sleep(400); ok = (await ev(`!!(${s.expect})`)) === true; } catch (e) { info = String(e.message).slice(0, 120); }
-        if (!ok) { await ev('ACT.home()').catch(() => { }); await sleep(600); } }
-      if (!ok) { failures.push(s.id); console.log(`ÉCHEC ${s.id} : écran non obtenu (${JSON.stringify(info)})`); continue; }
-      await settle();
-      const buf = execFileSync(ADB, ['-s', serial, 'exec-out', 'screencap', '-p'], { maxBuffer: 128 << 20 });
-      const file = fileName(s, kind); writeFileSync(join(out, file), buf);
-      const width = buf.readUInt32BE(16), height = buf.readUInt32BE(20);
-      if (buf.length < 60000) { failures.push(s.id + ' (image presque vide)'); console.log(`ÉCHEC ${s.id} : image trop légère (${buf.length} o)`); continue; }
-      manifest.captures.push({ fichier: `${kind}/${file}`, ecran: s.title, description: s.description, largeur: width, hauteur: height, orientation: width > height ? 'paysage' : 'portrait', octets: buf.length });
-      console.log(`capture ${file} ${width}x${height}`);
-      if (s.after) await ev(s.after).catch(() => { });
-    }
-  } finally { demo(false); }
-  const fresh = new Set(manifest.captures.map(c => c.fichier));
-  manifest.captures = [...previous.filter(c => !fresh.has(c.fichier) && existsSync(join(outRoot, c.fichier))), ...manifest.captures].sort((a, b) => a.fichier.localeCompare(b.fichier));
-  writeFileSync(join(out, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
-  if (failures.length) { console.error('ÉCHECS : ' + failures.join(', ')); process.exit(1); }
-  console.log(`OK : ${manifest.captures.length} captures dans ${out}`);
-  process.exit(0);
-}
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(e => { console.error('CRASH', e.stack); process.exit(1); });
