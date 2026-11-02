@@ -149,6 +149,7 @@
 !/tools/make-monochrome-icon.ps1
 !/tools/make-pwa-icons.ps1
 !/tests/pwa-identity.test.js
+!/tests/scan-exclusions.test.js
 !/tools/store-screenshots.mjs
 !/tools/android-cdp.mjs
 !/tests/store-screenshots.test.js

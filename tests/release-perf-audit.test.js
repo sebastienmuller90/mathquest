@@ -8,13 +8,13 @@
    7. écouteurs document / window et minuteries qui ne s'accumulent pas après des allers-retours accueil ↔ profils ↔ mission. */
 const fs=require('fs'),path=require('path');
 const {serve,launchEngine,freshContext,wizard,playMission}=require('./release-lib');
-const {ROOT,swPrecache,seedProfile}=require('./lib');
+const {ROOT,swPrecache,seedProfile,isLocalOnly}=require('./lib');
 
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const exists=rel=>{try{return fs.statSync(path.join(ROOT,decodeURIComponent(rel))).isFile();}catch(e){return false;}};
 const clean=u=>String(u).split('#')[0].split('?')[0].replace(/^\.\//,'');
 const external=u=>/^(https?:|data:|mailto:|tel:|blob:|\/\/)/i.test(u);
-function walk(dir,out=[]){for(const e of fs.readdirSync(path.join(ROOT,dir),{withFileTypes:true})){const rel=dir?dir+'/'+e.name:e.name;if(e.isDirectory()){if(e.name==='node_modules'||e.name==='.git')continue;walk(rel,out);}else out.push(rel);}return out;}
+function walk(dir,out=[]){for(const e of fs.readdirSync(path.join(ROOT,dir),{withFileTypes:true})){const rel=dir?dir+'/'+e.name:e.name;if(e.isDirectory()){if(e.name==='node_modules'||e.name==='.git'||isLocalOnly(rel))continue;walk(rel,out);}else out.push(rel);}return out;}
 
 // Compteurs d'écouteurs (uniques : fonction + capture, comme le navigateur) et de minuteries actives, installés avant tout script.
 const PATCH=()=>{
