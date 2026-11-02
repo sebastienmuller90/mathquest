@@ -20,14 +20,26 @@ Ces données doivent remplacer les placeholders de :
 
 ## 2. Politique de confidentialité
 
-Après remplacement des placeholders :
+GitHub Pages est **déjà actif** pour le dépôt. Le déploiement du commit `be3fb622ba2328a797529917ba9e79445aee06e2` a confirmé l'URL publique de base :
 
-- publier la page sur une URL HTTPS stable ;
-- vérifier cette URL sans authentification ;
-- reporter exactement la même URL dans Play Console ;
-- ajouter cette URL dans l'espace Parents de l'application.
+`https://sebastienmuller90.github.io/mathquest/`
 
-Ne jamais publier la page avec des éléments entre crochets.
+Le fichier actuel `docs/google-play/privacy-policy-public.html` peut donc être publié sans infrastructure supplémentaire. Tant que ses placeholders éditeur ne sont pas remplacés, il ne doit toutefois **pas** être déclaré comme politique définitive dans Play Console.
+
+URL technique correspondant au fichier actuel une fois finalisé :
+
+`https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
+
+Avant utilisation dans Play Console :
+
+- remplacer tous les placeholders ;
+- laisser GitHub Pages redéployer `main` ;
+- ouvrir l'URL sans authentification ;
+- vérifier le rendu sur mobile ;
+- reporter exactement cette URL dans Play Console ;
+- ajouter la même URL dans l'espace Parents de l'application.
+
+Ne jamais publier la page comme politique finale avec des éléments entre crochets.
 
 ## 3. Distribution
 
@@ -61,10 +73,12 @@ Actions à réaliser hors Git :
 - rotation et taille de police agrandie ;
 - parcours enfant + espace Parents.
 
+La procédure détaillée CMD/ADB est dans `physical-device-validation.md`.
+
 ## 6. Assets Store restant à valider
 
-- icône Google Play finale 512×512 ;
-- Feature Graphic 1024×500 ;
+- icône Google Play finale 512×512 : **techniquement prête** ;
+- Feature Graphic 1024×500 : brief prêt, visuel final à produire ;
 - sélection finale des captures téléphone ;
 - sélection finale des captures tablette.
 
