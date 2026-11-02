@@ -48,7 +48,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  // 4. Nom, icônes, écran de démarrage
  T('Nom affiché « Finot Académie »',/<string name="app_name">Finot Académie<\/string>/.test(read(A('app/src/main/res/values/strings.xml'))),'');
  const adapt=read(A('app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml'));
- T('Icône adaptative : fond #7C3AED + premier plan Finot',/<background android:drawable="@color\/ic_launcher_background"\/>/.test(adapt)&&/<foreground android:drawable="@mipmap\/ic_launcher_foreground"\/>/.test(adapt)&&/#7C3AED/i.test(read(A('app/src/main/res/values/ic_launcher_background.xml'))),'');
+ T('Icône adaptative : fond (couleur ic_launcher_background) + premier plan Finot',/<background android:drawable="@color\/ic_launcher_background"\/>/.test(adapt)&&/<foreground android:drawable="@mipmap\/ic_launcher_foreground"\/>/.test(adapt)&&/<color name="ic_launcher_background">#[0-9A-Fa-f]{6}<\/color>/.test(read(A('app/src/main/res/values/ic_launcher_background.xml'))),'');
  T('Logo Capacitor du modèle supprimé (drawable vectoriel inutilisé)',!fs.existsSync(A('app/src/main/res/drawable-v24/ic_launcher_foreground.xml'))&&!fs.existsSync(A('app/src/main/res/drawable/ic_launcher_background.xml')),'');
  const st=read(A('app/src/main/res/values/styles.xml'));
  T('Écran de démarrage Android 12+ : fond #F4F1FF, icône Finot, puis thème de l’app',/windowSplashScreenBackground">@color\/finot_splash_background/.test(st)&&/postSplashScreenTheme">@style\/AppTheme\.NoActionBar/.test(st)&&/#F4F1FF/i.test(read(A('app/src/main/res/values/colors.xml'))),'');
@@ -64,6 +64,11 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   if(String(sp.p[0].slice(0,3))!=='244,241,255')bad.push(d+' splash '+JSON.stringify(sp));}
  // Le fox de Finot est au centre : pixel central blanc/clair du disque, jamais le fond du modèle Capacitor.
  T('Icônes (5 densités, tailles exactes, opaques au centre, premier plan transparent en bordure) et splash Finot (#F4F1FF)',!bad.length,bad.slice(0,4).join(' | '));
+ // Icône (02/11/2026) : fond blanc, Finot orange. Grille 10 × 10 sur le premier plan xxxhdpi : une part franchement orange parmi les pixels opaques.
+ const N=30,grid=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++)grid.push([(i+.5)/N,(j+.5)/N]);
+ const fgx=await px(A('app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png'),grid);
+ const orange=fgx.p.filter(([r,g,bl,a])=>a===255&&r>200&&g>70&&g<190&&bl<110).length,opaque=fgx.p.filter(p=>p[3]===255).length;
+ T('Icône Finot : fond adaptatif blanc (#FFFFFF), premier plan transparent en bordure avec une part orange marquée (Finot)',/#FFFFFF/i.test(read(A('app/src/main/res/values/ic_launcher_background.xml')))&&opaque>=N*N*.15&&opaque<=N*N*.6&&orange>=opaque*.25&&fgx.p[0][3]===0&&fgx.p[N*N-1][3]===0&&fgx.p[N-1][3]===0,JSON.stringify({orange,opaque,share:+(orange/Math.max(1,opaque)).toFixed(2),bg:(read(A('app/src/main/res/values/ic_launcher_background.xml')).match(/#[0-9A-Fa-f]{6}/)||[''])[0]}));
  await b.close();
 
  // 5. Aucun secret
