@@ -26,8 +26,12 @@ if errorlevel 1 (
 set "KS=%~1"
 if "%KS%"=="" set "KS=%USERPROFILE%\.finot\finot-upload.jks"
 
+rem Canonicalise les chemins avant tout controle : un argument relatif est sinon interprete depuis le depot
+rem au moment de keytool, tout en pouvant echapper a une comparaison textuelle avec le chemin absolu du depot.
+for %%I in ("%KS%") do set "KS=%%~fI"
+for %%I in ("%CD%") do set "REPO=%%~fI"
+
 rem Refuse un keystore place dans le depot
-set "REPO=%CD%"
 echo "%KS%" | findstr /i /c:"%REPO%" >nul
 if not errorlevel 1 (
   echo ECHEC : le keystore ne doit jamais etre dans le depot ^(%REPO%^). Choisissez un autre chemin.
