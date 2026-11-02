@@ -1,0 +1,12 @@
+/* Splash Android Finot Académie : cohérence avec l'identité PWA validée (orange/crème). */
+const fs=require('fs'),path=require('path'),zlib=require('zlib');
+const ROOT=path.join(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(ROOT,p),'utf8');
+function png(file){const b=fs.readFileSync(path.join(ROOT,file));let o=8,w=0,h=0,ct=0,bd=0,il=0;const id=[];while(o<b.length){const n=b.readUInt32BE(o),t=b.toString('ascii',o+4,o+8),d=b.subarray(o+8,o+8+n);if(t==='IHDR'){w=d.readUInt32BE(0);h=d.readUInt32BE(4);bd=d[8];ct=d[9];il=d[12];}else if(t==='IDAT')id.push(d);o+=12+n;}if(bd!==8||il!==0||(ct!==2&&ct!==6))throw Error('PNG non géré '+file);const bpp=ct===6?4:3,raw=zlib.inflateSync(Buffer.concat(id)),stride=w*bpp,px=Buffer.alloc(w*h*4);let prev=Buffer.alloc(stride);for(let y=0;y<h;y++){const f=raw[y*(stride+1)],line=Buffer.from(raw.subarray(y*(stride+1)+1,(y+1)*(stride+1)));for(let i=0;i<stride;i++){const a=i>=bpp?line[i-bpp]:0,u=prev[i],c=i>=bpp?prev[i-bpp]:0;if(f===1)line[i]=(line[i]+a)&255;else if(f===2)line[i]=(line[i]+u)&255;else if(f===3)line[i]=(line[i]+((a+u)>>1))&255;else if(f===4){const p=a+u-c,pa=Math.abs(p-a),pb=Math.abs(p-u),pc=Math.abs(p-c);line[i]=(line[i]+(pa<=pb&&pa<=pc?a:pb<=pc?u:c))&255;}}for(let x=0;x<w;x++){const j=(y*w+x)*4;px[j]=line[x*bpp];px[j+1]=line[x*bpp+1];px[j+2]=line[x*bpp+2];px[j+3]=bpp===4?line[x*bpp+3]:255;}prev=line;}return{w,h,at:(x,y)=>{const j=(y*w+x)*4;return [...px.subarray(j,j+4)]}};}
+const cream=p=>p[3]===255&&Math.abs(p[0]-255)<=1&&Math.abs(p[1]-246)<=1&&Math.abs(p[2]-232)<=1;
+let fail=0;const ok=(name,v,d='')=>{console.log((v?'PASS':'FAIL')+' '+name+(d?' — '+d:''));if(!v)fail++;};
+const colors=read('android/app/src/main/res/values/colors.xml'),styles=read('android/app/src/main/res/values/styles.xml');
+ok('couleur splash = #FFF6E8',/<color name="finot_splash_background">#FFF6E8<\/color>/i.test(colors));
+ok('thème SplashScreen utilise finot_splash_background et le premier plan Finot',/windowSplashScreenBackground">@color\/finot_splash_background/.test(styles)&&/windowSplashScreenAnimatedIcon">@mipmap\/ic_launcher_foreground/.test(styles));
+for(const d of ['mdpi','hdpi','xhdpi','xxhdpi','xxxhdpi']){const f=`android/app/src/main/res/drawable-port-${d}/splash.png`,P=png(f),corners=[P.at(2,2),P.at(P.w-3,2),P.at(2,P.h-3),P.at(P.w-3,P.h-3)];ok(`${d}: fond crème #FFF6E8 aux quatre coins`,corners.every(cream),JSON.stringify(corners));const c=P.at(Math.floor(P.w/2),Math.floor(P.h/2));ok(`${d}: visuel central présent`,!cream(c),JSON.stringify(c));}
+if(fail)process.exit(1);
