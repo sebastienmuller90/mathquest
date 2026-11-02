@@ -34,10 +34,10 @@
 - Modify: `docs/google-play/release-checklist.md`
 - Modify: `docs/google-play/store-assets-checklist.md`
 
-- [ ] Record `main@ecc9932…` / PR #47 and current API 36 requirement.
-- [ ] Mark Android launcher icon integration READY while keeping Play Store 512×512 asset as a separate deliverable.
-- [ ] Confirm feature graphic 1024×500 no-alpha and closed-test 12/14 requirement from official sources.
-- [ ] Re-read both files for stale TODOs and contradictory status.
+- [x] Record `main@ecc9932…` / PR #47 and current API 36 requirement.
+- [x] Mark Android launcher icon integration READY while keeping Play Store 512×512 asset as a separate deliverable.
+- [x] Confirm feature graphic 1024×500 no-alpha and closed-test 12/14 requirement from official sources.
+- [x] Re-read both files for stale TODOs and contradictory status.
 
 ### Task 2: Refresh Store/Play Console metadata
 
@@ -45,23 +45,23 @@
 - Modify: `docs/google-play/store-listing-fr.md`
 - Modify: `docs/google-play/play-console-answers-draft.md`
 
-- [ ] Update verified base to current `main`.
-- [ ] Preserve only claims proven by current local-only V1.
-- [ ] Make the applicable personal-account closed-test requirement precise.
-- [ ] Keep publisher/contact/country/program decisions explicit and unresolved.
+- [x] Update verified base to current `main`.
+- [x] Preserve only claims proven by current local-only V1.
+- [x] Make the applicable personal-account closed-test requirement precise.
+- [x] Keep publisher/contact/country/program decisions explicit and unresolved.
 
 ### Task 3: Add deployable privacy-policy template
 
 **Files:**
 - Create: `docs/google-play/privacy-policy-public.html`
 
-- [ ] Mirror the verified local-only privacy behavior from `privacy-policy-draft.md`.
-- [ ] Use a dependency-free static HTML document suitable for HTTPS static hosting.
-- [ ] Keep editor identity, address, email, publication date and canonical URL as obvious placeholders.
-- [ ] Verify no analytics, remote assets, scripts, cookies or trackers are included.
+- [x] Mirror the verified local-only privacy behavior from `privacy-policy-draft.md`.
+- [x] Use a dependency-free static HTML document suitable for HTTPS static hosting.
+- [x] Keep editor identity, address, email, publication date and canonical URL as obvious placeholders.
+- [x] Verify no analytics, remote assets, scripts, cookies or trackers are included.
 
 ### Task 4: Verify branch and open draft PR
 
-- [ ] Compare branch against `main`; expected changes are documentation only.
-- [ ] Re-read changed files for contradictions and placeholders.
+- [x] Compare branch against `main`; changes are documentation only.
+- [x] Re-read changed files for contradictions and placeholders.
 - [ ] Open a Draft PR to `main`; do not merge.
