@@ -1,3 +1,4 @@
+// Garde-fou géométrique : aucune bulle Finot ne doit être tronquée dans la capture Store téléphone.
 const path=require('path');
 const {pathToFileURL}=require('url');
 const {serve,launch,main,ROOT}=require('./lib');
