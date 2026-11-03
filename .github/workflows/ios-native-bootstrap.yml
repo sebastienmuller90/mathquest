@@ -1,0 +1,93 @@
+name: iOS Native Bootstrap
+
+on:
+  push:
+    branches:
+      - chatgpt/ios-native-bootstrap
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    if: ${{ !contains(github.event.head_commit.message, '[ios-bootstrap-done]') }}
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Installer la base existante
+        run: npm ci
+
+      - name: RED — le projet iOS n'existe pas encore
+        shell: bash
+        run: |
+          set +e
+          node tests/ios-project.test.js | tee /tmp/ios-red.log
+          code=${PIPESTATUS[0]}
+          set -e
+          if [ "$code" -eq 0 ]; then
+            echo "Le test iOS devait être rouge avant génération, mais il est déjà vert."
+            exit 1
+          fi
+          grep -q 'FAIL' /tmp/ios-red.log
+          echo "RED confirmé."
+
+      - name: Installer Capacitor iOS 8.6.0
+        run: |
+          npm install --save-dev --save-exact @capacitor/ios@8.6.0
+          npm pkg set 'scripts.ios:sync=npm run package:www && cap sync ios'
+
+      - name: Générer le paquet web reproductible
+        run: npm run package:www
+
+      - name: Générer le projet iOS SPM
+        run: npx cap add ios --packagemanager SPM
+
+      - name: Synchroniser Capacitor iOS
+        run: npm run ios:sync
+
+      - name: GREEN — contrat statique iOS
+        run: node tests/ios-project.test.js
+
+      - name: Vérifier Xcode
+        run: xcodebuild -version
+
+      - name: Compiler sans signature pour simulateur
+        run: |
+          xcodebuild \
+            -project ios/App/App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Revalider le packaging mobile
+        run: node tests/mobile-package.test.js
+
+      - name: Vérifier qu'aucun secret n'est apparu
+        shell: bash
+        run: |
+          if git grep -n -E 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|service_role|sb_secret_' -- package.json package-lock.json ios 2>/dev/null; then
+            echo 'Secret potentiel détecté.'
+            exit 1
+          fi
+
+      - name: Committer le bootstrap généré
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package.json package-lock.json ios
+          git diff --cached --check
+          git status --short
+          git commit -m 'chore(ios): bootstrap Capacitor iOS project [ios-bootstrap-done]'
+          git push origin HEAD:chatgpt/ios-native-bootstrap
