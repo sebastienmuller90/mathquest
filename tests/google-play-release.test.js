@@ -39,7 +39,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  T('Cohérence : INTERNET seule déclarée ; les documents affirment l’absence de micro, d’AD_ID et de publicité ; le manifeste les retire',JSON.stringify(perms)==='["android.permission.INTERNET"]'&&/RECORD_AUDIO.*absent|absent.*RECORD_AUDIO/s.test(ds)&&/AD_ID/.test(ds)&&/allowBackup="false"/.test(man),perms.join(','));
  const pa=read('docs/google-play/play-console-answers-draft.md');
  T('Réponses Play Console : V1 gratuite figée ; seules les décisions réellement dépendantes de la Console restent marquées',
-  /prix proposé au lancement[^\n]*\*\*gratuite\*\*/i.test(pa)&&/Prix \| \*\*gratuit pour la V1 actuelle\*\*/.test(pa)&&
+  /Gratuite ou payante[^\n]*\*\*gratuite\*\*/i.test(pa)&&/Prix \| \*\*gratuit pour la V1 actuelle\*\*/.test(pa)&&
   /Pays \/ régions \| \*\*À DÉCIDER DANS PLAY CONSOLE\*\*/.test(pa)&&/Designed for Families[^\n]*À DÉCIDER DANS PLAY CONSOLE/.test(pa)&&
   !pa.includes('À DÉCIDER AVANT PUBLICATION'),'');
  const pp=read('docs/google-play/privacy-policy-draft.md'),pub=read('docs/google-play/privacy-policy-public.html'),sl=read('docs/google-play/store-listing-fr.md');
