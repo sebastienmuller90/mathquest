@@ -1,8 +1,8 @@
 # Finot Académie — Réponses probables Play Console (BROUILLON)
 
-À reporter dans Play Console par l'éditeur. État vérifié le **02/11/2026** contre `main@03b2f1cb4b8c235c374c5be249472d310ca96525` et les exigences Google Play publiques disponibles ce jour-là.
+À reporter dans Play Console par l'éditeur. État vérifié le **03/11/2026** contre le produit actuel et les exigences Google Play publiques disponibles ce jour-là.
 
-Toute réponse dépendant encore d'une décision commerciale, juridique ou d'identité reste marquée **À DÉCIDER AVANT PUBLICATION**. Rien n'est soumis par ce document.
+Toute réponse dépendant encore d'une décision commerciale ou d'un écran spécifique du compte reste marquée **À DÉCIDER DANS PLAY CONSOLE**. Rien n'est soumis par ce document.
 
 ## 1. Application
 
@@ -10,12 +10,12 @@ Toute réponse dépendant encore d'une décision commerciale, juridique ou d'ide
 |---|---|
 | Nom | **Finot Académie** |
 | Application ou jeu | **Application** |
-| Gratuite ou payante | proposition V1 : **gratuite** — À DÉCIDER AVANT PUBLICATION |
+| Gratuite ou payante | proposition de lancement la plus sûre pour la V1 actuelle sans paiement intégré : **gratuite** |
 | Identifiant | `fr.finot.academie` — conserver cet identifiant lors de la création dans Play Console |
 | Catégorie | **Éducation** |
 | Nom public éditeur | **UpFactory Apps** |
 | Coordonnées | **upfactory.apps@gmail.com** |
-| Politique de confidentialité | URL technique prévue `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — à déclarer seulement après finalisation juridique de la page |
+| Politique de confidentialité | `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — contenu finalisé et daté du 03/11/2026 ; vérifier l'accès public après déploiement de `main` |
 
 ## 2. Public cible et contenu
 
@@ -23,7 +23,7 @@ Toute réponse dépendant encore d'une décision commerciale, juridique ou d'ide
 |---|---|
 | Tranches d'âge cibles | **6–8 ans, 9–12 ans et 13–15 ans**, correspondant réellement au produit CP → 3e |
 | Destinée aux enfants ? | **Oui** : l'audience inclut des enfants ; la Politique Familles est donc à traiter explicitement |
-| Programme Designed for Families | candidature distincte/facultative selon les options proposées au compte — À DÉCIDER AVANT PUBLICATION |
+| Programme Designed for Families | candidature distincte/facultative selon les options proposées au compte — **À DÉCIDER DANS PLAY CONSOLE** |
 | Publicité destinée aux enfants | **Aucune publicité** |
 | Contenu | éducatif ; pas de violence explicite, sexualité, jeu d'argent, drogue ou contenu social partagé |
 
@@ -51,13 +51,13 @@ La classification finale doit être obtenue en répondant au questionnaire offic
 | Foreground service | **Aucun** | manifeste |
 | Appareils cibles | téléphones et tablettes Android ; `minSdk` 24 ; `targetSdk` 36 | configuration Android |
 | Target API Google Play | **API 36 — conforme à l'exigence applicable depuis le 31/08/2026** | configuration + build release |
-| Pays / régions | `[À DÉCIDER AVANT PUBLICATION]` |
-| Prix | proposition V1 : gratuit — `[À DÉCIDER AVANT PUBLICATION]` |
+| Pays / régions | **À DÉCIDER DANS PLAY CONSOLE** |
+| Prix | **gratuit pour la V1 actuelle** ; toute monétisation ultérieure nécessitera une nouvelle passe conformité/store |
 | Familles | relire et appliquer `families-compliance.md` lors de la saisie réelle |
 
 ## 5. Tests et accès production
 
-| Sujet | Information vérifiée le 02/11/2026 |
+| Sujet | Information vérifiée le 03/11/2026 |
 |---|---|
 | Test interne | disponible sans exigence de testeurs minimum ; recommandé pour vérifier le premier AAB signé |
 | Nouveau compte développeur **personnel** créé après le 13/11/2023 | avant accès production, Google exige un **test fermé avec au moins 12 testeurs inscrits en continu pendant au moins 14 jours** |
@@ -86,7 +86,7 @@ Toute évolution vers l'une de ces fonctions impose une nouvelle revue des décl
 ## 8. Références externes à revalider au dépôt
 
 - Google Play Console Help — exigences de test des nouveaux comptes développeur personnels.
-- Android Developers — exigence du niveau d'API cible Google Play.
+- Android Developers / Play Console Help — exigence du niveau d'API cible Google Play.
 - Google Play Console Help / Android Developers — spécifications des assets Store.
 
 Les politiques Google peuvent évoluer : la Play Console affichée au compte de l'éditeur reste l'autorité finale au moment de la soumission.

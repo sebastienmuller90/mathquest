@@ -2,29 +2,23 @@
 
 Ce fichier regroupe uniquement les informations qui ne peuvent pas être déduites du code ni inventées par un agent.
 
-## 1. Identité publique de l'éditeur
+## 1. Identité du compte développeur
 
 Informations publiques désormais **confirmées** :
 
 - nom public développeur / marque : **UpFactory Apps** ;
 - e-mail public de support / confidentialité : **upfactory.apps@gmail.com**.
 
-Informations juridiques qui restent à renseigner :
+Informations personnelles à fournir **uniquement lors de l'inscription/vérification Play Console** :
 
 - identité légale du titulaire du compte développeur personnel ;
-- adresse légale correspondante **dans Google Payments / Play Console** ;
-- pays de l'éditeur si demandé par Play Console.
+- adresse légale correspondante dans Google Payments / Play Console ;
+- coordonnées de vérification demandées par Google ;
+- pays du compte.
 
-Ne jamais remplacer ces éléments par « UpFactory Apps » si un champ demande explicitement un **nom légal**, une **raison sociale** ou une **adresse légale**.
+Ne jamais remplacer ces éléments par « UpFactory Apps » si un champ demande explicitement un **nom légal** ou une **adresse légale**.
 
-L'adresse légale est nécessaire à la vérification du compte Google Play personnel mais n'est pas ajoutée à la politique de confidentialité publique uniquement pour cette raison. La privacy publique conserve un point de contact dédié : `upfactory.apps@gmail.com`.
-
-Les informations confirmées sont reportées dans :
-
-- `docs/google-play/privacy-policy-public.html` ;
-- `docs/google-play/privacy-policy-draft.md` ;
-- `docs/google-play/store-listing-fr.md` ;
-- `docs/google-play/play-console-answers-draft.md`.
+Ces informations de vérification du compte ne sont pas un prérequis au contenu de la politique de confidentialité publique. La privacy identifie déjà l'application, l'éditeur public et le point de contact `upfactory.apps@gmail.com`.
 
 ## 2. Politique de confidentialité
 
@@ -32,21 +26,19 @@ GitHub Pages est **déjà actif** pour le dépôt. URL publique de base :
 
 `https://sebastienmuller90.github.io/mathquest/`
 
-URL technique prévue pour la politique finale :
+URL finale prévue pour la politique :
 
 `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
 
-Il reste avant utilisation dans Play Console :
+Contenu de la politique : **finalisé et daté du 3 novembre 2026**.
 
-- renseigner l'identité légale du responsable dans la privacy ;
-- fixer la date de publication au jour de la mise en ligne définitive ;
-- laisser GitHub Pages redéployer `main` ;
+Il reste seulement à :
+
+- laisser GitHub Pages redéployer `main` après fusion ;
 - ouvrir l'URL sans authentification ;
 - vérifier le rendu sur mobile ;
 - reporter exactement cette URL dans Play Console ;
 - ajouter la même URL dans l'espace Parents de l'application.
-
-Ne jamais déclarer la page comme politique finale avec des éléments entre crochets.
 
 ## 3. Distribution
 
@@ -55,14 +47,14 @@ Décisions **déjà fixées** :
 - tranches d'âge Play Console : **6–8 ans, 9–12 ans et 13–15 ans** ;
 - application validée techniquement sur téléphone et tablette Android.
 
-Décisions/actions qui restent à confirmer dans Play Console :
+Actions qui restent dans Play Console :
 
-- pays/régions de distribution au lancement ;
-- test fermé 12 testeurs / 14 jours si le compte personnel est soumis à cette exigence.
+- choisir les pays/régions de distribution au lancement ;
+- exécuter le test fermé **12 testeurs / 14 jours continus** si le nouveau compte personnel est soumis à cette exigence.
 
 ## 4. Signature
 
-Actions à réaliser hors Git :
+Actions à réaliser hors Git, après création du compte développeur :
 
 - créer la clé d'upload Android ;
 - choisir et conserver son mot de passe ;
@@ -85,7 +77,7 @@ Actions à réaliser hors Git :
 
 La procédure détaillée CMD/ADB est dans `physical-device-validation.md`.
 
-## 6. Assets Store restant à valider
+## 6. Assets Store restant à figer
 
 - icône Google Play finale 512×512 : **techniquement prête** ;
 - Feature Graphic 1024×500 : candidat technique prêt, validation visuelle finale à faire ;

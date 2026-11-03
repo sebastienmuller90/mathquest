@@ -1,4 +1,4 @@
-/* Préparation Google Play (01/11/2026) — vérifications statiques, sans JDK ni SDK : dossier docs/google-play complet,
+/* Préparation Google Play (03/11/2026) — vérifications statiques, sans JDK ni SDK : dossier docs/google-play complet,
    registre de versions cohérent avec sw.js, script de release à arrêt immédiat, aucun secret de signature dans le dépôt,
    garde-fous .gitignore, cohérence des déclarations avec le manifeste Android. */
 const fs=require('fs'),path=require('path');
@@ -38,12 +38,16 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const ds=read('docs/google-play/data-safety-draft.md')+read('docs/google-play/families-compliance.md');
  T('Cohérence : INTERNET seule déclarée ; les documents affirment l’absence de micro, d’AD_ID et de publicité ; le manifeste les retire',JSON.stringify(perms)==='["android.permission.INTERNET"]'&&/RECORD_AUDIO.*absent|absent.*RECORD_AUDIO/s.test(ds)&&/AD_ID/.test(ds)&&/allowBackup="false"/.test(man),perms.join(','));
  const pa=read('docs/google-play/play-console-answers-draft.md');
- T('Réponses Play Console : chaque décision commerciale ou juridique ouverte est marquée « À DÉCIDER AVANT PUBLICATION »',(pa.match(/À DÉCIDER AVANT PUBLICATION/g)||[]).length>=4,String((pa.match(/À DÉCIDER AVANT PUBLICATION/g)||[]).length));
+ T('Réponses Play Console : V1 gratuite figée ; seules les décisions réellement dépendantes de la Console restent marquées',
+  /Gratuite ou payante[^\n]*\*\*gratuite\*\*/i.test(pa)&&/Prix \| \*\*gratuit pour la V1 actuelle\*\*/.test(pa)&&
+  /Pays \/ régions \| \*\*À DÉCIDER DANS PLAY CONSOLE\*\*/.test(pa)&&/Designed for Families[^\n]*À DÉCIDER DANS PLAY CONSOLE/.test(pa)&&
+  !pa.includes('À DÉCIDER AVANT PUBLICATION'),'');
  const pp=read('docs/google-play/privacy-policy-draft.md'),pub=read('docs/google-play/privacy-policy-public.html'),sl=read('docs/google-play/store-listing-fr.md');
  const privacyUrl='https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html';
- T('Google Play : identité publique/contact figés ; seuls identité légale et date restent à compléter dans la privacy publique',
-  pp.includes('UpFactory Apps')&&pp.includes('upfactory.apps@gmail.com')&&pp.includes('IDENTITÉ LÉGALE DU TITULAIRE')&&pp.includes('DATE DE PUBLICATION')&&!pp.includes('[À COMPLÉTER : ADRESSE POSTALE]')&&
-  pub.includes('UpFactory Apps')&&pub.includes('upfactory.apps@gmail.com')&&pub.includes('IDENTITÉ LÉGALE DU TITULAIRE')&&pub.includes('[DATE DE PUBLICATION]')&&!pub.includes('[À COMPLÉTER : ADRESSE POSTALE]')&&
+ T('Google Play : privacy publique finalisée, datée, sans placeholder juridique ; identité publique et contact présents',
+  pp.includes('Finot Académie')&&pp.includes('UpFactory Apps')&&pp.includes('upfactory.apps@gmail.com')&&pp.includes('3 novembre 2026')&&
+  pub.includes('Finot Académie')&&pub.includes('UpFactory Apps')&&pub.includes('upfactory.apps@gmail.com')&&pub.includes('3 novembre 2026')&&
+  !/IDENTITÉ LÉGALE DU TITULAIRE|DATE DE PUBLICATION|\[À COMPLÉTER/.test(pp+pub)&&
   sl.includes('upfactory.apps@gmail.com')&&sl.includes(privacyUrl),'');
  T('Identifiant : le candidat de production fr.finot.academie est documenté (audit, checklist) et le suffixe .dev du debug aussi',/fr\.finot\.academie/.test(read('docs/google-play/release-audit.md'))&&/\.dev/.test(read('docs/google-play/release-audit.md'))&&/App ID/i.test(read('docs/google-play/release-checklist.md')),'');
  return R;}
