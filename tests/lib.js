@@ -5,12 +5,14 @@ const http=require('http'),fs=require('fs'),path=require('path');
 const ROOT=path.resolve(__dirname,'..');
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.css':'text/css','.svg':'image/svg+xml','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8'};
 // opts.cacheControl : en-tête Cache-Control servi ('no-store' par défaut ; 'max-age=600' imite GitHub Pages).
+// Ports que Chromium refuse (net::ERR_UNSAFE_PORT) : un port aléatoire du système ne doit jamais en être un.
+const UNSAFE_PORTS=new Set([1,7,9,11,13,15,17,19,20,21,22,23,25,37,42,43,53,69,77,79,87,95,101,102,103,104,109,110,111,113,115,117,119,123,135,137,139,143,161,179,389,427,465,512,513,514,515,526,530,531,532,540,548,554,556,563,587,601,636,989,990,993,995,1719,1720,1723,2049,3659,4045,4190,5060,5061,6000,6566,6665,6666,6667,6668,6669,6679,6697,10080]);
 function serve(port=0,root=ROOT,opts={}){const CC=opts.cacheControl||'no-store';
   return new Promise(res=>{const srv=http.createServer((req,rsp)=>{
     let u=decodeURIComponent(req.url.split('?')[0]);if(u.endsWith('/'))u+='index.html';
     const f=path.join(root,u);if(!f.startsWith(root)||!fs.existsSync(f)||fs.statSync(f).isDirectory()){rsp.writeHead(404);rsp.end('not found');return;}
     rsp.writeHead(200,{'Content-Type':TYPES[path.extname(f)]||'application/octet-stream','Cache-Control':CC});fs.createReadStream(f).pipe(rsp);
-  });srv.listen(port,'127.0.0.1',()=>res({srv,url:`http://127.0.0.1:${srv.address().port}/`}));});
+  });const up=n=>srv.listen(port,'127.0.0.1',()=>{if(port===0&&UNSAFE_PORTS.has(srv.address().port)&&n<50){srv.close(()=>up(n+1));return;}res({srv,url:`http://127.0.0.1:${srv.address().port}/`});});up(0);});
 }
 function chromePath(){
   if(process.env.CHROME_PATH)return process.env.CHROME_PATH;
