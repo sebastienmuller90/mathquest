@@ -108,6 +108,9 @@ jobs:
       - name: Chat Finot — première bulle entièrement visible (320×568, 360×640, clavier ouvert, police agrandie)
         if: matrix.browser == 'chromium'
         run: node tests/finot-chat-initial-geometry.test.js
+      - name: Lien de confidentialité dans l’espace Parents (jamais côté enfant, hors ligne sans plantage)
+        if: matrix.browser == 'chromium'
+        run: node tests/parent-privacy-link.test.js
       - name: Carnet d’erreurs — missions de réparation
         if: matrix.browser == 'chromium'
         run: node tests/error-repair.test.js
