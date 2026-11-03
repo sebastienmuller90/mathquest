@@ -29,7 +29,7 @@ if(window.MQPlatform&&MQPlatform.isNative){
  // Première prise de contrôle (toute première visite) : rien à signaler. Changement suivant, même sans avoir rechargé
  // l'onglet : une nouvelle version vient d'être activée → bandeau.
  navigator.serviceWorker.addEventListener('controllerchange',()=>{refreshVersion();if(hadController)banner();hadController=true;});
- const reg=()=>navigator.serviceWorker.register('./sw.js').then(r=>{REG=r;LAST_CHECK=Date.now();refreshVersion();}).catch(()=>{});
+ const reg=()=>navigator.serviceWorker.register('./sw.js').then(r=>{REG=r;LAST_CHECK=Date.now();}).catch(()=>{});
  if(document.readyState==='complete')reg();else window.addEventListener('load',reg,{once:true});
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check(false);});
  refreshVersion();

@@ -78,11 +78,21 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  // ===== mise à jour réparée
  fs.writeFileSync(victim,keep);({srv,url}=await serve(PORT,site,{cacheControl:'max-age=600'}));
  await p.goto(url+'index.html',{waitUntil:'load'});await p.waitForTimeout(500);
- await p.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();await r.update();});
- // Le cache V3 peut exister avant la fin de l'activation et de clients.claim(). On attend donc
- // explicitement que le contrôleur de CETTE page réponde V3, sans délai fixe arbitraire.
- await p.evaluate(async v=>{const versionOfController=()=>new Promise(res=>{const ctl=navigator.serviceWorker.controller;if(!ctl)return res(null);const ch=new MessageChannel();let done=false;const finish=x=>{if(done)return;done=true;res(x);};ch.port1.onmessage=e=>finish(e.data&&e.data.version);ctl.postMessage({type:'version'},[ch.port2]);setTimeout(()=>finish(null),1000);});const t0=Date.now();while(Date.now()-t0<30000){const ks=await caches.keys(),r=await navigator.serviceWorker.getRegistration(),current=await versionOfController();if(ks.some(k=>k.includes(v))&&ks.filter(k=>k.startsWith('mathquest-')).length===1&&r.active&&!r.installing&&!r.waiting&&current===v)return;await new Promise(r=>setTimeout(r,250));}},V3);
+ await p.evaluate(async()=>{window.__mqControllerChange=new Promise(res=>navigator.serviceWorker.addEventListener('controllerchange',()=>res(true),{once:true}));const r=await navigator.serviceWorker.getRegistration();await r.update();});
+ // [attente-activation]
+ // On attend l'événement réel (controllerchange), pas un état déduit du cache : le cache V3 existe dès l'installation, bien avant l'activation.
+ // Aucun message n'est envoyé à l'ancien contrôleur pendant l'attente : s'il en reçoit un alors que le navigateur l'arrête pour activer le nouveau worker, il redémarre et l'activation reste bloquée.
+ // La durée de l'installation (pré-cache complet) varie avec la charge : la borne de 120 s ne sert qu'à ne pas rester suspendu si l'activation n'arrive jamais.
+ await p.evaluate(async v=>{const bound=ms=>new Promise(res=>setTimeout(()=>res(false),ms));
+  if(!(await Promise.race([window.__mqControllerChange,bound(120000)])))return;
+  const r=await navigator.serviceWorker.getRegistration();
+  if(r.active&&r.active.state!=='activated')await Promise.race([new Promise(res=>r.active.addEventListener('statechange',()=>{if(r.active.state==='activated')res(true);})),bound(30000)]);},V3);
+ // [/attente-activation]
  const ks3=await p.evaluate(async()=>(await caches.keys()).sort());const vFix=await verOf();
+ // Garde-fou déterministe (cause racine du test intermittent) : un message reçu par l'ANCIEN worker pendant qu'il est arrêté pour activer le nouveau le redémarre et bloque l'activation (nouveau worker « installed » indéfiniment).
+ // L'attente de l'activation ne doit donc jamais écrire à l'ancien contrôleur ; elle observe des événements (controllerchange) et des états.
+ const waitSrc=fs.readFileSync(__filename,'utf8').split('// [attente-activation]')[1].split('// [/attente-activation]')[0];
+ T('Attente de l’activation : aucun message envoyé à l’ancien contrôleur (sinon l’ancien worker redémarre et l’activation reste bloquée)',waitSrc.length>50&&!/postMessage|askVersion|verOf|versionOfController/.test(waitSrc),'extrait de '+waitSrc.length+' caractères'+(/postMessage/.test(waitSrc)?' : postMessage trouvé':''));
  T('Mise à jour réparée : la version suivante s’installe, un seul cache « mathquest- » (le reste, y compris le cache partiel de la tentative cassée, est supprimé)',ks3.filter(k=>k.startsWith('mathquest-')).length===1&&ks3.some(k=>k.includes(V3))&&vFix===V3&&ks3.includes('mqimg-lecons-v1'),ks3.join(', ')+' / '+vFix);
  // aucune boucle de rechargement après activation (la page reste stable)
  const lA=await p.evaluate(()=>+sessionStorage.getItem('mq_loads'));await p.waitForTimeout(3500);const lB=await p.evaluate(()=>+sessionStorage.getItem('mq_loads'));
