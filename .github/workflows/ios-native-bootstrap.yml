@@ -61,14 +61,25 @@ jobs:
         run: xcodebuild -version
 
       - name: Compiler sans signature pour simulateur
+        shell: bash
         run: |
+          set +e
           xcodebuild \
             -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Debug \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
-            build
+            build 2>&1 | tee /tmp/xcodebuild.log
+          code=${PIPESTATUS[0]}
+          set -e
+          if [ "$code" -ne 0 ]; then
+            echo '=== ERREURS XCODE ==='
+            grep -n -E 'error:|fatal error:|BUILD FAILED|The following build commands failed' /tmp/xcodebuild.log | tail -100 || true
+            echo '=== CONTEXTE FINAL XCODE ==='
+            tail -120 /tmp/xcodebuild.log || true
+            exit "$code"
+          fi
 
       - name: Revalider le packaging mobile
         run: node tests/mobile-package.test.js
