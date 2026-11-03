@@ -35,6 +35,7 @@
 !/tests/hooks.test.js
 !/tests/mobile-layout.test.js
 !/tests/pwa-update.test.js
+!/tests/pwa-register-race.test.js
 !/tests/scenarios.test.js
 !/tests/keyboard-a11y.test.js
 !/tests/finot-voice.test.js
