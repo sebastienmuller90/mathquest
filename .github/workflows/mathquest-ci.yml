@@ -105,6 +105,9 @@ jobs:
       - name: Voix de Finot en fin d'exercice
         if: matrix.browser == 'chromium'
         run: node tests/finot-voice.test.js
+      - name: Chat Finot — première bulle entièrement visible (320×568, 360×640, clavier ouvert, police agrandie)
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-chat-initial-geometry.test.js
       - name: Carnet d’erreurs — missions de réparation
         if: matrix.browser == 'chromium'
         run: node tests/error-repair.test.js
