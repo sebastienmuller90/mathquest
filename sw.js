@@ -8,7 +8,7 @@
    8.75.7 : nouveau cache pour livrer le repli TTS quand une voix native est refusée par le navigateur.
    8.75.8 : identité PWA Finot (manifeste orange/crème, icônes Finot « any » 192/512 et « maskable » 512) à livrer aux appareils installés.
    8.75.9 : espace Parents aligné sur la palette orange/crème Finot Académie. */
-const VERSION='8.75.10-sw-register-course-2026-11-03';
+const VERSION='8.75.11-finot-chat-geometry-2026-11-03';
 const CACHE='mathquest-'+VERSION;
 // Images des leçons et de l'atlas : trop nombreuses pour être préchargées. Mises en cache au premier affichage, dans un
 // cache à part qui survit aux changements de version (son nom ne commence pas par « mathquest- »).

@@ -157,7 +157,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .fch-head{display:flex;align-items:center;gap:10px}
 .fch-head img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 35%}
 .fch-head b{font-family:'Fredoka',sans-serif;font-size:20px;flex:1}
-.fch-body{flex:1;min-height:min(6rem,30vh);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px 2px;margin:6px 0}
+.fch-body{flex:1;min-height:min(9rem,30vh);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:10px 2px;margin:6px 0}
 .fch-msg{max-width:85%;padding:10px 14px;border-radius:16px;line-height:1.4;font-size:15px}
 .fch-msg.finot{align-self:flex-start;background:var(--surface2);border-bottom-left-radius:4px}
 .fch-msg.you{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px}
