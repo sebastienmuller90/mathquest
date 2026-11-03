@@ -1,24 +1,23 @@
-# Finot Académie — Politique de confidentialité (BROUILLON, non publié)
+# Finot Académie — Politique de confidentialité (source de référence)
 
-> **Statut : brouillon à compléter par l'éditeur avant publication.**
-> Vérifié le **02/11/2026** contre la V1 Android actuelle.
-> Le nom public éditeur et l'e-mail de contact sont confirmés ; l'identité légale du titulaire et la date de publication restent à renseigner.
-> L'adresse légale demandée par Google pour le compte développeur personnel reste renseignée directement dans Google Payments / Play Console et n'est pas publiée dans cette politique.
+> **Statut : contenu finalisé pour la V1 Android.**
+> Vérifié le **03/11/2026** contre le comportement local-only de la V1 et les exigences Google Play publiques applicables.
+> Le nom public éditeur et l'e-mail de contact sont confirmés. L'identité légale et l'adresse demandées pour la vérification du compte développeur restent renseignées directement dans Google Payments / Play Console et ne sont pas des champs nécessaires de cette page publique.
 
-Une version HTML statique prête à héberger après remplacement des derniers placeholders est disponible dans `privacy-policy-public.html`.
+La version HTML publique correspondante est `privacy-policy-public.html`.
 
 ---
 
 ## Politique de confidentialité de Finot Académie
 
-Dernière mise à jour : `[À COMPLÉTER : DATE DE PUBLICATION]`
+Dernière mise à jour : **3 novembre 2026**
 
 ### 1. Qui sommes-nous ?
 
 Finot Académie est une application éducative du CP à la 3e publiée sous le nom public **UpFactory Apps**.
 
+- **Application** : Finot Académie
 - **Nom public éditeur** : UpFactory Apps
-- **Responsable / identité légale** : `[À COMPLÉTER : IDENTITÉ LÉGALE DU TITULAIRE]`
 - **Contact confidentialité / support** : `upfactory.apps@gmail.com`
 
 ### 2. L'essentiel
@@ -82,15 +81,13 @@ Toute modification sera publiée à la même adresse avec une nouvelle date de m
 
 ---
 
-## Mise en ligne — reste à faire par l'éditeur
+## Mise en ligne — contrôles restants
 
-1. Compléter l'identité légale du titulaire et la date dans `privacy-policy-public.html`.
-2. Vérifier l'URL HTTPS publique GitHub Pages : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`.
-3. Renseigner cette URL dans Play Console seulement après vérification publique.
-4. Ajouter ensuite cette même URL dans l'espace parents de l'application.
-5. Vérifier que la page publique et `data-safety-draft.md` décrivent exactement le même comportement.
-6. Ne jamais publier la page avec les placeholders juridiques restants.
+1. Laisser GitHub Pages redéployer `main` après fusion.
+2. Ouvrir sans authentification : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`.
+3. Vérifier le rendu mobile et l'absence de placeholder.
+4. Reporter exactement cette URL dans Play Console.
+5. Ajouter la même URL dans l'espace Parents de l'application avant le build final.
+6. Revalider `data-safety-draft.md` contre l'AAB signé final.
 
-URL technique prévue : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
-
-**Aucune publication de cette politique n'est effectuée automatiquement par le dépôt tant que les informations juridiques restantes ne sont pas complétées.**
+URL finale prévue : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
