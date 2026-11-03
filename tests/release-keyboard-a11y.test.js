@@ -288,6 +288,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    const g=await q.evaluate(()=>[...document.querySelectorAll('[data-pob="gender"]')].map(e=>e.dataset.value+'='+e.getAttribute('aria-pressed')+'/'+e.classList.contains('sel')));
    if(g.join()!=='girl=false/false,boy=true/true')tg.push('assistant genre : '+g.join());
    await q.focus('[data-pob="gender"][data-value="girl"]');await q.keyboard.press('Space');
+   await q.waitForFunction(()=>{const e=document.querySelector('[data-pob="gender"][data-value="girl"]');return e&&e.getAttribute('aria-pressed')==='true';},null,{timeout:5000}).catch(()=>{});
    const g2=await q.evaluate(()=>[...document.querySelectorAll('[data-pob="gender"]')].map(e=>e.dataset.value+'='+e.getAttribute('aria-pressed')));
    if(g2.join()!=='girl=true,boy=false')tg.push('assistant genre au clavier : '+g2.join());
    const aria=await q.evaluate(ARIASTATE);if(aria.length)tg.push(...aria);
