@@ -12,10 +12,31 @@ adb start-server
 adb devices -l
 ```
 
-Le téléphone doit apparaître avec l'état `device`. Si plusieurs appareils sont connectés, définir :
+Le téléphone doit apparaître avec l'état `device`.
+
+### Un seul téléphone connecté
+
+Détecter automatiquement son numéro de série puis vérifier la valeur obtenue :
 
 ```cmd
-set SERIAL=REMPLACER_PAR_LE_SERIAL
+set "SERIAL="
+for /f "skip=1 tokens=1,2" %A in ('adb devices') do @if "%B"=="device" if not defined SERIAL set "SERIAL=%A"
+echo SERIAL=%SERIAL%
+```
+
+Si `SERIAL=` reste vide, ne pas continuer : vérifier le câble, le débogage USB et l'autorisation affichée sur le téléphone.
+
+### Plusieurs appareils connectés
+
+Choisir explicitement le numéro de série affiché par `adb devices -l` :
+
+```cmd
+set "SERIAL=REMPLACER_PAR_LE_SERIAL"
+```
+
+Dans les deux cas, toutes les commandes suivantes utilisent `%SERIAL%` :
+
+```cmd
 adb -s %SERIAL% shell getprop ro.product.manufacturer
 adb -s %SERIAL% shell getprop ro.product.model
 adb -s %SERIAL% shell getprop ro.build.version.release

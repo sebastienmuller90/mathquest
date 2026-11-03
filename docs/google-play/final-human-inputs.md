@@ -50,11 +50,14 @@ Ne jamais déclarer la page comme politique finale avec des éléments entre cro
 
 ## 3. Distribution
 
-Décisions éditeur à confirmer dans Play Console :
+Décisions **déjà fixées** :
+
+- tranches d'âge Play Console : **6–8 ans, 9–12 ans et 13–15 ans** ;
+- application validée techniquement sur téléphone et tablette Android.
+
+Décisions/actions qui restent à confirmer dans Play Console :
 
 - pays/régions de distribution au lancement ;
-- tranches d'âge exactes sélectionnées ;
-- disponibilité téléphone/tablette ;
 - test fermé 12 testeurs / 14 jours si le compte personnel est soumis à cette exigence.
 
 ## 4. Signature
@@ -86,8 +89,8 @@ La procédure détaillée CMD/ADB est dans `physical-device-validation.md`.
 
 - icône Google Play finale 512×512 : **techniquement prête** ;
 - Feature Graphic 1024×500 : candidat technique prêt, validation visuelle finale à faire ;
-- sélection finale des captures téléphone ;
-- sélection finale des captures tablette.
+- sélection commerciale : **8 captures téléphone + 8 captures tablette déjà définies** ;
+- régénérer ces captures depuis le `main` consolidé puis figer les PNG réellement téléversés.
 
 Le générateur de captures reproductibles existe déjà dans le dépôt après la PR #49.
 
