@@ -490,3 +490,4 @@ body.young .choice kbd{display:none}
 .mq-try summary::-webkit-details-marker,.mq-adult summary::-webkit-details-marker{display:none}
 .mq-try summary::before,.mq-adult summary::before{content:'▸';display:inline-block;margin-right:8px;transition:transform .2s}
 .mq-try details[open]>summary::before,.mq-adult[open]>summary::before{transform:rotate(90deg)}
+.privacy-link{display:inline-flex;align-items:center;min-height:48px;font-weight:700}
