@@ -1,0 +1,50 @@
+require "json"
+
+ROOT = File.expand_path("..", __dir__)
+CONFIG_PATH = File.join(ROOT, "upfactory.app.json")
+UI.user_error!("upfactory.app.json introuvable") unless File.exist?(CONFIG_PATH)
+UPFACTORY = JSON.parse(File.read(CONFIG_PATH))
+
+def required_env(name)
+  value = ENV[name]
+  UI.user_error!("Variable requise absente: #{name}") if value.nil? || value.empty?
+  value
+end
+
+def android_store_config
+  ((UPFACTORY["store"] || {})["android"] || {})
+end
+
+def newest_artifact(pattern)
+  files = Dir.glob(File.expand_path(pattern, ROOT)).select { |path| File.file?(path) }
+  UI.user_error!("Aucun artifact trouvé: #{pattern}") if files.empty?
+  files.max_by { |path| File.mtime(path) }
+end
+
+platform :android do
+  desc "Upload de l'AAB Finot Académie vers Google Play"
+  lane :deploy do
+    cfg = android_store_config
+    artifact_pattern = cfg["artifact"] || "artifacts/google-play/*.aab"
+    package_name = cfg["packageName"] || UPFACTORY["id"]
+
+    options = {
+      aab: newest_artifact(artifact_pattern),
+      package_name: package_name,
+      json_key_data: required_env("GOOGLE_PLAY_SERVICE_ACCOUNT_JSON"),
+      track: cfg["track"] || "internal",
+      release_status: cfg["releaseStatus"] || "draft"
+    }
+
+    metadata_path = cfg["metadataPath"]
+    if metadata_path && !metadata_path.empty?
+      options[:metadata_path] = File.expand_path(metadata_path, ROOT)
+    else
+      options[:skip_upload_metadata] = true
+      options[:skip_upload_images] = true
+      options[:skip_upload_screenshots] = true
+    end
+
+    upload_to_play_store(**options)
+  end
+end

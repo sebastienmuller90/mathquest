@@ -1,0 +1,100 @@
+name: UpFactory Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Autoriser réellement l'envoi sur Google Play
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Finot Académie
+        uses: actions/checkout@v7
+
+      - name: Checkout UpFactory Publisher
+        uses: actions/checkout@v7
+        with:
+          repository: sebastienmuller90/upfactory-publisher
+          ref: 193597252494f529b454e0a0bb03c31c18fad1ec
+          token: ${{ secrets.UPFACTORY_PUBLISHER_TOKEN }}
+          path: .upfactory/publisher
+          persist-credentials: false
+
+      - name: Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Android SDK 36
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+      - name: Ruby 3.4.12
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.12'
+
+      - name: Installer Fastlane épinglé
+        run: BUNDLE_GEMFILE=Gemfile.upfactory bundle install --jobs 4 --retry 3
+
+      - name: Vérifier l'environnement natif
+        shell: bash
+        run: |
+          set -euo pipefail
+          java -version
+          node --version
+          sdkmanager --list_installed
+
+      - name: Restaurer la clé d'upload Android
+        shell: bash
+        env:
+          KEYSTORE_B64: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_B64 }}
+        run: |
+          set -euo pipefail
+          test -n "$KEYSTORE_B64"
+          mkdir -p .upfactory/secrets
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > .upfactory/secrets/android-upload.jks
+          test -s .upfactory/secrets/android-upload.jks
+
+      - name: Exécuter la release UpFactory Android
+        shell: bash
+        env:
+          BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile.upfactory
+          UPFACTORY_ANDROID_KEYSTORE: ${{ github.workspace }}/.upfactory/secrets/android-upload.jks
+          UPFACTORY_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_PASSWORD }}
+          UPFACTORY_ANDROID_KEY_ALIAS: ${{ secrets.UPFACTORY_ANDROID_KEY_ALIAS }}
+          UPFACTORY_ANDROID_KEY_PASSWORD: ${{ secrets.UPFACTORY_ANDROID_KEY_PASSWORD }}
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          set -euo pipefail
+          CONFIRM=""
+          if [ "${{ inputs.publish }}" = "true" ]; then CONFIRM="--confirm-publish"; fi
+          node .upfactory/publisher/bin/upfactory.mjs release --app . --platform android $CONFIRM
+
+      - name: Publier le rapport UpFactory
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: upfactory-finot-android-${{ github.sha }}
+          path: |
+            artifacts/upfactory/*.json
+            artifacts/google-play/release-summary.json
+          if-no-files-found: ignore
+          retention-days: 14

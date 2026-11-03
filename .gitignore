@@ -154,6 +154,19 @@
 !/tests/store-screenshots.test.js
 !/tests/google-play-release.test.js
 !/tests/profile-delete-purge.test.js
+# UpFactory Publisher : orchestration de release uniquement. Les secrets/artefacts générés restent ignorés.
+!/upfactory.app.json
+!/Gemfile.upfactory
+!/fastlane/
+!/fastlane/Fastfile
+!/UPFACTORY_RELEASE.cmd
+!/.github/workflows/upfactory-release.yml
+!/tests/upfactory-integration.test.js
+Gemfile.upfactory.lock
+fastlane/report.xml
+fastlane/README.md
+/.upfactory/
+/artifacts/
 # Garde-fou : clés de signature JAMAIS versionnées, même si un fichier est déposé dans un dossier autorisé ci-dessus.
 *.jks
 *.keystore
