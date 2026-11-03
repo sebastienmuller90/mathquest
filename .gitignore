@@ -39,6 +39,7 @@
 !/tests/scenarios.test.js
 !/tests/keyboard-a11y.test.js
 !/tests/finot-voice.test.js
+!/tests/serve-safe-port.test.js
 !/tests/course-depth.test.js
 !/tests/course-depth-tts-lang.test.js
 !/tests/course-depth-lang-markup.test.js

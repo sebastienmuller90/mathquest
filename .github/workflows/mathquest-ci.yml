@@ -257,6 +257,8 @@ jobs:
         run: node tests/pwa-identity.test.js
       - name: Mise à jour de l’appli installée (N → N+1) et vrai démarrage hors ligne (serveur arrêté)
         run: node tests/pwa-update.test.js
+      - name: Harnais de test — serve() ne choisit jamais un port interdit par Chromium
+        run: node tests/serve-safe-port.test.js
       - name: Audit navigateur intégral
         run: node tests/browser-audit.mjs
       - name: Audit des 3 niveaux et de Finot
