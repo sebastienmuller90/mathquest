@@ -185,3 +185,4 @@ fastlane/README.md
 keystore.properties
 google-services.json
 finot-release.env*
+!/docs/RELEASE_100_PROGRESS.md
