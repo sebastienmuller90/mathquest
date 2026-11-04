@@ -69,7 +69,9 @@ jobs:
           exit 1
       - name: "Projet iOS (Capacitor) : confidentialité, identité, icône sans alpha, aucun secret Apple (statique, sans Xcode)"
         if: matrix.browser == 'chromium'
-        run: node tests/ios-config.test.js
+        run: |
+          node tools/ios-static-check.mjs
+          node tests/ios-config.test.js
       - name: Mise en page mobile réelle (5 tailles, géométrie, aucun élément masqué)
         run: node tests/mobile-layout.test.js
       - name: Architecture (points d’extension, réponse unique, mission isolée)

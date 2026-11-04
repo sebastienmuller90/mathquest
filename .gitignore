@@ -166,6 +166,7 @@
 !/tests/pwa-identity.test.js
 !/tools/store-screenshots.mjs
 !/tools/android-cdp.mjs
+!/tools/ios-static-check.mjs
 !/tests/store-screenshots.test.js
 !/tests/google-play-release.test.js
 !/tests/profile-delete-purge.test.js
@@ -200,3 +201,6 @@ GoogleService-Info.plist
 ExportOptions.plist
 !/docs/RELEASE_100_PROGRESS.md
 !/tests/lib-goto-retry.test.js
+# Audit de sécurité interne (04/11/2026) : documentation seule, aucun secret.
+!/docs/security/
+!/docs/security/**
