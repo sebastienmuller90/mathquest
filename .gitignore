@@ -42,6 +42,7 @@
 !/tests/serve-safe-port.test.js
 !/tests/finot-chat-initial-geometry.test.js
 !/tests/parent-privacy-link.test.js
+!/tests/parent-attempt-lock.test.js
 !/tests/parent-adult-gate.test.js
 !/tests/course-depth.test.js
 !/tests/course-depth-tts-lang.test.js

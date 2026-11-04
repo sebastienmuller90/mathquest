@@ -23,5 +23,23 @@ function answer(v){const t=String(v==null?'':v).replace(/\s+/g,'');const ok=!!CH
 function adultOk(){return Date.now()<adultUntil;}
 function adultConsume(){adultUntil=0;CH=null;}
 
-window.MQParentGuard=Object.freeze({randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume});
+/* ---------- Limitation PERSISTANTE des tentatives (S-02) ---------- */
+/* État au niveau de l'APPAREIL (clé propre, jamais dans un profil) : il survit au rechargement et au redémarrage.
+   5 échecs consécutifs sont tolérés ; ensuite verrou croissant : 30 s, 1 min, 5 min, 15 min, puis 1 h. Un succès remet tout à zéro.
+   Horloge : un retour en arrière ne prolonge jamais le verrou au-delà de sa durée initiale (il est recalé sur « maintenant + durée »),
+   et ne le lève pas. Limite assumée : avancer l'horloge de l'appareil lève le verrou — ce garde-fou arrête l'essai en rafale par un
+   enfant, pas un adulte qui manipule les réglages du système. */
+const LOCK_KEY='mathquest_parentlock_v1',FREE=5,STEPS=[30e3,60e3,300e3,900e3,3600e3];
+const nn=v=>Number.isFinite(+v)&&+v>0?+v:0;
+function readLock(){try{const o=JSON.parse(localStorage.getItem(LOCK_KEY)||'null');if(o&&typeof o==='object')return {fails:Math.min(1e6,Math.floor(nn(o.fails))),until:nn(o.until),wait:Math.min(STEPS[STEPS.length-1],nn(o.wait))};}catch(e){}return {fails:0,until:0,wait:0};}
+function writeLock(o){try{localStorage.setItem(LOCK_KEY,JSON.stringify(o));}catch(e){}}
+function lockState(){const o=readLock(),now=Date.now();let remain=o.until-now;
+ if(remain>o.wait){remain=o.wait;o.until=now+o.wait;writeLock(o);}  // horloge reculée : recalage, jamais d'enfermement prolongé
+ return {locked:remain>0,remainMs:Math.max(0,remain),fails:o.fails};}
+function failure(){const o=readLock(),now=Date.now();o.fails+=1;if(o.fails>=FREE){o.wait=STEPS[Math.min(o.fails-FREE,STEPS.length-1)];o.until=now+o.wait;}writeLock(o);return lockState();}
+function success(){try{localStorage.removeItem(LOCK_KEY);}catch(e){}}
+function fmtDuration(ms){const s=Math.max(1,Math.ceil(ms/1000));if(s<60)return s+(s>1?' secondes':' seconde');const m=Math.ceil(s/60);if(m<60)return m+(m>1?' minutes':' minute');const h=Math.ceil(m/60);return h+(h>1?' heures':' heure');}
+function lockMessage(st){return 'Trop d’essais pour l’instant. Réessaie dans '+fmtDuration(st.remainMs)+'.';}
+
+window.MQParentGuard=Object.freeze({randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume,lockState,failure,success,lockMessage});
 })();
