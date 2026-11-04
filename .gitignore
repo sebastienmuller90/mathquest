@@ -152,6 +152,11 @@
 !/docs/
 !/docs/google-play/
 !/docs/google-play/**
+# Conformité stores et monétisation V1.1 (04/11/2026) : documentation seule.
+!/docs/stores/
+!/docs/stores/verification-conformite-2026-11.md
+!/docs/monetization/
+!/docs/monetization/architecture-v1.1.md
 !/tools/
 !/tools/google-play-release.mjs
 !/tools/build-google-play-release.cmd
@@ -193,3 +198,4 @@ finot-release.env*
 *.provisionprofile
 GoogleService-Info.plist
 ExportOptions.plist
+!/docs/RELEASE_100_PROGRESS.md
