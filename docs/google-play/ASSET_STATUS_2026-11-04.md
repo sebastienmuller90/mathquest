@@ -23,7 +23,7 @@ Base : `main` = `1e7bbd0a143cfeb4bf1bd06f9609b1f7e53fe56d` (CI verte). Version d
 
 Source : `tools/store-screenshots.mjs`, APK debug construit depuis `1e7bbd0`, profil entièrement fictif « Léo » CM1, barre d'état Android en mode démonstration. Téléphone : AVD Pixel API 36, 1080×2400. Tablette : AVD Pixel Tablet API 36, 2560×1600. 11 écrans par format, aucune capture en double (22 empreintes distinctes), contrôle visuel du chat Finot et de l'espace Parents sur les deux formats.
 
-Capture du chat Finot : la réponse est désormais affichée en entier (correctif du défilement dans le script de capture).
+Chat Finot (écran 09) : sur téléphone, la zone de messages est courte ; le script place la question en haut (aucune bulle coupée en haut, contrainte du test `store-chat-framing`), si bien que la fin de la réponse est rognée par les suggestions. La capture reste fidèle à l’application réelle (le fil défile). Sur tablette, tout le fil est visible.
 
 | Fichier | SHA-256 |
 | --- | --- |
@@ -35,7 +35,7 @@ Capture du chat Finot : la réponse est désormais affichée en entier (correcti
 | `phone/06-parcours.png` | `cafd6ba18170083735863716e68892852a4dd694b342fc1fc4f846b4764d4bad` |
 | `phone/07-lecture.png` | `99f823399df0e6f37d2c05cd343a3afb27e1f1c44d321f7b00ab7bf93f941001` |
 | `phone/08-dictee.png` | `5a279bce97448a517410cd74013f4f4127c097d4c8a4f95b11a6f3e5c47363f2` |
-| `phone/09-finot-chat.png` | `e2dba281fb1bd453fd9711dc70b380cd1e456b807166630c697808debe6a77c4` |
+| `phone/09-finot-chat.png` | `66b0120e179b2a63546a6a939b43ae5b399c7654f9a68ea09b9e9e27ad29a650` |
 | `phone/10-progression.png` | `b60e528f96bfdf1022eb837e6878e6e7d5eda493cc2ae7c03a8b3e250aa8f661` |
 | `phone/11-espace-parents.png` | `b0fbe9490db9b2c73f818604a7041e94324eb441e04247635dfa3a1945768af6` |
 | `tablet/01-tablet-accueil.png` | `15cb74c8911536bb583880a3f8a18670e760a14f042fdc535ee071df7c3c200c` |
