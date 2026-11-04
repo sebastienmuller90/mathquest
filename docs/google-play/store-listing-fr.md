@@ -100,7 +100,7 @@ Le titre reste **Finot Académie** : ne pas ajouter de suite de mots-clés au no
 - Public cible Play Console recommandé pour le produit CP → 3e : **6–8 ans, 9–12 ans et 13–15 ans**. Ne pas cocher des tranches plus jeunes ou plus âgées uniquement pour élargir artificiellement la diffusion.
 - Nom public éditeur : **UpFactory Apps**.
 - E-mail public éditeur / support : **upfactory.apps@gmail.com**.
-- Politique de confidentialité : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — contenu finalisé et daté du 3 novembre 2026 ; vérifier simplement l'accès public après déploiement GitHub Pages.
+- Politique de confidentialité : `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — contenu finalisé et daté du 4 novembre 2026 (republier l'URL publique) ; vérifier simplement l'accès public après déploiement GitHub Pages.
 - Pays/régions : à sélectionner dans Play Console au lancement.
 
 Les éléments restant à fournir sont regroupés dans `docs/google-play/final-human-inputs.md`.

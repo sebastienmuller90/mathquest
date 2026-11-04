@@ -114,6 +114,9 @@ jobs:
       - name: Lien de confidentialité dans l’espace Parents (jamais côté enfant, hors ligne sans plantage)
         if: matrix.browser == 'chromium'
         run: node tests/parent-privacy-link.test.js
+      - name: Politique de confidentialité publique — données personnelles déclarées
+        if: matrix.browser == 'chromium'
+        run: node tests/privacy-policy-data.test.js
       - name: Espace Parents — empreinte salée du code et migration de l’ancien hachage
         if: matrix.browser == 'chromium'
         run: node tests/parent-code-hash.test.js

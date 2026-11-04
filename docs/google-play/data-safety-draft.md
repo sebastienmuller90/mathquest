@@ -17,7 +17,7 @@ tout ce que Finot Académie V1 mémorise.
 
 | Domaine | Constat | Statut |
 |---|---|---|
-| Appels réseau de l'application | Un seul `fetch` applicatif dans tout `js/` : le suivi parent distant (`js/app-state.js`, appel RPC Supabase). Le service worker ne fait que recharger les fichiers de l'app sur sa propre origine. | voir ligne suivante |
+| Appels réseau de l'application | Deux `fetch` applicatifs dans `js/` : le suivi parent distant, désactivé (`js/app-state.js`, appel RPC Supabase, jamais émis sans configuration), et la lecture de `finot-package.json` sur la même origine pour afficher la version (`js/app-pwa.js`). Le service worker ne fait que recharger les fichiers de l'app sur sa propre origine. | voir ligne suivante |
 | Suivi parent distant | **Désactivé dans le binaire** : `MQRemoteSync.configured()` exige un objet `window.FINOT_REMOTE_SYNC` activé, une URL `*.supabase.co` et une clé publiable. Aucun fichier du dépôt ne définit cet objet (`index.html`, `parent.html`, `js/remote-sync-config.js` : valeurs par défaut vides). L'écran parent affiche « Suivi à distance : non activé dans cette version ». | OPTIONNEL / DÉSACTIVÉ |
 | Statistiques d'usage | `js/analytics.js` : aucun fournisseur branché, aucun accord parent par défaut, aucun `fetch`/`sendBeacon`. | NON UTILISÉ (aucun envoi) |
 | Achats / droits Premium | `js/entitlements.js` : interface abstraite, aucun fournisseur de paiement branché, aucun `fetch`. | NON UTILISÉ |
@@ -31,7 +31,7 @@ tout ce que Finot Académie V1 mémorise.
 | Sauvegarde Android | `allowBackup=false`, règles `data_extraction_rules` excluant sauvegarde cloud **et** transfert d'appareil à appareil. | LOCAL UNIQUEMENT |
 
 Données mémorisées localement (`localStorage` de la WebView, origine `https://localhost`) :
-prénom saisi par l'utilisateur, genre (choix d'assistant), niveau scolaire, compagnon choisi, réponses d'onboarding (niveau déclaré,
+prénom saisi par l'utilisateur, genre (choix proposé à la création du profil), date de naissance (facultative), niveau scolaire, compagnon choisi, réponses d'onboarding (niveau déclaré,
 confiance, aide souhaitée, objectif, rythme), progression, scores, erreurs, historique d'activités, préférences (thème, son,
 mode dys), code parent (haché localement) et clé de récupération, réglages. Aucune donnée n'est lue sur l'appareil (pas de
 contacts, photos, localisation, identifiants).
@@ -52,8 +52,8 @@ Tous les types ci-dessous sont **non collectés** et **non partagés** ; ils son
 
 | Type de données Google | Collecté | Partagé | Obligatoire / facultatif | Finalité | Traitement | Chiffrement | Suppression |
 |---|---|---|---|---|---|---|---|
-| Nom (prénom saisi) | Non | Non | Facultatif de fait (surnom libre) | Personnaliser l'app | Local uniquement | Stockage privé de l'app (sandbox Android) ; pas de chiffrement applicatif | Suppression du profil / désinstallation |
-| Informations personnelles : âge, genre | Non | Non | Facultatif | Adapter le niveau | Local | idem | idem |
+| Nom (prénom saisi) | Non | Non | Demandé à la création du profil (surnom libre recommandé) | Personnaliser l'app | Local uniquement | Stockage privé de l'app (sandbox Android) ; pas de chiffrement applicatif | Suppression du profil / désinstallation |
+| Informations personnelles : date de naissance (facultative), genre (demandé à la création du profil) | Non | Non | Date de naissance facultative ; genre demandé | Adapter les explications et les formulations, message d'anniversaire | Local | idem | idem |
 | Activité dans l'application (progression, scores, historique) | Non | Non | Obligatoire au fonctionnement | Pédagogie, révisions | Local | idem | idem |
 | Identifiants (appareil, publicitaire, compte) | Non | Non | — | — | Aucun lu | — | — |
 | Localisation, contacts, photos, fichiers, audio, SMS, calendrier | Non | Non | — | — | Aucun lu | — | — |
