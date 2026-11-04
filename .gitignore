@@ -166,6 +166,7 @@
 !/tests/pwa-identity.test.js
 !/tools/store-screenshots.mjs
 !/tools/android-cdp.mjs
+!/tools/ios-static-check.mjs
 !/tests/store-screenshots.test.js
 !/tests/google-play-release.test.js
 !/tests/profile-delete-purge.test.js
