@@ -199,3 +199,4 @@ finot-release.env*
 GoogleService-Info.plist
 ExportOptions.plist
 !/docs/RELEASE_100_PROGRESS.md
+!/tests/lib-goto-retry.test.js
