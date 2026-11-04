@@ -89,3 +89,16 @@ Le générateur de captures reproductibles existe déjà dans le dépôt après 
 ## 7. Source de suivi
 
 Le suivi global de la release est centralisé dans l'issue GitHub `#51` : **Release Google Play — checklist finale Finot Académie**.
+
+## 8. Compléments ajoutés le 04/11/2026
+
+Décisions encore manquantes, à ne jamais inventer (voir `play-console-checklist-ordonnee.md`) :
+
+- type de compte développeur (personnel ou organisation) : détermine l'application du test fermé 12/14 ;
+- statut « trader » (Digital Services Act) et affichage public éventuel de l'adresse ;
+- vérification des développeurs Android / enregistrement du nom de paquet `fr.finot.academie` ;
+- pays/régions de distribution ;
+- tags du Store (liste fermée de la Console) ;
+- téléphone et site web publics (facultatifs) ;
+- candidature facultative au programme « Designed for Families » ;
+- validation visuelle humaine de la Feature Graphic et relecture des textes anglais (`store-listing-en.md`, `release-notes-en.md`).

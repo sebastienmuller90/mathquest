@@ -13,7 +13,7 @@ Finot **n'est pas** un navigateur vers un site distant. Vérifié :
 - `capacitor.config.json` : `webDir: "www"`, **aucun** `server.url` ; origine figée `https://localhost` (assets locaux) ;
 - le paquet web (`index.html`, `js/`, `data/`, `fonts/`, CSS) est copié dans `android/app/src/main/assets/public` par `cap sync`
   et embarqué dans l'AAB (`assets/public/…`, environ 1 900 fichiers) ;
-- le seul appel réseau applicatif vers un serveur extérieur est le suivi parent distant, **désactivé** (le seul autre `fetch` lit un fichier de version sur la même origine) (voir `data-safety-draft.md` §2) ;
+- le seul appel réseau vers un serveur distant du dépôt est le suivi parent distant, **désactivé** (les autres `fetch` sont de même origine : fichiers locaux de l'app) (voir `data-safety-draft.md` §2) ;
 - recette émulateur en **mode avion** : démarrage complet, profil et exercices fonctionnels (test « Démarrage hors ligne »).
 
 Conséquence : fonctionnement **hors ligne par défaut**, contenu pédagogique embarqué.

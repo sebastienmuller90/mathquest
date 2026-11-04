@@ -26,7 +26,7 @@ URL technique prévue :
 
 Avant de la déclarer comme politique définitive dans Play Console :
 
-- renseigner l'identité légale exacte du titulaire ;
+- (aucune identité légale n'est requise dans la politique : elle identifie l'éditeur public UpFactory Apps et `upfactory.apps@gmail.com`, voir `final-human-inputs.md` §1) ;
 - fixer la date de publication ;
 - laisser GitHub Pages publier le `main` final ;
 - ouvrir l'URL sans authentification et vérifier son rendu mobile ;
@@ -35,6 +35,13 @@ Avant de la déclarer comme politique définitive dans Play Console :
 L'adresse légale du compte personnel doit être renseignée dans Google Payments / Play Console lorsque Google la demande, mais elle n'est pas publiée dans la privacy uniquement pour cette raison.
 
 Voir `final-human-inputs.md`.
+
+### 2 bis. Points à vérifier dans la Console (ajoutés le 04/11/2026)
+
+- vérification des développeurs Android / enregistrement du nom de paquet `fr.finot.academie` (G13 de `docs/stores/verification-conformite-2026-11.md`) ;
+- statut « trader » (Digital Services Act) pour l'UE : **décision humaine**, source Google non confirmée (G14).
+
+L'ordre exact écran par écran est dans `play-console-checklist-ordonnee.md`.
 
 ### 3. Déclarer Publicités
 

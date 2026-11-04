@@ -17,7 +17,7 @@ tout ce que Finot Académie V1 mémorise.
 
 | Domaine | Constat | Statut |
 |---|---|---|
-| Appels réseau de l'application | Deux `fetch` applicatifs dans `js/` : le suivi parent distant, désactivé (`js/app-state.js`, appel RPC Supabase, jamais émis sans configuration), et la lecture de `finot-package.json` sur la même origine pour afficher la version (`js/app-pwa.js`). Le service worker ne fait que recharger les fichiers de l'app sur sa propre origine. | voir ligne suivante |
+| Appels réseau de l'application | Un seul `fetch` vers un serveur distant dans tout `js/` : le suivi parent distant (`js/app-state.js`, appel RPC Supabase, dupliqué dans `parent.html`). Les autres `fetch` sont de même origine (`js/app-pwa.js` lit `finot-package.json` local ; `sw.js` recharge les fichiers de l'app) ; aucune URL `http(s)` externe n'est présente dans `index.html` ni `sw.js` (vérifié le 04/11/2026). Le service worker ne fait que recharger les fichiers de l'app sur sa propre origine. | voir ligne suivante |
 | Suivi parent distant | **Désactivé dans le binaire** : `MQRemoteSync.configured()` exige un objet `window.FINOT_REMOTE_SYNC` activé, une URL `*.supabase.co` et une clé publiable. Aucun fichier du dépôt ne définit cet objet (`index.html`, `parent.html`, `js/remote-sync-config.js` : valeurs par défaut vides). L'écran parent affiche « Suivi à distance : non activé dans cette version ». | OPTIONNEL / DÉSACTIVÉ |
 | Statistiques d'usage | `js/analytics.js` : aucun fournisseur branché, aucun accord parent par défaut, aucun `fetch`/`sendBeacon`. | NON UTILISÉ (aucun envoi) |
 | Achats / droits Premium | `js/entitlements.js` : interface abstraite, aucun fournisseur de paiement branché, aucun `fetch`. | NON UTILISÉ |

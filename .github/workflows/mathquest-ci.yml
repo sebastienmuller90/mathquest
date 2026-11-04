@@ -69,7 +69,9 @@ jobs:
           exit 1
       - name: "Projet iOS (Capacitor) : confidentialité, identité, icône sans alpha, aucun secret Apple (statique, sans Xcode)"
         if: matrix.browser == 'chromium'
-        run: node tests/ios-config.test.js
+        run: |
+          node tools/ios-static-check.mjs
+          node tests/ios-config.test.js
       - name: Mise en page mobile réelle (5 tailles, géométrie, aucun élément masqué)
         run: node tests/mobile-layout.test.js
       - name: Architecture (points d’extension, réponse unique, mission isolée)
@@ -111,6 +113,9 @@ jobs:
       - name: Chat Finot — première bulle entièrement visible (320×568, 360×640, clavier ouvert, police agrandie)
         if: matrix.browser == 'chromium'
         run: node tests/finot-chat-initial-geometry.test.js
+      - name: Chat Finot — question et réponse entières, suggestions qui défilent (360×800, 412×915, 360×640, 320×568)
+        if: matrix.browser == 'chromium'
+        run: node tests/finot-chat-reply-visible.test.js
       - name: Lien de confidentialité dans l’espace Parents (jamais côté enfant, hors ligne sans plantage)
         if: matrix.browser == 'chromium'
         run: node tests/parent-privacy-link.test.js
