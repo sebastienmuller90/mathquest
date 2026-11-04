@@ -23,7 +23,7 @@ Conséquence : fonctionnement **hors ligne par défaut**, contenu pédagogique e
 | Sujet | Constat vérifié | Statut |
 |---|---|---|
 | Contenu approprié | Programme scolaire français, ton éducatif ; aucun contenu violent, sexuel, de jeu d'argent ni de produit réglementé. Les pièces/XP sont des récompenses internes sans valeur monétaire. | CONFORME |
-| Espace parent | Code parent (4 à 8 chiffres) créé au premier accès ; clé de récupération ; navigation protégée par `MQParentGate`. | CONFORME (voir ATTENTION 1) |
+| Espace parent | Code parent (4 à 8 chiffres) créé au premier accès, après un calcul réservé aux adultes (`tests/parent-adult-gate.test.js`) ; clé de récupération tirée de `crypto.getRandomValues` ; code commun à tous les profils (`tests/parent-code-device.test.js`) ; verrou croissant après 5 erreurs, persistant (`tests/parent-attempt-lock.test.js`) ; empreinte SHA-256 salée et itérée (`tests/parent-code-hash.test.js`) ; navigation protégée par `MQParentGate`. | CONFORME (voir ATTENTION 1) |
 | Liens externes | Espace enfant : **aucun lien ne sort** (texte seul : libellé + domaine) ; garde globale `js/link-policy.js` bloque tout lien ou `window.open` externe hors espace parents ; espace parents : sources officielles `education.gouv.fr` / `eduscol.education.gouv.fr`, `rel="noopener noreferrer"`, navigateur du système. Test dédié `tests/external-links.test.js`. | CONFORME |
 | Achats / abonnements | Aucun achat intégré, aucun SDK Billing. `js/entitlements.js` est une interface sans fournisseur branché. | CONFORME (V1 gratuite) |
 | Publicité | Aucun SDK, aucune bannière, aucun identifiant publicitaire (`AD_ID` retiré du manifeste). | CONFORME |
@@ -40,10 +40,13 @@ Conséquence : fonctionnement **hors ligne par défaut**, contenu pédagogique e
 
 ## 3. Points d'attention
 
-1. **ATTENTION 1 — Solidité du code parent.** Le code est stocké sous forme d'empreinte 32 bits non cryptographique
-   (`hsh()` dans `js/app-actions.js`). C'est une barrière d'usage pour enfants, pas un mécanisme d'authentification. Sans transmission
-   ni sauvegarde, le risque est limité à un accès physique à l'appareil. Ne pas le présenter comme « chiffré ». Renforcement possible
-   dans un chantier ultérieur (hors périmètre de la préparation Google Play).
+1. **ATTENTION 1 — Solidité du code parent.** Le code (4 à 8 chiffres, soit au plus 10 000 combinaisons à 4 chiffres) reste une barrière d'usage
+   pour enfants, pas un mécanisme d'authentification : ne pas le présenter comme « chiffré » ni comme un secret fort. Depuis le 04/11/2026
+   (audit de sécurité S-01 à S-04) : l'empreinte est un SHA-256 salé et itéré (l'ancien hachage 32 bits est migré au déverrouillage suivant),
+   un calcul réservé aux adultes précède la création du premier code (l'enfant ne peut plus s'en emparer), le code vaut pour tous les
+   profils de l'appareil, et au-delà de 5 erreurs un verrou croissant (30 s à 1 h) ralentit les essais. Limites : le verrou se contourne en
+   avançant l'horloge de l'appareil, et le calcul d'adulte écarte un jeune enfant, pas un adolescent motivé. Sans transmission ni
+   sauvegarde, le risque se limite à l'accès physique à l'appareil — c'est-à-dire, en pratique, à l'enfant lui-même.
 2. **Suppression d'un profil (corrigé dans la PR #46).** Supprimer un profil purge aussi ses copies locales
    (`mathquest_import_backup`, `mathquest_v1_backup`, copies brutes `mathquest_profiles_corrupt_backup_*`, mémoire de rotation des
    questions) ; test `tests/profile-delete-purge.test.js`. Les copies d'un autre profil restent intactes.

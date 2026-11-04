@@ -30,7 +30,7 @@ URL finale prévue pour la politique :
 
 `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html`
 
-Contenu de la politique : **finalisé et daté du 3 novembre 2026**.
+Contenu de la politique : **finalisé et daté du 4 novembre 2026 (**l'URL publique doit être republiée avec cette version**)**.
 
 Il reste seulement à :
 

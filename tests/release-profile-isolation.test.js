@@ -30,7 +30,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
     const a=await read();const d=diff(a,exp(k));if(d)bad.push(k.name+' '+d);
     const leak=await p.evaluate(({self,names})=>names.filter(n=>n!==self&&document.getElementById('app').textContent.includes(n)),{self:k.name,names:list.map(x=>x.name)});if(leak.length)bad.push(k.name+' affiche '+leak);}return bad;};
   const parentView=()=>p.evaluate(()=>new Promise(r=>{PARENT=true;parentScreen('suivi');setTimeout(()=>r({txt:document.getElementById('app').textContent,wk:MQWeeklyReport.report().cur.questions}),200);}));
-  const fp=id=>p.evaluate(id=>{const o=JSON.parse(localStorage.getItem('mathquest_profiles_v2')).profiles[id];delete o.lastSeen;delete o.path;delete o.pathHist;/* métadonnées de migration des erreurs (at/seen) ajoutées plus tard à tous les profils : on compare le contenu */o.mistakes=Object.fromEntries(Object.entries(o.mistakes||{}).map(([c,l])=>[c,l.map(m=>m.q)]));return JSON.stringify(o);},id);
+  const fp=id=>p.evaluate(id=>{const o=JSON.parse(localStorage.getItem('mathquest_profiles_v2')).profiles[id];delete o.lastSeen;delete o.pin;delete o.rec;/* le code parent est migré vers l'empreinte salée au premier déverrouillage réussi (S-01) : on compare le reste du profil */delete o.path;delete o.pathHist;/* métadonnées de migration des erreurs (at/seen) ajoutées plus tard à tous les profils : on compare le contenu */o.mistakes=Object.fromEntries(Object.entries(o.mistakes||{}).map(([c,l])=>[c,l.map(m=>m.q)]));return JSON.stringify(o);},id);
 
   // 1. CP + CM2 puis CE1 + 6e
   for(const [lab,list] of [['CP + CM2',[KIDS[0],KIDS[1]]],['CE1 + 6e',[KIDS[3],KIDS[2]]]]){
