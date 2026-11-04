@@ -10,6 +10,47 @@ function randBytes(n){const a=new Uint8Array(n);crypto.getRandomValues(a);return
 /* Entier uniforme dans [min,max] par rejet (pas de biais de modulo). */
 function randInt(min,max){const span=max-min+1,lim=Math.floor(0x100000000/span)*span;let x;do{x=crypto.getRandomValues(new Uint32Array(1))[0];}while(x>=lim);return min+x%span;}
 
+/* ---------- Empreinte du code (S-01) : SHA-256 salé et itéré, JS pur et SYNCHRONE ---------- */
+/* Pas de WebCrypto subtle (asynchrone, absent hors contexte sécurisé comme file://) : les gestionnaires existants restent synchrones.
+   Format stocké : « s2$sel(hex)$itérations$empreinte(hex) ». L'ancien format (hachage polynomial 32 bits en base 36, sans sel) reste
+   LU pour permettre la migration : il est remplacé par le nouveau format au prochain déverrouillage réussi.
+   Rappel : sel et itérations ralentissent un calcul massif hors de l'appareil, mais 10 000 codes à 4 chiffres restent énumérables ;
+   c'est le verrou de tentatives, pas l'empreinte, qui protège un enfant qui essaie des codes sur l'appareil. */
+const ITER=10000,MAXITER=200000;
+const K=new Uint32Array(64),H0=new Uint32Array(8);
+(function(){const primes=[];for(let n=2;primes.length<64;n++){let ok=true;for(const q of primes){if(q*q>n)break;if(n%q===0){ok=false;break;}}if(ok)primes.push(n);}
+ const frac=x=>Math.floor((x-Math.floor(x))*4294967296);
+ for(let i=0;i<64;i++)K[i]=frac(Math.cbrt(primes[i]));for(let i=0;i<8;i++)H0[i]=frac(Math.sqrt(primes[i]));})();
+const W=new Uint32Array(64);
+function rotr(x,n){return (x>>>n)|(x<<(32-n));}
+function sha256(bytes){const l=bytes.length,nb=((l+9+63)>>6),buf=new Uint8Array(nb*64);buf.set(bytes);buf[l]=0x80;
+ const dv=new DataView(buf.buffer);dv.setUint32(nb*64-8,Math.floor(l/0x20000000));dv.setUint32(nb*64-4,(l<<3)>>>0);
+ const h=new Uint32Array(H0);
+ for(let o=0;o<nb*64;o+=64){for(let i=0;i<16;i++)W[i]=dv.getUint32(o+4*i);
+  for(let i=16;i<64;i++){const a=W[i-15],b=W[i-2];W[i]=(W[i-16]+(rotr(a,7)^rotr(a,18)^(a>>>3))+W[i-7]+(rotr(b,17)^rotr(b,19)^(b>>>10)))>>>0;}
+  let a=h[0],b=h[1],c=h[2],d=h[3],e=h[4],f=h[5],g=h[6],hh=h[7];
+  for(let i=0;i<64;i++){const t1=(hh+(rotr(e,6)^rotr(e,11)^rotr(e,25))+((e&f)^(~e&g))+K[i]+W[i])>>>0,t2=((rotr(a,2)^rotr(a,13)^rotr(a,22))+((a&b)^(a&c)^(b&c)))>>>0;
+   hh=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;}
+  h[0]+=a;h[1]+=b;h[2]+=c;h[3]+=d;h[4]+=e;h[5]+=f;h[6]+=g;h[7]+=hh;}
+ const out=new Uint8Array(32),ov=new DataView(out.buffer);for(let i=0;i<8;i++)ov.setUint32(4*i,h[i]);return out;}
+const toHex=u=>Array.from(u,x=>x.toString(16).padStart(2,'0')).join('');
+const fromHex=s=>{const u=new Uint8Array(s.length/2);for(let i=0;i<u.length;i++)u[i]=parseInt(s.substr(2*i,2),16);return u;};
+const utf8=s=>new TextEncoder().encode(String(s));
+function sha256hex(s){return toHex(sha256(utf8(s)));}
+function derive(code,salt,iters){const c=utf8(code),buf=new Uint8Array(32+salt.length+c.length);buf.set(salt,32);buf.set(c,32+salt.length);
+ let h=sha256(buf.subarray(32));for(let i=1;i<iters;i++){buf.set(h,0);h=sha256(buf);}return toHex(h);}
+/* Égalité de deux chaînes sans sortie anticipée (le temps ne dépend pas de la position de la première différence). */
+function ctEqual(a,b){a=String(a);b=String(b);let d=a.length^b.length;const n=Math.max(a.length,b.length);for(let i=0;i<n;i++)d|=(a.charCodeAt(i)||0)^(b.charCodeAt(i)||0);return d===0;}
+function hash(code){const salt=randBytes(16);return 's2$'+toHex(salt)+'$'+ITER+'$'+derive(code,salt,ITER);}
+/* Ancien hachage (32 bits, sans sel) : conservé UNIQUEMENT pour reconnaître les codes déjà enregistrés avant la migration. */
+const legacyHash=s=>Array.from(String(s)).reduce((a,c)=>(Math.imul(a,31)+c.charCodeAt(0))>>>0,7919).toString(36);
+const isLegacy=stored=>typeof stored==='string'&&stored!==''&&stored.indexOf('s2$')!==0;
+function verify(code,stored){if(typeof code!=='string'||!code||typeof stored!=='string'||!stored)return false;
+ if(stored.indexOf('s2$')===0){const p=stored.split('$');if(p.length!==4||!/^[0-9a-f]{32}$/.test(p[1])||!/^[0-9a-f]{64}$/.test(p[3]))return false;const it=+p[2];if(!(it>=1&&it<=MAXITER&&Math.floor(it)===it))return false;return ctEqual(derive(code,fromHex(p[1]),it),p[3]);}
+ return ctEqual(legacyHash(code),stored);}
+/* Clé de secours : 8 caractères sans ambiguïté (ni I, O, 0, 1, L), tirés de crypto.getRandomValues, jamais de Math.random. */
+function newRecKey(){const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let k='';for(let i=0;i<8;i++)k+=A[randInt(0,A.length-1)];return k;}
+
 /* ---------- Porte adulte (S-03) ---------- */
 /* Défi : « a × b + c − d », avec a de 14 à 29 et b de 13 à 19 (produit à deux chiffres par deux chiffres, hors programme
    avant la 6e), c de 100 à 299 et d de 40 à 99. Résultat toujours supérieur à 150. Une calculatrice ou du papier sont permis :
@@ -56,5 +97,5 @@ function unify(){try{const act=(typeof PDB!=='undefined'&&PDB&&PDB.profiles&&PDB
  if(S&&(S.pin!==pin||(S.rec||'')!==rec)){S.pin=pin;S.rec=rec;changed=true;}
  if(changed&&typeof saveLocal==='function')saveLocal();return changed;}catch(e){return false;}}
 
-window.MQParentGuard=Object.freeze({setCode,unify,randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume,lockState,failure,success,lockMessage});
+window.MQParentGuard=Object.freeze({sha256hex,hash,verify,isLegacy,ctEqual,newRecKey,setCode,unify,randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume,lockState,failure,success,lockMessage});
 })();
