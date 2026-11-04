@@ -134,10 +134,53 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
 
  // 9. Liste blanche racine et CI
  const rgi=read(path.join(ROOT,'.gitignore')).split(/\r?\n/);
- T('.gitignore racine : ios/ et ce test autorisés nommément (liste blanche) ; certificats Apple bloqués',['!/ios/','!/ios/**','!/tests/ios-config.test.js'].every(l=>rgi.includes(l))&&['*.p12','*.mobileprovision','*.cer','GoogleService-Info.plist'].every(l=>rgi.includes(l)),'');
+ T('.gitignore racine : ios/ et ce test autorisés nommément (liste blanche) ; certificats Apple bloqués',['!/ios/','!/ios/**','!/tests/ios-config.test.js','!/tools/ios-static-check.mjs'].every(l=>rgi.includes(l))&&['*.p12','*.mobileprovision','*.cer','GoogleService-Info.plist'].every(l=>rgi.includes(l)),'');
  const ci=read(path.join(ROOT,'.github','workflows','mathquest-ci.yml'));
- T('Workflow CI : ce test est exécuté par une étape nommée',/run: node tests\/ios-config\.test\.js/.test(ci),'');
+ T('Workflow CI : ce test et le vérificateur statique sont exécutés par l’étape iOS nommée',/node tests\/ios-config\.test\.js/.test(ci)&&/node tools\/ios-static-check\.mjs/.test(ci)&&/- name: "Projet iOS/.test(ci),'');
  const rd=read(path.join(ROOT,'docs','ios','README.md'));
  T('docs/ios/README.md : procédure Mac (npm ci, ios:sync, ouvrir ios/App, équipe de signature, archive, TestFlight) et recette, sans prétendre à un build validé',['npm ci','npm run ios:sync','ios/App/App.xcodeproj','TestFlight','Dynamic Type','non exécuté'].every(k=>rd.includes(k))&&!/build iOS (?:est )?valid[ée]\b(?!.*non)/i.test(rd.replace(/non (?:valid|exécut)[^\n]*/gi,'')),'');
+ // 10. Vérificateur statique tools/ios-static-check.mjs (project.pbxproj, plists, storyboards, assets, SPM) : projet réel + cas cassés
+ const os=require('os');
+ const {pathToFileURL}=require('url');
+ const checker=await import(pathToFileURL(path.join(ROOT,'tools','ios-static-check.mjs')).href);
+ const live=checker.checkIosProject(ROOT);
+ T('Vérificateur statique : le projet réel passe toutes ses vérifications (pbxproj, plists, storyboards, assets, SPM, config)',live.length>=80&&live.every(r=>r.ok),live.length+' vérifications ; échecs : '+live.filter(r=>!r.ok).map(r=>r.id).join(' | '));
+ const cp=(s,d)=>{fs.mkdirSync(path.dirname(d),{recursive:true});fs.cpSync(s,d,{recursive:true,filter:f=>!/[\\/](public|Pods|build)$/.test(f)});};
+ const fixture=(edit)=>{const d=fs.mkdtempSync(path.join(os.tmpdir(),'ios-fixture-'));
+  cp(path.join(ROOT,'ios'),path.join(d,'ios'));
+  for(const f of ['package.json','package-lock.json','capacitor.config.json','.gitignore','scripts/package-www.mjs','android/store-version.json'])if(fs.existsSync(path.join(ROOT,f)))cp(path.join(ROOT,f),path.join(d,f));
+  const pbxp=path.join(d,'ios/App/App.xcodeproj/project.pbxproj');
+  edit({d,file:(rel,fn)=>{const p=path.join(d,rel);fs.writeFileSync(p,fn(fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n')));},pbx:fn=>{fs.writeFileSync(pbxp,fn(fs.readFileSync(pbxp,'utf8').replace(/\r\n/g,'\n')));}});
+  try{return checker.checkIosProject(d,{nodeModules:path.join(ROOT,'node_modules')});}finally{fs.rmSync(d,{recursive:true,force:true});}};
+ // Témoin : la copie intacte doit passer (sinon les cas cassés ci-dessous ne prouveraient rien).
+ const ctl=fixture(()=>{});
+ T('Vérificateur statique : copie intacte du projet = aucun échec (témoin des cas cassés)',ctl.every(r=>r.ok),ctl.filter(r=>!r.ok).map(r=>r.id).join(' | '));
+ const broken=[
+  ['pbxproj : « ; » manquant après une valeur',e=>e.pbx(s=>s.replace('productType = "com.apple.product-type.application";','productType = "com.apple.product-type.application"')),/pbxproj : syntaxe/],
+  ['pbxproj : accolade fermante manquante',e=>e.pbx(s=>s.replace(/\n\t\};\n\trootObject/,'\n\trootObject')),/pbxproj : syntaxe/],
+  ['pbxproj : PBXBuildFile pointe vers un fileRef inexistant',e=>e.pbx(s=>s.replace('fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */','fileRef = 504EC3071FED7965FFFFFFFF /* AppDelegate.swift */')),/aucune référence d’identifiant vers un objet inexistant|PBXBuildFile pointe/],
+  ['pbxproj : identifiant d’objet de 23 caractères',e=>e.pbx(s=>s.replace(/\n\t\t504EC3041FED79650016851F \/\* App.app \*\/ = \{isa = PBXFileReference/,'\n\t\t504EC3041FED7965001685F /* App.app */ = {isa = PBXFileReference')),/24 hexadécimaux/],
+  ['pbxproj : fichier Swift référencé mais supprimé du disque',e=>fs.rmSync(path.join(e.d,'ios/App/App/SceneDelegate.swift')),/chaque fichier référencé existe|tout fichier \.swift/],
+  ['pbxproj : cible de déploiement divergente (14.0)',e=>e.pbx(s=>s.replace('IPHONEOS_DEPLOYMENT_TARGET = 15.0;','IPHONEOS_DEPLOYMENT_TARGET = 14.0;')),/IPHONEOS_DEPLOYMENT_TARGET/],
+  ['pbxproj : DEVELOPMENT_TEAM renseigné',e=>e.pbx(s=>s.replace('CODE_SIGN_STYLE = Automatic;','CODE_SIGN_STYLE = Automatic;\n\t\t\t\tDEVELOPMENT_TEAM = ABCDE12345;')),/DEVELOPMENT_TEAM/],
+  ['pbxproj : famille d’appareils iPhone seul',e=>e.pbx(s=>s.replace('TARGETED_DEVICE_FAMILY = "1,2";','TARGETED_DEVICE_FAMILY = 1;')),/TARGETED_DEVICE_FAMILY/],
+  ['Info.plist : balise non fermée',e=>e.file('ios/App/App/Info.plist',s=>s.replace('<string>fr</string>','<string>fr</strin>')),/Info\.plist/],
+  ['Info.plist : permission micro ajoutée',e=>e.file('ios/App/App/Info.plist',s=>s.replace('<key>CFBundleName</key>','<key>NSMicrophoneUsageDescription</key>\n\t<string>x</string>\n\t<key>CFBundleName</key>')),/aucune clé de permission/],
+  ['Info.plist : orientations iPad incomplètes',e=>e.file('ios/App/App/Info.plist',s=>s.replace('\t\t<string>UIInterfaceOrientationPortraitUpsideDown</string>\n','')),/Orientations/],
+  ['Info.plist : classe de scène inexistante',e=>e.file('ios/App/App/Info.plist',s=>s.replace('.SceneDelegate</string>','.SceneDelegat</string>')),/UISceneDelegateClassName/],
+  ['PrivacyInfo : clé NSPrivacyTracking manquante',e=>e.file('ios/App/App/PrivacyInfo.xcprivacy',s=>s.replace('<key>NSPrivacyTracking</key>\n\t<false/>\n','')),/PrivacyInfo/],
+  ['Storyboard : classe du contrôleur modifiée',e=>e.file('ios/App/App/Base.lproj/Main.storyboard',s=>s.replace('customClass="CAPBridgeViewController"','customClass="UIViewController"')),/contrôleur initial/],
+  ['Storyboard : initialViewController inexistant',e=>e.file('ios/App/App/Base.lproj/LaunchScreen.storyboard',s=>s.replace('initialViewController="01J-lp-oVM"','initialViewController="zzz-zz-zzz"')),/initialViewController existant/],
+  ['Icône : PNG tronqué',e=>{const p=path.join(e.d,'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png');fs.writeFileSync(p,fs.readFileSync(p).subarray(0,5000));},/PNG intact/],
+  ['Assets : fichier d’icône absent du disque',e=>fs.rmSync(path.join(e.d,'ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png')),/AppIcon\.appiconset : Contents\.json valide/],
+  ['Assets : Contents.json invalide',e=>e.file('ios/App/App/Assets.xcassets/Splash.imageset/Contents.json',s=>s.replace('"info" :','"info"')),/Splash\.imageset|assets/],
+  ['SPM : capacitor-swift-pm épinglé à une autre version',e=>e.file('ios/App/CapApp-SPM/Package.swift',s=>s.replace('exact: "8.6.0"','exact: "8.5.3"')),/capacitor-swift-pm épinglé/],
+  ['SPM : plateforme iOS 14',e=>e.file('ios/App/CapApp-SPM/Package.swift',s=>s.replace('.iOS(.v15)','.iOS(.v14)')),/swift-tools-version|IPHONEOS_DEPLOYMENT_TARGET/],
+  ['SPM : plugin déclaré dans package.json mais absent de Package.swift',e=>e.file('ios/App/CapApp-SPM/Package.swift',s=>s.replace(',\n        .package(name: "CapacitorApp", path: "../../../node_modules/@capacitor/app")','')),/un \.package\(path:\) local par plugin/],
+  ['Configuration : appId divergent',e=>e.file('capacitor.config.json',s=>s.replace('fr.finot.academie','fr.finot.autre')),/appId/]
+ ];
+ for(const [name,edit,re] of broken){let res;try{res=fixture(edit);}catch(err){res=[{id:'fixture (exception)',ok:false,detail:String(err)}];}
+  const failed=res.filter(r=>!r.ok);
+  T('Cas cassé détecté : '+name,failed.some(r=>re.test(r.id)),failed.length?failed.map(r=>r.id).join(' | '):'AUCUN échec signalé');}
  return R;}
 main(run);
