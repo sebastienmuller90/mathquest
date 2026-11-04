@@ -12,6 +12,10 @@
     "webContentsDebuggingEnabled": false,
     "adjustMarginsForEdgeToEdge": "auto"
   },
+  "ios": {
+    "contentInset": "never",
+    "allowsLinkPreview": false
+  },
   "plugins": {
     "SystemBars": {
       "insetsHandling": "native",
