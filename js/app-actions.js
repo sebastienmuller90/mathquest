@@ -275,9 +275,9 @@ const ACT={
  adultok:()=>{const f=$('#adultans');if(MQParentGuard.answer(f&&f.value)){return parentGate();}sfx('bad');toast('Ce n’est pas le bon résultat. Voici un autre calcul, prends ton temps.');adultGateScreen(true);},
  pinok:()=>{if(!S.pin&&!MQParentGuard.adultOk()){return adultGateScreen(false);}const a=$('#pin').value.trim();if(S.pin){if(guardDenied())return;if(hsh(a)===S.pin){MQParentGuard.success();PARENT=true;return parentScreen('suivi');}sfx('bad');$('#pin').value='';return guardFail('Code incorrect');}
   const b=$('#pin2').value.trim();if(!PINOK(a))return toast('Le code doit contenir 4 à 8 chiffres');if(a!==b)return toast('Les deux codes sont différents');
-  const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let k='';for(let i=0;i<8;i++)k+=A[Math.floor(Math.random()*A.length)];S.pin=hsh(a);S.rec=hsh(k);MQParentGuard.adultConsume();save();PARENT=true;recKeyScreen(k.slice(0,4)+'-'+k.slice(4));},
- recov:()=>{if(guardDenied())return;const k=$('#rk').value.toUpperCase().replace(/[^A-Z0-9]/g,''),n=$('#np2').value.trim();if(!S.rec||hsh(k)!==S.rec){sfx('bad');return guardFail('Code de secours incorrect');}if(!PINOK(n))return toast('Le nouveau code doit contenir 4 à 8 chiffres');S.pin=hsh(n);MQParentGuard.success();save();PARENT=true;toast('Code parent changé ✅');parentScreen('suivi');},
- pinchange:()=>{const n=$('#np').value.trim();if(!PINOK(n))return toast('Le code doit contenir 4 à 8 chiffres');S.pin=hsh(n);save();$('#np').value='';toast('Code parent changé ✅');},
+  const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let k='';for(let i=0;i<8;i++)k+=A[Math.floor(Math.random()*A.length)];MQParentGuard.setCode(hsh(a),hsh(k));MQParentGuard.adultConsume();save();PARENT=true;recKeyScreen(k.slice(0,4)+'-'+k.slice(4));},
+ recov:()=>{if(guardDenied())return;const k=$('#rk').value.toUpperCase().replace(/[^A-Z0-9]/g,''),n=$('#np2').value.trim();if(!S.rec||hsh(k)!==S.rec){sfx('bad');return guardFail('Code de secours incorrect');}if(!PINOK(n))return toast('Le nouveau code doit contenir 4 à 8 chiffres');MQParentGuard.setCode(hsh(n));MQParentGuard.success();save();PARENT=true;toast('Code parent changé ✅');parentScreen('suivi');},
+ pinchange:()=>{const n=$('#np').value.trim();if(!PINOK(n))return toast('Le code doit contenir 4 à 8 chiffres');MQParentGuard.setCode(hsh(n));save();$('#np').value='';toast('Code parent changé ✅');},
  acc:id=>{if(doAccept(id)){save();sfx('coin');}parentScreen('recomp');},
  ref:id=>{doRefuse(id);save();parentScreen('recomp');},
  bonus:sg=>{const n=parseInt($('#bn').value),why=$('#br').value.trim();if(!(n>0))return toast('Indique un nombre de points');doBonus(+sg>0?n:-n,why);save();toast(`${+sg>0?'+':'−'}${n} 🎖️ enregistré`);parentScreen('recomp');},
@@ -333,7 +333,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='finotin'&&e.key==='Enter'){e.preventDefault();ACT.finotsend();}});
 // Première synchronisation après le chargement de tous les modules : les abonnés 'sync:action' (interrogation à distance…)
 // doivent être en place, sinon une action reçue tôt serait acquittée sans être appliquée.
-load();applyTheme();hometabsDOM();home();if(document.readyState==='complete')setTimeout(syncNow,0);else window.addEventListener('load',()=>syncNow(),{once:true});finotChatDOM();finotFabSync();hometabsSync();
+load();MQParentGuard.unify();applyTheme();hometabsDOM();home();if(document.readyState==='complete')setTimeout(syncNow,0);else window.addEventListener('load',()=>syncNow(),{once:true});finotChatDOM();finotFabSync();hometabsSync();
 setInterval(()=>{if(document.visibilityState==='visible')syncNow();},30000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')ttsStop();if(document.visibilityState==='visible')syncNow();else if(S.sync.child)syncNow();});
 document.addEventListener('toggle',e=>{const d=e.target;if(!d||!d.dataset||!d.dataset.cat||typeof CATOPEN==='undefined')return;const [w,k]=d.dataset.cat.split('|');(CATOPEN[w]=CATOPEN[w]||{})[k]=d.open;},true);

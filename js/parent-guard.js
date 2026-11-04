@@ -41,5 +41,20 @@ function success(){try{localStorage.removeItem(LOCK_KEY);}catch(e){}}
 function fmtDuration(ms){const s=Math.max(1,Math.ceil(ms/1000));if(s<60)return s+(s>1?' secondes':' seconde');const m=Math.ceil(s/60);if(m<60)return m+(m>1?' minutes':' minute');const h=Math.ceil(m/60);return h+(h>1?' heures':' heure');}
 function lockMessage(st){return 'Trop d’essais pour l’instant. Réessaie dans '+fmtDuration(st.remainMs)+'.';}
 
-window.MQParentGuard=Object.freeze({randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume,lockState,failure,success,lockMessage});
+/* ---------- Code parent = code de l'APPAREIL (S-04) ---------- */
+/* Le code reste stocké dans chaque profil (clés de stockage et format inchangés : aucune sauvegarde n'est cassée), mais il est
+   toujours écrit dans TOUS les profils à la fois : un changement ou une réinitialisation vaut donc pour l'appareil entier. */
+const prof=()=>Object.values((typeof PDB!=='undefined'&&PDB&&PDB.profiles)||{}).filter(v=>v&&typeof v==='object'&&!Array.isArray(v));
+function setCode(pin,rec){for(const p of prof()){p.pin=pin;if(rec!==undefined)p.rec=rec;}S.pin=pin;if(rec!==undefined)S.rec=rec;}
+/* Migration au démarrage : un appareil installé avant ce correctif peut avoir des codes différents d'un profil à l'autre, ou un
+   code sur certains profils seulement. Le code du profil actif l'emporte ; à défaut, le premier code existant parmi les autres
+   profils. Rien n'est inventé : sans aucun code, rien ne change. Seuls les champs pin/rec sont touchés. */
+function unify(){try{const act=(typeof PDB!=='undefined'&&PDB&&PDB.profiles&&PDB.profiles[ACTIVE])||S;
+ const src=(act&&act.pin)?act:prof().find(p=>p.pin);if(!src)return false;
+ const pin=src.pin,rec=src.rec||'';let changed=false;
+ for(const p of prof()){if(p.pin!==pin||(p.rec||'')!==rec){p.pin=pin;p.rec=rec;changed=true;}}
+ if(S&&(S.pin!==pin||(S.rec||'')!==rec)){S.pin=pin;S.rec=rec;changed=true;}
+ if(changed&&typeof saveLocal==='function')saveLocal();return changed;}catch(e){return false;}}
+
+window.MQParentGuard=Object.freeze({setCode,unify,randBytes,randInt,challenge,newChallenge,answer,adultOk,adultConsume,lockState,failure,success,lockMessage});
 })();
