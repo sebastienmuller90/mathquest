@@ -196,7 +196,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   await p.evaluate(()=>{parentScreen('reglages');});await p.click('[data-a="impshow"]');await p.waitForSelector('#imp');
   const im=await edit(p,'#imp',TEXT_OPS);T('Import : zone de code (#imp, textarea) à la frappe réelle, focus donné à l’ouverture',!im.length,im.join(' | '));
   // code PIN : création (deux champs) puis déverrouillage
-  await p.evaluate(()=>{S.pin='';PARENT=false;parentGate();});await p.waitForSelector('#pin');
+  await p.evaluate(()=>{S.pin='';PARENT=false;parentGate();});await require('./lib').passAdultGate(p);await p.waitForSelector('#pin');
   const foc=await p.evaluate(()=>document.activeElement&&document.activeElement.id);
   const pin=await edit(p,'#pin',['type:1234','L','BS','type:7','END','wait']);
   const pin2=await edit(p,'#pin2',['type:4821','wait'],{wait:300});
@@ -225,7 +225,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    'parent réglages':`(()=>{PARENT=true;parentScreen('reglages');})()`,
    'carnet d’erreurs':`(()=>{PARENT=false;home();const c=SCH(S.subj).find(c=>WMAP[c.id]).id;MQAdaptive.recordMistake(S,c,{q:'2+2 ?',answer:'4',expl:'deux et deux font quatre'});save();ACT.mistakes();})()`,
    'cours / leçon':`(()=>{PARENT=false;home();const id=reco().id;openLesson(id);})()`,
-   'code parent (création)':`(()=>{S.pin='';PARENT=false;L=null;parentGate();})()`,
+   'code parent (porte adulte)':`(()=>{S.pin='';PARENT=false;L=null;MQParentGuard.adultConsume();parentGate();})()`,
+   'code parent (création)':`(()=>{S.pin='';PARENT=false;L=null;parentGate();const m=document.getElementById('adultq-vis').textContent.match(/([0-9]+) *× *([0-9]+) *[+] *([0-9]+) *− *([0-9]+)/);document.getElementById('adultans').value=String(m[1]*m[2]+ +m[3]-m[4]);ACT.adultok();})()`,
    'code parent (déverrouillage)':`(()=>{S.pin='4821';PARENT=false;L=null;parentGate();})()`,
    'code oublié':`(()=>{PARENT=false;L=null;forgotScreen();})()`,
    'import':`(()=>{PARENT=true;parentScreen('reglages');ACT.impshow();})()`,
@@ -351,7 +352,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
     await q.evaluate(()=>{PARENT=true;parentScreen('recomp');});await chk('parent récompenses');
     await q.evaluate(()=>{PARENT=true;parentScreen('reglages');});await chk('parent réglages');
     await q.click('[data-a="impshow"]').catch(()=>{});await chk('parent réglages + import');
-    await q.evaluate(()=>{S.pin='';PARENT=false;parentGate();});await chk('code parent (création)');
+    await q.evaluate(()=>{S.pin='';PARENT=false;MQParentGuard.adultConsume();parentGate();});await chk('code parent (porte adulte)');await q.evaluate(()=>{const m=document.getElementById('adultq-vis').textContent.match(/([0-9]+) *× *([0-9]+) *[+] *([0-9]+) *− *([0-9]+)/);document.getElementById('adultans').value=String(m[1]*m[2]+ +m[3]-m[4]);ACT.adultok();});await chk('code parent (création)');
     await q.evaluate(()=>{PARENT=false;home();ACT.mistakes();});await chk('carnet d’erreurs');
     await q.evaluate(()=>{const id=reco().id;openLesson(id);});await chk('cours : étape 1');
     for(let i=1;i<6;i++){const more=await q.evaluate(()=>{if(typeof L==='undefined'||!L)return false;if(L.i>=L.steps.length-1)return false;L.i++;renderLesson();return true;});if(!more)break;await chk('cours : étape '+(i+1)+' ('+await q.evaluate(()=>L&&L.steps[L.i]&&L.steps[L.i].k)+')');}
