@@ -161,7 +161,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .fch-msg{max-width:85%;padding:10px 14px;border-radius:16px;line-height:1.4;font-size:15px}
 .fch-msg.finot{align-self:flex-start;background:var(--surface2);border-bottom-left-radius:4px}
 .fch-msg.you{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px}
-.fch-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;min-height:2.6rem;overflow-y:auto}
+.fch-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;min-height:2.6rem;max-height:min(8.5rem,26vh);overflow-y:auto}
 .fch-chip{padding:6px 12px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--text)}
 .fch-row{display:flex;gap:8px;position:sticky;bottom:0;z-index:1;background:var(--surface)}
 .fch-row input{flex:1}

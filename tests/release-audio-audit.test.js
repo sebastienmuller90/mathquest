@@ -165,8 +165,12 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
    const issues=res.flatMap(r=>r.issues.map(i=>r.id+' : '+i));const nq=res.reduce((a,r)=>a+r.nq,0),nch=new Set(res.map(r=>r.id)).size;
    T(`${label} : ${n} énoncés audio sur ${nq} questions (${nch} chapitres${passes>1?`, ${passes} passes`:''}), texte et langue envoyés à la synthèse corrects`,res.length>0&&n>=minAudio&&!issues.length,(res.length?'':'aucun chapitre — ')+issues.slice(0,5).join(' | '));
    if(extra)extra(res);return res;};
-  await group('Dictée CP (mots)',pick.cpDict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CP : un mot (ou une courte phrase) par question, jamais la consigne ni une réponse inversée',t.length>0&&t.every(x=>x.split(/\s+/).length<=4&&!/[ÉE]coute|écris/i.test(x)),t.join(' / '));});
-  await group('Dictée CE1 (mots et phrases)',pick.ce1Dict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CE1 : le texte lu ne contient ni la consigne ni « undefined »',t.length>0&&t.every(x=>!/[ÉE]coute|écris|undefined/i.test(x)),t.join(' / '));});
+  // Détecteur de la CONSIGNE (« Écoute et écris… ») : mot entier uniquement. L'ancienne expression /[ÉE]coute|écris/ prenait pour la consigne la phrase de
+  // dictée légitime « Les élèves écouteront une chanson demain. » dès qu'elle était tirée (rotation de 12 h) : échec dépendant de l'heure, sans défaut produit.
+  const CONSIGNE=/(?<![\p{L}])(?:[ÉE]coute|écris)(?![\p{L}])/iu;
+  T('Détecteur de consigne : « écouteront » (phrase de dictée légitime) n’est pas pris pour la consigne, « Écoute et écris » l’est',!CONSIGNE.test('Les élèves écouteront une chanson demain.')&&CONSIGNE.test('Écoute et écris la phrase')&&CONSIGNE.test('écoute')&&!CONSIGNE.test('Les enfants regardent les oiseaux.'),'');
+  await group('Dictée CP (mots)',pick.cpDict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CP : un mot (ou une courte phrase) par question, jamais la consigne ni une réponse inversée',t.length>0&&t.every(x=>x.split(/\s+/).length<=4&&!CONSIGNE.test(x)),t.join(' / '));});
+  await group('Dictée CE1 (mots et phrases)',pick.ce1Dict,3,res=>{const t=res.flatMap(r=>r.texts);T('Dictée CE1 : le texte lu ne contient ni la consigne ni « undefined »',t.length>0&&t.every(x=>!CONSIGNE.test(x)&&!/undefined/i.test(x)),t.join(' / '));});
   await group('Dictée CM2',pick.cm2Dict,3);
   await group('Lettres, sons, syllabes et mots (CP)',pick.sons,5);
   await group('Anglais du primaire (CP, CE1, CM2)',pick.anglaisPrim,5,res=>{T('Anglais du primaire : tout est lu avec la locale en-GB',res.flatMap(r=>r.texts).length>0,'')});
