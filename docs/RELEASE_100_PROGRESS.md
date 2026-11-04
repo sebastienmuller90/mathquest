@@ -1,6 +1,6 @@
 # Tableau de bord — Finot Académie, objectif « release ready »
 
-Dernière mise à jour : 04/11/2026 — base `main` = `1e7bbd0a143cfeb4bf1bd06f9609b1f7e53fe56d` (CI verte).
+Dernière mise à jour : 04/11/2026 — base `main` = `4bd274f` (après fusion de #71, #77, #78, #79).
 
 Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligatoire n'est pas démontré) :
 
@@ -15,8 +15,8 @@ Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligato
 | --- | --- | --- | --- | --- |
 | PWA / hors ligne / mises à jour | terminé | terminé (CI + run-all) | — | — |
 | Android V1 | terminé | terminé sur émulateurs ; **appareil physique non testé** | prêt côté assets, déclarations à saisir | non réalisée |
-| iOS | en cours (PR dédiée) | **non exécutable** sans Mac/Xcode | docs présentes (PR #70/#71), à compléter | non réalisée |
-| Conformité Stores | — | — | vérification des sources officielles en cours | — |
+| iOS | projet natif créé et fusionné (#79) | **non exécutable** sans Mac/Xcode ; test statique `ios-config` 39/39 | docs App Store fusionnées (#71), à finaliser avec le titulaire du compte | non réalisée |
+| Conformité Stores | — | — | vérification sur sources officielles faite (#78), 5 écarts à trancher | — |
 | Monétisation V1.1 | hors V1 (architecture seule) | — | — | — |
 
 ## Chantiers
@@ -36,12 +36,15 @@ Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligato
 - Visuels finaux : icône 512, Feature Graphic 1024×500, 11 captures téléphone + 11 tablette, empreintes SHA-256 dans `ASSET_STATUS_2026-11-04.md`.
 - **Reste (humain)** : clé d'upload et signature, appareil physique, compte Play Console.
 
-### iOS — voir la PR `claude/ios-capacitor`
-- Aucun build iOS ne peut être exécuté ici (pas de Mac). Tout ce qui exige Xcode est marqué « non exécuté ».
+### iOS — dév. fait (#79), validation technique **non faite**
+- Fait : `@capacitor/ios` 8.6.0 (Swift Package Manager), dossier `ios/` (bundle `fr.finot.academie`, iPhone + iPad, iOS 15 minimum, `PrivacyInfo.xcprivacy`, `Info.plist` sans permission, icône 1024 sans alpha, launch screen crème), `tests/ios-config.test.js` 39/39 en CI, procédure Mac dans `docs/ios/README.md`.
+- **Non exécuté** : tout ce qui exige Xcode (build, simulateur, archive, TestFlight). Le `project.pbxproj` n'a jamais été ouvert dans Xcode.
+- Écarts à trancher : âge visé 6–15 ans > Catégorie Enfants Apple (≤ 11 ans) ; déclaration de chiffrement à confirmer ; icône 1024 agrandie depuis 512.
 
 ### Google Play / App Store (dossiers)
-- Google Play : `docs/google-play/*`, état du 04/11 ; vérification de conformité aux sources officielles en cours (PR `claude/docs-conformite-stores`).
-- App Store : PR #70/#71 (docs) à arbitrer.
+- Google Play : `docs/google-play/*` + `ASSET_STATUS_2026-11-04.md` ; APK de recette `artifacts/google-play/recette/finot-academie-recette-debug-8075012.apk` (SHA-256 `9325049a3c2f633383e9fc088c4efb91389ae1f31161d034aa425c3b4bdb0441`, hors Git).
+- Vérification de conformité sur sources officielles : `docs/stores/verification-conformite-2026-11.md` (#78). Écarts à trancher : statut « trader » (DSA), vérification des développeurs Android, permission INTERNET (suivi distant désactivé), public cible vs Catégorie Enfants Apple, code parent = empreinte 32 bits (barrière d'usage, à renforcer avant tout achat).
+- App Store : `docs/app-store/*` (#71) fusionnée ; PR #64 et #70 fermées (contenu intégré / doublon).
 
 ### Monétisation
 - V1 gratuite, sans publicité ni achat intégré, inchangée. Architecture V1.1 rédigée séparément, sans code ni dépense.
