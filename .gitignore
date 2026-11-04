@@ -130,6 +130,12 @@
 !/android/**
 !/scripts/android-assets.py
 !/tests/android-project.test.js
+# Enveloppe iOS (Capacitor 8, Swift Package Manager) : projet natif versionné ; ios/.gitignore exclut Pods, build, www copié.
+!/ios/
+!/ios/**
+!/tests/ios-config.test.js
+!/docs/ios/
+!/docs/ios/**
 !/tests/remote-sync-flag.test.js
 !/tests/supabase-design.test.js
 !/tests/analytics-guard.test.js
@@ -185,4 +191,11 @@ fastlane/README.md
 keystore.properties
 google-services.json
 finot-release.env*
+*.p8
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+GoogleService-Info.plist
+ExportOptions.plist
 !/docs/RELEASE_100_PROGRESS.md

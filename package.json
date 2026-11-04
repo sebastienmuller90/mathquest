@@ -11,6 +11,8 @@
     "package:www": "node scripts/package-www.mjs",
     "test:package": "node tests/mobile-package.test.js",
     "android:sync": "node scripts/package-www.mjs && cap sync android",
+    "ios:sync": "node scripts/package-www.mjs && cap sync ios",
+    "test:ios": "node tests/ios-config.test.js",
     "test:android": "node tests/android-project.test.js",
     "test:runtime": "node tests/mobile-runtime.test.js"
   },
@@ -20,6 +22,7 @@
     "@capacitor/app": "8.1.2",
     "@capacitor/cli": "8.6.0",
     "@capacitor/core": "8.6.0",
+    "@capacitor/ios": "8.6.0",
     "playwright": "1.57.0"
   }
 }
