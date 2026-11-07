@@ -1,0 +1,72 @@
+name: Build Play 8075014
+on:
+  push:
+    branches: [audit/build-8075014]
+permissions:
+  contents: read
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: dc62bc66cddb512bf4617a5a018d664ed47c1f9a
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build commercial release
+        run: |
+          npm ci
+          npm run android:sync
+          cd android
+          bash gradlew --no-daemon bundleRelease lintRelease
+      - name: Verify bundle and embedded attribution
+        run: |
+          mkdir -p out
+          aab=android/app/build/outputs/bundle/release/app-release.aab
+          cp "$aab" out/Finot-Academie-8075014-non-signe.aab
+          curl -fsSL --retry 3 https://github.com/google/bundletool/releases/download/1.18.2/bundletool-all-1.18.2.jar -o /tmp/bundletool.jar
+          java -jar /tmp/bundletool.jar validate --bundle="$aab"
+          java -jar /tmp/bundletool.jar dump manifest --bundle="$aab" > /tmp/manifest.xml
+          grep -q 'package="fr.finot.academie"' /tmp/manifest.xml
+          grep -q 'android:versionCode="8075014"' /tmp/manifest.xml
+          unzip -p "$aab" base/assets/public/data/lesson-images.js > /tmp/lessons
+          grep -q 'Contains modified Copernicus Sentinel data 2021' /tmp/lessons
+          unzip -p "$aab" base/assets/public/data/licence-cartes.html > /tmp/cartes
+          grep -q 'GNU Free Documentation License' /tmp/cartes
+      - name: Sign only with existing uploader credentials
+        env:
+          KS: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_B64 }}
+          KP: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_PASSWORD }}
+          KA: ${{ secrets.UPFACTORY_ANDROID_KEY_ALIAS }}
+          KE: ${{ secrets.UPFACTORY_ANDROID_KEY_PASSWORD }}
+        run: |
+          set -eu
+          if [[ -z "$KS" || -z "$KP" || -z "$KA" || -z "$KE" ]]; then
+            echo "Existing upload credentials unavailable on this runner" | tee out/signature.txt
+            exit 0
+          fi
+          umask 077
+          key="$RUNNER_TEMP/finot-private.jks"
+          trap 'rm -f "$key"' EXIT
+          printf '%s' "$KS" | base64 --decode > "$key"
+          signed=out/Finot-Academie-8075014-signe.aab
+          jarsigner -keystore "$key" -storepass:env KP -keypass:env KE -signedjar "$signed" out/*-non-signe.aab "$KA"
+          jarsigner -verify "$signed" > /tmp/verify
+          grep -q 'jar verified' /tmp/verify
+          keytool -exportcert -keystore "$key" -alias "$KA" -storepass:env KP > /tmp/uploader.der
+          keytool -printcert -jarfile "$signed" -rfc | openssl x509 -outform DER > /tmp/signer.der
+          cmp /tmp/uploader.der /tmp/signer.der
+          echo "Signed and verified against upload certificate" > out/signature.txt
+          rm out/*-non-signe.aab
+      - run: cd out && sha256sum *.aab | tee SHA256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: finot-8075014
+          path: out/
+          retention-days: 30
