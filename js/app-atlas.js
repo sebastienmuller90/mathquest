@@ -23,7 +23,12 @@ function atlasScreen(){if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}L
  <input id="atlq" class="fld libsearch" type="search" placeholder="Chercher un pays ou une capitale…" value="${esc(ATL.q)}" aria-label="Rechercher un pays" autocomplete="off">
  <div class="libchips" role="group" aria-label="Continent">${ATL_CONT.map(([k,l])=>`<button class="pillbtn ${k===ATL.c?'on':''}" data-a="atlcont:${k}" aria-pressed="${k===ATL.c}">${l}</button>`).join('')}</div>
  <div id="atllist" aria-live="polite">${atlListHTML()}</div>`;}
-function atlCredit(f){const c=atlData().cred[f];return c?`${esc(c.a)} · ${esc(c.l)} · Wikimedia Commons`:'';}
+function atlCredit(f){
+ const c=atlData().cred[f];if(!c)return '';
+ const credit=`${esc(c.a)} · ${esc(c.l)} · Wikimedia Commons`;
+ if(c.l!=='GFDL')return credit;
+ return `${credit} · ${MQLinks.html(c.s,'Fichier source')} · <a href="./data/licence-cartes.html">Licence des cartes</a>`;
+}
 function atlasCarte(id){const x=atlData().cartes.find(c=>c.id===id);if(!x)return atlasScreen();CUR='atlas';
  app.innerHTML=`${bar('🗺️ '+esc(x.t),'atlas')}<figure class="lfig atlbig">${atlImg('carte-'+x.id,x.t,'')}<figcaption><b>${esc(x.t)}</b><small>${esc(x.a)} · ${esc(x.l)} · Wikimedia Commons</small></figcaption></figure>
  <p class="muted small">Astuce : pince l’image avec deux doigts pour zoomer.</p><button class="btn ghost wide" data-a="atlas">← Retour à l’atlas</button>`;window.scrollTo(0,0);}
