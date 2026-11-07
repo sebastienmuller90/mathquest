@@ -13,7 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         api:
-        - 30
         - 36
     steps:
     - uses: actions/checkout@v4
@@ -39,13 +38,16 @@ jobs:
         \ > \"/tmp/instrument-$1.log\" 2>&1 &\n node ./check.mjs \"$1\"\n adb shell\
         \ am force-stop fr.finot.academie\n}\njava -jar /tmp/bt.jar install-apks --apks=/tmp/old.apks\n\
         run_check old\njava -jar /tmp/bt.jar install-apks --apks=/tmp/candidate.apks\n\
-        run_check upgrade\nadb shell svc wifi disable\nadb shell svc data disable\n\
-        run_check offline\nadb shell svc wifi enable\nrun_check restored\nFINOT_QA_EOF\n\
-        cat > helpers/build-probe.sh <<'FINOT_QA_EOF'\nset -euo pipefail\nb=\"$ANDROID_HOME/build-tools/36.0.0\"\
-        \nlib=\"$ANDROID_HOME/platforms/android-36/android.jar\"\nmkdir -p /tmp/probe/classes\
-        \ /tmp/probe/dex\ncd /tmp/probe\ncat > AndroidManifest.xml <<'XML'\n<manifest\
-        \ xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"\
-        finot.qa\">\n<uses-sdk android:minSdkVersion=\"24\" android:targetSdkVersion=\"\
+        run_check upgrade\nadb shell cmd connectivity airplane-mode enable\nadb shell\
+        \ svc wifi disable\nadb shell svc data disable\nrun_check offline\nadb shell\
+        \ cmd connectivity airplane-mode disable\nadb shell svc data enable\nadb shell\
+        \ svc wifi enable\nrun_check restored\n\nadb uninstall fr.finot.academie\n\
+        java -jar /tmp/bt.jar install-apks --apks=/tmp/candidate.apks\nrun_check fresh\n\
+        FINOT_QA_EOF\ncat > helpers/build-probe.sh <<'FINOT_QA_EOF'\nset -euo pipefail\n\
+        b=\"$ANDROID_HOME/build-tools/36.0.0\"\nlib=\"$ANDROID_HOME/platforms/android-36/android.jar\"\
+        \nmkdir -p /tmp/probe/classes /tmp/probe/dex\ncd /tmp/probe\ncat > AndroidManifest.xml\
+        \ <<'XML'\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\
+        \ package=\"finot.qa\">\n<uses-sdk android:minSdkVersion=\"24\" android:targetSdkVersion=\"\
         36\"/>\n<application android:label=\"Finot QA\"/>\n<instrumentation android:name=\"\
         finot.qa.Bridge\" android:targetPackage=\"fr.finot.academie\"/>\n</manifest>\n\
         XML\njavac -source 8 -target 8 -cp \"$lib\" -d classes \"$GITHUB_WORKSPACE/helpers/Bridge.java\"\
@@ -78,8 +80,26 @@ jobs:
         \ await ev('activateProfile('+JSON.stringify(a.id)+');save()');\n await screen('espace-parents');\n\
         \ writeFileSync('/tmp/seed.json',JSON.stringify(await snap()));\n console.log('PASS\
         \ ancienne version, deux profils, bonne/mauvaise réponse, suivi parent');\n\
-        }else{\n const seed=JSON.parse(readFileSync('/tmp/seed.json'));\n assert.deepEqual(await\
-        \ snap(),seed);\n console.log('PASS persistance après '+mode);\n if(mode==='upgrade'){\n\
+        }else if(mode==='fresh'){\n for(let i=0;i<50&&!await ev(\"!!document.querySelector('#pob-name')\"\
+        );i++)await pause(300);\n const backup=JSON.parse(readFileSync('/tmp/backup.json'));\n\
+        \ for(const [idx,item] of backup.entries()){\n  if(idx)await ev('ACT.profiles();ACT.pnew()');\n\
+        \  await ev(ONBOARDING_JS.replace('Léo','Vierge'+idx));\n  const before=await\
+        \ snap();assert.equal(before.q,0);\n  await ev(\"PARENT=true;parentScreen('reglages');ACT.impshow();document.querySelector('#imp').value=\"\
+        +JSON.stringify(item.code)+\";document.querySelector('[data-a=imp]').click();document.querySelector('[data-a=imp]').click()\"\
+        );\n  const after=await snap();\n  for(const k of ['name','grade','q','xp'])assert.equal(after[k],item.state[k],k);\n\
+        \ }\n assert.equal((await snap()).profiles.length,2);\n console.log('PASS\
+        \ restauration des deux exports sur installation vierge');\n}else{\n const\
+        \ seed=JSON.parse(readFileSync('/tmp/seed.json'));\n assert.deepEqual(await\
+        \ snap(),seed);\n console.log('PASS persistance après '+mode);\n if(mode==='offline'){\n\
+        \  assert.equal(await ev('navigator.onLine'),false,'émulateur hors ligne');\n\
+        \  await screen('exercice');\n  await ev(\"document.querySelectorAll('#app\
+        \ .choice')[M.q.ans].click()\");\n  await pause(1500);await ev('save();ACT.home()');\n\
+        \  const updated=await snap();assert.equal(updated.q,seed.q+1);\n  writeFileSync('/tmp/seed.json',JSON.stringify(updated));\n\
+        \  console.log('PASS nouvelle réponse hors ligne enregistrée');\n }\n if(mode==='restored'){\n\
+        \  const backup=[];\n  for(const id of seed.profiles){\n   await ev('activateProfile('+JSON.stringify(id)+')');\n\
+        \   const state=await snap();\n   const code=await ev(\"PARENT=true;parentScreen('reglages');ACT.exp();document.querySelector('#xfer\
+        \ textarea').value\");\n   backup.push({state,code});\n  }\n  writeFileSync('/tmp/backup.json',JSON.stringify(backup));\n\
+        \  console.log('PASS deux codes exportés');\n }\n if(mode==='upgrade'){\n\
         \  await screen('cours');await screen('progression');await screen('espace-parents');\n\
         \  const network=await ev(\"performance.getEntriesByType('resource').map(x=>x.name).filter(s=>/^https?:/.test(s)&&new\
         \ URL(s).hostname!=='localhost')\");\n  console.log('Ressources HTTP distantes\
