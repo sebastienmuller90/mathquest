@@ -1,0 +1,105 @@
+name: Audit avant test ferme
+on:
+  push:
+    branches: [audit/play-20261107]
+permissions:
+  contents: read
+jobs:
+  pwa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f2fbddba00019f51f2d477468e0c39d589c122eb
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci && npx playwright install --with-deps chromium
+      - name: Dix essais isoles
+        shell: bash
+        run: |
+          mkdir -p /tmp/results
+          result=0
+          for n in {1..10}; do
+            node tests/release-pwa-audit.test.js > "/tmp/results/pwa-$n.log" 2>&1 || result=1
+            tail -n 2 "/tmp/results/pwa-$n.log"
+          done
+          exit "$result"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pwa-audit
+          path: /tmp/results/
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f2fbddba00019f51f2d477468e0c39d589c122eb
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: |
+          npm ci
+          npm run android:sync
+          cd android
+          bash gradlew --no-daemon bundleRelease
+      - name: Examiner le vrai bundle et creer les APK de test
+        shell: bash
+        run: |
+          mkdir -p /tmp/audit
+          curl --fail --location --retry 2 https://github.com/google/bundletool/releases/download/1.18.2/bundletool-all-1.18.2.jar -o /tmp/bt.jar
+          aab=android/app/build/outputs/bundle/release/app-release.aab
+          java -jar /tmp/bt.jar validate --bundle="$aab"
+          sha256sum "$aab" | tee /tmp/audit/aab-sha256.txt
+          java -jar /tmp/bt.jar dump manifest --bundle="$aab" > /tmp/audit/manifest.xml
+          grep -q 'package="fr.finot.academie"' /tmp/audit/manifest.xml
+          jarsigner -verify "$aab" | tee /tmp/audit/signature.txt
+          keytool -genkeypair -keystore /tmp/test-only.jks -storepass disposable -keypass disposable -alias qa -keyalg RSA -validity 3 -dname 'CN=Finot disposable QA'
+          java -jar /tmp/bt.jar build-apks --bundle="$aab" --output=/tmp/test.apks --ks=/tmp/test-only.jks --ks-pass=pass:disposable --ks-key-alias=qa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: finot-audit-aab-non-signe
+          path: |
+            android/app/build/outputs/bundle/release/app-release.aab
+            /tmp/audit/
+      - name: Activer KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Lancement, arret force et redemarrage hors ligne
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 36
+          arch: x86_64
+          target: google_apis
+          profile: pixel_6
+          script: |
+            java -jar /tmp/bt.jar install-apks --apks=/tmp/test.apks
+            adb shell am start -W -n fr.finot.academie/.MainActivity
+            sleep 12
+            adb shell pidof fr.finot.academie
+            adb shell uiautomator dump /sdcard/window.xml && adb pull /sdcard/window.xml /tmp/audit/start.xml
+            adb exec-out screencap -p > /tmp/audit/start.png
+            adb shell am force-stop fr.finot.academie
+            adb shell svc wifi disable
+            adb shell svc data disable
+            adb shell am start -W -n fr.finot.academie/.MainActivity
+            sleep 10
+            adb shell pidof fr.finot.academie
+            adb exec-out screencap -p > /tmp/audit/offline.png
+            adb shell uiautomator dump /sdcard/window.xml && adb pull /sdcard/window.xml /tmp/audit/offline.xml
+            adb logcat -d -b crash > /tmp/audit/crash.log
+            ! grep -q 'Process: fr.finot.academie' /tmp/audit/crash.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-emulator-evidence
+          path: /tmp/audit/
