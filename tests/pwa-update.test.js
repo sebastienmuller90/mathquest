@@ -7,7 +7,9 @@
    4. Démarrage 100 % hors ligne (serveur arrêté) après installation : accueil, exercice, aucune erreur. */
 const fs=require('fs'),path=require('path'),os=require('os');const {serve,ROOT,chromePath,seedProfile}=require('./lib');
 const SKIP=new Set(['tests','reports','node_modules','.git','docs']);
-function copyDir(a,b){fs.mkdirSync(b,{recursive:true});for(const n of fs.readdirSync(a)){if(SKIP.has(n)||/^WORK-|\.md$/.test(n))continue;const s=path.join(a,n),d=path.join(b,n);if(fs.statSync(s).isDirectory())copyDir(s,d);else fs.copyFileSync(s,d);}}
+// Dossiers locaux et générés à la racine (sorties de build, captures, worktrees) : jamais du site ; les copier rend le test inutilisable en local.
+const GEN_ROOT=new Set(['artifacts','.claude','android','ios']);
+function copyDir(a,b){fs.mkdirSync(b,{recursive:true});for(const n of fs.readdirSync(a)){if(SKIP.has(n)||/^WORK-|\.md$/.test(n)||(a===ROOT&&(GEN_ROOT.has(n)||/^_wt/.test(n))))continue;const s=path.join(a,n),d=path.join(b,n);if(fs.statSync(s).isDirectory())copyDir(s,d);else fs.copyFileSync(s,d);}}
 const bump=(dir,v)=>{const sp=path.join(dir,'sw.js');fs.writeFileSync(sp,fs.readFileSync(sp,'utf8').replace(/const VERSION='[^']*';/,`const VERSION='${v}';`));};
 const stop=srv=>new Promise(r=>{srv.close(()=>r());if(srv.closeAllConnections)srv.closeAllConnections();});
 async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,detail:String(d).slice(0,600)});
@@ -17,7 +19,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  const ctx=await pw[eng].launchPersistentContext(prof,{...(eng==='chromium'?{executablePath:chromePath()}:{}),viewport:{width:390,height:844}});
  await ctx.addInitScript(()=>{try{sessionStorage.setItem('mq_loads',String(+(sessionStorage.getItem('mq_loads')||0)+1));}catch(e){}});
  const p=ctx.pages()[0]||await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
- await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(async()=>{await navigator.serviceWorker.ready;});await p.waitForFunction(()=>!!navigator.serviceWorker.controller,null,{timeout:60000}).catch(()=>{});if(!(await p.evaluate(()=>!!navigator.serviceWorker.controller))){await p.reload({waitUntil:'load'});}
+ await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,rej)=>setTimeout(()=>rej(new Error('service worker jamais activé après 60 s (installation en échec ?)')),60000))]));await p.waitForFunction(()=>!!navigator.serviceWorker.controller,null,{timeout:60000}).catch(()=>{});if(!(await p.evaluate(()=>!!navigator.serviceWorker.controller))){await p.reload({waitUntil:'load'});}
  await p.waitForFunction(()=>!document.getElementById('splash'),null,{timeout:15000});
  await seedProfile(p,'Maj','6e');
  await p.evaluate(()=>MQPWA.refreshVersion());await p.evaluate(()=>{ACT.hometab('plus');});
