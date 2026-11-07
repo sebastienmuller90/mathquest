@@ -1,0 +1,124 @@
+name: Recette Android profils et mise à jour
+'on':
+  push:
+    branches:
+    - audit/play-parcours-20261107
+permissions:
+  contents: read
+jobs:
+  recette:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        api:
+        - 30
+        - 36
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: f2fbddba00019f51f2d477468e0c39d589c122eb
+        path: candidate
+    - uses: actions/checkout@v4
+      with:
+        ref: 1e7bbd0a143cfeb4bf1bd06f9609b1f7e53fe56d
+        path: old
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+    - name: Préparer la sonde de test
+      shell: bash
+      run: "mkdir -p helpers\ncat > helpers/on-avd.sh <<'FINOT_QA_EOF'\nset -euo pipefail\n\
+        adb install /tmp/probe/bridge.apk\nrun_check() {\n adb shell am force-stop\
+        \ fr.finot.academie\n adb shell am instrument -w finot.qa/finot.qa.Bridge\
+        \ > \"/tmp/instrument-$1.log\" 2>&1 &\n node ./check.mjs \"$1\"\n adb shell\
+        \ am force-stop fr.finot.academie\n}\njava -jar /tmp/bt.jar install-apks --apks=/tmp/old.apks\n\
+        run_check old\njava -jar /tmp/bt.jar install-apks --apks=/tmp/candidate.apks\n\
+        run_check upgrade\nadb shell svc wifi disable\nadb shell svc data disable\n\
+        run_check offline\nadb shell svc wifi enable\nrun_check restored\nFINOT_QA_EOF\n\
+        cat > helpers/build-probe.sh <<'FINOT_QA_EOF'\nset -euo pipefail\nb=\"$ANDROID_HOME/build-tools/36.0.0\"\
+        \nlib=\"$ANDROID_HOME/platforms/android-36/android.jar\"\nmkdir -p /tmp/probe/classes\
+        \ /tmp/probe/dex\ncd /tmp/probe\ncat > AndroidManifest.xml <<'XML'\n<manifest\
+        \ xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"\
+        finot.qa\">\n<uses-sdk android:minSdkVersion=\"24\" android:targetSdkVersion=\"\
+        36\"/>\n<application android:label=\"Finot QA\"/>\n<instrumentation android:name=\"\
+        finot.qa.Bridge\" android:targetPackage=\"fr.finot.academie\"/>\n</manifest>\n\
+        XML\njavac -source 8 -target 8 -cp \"$lib\" -d classes \"$GITHUB_WORKSPACE/helpers/Bridge.java\"\
+        \n\"$b/d8\" --lib \"$lib\" --min-api 24 --output dex classes/finot/qa/Bridge.class\n\
+        \"$b/aapt2\" link -I \"$lib\" --manifest AndroidManifest.xml -o base.apk\n\
+        (cd dex && zip -q ../base.apk classes.dex)\n\"$b/zipalign\" -f 4 base.apk\
+        \ unsigned.apk\n\"$b/apksigner\" sign --ks /tmp/finot-qa.jks --ks-pass pass:disposable\
+        \ --key-pass pass:disposable --out bridge.apk unsigned.apk\nFINOT_QA_EOF\n\
+        cat > helpers/check.mjs <<'FINOT_QA_EOF'\nimport {execFileSync} from 'node:child_process';\n\
+        import {readFileSync, writeFileSync} from 'node:fs';\nimport assert from 'node:assert/strict';\n\
+        import {connect} from './tools/android-cdp.mjs';\nimport {ONBOARDING_JS,SCREENS}\
+        \ from './tools/store-screenshots.mjs';\nconst pause = ms=>new Promise(r=>setTimeout(r,ms));\n\
+        const mode=process.argv[2];\nlet c;\nfor(let i=0;i<45&&!c;i++){\n try{\n \
+        \ const pid=execFileSync('adb',['shell','pidof','fr.finot.academie']).toString().trim();\n\
+        \  execFileSync('adb',['forward','tcp:9333','localabstract:webview_devtools_remote_'+pid]);\n\
+        \  c=await connect(9333);\n }catch{await pause(1000);}\n}\nassert.ok(c,'WebView\
+        \ du processus instrumenté inaccessible');\nconst ev=x=>c.evaluate(x);\nconst\
+        \ snap=()=>ev('({id:ACTIVE,name:S.name,grade:S.grade,q:S.totalQ,xp:S.xp,profiles:Object.keys(PDB.profiles).sort()})');\n\
+        for(let i=0;i<35;i++){if(await ev(\"document.readyState==='complete' && typeof\
+        \ ACT==='object' && !!document.querySelector('#app')\"))break;await pause(500);}\n\
+        const screen=async id=>{\n const s=SCREENS.find(x=>x.id===id); await ev(s.js);\
+        \ assert.ok(await ev(s.expect),id); if(s.after)await ev(s.after); console.log('PASS\
+        \ '+id);\n};\nif(mode==='old'){\n for(let i=0;i<50&&!await ev(\"!!document.querySelector('#pob-name')\"\
+        );i++)await pause(300);\n const user=await ev(ONBOARDING_JS);assert.equal(user.name,'Léo');\n\
+        \ await screen('cours');\n await screen('exercice');\n await ev(\"document.querySelectorAll('#app\
+        \ .choice')[M.q.ans].click()\");\n await pause(1600);\n await screen('correction');\n\
+        \ await ev(\"save();ACT.home();\");\n const a=await snap();assert.ok(a.q>=2,JSON.stringify(a));\n\
+        \ await ev(\"ACT.profiles();ACT.pnew()\");\n await ev(ONBOARDING_JS.replace('Léo','Nina'));\n\
+        \ const b=await snap();assert.equal(b.name,'Nina');assert.notEqual(a.id,b.id);assert.equal(b.q,0);\n\
+        \ await ev('activateProfile('+JSON.stringify(a.id)+');save()');\n await screen('espace-parents');\n\
+        \ writeFileSync('/tmp/seed.json',JSON.stringify(await snap()));\n console.log('PASS\
+        \ ancienne version, deux profils, bonne/mauvaise réponse, suivi parent');\n\
+        }else{\n const seed=JSON.parse(readFileSync('/tmp/seed.json'));\n assert.deepEqual(await\
+        \ snap(),seed);\n console.log('PASS persistance après '+mode);\n if(mode==='upgrade'){\n\
+        \  await screen('cours');await screen('progression');await screen('espace-parents');\n\
+        \  const network=await ev(\"performance.getEntriesByType('resource').map(x=>x.name).filter(s=>/^https?:/.test(s)&&new\
+        \ URL(s).hostname!=='localhost')\");\n  console.log('Ressources HTTP distantes\
+        \ observées dans cette fenêtre',JSON.stringify(network));\n  const code=await\
+        \ ev(\"PARENT=true; parentScreen('reglages');ACT.exp();document.querySelector('#xfer\
+        \ textarea').value\");\n  assert.ok(code.startsWith('MQ1:'));\n  const old=await\
+        \ snap();\n  await ev(\"ACT.impshow();document.querySelector('#imp').value='invalide';document.querySelector('[data-a=imp]').click()\"\
+        );\n  assert.deepEqual(await snap(),old);\n  await ev(\"ACT.impshow();document.querySelector('#imp').value=\"\
+        +JSON.stringify(code)+\";document.querySelector('[data-a=imp]').click();document.querySelector('[data-a=imp]').click()\"\
+        );\n  assert.deepEqual(await snap(),old);\n  console.log('PASS export et reimport\
+        \ du profil actif, rejet de la saisie invalide');\n }\n}\nc.close();process.exit(0);\n\
+        FINOT_QA_EOF\ncat > helpers/Bridge.java <<'FINOT_QA_EOF'\npackage finot.qa;\n\
+        import android.app.Instrumentation;\nimport android.content.Intent;\nimport\
+        \ android.os.Bundle;\nimport android.os.SystemClock;\nimport android.webkit.WebView;\n\
+        public class Bridge extends Instrumentation {\n  public void onCreate(Bundle\
+        \ args) { super.onCreate(args); start(); }\n  public void onStart() {\n  \
+        \  Intent intent = getTargetContext().getPackageManager().getLaunchIntentForPackage(\"\
+        fr.finot.academie\");\n    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);\n\
+        \    startActivitySync(intent);\n    runOnMainSync(() -> WebView.setWebContentsDebuggingEnabled(true));\n\
+        \    SystemClock.sleep(480000);\n    finish(0, new Bundle());\n  }\n}\nFINOT_QA_EOF\n"
+    - name: Construire les deux versions du produit
+      shell: bash
+      run: "set -euo pipefail\nkeytool -genkeypair -keystore /tmp/finot-qa.jks -storepass\
+        \ disposable -keypass disposable -alias qa -keyalg RSA -validity 3 -dname\
+        \ 'CN=Finot disposable audit'\ncurl -fsSL --retry 3 https://github.com/google/bundletool/releases/download/1.18.2/bundletool-all-1.18.2.jar\
+        \ -o /tmp/bt.jar\nfor version in old candidate; do\n (cd \"$version\" && npm\
+        \ ci && npm run android:sync && cd android && bash gradlew --no-daemon bundleRelease)\n\
+        \ file=\"$version/android/app/build/outputs/bundle/release/app-release.aab\"\
+        \n java -jar /tmp/bt.jar build-apks --bundle=\"$file\" --output=\"/tmp/$version.apks\"\
+        \ --ks=/tmp/finot-qa.jks --ks-key-alias=qa --ks-pass=pass:disposable\ndone\n\
+        bash helpers/build-probe.sh\ncp helpers/check.mjs candidate/check.mjs\necho\
+        \ 'KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\", OPTIONS+=\"static_node=kvm\"\
+        ' | sudo tee /etc/udev/rules.d/99-kvm4all.rules\nsudo udevadm control --reload-rules\n\
+        sudo udevadm trigger --name-match=kvm\n"
+    - name: Tester la mise à jour, les profils et la reprise
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api }}
+        arch: x86_64
+        target: google_apis
+        profile: pixel_6
+        script: cd candidate && bash ../helpers/on-avd.sh
