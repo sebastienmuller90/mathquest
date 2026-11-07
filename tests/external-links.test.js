@@ -10,6 +10,8 @@ const {ROOT,serve,launchEngine,seedProfile}=require('./lib');
 const HOSTS={
  'commons.wikimedia.org':'credit','www.metmuseum.org':'credit','images.nasa.gov':'credit','hdl.loc.gov':'credit','muzyczny.pl':'credit','www.photography.mattfield.com':'credit',
  'fr.vikidia.org':'credit',
+ // Adresses reproduites en texte dans la licence GFDL des cartes.
+ 'fsf.org':'license-text','www.gnu.org':'license-text',
  'www.education.gouv.fr':'parent-source','eduscol.education.gouv.fr':'parent-source',
  // Éducation aux médias : fausses adresses d'hameçonnage et vrais sites cités comme exemples, en TEXTE uniquement.
  'laposte.fr.suivi-colis.top':'pedagogic-text','impots-gouv.remboursement-fr.com':'pedagogic-text','education-gouv.bourse-aide.net':'pedagogic-text','colis-livraison-fr.top':'pedagogic-text','ameli-securite.info':'pedagogic-text','www.laposte.fr':'pedagogic-text','www.impots.gouv.fr':'pedagogic-text','www.ameli.fr':'pedagogic-text',

@@ -24,11 +24,25 @@ function chromePath(){
 async function launch(){const {chromium}=require('playwright-core');return chromium.launch({executablePath:chromePath()});}
 // WebKit (moteur de Safari iOS) ou Firefox, installés par « npx playwright-core install webkit firefox ».
 async function launchEngine(name){if(name==='chromium')return launch();const pw=require('playwright-core');if(!pw[name])throw new Error('moteur inconnu : '+name);return pw[name].launch();}
+/* Chargement de page avec UNE relance, visible, en cas de dépassement de délai.
+   Cause établie (mesures du 04/11/2026) : ~196 requêtes par chargement ; médiane 0,6 s, mais des pointes de 5 à 17 s dès que d'autres processus
+   (npm, git, antivirus) sollicitent le disque ou le CPU de la machine de test, au point de dépasser une fois les 30 s de Playwright sur ~700 chargements.
+   Ce n'est pas un défaut de l'appli. Garde-fous : une seule relance (jamais de boucle), erreurs sans rapport avec le délai jamais avalées,
+   chaque relance journalisée et comptée, et report() fait ÉCHOUER la suite au-delà de LOAD.max relances. */
+const LOAD={retries:0,max:2,urls:[]};
+function resetLoadRetries(){LOAD.retries=0;LOAD.urls=[];}
+function loadRetryVerdict(){return {retries:LOAD.retries,max:LOAD.max,ok:LOAD.retries<=LOAD.max};}
+async function gotoRetry(page,url,opts){try{return await page.goto(url,opts);}catch(e){
+  if(!/Timeout/i.test(String(e&&e.message)))throw e;
+  LOAD.retries++;LOAD.urls.push(String(url).slice(-40));console.log('⚠️ RELANCE du chargement (délai dépassé, relance '+LOAD.retries+'/'+LOAD.max+' tolérée) : '+url);
+  return await page.goto(url,opts);}}
 // Petit rapport : chaque test renvoie {name, ok, detail}.
 // Toute liste vide ou contenant un échec est un échec : process.exitCode passe à 1 (jamais de « succès » avec un test rouge).
 function report(results){let ok=0;if(!Array.isArray(results)||!results.length){console.log('❌ FAIL  Aucun résultat de test produit');console.log('BILAN PASS=0 FAIL=1');process.exitCode=1;return false;}
   for(const r of results){const pass=!!r&&r.ok===true;console.log(`${pass?'✅ PASS':'❌ FAIL'}  ${r&&r.name}${r&&r.detail?'  — '+r.detail:''}`);if(pass)ok++;}
-  const fail=results.length-ok;console.log(`\n${ok}/${results.length} tests réussis`);console.log(`BILAN PASS=${ok} FAIL=${fail}`);if(fail)process.exitCode=1;return fail===0;}
+  let total=results.length;if(LOAD.retries>0)console.log(`ℹ️ Relances de chargement : ${LOAD.retries} (seuil ${LOAD.max})`);
+  if(LOAD.retries>LOAD.max){console.log(`❌ FAIL  Trop de relances de chargement (${LOAD.retries} > ${LOAD.max}) : machine de test surchargée ou régression de performance  — ${LOAD.urls.join(', ')}`);total++;}
+  const fail=total-ok;console.log(`\n${ok}/${total} tests réussis`);console.log(`BILAN PASS=${ok} FAIL=${fail}`);if(fail)process.exitCode=1;return fail===0;}
 // Point d'entrée commun : exécute la suite, affiche le bilan ; code de sortie 1 au moindre échec ou exception.
 function main(fn){Promise.resolve().then(fn).then(r=>{report(r);}).catch(e=>{console.error(e&&e.stack||e);console.log('BILAN PASS=0 FAIL=1');process.exitCode=1;
  // Navigateur ou serveur encore ouverts après une exception : on sort quand même, au lieu de bloquer run-all 30 min.
@@ -54,4 +68,4 @@ async function seedProfile(page,name='Lina',grade='6e',opts={}){await page.waitF
    un adulte, saisit le résultat et valide. Le test ne dispose d'aucune réponse cachée : il fait le calcul visible à l'écran. */
 async function passAdultGate(page){const t=await page.locator('#adultq-vis').textContent();const m=t.match(/(\d+)\s*×\s*(\d+)\s*\+\s*(\d+)\s*[−-]\s*(\d+)/);if(!m)throw new Error('calcul de la porte adulte illisible : '+t);
   await page.fill('#adultans',String(+m[1]*+m[2]+ +m[3]-+m[4]));await page.click('[data-a="adultok"]');await page.waitForSelector('#pin2',{timeout:3000});}
-module.exports={passAdultGate,serve,launch,launchEngine,createModernProfile,seedProfile,report,main,ROOT,chromePath,swPrecache};
+module.exports={passAdultGate,serve,launch,launchEngine,createModernProfile,seedProfile,report,main,ROOT,chromePath,swPrecache,gotoRetry,loadRetryVerdict,resetLoadRetries};

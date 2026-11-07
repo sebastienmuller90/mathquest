@@ -11,7 +11,9 @@
    5. démarrage hors ligne avec un ancien service worker qui n'a jamais été remplacé. */
 const fs=require('fs'),path=require('path'),os=require('os');const {serve,ROOT,chromePath,seedProfile,swPrecache}=require('./lib');
 const SKIP=new Set(['tests','reports','node_modules','.git','docs']);
-function copyDir(a,b){fs.mkdirSync(b,{recursive:true});for(const n of fs.readdirSync(a)){if(SKIP.has(n)||/^WORK-|\.md$/.test(n))continue;const s=path.join(a,n),d=path.join(b,n);if(fs.statSync(s).isDirectory())copyDir(s,d);else fs.copyFileSync(s,d);}}
+// Dossiers locaux et générés à la racine (sorties de build, captures, worktrees) : jamais du site ; les copier rend le test inutilisable en local.
+const GEN_ROOT=new Set(['artifacts','.claude','android','ios']);
+function copyDir(a,b){fs.mkdirSync(b,{recursive:true});for(const n of fs.readdirSync(a)){if(SKIP.has(n)||/^WORK-|\.md$/.test(n)||(a===ROOT&&(GEN_ROOT.has(n)||/^_wt/.test(n))))continue;const s=path.join(a,n),d=path.join(b,n);if(fs.statSync(s).isDirectory())copyDir(s,d);else fs.copyFileSync(s,d);}}
 const bump=(dir,v)=>{const sp=path.join(dir,'sw.js');fs.writeFileSync(sp,fs.readFileSync(sp,'utf8').replace(/const VERSION='[^']*';/,`const VERSION='${v}';`));};
 const stop=srv=>new Promise(r=>{srv.close(()=>r());if(srv.closeAllConnections)srv.closeAllConnections();});
 const MAX_PRECACHE_MB=40;

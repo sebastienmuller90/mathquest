@@ -239,6 +239,8 @@ jobs:
       - name: "Release : responsive géométrique"
         if: matrix.browser == 'chromium'
         run: node tests/release-responsive.test.js
+      - name: "Harnais : relance unique et visible d'un chargement de page"
+        run: node tests/lib-goto-retry.test.js
       - name: "Release : clavier, focus et accessibilité"
         if: matrix.browser == 'chromium'
         run: node tests/release-keyboard-a11y.test.js
@@ -291,6 +293,9 @@ jobs:
       - name: Course d’activation du service worker (aucun message vers l’ancien worker pendant la mise à jour)
         if: matrix.browser == 'chromium'
         run: node tests/pwa-register-race.test.js
+      - name: Service worker — installation et activation réelles (jamais « redundant »)
+        if: matrix.browser == 'chromium'
+        run: node tests/sw-install-ok.test.js
       - name: Audit navigateur intégral
         run: node tests/browser-audit.mjs
       - name: Audit des 3 niveaux et de Finot

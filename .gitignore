@@ -205,7 +205,9 @@ finot-release.env*
 GoogleService-Info.plist
 ExportOptions.plist
 !/docs/RELEASE_100_PROGRESS.md
+!/tests/lib-goto-retry.test.js
 !/tests/finot-chat-reply-visible.test.js
 # Audit de sécurité interne (04/11/2026) : documentation seule, aucun secret.
 !/docs/security/
 !/docs/security/**
+!/tests/sw-install-ok.test.js

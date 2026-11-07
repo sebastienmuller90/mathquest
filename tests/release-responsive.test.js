@@ -4,7 +4,7 @@
    mode sombre, texte agrandi (html 130 %), paysage téléphone.
    Détecte : débordement horizontal du document, texte coupé (overflow hidden sans ellipse voulue), contrôle hors écran,
    contrôle recouvert (elementFromPoint), champ de saisie minuscule, fenêtre modale hors écran. */
-const {serve,launchEngine,seedProfile}=require('./lib');
+const {serve,launchEngine,seedProfile,gotoRetry}=require('./lib');
 const {answerQuestion}=require('./release-lib');
 const VPS=[[320,568],[360,640],[375,667],[390,844],[430,932],[768,1024],[900,700],[1024,768],[1280,720],[1366,768],[1440,900],[1920,1080]];
 const LAND=[[844,390],[667,375],[568,320]];
@@ -73,7 +73,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
   await ctx.addInitScript(VOICES);
   const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
-  await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
+  await gotoRetry(p,url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await gotoRetry(p,url+'index.html',{waitUntil:'load'});
   await seedProfile(p,'Lou',grade);
   await p.evaluate(()=>{const ch=SCH(S.subj).filter(c=>WMAP[c.id]&&WMAP[c.id].lvl===S.grade).map(c=>c.id);
     try{MQAdaptive.recordMistake(S,ch[0],{q:'Combien font 7 × 8 quand on additionne aussi 12 et qu’on retire 5 ?',answer:'faux',expl:'Explication assez longue pour vérifier le retour à la ligne dans la carte.'});MQAdaptive.recordAnswer(S,ch[0],false,{});}catch(e){}
@@ -134,7 +134,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  async function onboard(w,h){
    const ctx=await b.newContext({viewport:{width:w,height:h},hasTouch:w<1000});await ctx.addInitScript(()=>{try{sessionStorage.setItem('fa_splash_shown','1');}catch(e){}});
    const p=await ctx.newPage();p.on('pageerror',e=>errs.push(e.message));
-   await p.goto(url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await p.goto(url+'index.html',{waitUntil:'load'});
+   await gotoRetry(p,url+'index.html',{waitUntil:'load'});await p.evaluate(()=>{try{localStorage.clear();}catch(e){}});await gotoRetry(p,url+'index.html',{waitUntil:'load'});
    try{await p.waitForSelector('.pob-shell',{timeout:8000});
     const chk=async(s)=>{checks++;const iss=await p.evaluate(CHECK,{});if(iss.length)obBad.push(`${w}×${h} étape ${s}: ${iss.slice(0,3).join('; ')}`);};
     await chk(0);await p.fill('#pob-name','Camille-Marie');await p.click('[data-pob="gender"][data-value="girl"]');await p.click('[data-pob="next"]');await chk(1);
