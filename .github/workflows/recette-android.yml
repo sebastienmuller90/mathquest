@@ -91,8 +91,13 @@ jobs:
         \ restauration des deux exports sur installation vierge');\n}else{\n const\
         \ seed=JSON.parse(readFileSync('/tmp/seed.json'));\n assert.deepEqual(await\
         \ snap(),seed);\n console.log('PASS persistance après '+mode);\n if(mode==='offline'){\n\
-        \  assert.equal(await ev('navigator.onLine'),false,'émulateur hors ligne');\n\
-        \  await screen('exercice');\n  await ev(\"document.querySelectorAll('#app\
+        \  await c.send('Network.enable');\n  await c.send('Network.emulateNetworkConditions',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0});\n\
+        \  await c.send('Network.overrideNetworkState',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0}).catch(()=>{});\n\
+        \  for(let i=0;i<20&&await ev('navigator.onLine');i++)await pause(250);\n\
+        \  assert.equal(await ev('navigator.onLine'),false,'WebView hors ligne');\n\
+        \  const unreachable=await ev(\"(async()=>{try{await fetch('https://example.com/',{mode:'no-cors',cache:'no-store'});return\
+        \ false}catch{return true}})()\");\n  assert.ok(unreachable,'requête réseau\
+        \ témoin bloquée');\n  await screen('exercice');\n  await ev(\"document.querySelectorAll('#app\
         \ .choice')[M.q.ans].click()\");\n  await pause(1500);await ev('save();ACT.home()');\n\
         \  const updated=await snap();assert.equal(updated.q,seed.q+1);\n  writeFileSync('/tmp/seed.json',JSON.stringify(updated));\n\
         \  console.log('PASS nouvelle réponse hors ligne enregistrée');\n }\n if(mode==='restored'){\n\
