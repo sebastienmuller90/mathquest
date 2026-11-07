@@ -224,6 +224,8 @@ jobs:
       - name: "Release : responsive géométrique"
         if: matrix.browser == 'chromium'
         run: node tests/release-responsive.test.js
+      - name: "Harnais : relance unique et visible d'un chargement de page"
+        run: node tests/lib-goto-retry.test.js
       - name: "Release : clavier, focus et accessibilité"
         if: matrix.browser == 'chromium'
         run: node tests/release-keyboard-a11y.test.js
