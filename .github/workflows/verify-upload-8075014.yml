@@ -1,0 +1,50 @@
+name: Verify upload key 8075014
+on:
+  push:
+    branches: [audit/build-8075014]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: finot-8075014
+          run-id: 42418077515
+          github-token: ${{ github.token }}
+      - name: Check existing upload key and sign
+        env:
+          KS: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_B64 || secrets.FINOT_UPLOAD_KEYSTORE_B64 }}
+          KP: ${{ secrets.UPFACTORY_ANDROID_KEYSTORE_PASSWORD || secrets.FINOT_UPLOAD_KEYSTORE_PASSWORD }}
+          KA: ${{ secrets.UPFACTORY_ANDROID_KEY_ALIAS || secrets.FINOT_UPLOAD_KEY_ALIAS }}
+          KE: ${{ secrets.UPFACTORY_ANDROID_KEY_PASSWORD || secrets.FINOT_UPLOAD_KEY_PASSWORD }}
+        run: |
+          set -eu
+          sha256sum -c SHA256.txt
+          for field in KS KP KA KE; do
+            if [[ -n "${!field}" ]]; then echo "$field available"; else echo "$field unavailable"; fi
+          done
+          if [[ -z "$KS" || -z "$KP" ]]; then exit 0; fi
+          umask 077
+          key="$RUNNER_TEMP/finot-private.jks"
+          trap 'rm -f "$key"' EXIT
+          printf '%s' "$KS" | base64 --decode > "$key"
+          if [[ -z "$KA" ]]; then
+            mapfile -t items < <(keytool -J-Duser.language=en -list -keystore "$key" -storepass:env KP | awk -F, '/PrivateKeyEntry/{print $1}')
+            test "${#items[@]}" = 1
+            KA="${items[0]}"
+          fi
+          export KE="${KE:-$KP}"
+          jarsigner -keystore "$key" -storepass:env KP -keypass:env KE -signedjar Finot-Academie-8075014-signe.aab Finot-Academie-8075014-non-signe.aab "$KA"
+          jarsigner -verify Finot-Academie-8075014-signe.aab | grep 'jar verified'
+          keytool -exportcert -keystore "$key" -alias "$KA" -storepass:env KP > /tmp/upload-cert.der
+          keytool -printcert -jarfile Finot-Academie-8075014-signe.aab -rfc | openssl x509 -outform DER > /tmp/signer.der
+          cmp /tmp/upload-cert.der /tmp/signer.der
+          sha256sum Finot-Academie-8075014-signe.aab
+      - uses: actions/upload-artifact@v4
+        if: success() && hashFiles('Finot-Academie-8075014-signe.aab') != ''
+        with:
+          name: finot-8075014-signe
+          path: Finot-Academie-8075014-signe.aab
