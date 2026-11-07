@@ -205,3 +205,4 @@ ExportOptions.plist
 # Audit de sécurité interne (04/11/2026) : documentation seule, aucun secret.
 !/docs/security/
 !/docs/security/**
+!/tests/sw-install-ok.test.js

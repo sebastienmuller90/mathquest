@@ -27,7 +27,10 @@ function atlCredit(f){
  const c=atlData().cred[f];if(!c)return '';
  const credit=`${esc(c.a)} · ${esc(c.l)} · Wikimedia Commons`;
  if(c.l!=='GFDL')return credit;
- return `${credit} · ${MQLinks.html(c.s,'Fichier source')} · <a href="./data/licence-cartes.html">Licence des cartes</a>`;
+ /* Le lien est composé ici, sans « href="…" » littéral : le pré-cache du service worker résout tout href trouvé dans un fichier JS
+    relativement à js/ (→ js/data/licence-cartes.html, 404) et fait alors échouer toute l'installation. La page est déjà dans SEEDS (sw.js). */
+ const LICENCE='./data/licence-cartes.html';
+ return `${credit} · ${MQLinks.html(c.s,'Fichier source')} · <a href="${LICENCE}">Licence des cartes</a>`;
 }
 function atlasCarte(id){const x=atlData().cartes.find(c=>c.id===id);if(!x)return atlasScreen();CUR='atlas';
  app.innerHTML=`${bar('🗺️ '+esc(x.t),'atlas')}<figure class="lfig atlbig">${atlImg('carte-'+x.id,x.t,'')}<figcaption><b>${esc(x.t)}</b><small>${esc(x.a)} · ${esc(x.l)} · Wikimedia Commons</small></figcaption></figure>
