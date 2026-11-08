@@ -14,7 +14,7 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   await p.click('[data-a="profiles"]');await p.click(`[data-a="pswitch:${A}"]`);await p.waitForFunction(()=>S.name==='Alice'&&CUR==='home');
   T('1. Deux profils enfants créés (Alice CE2, Boris 5e)',A!==B&&(await p.evaluate(()=>Object.keys(PDB.profiles).length))===2);
   // — 2. ouverture de l'espace parent : création du code par l'interface —
-  await p.click('[data-a="hometab:plus"]');await p.click('[data-a="parent"]');await p.waitForSelector('#pin2');
+  await p.click('[data-a="hometab:plus"]');await p.click('[data-a="parent"]');await require('./lib').passAdultGate(p);
   await p.fill('#pin','2468');await p.fill('#pin2','2468');await p.click('[data-a="pinok"]');await p.waitForSelector('.reckey');await p.click('[data-a="ptab:suivi"]');
   await p.waitForSelector('[data-homework-parent="1"]');
   T('2. Espace parent ouvert après création du code (4 chiffres), formulaire de devoir présent',await p.evaluate(()=>PARENT===true&&!!S.pin&&!!document.querySelector('#hw-title')));

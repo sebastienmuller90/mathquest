@@ -44,9 +44,11 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
   !pa.includes('À DÉCIDER AVANT PUBLICATION'),'');
  const pp=read('docs/google-play/privacy-policy-draft.md'),pub=read('docs/google-play/privacy-policy-public.html'),sl=read('docs/google-play/store-listing-fr.md');
  const privacyUrl='https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html';
+ // La date de mise à jour de la politique doit exister ET être identique dans le brouillon et la page publique (ne plus figer un jour précis : elle change à chaque modification réelle des données déclarées).
+ const dateOf=t=>(t.match(/Dernière mise à jour\s*:\s*(?:\*\*)?(\d{1,2} (?:janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) 20\d\d)/)||[])[1],dpp=dateOf(pp),dpub=dateOf(pub);
  T('Google Play : privacy publique finalisée, datée, sans placeholder juridique ; identité publique et contact présents',
-  pp.includes('Finot Académie')&&pp.includes('UpFactory Apps')&&pp.includes('upfactory.apps@gmail.com')&&pp.includes('3 novembre 2026')&&
-  pub.includes('Finot Académie')&&pub.includes('UpFactory Apps')&&pub.includes('upfactory.apps@gmail.com')&&pub.includes('3 novembre 2026')&&
+  pp.includes('Finot Académie')&&pp.includes('UpFactory Apps')&&pp.includes('upfactory.apps@gmail.com')&&!!dpp&&
+  pub.includes('Finot Académie')&&pub.includes('UpFactory Apps')&&pub.includes('upfactory.apps@gmail.com')&&!!dpub&&dpp===dpub&&
   !/IDENTITÉ LÉGALE DU TITULAIRE|DATE DE PUBLICATION|\[À COMPLÉTER/.test(pp+pub)&&
   sl.includes('upfactory.apps@gmail.com')&&sl.includes(privacyUrl),'');
  T('Identifiant : le candidat de production fr.finot.academie est documenté (audit, checklist) et le suffixe .dev du debug aussi',/fr\.finot\.academie/.test(read('docs/google-play/release-audit.md'))&&/\.dev/.test(read('docs/google-play/release-audit.md'))&&/App ID/i.test(read('docs/google-play/release-checklist.md')),'');

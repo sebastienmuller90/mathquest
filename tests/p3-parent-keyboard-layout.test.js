@@ -12,7 +12,7 @@ async function run(){
   const before=await p.evaluate(()=>({cur:CUR,nav:document.getElementById('hometabs')?.classList.contains('show'),name:S.name}));
   T('Accueil : navigation élève visible avant l’entrée dans l’espace parent',before.cur==='home'&&before.nav&&!!before.name,JSON.stringify(before));
 
-  await p.evaluate(()=>{PARENT=false;S.pin='';parentGate();});await p.waitForTimeout(100);
+  await p.evaluate(()=>{PARENT=false;S.pin='';parentGate();});await require('./lib').passAdultGate(p);await p.waitForTimeout(100);
   const gate=await p.evaluate(()=>({cur:CUR,pin:!!document.getElementById('pin'),confirm:!!document.getElementById('pin2'),nav:document.getElementById('hometabs')?.classList.contains('show'),focus:document.activeElement?.id||''}));
   T('Écran PIN parent : la navigation élève fixed est masquée',gate.pin&&gate.confirm&&!gate.nav,JSON.stringify(gate));
   T('Le clavier peut s’ouvrir sur le PIN sans perdre le focus',gate.focus==='pin',JSON.stringify(gate));

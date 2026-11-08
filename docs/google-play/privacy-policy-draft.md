@@ -10,7 +10,7 @@ La version HTML publique correspondante est `privacy-policy-public.html`.
 
 ## Politique de confidentialité de Finot Académie
 
-Dernière mise à jour : **3 novembre 2026**
+Dernière mise à jour : **4 novembre 2026**
 
 ### 1. Qui sommes-nous ?
 
@@ -23,7 +23,7 @@ Finot Académie est une application éducative du CP à la 3e publiée sous le n
 ### 2. L'essentiel
 
 - Finot Académie fonctionne **sans compte utilisateur** et peut être utilisée **hors connexion**.
-- Les informations saisies dans l'application (prénom ou surnom, niveau, progression, réglages) restent sur l'appareil dans la V1 Android actuelle et ne sont pas envoyées à l'éditeur.
+- Les informations saisies dans l'application (prénom ou surnom, genre, date de naissance facultative, niveau, progression, réglages) restent sur l'appareil dans la V1 Android actuelle et ne sont pas envoyées à l'éditeur.
 - L'application ne contient **aucune publicité**, **aucun traceur**, **aucun achat intégré** dans cette version.
 - L'application ne demande pas l'accès au **micro**, à la **caméra**, à la **localisation** ni aux **contacts**.
 
@@ -31,7 +31,9 @@ Finot Académie est une application éducative du CP à la 3e publiée sous le n
 
 | Donnée | Pourquoi | Où | Envoyée hors de l'appareil ? |
 |---|---|---|---|
-| Prénom ou surnom, niveau scolaire, compagnon/réglages de profil | personnaliser l'application | stockage privé de l'application | **Non** |
+| Prénom ou surnom (demandé à la création d'un profil), avatar ou compagnon choisi, niveau scolaire, réglages de profil | personnaliser l'application | stockage privé de l'application | **Non** |
+| Genre (choix proposé à la création d'un profil) | adapter les formulations de l'application | stockage privé de l'application | **Non** |
+| Date de naissance (**facultative**) | adapter les explications à l'âge et afficher un message le jour de l'anniversaire | stockage privé de l'application | **Non** |
 | Réponses d'accueil (niveau ressenti, objectifs, rythme) | adapter les activités | stockage privé de l'application | **Non** |
 | Progression, scores, erreurs, historique d'activités | proposer des révisions et un suivi local | stockage privé de l'application | **Non** |
 | Préférences (thème, son, mode dys, police) | confort et accessibilité | stockage privé de l'application | **Non** |
@@ -61,7 +63,7 @@ Aucune donnée d'enfant n'est transmise à l'éditeur dans la version décrite i
 
 ### 7. Sécurité
 
-Les données restent dans l'espace privé de l'application géré par Android. Le trafic réseau éventuellement autorisé est limité aux connexions sécurisées. L'espace parents est protégé par un code destiné à séparer l'usage enfant/parent ; il ne constitue pas une protection cryptographique contre une personne disposant d'un accès complet à l'appareil.
+Les données restent dans l'espace privé de l'application géré par Android. Le trafic réseau éventuellement autorisé est limité aux connexions sécurisées. L'espace parents est protégé par un code de 4 à 8 chiffres destiné à séparer l'usage enfant/parent : la création du premier code est précédée d'un petit calcul réservé aux adultes, le code est identique pour tous les profils de l'appareil et les essais successifs sont ralentis après plusieurs erreurs. Ce code reste une barrière d'usage, non un secret fort ; il ne constitue pas une protection cryptographique contre une personne disposant d'un accès complet à l'appareil.
 
 ### 8. Vos droits
 

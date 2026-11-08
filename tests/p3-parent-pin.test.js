@@ -1,5 +1,5 @@
 /* P3-B — Entrée sur le premier champ du code parent ne doit pas comparer avec une confirmation vide. */
-const {serve,launch,seedProfile}=require('./lib');
+const {serve,launch,seedProfile,passAdultGate}=require('./lib');
 
 async function run(){
  const R=[];const T=(name,ok,detail='')=>R.push({name,ok:!!ok,detail:String(detail)});
@@ -7,7 +7,7 @@ async function run(){
  try{
   await p.goto(url+'index.html',{waitUntil:'load'});
   await seedProfile(p,'Parent P3','6e');
-  await p.evaluate(()=>{S.pin='';S.rec='';save();PARENT=false;parentGate();});
+  await p.evaluate(()=>{S.pin='';S.rec='';save();PARENT=false;parentGate();});await passAdultGate(p);
   await p.locator('#pin').fill('1234');
   await p.locator('#pin').focus();
   await p.keyboard.press('Enter');

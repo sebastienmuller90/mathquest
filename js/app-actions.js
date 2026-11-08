@@ -120,6 +120,7 @@ function statsBody(){if(PF.pid!==ACTIVE)PF={pid:ACTIVE,grade:S.grade,subj:'',per
   return `<details class="det2"><summary><span>${sOf(w.id).emoji} ${sOf(w.id).name} · ${w.lvl}</span><span class="mbar"><i style="width:${a}%;background:${w.col}"></i></span><b>${tot?a+' %':'–'}</b></summary>${WCH[w.id].map(c=>{const s=S.chap[c.id];return `<div class="drow"><span>${c.icon} ${esc(c.name)}</span>${starStr(s?.stars||0)}<span class="muted">${s?`${s.ok}/${s.tot}`:'jamais commencé'}</span></div>`;}).join('')}</details>`;}).join('')}</details>`;}
 
 /* ===== Bons points & récompenses ===== */
+/* Ancien hachage 32 bits : conservé tel quel (outils de test, lecture des codes déjà enregistrés). Le code parent est désormais haché par MQParentGuard.hash. */
 const hsh=s=>[...String(s)].reduce((a,c)=>(Math.imul(a,31)+c.charCodeAt(0))>>>0,7919).toString(36);
 const isPend=id=>S.merit.req.some(r=>r.rid===id);
 const availPts=()=>S.merit.pts-S.merit.req.reduce((t,r)=>t+(S.merit.rewards.find(w=>w.id===r.rid)?.c||0),0);
@@ -130,10 +131,21 @@ function rewardsScreen(){CUR='rewards';const m=S.merit,av=availPts();
  <h2 class="sec">Ce que je peux gagner</h2>${m.rewards.length?m.rewards.slice().sort((a,b)=>a.c-b.c).map(w=>{const pend=isPend(w.id),ok=av>=w.c,pc=Math.min(100,Math.round(Math.max(0,av)/w.c*100));
   return `<div class="card rw2 ${ok||pend?'ready':''}"><span class="re">${esc(w.e)}</span><div class="grow"><b>${esc(w.n)}</b><div class="mbar"><i style="width:${pend?100:pc}%"></i></div><small class="muted">${pend?w.c:Math.min(Math.max(0,av),w.c)}/${w.c} 🎖️</small></div>${pend?'<span class="pill">⏳ En attente</span>':ok?`<button class="btn primary sm2" data-a="ask:${w.id}">Demander</button>`:`<span class="muted small">encore ${w.c-av}</span>`}</div>`;}).join(''):'<p class="muted">Aucune récompense pour l’instant. Demande à tes parents d’en ajouter.</p>'}
  <h2 class="sec">Comment gagner des bons points</h2><div class="card"><ul class="how">${RULES.filter(([k])=>m.rules[k]>0).map(([k,l])=>`<li><b>+${m.rules[k]}</b> ${l.charAt(0).toLowerCase()+l.slice(1)}</li>`).join('')}<li>Et des bonus donnés par tes parents 🎁</li></ul></div>`;}
+/* Porte adulte (audit S-03) : tant qu'aucun code parent n'existe, un calcul à plusieurs étapes précède la création du premier code,
+   pour qu'un enfant ne puisse pas s'approprier l'espace Parents. Tirage cryptographique ; voir js/parent-guard.js. */
+function adultGateScreen(fresh){const c=fresh?MQParentGuard.newChallenge():MQParentGuard.challenge();
+ app.innerHTML=`${bar('🔒 Espace parents')}<div class="card center pop"><p class="lead">Un adulte est-il présent ?</p><p class="muted">Pour créer le code parent, résous ce calcul. Une calculatrice ou du papier sont les bienvenus.</p>
+ <p id="adultq" class="lead adultq"><span id="adultq-vis" aria-hidden="true">${c.a} × ${c.b} + ${c.c} − ${c.d}</span><span class="sr-only">${c.a} fois ${c.b}, plus ${c.c}, moins ${c.d}</span></p>
+ <input id="adultans" class="big pin" type="text" inputmode="numeric" maxlength="6" autocomplete="off" aria-label="Résultat du calcul" placeholder="Résultat">
+ <button class="btn primary big" data-a="adultok">Valider</button></div>`;$('#adultans').focus();}
+/* Verrou de tentatives (S-02) : refuse tant que le verrou court ; l'échec est compté, le succès remet à zéro. */
+function guardDenied(){const lk=MQParentGuard.lockState();if(!lk.locked)return false;sfx('bad');toast(MQParentGuard.lockMessage(lk));return true;}
+function guardFail(msg){const f=MQParentGuard.failure();toast(f.locked?MQParentGuard.lockMessage(f):msg);}
 function parentGate(){if(PARENT)return parentScreen('suivi');const has=!!S.pin;
+ if(!has&&!MQParentGuard.adultOk())return adultGateScreen(false);
  app.innerHTML=`${bar('🔒 Espace parents')}<div class="card center pop"><p class="lead">${has?'Entre le code parent':'Crée un code parent'}</p><p class="muted">${has?'':'4 à 8 chiffres. Il protège les récompenses et les réglages.'}</p>
  <input id="pin" class="big pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" aria-label="Code parent" placeholder="Code">${has?'':'<input id="pin2" class="big pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" aria-label="Confirme le code parent" placeholder="Confirme le code">'}
- <button class="btn primary big" data-a="pinok">${has?'Déverrouiller':'Créer le code'}</button>${has?'<button class="linkb" data-a="forgot">Code oublié ?</button>':''}</div>`;$('#pin').focus();}
+ ${has&&MQParentGuard.lockState().locked?`<p id="pinlock" class="muted" role="status">${MQParentGuard.lockMessage(MQParentGuard.lockState())}</p>`:''}<button class="btn primary big" data-a="pinok">${has?'Déverrouiller':'Créer le code'}</button>${has?'<button class="linkb" data-a="forgot">Code oublié ?</button>':''}</div>`;$('#pin').focus();}
 function recKeyScreen(k){app.innerHTML=`${bar('🔑 Code de secours')}<div class="card center pop"><p class="lead">Note ce code de secours sur papier.</p><p class="muted">Il permet de changer le code parent en cas d’oubli. Il ne sera plus affiché.</p><div class="reckey">${k}</div><button class="btn primary big" data-a="ptab:suivi">C’est noté, continuer</button></div>`;}
 function forgotScreen(){app.innerHTML=`${bar('🔑 Code oublié')}<div class="card center pop"><p class="muted">Entre le code de secours noté à la création, puis un nouveau code parent.</p>
  <input id="rk" class="big pin" autocomplete="off" aria-label="Code de secours" placeholder="Code de secours" maxlength="10"><input id="np2" class="big pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off" aria-label="Nouveau code parent" placeholder="Nouveau code">
@@ -220,7 +232,7 @@ const ACT={
   if(!el.dataset.armed){el.dataset.armed='1';el.textContent='Confirmer';return toast('Clique encore pour supprimer ce profil. Une sauvegarde de secours est conservée.');}
   const was=id===ACTIVE;if(deleteProfile(id)){toast('Profil supprimé.');if(was)home();else profilesScreen();}},
  pdelcancel:()=>{DELPEND=null;profilesScreen();},
- pdelok:id=>{const f=$('#pdelpin'),v=f.value.trim();if(hsh(v)!==S.pin){sfx('bad');f.classList.remove('shake');void f.offsetWidth;f.classList.add('shake');f.value='';f.focus();return toast('Code parent incorrect');}DELPEND=null;const was=id===ACTIVE;if(deleteProfile(id)){toast('Profil supprimé.');if(was)home();else profilesScreen();}},
+ pdelok:id=>{if(guardDenied())return;const f=$('#pdelpin'),v=f.value.trim();if(!MQParentGuard.verify(v,S.pin)){sfx('bad');f.classList.remove('shake');void f.offsetWidth;f.classList.add('shake');f.value='';f.focus();return guardFail('Code parent incorrect');}MQParentGuard.success();if(MQParentGuard.isLegacy(S.pin))MQParentGuard.setCode(MQParentGuard.hash(v));DELPEND=null;const was=id===ACTIVE;if(deleteProfile(id)){toast('Profil supprimé.');if(was)home();else profilesScreen();}},
  world:worldScreen,chap:fiche,start:id=>startMission([id]),flashmenu:flashMenu,flash:startFlash,shop,badges:badgesScreen,rewards:rewardsScreen,parent:parentGate,ptab:k=>PARENT?parentScreen(k):parentGate(),forgot:forgotScreen,finot:(_,el)=>{const img=el?.querySelector?.('.finot-live');if(img&&!matchMedia('(prefers-reduced-motion: reduce)').matches){setTimeout(finotScreen,260);}else finotScreen();},
  snd:()=>{S.sound=!S.sound;save();home();},hint:showHint,valid:()=>validate(),pick:i=>validate(+i),next:advance,chip:insertChip,
  quit:()=>ACT.home(),
@@ -261,11 +273,12 @@ const ACT={
  // Réinitialiser efface la progression seulement : identité, préférences, récompenses et suivi parent sont conservés.
  reset:(_,el)=>{if(!el.dataset.armed){el.dataset.armed=1;el.textContent='⚠️ Cliquer encore pour confirmer (progression uniquement)';return;}const k={name:S.name,avatar:S.avatar,grade:S.grade,birthdate:S.birthdate,lastBirthdayYear:S.lastBirthdayYear,dailyGoal:S.dailyGoal,sound:S.sound,pin:S.pin,rec:S.rec,sync:clone(S.sync),theme:S.theme,own:clone(S.own),tts:clone(S.tts),subj:S.subj,rules:clone(S.merit.rules),rewards:clone(S.merit.rewards)};S=normalizeState(clone(DEF));Object.assign(S,{name:k.name,avatar:k.avatar,grade:k.grade,birthdate:k.birthdate,lastBirthdayYear:k.lastBirthdayYear,dailyGoal:k.dailyGoal,sound:k.sound,pin:k.pin,rec:k.rec,sync:k.sync,theme:k.theme,own:k.own,tts:k.tts,subj:k.subj});S.merit.rules=k.rules;S.merit.rewards=k.rewards;ensureSubj();save();applyTheme();PARENT=false;home();toast('✅ Progression réinitialisée. Profil, réglages et suivi parent conservés.');},
  ask:id=>{const w=S.merit.rewards.find(x=>x.id===id);if(!w||isPend(id)||availPts()<w.c)return;S.merit.req.push({id:'q'+Date.now(),rid:id,t:Date.now()});save();sfx('coin');confetti(20);toast('Demande envoyée ! Un parent doit la valider 🔒');rewardsScreen();},
- pinok:()=>{const a=$('#pin').value.trim();if(S.pin){if(hsh(a)===S.pin){PARENT=true;return parentScreen('suivi');}sfx('bad');$('#pin').value='';return toast('Code incorrect');}
+ adultok:()=>{const f=$('#adultans');if(MQParentGuard.answer(f&&f.value)){return parentGate();}sfx('bad');toast('Ce n’est pas le bon résultat. Voici un autre calcul, prends ton temps.');adultGateScreen(true);},
+ pinok:()=>{if(!S.pin&&!MQParentGuard.adultOk()){return adultGateScreen(false);}const a=$('#pin').value.trim();if(S.pin){if(guardDenied())return;if(MQParentGuard.verify(a,S.pin)){MQParentGuard.success();if(MQParentGuard.isLegacy(S.pin)){MQParentGuard.setCode(MQParentGuard.hash(a));save();}PARENT=true;return parentScreen('suivi');}sfx('bad');$('#pin').value='';return guardFail('Code incorrect');}
   const b=$('#pin2').value.trim();if(!PINOK(a))return toast('Le code doit contenir 4 à 8 chiffres');if(a!==b)return toast('Les deux codes sont différents');
-  const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let k='';for(let i=0;i<8;i++)k+=A[Math.floor(Math.random()*A.length)];S.pin=hsh(a);S.rec=hsh(k);save();PARENT=true;recKeyScreen(k.slice(0,4)+'-'+k.slice(4));},
- recov:()=>{const k=$('#rk').value.toUpperCase().replace(/[^A-Z0-9]/g,''),n=$('#np2').value.trim();if(!S.rec||hsh(k)!==S.rec){sfx('bad');return toast('Code de secours incorrect');}if(!PINOK(n))return toast('Le nouveau code doit contenir 4 à 8 chiffres');S.pin=hsh(n);save();PARENT=true;toast('Code parent changé ✅');parentScreen('suivi');},
- pinchange:()=>{const n=$('#np').value.trim();if(!PINOK(n))return toast('Le code doit contenir 4 à 8 chiffres');S.pin=hsh(n);save();$('#np').value='';toast('Code parent changé ✅');},
+  const k=MQParentGuard.newRecKey();MQParentGuard.setCode(MQParentGuard.hash(a),MQParentGuard.hash(k));MQParentGuard.adultConsume();save();PARENT=true;recKeyScreen(k.slice(0,4)+'-'+k.slice(4));},
+ recov:()=>{if(guardDenied())return;const k=$('#rk').value.toUpperCase().replace(/[^A-Z0-9]/g,''),n=$('#np2').value.trim();if(!S.rec||!MQParentGuard.verify(k,S.rec)){sfx('bad');return guardFail('Code de secours incorrect');}if(!PINOK(n))return toast('Le nouveau code doit contenir 4 à 8 chiffres');MQParentGuard.setCode(MQParentGuard.hash(n),MQParentGuard.hash(k));MQParentGuard.success();save();PARENT=true;toast('Code parent changé ✅');parentScreen('suivi');},
+ pinchange:()=>{const n=$('#np').value.trim();if(!PINOK(n))return toast('Le code doit contenir 4 à 8 chiffres');MQParentGuard.setCode(MQParentGuard.hash(n));save();$('#np').value='';toast('Code parent changé ✅');},
  acc:id=>{if(doAccept(id)){save();sfx('coin');}parentScreen('recomp');},
  ref:id=>{doRefuse(id);save();parentScreen('recomp');},
  bonus:sg=>{const n=parseInt($('#bn').value),why=$('#br').value.trim();if(!(n>0))return toast('Indique un nombre de points');doBonus(+sg>0?n:-n,why);save();toast(`${+sg>0?'+':'−'}${n} 🎖️ enregistré`);parentScreen('recomp');},
@@ -312,7 +325,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Escape'&&closeTopOverlay())return;
  if(document.activeElement&&(document.activeElement.id==='padtx'||document.activeElement.id==='finotin'))return;
  if(!M&&L&&$('.lcard')){const s=L.steps[L.i],onBtn=document.activeElement&&document.activeElement.matches&&document.activeElement.matches('button[data-a]');if(s.k==='quiz'||s.k==='practice'){const P=s.k==='practice',q=P?L.pq:L.q;if(e.key==='Enter'){if(onBtn)return;e.preventDefault();if(L.locked)(P?ACT.pnext:ACT.lqnext)();else if(q&&q.type!=='choice')lvalidate(undefined,P?'practice':undefined);}else if(!L.locked&&q&&q.type==='choice'&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<q.choices.length)lvalidate(i,P?'practice':undefined);}}else if(e.key==='ArrowRight'||(e.key==='Enter'&&!onBtn)){e.preventDefault();ACT.lnext();}else if(e.key==='ArrowLeft')ACT.lprev();return;}
- if(!M){if(e.key!=='Enter')return;const id=document.activeElement&&document.activeElement.id;if(id==='nm')ACT.begin();else if(id==='pin'||id==='pin2')ACT.pinok();else if(id==='rk'||id==='np2')ACT.recov();else if(id==='pdelpin'&&DELPEND)ACT.pdelok(DELPEND);return;}
+ if(!M){if(e.key!=='Enter')return;const id=document.activeElement&&document.activeElement.id;if(id==='nm')ACT.begin();else if(id==='adultans')ACT.adultok();else if(id==='pin'||id==='pin2')ACT.pinok();else if(id==='rk'||id==='np2')ACT.recov();else if(id==='pdelpin'&&DELPEND)ACT.pdelok(DELPEND);return;}
  // Entrée sur un bouton qui a le focus (réponse, « suivant »…) : son clic natif suffit, une seule fois.
  if(e.key==='Enter'){if(document.activeElement&&document.activeElement.matches&&document.activeElement.matches('button[data-a]'))return;e.preventDefault();if(M.locked){if($('[data-a="next"]'))advance();}else if(M.q.type!=='choice')validate();}
  else if(!M.locked&&M.q.type==='choice'&&/^[1-4]$/.test(e.key)){const i=+e.key-1;if(i<M.q.choices.length)validate(i);}});
@@ -321,7 +334,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='finotin'&&e.key==='Enter'){e.preventDefault();ACT.finotsend();}});
 // Première synchronisation après le chargement de tous les modules : les abonnés 'sync:action' (interrogation à distance…)
 // doivent être en place, sinon une action reçue tôt serait acquittée sans être appliquée.
-load();applyTheme();hometabsDOM();home();if(document.readyState==='complete')setTimeout(syncNow,0);else window.addEventListener('load',()=>syncNow(),{once:true});finotChatDOM();finotFabSync();hometabsSync();
+load();MQParentGuard.unify();applyTheme();hometabsDOM();home();if(document.readyState==='complete')setTimeout(syncNow,0);else window.addEventListener('load',()=>syncNow(),{once:true});finotChatDOM();finotFabSync();hometabsSync();
 setInterval(()=>{if(document.visibilityState==='visible')syncNow();},30000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')ttsStop();if(document.visibilityState==='visible')syncNow();else if(S.sync.child)syncNow();});
 document.addEventListener('toggle',e=>{const d=e.target;if(!d||!d.dataset||!d.dataset.cat||typeof CATOPEN==='undefined')return;const [w,k]=d.dataset.cat.split('|');(CATOPEN[w]=CATOPEN[w]||{})[k]=d.open;},true);
