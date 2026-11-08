@@ -1,6 +1,6 @@
 # Tableau de bord — Finot Académie, objectif « release ready »
 
-Dernière mise à jour : 04/11/2026 — base `main` = `4bd274f` (après fusion de #71, #77, #78, #79).
+Dernière mise à jour : 08/11/2026 — base `main` = `924e0b9` (dernière fusion : #86 porte adulte du code parent). Seul un commit de documentation suit.
 
 Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligatoire n'est pas démontré) :
 
@@ -13,41 +13,44 @@ Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligato
 
 | Chantier | Dév. | Validation technique | Dossier Store | Publication |
 | --- | --- | --- | --- | --- |
-| PWA / hors ligne / mises à jour | terminé | terminé (CI + run-all) | — | — |
-| Android V1 | terminé | terminé sur émulateurs ; **appareil physique non testé** | prêt côté assets, déclarations à saisir | non réalisée |
-| iOS | projet natif créé et fusionné (#79) | **non exécutable** sans Mac/Xcode ; test statique `ios-config` 39/39 | docs App Store fusionnées (#71), à finaliser avec le titulaire du compte | non réalisée |
-| Conformité Stores | — | — | vérification sur sources officielles faite (#78), 5 écarts à trancher | — |
+| PWA / hors ligne / mises à jour | terminé | terminé (CI + `run-all` 1858/0) | — | — |
+| Android V1 | terminé | terminé sur 3 émulateurs ; grand téléphone API 35 non testé ; **appareil physique non testé** | assets prêts, déclarations à saisir | non réalisée |
+| iOS | projet natif fusionné (#79) | **non exécutable** sans Mac/Xcode ; tests statiques 63/63 et 90/90 | docs fusionnées (#71) | non réalisée |
+| Conformité Stores | — | — | vérification faite (#78), écarts à trancher | — |
 | Monétisation V1.1 | hors V1 (architecture seule) | — | — | — |
 
-## Chantiers
+## Validation finale sur le HEAD `924e0b9`
 
-### PWA, Service Worker, cache, mises à jour — 100 % (dév. + validation)
-- Fait : course d'activation du service worker corrigée (#72), test de non-régression exécuté en CI (#73), `serve()` du harnais ne tire plus de port interdit par Chromium (#76).
-- Tests : CI complète verte sur les PR ; `run-all` final : 1679 PASS + 1 FAIL (timeout de chargement dû à la contention CPU, `release-responsive`), **rejoué seul : 9/9 PASS**.
-- Reste : rien.
+- `run-all` complet : **1858 PASS, 0 FAIL**, 110 suites, 3235 s. `e2e` : **72/72**.
+- Un premier `run-all` avait donné 5 FAIL, tous hors code applicatif : trois tests privés (`e2e`, `finot-assistant`, `accessibility`) ne franchissaient pas la porte adulte de #86 (corrigés avec `passAdultGate`), et `@capacitor/ios` manquait du `node_modules` local (la CI l'installe via `npm ci`).
+- AAB non signé `8075016` : SHA-256 `c029eb0beaa55cf29016cdb462b90900ee0994b2a72f08cfe1352e9696119700`. Détails et empreintes de tous les visuels : `docs/google-play/ASSET_STATUS_2026-11-08.md`.
 
-### Interface, responsive, accessibilité, chat Finot, espace Parents — 100 % (dév. + validation)
-- Fait : chat Finot lisible sur petit écran (#54, #74) ; lien vers la politique de confidentialité **dans l'espace Parents uniquement** (#75), jamais dans l'espace enfant.
-- Tests : `finot-chat-initial-geometry`, `parent-privacy-link`, balayages responsive (683 contrôles), clavier/accessibilité.
+## Émulateurs réellement testés (08/11/2026)
 
-### Android natif — dév. 100 %, validation technique 100 % hors appareil physique
-- AAB non signé `8075012` : SHA-256 `09ab5ed9…c93c94`, **build reproductible démontré** (deux builds identiques).
-- Recette émulateur : téléphone 34/0/1, tablette 34/0/1 (la première exécution tablette avait donné 4 FAIL au premier démarrage à froid ; rejouée, 34/0 — voir `docs/google-play/ASSET_STATUS_2026-11-04.md`).
-- Visuels finaux : icône 512, Feature Graphic 1024×500, 11 captures téléphone + 11 tablette, empreintes SHA-256 dans `ASSET_STATUS_2026-11-04.md`.
-- **Reste (humain)** : clé d'upload et signature, appareil physique, compte Play Console.
+| AVD | API | Suite appli | Suite réseau |
+| --- | --- | --- | --- |
+| Tablette | 36 | 34 / 0 / 1 | 24 / 0 |
+| Téléphone standard (Pixel) | 36 | 34 / 0 / 1 | 24 / 0 |
+| Petit téléphone | 30 | 34 / 0 / 1 | 24 / 0 |
+| Grand téléphone | 35 | **non testé** (démarrage impossible : disque C: insuffisant) | **non testé** |
 
-### iOS — dév. fait (#79), validation technique **non faite**
-- Fait : `@capacitor/ios` 8.6.0 (Swift Package Manager), dossier `ios/` (bundle `fr.finot.academie`, iPhone + iPad, iOS 15 minimum, `PrivacyInfo.xcprivacy`, `Info.plist` sans permission, icône 1024 sans alpha, launch screen crème), `tests/ios-config.test.js` 39/39 en CI, procédure Mac dans `docs/ios/README.md`.
-- **Non exécuté** : tout ce qui exige Xcode (build, simulateur, archive, TestFlight). Le `project.pbxproj` n'a jamais été ouvert dans Xcode.
-- Écarts à trancher : âge visé 6–15 ans > Catégorie Enfants Apple (≤ 11 ans) ; déclaration de chiffrement à confirmer ; icône 1024 agrandie depuis 512.
+Les émulateurs ne prouvent pas le comportement sur appareil réel.
 
-### Google Play / App Store (dossiers)
-- Google Play : `docs/google-play/*` + `ASSET_STATUS_2026-11-04.md` ; APK de recette `artifacts/google-play/recette/finot-academie-recette-debug-8075012.apk` (SHA-256 `9325049a3c2f633383e9fc088c4efb91389ae1f31161d034aa425c3b4bdb0441`, hors Git).
-- Vérification de conformité sur sources officielles : `docs/stores/verification-conformite-2026-11.md` (#78). Écarts à trancher : statut « trader » (DSA), vérification des développeurs Android, permission INTERNET (suivi distant désactivé), public cible vs Catégorie Enfants Apple, code parent = empreinte 32 bits (barrière d'usage, à renforcer avant tout achat).
-- App Store : `docs/app-store/*` (#71) fusionnée ; PR #64 et #70 fermées (contenu intégré / doublon).
+## Points ouverts (honnêtes)
 
-### Monétisation
-- V1 gratuite, sans publicité ni achat intégré, inchangée. Architecture V1.1 rédigée séparément, sans code ni dépense.
+- Grand téléphone API 35 à rejouer après libération de ≥ 12 Go sur C:.
+- Bouton « Valider » parfois débordant sur tablette à police 2× + affichage agrandi : vu une fois, non reproduit en 3 essais, cause non établie.
+- Test Firefox `pwa-update` instable en CI à une occasion, cause non établie.
+- Permission `INTERNET` (suivi distant désactivé) : décision à prendre.
+- Le verrou du code parent peut être contourné en avançant l'horloge ; code parent à renforcer avant tout achat.
+- iOS : âge visé 6–15 ans > Catégorie Enfants Apple ; déclaration de chiffrement à confirmer.
 
-## Interventions humaines obligatoires (liste minimale)
-Voir `docs/google-play/final-human-inputs.md` et le rapport final : clé d'upload + signature de l'AAB, compte Play Console (identité légale), appareil physique, saisie des déclarations, téléversement ; pour iOS : Mac + Xcode 26, compte Apple Developer.
+## Interventions humaines obligatoires
+
+1. Créer et sauvegarder la clé d'upload, puis signer l'AAB `8075016` (`D:\UpFactory\Releases\Signer-Finot-AAB.ps1`, mots de passe saisis par l'éditeur). Ne jamais téléverser un AAB non signé ; les AAB `8075012` et `8075014` sont obsolètes.
+2. Tester sur appareil physique.
+3. Compte Play Console (identité, statut « trader »), déclarations, republication de la politique de confidentialité publique, téléversement.
+4. iOS : Mac + Xcode 26+, compte Apple Developer.
+5. Libérer de la place sur C: pour tester le grand téléphone API 35.
+
+Voir aussi `docs/google-play/final-human-inputs.md`.
