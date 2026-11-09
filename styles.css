@@ -491,3 +491,4 @@ body.young .choice kbd{display:none}
 .mq-try summary::before,.mq-adult summary::before{content:'▸';display:inline-block;margin-right:8px;transition:transform .2s}
 .mq-try details[open]>summary::before,.mq-adult[open]>summary::before{transform:rotate(90deg)}
 .privacy-link{display:inline-flex;align-items:center;min-height:48px;font-weight:700}
+.diag-note{display:flex;flex-direction:column;align-items:center;gap:4px;margin:8px 0 12px}.diag-note .big{font-size:2.6rem;line-height:1.1;color:var(--accent,#f0904a)}

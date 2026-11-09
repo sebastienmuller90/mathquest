@@ -58,6 +58,8 @@ async function journey(b,url,k,R){
   st=await store(p);const dg=st.pr.diagnostic;
   const dgOk=pattern.reduce((a,x)=>a+x,0);
   T('Diagnostic : 12 réponses jouées, score cohérent, persisté, aucun XP ni pièce, totalQ inchangé',dg&&dg.completedAt&&dg.total===12&&dg.answers.length===12&&dg.ok===dg.answers.filter(x=>x.ok).length&&dg.ok===dgOk&&st.pr.xp===0&&st.pr.coins===0&&st.pr.totalQ===0,JSON.stringify({ok:dg&&dg.ok,total:dg&&dg.total,score:dg&&dg.score,xp:st.pr.xp,coins:st.pr.coins,totalQ:st.pr.totalQ,played,expectedOk:dgOk}));
+  {const nt=await p.evaluate(()=>({txt:document.querySelector('.diag-note')?.innerText||'',lbl:document.querySelector('.end .lead')?.innerText||''}));const exp=Math.round(dgOk/12*20);
+   T('Diagnostic terminé : une note sur 20 est affichée et enregistrée (9/12 → 15/20)',dg.note20===exp&&exp===15&&nt.txt.includes(exp+' / 20')&&nt.txt.includes(dgOk+' bonnes réponses sur 12')&&nt.lbl.length>10,JSON.stringify({note20:dg.note20,exp,nt}));}
   await p.click('[data-a="home"]');await p.waitForFunction(()=>CUR==='home');
   T('Diagnostic terminé : la carte « Calibrer mon niveau » ne revient plus',await p.evaluate(()=>!document.querySelector('.diag-home-card')));
 
