@@ -15,7 +15,7 @@ Toute réponse dépendant encore d'une décision commerciale ou d'un écran spé
 | Catégorie | **Éducation** |
 | Nom public éditeur | **UpFactory Apps** |
 | Coordonnées | **upfactory.apps@gmail.com** |
-| Politique de confidentialité | `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — contenu finalisé et daté du 03/11/2026 ; vérifier l'accès public après déploiement de `main` |
+| Politique de confidentialité | `https://sebastienmuller90.github.io/mathquest/docs/google-play/privacy-policy-public.html` — contenu finalisé et daté du 4 novembre 2026 ; vérifier l'accès public après déploiement de `main` |
 
 ## 2. Public cible et contenu
 
