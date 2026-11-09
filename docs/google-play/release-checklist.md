@@ -9,7 +9,7 @@ Mise à jour : **02/11/2026** — `main@ecc99323915bfe17ff4267e8ea0d2bfbf0f88b78
 | # | Élément | Statut | Détail |
 |---|---|---|---|
 | 1 | App ID (`fr.finot.academie`) | **READY** / **HUMAN ACTION** pour confirmer dans Play Console | release `fr.finot.academie` ; debug `.dev` ; identifiant à conserver lors de la création de l'application |
-| 2 | Version (`1.0.0` / `8075016`) | **READY** | `versionName` dans `android/store-version.json` ; `versionCode` dérivé de `sw.js` ; registre `version-ledger.json` |
+| 2 | Version (`1.0.0` / `8075018`) | **READY** | `versionName` dans `android/store-version.json` ; `versionCode` dérivé de `sw.js` ; registre `version-ledger.json` |
 | 3 | `targetSdk` / `compileSdk` 36 | **READY** | API 36. Depuis le 31/08/2026, Google Play exige Android 16 / API 36 ou plus pour les nouvelles applications et mises à jour Android standard |
 | 4 | AAB release non signé | **READY DANS PR #49** | 58 242 317 octets ; SHA-256 `7c66820146e354c8ac2335c0b62e7abab5d6b562314799d782c207c76b2c0e96`, identique sur deux builds ; non débogable |
 | 5 | Permissions minimales | **READY** | `INTERNET` seule (+ permission interne AndroidX) ; pas de micro, caméra, localisation, contacts ni `AD_ID` |

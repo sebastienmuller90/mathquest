@@ -17,7 +17,7 @@ sur la documentation. Les chiffres cités proviennent du manifeste fusionné rel
 | Plugins natifs | `@capacitor/app` 8.1.2, `@capacitor-community/text-to-speech` 8.0.2 | `android/app/capacitor.build.gradle` |
 | Android Gradle Plugin / Gradle | 8.13.0 / 8.14.3 | `android/build.gradle`, `gradle-wrapper.properties` |
 | JDK de build | 21 (Temurin) ; JBR 25 fait échouer Gradle | essais de build |
-| `versionName` / `versionCode` | `1.0.0` / `8075016` | manifeste de l’AAB 8075016 relu le 09/11/2026 (voir `AUDIT_CONFORMITE_2026-11-09.md`) |
+| `versionName` / `versionCode` | `1.0.0` / `8075018` | manifeste fusionné de l’AAB 8075018 contrôlé par le script de release le 09/11/2026 (voir `AUDIT_CONFORMITE_2026-11-09.md`) |
 | Débogable | **non** (release) ; oui en debug (normal) | pas de `android:debuggable` dans le manifeste release + `debuggable false` explicite |
 | Sauvegarde | `allowBackup="false"`, `fullBackupContent="false"`, `dataExtractionRules` excluant cloud **et** transfert d'appareil | manifeste |
 | Trafic en clair | interdit (`cleartextTrafficPermitted="false"`) ; aucun `usesCleartextTraffic` | `network_security_config.xml` |

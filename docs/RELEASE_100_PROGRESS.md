@@ -23,7 +23,7 @@ Quatre niveaux, volontairement distincts (aucun 100 % tant qu'un niveau obligato
 
 - `run-all` complet : **1858 PASS, 0 FAIL**, 110 suites, 3235 s. `e2e` : **72/72**.
 - Un premier `run-all` avait donné 5 FAIL, tous hors code applicatif : trois tests privés (`e2e`, `finot-assistant`, `accessibility`) ne franchissaient pas la porte adulte de #86 (corrigés avec `passAdultGate`), et `@capacitor/ios` manquait du `node_modules` local (la CI l'installe via `npm ci`).
-- AAB non signé `8075016` : SHA-256 `c029eb0beaa55cf29016cdb462b90900ee0994b2a72f08cfe1352e9696119700`. Détails et empreintes de tous les visuels : `docs/google-play/ASSET_STATUS_2026-11-08.md`.
+- AAB non signé `8075018` : SHA-256 `ec3f78849b96181dd3f71bd644d079eecb9f9eff95c7c608cf66239f413acffc`. Détails et empreintes de tous les visuels : `docs/google-play/ASSET_STATUS_2026-11-09.md` (visuels : `ASSET_STATUS_2026-11-08.md`).
 
 ## Émulateurs réellement testés (08/11/2026)
 
@@ -47,7 +47,7 @@ Les émulateurs ne prouvent pas le comportement sur appareil réel.
 
 ## Interventions humaines obligatoires
 
-1. Créer et sauvegarder la clé d'upload, puis signer l'AAB `8075016` (`D:\UpFactory\Releases\Signer-Finot-AAB.ps1`, mots de passe saisis par l'éditeur). Ne jamais téléverser un AAB non signé ; les AAB `8075012` et `8075014` sont obsolètes.
+1. Créer et sauvegarder la clé d'upload, puis signer l'AAB `8075018` (`D:\UpFactory\Releases\Signer-Finot-AAB-8075018.ps1`, mots de passe saisis par l'éditeur). Ne jamais téléverser un AAB non signé ; les AAB `8075012`, `8075014` et `8075016` sont obsolètes.
 2. Tester sur appareil physique.
 3. Compte Play Console (identité, statut « trader »), déclarations, republication de la politique de confidentialité publique, téléversement.
 4. iOS : Mac + Xcode 26+, compte Apple Developer.
