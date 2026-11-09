@@ -1,4 +1,4 @@
-/* Bouton « Valider » de l'exercice : jamais hors de la carte ni de l'écran, même avec la police système agrandie (14/11/2026).
+/* Bouton « Valider » de l'exercice : jamais hors de la carte ni de l'écran, même avec la police système agrandie (09/11/2026).
    Cause établie : la rangée .qbtns (Indice, Brouillon, Finot, « Pourquoi ? », Valider) restait en « nowrap » au-dessus de 440 px ;
    avec la police Android à 2,0× (textZoom de la WebView), la somme des largeurs minimales des boutons dépassait la carte et
    « Valider » sortait de 13 px à droite de l'écran (viewport ≈ 985 px = tablette 1280 px à l'affichage agrandi).
