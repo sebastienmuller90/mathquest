@@ -38,6 +38,7 @@
 !/tests/pwa-register-race.test.js
 !/tests/scenarios.test.js
 !/tests/keyboard-a11y.test.js
+!/tests/valider-overflow.test.js
 !/tests/finot-voice.test.js
 !/tests/serve-safe-port.test.js
 !/tests/finot-chat-initial-geometry.test.js

@@ -39,7 +39,7 @@ async function run(){
 
   await p.waitForFunction(()=>typeof CUR!=='undefined'&&CUR==='diagnostic'&&!!S.diagnostic?.active,null,{timeout:4000});
   const diag=await p.evaluate(()=>({cur:CUR,n:S.diagnostic?.active?.questions?.length||0,i:S.diagnostic?.active?.i,score:S.diagnostic?.score,xp:S.xp,coins:S.coins,text:document.body.innerText}));
-  T('Après le questionnaire, le diagnostic réel de 12 questions prend le relais sans récompense',diag.cur==='diagnostic'&&diag.n===12&&diag.i===0&&diag.xp===0&&diag.coins===0&&/Ce n’est pas une note/.test(diag.text),JSON.stringify(diag));
+  T('Après le questionnaire, le diagnostic réel de 12 questions prend le relais sans récompense',diag.cur==='diagnostic'&&diag.n===12&&diag.i===0&&diag.xp===0&&diag.coins===0&&/Ce n’est pas un examen/.test(diag.text),JSON.stringify(diag));
   await p.click('[data-a="diagpause"]');await p.waitForFunction(()=>CUR==='home',null,{timeout:3000});
 
   await p.reload({waitUntil:'load'});await p.waitForFunction(()=>typeof S!=='undefined'&&S.name==='Lina',null,{timeout:6000});const reload=await p.evaluate(()=>({onb:!!document.querySelector('.pob-wrap'),gender:S.gender,companion:S.companion,goals:S.learnerProfile?.goals||[],difficulty:S.learnerProfile?.difficultSubjects||[],diag:!!S.diagnostic?.active}));

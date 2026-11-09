@@ -94,7 +94,7 @@ input.big:focus{border-color:var(--accent)}input.good{border-color:var(--good);b
 .choice:hover:not(:disabled){filter:brightness(1.04);border-color:var(--accent)}.choice:active:not(:disabled){transform:scale(.97)}
 .choice kbd{font:600 13px 'Nunito',sans-serif;background:var(--surface);border-radius:8px;padding:2px 7px;color:var(--muted)}
 .choice.good{border-color:var(--good);background:var(--goodbg)}.choice.bad{border-color:var(--bad);background:var(--badbg)}.choice:disabled{cursor:default}
-.qbtns{display:flex;gap:10px;justify-content:space-between;margin-top:16px}.qbtns .primary{flex:1}
+.qbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:16px}.qbtns .primary{flex:1}
 .fb{margin-top:14px;border-radius:18px;padding:14px 16px;font-size:18px}.fb.good{background:var(--goodbg);color:var(--good)}.fb.bad{background:var(--badbg)}.fb.bad>b:first-child{color:var(--bad)}
 .fb.tip{background:color-mix(in srgb,var(--gold) 18%,var(--surface));display:flex;flex-direction:column;gap:4px}.fb small{color:var(--muted)}
 .expl{margin-top:8px;padding-top:8px;border-top:2px dashed var(--border);color:var(--text)}
@@ -491,3 +491,4 @@ body.young .choice kbd{display:none}
 .mq-try summary::before,.mq-adult summary::before{content:'▸';display:inline-block;margin-right:8px;transition:transform .2s}
 .mq-try details[open]>summary::before,.mq-adult[open]>summary::before{transform:rotate(90deg)}
 .privacy-link{display:inline-flex;align-items:center;min-height:48px;font-weight:700}
+.diag-note{display:flex;flex-direction:column;align-items:center;gap:4px;margin:8px 0 12px}.diag-note .big{font-size:2.6rem;line-height:1.1;color:var(--accent,#f0904a)}
