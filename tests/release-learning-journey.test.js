@@ -45,21 +45,22 @@ async function journey(b,url,k,R){
   let st=await store(p);
   T('Inscription réelle : profil stocké, compteurs à zéro, diagnostic proposé en pause',st.pr.name===k.name&&st.pr.grade===k.grade&&st.pr.totalQ===0&&st.pr.xp===0&&st.pr.coins===0&&!!(st.pr.diagnostic&&st.pr.diagnostic.active),JSON.stringify({base,st:st.pr.diagnostic&&Object.keys(st.pr.diagnostic)}));
 
-  // 1. DIAGNOSTIC : reprise de la calibration mise en pause, 12 vraies réponses (9 justes puis 3 fausses), sans XP ni pièces.
+  // 1. DIAGNOSTIC : reprise de la calibration mise en pause, 20 vraies réponses (13 justes puis 7 fausses), sans XP ni pièces.
   await p.evaluate(()=>{window.__diagQ=()=>{return null;};});
   await p.waitForSelector('[data-a="diagstart"]',{timeout:5000});await p.click('[data-a="diagstart"]');await p.waitForFunction(()=>CUR==='diagnostic');
   // La question courante vit dans la fermeture du moteur : on la lit via le DOM et l'objet S.diagnostic.active.
   await p.evaluate(()=>{window.__diagQ=()=>S.diagnostic.active.questions[S.diagnostic.active.i].q;});
-  const pattern=[1,1,1,1,1,1,1,1,1,0,0,0];let played=0;
-  for(let i=0;i<12;i++){await p.waitForFunction(()=>CUR==='diagnostic'&&!!document.querySelector('.qcard'),null,{timeout:4000});
+  const pattern=[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0];let played=0;
+  for(let i=0;i<20;i++){await p.waitForFunction(()=>CUR==='diagnostic'&&!!document.querySelector('.qcard'),null,{timeout:4000});
    const i0=await p.evaluate(()=>S.diagnostic.active.i);await answerCur(p,!!pattern[i],'diag');played++;
    await p.waitForFunction(i0=>CUR==='diagnostic-done'||S.diagnostic.active.i===i0+1||(S.diagnostic&&S.diagnostic.completedAt),i0,{timeout:4000});}
   await p.waitForFunction(()=>CUR==='diagnostic-done',null,{timeout:4000});
   st=await store(p);const dg=st.pr.diagnostic;
   const dgOk=pattern.reduce((a,x)=>a+x,0);
-  T('Diagnostic : 12 réponses jouées, score cohérent, persisté, aucun XP ni pièce, totalQ inchangé',dg&&dg.completedAt&&dg.total===12&&dg.answers.length===12&&dg.ok===dg.answers.filter(x=>x.ok).length&&dg.ok===dgOk&&st.pr.xp===0&&st.pr.coins===0&&st.pr.totalQ===0,JSON.stringify({ok:dg&&dg.ok,total:dg&&dg.total,score:dg&&dg.score,xp:st.pr.xp,coins:st.pr.coins,totalQ:st.pr.totalQ,played,expectedOk:dgOk}));
-  {const nt=await p.evaluate(()=>({txt:document.querySelector('.diag-note')?.innerText||'',lbl:document.querySelector('.end .lead')?.innerText||''}));const exp=Math.round(dgOk/12*20);
-   T('Diagnostic terminé : une note sur 20 est affichée et enregistrée (9/12 → 15/20)',dg.note20===exp&&exp===15&&nt.txt.includes(exp+' / 20')&&nt.txt.includes(dgOk+' bonnes réponses sur 12')&&nt.lbl.length>10,JSON.stringify({note20:dg.note20,exp,nt}));}
+  T('Diagnostic : 20 réponses jouées, score cohérent, persisté, aucun XP ni pièce, totalQ inchangé',dg&&dg.completedAt&&dg.total===20&&dg.answers.length===20&&dg.ok===dg.answers.filter(x=>x.ok).length&&dg.ok===dgOk&&st.pr.xp===0&&st.pr.coins===0&&st.pr.totalQ===0,JSON.stringify({ok:dg&&dg.ok,total:dg&&dg.total,score:dg&&dg.score,xp:st.pr.xp,coins:st.pr.coins,totalQ:st.pr.totalQ,played,expectedOk:dgOk}));
+  {const nt=await p.evaluate(()=>({txt:document.querySelector('.diag-note')?.innerText||'',lbl:document.querySelector('.cal-hero .lead')?.innerText||'',finot:document.querySelector('.cal-finot')?.innerText||'',subj:document.querySelectorAll('.cal-sub').length,dom:document.querySelectorAll('.cal-dom').length,steps:document.querySelectorAll('.cal-step [data-a^="chap:"]').length,refine:document.querySelectorAll('[data-a^="diagsub:"]').length,detail:document.querySelectorAll('.cal-qlist li').length,sw:document.documentElement.scrollWidth,iw:innerWidth}));const exp=Math.round(dgOk/20*20);
+   T('Diagnostic terminé : une note sur 20 est affichée et enregistrée (13 bonnes réponses sur 20 → 13/20)',dg.note20===exp&&exp===13&&nt.txt.includes(exp+' / 20')&&nt.txt.includes(dgOk+' bonnes réponses sur 20')&&nt.lbl.length>10,JSON.stringify({note20:dg.note20,exp,nt}));
+   T('Diagnostic terminé : bilan par matière, par domaine, parcours conseillé, détail des 20 questions et calibrations par matière, sans débordement',nt.subj>=3&&nt.dom>=4&&nt.steps>=1&&nt.refine>=2&&nt.detail===20&&nt.finot.length>60&&nt.sw<=nt.iw+1,JSON.stringify(nt));}
   await p.click('[data-a="home"]');await p.waitForFunction(()=>CUR==='home');
   T('Diagnostic terminé : la carte « Calibrer mon niveau » ne revient plus',await p.evaluate(()=>!document.querySelector('.diag-home-card')));
 
