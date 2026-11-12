@@ -13,14 +13,14 @@ await page.waitForFunction(()=>window.MQHooks&&MQPathSkillFocus.hookActive&&MQQu
 const initial=await page.evaluate(()=>({grade:S.grade,age:document.body.dataset.mqAge,card:!!document.querySelector('.diag-home-card'),xp:S.xp||0,coins:S.coins||0,eligible:MQDiagnostic.eligible(),skillHook:MQPathSkillFocus.hookActive,transferHooks:MQQuestionTransfer.hooksActive,audit:!!window.MQHooks&&!document.querySelector('script[src*="audit-fixes"]')}));
 if(initial.grade!=='CP')fail('test-profile-grade-not-cp');if(initial.age!=='young')fail('CP-age-not-young');if(!initial.card||!initial.eligible)fail('diagnostic-card-missing');if(!initial.audit)fail('hooks-not-loaded-or-legacy-injection');if(!initial.skillHook)fail('skill-focus-hook-lost-after-audit-fixes');if(!initial.transferHooks)fail('transfer-hook-lost-after-audit-fixes');
 await page.evaluate(()=>ACT.diagstart());
-for(let step=0;step<12;step++){
+for(let step=0;step<20;step++){
  await page.waitForSelector('.qcard');
  const acted=await page.evaluate(()=>{const choice=document.querySelector('[data-a^="diagpick:"]');if(choice){const i=+choice.dataset.a.split(':')[1];ACT.diagpick(i);return'choice';}const toks=[...document.querySelectorAll('[data-a^="diagtok:"]')];if(toks.length){const idx=toks.map(x=>+x.dataset.a.split(':')[1]);idx.forEach(i=>ACT.diagtok(i));ACT.diagvalid();return'order';}const ins=[...document.querySelectorAll('[id^="di"]')];if(ins.length){ins.forEach(x=>x.value='0');ACT.diagvalid();return'input';}return'';});
  if(!acted){fail('diagnostic-no-input-step-'+step);break;}await page.waitForTimeout(20);
 }
 await page.waitForFunction(()=>S.diagnostic?.completedAt||document.querySelector('[data-a="home"]'));
 const diag=await page.evaluate(()=>({done:!!S.diagnostic?.completedAt,n:S.diagnostic?.answers?.length||0,xp:S.xp||0,coins:S.coins||0,comp:Object.keys(S.competencies||{}).length}));
-if(!diag.done||diag.n!==12)fail('diagnostic-not-complete');if(diag.xp!==initial.xp||diag.coins!==initial.coins)fail('diagnostic-rewarded');if(!diag.comp)fail('diagnostic-no-competencies');
+if(!diag.done||diag.n!==20)fail('diagnostic-not-complete');if(diag.xp!==initial.xp||diag.coins!==initial.coins)fail('diagnostic-rewarded');if(!diag.comp)fail('diagnostic-no-competencies');
 const transfer=await page.evaluate(()=>{const id=Object.keys(CHMAP).find(x=>WMAP[x]?.lvl==='CP'&&typeof CHMAP[x].g==='function'),q=CHMAP[id].g(2);return {id,transfer:q?._mq?.transfer||'',skill:q?._mq?.skillKind||''};});
 // Règle de stabilisation : transfert rédigé pour le chapitre (pack) ou absent ; jamais une situation générique.
 if(transfer.transfer)fail('generic-transfer-still-attached');const packTransfer=await page.evaluate(()=>CHMAP['6p'].g(2)?._mq?.transfer||'');if(!packTransfer)fail('pack-transfer-missing');if(!transfer.skill)fail('transfer-skill-missing');

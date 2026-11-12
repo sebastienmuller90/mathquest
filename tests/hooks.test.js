@@ -39,6 +39,8 @@ async function run(){const R=[];const T=(n,ok,d='')=>R.push({name:n,ok:!!ok,deta
  await p.evaluate(()=>{if(M&&M.locked)advance();});
  let dbl=null;for(let k=0;k<6&&!dbl;k++){const isChoice=await p.evaluate(()=>M&&M.q.type==='choice');if(isChoice){const tq0=await p.evaluate(()=>S.totalQ);const sel=await p.evaluate(()=>`.choice[data-a="pick:${M.q.ans}"]`);await p.dblclick(sel);await p.waitForTimeout(60);dbl={d:(await p.evaluate(()=>S.totalQ))-tq0};}else{await p.evaluate(()=>{result(true);advance();});}}
  T('Double clic réel sur une réponse : une seule réponse enregistrée',dbl&&dbl.d===1,JSON.stringify(dbl));
+ // Série neuve : le nombre de questions déjà consommées plus haut dépend de l'ordre des types de questions (variable selon le jour).
+ await p.evaluate(()=>{const id=M.cid;home();ACT.startlevel(id+'|1');});await p.waitForTimeout(120);
  const lv=await p.evaluate(()=>{const ds=[];for(let i=0;i<6&&M&&!M.flash&&M.i<M.n;i++){if(!M.locked)result(true);ds.push(M.d);clearTimeout(M.tid);if(M.i<M.n-1)advance();else break;}return ds;});
  T('Niveau Facile choisi : difficulté fixe toute la série (plus d’écrasement par la série par chapitre)',lv.length>=3&&lv.every(d=>d===1),lv.join(','));
  await p.evaluate(()=>ACT.home());

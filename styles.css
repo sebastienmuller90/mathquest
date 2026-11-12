@@ -492,3 +492,15 @@ body.young .choice kbd{display:none}
 .mq-try details[open]>summary::before,.mq-adult[open]>summary::before{transform:rotate(90deg)}
 .privacy-link{display:inline-flex;align-items:center;min-height:48px;font-weight:700}
 .diag-note{display:flex;flex-direction:column;align-items:center;gap:4px;margin:8px 0 12px}.diag-note .big{font-size:2.6rem;line-height:1.1;color:var(--accent,#f0904a)}
+/* Bilan de calibration (12/11/2026) : note sur 20, matières, domaines, parcours conseillé */
+.cal{display:flex;flex-direction:column;gap:12px}.cal h1{font-size:26px;margin:.2em 0}.cal-hero{text-align:center}.cal-hero .bigicon{font-size:52px}
+.cal-finot{background:color-mix(in srgb,var(--accent) 10%,var(--surface));border:2px solid color-mix(in srgb,var(--accent) 35%,var(--border));border-radius:14px;padding:12px 14px;text-align:left;line-height:1.5;margin:10px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.cal-dom,.cal-sub{border-left:6px solid var(--border);display:flex;flex-direction:column;gap:6px;margin:0}.cal-top{border-left-color:var(--good)}.cal-good{border-left-color:var(--good)}.cal-mid{border-left-color:var(--gold)}.cal-low{border-left-color:var(--bad)}
+.cal-domtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.cal-domname{font-weight:800;overflow-wrap:anywhere}.cal-score{font-weight:800;white-space:nowrap}
+.cal-meter{height:10px;background:var(--surface2);border-radius:99px;overflow:hidden}.cal-meter i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.cal-top .cal-meter i,.cal-good .cal-meter i{background:var(--good)}.cal-mid .cal-meter i{background:var(--gold)}.cal-low .cal-meter i{background:var(--bad)}
+.cal-chaps,.cal-list,.cal-qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.cal-chaps li,.cal-list li,.cal-qlist li{overflow-wrap:anywhere}.cal-qlist{counter-reset:q}
+.cal-steps{display:flex;flex-direction:column;gap:8px}.cal-step{display:flex;align-items:center;gap:12px;margin:0}.cal-step p{margin:2px 0 0}.cal-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:800}
+.cal-detail summary{cursor:pointer;font-weight:800;min-height:44px;display:flex;align-items:center}.cal-qlist{margin-top:8px}
+.cal-subs{display:flex;flex-wrap:wrap;gap:8px}.cal-hubrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 8px}.cal-hubicon{font-size:28px}.cal-hubrow .grow{flex:1 1 140px;min-width:0}
