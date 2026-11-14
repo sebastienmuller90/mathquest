@@ -18,6 +18,7 @@ function atlasScreen(){if(M){clearInterval(M.tick);clearTimeout(M.tid);M=null;}L
  const cartes=D.cartes.filter(x=>!ATL.c||x.c===ATL.c);
  app.innerHTML=`${bar('🗺️ Atlas du monde')}
  <p class="muted">Les cartes du monde et des continents, puis une fiche pour chaque pays : son drapeau, sa carte, ses chiffres clés et un peu de son histoire.</p>
+ ${window.MQAtlasThemes?MQAtlasThemes.homeSection():''}
  ${cartes.length?`<h2 class="sec">🗺️ Les grandes cartes</h2><div class="atlmaps">${cartes.map(x=>`<button class="atlmap card" data-a="atlcarte:${x.id}">${atlImg('carte-'+x.id,x.t,'')}<span>${esc(x.t)}</span></button>`).join('')}</div>`:''}
  <h2 class="sec">🏳️ Les pays</h2>
  <input id="atlq" class="fld libsearch" type="search" placeholder="Chercher un pays ou une capitale…" value="${esc(ATL.q)}" aria-label="Rechercher un pays" autocomplete="off">
@@ -34,7 +35,7 @@ function atlCredit(f){
 }
 function atlasCarte(id){const x=atlData().cartes.find(c=>c.id===id);if(!x)return atlasScreen();CUR='atlas';
  app.innerHTML=`${bar('🗺️ '+esc(x.t),'atlas')}<figure class="lfig atlbig">${atlImg('carte-'+x.id,x.t,'')}<figcaption><b>${esc(x.t)}</b><small>${esc(x.a)} · ${esc(x.l)} · Wikimedia Commons</small></figcaption></figure>
- <p class="muted small">Astuce : pince l’image avec deux doigts pour zoomer.</p><button class="btn ghost wide" data-a="atlas">← Retour à l’atlas</button>`;window.scrollTo(0,0);}
+ <p class="muted small">Astuce : pince l’image avec deux doigts pour zoomer.</p>${window.MQAtlasThemes?MQAtlasThemes.carteExtra(id):''}<button class="btn ghost wide" data-a="atlas">← Retour à l’atlas</button>`;window.scrollTo(0,0);}
 function atlasPays(iso){const p=atlData().pays[iso];if(!p)return atlasScreen();CUR='atlas';const k=iso.toLowerCase();
  const row=(t,v)=>v?`<div class="frow"><span class="grow muted">${t}</span><b>${v}</b></div>`:'';
  app.innerHTML=`${bar((p.f?'':'🏳️ ')+esc(p.n),'atlas')}

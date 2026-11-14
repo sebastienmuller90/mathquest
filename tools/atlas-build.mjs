@@ -86,6 +86,7 @@ const KW = /(fleuve|rivière|cours d.eau|affluent|lac|mer|océan|golfe|baie|dét
 function clean(t) {
   let s = String(t || '');
   s = s.replace(/\[[^\]]{0,60}\]/g, '');                                    // [1], [réf. à confirmer], [ˈtisɒ]
+  s = s.replace(/(siècles?|millénaires?)\?/g, '$1');                    // modèle Vikidia mal rendu : « XIXe siècle? »
   for (let i = 0; i < 4; i++) s = s.replace(/\s*\([^()]*\)/g, m => (LATIN.test(m) || IPA.test(m) || /prononc|\bAPI\b|écouter|\/[^/]{1,30}\//i.test(m)) ? '' : m); // parenthèses non latines / phonétiques
   s = s.replace(/\s*\(\s*\)/g, '').replace(/\s*\(\s*[;,]\s*/g, ' (').replace(/\s*[;,]\s*\)/g, ')');
   s = s.split(/\s+/).filter(w => !LATIN.test(w) && !IPA.test(w)).join(' ');        // mots restants en écriture non latine

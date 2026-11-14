@@ -9,7 +9,7 @@ const {ROOT,serve,launchEngine,seedProfile}=require('./lib');
 // Classement exhaustif des domaines trouvés dans le code de l'app (js/, data/, index.html, parent.html, *.css).
 const HOSTS={
  'commons.wikimedia.org':'credit','www.metmuseum.org':'credit','images.nasa.gov':'credit','hdl.loc.gov':'credit','muzyczny.pl':'credit','www.photography.mattfield.com':'credit',
- 'fr.vikidia.org':'credit',
+ 'fr.vikidia.org':'credit','fr.wikipedia.org':'credit',
  // Adresses reproduites en texte dans la licence GFDL des cartes.
  'fsf.org':'license-text','www.gnu.org':'license-text',
  'www.education.gouv.fr':'parent-source','eduscol.education.gouv.fr':'parent-source',
