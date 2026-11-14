@@ -44,7 +44,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const pickN=(a,n)=>shuffle(a).slice(0,n);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const plain=h=>String(h==null?'':h).replace(/<[^>]*>/g,'').replace(/&nbsp;| | /g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s+/g,' ').trim().toLowerCase();
-const nf=n=>{const s=String(Math.abs(n));const parts=s.split('.');parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (n<0?'−':'')+parts.join(',');};
+const nf=n=>{const a=Math.abs(n);const s=Number.isInteger(a)||!isFinite(a)?String(a):String(+a.toFixed(10));/* +toFixed(10) : efface les artefacts de virgule flottante (3,0599999999999996 → 3,06) */const parts=s.split('.');parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (n<0?'−':'')+parts.join(',');};
 const dec=(x,k=2)=>{const v=Math.round(x*10**k)/10**k;return nf(v);};
 const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b)[a,b]=[b,a%b];return a;};
 

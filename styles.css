@@ -504,3 +504,21 @@ body.young .choice kbd{display:none}
 .cal-steps{display:flex;flex-direction:column;gap:8px}.cal-step{display:flex;align-items:center;gap:12px;margin:0}.cal-step p{margin:2px 0 0}.cal-num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:800}
 .cal-detail summary{cursor:pointer;font-weight:800;min-height:44px;display:flex;align-items:center}.cal-qlist{margin-top:8px}
 .cal-subs{display:flex;flex-wrap:wrap;gap:8px}.cal-hubrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 8px}.cal-hubicon{font-size:28px}.cal-hubrow .grow{flex:1 1 140px;min-width:0}
+/* Atlas : thèmes détaillés (8.75.20) */
+.atlthemes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.atlcol{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px;text-align:left;font:inherit;color:inherit;cursor:pointer;min-width:0}
+.atlcol-i{font-size:26px;line-height:1}.atlcol small{line-height:1.35;overflow-wrap:anywhere}
+.atlrows{display:flex;flex-direction:column;gap:6px}
+.atlrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;text-align:left;font:inherit;color:inherit;cursor:pointer;min-width:0}
+.atlrow-main{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.atlrow-main b,.atlrow-main small{overflow-wrap:anywhere}
+.atlrow-val{display:flex;flex-direction:column;align-items:flex-end;flex:0 0 auto;text-align:right}
+.atlsel{display:flex;flex-direction:column;gap:4px;margin:8px 0}.atlsel select{width:100%;min-width:0}
+.atlsort{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0}
+.atlkind{text-transform:capitalize;font-size:.9em}
+.atllinks{display:flex;flex-direction:column;gap:8px}.atllinks .libchips{flex-wrap:wrap}
+.atlflag-s{width:22px;height:15px;object-fit:contain;border-radius:2px;vertical-align:middle;margin-right:6px}
+.atltable-wrap{overflow-x:auto;max-width:100%}
+.atltable{border-collapse:collapse;width:100%;font-size:.92em}.atltable th,.atltable td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.atltable thead th{position:sticky;top:0;background:var(--surface2)}
+.atllinkbtn{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--accent-text);text-align:left;cursor:pointer;text-decoration:underline}
+.atlextra{display:flex;flex-direction:column;gap:8px;margin:12px 0}
